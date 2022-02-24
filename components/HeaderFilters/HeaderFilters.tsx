@@ -9,21 +9,32 @@ import {
 } from './constants';
 import { FilterIds } from './interfaces';
 
+enum INPUT_IDS {
+  CAR_SELECTION_ID = 'header-filter-car-selection',
+  MODEL_SELECTION_ID = 'header-filter-model-selection',
+  YEAR_SELECTION_ID = 'header-filter-year-selection',
+}
+
 const HeaderFilters: React.FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | any>(null);
-  // const divRef = React.useRef();
+  const divRef = React.useRef();
+  const divRef1 = React.useRef();
+  const divRef2 = React.useRef();
   const [car, setCar] = useState<string>('');
   const [model, setModel] = useState<string>('');
   const [year, setYear] = useState<string>('');
 
-  function handleClick() {
-    console.log('handle click');
+  function handleClick(event: any) {
+    const { id } = event.target;
+    setAnchorEl(divRef);
+
     // if (divRef) {
     //   setAnchorEl(divRef.current);
     // }
   }
 
   function handleClose() {
+    console.log('handle close');
     setAnchorEl(null);
   }
   const [focusedInputs, setfocusedInputs] = useState<
@@ -37,30 +48,26 @@ const HeaderFilters: React.FC = () => {
   const onFocus = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    const { id } = event.currentTarget;
-    const focused = focusedInputs[id as FilterIds];
-
-    console.log(event);
-
-    console.log('on focus', id);
-
-    if (focused === undefined) {
-      return;
-    }
-
-    const newfocusedInputs = Object.keys(focusedInputs).reduce<
-      Record<FilterIds, boolean>
-    >((acc, key) => {
-      acc[key as FilterIds] = key === id;
-      return acc;
-    }, focusedInputs);
-
-    console.log('Anchor el', anchorEl);
-
-    setfocusedInputs({ ...newfocusedInputs });
+    // const { id } = event.currentTarget;
+    // const focused = focusedInputs[id as FilterIds];
+    // console.log(event);
+    // console.log('on focus', id);
+    // if (focused === undefined) {
+    //   return;
+    // }
+    // const newfocusedInputs = Object.keys(focusedInputs).reduce<
+    //   Record<FilterIds, boolean>
+    // >((acc, key) => {
+    //   acc[key as FilterIds] = key === id;
+    //   return acc;
+    // }, focusedInputs);
+    // console.log('Anchor el', anchorEl);
+    // setfocusedInputs({ ...newfocusedInputs });
   };
 
   const open = Boolean(anchorEl);
+  console.log('open?', open);
+  console.log('div ref', divRef);
   const id = open ? 'simple-popover' : undefined;
 
   return (
@@ -79,6 +86,7 @@ const HeaderFilters: React.FC = () => {
       </Typography>
       <TextField
         id={CAR_SELECTION_ID}
+        inputRef={divRef}
         label='Filled success'
         color='secondary'
         onChange={(event) => setCar(event.target.value)}
@@ -88,6 +96,7 @@ const HeaderFilters: React.FC = () => {
       />
       <TextField
         id={MODEL_SELECTION_ID}
+        inputRef={divRef1}
         label='Filled success'
         color='secondary'
         onChange={(event) => setModel(event.target.value)}
@@ -97,6 +106,7 @@ const HeaderFilters: React.FC = () => {
       />
       <TextField
         id={YEAR_SELECTION_ID}
+        inputRef={divRef2}
         label='Filled success'
         color='secondary'
         onChange={(event) => setYear(event.target.value)}
@@ -109,8 +119,8 @@ const HeaderFilters: React.FC = () => {
       <Popover
         id={id}
         open={open}
-        anchorEl={anchorEl}
         onClose={handleClose}
+        anchorEl={divRef.current}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'center',

@@ -1,4 +1,4 @@
 import CheckboxGroup from './CheckboxGroup';
 
-export * from './interfaces';
+export * from './types';
 export default CheckboxGroup;

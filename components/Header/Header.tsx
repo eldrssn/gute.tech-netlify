@@ -1,4 +1,5 @@
 import React from 'react';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,8 +11,9 @@ import MenuItem from '@mui/material/MenuItem';
 import PhoneCallbackIcon from '@mui/icons-material/PhoneCallback';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import styles from './styles.module.css';
+
 import HeaderFilters from '../HeaderFilters/HeaderFilters';
+import styles from './styles.module.css';
 
 //TODO: in constants + rework
 const pages = ['phone', 'callback', 'shoppingCart'];
