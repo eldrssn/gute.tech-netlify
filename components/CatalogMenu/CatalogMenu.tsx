@@ -3,11 +3,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
+
 import styles from './styles.module.css';
+import { catalogProperties } from '../../mock/CatalogMenu';
 
 const CatalogMenu: React.FC = () => {
-  const catalogProperties = ['element 1', 'element 2', 'element 3', 'element4'];
-
   const renderElement = (props: any, index: number) => {
     return (
       <ListItem key={index} component='div' disablePadding>

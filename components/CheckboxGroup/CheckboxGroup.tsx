@@ -11,34 +11,98 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   options,
 }) => {
   const router = useRouter();
-  const [isChecked, setChecked] = useState<{ [key: string]: boolean }>({});
 
   const setOnChange = useCallback(
     (checked: boolean, element: CheckboxOption) => {
       const { name } = element;
       const { query, pathname } = router;
+      const isElementExist = query[queryName];
 
-      const queryOptions = {
-        ...isChecked,
-        [name]: checked,
-      };
+      if (checked && !isElementExist) {
+        const newQuery = { ...query, [queryName]: element.name };
+        router.push({
+          pathname: pathname,
+          query: newQuery,
+        });
 
-      const newQuery = Object.keys(queryOptions).filter(
-        (option) => queryOptions[option],
-      );
+        return;
+      }
 
-      router.push({
-        pathname: pathname,
-        query: {
-          ...query,
-          [queryName]: newQuery,
-        },
-      });
+      if (checked && isElementExist) {
+        const isArray = Array.isArray(isElementExist);
 
-      setChecked(queryOptions);
+        if (!isArray) {
+          const newQuery = {
+            ...query,
+            [queryName]: [isElementExist, element.name],
+          };
+          router.push({
+            pathname: pathname,
+            query: newQuery,
+          });
+
+          return;
+        }
+
+        if (isArray) {
+          const newQueryArray = isElementExist;
+          newQueryArray.push(element.name);
+
+          const newQuery = {
+            ...query,
+            [queryName]: newQueryArray,
+          };
+
+          router.push({
+            pathname: pathname,
+            query: newQuery,
+          });
+          return;
+        }
+      }
+
+      if (!checked) {
+        if (Array.isArray(isElementExist)) {
+          const newQuery = {
+            ...query,
+            [queryName]: isElementExist.filter(
+              (queryOption) => queryOption !== element.name,
+            ),
+          };
+
+          router.push({
+            pathname: pathname,
+            query: newQuery,
+          });
+
+          return;
+        }
+        const newQuery = { ...query };
+        delete newQuery[queryName];
+
+        router.push({
+          pathname: pathname,
+          query: newQuery,
+        });
+
+        return;
+      }
     },
-    [router, isChecked],
+    [router.isReady, router.query],
   );
+
+  const getIsChecked = (name: string) => {
+    const { query } = useRouter();
+
+    const queryOption = query[queryName];
+    const isArray = Array.isArray(queryOption);
+
+    if (!isArray) {
+      return queryOption === name;
+    }
+
+    return Boolean(queryOption.find((element) => element === name));
+  };
 
   useEffect(() => {
     const queryOptions = router.query[queryName];
@@ -64,7 +128,6 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
 
           return prev;
         }, {});
-        setChecked(newQuery);
       }
     }
   }, [router.isReady]);
@@ -74,14 +137,13 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
       {title && <p>{title} </p>}
       {options.map((element: CheckboxOption, index) => {
         const { name } = element;
-        const isCheckedOption = isChecked[name] || false;
         return (
           <FormControlLabel
             key={index}
             control={
               <Checkbox
                 onChange={(event, checked) => setOnChange(checked, element)}
-                checked={isCheckedOption}
+                checked={getIsChecked(name)}
               />
             }
             label={element.displayName}

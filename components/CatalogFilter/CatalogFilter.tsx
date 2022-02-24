@@ -1,9 +1,10 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import styles from './styles.module.css';
 import CatalogMenu from '../CatalogMenu';
 import CheckboxGroup from '../CheckboxGroup';
 import PriceRange from '../PriceRange';
+import styles from './styles.module.css';
+import { filterOptions } from '../../mock/CatalogFilter';
 
 const CatalogFilter: React.FC = () => {
   return (
@@ -19,10 +20,7 @@ const CatalogFilter: React.FC = () => {
         <CheckboxGroup
           title='example title'
           queryName='example'
-          options={[
-            { name: 'abc007', displayName: 'example' },
-            { name: 'bcd566', displayName: 'bcd566' },
-          ]}
+          options={filterOptions}
         />
       </Box>
       <CatalogMenu />
