@@ -1,9 +1,12 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
+
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { CheckboxGroupProps, CheckboxOption } from './interfaces';
+
+import useRouterQuery from '../../hooks/useRouterQuery/useRouterQuery';
+import { CheckboxGroupProps, CheckboxOption } from './types';
 
 const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   title,
@@ -11,77 +14,44 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   options,
 }) => {
   const router = useRouter();
-  const [isChecked, setChecked] = useState<{ [key: string]: boolean }>({});
+  const routerQuery = useRouterQuery();
 
   const setOnChange = useCallback(
     (checked: boolean, element: CheckboxOption) => {
       const { name } = element;
-      const { query, pathname } = router;
 
-      const queryOptions = {
-        ...isChecked,
-        [name]: checked,
-      };
+      if (!checked) {
+        routerQuery.remove(queryName, name);
+        return;
+      }
 
-      const newQuery = Object.keys(queryOptions).filter(
-        (option) => queryOptions[option],
-      );
-
-      router.push({
-        pathname: pathname,
-        query: {
-          ...query,
-          [queryName]: newQuery,
-        },
-      });
-
-      setChecked(queryOptions);
+      routerQuery.create(queryName, name);
     },
-    [router, isChecked],
+    [router.isReady, router.query],
   );
 
-  useEffect(() => {
-    const queryOptions = router.query[queryName];
+  const getIsChecked = (name: string) => {
+    const queryOption = routerQuery.get(queryName);
 
-    if (queryOptions) {
-      const queries =
-        queryOptions && Array.isArray(queryOptions)
-          ? queryOptions
-          : queryOptions.split(',');
-
-      if (queries) {
-        const newQuery = queries.reduce((prev, accumulator) => {
-          const queryOption = options.find(
-            (option) => option.name === accumulator,
-          );
-
-          if (queryOption) {
-            return {
-              ...prev,
-              [queryOption.name]: true,
-            };
-          }
-
-          return prev;
-        }, {});
-        setChecked(newQuery);
-      }
+    if (!Array.isArray(queryOption)) {
+      return queryOption === name;
     }
-  }, [router.isReady]);
+
+    return Boolean(queryOption.find((element) => element === name));
+  };
 
   return (
-    <Box component='div' sx={{ width: '100%  ' }}>
+    <Box component='div' sx={{ width: '100%' }}>
       {title && <p>{title} </p>}
       {options.map((element: CheckboxOption, index) => {
         const { name } = element;
-        const isCheckedOption = isChecked[name] || false;
         return (
           <FormControlLabel
             key={index}
             control={
               <Checkbox
                 onChange={(event, checked) => setOnChange(checked, element)}
-                checked={isCheckedOption}
+                checked={getIsChecked(name)}
               />
             }
             label={element.displayName}

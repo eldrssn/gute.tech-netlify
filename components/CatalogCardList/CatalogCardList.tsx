@@ -1,6 +1,7 @@
-import { Box } from '@mui/material';
 import { FC } from 'react';
-import Card from '../CatalogCard/CatalogCard';
+
+import { Box } from '@mui/material';
+
 import {
   AutoSizer,
   ListRowProps,
@@ -9,7 +10,8 @@ import {
   CellMeasurerCache,
 } from 'react-virtualized';
 
-const list = ['Brian Vaughn', 'Brian Vaughn', 'Brian Vaughn'];
+import Card from '../CatalogCard/CatalogCard';
+import { list } from '../../mock/CatalogCardList';
 
 const CatalogCardList: FC = () => {
   const cache = new CellMeasurerCache({

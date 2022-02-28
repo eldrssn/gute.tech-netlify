@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { Box, Typography } from '@mui/material';
 
-const CatalogTitle: React.FC<any> = () => {
+const CatalogTitle: React.FC = () => {
   return (
     <Box>
       <Typography

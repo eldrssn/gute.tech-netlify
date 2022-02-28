@@ -1,66 +1,66 @@
 import React, { useState } from 'react';
+
 import { Box, Typography, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Popover from '@mui/material/Popover';
-import {
-  CAR_SELECTION_ID,
-  MODEL_SELECTION_ID,
-  YEAR_SELECTION_ID,
-} from './constants';
-import { FilterIds } from './interfaces';
+
+import { INPUT_IDS, CarModel } from './types';
+import initialState from './initialState';
 
 const HeaderFilters: React.FC = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | any>(null);
-  // const divRef = React.useRef();
+  const refs = initialState.useLocalRefs();
+  const [anchorElId, setAnchorElId] = React.useState<null | string>(null);
   const [car, setCar] = useState<string>('');
   const [model, setModel] = useState<string>('');
   const [year, setYear] = useState<string>('');
 
-  function handleClick() {
-    console.log('handle click');
-    // if (divRef) {
-    //   setAnchorEl(divRef.current);
-    // }
+  const [selectedCars, setSelectedCars] = useState<CarModel[]>([]);
+
+  function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const { id } = event.target as HTMLElement;
+    if (id) {
+      setAnchorElId(id);
+    }
   }
 
   function handleClose() {
-    setAnchorEl(null);
+    setAnchorElId(null);
   }
-  const [focusedInputs, setfocusedInputs] = useState<
-    Record<FilterIds, boolean>
-  >({
-    [CAR_SELECTION_ID]: false,
-    [MODEL_SELECTION_ID]: false,
-    [YEAR_SELECTION_ID]: false,
-  });
+
+  const addCar = () => {
+    if (!car || !model || !year) {
+      //TODO: Handle empty parameters
+      return;
+    }
+    const newSelectedCar = {
+      car,
+      model,
+      year,
+    };
+
+    setCar('');
+    setModel('');
+    setYear('');
+    setSelectedCars((cars) => [...cars, newSelectedCar]);
+  };
 
   const onFocus = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    const { id } = event.currentTarget;
-    const focused = focusedInputs[id as FilterIds];
+  ) => {};
 
-    console.log(event);
+  const onChangeCar = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => setCar(event.target.value);
 
-    console.log('on focus', id);
+  const onChangeModel = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => setModel(event.target.value);
 
-    if (focused === undefined) {
-      return;
-    }
+  const onChangeYear = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => setYear(event.target.value);
 
-    const newfocusedInputs = Object.keys(focusedInputs).reduce<
-      Record<FilterIds, boolean>
-    >((acc, key) => {
-      acc[key as FilterIds] = key === id;
-      return acc;
-    }, focusedInputs);
-
-    console.log('Anchor el', anchorEl);
-
-    setfocusedInputs({ ...newfocusedInputs });
-  };
-
-  const open = Boolean(anchorEl);
+  const open = Boolean(anchorElId);
   const id = open ? 'simple-popover' : undefined;
 
   return (
@@ -78,39 +78,51 @@ const HeaderFilters: React.FC = () => {
         для вашего транспорта
       </Typography>
       <TextField
-        id={CAR_SELECTION_ID}
+        id={INPUT_IDS.CAR_SELECTION_ID}
+        inputRef={refs[INPUT_IDS.CAR_SELECTION_ID]}
         label='Filled success'
         color='secondary'
-        onChange={(event) => setCar(event.target.value)}
-        focused={Boolean(car) || focusedInputs[CAR_SELECTION_ID]}
+        value={car}
+        focused={Boolean(car) || anchorElId === INPUT_IDS.CAR_SELECTION_ID}
+        onChange={onChangeCar}
         onFocus={onFocus}
         onClick={handleClick}
       />
       <TextField
-        id={MODEL_SELECTION_ID}
+        id={INPUT_IDS.MODEL_SELECTION_ID}
+        inputRef={refs[INPUT_IDS.MODEL_SELECTION_ID]}
         label='Filled success'
         color='secondary'
-        onChange={(event) => setModel(event.target.value)}
-        focused={Boolean(model) || focusedInputs[MODEL_SELECTION_ID]}
+        value={model}
+        focused={Boolean(model) || anchorElId === INPUT_IDS.MODEL_SELECTION_ID}
+        onChange={onChangeModel}
         onFocus={onFocus}
         onClick={handleClick}
       />
       <TextField
-        id={YEAR_SELECTION_ID}
+        id={INPUT_IDS.YEAR_SELECTION_ID}
+        inputRef={refs[INPUT_IDS.YEAR_SELECTION_ID]}
         label='Filled success'
         color='secondary'
-        onChange={(event) => setYear(event.target.value)}
-        focused={Boolean(year) || focusedInputs[YEAR_SELECTION_ID]}
+        value={year}
+        focused={Boolean(year) || anchorElId === INPUT_IDS.YEAR_SELECTION_ID}
+        onChange={onChangeYear}
         onFocus={onFocus}
         onClick={handleClick}
       />
-      <Button variant='contained'>Подобрать детали</Button>
+      <Button onClick={addCar} variant='contained'>
+        Подобрать детали
+      </Button>
 
       <Popover
+        disableScrollLock
         id={id}
         open={open}
-        anchorEl={anchorEl}
         onClose={handleClose}
+        disableAutoFocus
+        anchorEl={
+          (anchorElId && refs[anchorElId as keyof typeof refs].current) || null
+        }
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'center',
