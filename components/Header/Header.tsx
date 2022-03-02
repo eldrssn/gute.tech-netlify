@@ -1,27 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 
-import HeaderFilters from '../HeaderFilters/HeaderFilters';
+import HeaderFilters from '../HeaderFilters/';
+import HeaderNavMenu from '../HeaderNavMenu';
 import styles from './styles.module.css';
-import { pages, menuItemNames, menuIcons } from './constants';
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [isFullMenu, setIsFullMenu] = React.useState<boolean>(true);
 
   const handleOpenNavMenu = (event: any) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (document) {
+        const { scrollTop } = document.documentElement;
+        setIsFullMenu(() => !Boolean(scrollTop));
+      }
+    };
+    if (window) {
+      window.addEventListener('scroll', onScroll, false);
+    }
+    () => window.removeEventListener('scroll', onScroll, false);
+  }, []);
 
   return (
     <AppBar
@@ -32,7 +41,7 @@ const Header = () => {
       <Container
         sx={{ display: 'flex', justifyContent: 'right', flexWrap: 'wrap' }}
       >
-        <Box component='div'>
+        <Box sx={{ display: isFullMenu ? 'block' : 'none' }} component='div'>
           <Typography>Выберите город</Typography>
         </Box>
       </Container>
@@ -45,7 +54,7 @@ const Header = () => {
             justifyContent: 'left',
           }}
         >
-          <MenuItem>
+          <MenuItem sx={{ display: isFullMenu ? 'block' : 'none' }}>
             <IconButton
               size='large'
               aria-label='account of current user'
@@ -57,7 +66,7 @@ const Header = () => {
               <img className={styles.header_logo} src={'/logo-example.jpeg'} />
             </IconButton>
           </MenuItem>
-          <MenuItem>
+          <MenuItem sx={{ display: isFullMenu ? 'block' : 'none' }}>
             <Typography
               component='div'
               style={{ width: 150, whiteSpace: 'break-spaces' }}
@@ -66,53 +75,10 @@ const Header = () => {
             </Typography>
           </MenuItem>
         </Box>
-        <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>
-                    {menuItemNames[page as keyof typeof menuItemNames]}
-                  </Typography>
-                  {/* {menuIcons[page as keyof typeof menuIcons]} */}
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => {
-              const Icon = menuIcons[page as keyof typeof menuIcons] || null;
-              return (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Icon />
-                  <Typography textAlign='center'>
-                    {menuItemNames[page as keyof typeof menuItemNames]}
-                  </Typography>
-                </MenuItem>
-              );
-            })}
-          </Box>
-        </Toolbar>
+        {isFullMenu && <HeaderNavMenu isFullMenu />}
       </Container>
       <Container>
-        <HeaderFilters />
+        <HeaderFilters isFullMenu={isFullMenu} />
       </Container>
     </AppBar>
   );
