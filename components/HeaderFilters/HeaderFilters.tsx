@@ -92,7 +92,6 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
         sx={{
           display: isOpenFilters ? 'none' : 'flex',
           flexWrap: 'wrap',
-          width: '100%',
         }}
       >
         {selectedCars.map((car, index) => (
@@ -185,6 +184,8 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
           <Typography>The content of the Popover.</Typography>
         </Popover>
       </Box>
+
+      {!isFullMenu && !isOpenFilters && <HeaderNavMenu />}
     </Box>
   );
 };
