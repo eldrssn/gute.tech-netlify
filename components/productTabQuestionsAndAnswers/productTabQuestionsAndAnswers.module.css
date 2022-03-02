@@ -1,0 +1,44 @@
+.accordionWrapper {
+  box-shadow: none;
+  padding: 20px;
+  padding-left: 32px;
+  position: relative;
+}
+
+.accordionWrapper::before {
+  display: none;
+}
+
+.accordionWrapper:nth-child(even) {
+  background-color: #f3f4f5;
+}
+
+.accordionSummary {
+  position: relative;
+}
+
+.accordionSummary::before {
+  display: block;
+  background: url('../../public/icons/faqArrow.png') 0 0 no-repeat;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -15px;
+  transition: transform 0.5s;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+
+.accordionSummaryExpanded::before {
+  transform: rotate(90deg) translateX(-50%);
+}
+
+.accordionDetails {
+  margin-top: 0;
+}
+
+/* .accordionSummary */
+.accordionSummaryText {
+  margin: 0;
+}

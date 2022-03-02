@@ -1,0 +1,1 @@
+export { ProductTabQuestionsAndAnswers } from './ProductTabQuestionsAndAnswers';

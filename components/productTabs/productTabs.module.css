@@ -1,0 +1,11 @@
+.tabTittle {
+  font-weight: 700;
+  color: #d7dcde;
+  font-size: 18px;
+  text-transform: none;
+}
+
+.tabTittle:hover,
+.tabTittle:focus {
+  color: #000;
+}

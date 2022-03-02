@@ -1,0 +1,1 @@
+export { ProductSpecial } from './ProductSpecial';
