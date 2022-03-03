@@ -21,13 +21,13 @@ const FirstRow: FC<Items> = ({ items }) => (
           {items[0].name}
         </CategoryCard>
       </Grid>
-      <Grid item sx={{ height: '305px' }}>
-        {items.length > 1 && (
+      {items.length > 1 && (
+        <Grid item sx={{ height: '305px' }}>
           <CategoryCard quantity={items[1].quantity} image={items[1].image}>
             {items[1].name}
           </CategoryCard>
-        )}
-      </Grid>
+        </Grid>
+      )}
     </Grid>
     {items.length > 2 && (
       <Grid item xs={12} lg={6} sx={{ height: { xs: '305px', lg: '610px' } }}>

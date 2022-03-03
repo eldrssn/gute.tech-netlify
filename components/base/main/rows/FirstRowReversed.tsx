@@ -21,20 +21,20 @@ const FirstRowReversed: FC<Items> = ({ items }) => (
       direction={'column'}
       justifyContent='space-between'
     >
-      <Grid item sx={{ height: '305px' }}>
-        {items.length > 1 && (
+      {items.length > 1 && (
+        <Grid item sx={{ height: '305px' }}>
           <CategoryCard quantity={items[1].quantity} image={items[1].image}>
             {items[1].name}
           </CategoryCard>
-        )}
-      </Grid>
-      <Grid item sx={{ height: '305px' }}>
-        {items.length > 2 && (
+        </Grid>
+      )}
+      {items.length > 2 && (
+        <Grid item sx={{ height: '305px' }}>
           <CategoryCard quantity={items[2].quantity} image={items[2].image}>
             {items[2].name}
           </CategoryCard>
-        )}
-      </Grid>
+        </Grid>
+      )}
     </Grid>
   </Grid>
 );

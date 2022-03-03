@@ -1,10 +1,4 @@
-type Category = {
-  id: number,
-  image: string,
-  name: string,
-  quantity: number,
-  sort: number
-}
+import { Category } from "components/base/main/CategoryCard/types";
 
 const items: Category[] = [
   {
@@ -93,5 +87,4 @@ const items: Category[] = [
   },
 ];
 
-export { items }
-export type { Category }
+export { items };

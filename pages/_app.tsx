@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import MainLayout from '../layouts/index';
+import MainLayout from 'layouts/index';
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {
