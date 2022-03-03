@@ -5,7 +5,16 @@ export const productInfo = {
   catalogTitle: 'Решетки радиатора и бампера',
   price: 5540,
   stockCount: 2,
-  images: {},
+  images: [
+    {
+      original: 'images/mainProduct1.jpeg',
+      thumbnail: 'images/mainProduct1.jpeg',
+    },
+    {
+      original: 'images/mainProduct2.jpeg',
+      thumbnail: 'images/mainProduct2.jpeg',
+    },
+  ],
   info: {
     characteristic: [
       ['Артикул', 'RG-10868'],
