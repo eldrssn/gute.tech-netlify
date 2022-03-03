@@ -1,34 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Gute.tech Frontend
 
-## Getting Started
+## Содержание
+* [О проекте](#о-проекте)
+* [Технологии](#технологии)
+* [Структура проекта](#структура-проекта)
+* [Система лейаутов](#система-лейаутов)
+* [Сборка](#сборка)
 
-First, run the development server:
+## О проекте
+
+Веб-приложение для сети облачных сайтов автозапчастей Gute.tech
+
+## Технологии
+
+- [React](https://reactjs.org/) - <i class="fa-brands fa-react"></i>
+- [Next.js](https://nextjs.org/) - Фреймворк, предоставляющий удобный SSR и SSG
+- [Material ui](https://mui.com/) - Библиотека стилизованных компонентов для более удобной и быстрой верстки и разработки
+- [TypeScript](https://www.typescriptlang.org/)
+
+## Структура проекта
+
+```bash
+.
+├── README.md
+├── components
+│   ├── base - **Папка base содержит компоненты, являющиеся составными блоками страниц**
+│   │   └── main **main - название страницы**
+│   │       └── CategoryCard **CategoryCard - компонент-блок, использующийся на главной странице**
+│   │           ├── CategoryCard.module.css **Модульные стили**
+│   │           ├── CategoryCard.tsx **Сам компонент**
+│   │           │── index.tsx **index файл для экспорта**
+│   │           └── types.ts **Типы**
+│   ├── main **Папка main содержит компоненты, являющиейся составными блоками лейаутов**
+│   │   ├── Footer
+│   │   └── Header
+│   └── ui **Атомарные компоненты**
+│       ├── Button
+│       └── Slider
+├── layouts **Лейауты**
+│   └── index.tsx
+├── mock **Фейковые данные для отладки и тестирования**
+├── pages **Нативная папка next.js. Как работает структура next проекта можно посмотреть в документации Next.
+├── public
+├── styles **Стили**
+│   └── globals.css
+├── next.config.js **Конфиг Next проекта**
+└── tsconfig.json **Конфиг TS*
+```
+
+## Система лейаутов
+
+Изначально все страницы отрисовываются в main layout.
+Для того чтобы поменять лейаут для страницы PageName на, например, ExampleLayout необходимо добавить к компоненту PageName добавить свойство PageLayout
+
+```js
+  /// PageName.tsx
+  import { ExampleLayout } from 'layouts/ExampleLayout'
+  
+  const PageName: React.FC = () => (...)
+
+  PageName.PageLayout = ExampleLayout
+
+  export default PageName
+```
+## Сборка
+
+Проект собирается командой
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
