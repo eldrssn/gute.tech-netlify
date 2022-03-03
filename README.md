@@ -13,7 +13,7 @@
 
 ## Технологии
 
-- [React](https://reactjs.org/) - <i class="fa-brands fa-react"></i>
+- [React](https://reactjs.org/)
 - [Next.js](https://nextjs.org/) - Фреймворк, предоставляющий удобный SSR и SSG
 - [Material ui](https://mui.com/) - Библиотека стилизованных компонентов для более удобной и быстрой верстки и разработки
 - [TypeScript](https://www.typescriptlang.org/)
