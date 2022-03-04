@@ -4,7 +4,7 @@ import { Box, Typography, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Popover from '@mui/material/Popover';
 
-import HeaderNavMenu from '../HeaderNavMenu';
+import HeaderNavMenu from 'components/base/header/HeaderNavMenu';
 
 import { INPUT_IDS, CarModel, HeaderFilterProps } from './types';
 

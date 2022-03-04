@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListRowProps, CellMeasurer } from 'react-virtualized';
 
-import Card from '../CatalogCard';
+import Card from 'components/base/catalog/CatalogCard';
 
 import { cardListCache } from './helpers';
 

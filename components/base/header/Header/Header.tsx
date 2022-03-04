@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 
-import HeaderFilters from '../HeaderFilters';
-import HeaderNavMenu from '../HeaderNavMenu';
+import HeaderFilters from 'components/base/header/HeaderFilters';
+import HeaderNavMenu from 'components/base/header/HeaderNavMenu';
 
 import styles from './styles.module.css';
 

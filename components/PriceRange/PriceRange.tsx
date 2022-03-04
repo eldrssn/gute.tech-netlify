@@ -3,7 +3,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-import useRouterQuery from '../../hooks/useRouterQuery';
+import useRouterQuery from 'hooks/useRouterQuery';
+
 import styles from './styles.module.css';
 
 const PriceRange: React.FC = () => {

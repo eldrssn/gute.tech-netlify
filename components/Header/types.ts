@@ -1,3 +1,0 @@
-interface HeaderMenuProps {
-  isFullMenu?: boolean;
-}

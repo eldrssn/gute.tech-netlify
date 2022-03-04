@@ -2,11 +2,11 @@ import React from 'react';
 
 import Box from '@mui/material/Box';
 
-import CatalogMenu from '../CatalogMenu';
-import CheckboxGroup from '../CheckboxGroup';
-import PriceRange from '../PriceRange';
+import CatalogMenu from 'components/base/catalog/CatalogMenu';
+import CheckboxGroup from 'components/CheckboxGroup';
+import PriceRange from 'components/PriceRange';
 
-import { filterOptions } from '../../mock/CatalogFilter';
+import { filterOptions } from 'mock/CatalogFilter';
 import styles from './styles.module.css';
 
 const CatalogFilter: React.FC = () => (

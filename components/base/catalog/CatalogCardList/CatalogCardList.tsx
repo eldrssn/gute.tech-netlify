@@ -3,7 +3,7 @@ import { AutoSizer, List } from 'react-virtualized';
 
 import { Box } from '@mui/material';
 
-import { list } from '../../mock/CatalogCardList';
+import { list } from 'mock/CatalogCardList';
 import RowRenderer from './RowRenderer';
 
 const CatalogCardList: React.FC = () => {
