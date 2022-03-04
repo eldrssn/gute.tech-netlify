@@ -10,7 +10,7 @@ import { filterOptions } from 'mock/CatalogFilter';
 import styles from './styles.module.css';
 
 const CatalogFilter: React.FC = () => (
-  <div>
+  <>
     <Box
       className={styles.catalog_filter_wrapper}
       component='form'
@@ -26,7 +26,7 @@ const CatalogFilter: React.FC = () => (
       />
     </Box>
     <CatalogMenu />
-  </div>
+  </>
 );
 
 export default CatalogFilter;

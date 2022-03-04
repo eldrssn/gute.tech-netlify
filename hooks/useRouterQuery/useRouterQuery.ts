@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery, ParsedUrlQueryInput } from 'querystring';
 
+import { RouterQuery } from './types';
+
 const useRouterQuery = () => {
   const router = useRouter();
   const { query, pathname } = router;
@@ -28,6 +30,7 @@ const useRouterQuery = () => {
         };
 
         updateQuery(newQuery);
+
         return;
       }
 
@@ -36,6 +39,7 @@ const useRouterQuery = () => {
           if (key === name) {
             return queryObj;
           }
+
           return { ...queryObj, [key]: query[key] };
         },
         {},
@@ -52,6 +56,7 @@ const useRouterQuery = () => {
         ...query,
         [name]: param,
       };
+
       updateQuery(newQuery);
     },
     [router],
@@ -65,11 +70,11 @@ const useRouterQuery = () => {
       const queryOption = query[name];
 
       if (Array.isArray(queryOption)) {
-        const newQueryArray = queryOption;
-        newQueryArray.push(param);
-
+        const newQueryArray = [...queryOption, param];
         const newQuery = { ...query, [name]: newQueryArray };
+
         updateQuery(newQuery);
+
         return;
       }
 
@@ -77,17 +82,20 @@ const useRouterQuery = () => {
         ...query,
         [name]: queryOption ? [queryOption, param] : param,
       };
+
       updateQuery(newQuery);
     },
     [router],
   );
 
-  return {
+  const routerQuery: RouterQuery = {
     setQueryOption,
     removeQuery,
     getQueryOption,
     updateQueryOption,
   };
+
+  return routerQuery;
 };
 
 export default useRouterQuery;

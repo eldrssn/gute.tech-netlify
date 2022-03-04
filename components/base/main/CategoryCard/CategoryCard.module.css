@@ -10,12 +10,12 @@
   cursor: pointer;
 }
 
-.categoryCard:hover>.categoryName {
+.categoryCard:hover > .categoryName {
   color: #52a9cd;
 }
 
 .backgroundImage {
-  background: url(~/public/germanika/bg.png) 0 0 no-repeat;
+  background: url(/public/germanika/bg.png) 0 0 no-repeat;
   background-size: cover;
   z-index: 10;
   position: absolute;

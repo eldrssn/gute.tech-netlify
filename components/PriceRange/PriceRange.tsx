@@ -6,30 +6,13 @@ import TextField from '@mui/material/TextField';
 import useRouterQuery from 'hooks/useRouterQuery';
 
 import styles from './styles.module.css';
+import { setQueryParam } from 'hooks/useRouterQuery/helpers';
 
 const PriceRange: React.FC = () => {
   const routerQuery = useRouterQuery();
 
-  const setPrice = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-    type: 'maxPrice' | 'minPrice',
-  ) => {
-    const { value } = event.target;
-
-    routerQuery.setQueryOption(type, value);
-
-    if (!value) {
-      routerQuery.removeQuery(type);
-    }
-  };
-
-  const setMaxPrice = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => setPrice(event, 'maxPrice');
-
-  const setMinPrice = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => setPrice(event, 'minPrice');
+  const setMaxPrice = setQueryParam(routerQuery, 'maxPrice');
+  const setMinPrice = setQueryParam(routerQuery, 'minPrice');
 
   return (
     <Box className={styles.price_range_wrapper} component='div'>
