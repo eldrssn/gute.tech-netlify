@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import { FC } from 'react';
 import { items } from 'mock/categories';
-import { Category } from "components/base/main/CategoryCard/types";
+import { Category } from 'components/base/main/CategoryCard/types';
 import {
   FirstRow,
   SecondRow,

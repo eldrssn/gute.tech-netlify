@@ -1,0 +1,1 @@
+export const list = ['Brian Vaughn', 'Brian Vaughn', 'Brian Vaughn'];
