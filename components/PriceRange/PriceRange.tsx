@@ -1,36 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-import useRouterQuery from '../../hooks/useRouterQuery/useRouterQuery';
+import useRouterQuery from '../../hooks/useRouterQuery';
 import styles from './styles.module.css';
 
 const PriceRange: React.FC = () => {
   const routerQuery = useRouterQuery();
 
-  const setMaxPrice = (
+  const setPrice = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+    type: 'maxPrice' | 'minPrice',
   ) => {
     const { value } = event.target;
-    routerQuery.set('maxPrice', value);
+
+    routerQuery.setQueryOption(type, value);
 
     if (!value) {
-      routerQuery.remove('maxPrice');
+      routerQuery.removeQuery(type);
     }
   };
+
+  const setMaxPrice = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => setPrice(event, 'maxPrice');
 
   const setMinPrice = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    const { value } = event.target;
-    routerQuery.set('minPrice', value);
-
-    if (!value) {
-      routerQuery.remove('minPrice');
-    }
-  };
+  ) => setPrice(event, 'minPrice');
 
   return (
     <Box className={styles.price_range_wrapper} component='div'>
@@ -38,14 +36,14 @@ const PriceRange: React.FC = () => {
         onChange={setMinPrice}
         type='number'
         variant='outlined'
-        value={routerQuery.get('minPrice')}
+        value={routerQuery.getQueryOption('minPrice')}
       />
       <span className={styles.range_separator} />
       <TextField
         onChange={setMaxPrice}
         type='number'
         variant='outlined'
-        value={routerQuery.get('maxPrice')}
+        value={routerQuery.getQueryOption('maxPrice')}
       />
     </Box>
   );

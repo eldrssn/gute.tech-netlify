@@ -6,29 +6,27 @@ import CatalogMenu from '../CatalogMenu';
 import CheckboxGroup from '../CheckboxGroup';
 import PriceRange from '../PriceRange';
 
-import styles from './styles.module.css';
 import { filterOptions } from '../../mock/CatalogFilter';
+import styles from './styles.module.css';
 
-const CatalogFilter: React.FC = () => {
-  return (
-    <div>
-      <Box
-        className={styles.catalog_filter_wrapper}
-        component='form'
-        noValidate
-        autoComplete='off'
-        sx={{ width: 300 }}
-      >
-        <PriceRange />
-        <CheckboxGroup
-          title='example title'
-          queryName='example'
-          options={filterOptions}
-        />
-      </Box>
-      <CatalogMenu />
-    </div>
-  );
-};
+const CatalogFilter: React.FC = () => (
+  <div>
+    <Box
+      className={styles.catalog_filter_wrapper}
+      component='form'
+      noValidate
+      autoComplete='off'
+      sx={{ width: 300 }}
+    >
+      <PriceRange />
+      <CheckboxGroup
+        title='example title'
+        queryName='example'
+        options={filterOptions}
+      />
+    </Box>
+    <CatalogMenu />
+  </div>
+);
 
 export default CatalogFilter;

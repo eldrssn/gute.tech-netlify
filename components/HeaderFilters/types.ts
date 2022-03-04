@@ -9,3 +9,7 @@ export interface CarModel {
   model: string;
   year: string;
 }
+
+export interface HeaderFilterProps {
+  isFullMenu: boolean;
+}

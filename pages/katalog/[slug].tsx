@@ -2,9 +2,9 @@ import { FC } from 'react';
 
 import { Container, Box } from '@mui/material';
 
-import CatalogFilters from '../../components/CatalogFilter/CatalogFilter';
-import CatalogCardList from '../../components/CatalogCardList/CatalogCardList';
-import CatalogTitle from '../../components/CatalogTitle/CatalogTitle';
+import CatalogFilters from '../../components/CatalogFilter';
+import CatalogCardList from '../../components/CatalogCardList';
+import CatalogTitle from '../../components/CatalogTitle';
 import Header from '../../components/Header';
 
 const Catalog: FC = () => {

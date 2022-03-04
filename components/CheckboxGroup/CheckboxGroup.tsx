@@ -1,43 +1,41 @@
-import React, { useCallback } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-import useRouterQuery from '../../hooks/useRouterQuery/useRouterQuery';
 import { CheckboxGroupProps, CheckboxOption } from './types';
+import useRouterQuery from '../../hooks/useRouterQuery';
 
 const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   title,
   queryName,
   options,
 }) => {
-  const router = useRouter();
   const routerQuery = useRouterQuery();
 
-  const setOnChange = useCallback(
-    (checked: boolean, element: CheckboxOption) => {
-      const { name } = element;
+  const setOnChange = (checked: boolean, element: CheckboxOption) => {
+    const { name } = element;
 
-      if (!checked) {
-        routerQuery.remove(queryName, name);
-        return;
-      }
-
-      routerQuery.create(queryName, name);
-    },
-    [router.isReady, router.query],
-  );
-
-  const getIsChecked = (name: string) => {
-    const queryOption = routerQuery.get(queryName);
-
-    if (!Array.isArray(queryOption)) {
-      return queryOption === name;
+    if (!checked) {
+      routerQuery.removeQuery(queryName, name);
+      return;
     }
 
-    return Boolean(queryOption.find((element) => element === name));
+    routerQuery.updateQueryOption(queryName, name);
+  };
+
+  const getIsChecked = (name: string) => {
+    const queryOption = routerQuery.getQueryOption(queryName);
+
+    if (!Array.isArray(queryOption)) {
+      const isChecked = queryOption === name;
+      return isChecked;
+    }
+
+    const isChecked = Boolean(queryOption.find((element) => element === name));
+
+    return isChecked;
   };
 
   return (
@@ -45,6 +43,7 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
       {title && <p>{title} </p>}
       {options.map((element: CheckboxOption, index) => {
         const { name } = element;
+
         return (
           <FormControlLabel
             key={index}

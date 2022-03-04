@@ -1,56 +1,66 @@
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { ParsedUrlQueryInput } from 'querystring';
+import { ParsedUrlQuery, ParsedUrlQueryInput } from 'querystring';
 
 const useRouterQuery = () => {
   const router = useRouter();
   const { query, pathname } = router;
 
-  const push = (newQuery: string | ParsedUrlQueryInput) =>
+  const updateQuery = (newQuery: string | ParsedUrlQueryInput) =>
     router.push({ pathname, query: newQuery });
 
-  const get = useCallback(
-    (name: string) => {
-      return router.query[name];
-    },
+  const getQueryOption = useCallback(
+    (name: string) => router.query[name],
     [router],
   );
 
-  const remove = useCallback(
+  /**
+   * Param option required only for array queries. Function will try to delete from an array in query option. Either way it will delete whole query.
+   */
+  const removeQuery = useCallback(
     (name: string, param?: string) => {
       const queryOption = query[name];
 
       if (Array.isArray(queryOption) && param) {
-        const newQueryOption = {
+        const newQuery = {
+          ...query,
           [name]: queryOption.filter((option) => option !== param),
         };
 
-        const newQuery = Object.assign({}, query, newQueryOption);
-
-        push(newQuery);
+        updateQuery(newQuery);
         return;
       }
 
-      const newQuery = { ...query };
-      delete newQuery[name];
+      const newQuery = Object.keys(query).reduce<ParsedUrlQuery>(
+        (queryObj, key) => {
+          if (key === name) {
+            return queryObj;
+          }
+          return { ...queryObj, [key]: query[key] };
+        },
+        {},
+      );
 
-      push(newQuery);
+      updateQuery(newQuery);
     },
     [router],
   );
 
-  const set = useCallback(
+  const setQueryOption = useCallback(
     (name: string, param: string) => {
       const newQuery = {
         ...query,
         [name]: param,
       };
-      push(newQuery);
+      updateQuery(newQuery);
     },
     [router],
   );
 
-  const create = useCallback(
+  /**
+   * Function will try to push or create array of queries, if same key already exists in query. Either way it will create new query parameter
+   */
+  const updateQueryOption = useCallback(
     (name: string, param: string) => {
       const queryOption = query[name];
 
@@ -58,31 +68,25 @@ const useRouterQuery = () => {
         const newQueryArray = queryOption;
         newQueryArray.push(param);
 
-        const newQueryOption = {
-          ...query,
-          [name]: newQueryArray,
-        };
-
-        const newQuery = Object.assign({}, query, newQueryOption);
-        push(newQuery);
+        const newQuery = { ...query, [name]: newQueryArray };
+        updateQuery(newQuery);
         return;
       }
 
-      const newQueryOption = {
+      const newQuery = {
+        ...query,
         [name]: queryOption ? [queryOption, param] : param,
       };
-
-      const newQuery = Object.assign({}, query, newQueryOption);
-      push(newQuery);
+      updateQuery(newQuery);
     },
     [router],
   );
 
   return {
-    set,
-    remove,
-    get,
-    create,
+    setQueryOption,
+    removeQuery,
+    getQueryOption,
+    updateQueryOption,
   };
 };
 

@@ -6,19 +6,11 @@ import Popover from '@mui/material/Popover';
 
 import HeaderNavMenu from '../HeaderNavMenu';
 
-import { INPUT_IDS, CarModel } from './types';
-import initialState from './initialState';
+import { INPUT_IDS, CarModel, HeaderFilterProps } from './types';
 
-const SelectedCar: React.FC<CarModel> = (props) => {
-  return <span>{props.car}</span>;
-};
-
-interface HeaderFilterProps {
-  isFullMenu: boolean;
-}
+const SelectedCar: React.FC<CarModel> = (props) => <span>{props.car}</span>;
 
 const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
-  const refs = initialState.useLocalRefs();
   const [anchorElId, setAnchorElId] = React.useState<null | string>(null);
   const [car, setCar] = useState<string>('');
   const [model, setModel] = useState<string>('');
@@ -26,6 +18,12 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
   const [isOpenFilters, setOpenFilters] = useState<boolean>(true);
   const [selectedCars, setSelectedCars] = useState<CarModel[]>([]);
   const { isFullMenu } = props;
+
+  const refs = {
+    [INPUT_IDS.CAR_SELECTION_ID]: React.useRef(),
+    [INPUT_IDS.MODEL_SELECTION_ID]: React.useRef(),
+    [INPUT_IDS.YEAR_SELECTION_ID]: React.useRef(),
+  };
 
   function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const { id } = event.target as HTMLElement;

@@ -7,8 +7,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 
-import HeaderFilters from '../HeaderFilters/';
+import HeaderFilters from '../HeaderFilters';
 import HeaderNavMenu from '../HeaderNavMenu';
+
 import styles from './styles.module.css';
 
 const Header = () => {
@@ -26,10 +27,15 @@ const Header = () => {
         setIsFullMenu(() => !Boolean(scrollTop));
       }
     };
+
     if (window) {
       window.addEventListener('scroll', onScroll, false);
     }
-    () => window.removeEventListener('scroll', onScroll, false);
+
+    () => {
+      window.removeEventListener('scroll', onScroll, false);
+      return;
+    };
   }, []);
 
   return (
