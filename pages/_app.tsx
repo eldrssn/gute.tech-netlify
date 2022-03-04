@@ -1,6 +1,8 @@
-import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import MainLayout from 'layouts/index';
+
+import { MainLayout } from 'layouts/MainLayout';
+
+import '../styles/globals.css';
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {
@@ -9,15 +11,19 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
-  return Component.PageLayout ? (
-    <Component.PageLayout>
-      <Component {...pageProps} />
-    </Component.PageLayout>
-  ) : (
-    <MainLayout>
-      <Component {...pageProps} />
-    </MainLayout>
-  );
+  if (Component.PageLayout) {
+    return (
+      <Component.PageLayout>
+        <Component {...pageProps} />
+      </Component.PageLayout>
+    )
+  } else {
+    return (
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
+    )
+  }
 }
 
 export default MyApp;

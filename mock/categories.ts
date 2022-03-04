@@ -85,6 +85,13 @@ const items: Category[] = [
     quantity: 10,
     sort: 12,
   },
+  {
+    id: 13,
+    image: 'vnedorozhnik',
+    name: 'asdfasdf',
+    quantity: 10,
+    sort: 13,
+  },
 ];
 
 export { items };

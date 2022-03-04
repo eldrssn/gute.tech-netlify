@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from './CategoryCard.module.css';
+
 import { Props } from './types';
+import styles from './CategoryCard.module.css';
 
 const CategoryCard: React.FC<Props> = (props) => (
   <div className={styles.categoryCard}>

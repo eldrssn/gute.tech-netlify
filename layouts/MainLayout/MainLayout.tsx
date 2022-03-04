@@ -1,5 +1,6 @@
-import { Container } from '@mui/material';
 import React from 'react';
+
+import { Container } from '@mui/material';
 
 const MainLayout: React.FC = ({ children }) => (
   <Container
@@ -12,4 +13,4 @@ const MainLayout: React.FC = ({ children }) => (
   </Container>
 );
 
-export default MainLayout;
+export { MainLayout };
