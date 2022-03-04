@@ -9,3 +9,5 @@ enum ItemKeysEnum {
 export type ItemKeys = keyof typeof ItemKeysEnum;
 
 export type GroupedItemsItem = Record<ItemKeys, Category | null>;
+
+export type Index = 1 | 2 | 3 | 4;

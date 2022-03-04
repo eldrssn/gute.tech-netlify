@@ -10,31 +10,9 @@ import {
 } from 'components/base/main/rows';
 
 import { Items } from 'components/base/main/rows/types';
-import { items } from 'mock/categories';
+import { groupedItems } from 'mock/categories';
 
-import { GroupedItemsItem, ItemKeys } from './types';
-
-
-const sortedItems = items.sort((a, b) => (a.sort < b.sort ? -1 : 1));
-
-let objByThree: GroupedItemsItem = { first: null, second: null, third: null }
-let objByThreeKeys: ItemKeys[] = Object.keys(objByThree) as ItemKeys[]
-
-const groupedItems = sortedItems.reduce<GroupedItemsItem[]>((acc, val, index) => {
-  objByThree[objByThreeKeys[index % 3]] = val
-
-  if ((index + 1) % 3 == 0 || index + 1 == sortedItems.length) {
-    acc.push(objByThree)
-
-    objByThree = { first: null, second: null, third: null }
-
-    return acc
-  }
-
-  return acc
-}, [])
-
-type Index = 1 | 2 | 3 | 4;
+import { Index } from './types';
 
 const rowHashMap: Record<Index, FC<Items>> = {
   1: FirstRow,
@@ -61,7 +39,7 @@ const Home: FC = () => (
         return <Component key={index} items={items} />;
       })}
     </Grid>
-    <Description></Description>
+    <Description />
   </>
 );
 
