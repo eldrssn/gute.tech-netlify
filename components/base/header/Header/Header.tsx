@@ -40,7 +40,11 @@ const Header = () => {
 
   return (
     <AppBar
-      style={{ background: '#2E3B55' }}
+      style={{
+        color: 'black',
+        height: 'auto',
+        background: 'white',
+      }}
       sx={{ display: 'flex', flexWrap: 'wrap' }}
       position='fixed'
     >
