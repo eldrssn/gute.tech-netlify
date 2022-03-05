@@ -1,13 +1,10 @@
-import React from 'react';
-import styles from './productStockCount.module.css';
-import { ProductStockCountType } from './types';
+import React, { FC } from 'react';
 
-export const ProductStockCount: React.FC<ProductStockCountType> = ({
-  stockCount,
-}) => {
-  return (
-    <div className={styles.stockCount}>
-      <p>{stockCount} штук на складе</p>
-    </div>
-  );
-};
+import { Props } from './types';
+import styles from './productStockCount.module.css';
+
+export const ProductStockCount: FC<Props> = ({ stockCount }) => (
+  <div className={styles.stockCount}>
+    <p>{stockCount} штук на складе</p>
+  </div>
+);

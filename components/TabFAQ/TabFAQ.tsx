@@ -1,17 +1,15 @@
-import React, { useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Box,
 } from '@mui/material';
-import { ProductContentTabType } from 'types/productTypes';
 
-import styles from './productTabQuestionsAndAnswers.module.css';
+import { TabProps as Props } from 'types/productTypes';
+import styles from './tabFAQ.module.css';
 
-export const ProductTabQuestionsAndAnswers: React.FC<ProductContentTabType> = ({
-  content,
-}) => {
+export const TabFAQ: FC<Props> = ({ content }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
@@ -27,28 +25,29 @@ export const ProductTabQuestionsAndAnswers: React.FC<ProductContentTabType> = ({
     },
     [expanded],
   );
+  if (!Array.isArray(content)) {
+    return <p>{content}</p>;
+  }
 
-  return Array.isArray(content) ? (
-    <Box>
-      {content.map((row) => (
+  return (
+    <Box className={styles.accordionList}>
+      {content.map(([question, answer]) => (
         <Accordion
           disableGutters
-          expanded={expanded === row[0]}
-          onChange={handleChange(row[0])}
+          expanded={expanded === question}
+          onChange={handleChange(question)}
           TransitionProps={{ unmountOnExit: true }}
-          className={styles.accordionWrapper}
-          key={row[0]}
+          className={styles.accordionItem}
+          key={question}
         >
-          <AccordionSummary id={row[0]} className={getIconClasses(row[0])}>
-            <p className={styles.accordionSummaryText}>{row[0]}</p>
+          <AccordionSummary id={question} className={getIconClasses(question)}>
+            <p className={styles.accordionSummaryText}>{question}</p>
           </AccordionSummary>
           <AccordionDetails>
-            <p className={styles.accordionDetails}>{row[1]}</p>
+            <p className={styles.accordionDetails}>{answer}</p>
           </AccordionDetails>
         </Accordion>
       ))}
     </Box>
-  ) : (
-    <p>{content}</p>
   );
 };

@@ -13,7 +13,7 @@ export default function MediaCard() {
       <CardMedia
         component='img'
         height='140'
-        image='images/mainProduct1.jpeg'
+        image='/images/mainProduct1.jpeg'
         alt='green iguana'
       />
       <CardContent>

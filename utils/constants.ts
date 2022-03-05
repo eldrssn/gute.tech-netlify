@@ -1,13 +1,17 @@
-export enum TYPES {
-  characteristic = 'characteristic',
-  description = 'description',
-  installation = 'installation',
-  questionsAndAnswers = 'questionsAndAnswers',
-}
+import { DescriptionType, DescriptionTypes } from 'types/productTypes';
 
-export const TAB_FIELDS: Record<string, string> = {
-  [TYPES.characteristic]: 'Характеристики',
-  [TYPES.description]: 'Описание',
-  [TYPES.installation]: 'Установка',
-  [TYPES.questionsAndAnswers]: 'Вопросы и ответы',
+export const MOBILE_WIDTH = 600;
+
+export const DESCRIPTION_TYPE_NAMES = [
+  DescriptionTypes.characteristic,
+  DescriptionTypes.description,
+  DescriptionTypes.installation,
+  DescriptionTypes.faq,
+];
+
+export const TAB_NAME_BY_TYPE: Record<DescriptionType, string> = {
+  [DescriptionTypes.characteristic]: 'Характеристики',
+  [DescriptionTypes.description]: 'Описание',
+  [DescriptionTypes.installation]: 'Установка',
+  [DescriptionTypes.faq]: 'Вопросы и ответы',
 };

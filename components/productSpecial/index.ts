@@ -1,1 +1,1 @@
-export { ProductSpecial } from './ProductSpecial';
+export * from './ProductSpecial';

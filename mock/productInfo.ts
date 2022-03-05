@@ -7,12 +7,12 @@ export const productInfo = {
   stockCount: 2,
   images: [
     {
-      original: 'images/mainProduct1.jpeg',
-      thumbnail: 'images/mainProduct1.jpeg',
+      original: '/images/mainProduct1.jpeg',
+      thumbnail: '/images/mainProduct1.jpeg',
     },
     {
-      original: 'images/mainProduct2.jpeg',
-      thumbnail: 'images/mainProduct2.jpeg',
+      original: '/images/mainProduct2.jpeg',
+      thumbnail: '/images/mainProduct2.jpeg',
     },
   ],
   info: {
@@ -23,7 +23,7 @@ export const productInfo = {
     description:
       'Как ни крути, в России основной головной болью автовладельцев, заботящихся о своём авто, являются дороги и поджидающие на них сюрпризы. Многие производители иномарок, для которых дорожное покрытие – верный друг и соратник, не учитывают многих нюансов, являющихся реалиями нашей жизни: мелких камней и песка, летящих из-под движущихся спереди автомобилей, крупных насекомых и прочих посторонних предметов, и не устанавливают защитные решётки радиатора, считая это нецелесообразным.',
     installation: 'Инструкция по установке отсутствует',
-    questionsAndAnswers: [
+    faq: [
       [
         'Для чего установлены решетки?',
         'Для защиты. Не все модели адаптированы под наши условия, а решётки в состоянии защитить от "мелких" неурядиц: крупных насекомых или небольших камней из под колёс едущего впереди автомобиля.',

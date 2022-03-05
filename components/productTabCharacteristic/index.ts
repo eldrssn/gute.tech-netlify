@@ -1,1 +1,0 @@
-export { ProductTabCharacteristic } from './ProductTabCharacteristic';

@@ -1,13 +1,14 @@
 .productSpecialItem {
   display: inline-block;
   position: relative;
-  /* padding: 0 0 0 0; */
   margin-left: 40px;
   margin-right: 20px;
+  margin-bottom: 20px;
   text-decoration: none;
   border-bottom: 1px dashed #1c85c7;
   transition: all 0.6s ease;
   color: #1c85c7;
+  inline-size: fit-content;
 }
 
 .productSpecialItem:hover {
@@ -28,6 +29,7 @@
 }
 
 .helpIcon::before {
+  /* TODO: absolute paths */
   background: url('../../public/icons/help.png') 0 0 no-repeat;
   background-size: contain;
 }

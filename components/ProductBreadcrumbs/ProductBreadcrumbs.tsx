@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Breadcrumbs, Link, Typography } from '@mui/material';
-import { ProductBreadcrumbsType } from './types';
 
-export const ProductBreadcrumbs: React.FC<ProductBreadcrumbsType> = ({
+import { Props } from './types';
+
+export const ProductBreadcrumbs: FC<Props> = ({
   catalogTitle,
   productTitle,
-}) => {
-  return (
-    <Breadcrumbs aria-label='breadcrumb'>
-      <Link underline='hover' color='inherit' href='/'>
-        Главная
-      </Link>
-      <Link underline='hover' color='inherit' href='/'>
-        {catalogTitle}
-      </Link>
-      <Typography color='text.primary'>{productTitle}</Typography>
-    </Breadcrumbs>
-  );
-};
+}) => (
+  <Breadcrumbs aria-label='breadcrumb'>
+    <Link underline='hover' color='inherit' href='/'>
+      Главная
+    </Link>
+    <Link underline='hover' color='inherit' href='/'>
+      {catalogTitle}
+    </Link>
+    <Typography color='text.primary'>{productTitle}</Typography>
+  </Breadcrumbs>
+);

@@ -1,1 +1,1 @@
-export { ProductStockCount } from './ProductStockCount';
+export * from './ProductStockCount';
