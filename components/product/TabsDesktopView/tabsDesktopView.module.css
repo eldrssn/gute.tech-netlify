@@ -9,3 +9,8 @@
 .tabTittle:focus {
   color: #000;
 }
+
+.tabPanel {
+  padding: 0;
+  margin-bottom: 25px;
+}

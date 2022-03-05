@@ -1,7 +1,9 @@
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Tab } from '@mui/material';
-import { TabContentByType } from 'components/TabContentByType';
 import React, { FC, useState } from 'react';
+import { Box, Tab } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+
+import { TabContentByType } from 'components/TabContentByType';
+
 import {
   DescriptionType,
   DescriptionTypes,
@@ -46,7 +48,7 @@ export const TabsDesktopView: FC<Props> = ({ productInfo }) => {
         </Box>
 
         {DESCRIPTION_TYPE_NAMES.map((type: DescriptionType) => (
-          <TabPanel key={type} value={type}>
+          <TabPanel className={styles.tabPanel} key={type} value={type}>
             <TabContentByType type={type} content={productInfo[type]} />
           </TabPanel>
         ))}

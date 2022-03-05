@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import styles from './productPrice.module.css';
 
 export const ProductPrice: FC = ({ children }) => (
-  <Box sx={{ marginTop: { sm: '20px', md: '10px' } }}>
+  <Box sx={{ marginTop: { xs: '20px', md: '10px' } }}>
     <p className={styles.priceWrapper}>
       <span className={styles.priceLabel}>Цена</span>
       {children} ₽

@@ -10,10 +10,9 @@ import { TabsProps as Props } from 'types/productTypes';
 
 export const ProductTabsDescription: FC<Props> = ({ productInfo }) => {
   const { windowWidth } = useWindowSize();
+  const Component = isMobileView(windowWidth)
+    ? TabsMobileView
+    : TabsDesktopView;
 
-  return isMobileView(windowWidth) ? (
-    <TabsMobileView productInfo={productInfo} />
-  ) : (
-    <TabsDesktopView productInfo={productInfo} />
-  );
+  return <Component productInfo={productInfo} />;
 };

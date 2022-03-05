@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -15,6 +15,19 @@ export const TabFAQ: FC<Props> = ({ content }) => {
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
+
+      const clickedPanel = event.currentTarget;
+
+      if (clickedPanel) {
+        setTimeout(
+          () =>
+            clickedPanel.scrollIntoView({
+              block: 'start',
+              behavior: 'smooth',
+            }),
+          300,
+        );
+      }
     };
 
   const getIconClasses = useCallback(
