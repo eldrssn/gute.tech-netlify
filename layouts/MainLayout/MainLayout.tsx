@@ -3,6 +3,8 @@ import { Container } from '@mui/material';
 
 import Header from 'components/base/header/Header';
 
+import { Container } from '@mui/material';
+
 const MainLayout: React.FC = ({ children }) => (
   <Container
     maxWidth={'lg'}
@@ -15,4 +17,4 @@ const MainLayout: React.FC = ({ children }) => (
   </Container>
 );
 
-export default MainLayout;
+export { MainLayout };
