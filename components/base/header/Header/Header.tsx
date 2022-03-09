@@ -45,8 +45,8 @@ const Header = () => {
         height: 'auto',
         background: 'white',
       }}
-      sx={{ display: 'flex', flexWrap: 'wrap' }}
-      position='fixed'
+      sx={{ display: 'flex', flexWrap: 'wrap', width: '100%' }}
+      position='sticky'
     >
       <Container
         sx={{ display: 'flex', justifyContent: 'right', flexWrap: 'wrap' }}
