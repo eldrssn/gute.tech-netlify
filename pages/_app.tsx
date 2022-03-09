@@ -1,7 +1,10 @@
-import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import MainLayout from 'layouts/index';
 
+import { MainLayout } from 'layouts/MainLayout';
+
+import 'styles/globals.css';
+
+// TODO: types -> types.ts
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {
     PageLayout: React.ComponentType;
@@ -9,15 +12,13 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
-  return Component.PageLayout ? (
-    <Component.PageLayout>
+  const Wrapper = Component.PageLayout || MainLayout;
+
+  return (
+    <Wrapper>
       <Component {...pageProps} />
-    </Component.PageLayout>
-  ) : (
-    <MainLayout>
-      <Component {...pageProps} />
-    </MainLayout>
-  );
+    </Wrapper>
+  )
 }
 
 export default MyApp;

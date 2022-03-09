@@ -3,8 +3,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 
 import CatalogMenu from 'components/base/catalog/CatalogMenu';
-import CheckboxGroup from 'components/CheckboxGroup';
-import PriceRange from 'components/PriceRange';
+import CheckboxGroup from 'components/ui/CheckboxGroup';
+import PriceRange from 'components/ui/PriceRange';
 
 import { filterOptions } from 'mock/CatalogFilter';
 import styles from './styles.module.css';
