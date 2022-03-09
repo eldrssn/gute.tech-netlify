@@ -1,9 +1,7 @@
 import React from 'react';
 import { Container } from '@mui/material';
 
-import Header from 'components/base/header/Header';
-
-import { Container } from '@mui/material';
+import Header from 'components/main/header/Header';
 
 const MainLayout: React.FC = ({ children }) => (
   <Container
