@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 
 import {
   Accordion,
@@ -6,10 +6,15 @@ import {
   AccordionSummary,
   Box,
 } from '@mui/material';
+import classnames from 'classnames/bind';
 
 import { TabContentByType } from '../TabContentByType';
 import { descriptionTypeName, tabNameByType } from 'utility/utils/constants';
 import { DescriptionType, TabsProps as Props } from 'types/productTypes';
+
+import styles from './tabsMobileView.module.css';
+
+const cn = classnames.bind(styles);
 
 export const TabsMobileView: FC<Props> = ({ productInfo }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -19,7 +24,15 @@ export const TabsMobileView: FC<Props> = ({ productInfo }) => {
       setExpanded(isExpanded ? panel : false);
     };
 
-  // !TODO: стили
+  const getIconClasses = useCallback(
+    (row) => {
+      return expanded === row
+        ? styles.accordionSummaryExpanded
+        : styles.accordionSummary;
+    },
+    [expanded],
+  );
+
   return (
     <Box>
       {descriptionTypeName.map((type: DescriptionType) => (
@@ -29,11 +42,14 @@ export const TabsMobileView: FC<Props> = ({ productInfo }) => {
           onChange={handleChange(type)}
           TransitionProps={{ unmountOnExit: true }}
           key={type}
+          className={styles.accordion}
         >
-          <AccordionSummary>
-            <p>{tabNameByType[type]}</p>
+          <AccordionSummary
+            className={cn(styles.accordionSummary, getIconClasses(type))}
+          >
+            <p className={styles.accordionSummaryText}>{tabNameByType[type]}</p>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails className={styles.accordionDetails}>
             <TabContentByType type={type} content={productInfo[type]} />
           </AccordionDetails>
         </Accordion>

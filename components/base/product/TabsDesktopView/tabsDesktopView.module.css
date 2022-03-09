@@ -1,13 +1,8 @@
 .tabTittle {
-  font-weight: 700;
-  color: #d7dcde;
+  font-weight: 400;
+  color: #000;
   font-size: 18px;
   text-transform: none;
-}
-
-.tabTittle:hover,
-.tabTittle:focus {
-  color: #000;
 }
 
 .tabPanel {
