@@ -7,9 +7,7 @@ import { TOuterProps } from './types';
 
 import styles from './styles.module.css';
 
-type TProps = TOuterProps;
-
-const View: React.FC<TProps> = ({
+const View: React.FC<TOuterProps> = ({
   children,
   isOpen,
   setIsOpen,
