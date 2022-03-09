@@ -1,0 +1,22 @@
+.contentBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 16px;
+  padding: 20px 0;
+}
+
+.spaceLine {
+  border-bottom: 1px dashed #d7dee4;
+  flex-grow: 1;
+  margin: 6px;
+}
+
+.contentLabel {
+  padding-right: 10px;
+}
+
+.contentValue {
+  padding-left: 10px;
+  font-weight: 700;
+}

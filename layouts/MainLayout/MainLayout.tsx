@@ -17,4 +17,4 @@ const MainLayout: React.FC = ({ children }) => (
   </Box>
 );
 
-export default MainLayout;
+export { MainLayout };
