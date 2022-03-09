@@ -1,11 +1,13 @@
 import React from 'react';
-import { ListRowProps, CellMeasurer } from 'react-virtualized';
+import { CellMeasurer } from 'react-virtualized';
 
 import Card from 'components/base/catalog/CatalogCard';
 
 import { cardListCache } from './helpers';
+import { RowRendererProps } from './types';
 
-const RowRenderer: React.FC<ListRowProps> = ({ key, index, style, parent }) => {
+const RowRenderer: React.FC<RowRendererProps> = (props) => {
+  const { localKey: key, index, style, parent, cards } = props;
   return (
     <CellMeasurer
       cache={cardListCache}
@@ -16,9 +18,9 @@ const RowRenderer: React.FC<ListRowProps> = ({ key, index, style, parent }) => {
     >
       {({ measure }) => (
         <div style={{ ...style, display: 'flex' }} onLoad={measure} key={index}>
-          <Card />
-          <Card />
-          <Card />
+          {cards.map((card, index) => (
+            <Card key={index} {...card} />
+          ))}
         </div>
       )}
     </CellMeasurer>
