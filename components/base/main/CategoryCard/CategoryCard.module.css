@@ -15,11 +15,7 @@
 }
 
 .backgroundImage {
-<<<<<<< HEAD
   background: url(/public/germanika/bg.png) 0 0 no-repeat;
-=======
-  background: url(/germanika/background.png) 0 0 no-repeat;
->>>>>>> develop
   background-size: cover;
   z-index: 10;
   position: absolute;
