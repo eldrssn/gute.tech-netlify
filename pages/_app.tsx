@@ -13,7 +13,7 @@ type ComponentWithPageLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const Wrapper = Component.PageLayout || MainLayout;
-  
+
   return (
     <Wrapper>
       <Component {...pageProps} />

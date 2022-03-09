@@ -1,0 +1,20 @@
+.priceLabel {
+  position: absolute;
+  margin-top: -14px;
+  opacity: 0.5;
+  font-weight: normal;
+  font-size: 12px;
+  color: black;
+}
+
+.priceWrapper {
+  position: relative;
+  font-size: 28px;
+  letter-spacing: 1px;
+  line-height: 1.2em;
+  text-transform: uppercase;
+  font-family: 'GTWalsheimProBlack-Regular', sans-serif;
+  font-weight: bold;
+  color: #1c85c7;
+  margin: auto 0;
+}
