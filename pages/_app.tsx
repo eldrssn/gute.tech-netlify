@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     <Wrapper>
       <Component {...pageProps} />
     </Wrapper>
-  );
+  )
 }
 
 export default MyApp;
