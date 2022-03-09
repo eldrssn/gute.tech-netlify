@@ -4,7 +4,7 @@ export const productInfo = {
   urlQuery: 'reshetka-bampera-d10-dlya-volkswagen-amarok-2016',
   catalogTitle: 'Решетки радиатора и бампера',
   price: 5540,
-  stockCount: 2,
+  quantity: 2,
   images: [
     {
       original: '/images/mainProduct1.jpeg',

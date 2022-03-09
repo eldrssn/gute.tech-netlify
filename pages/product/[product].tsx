@@ -1,17 +1,17 @@
 import React, { FC } from 'react';
 import { Container, Box } from '@mui/material';
 
-import { CustomButton } from 'ui/CustomButton';
+import { CustomButton } from 'components/ui/CustomButton';
 
 import { productInfo } from 'mock/productInfo';
 
-import { ProductPrice } from 'components/ProductPrice';
-import { ProductStockCount } from 'components/ProductStockCount';
-import { ProductSpecial } from 'components/ProductSpecial';
-import { ProductImageGallery } from 'components/ProductImageGallery';
-import { ProductBreadcrumbs } from 'components/ProductBreadcrumbs';
-import { RecommendedProducts } from 'components/RecommendedProducts';
-import { ProductTabsDescription } from 'components/ProductTabsDescription';
+import { ProductPrice } from 'components/base/product/ProductPrice';
+import { ProductQuantity } from 'components/base/product/ProductQuantity';
+import { ProductSpecial } from 'components/base/product/ProductSpecial';
+import { ProductImageGallery } from 'components/base/product/ProductImageGallery';
+import { ProductBreadcrumbs } from 'components/base/product/ProductBreadcrumbs';
+import { RecommendedProducts } from 'components/base/product/RecommendedProducts';
+import { ProductTabsDescription } from 'components/base/product/ProductTabsDescription';
 
 const Product: FC = () => {
   return (
@@ -46,7 +46,7 @@ const Product: FC = () => {
             <ProductPrice>{productInfo.price}</ProductPrice>
           </Box>
 
-          <ProductStockCount stockCount={productInfo.stockCount} />
+          <ProductQuantity quantity={productInfo.quantity} />
           <ProductSpecial />
         </Container>
       </Box>
