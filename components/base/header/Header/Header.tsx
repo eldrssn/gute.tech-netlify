@@ -40,9 +40,13 @@ const Header = () => {
 
   return (
     <AppBar
-      style={{ background: '#2E3B55' }}
-      sx={{ display: 'flex', flexWrap: 'wrap' }}
-      position='fixed'
+      style={{
+        color: 'black',
+        height: 'auto',
+        background: 'white',
+      }}
+      sx={{ display: 'flex', flexWrap: 'wrap', width: '100%' }}
+      position='sticky'
     >
       <Container
         sx={{ display: 'flex', justifyContent: 'right', flexWrap: 'wrap' }}
