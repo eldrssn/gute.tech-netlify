@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Box } from '@mui/system';
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
 
-import { socialLinks } from './constance';
+import { socialLinks } from './constants';
 import styles from './footerSocialLinks.module.css';
 
-export const FooterSocialLinks = () => (
+export const FooterSocialLinks: FC = () => (
   <Box
     sx={{
       display: 'flex',
