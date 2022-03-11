@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Box, Container } from '@mui/material';
 
-import styles from './footer.module.css';
-import { FooterText } from '../FooterText';
-import { FooterSocialLinks } from '../FooterSocialLinks';
+import { FooterText } from './components/FooterText';
+import { FooterSocialLinks } from './components/FooterSocialLinks';
 
-export const Footer = () => (
+import styles from './footer.module.css';
+
+export const Footer: FC = () => (
   <Box component='footer' className={styles.wrap}>
     <Container
       sx={{
