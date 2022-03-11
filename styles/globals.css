@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Mui global styles  */
+.MuiTab-root.Mui-selected {
+  font-weight: 700;
+  color: black;
+}

@@ -21,13 +21,14 @@ const Product: FC = () => {
         productTitle={productInfo.title}
       />
 
-      {/* !TODO: сделать стили заголовку */}
+      {/* !TODO: сделать стили заголовкам */}
       <h1>{productInfo.title}</h1>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           flexDirection: { xs: 'column', sm: 'row' },
+          marginBottom: '64px',
         }}
       >
         <ProductImageGallery images={productInfo.images} />

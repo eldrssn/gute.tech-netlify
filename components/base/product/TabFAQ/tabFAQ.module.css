@@ -25,7 +25,6 @@
 
 .accordionSummary::before {
   display: block;
-  /* TODO: abolute path */
   background: url('~/public/icons/faqArrow.png') 0 0 no-repeat;
   content: '';
   position: absolute;
