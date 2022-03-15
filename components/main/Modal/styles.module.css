@@ -1,0 +1,56 @@
+.modalBackground {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #00000066;
+  justify-content: center;
+  overflow: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 1101;
+}
+
+.modalOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  flex-shrink: 0;
+  flex-grow: 0;
+  min-height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  background-color: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.closeModal {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  background: #fc5367;
+  display: block;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}

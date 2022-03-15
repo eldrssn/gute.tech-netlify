@@ -1,0 +1,24 @@
+.arrowButton {
+  width: 20px;
+  height: 32px;
+
+  display: block;
+  position: absolute;
+  top: 50%;
+  cursor: pointer;
+}
+
+.nextArrow {
+  background: url('~/public/icons/next_arrow.png') 0 0 no-repeat;
+  right: -40px;
+}
+
+.prevArrow {
+  background: url('~/public/icons/prev_arrow.png') 0 0 no-repeat;
+  left: -40px;
+}
+
+.nextArrow:hover,
+.prevArrow:hover {
+  background-position: 0 100%;
+}

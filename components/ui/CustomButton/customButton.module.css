@@ -1,0 +1,19 @@
+/* !TODO: добавить адаптивность */
+
+.button {
+  border-radius: 0;
+  display: block;
+  padding: 14px 16px;
+  margin: 0 0 0;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  background-color: #3390ce;
+  margin: 5px;
+}
+
+.button:hover {
+  background-color: #1a6fa8;
+}

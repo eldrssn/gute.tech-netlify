@@ -1,0 +1,29 @@
+.socialIconList {
+  padding: 0;
+  display: flex;
+  list-style-type: none;
+  text-align: center;
+}
+
+.socialIcon {
+  margin: 0 2px;
+}
+
+.footerPhone {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  margin-top: 6px;
+}
+
+.footerPhoneIcon {
+  width: 30px;
+  height: 30px;
+  margin-right: 6px;
+}
+
+.footerPhoneNumber {
+  display: inline-block;
+  height: auto;
+}
