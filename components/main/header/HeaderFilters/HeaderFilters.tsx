@@ -59,7 +59,9 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
     setSelectedCars((cars) => [...cars, newSelectedCar]);
   };
 
-  const onFocus = (event: ChangeEvent) => {};
+  const onFocus = (event: ChangeEvent) => {
+    console.log('onFocus: ', event.target.value);
+  };
 
   const onChangeCar = (event: ChangeEvent) => setCar(event.target.value);
 
@@ -162,10 +164,7 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
           open={open}
           onClose={handleClose}
           disableAutoFocus
-          anchorEl={
-            // TODO:  as - избавиться
-            (anchorElId && refs[anchorElId].current) || null
-          }
+          anchorEl={(anchorElId && refs[anchorElId].current) || null}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',

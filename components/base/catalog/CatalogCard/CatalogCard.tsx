@@ -7,8 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Image from 'next/image';
 
 import { ICatalogCard } from './types';
 import styles from './styles.module.css';
@@ -18,7 +18,7 @@ const CatalogCard: React.FC<ICatalogCard> = (props) => (
     sx={{ maxWidth: 275, margin: '0.7em', display: 'flex', flexWrap: 'wrap' }}
   >
     <CardMedia
-      component='img'
+      component={Image}
       height='250'
       image={props.picture}
       alt='green iguana'

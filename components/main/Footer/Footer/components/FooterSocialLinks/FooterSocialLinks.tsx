@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Box } from '@mui/system';
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
+import Image from 'next/image';
 
 import { socialLinks } from './constants';
 import styles from './footerSocialLinks.module.css';
@@ -20,9 +21,14 @@ export const FooterSocialLinks: FC = () => (
       className={styles.socialIconList}
     >
       {socialLinks.map(({ title, url, icon }) => (
-        <li>
-          <a className={styles.socialIcon} href={url} target='_blank'>
-            <img src={icon} alt={title} height='30px' width='30px' />
+        <li key={url}>
+          <a
+            className={styles.socialIcon}
+            href={url}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <Image src={icon} alt={title} height='30px' width='30px' />
           </a>
         </li>
       ))}

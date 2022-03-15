@@ -1,0 +1,1 @@
+echo "Frontend service compiled successfully"
