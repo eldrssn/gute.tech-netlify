@@ -1,37 +1,45 @@
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 import { TextField } from '@mui/material';
+
+import patternsType from 'consts/patternType';
+
 import { FormInputProps } from './types';
 
-const FormInputText: React.FC<FormInputProps> = ({
+const FormInput = <TFormValue extends Record<string, unknown>>({
   name,
   control,
   label,
-  pattern,
-  errorMessagePattern,
-}) => (
-  <Controller
-    name={name}
-    control={control}
-    rules={{ required: 'Обязательное поле', pattern: pattern }}
-    render={({ field: { onChange, value }, fieldState: { error } }) => {
-      const errroMessage =
-        error?.type === 'pattern' ? errorMessagePattern : error?.message;
+  patternType,
+}: FormInputProps<TFormValue>): JSX.Element => {
+  const rules = {
+    required: 'Обязательное поле',
+    pattern: {
+      value: patternsType[patternType].pattern,
+      message: patternsType[patternType].message,
+    },
+  };
+  const {
+    field: { onChange, value },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    rules: rules,
+  });
 
-      return (
-        <TextField
-          sx={{ width: '100%' }}
-          helperText={errroMessage}
-          error={!!error}
-          onChange={onChange}
-          value={value}
-          fullWidth
-          label={label}
-          variant='outlined'
-        />
-      );
-    }}
-  />
-);
+  return (
+    <TextField
+      sx={{ width: '100%' }}
+      helperText={error?.message}
+      error={Boolean(error)}
+      onChange={onChange}
+      value={value}
+      fullWidth
+      label={label}
+      variant='outlined'
+    />
+  );
+};
 
-export default FormInputText;
+export default FormInput;

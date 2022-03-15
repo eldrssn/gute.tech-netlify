@@ -1,3 +1,3 @@
-import Component from './FormInput';
+import FormInput from './FormInput';
 
-export default Component;
+export default FormInput;

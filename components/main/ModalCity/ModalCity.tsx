@@ -16,11 +16,13 @@ import { CitiesOption } from 'mock/CitiesOption';
 import ModalComponent from 'components/main/Modal';
 import FormInput from 'components/main/FormInput';
 
+import { EPatternTypes } from 'consts/types';
+
+import { TCitiesOption, TFormData } from './types';
+
 import styles from './styles.module.css';
 
-import { TFormData, TCitiesOption } from './types';
-
-const View: React.FC = ({}) => {
+const ModalCity: React.FC = () => {
   const { watch, control, reset } = useForm<TFormData>({
     defaultValues: {
       cityName: '',
@@ -54,7 +56,7 @@ const View: React.FC = ({}) => {
 
   useEffect(() => {
     const subscription = watch((value) => {
-      setDesiredСity(value?.cityName);
+      setDesiredСity(value.cityName);
     });
     return () => {
       subscription.unsubscribe();
@@ -79,10 +81,11 @@ const View: React.FC = ({}) => {
           </Typography>
           <Divider className={styles.divider} />
           <Box className={styles.inputContainer}>
-            <FormInput
+            <FormInput<TFormData>
               name='cityName'
               control={control}
               label='Введите название города'
+              patternType={EPatternTypes.ANY}
             />
             <Box className={styles.resetField} onClick={resetInput}>
               <FontAwesomeIcon icon={faTimes} />
@@ -115,4 +118,4 @@ const View: React.FC = ({}) => {
   );
 };
 
-export default View;
+export default ModalCity;

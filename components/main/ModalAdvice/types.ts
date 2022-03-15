@@ -1,6 +1,6 @@
-interface IFormData {
+type TFormData = {
   nameValue: string;
   phoneNumber: string;
-}
+};
 
-export type { IFormData };
+export type { TFormData };

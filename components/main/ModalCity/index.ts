@@ -1,3 +1,3 @@
-import Component from './ModalCity';
+import ModalCity from './ModalCity';
 
-export default Component;
+export default ModalCity;

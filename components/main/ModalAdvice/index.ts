@@ -1,3 +1,3 @@
-import Component from './ModalAdvice';
+import ModalAdvice from './ModalAdvice';
 
-export default Component;
+export default ModalAdvice;

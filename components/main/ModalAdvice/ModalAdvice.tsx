@@ -8,15 +8,14 @@ import Link from 'next/link';
 import ModalComponent from 'components/main/Modal';
 import FormInput from 'components/main/FormInput';
 
+import { EPatternTypes } from 'consts/types';
+
+import { TFormData } from './types';
+
 import styles from './styles.module.css';
 
-import { IFormData } from './types';
-
-const phonePattern =
-  /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-
-const View: React.FC = ({}) => {
-  const { handleSubmit, control } = useForm<IFormData>({
+const ModalAdvice: React.FC = ({}) => {
+  const { handleSubmit, control } = useForm<TFormData>({
     defaultValues: {
       nameValue: '',
       phoneNumber: '',
@@ -53,15 +52,19 @@ const View: React.FC = ({}) => {
           </Typography>
           <Box component='div' className={styles.inputBox}>
             <Box sx={{ width: '48%' }}>
-              <FormInput name='nameValue' control={control} label='Ваше имя' />
+              <FormInput<TFormData>
+                name='nameValue'
+                control={control}
+                label='Ваше имя'
+                patternType={EPatternTypes.ANY}
+              />
             </Box>
             <Box sx={{ width: '48%' }}>
-              <FormInput
+              <FormInput<TFormData>
                 name='phoneNumber'
                 control={control}
                 label='Телефон'
-                pattern={phonePattern}
-                errorMessagePattern='Номер введен неверно'
+                patternType={EPatternTypes.PHONE_NUMBER}
               />
             </Box>
           </Box>
@@ -84,4 +87,4 @@ const View: React.FC = ({}) => {
   );
 };
 
-export default View;
+export default ModalAdvice;
