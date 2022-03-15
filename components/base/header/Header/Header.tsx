@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, MouseEventHandler } from 'react';
+
+import { Image } from 'next/image';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,18 +15,17 @@ import HeaderNavMenu from 'components/base/header/HeaderNavMenu';
 import styles from './styles.module.css';
 
 const Header = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [isFullMenu, setIsFullMenu] = React.useState<boolean>(true);
 
-  const handleOpenNavMenu = (event: any) => {
-    setAnchorElNav(event.currentTarget);
+  const handleOpenNavMenu: MouseEventHandler = (event) => {
+    console.log(event.currentTarget);
   };
 
   useEffect(() => {
     const onScroll = () => {
       if (document) {
         const { scrollTop } = document.documentElement;
-        setIsFullMenu(() => !Boolean(scrollTop));
+        setIsFullMenu(() => !scrollTop);
       }
     };
 
@@ -73,7 +74,11 @@ const Header = () => {
               onClick={handleOpenNavMenu}
               color='inherit'
             >
-              <img className={styles.header_logo} src={'/logo-example.jpeg'} />
+              <Image
+                className={styles.header_logo}
+                src={'/logo-example.jpeg'}
+                alt='logo'
+              />
             </IconButton>
           </MenuItem>
           <MenuItem sx={{ display: isFullMenu ? 'block' : 'none' }}>
@@ -81,7 +86,7 @@ const Header = () => {
               component='div'
               style={{ width: 150, whiteSpace: 'break-spaces' }}
             >
-               Автокомпоненты Фольксваген Химки
+              Автокомпоненты Фольксваген Химки
             </Typography>
           </MenuItem>
         </Box>

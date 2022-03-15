@@ -28,8 +28,10 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
 
   function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const { id } = event.target as HTMLElement;
+
     if (id) {
       const newId = InputIds[id as InputId];
+
       setAnchorElId(newId);
     }
   }
@@ -46,6 +48,7 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
       //TODO: Handle empty parameters
       return;
     }
+
     const newSelectedCar = {
       car,
       model,
@@ -59,7 +62,9 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
     setSelectedCars((cars) => [...cars, newSelectedCar]);
   };
 
-  const onFocus = (event: ChangeEvent) => {};
+  const onFocus = (event: ChangeEvent) => {
+    console.log('filters -> focus: ', event.target.value);
+  };
 
   const onChangeCar = (event: ChangeEvent) => setCar(event.target.value);
 
@@ -68,6 +73,7 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
   const onChangeYear = (event: ChangeEvent) => setYear(event.target.value);
 
   const open = Boolean(anchorElId);
+
   const id = open ? 'simple-popover' : undefined;
 
   return (
@@ -162,10 +168,7 @@ const HeaderFilters: React.FC<HeaderFilterProps> = (props) => {
           open={open}
           onClose={handleClose}
           disableAutoFocus
-          anchorEl={
-            // TODO:  as - избавиться
-            (anchorElId && refs[anchorElId].current) || null
-          }
+          anchorEl={(anchorElId && refs[anchorElId].current) || null}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
