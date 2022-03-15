@@ -1,0 +1,11 @@
+.tabTittle {
+  font-weight: 400;
+  color: #000;
+  font-size: 18px;
+  text-transform: none;
+}
+
+.tabPanel {
+  padding: 0;
+  margin-bottom: 25px;
+}
