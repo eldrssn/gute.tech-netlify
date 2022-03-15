@@ -20,7 +20,7 @@ export const FooterSocialLinks: FC = () => (
       className={styles.socialIconList}
     >
       {socialLinks.map(({ title, url, icon }) => (
-        <li>
+        <li key={url}>
           <a className={styles.socialIcon} href={url} target='_blank'>
             <img src={icon} alt={title} height='30px' width='30px' />
           </a>
