@@ -4,9 +4,9 @@ import { Box, Typography, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Popover from '@mui/material/Popover';
 
-import HeaderNavMenu from 'components/main/header/HeaderNavMenu';
+import HeaderNavMenu from './HeaderNavMenu';
 
-import { InputIds, InputId, CarModel, HeaderFilterProps } from './types';
+import { InputIds, InputId, CarModel, HeaderFilterProps } from '../types';
 
 const SelectedCar: React.FC<CarModel> = (props) => <span>{props.car}</span>;
 

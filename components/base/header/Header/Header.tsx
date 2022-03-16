@@ -1,6 +1,6 @@
 import React, { useEffect, MouseEventHandler } from 'react';
 
-import { Image } from 'next/image';
+import Image from 'next/image';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';

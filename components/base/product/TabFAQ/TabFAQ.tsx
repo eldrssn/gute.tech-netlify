@@ -8,10 +8,10 @@ import {
 
 import { setSmoothScroll } from 'utility/utils/setSmoothScroll';
 
-import { TabProps as Props } from 'types/productTypes';
+import { TabProps } from 'types/productTypes';
 import styles from './tabFAQ.module.css';
 
-export const TabFAQ: FC<Props> = ({ content }) => {
+export const TabFAQ: FC<TabProps> = ({ content }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
