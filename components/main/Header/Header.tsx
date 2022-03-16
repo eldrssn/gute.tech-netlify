@@ -1,4 +1,4 @@
-import React, { useEffect, MouseEventHandler } from 'react';
+import React, { useEffect } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,17 +8,13 @@ import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
 
-import HeaderFilters from 'components/main/header/HeaderFilters';
-import HeaderNavMenu from 'components/main/header/HeaderNavMenu';
+import HeaderFilters from './components/HeaderFilters';
+import HeaderNavMenu from './components/HeaderNavMenu';
 
 import styles from './styles.module.css';
 
 const Header = () => {
   const [isFullMenu, setIsFullMenu] = React.useState<boolean>(true);
-
-  const handleOpenNavMenu: MouseEventHandler<HTMLDivElement> = (event) => {
-    console.log(event.currentTarget);
-  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -66,7 +62,6 @@ const Header = () => {
               aria-label='account of current user'
               aria-controls='menu-appbar'
               aria-haspopup='true'
-              onClick={handleOpenNavMenu}
               color='inherit'
             >
               <Image
