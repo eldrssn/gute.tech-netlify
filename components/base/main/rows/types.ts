@@ -1,3 +1,3 @@
-import { GroupedItemsItem } from 'pages/home/types';
+import { GroupedItemsItem } from 'components/base/home';
 
 export type Items = { items: GroupedItemsItem };
