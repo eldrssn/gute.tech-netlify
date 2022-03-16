@@ -16,6 +16,7 @@ const CategoryCard: React.FC<Props> = (props) => (
       className={styles.categoryImage}
       src={`/germanika/${props.image}.jpg`}
       alt={props.name || 'category name'}
+      layout='fill'
     />
   </div>
 );
