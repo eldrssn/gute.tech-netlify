@@ -68,6 +68,7 @@ const Header = () => {
                 className={styles.header_logo}
                 src={'/logo-example.jpeg'}
                 alt='logo'
+                layout='fill'
               />
             </IconButton>
           </MenuItem>
