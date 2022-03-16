@@ -1,38 +1,28 @@
 import { useEffect, useState } from 'react';
-import { WindowSideType } from 'types/productTypes';
-import { useThrottle } from '@react-hook/throttle';
 
-type WindowSidesType = {
-  windowWidth: WindowSideType;
-  windowHeight: WindowSideType;
-};
-
-const FPS = 1;
+import { WindowSidesType } from './types';
 
 export const useWindowSize = () => {
-  const [windowSize, setWindowSize] = useThrottle<WindowSidesType>(
-    {
-      windowWidth: undefined,
-      windowHeight: undefined,
-    },
-    FPS,
-  );
+  const [windowSize, setWindowSize] = useState<WindowSidesType>({
+    windowWidth: null,
+    windowHeight: null,
+  });
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const handleResize = () => {
-        setWindowSize({
-          windowWidth: window.innerWidth,
-          windowHeight: window.innerHeight,
-        });
-      };
+    const handleResize = () => {
+      setWindowSize({
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight,
+      });
+    };
 
-      window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize);
 
-      handleResize();
+    handleResize();
 
-      return () => window.removeEventListener('resize', handleResize);
-    }
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return windowSize;
