@@ -1,6 +1,6 @@
-import { Category } from "components/base/main/CategoryCard/types";
-import { GroupedItemsItem, ItemKeys } from "pages/home/types";
-import { groupItems, sortItems } from "utility/helpers";
+import { Category } from 'components/base/main/CategoryCard/types';
+import { GroupedItemsItem, ItemKeys } from 'components/base/home';
+import { groupItems, sortItems } from 'utility/helpers';
 
 const items: Category[] = [
   {
@@ -96,11 +96,11 @@ const items: Category[] = [
   },
 ];
 
-const sortedItems = sortItems(items)
+const sortedItems = sortItems(items);
 
-const objByThree: GroupedItemsItem = { first: null, second: null, third: null }
-const objByThreeKeys: ItemKeys[] = Object.keys(objByThree) as ItemKeys[]
+const objByThree: GroupedItemsItem = { first: null, second: null, third: null };
+const objByThreeKeys: ItemKeys[] = Object.keys(objByThree) as ItemKeys[];
 
-const groupedItems = groupItems(sortedItems)
+const groupedItems = groupItems(sortedItems);
 
 export { items, sortedItems, objByThree, objByThreeKeys, groupedItems };
