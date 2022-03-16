@@ -76,6 +76,7 @@ const Header = () => {
             >
               <Image
                 className={styles.header_logo}
+                layout='fill'
                 src={'/logo-example.jpeg'}
                 alt='logo'
               />
