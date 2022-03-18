@@ -1,6 +1,6 @@
 import React, { useEffect, MouseEventHandler } from 'react';
 
-import { Image } from 'next/image';
+import Image from 'next/image';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -76,6 +76,7 @@ const Header = () => {
             >
               <Image
                 className={styles.header_logo}
+                layout='fill'
                 src={'/logo-example.jpeg'}
                 alt='logo'
               />

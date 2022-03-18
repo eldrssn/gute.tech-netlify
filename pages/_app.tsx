@@ -1,8 +1,11 @@
 import type { AppProps } from 'next/app';
 
 import { MainLayout } from 'layouts/MainLayout';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import 'styles/globals.css';
+
+const theme = createTheme();
 
 // TODO: types -> types.ts
 type ComponentWithPageLayout = AppProps & {
@@ -15,10 +18,12 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const Wrapper = Component.PageLayout || MainLayout;
 
   return (
-    <Wrapper>
-      <Component {...pageProps} />
-    </Wrapper>
-  )
+    <ThemeProvider theme={theme}>
+      <Wrapper>
+        <Component {...pageProps} />
+      </Wrapper>
+    </ThemeProvider>
+  );
 }
 
 export default MyApp;

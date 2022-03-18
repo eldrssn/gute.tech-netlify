@@ -5,8 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 
-import { pages, menuItemNames, menuIcons } from './constants';
-import { HeaderMenuProps } from './types';
+import { pages, menuItemNames, menuIcons } from '../constants';
+import { HeaderMenuProps } from '../types';
 
 const HeaderNavMenu: React.FC<HeaderMenuProps> = (props) => (
   <Toolbar disableGutters>

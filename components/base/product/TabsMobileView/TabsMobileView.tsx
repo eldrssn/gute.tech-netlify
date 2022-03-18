@@ -10,17 +10,17 @@ import classnames from 'classnames/bind';
 
 import { TabContentByType } from '../TabContentByType';
 import { descriptionTypeName, tabNameByType } from 'utility/utils/constants';
-import { DescriptionType, TabsProps as Props } from 'types/productTypes';
+import { DescriptionType, TabsProps } from 'types/productTypes';
 
 import styles from './tabsMobileView.module.css';
 
 const cn = classnames.bind(styles);
 
-export const TabsMobileView: FC<Props> = ({ productInfo }) => {
+export const TabsMobileView: FC<TabsProps> = ({ productInfo }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 

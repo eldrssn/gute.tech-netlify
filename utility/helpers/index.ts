@@ -1,6 +1,6 @@
 import { Category } from 'components/base/main/CategoryCard/types';
 import { objByThree, objByThreeKeys } from 'mock/categories';
-import { GroupedItemsItem } from 'pages/home/types';
+import { GroupedItemsItem } from 'components/base/home';
 
 const sortItems = (unsortedItems: Category[]) => {
   return unsortedItems.sort((a, b) => (a.sort < b.sort ? -1 : 1));

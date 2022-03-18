@@ -4,6 +4,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 
 import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
+
+// TODO: CatalogCard должна уехать из components/base в components/main
 import CatalogCard from 'components/base/catalog/CatalogCard';
 
 import styles from './recommendedProducts.module.css';
@@ -53,11 +55,11 @@ export const RecommendedProducts: FC = () => (
   <Box>
     <h2>Вам обязательно понадобятся</h2>
     <Slider {...sliderSettings}>
-      <CatalogCard />
-      <CatalogCard />
-      <CatalogCard />
-      <CatalogCard />
-      <CatalogCard />
+      <CatalogCard title='1' price='10' picture='' />
+      <CatalogCard title='2' price='20' picture='' />
+      <CatalogCard title='3' price='30' picture='' />
+      <CatalogCard title='4' price='40' picture='' />
+      <CatalogCard title='5' price='50' picture='' />
     </Slider>
   </Box>
 );

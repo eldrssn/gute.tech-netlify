@@ -4,7 +4,7 @@ export type TabProps = {
   content: Content;
 };
 
-export type WindowSideType = number | undefined;
+export type WindowSideType = number | null;
 
 export enum DescriptionTypes {
   characteristic = 'characteristic',
