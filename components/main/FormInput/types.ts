@@ -1,12 +1,9 @@
-import { Control, Path } from 'react-hook-form';
-
-import { EPatternTypes } from 'consts/types';
-
-type FormInputProps<TFormValues> = {
-  name: Path<TFormValues>;
-  control: Control<TFormValues>;
+type FormInputProps = {
+  helperText: string | undefined;
   label: string;
-  patternType: EPatternTypes;
+  onChange: () => void;
+  value: string;
+  isError: boolean;
 };
 
 export type { FormInputProps };

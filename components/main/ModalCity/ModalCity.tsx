@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useController } from 'react-hook-form';
 import {
   Container,
   Box,
@@ -16,28 +16,32 @@ import { CitiesOption } from 'mock/CitiesOption';
 import ModalComponent from 'components/main/Modal';
 import FormInput from 'components/main/FormInput';
 
-import { EPatternTypes } from 'consts/types';
-
 import { TCitiesOption, TFormData } from './types';
 
 import styles from './styles.module.css';
 
 const ModalCity: React.FC = () => {
-  const { watch, control, reset } = useForm<TFormData>({
-    defaultValues: {
-      cityName: '',
+  const { watch, control, reset } = useForm<TFormData>();
+  const [desiredСity, setDesiredСity] = useState<string>();
+  const [isOpen, setIsOpen] = useState(true);
+  const cityInput = useController({
+    name: 'cityName',
+    control,
+    rules: {
+      required: 'Обязательное поле',
     },
   });
-  const [desiredСity, setDesiredСity] = useState('');
-  const [isOpen, setIsOpen] = useState(true);
 
+  //TODO: поменять на фильтрацию данных
   const filterCitiesOption = (CitiesOption: TCitiesOption) => {
     const searchedRegionOptions = CitiesOption.regions.filter((region) =>
-      region.cities.some(({ cityName }) => cityName.indexOf(desiredСity) >= 0),
+      region.cities.some(
+        ({ cityName }) => cityName.indexOf(desiredСity || '') >= 0,
+      ),
     );
     const searchedCityOption = searchedRegionOptions.map((region) => {
       const filteredCity = region.cities.filter(
-        ({ cityName }) => cityName.indexOf(desiredСity) >= 0,
+        ({ cityName }) => cityName.indexOf(desiredСity || '') >= 0,
       );
 
       return { ...region, cities: filteredCity };
@@ -81,36 +85,33 @@ const ModalCity: React.FC = () => {
           </Typography>
           <Divider className={styles.divider} />
           <Box className={styles.inputContainer}>
-            <FormInput<TFormData>
-              name='cityName'
-              control={control}
-              label='Введите название города'
-              patternType={EPatternTypes.ANY}
+            <FormInput
+              helperText={cityInput.fieldState.error?.message}
+              onChange={cityInput.field.onChange}
+              value={cityInput.field.value}
+              label='Ваше имя'
+              isError={Boolean(cityInput.fieldState.error)}
             />
             <Box className={styles.resetField} onClick={resetInput}>
               <FontAwesomeIcon icon={faTimes} />
             </Box>
           </Box>
           <Box component='div' className={styles.regions}>
-            {searchedCitiesOption.map((region) => {
-              return (
-                <Box component='div' className={styles.region} key={region.id}>
-                  <Typography className={styles.regionTitle}>
-                    {region.regionName}
-                  </Typography>
-                  <List>
-                    {region.cities.map((city) => {
-                      return (
-                        <ListItemButton key={city.id}>
-                          {/* TODO: диспач id */}
-                          {city.cityName}
-                        </ListItemButton>
-                      );
-                    })}
-                  </List>
-                </Box>
-              );
-            })}
+            {searchedCitiesOption.map((region) => (
+              <Box component='div' className={styles.region} key={region.id}>
+                <Typography className={styles.regionTitle}>
+                  {region.regionName}
+                </Typography>
+                <List>
+                  {region.cities.map((city) => (
+                    <ListItemButton key={city.id}>
+                      {/* TODO: диспач id */}
+                      {city.cityName}
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Box>
+            ))}
           </Box>
         </Box>
       </Container>

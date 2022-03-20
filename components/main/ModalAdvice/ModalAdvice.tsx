@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import { useForm, useController } from 'react-hook-form';
 import { Container, Box, Typography, Button } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -8,28 +8,50 @@ import Link from 'next/link';
 import ModalComponent from 'components/main/Modal';
 import FormInput from 'components/main/FormInput';
 
-import { EPatternTypes } from 'consts/types';
+import { validatePatterns } from 'constants/patterns';
+import { EValidatePattern } from 'constants/types';
 
-import { TFormData } from './types';
+import { TFormData, TOuterProps } from './types';
 
 import styles from './styles.module.css';
 
-const ModalAdvice: React.FC = ({}) => {
-  const { handleSubmit, control } = useForm<TFormData>({
-    defaultValues: {
-      nameValue: '',
-      phoneNumber: '',
-    },
+const getInputRules = (patternCategory?: EValidatePattern) => {
+  if (patternCategory) {
+    return {
+      required: 'Обязательное поле',
+      pattern: {
+        value: validatePatterns[patternCategory].pattern,
+        message: validatePatterns[patternCategory].message,
+      },
+    };
+  }
+
+  return {
+    required: 'Обязательное поле',
+  };
+};
+
+const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
+  const { handleSubmit, control } = useForm<TFormData>();
+  const phoneInput = useController({
+    name: 'phoneNumber',
+    control,
+    rules: getInputRules(EValidatePattern.PHONE_NUMBER),
   });
-  const [isOpen, setIsOpen] = useState(true);
+  const nameInput = useController({
+    name: 'nameValue',
+    control,
+    rules: getInputRules(),
+  });
 
   const closeModal = () => {
     setIsOpen(false);
   };
 
+  //TODO: обработка отправки
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-  }); //TODO: обработка отправки
+  });
 
   return (
     <ModalComponent isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -52,19 +74,21 @@ const ModalAdvice: React.FC = ({}) => {
           </Typography>
           <Box component='div' className={styles.inputBox}>
             <Box sx={{ width: '48%' }}>
-              <FormInput<TFormData>
-                name='nameValue'
-                control={control}
+              <FormInput
+                helperText={nameInput.fieldState.error?.message}
+                onChange={nameInput.field.onChange}
+                value={nameInput.field.value}
                 label='Ваше имя'
-                patternType={EPatternTypes.ANY}
+                isError={Boolean(nameInput.fieldState.error)}
               />
             </Box>
             <Box sx={{ width: '48%' }}>
-              <FormInput<TFormData>
-                name='phoneNumber'
-                control={control}
+              <FormInput
+                helperText={phoneInput.fieldState.error?.message}
+                onChange={phoneInput.field.onChange}
+                value={phoneInput.field.value}
                 label='Телефон'
-                patternType={EPatternTypes.PHONE_NUMBER}
+                isError={Boolean(phoneInput.fieldState.error)}
               />
             </Box>
           </Box>
