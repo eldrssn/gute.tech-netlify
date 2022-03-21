@@ -8,28 +8,13 @@ import Link from 'next/link';
 import ModalComponent from 'components/main/Modal';
 import FormInput from 'components/main/FormInput';
 
-import { validatePatterns } from 'constants/patterns';
+import { getInputRules } from 'utility/helpers';
+
 import { EValidatePattern } from 'constants/types';
 
 import { TFormData, TOuterProps } from './types';
 
 import styles from './styles.module.css';
-
-const getInputRules = (patternCategory?: EValidatePattern) => {
-  if (patternCategory) {
-    return {
-      required: 'Обязательное поле',
-      pattern: {
-        value: validatePatterns[patternCategory].pattern,
-        message: validatePatterns[patternCategory].message,
-      },
-    };
-  }
-
-  return {
-    required: 'Обязательное поле',
-  };
-};
 
 const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   const { handleSubmit, control } = useForm<TFormData>();
@@ -59,7 +44,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
         <FontAwesomeIcon icon={faTimes} />
       </Box>
       <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Box component='div' className={styles.container}>
+        <form onSubmit={onSubmit} className={styles.container}>
           <Typography
             className={styles.title}
             id='modal-modal-title'
@@ -105,7 +90,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
             и соглашаетесь с{' '}
             <Link href='/policy'>политикой конфиденциальности.</Link>
           </Typography>
-        </Box>
+        </form>
       </Container>
     </ModalComponent>
   );

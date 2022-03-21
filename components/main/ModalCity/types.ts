@@ -2,15 +2,19 @@ type TFormData = {
   cityName: string;
 };
 
+type TCities = {
+  id: number;
+  cityName: string;
+};
+
+type TRegion = {
+  id: number;
+  regionName: string;
+  cities: TCities[];
+};
+
 type TCitiesOption = {
-  regions: {
-    id: number;
-    regionName: string;
-    cities: {
-      id: number;
-      cityName: string;
-    }[];
-  }[];
+  regions: TRegion[];
 };
 
 export type { TFormData, TCitiesOption };

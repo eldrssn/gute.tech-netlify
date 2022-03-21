@@ -1,4 +1,6 @@
-const CitiesOption = {
+import { TCitiesOption } from 'components/main/ModalCity/types';
+
+const CitiesOption: TCitiesOption = {
   regions: [
     {
       id: 1,
