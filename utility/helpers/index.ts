@@ -1,6 +1,8 @@
 import { Category } from 'components/base/main/CategoryCard/types';
 import { objByThree, objByThreeKeys } from 'mock/categories';
 import { GroupedItemsItem } from 'components/base/home';
+import { validatePatterns } from 'constants/patterns';
+import { EValidatePattern } from 'constants/types';
 
 const sortItems = (unsortedItems: Category[]) => {
   return unsortedItems.sort((a, b) => (a.sort < b.sort ? -1 : 1));
@@ -37,4 +39,21 @@ const groupItems = (sortedItems: Category[]) => {
   return groupedItems;
 };
 
-export { groupItems, sortItems };
+const getInputRules = (patternCategory?: EValidatePattern) => {
+  if (patternCategory) {
+    const { message, pattern } = validatePatterns[patternCategory];
+    return {
+      required: 'Обязательное поле',
+      pattern: {
+        value: pattern,
+        message: message,
+      },
+    };
+  }
+
+  return {
+    required: 'Обязательное поле',
+  };
+};
+
+export { groupItems, sortItems, getInputRules };
