@@ -1,4 +1,5 @@
 export type CustomButtonType = {
   href?: string;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  customStyles?: string;
 };

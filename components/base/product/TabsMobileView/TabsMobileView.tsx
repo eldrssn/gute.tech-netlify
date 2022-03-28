@@ -9,7 +9,7 @@ import {
 import classnames from 'classnames/bind';
 
 import { TabContentByType } from '../TabContentByType';
-import { descriptionTypeName, tabNameByType } from 'utility/utils/constants';
+import { descriptionTypeName, tabNameByType } from 'constants/variables';
 import { DescriptionType, TabsProps } from 'types/productTypes';
 
 import styles from './tabsMobileView.module.css';

@@ -1,0 +1,10 @@
+.cityWrapper {
+  display: flex;
+  justify-content: right;
+  flex-wrap: wrap;
+}
+
+.cityName {
+  color: #1c85c7;
+  font-size: 14px;
+}

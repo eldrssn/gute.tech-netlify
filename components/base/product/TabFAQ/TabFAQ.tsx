@@ -6,7 +6,7 @@ import {
   Box,
 } from '@mui/material';
 
-import { setSmoothScroll } from 'utility/utils/setSmoothScroll';
+import { setSmoothScroll } from 'utility/utils';
 
 import { TabProps } from 'types/productTypes';
 import styles from './tabFAQ.module.css';
