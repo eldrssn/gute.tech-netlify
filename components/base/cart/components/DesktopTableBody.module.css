@@ -1,0 +1,46 @@
+.tableBody {
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+
+.tableBody th {
+  display: flex;
+  align-items: center;
+}
+
+.tableBodyName {
+  min-width: 220px;
+}
+
+.itemTitle {
+  margin-left: 10px;
+}
+
+.btnCount {
+  color: white;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  min-width: 0;
+  margin: 20px;
+  background-color: #1976d2;
+}
+
+.btnCountAdd {
+  margin-right: 0;
+}
+
+.btnCountRemove {
+  margin-left: 0;
+}
+
+.btnDelete {
+  position: absolute;
+  right: -45px;
+  top: calc(50% - 18px);
+  background-color: red;
+  color: white;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  min-width: 0;
+}

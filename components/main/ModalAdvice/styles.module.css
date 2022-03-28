@@ -24,6 +24,10 @@
   cursor: pointer;
 }
 
+.inputContainer {
+  width: 48%;
+}
+
 .title {
   font-size: 28px;
   letter-spacing: 1px;
@@ -47,4 +51,30 @@
 
 .policy a {
   text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .inputBox {
+    flex-direction: column;
+  }
+
+  .inputContainer {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .policy {
+    width: 100%;
+  }
+
+  .closeModal {
+    position: absolute;
+    right: 30px;
+    z-index: 1;
+    background: #fff;
+    color: #000;
+    width: 15px;
+    height: 15px;
+    border-radius: 0;
+  }
 }
