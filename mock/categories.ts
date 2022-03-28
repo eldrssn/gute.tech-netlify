@@ -1,6 +1,40 @@
 import { Category } from 'components/base/main/CategoryCard/types';
 import { GroupedItemsItem, ItemKeys } from 'components/base/home';
-import { groupItems, sortItems } from 'utility/helpers';
+
+const sortItems = (unsortedItems: Category[]) => {
+  return unsortedItems.sort((a, b) => (a.sort < b.sort ? -1 : 1));
+};
+
+const groupItems = (sortedItems: Category[]) => {
+  const { groupedItems } = sortedItems.reduce<{
+    groupedItems: GroupedItemsItem[];
+    currentItem: GroupedItemsItem;
+  }>(
+    (acc, value, index) => {
+      const currentItem = {
+        ...acc.currentItem,
+        [objByThreeKeys[index % 3]]: value,
+      };
+
+      if ((index + 1) % 3 == 0 || index + 1 == sortedItems.length) {
+        acc.groupedItems.push(currentItem);
+
+        acc.currentItem = { ...objByThree };
+        return acc;
+      }
+
+      acc.currentItem = currentItem;
+
+      return acc;
+    },
+    {
+      groupedItems: [],
+      currentItem: { ...objByThree },
+    },
+  );
+
+  return groupedItems;
+};
 
 const items: Category[] = [
   {
@@ -96,11 +130,11 @@ const items: Category[] = [
   },
 ];
 
-const sortedItems = items;
+const sortedItems = sortItems(items);
 
 const objByThree: GroupedItemsItem = { first: null, second: null, third: null };
 const objByThreeKeys: ItemKeys[] = Object.keys(objByThree) as ItemKeys[];
 
-const groupedItems = sortedItems;
+const groupedItems = groupItems(sortedItems);
 
 export { items, sortedItems, objByThree, objByThreeKeys, groupedItems };

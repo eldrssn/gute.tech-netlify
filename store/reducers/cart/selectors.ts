@@ -2,13 +2,13 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import storeSelector from 'store/storeSelector';
 
-const selectAppStore = createSelector(
+const selectCartStore = createSelector(
   storeSelector,
-  ({ cartReducer }) => cartReducer,
+  ({ cartStore }) => cartStore,
 );
 
-const selectCart = createSelector(selectAppStore, ({ data }) => data);
-const selectOrderTotal = createSelector(selectAppStore, ({ data }) =>
+const selectCart = createSelector(selectCartStore, ({ data }) => data);
+const selectOrderTotal = createSelector(selectCartStore, ({ data }) =>
   data.reduce((total, item) => item.count * item.price + total, 0),
 );
 

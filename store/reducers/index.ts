@@ -1,11 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { testStore } from './TestStore';
 import { cartReducer } from './cart';
+import { contentReducer } from './content';
 
 const reducers = combineReducers({
-  testStore,
-  cartReducer,
+  cartStore: cartReducer,
+  contentStore: contentReducer,
 });
 
 export { reducers };
