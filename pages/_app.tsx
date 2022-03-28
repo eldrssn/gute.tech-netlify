@@ -2,10 +2,9 @@ import type { AppProps } from 'next/app';
 
 import { MainLayout } from 'layouts/MainLayout';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
 import { wrapper } from 'store';
 
-import 'styles/globals.css';
+import 'styles/globals.scss';
 
 const theme = createTheme();
 

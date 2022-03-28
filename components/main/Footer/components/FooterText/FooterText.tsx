@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import styles from './footerText.module.css';
+import styles from './footerText.module.scss';
 
 export const FooterText: FC = () => (
   <div>

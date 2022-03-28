@@ -18,7 +18,7 @@ import FormInput from 'components/main/FormInput';
 
 import { TCitiesOption, TFormData } from './types';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 const ModalCity: React.FC = () => {
   const { watch, control, reset } = useForm<TFormData>();

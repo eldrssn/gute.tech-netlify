@@ -4,7 +4,7 @@ import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import Image from 'next/image';
 
 import { socialLinks } from './constants';
-import styles from './footerSocialLinks.module.css';
+import styles from './footerSocialLinks.module.scss';
 
 export const FooterSocialLinks: FC = () => (
   <Box

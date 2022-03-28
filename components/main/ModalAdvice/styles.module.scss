@@ -1,8 +1,10 @@
+@import "~styles/colors.scss";
+
 .container {
   font-size: 16px;
   max-width: 640px;
   position: relative;
-  background-color: white;
+  background-color: $white;
   padding: 40px;
   padding-top: 32px;
 }
@@ -11,7 +13,7 @@
   position: fixed;
   top: 8px;
   right: 8px;
-  background: #fc5367;
+  background: $red1;
   display: block;
   width: 40px;
   height: 40px;
@@ -20,7 +22,7 @@
   margin: 0;
   padding: 8px 12px;
   font-size: 20px;
-  color: #fff;
+  color: $white;
   cursor: pointer;
 }
 
@@ -47,10 +49,10 @@
   opacity: 0.5;
   margin: 15px 0px;
   width: 75%;
-}
 
-.policy a {
-  text-decoration: underline;
+  a {
+    text-decoration: underline;
+  }
 }
 
 @media (max-width: 600px) {

@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { Box } from '@mui/material';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick.scss';
 
 import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
 
 // TODO: CatalogCard должна уехать из components/base в components/main
 import CatalogCard from 'components/base/catalog/CatalogCard';
 
-import styles from './recommendedProducts.module.css';
+import styles from './recommendedProducts.module.scss';
 
 export const sliderSettings = {
   className: styles.slider,

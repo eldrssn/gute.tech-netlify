@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 
 import useRouterQuery from 'hooks/useRouterQuery';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import { setQueryParam } from 'hooks/useRouterQuery/helpers';
 
 const PriceRange: React.FC = () => {

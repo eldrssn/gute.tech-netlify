@@ -14,7 +14,7 @@ import { EValidatePattern } from 'constants/types';
 
 import { TFormData, TOuterProps } from './types';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   const { handleSubmit, control } = useForm<TFormData>();

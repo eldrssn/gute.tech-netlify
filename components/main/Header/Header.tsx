@@ -14,7 +14,7 @@ import { HeaderDesktopFull } from './components/HeaderDesktopFull';
 import { HeaderContext } from './components/HeaderContext';
 import { HeaderMobile } from './components/HeaderMobile';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 export const Header = () => {
   const [isFullHeader, setisFullHeader] = useState<boolean>(true);

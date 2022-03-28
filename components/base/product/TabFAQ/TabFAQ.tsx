@@ -9,7 +9,7 @@ import {
 import { setSmoothScroll } from 'utility/utils';
 
 import { TabProps } from 'types/productTypes';
-import styles from './tabFAQ.module.css';
+import styles from './tabFAQ.module.scss';
 
 export const TabFAQ: FC<TabProps> = ({ content }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);

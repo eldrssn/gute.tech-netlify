@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import classnames from 'classnames/bind';
 
 import { CustomButtonType } from './types';
-import styles from './customButton.module.css';
+import styles from './customButton.module.scss';
 
 const cn = classnames.bind(styles);
 

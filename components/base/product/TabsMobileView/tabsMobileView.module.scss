@@ -12,8 +12,7 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-
-.accordion:last-of-type {
+s .accordion:last-of-type {
   border-bottom: 1px solid #1c85c7;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -48,7 +47,7 @@
   top: 50%;
   right: 10px;
   margin-top: -2px;
-  content: '';
+  content: "";
 }
 
 .accordionSummaryExpanded::before {
