@@ -56,4 +56,4 @@ const getInputRules = (patternCategory?: EValidatePattern) => {
   };
 };
 
-export { groupItems, sortItems, getInputRules };
+export { groupItems, getInputRules, sortItems };

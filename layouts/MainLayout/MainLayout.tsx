@@ -1,18 +1,18 @@
 import React from 'react';
-import { Container, Box } from '@mui/material';
+import { Container } from '@mui/material';
 
-import Header from 'components/base/header/Header';
+import { Header } from 'components/main/Header';
 import { Footer } from 'components/main/Footer';
 
 const MainLayout: React.FC = ({ children }) => (
   <>
+    <Header />
     <Container
       maxWidth={'lg'}
       sx={{
         minHeight: '100vh',
       }}
     >
-      <Header />
       {children}
     </Container>
     <Footer />

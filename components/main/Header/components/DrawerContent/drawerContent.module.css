@@ -1,0 +1,23 @@
+.navContainer {
+  background-color: #333333;
+  color: white;
+  height: 100%;
+  padding: 40px 20px;
+}
+
+.location {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.location_current {
+  font-weight: 400;
+}
+
+.divider {
+  border-color: #5c5c5c;
+}
+
+.asideNavContainer {
+  padding: 25px 0;
+}

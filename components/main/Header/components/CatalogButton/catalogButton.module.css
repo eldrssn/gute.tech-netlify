@@ -1,0 +1,97 @@
+.catalogButton {
+  display: flex;
+  position: relative;
+  box-sizing: content-box;
+
+  background-color: white;
+  color: #0686c9;
+
+  border: 2px solid #0686c9;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: none;
+
+  padding: 17px 43px;
+  margin: 0;
+  margin-left: 15px;
+}
+
+.catalogButton:hover {
+  background-color: white;
+}
+
+.catalogButton_hidden {
+  display: block;
+  padding: 0;
+  border: none;
+  order: -1;
+  height: 100%;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.catalogButton_hidden .catalogTitle {
+  display: none;
+}
+
+.catalogButton_tablet {
+  padding: 9px 20px;
+}
+
+.catalogIcon {
+  font-size: 0;
+  display: block;
+  width: 24px;
+  height: 14px;
+  transform: rotate(180deg);
+  margin-left: auto;
+}
+
+.catalogIconLines {
+  margin-left: 12px;
+  margin-top: 1px;
+
+  transition: 0.1s;
+  transform: translate(0, 50%);
+}
+
+.catalogIconLines::before,
+.catalogIconLines::after,
+.catalogIconLines {
+  display: block;
+  position: relative;
+  height: 2px;
+  width: 12px;
+  background-color: #0686c9;
+  transition: 0.4s;
+  border-radius: 2px;
+}
+
+.catalogIconLines::before {
+  content: '';
+  top: -4px;
+}
+
+.catalogIconLines::after {
+  content: '';
+  top: 2px;
+}
+
+.catalogIconLines_open {
+  transition: 0.01s;
+  height: 0;
+}
+
+.catalogIconLines_open::before {
+  top: -2px;
+  transform: rotate(45deg);
+  background-color: #0686c9;
+  width: 14px;
+}
+
+.catalogIconLines_open::after {
+  top: -4px;
+  transform: rotate(-45deg);
+  background-color: #0686c9;
+  width: 14px;
+}
