@@ -19,7 +19,6 @@ export const ContentByDescription: Record<DescriptionType, FC<TabProps>> = {
   [DescriptionTypes.faq]: TabFAQ,
 };
 
-
 export const TabContentByType: FC<Props> = ({ type, content }) => {
   const Content = ContentByDescription[type];
 

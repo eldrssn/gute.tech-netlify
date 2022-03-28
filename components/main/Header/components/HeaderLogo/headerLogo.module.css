@@ -1,0 +1,25 @@
+.header_logo {
+  position: relative;
+  float: left;
+  width: 125px;
+  height: 44px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.headerTitle {
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.header_logo_mobile {
+  width: 250px;
+  height: auto;
+}
+
+.headerTitle_mobile {
+  font-size: 18px;
+  margin: 22px 0;
+  line-height: 1.57;
+}

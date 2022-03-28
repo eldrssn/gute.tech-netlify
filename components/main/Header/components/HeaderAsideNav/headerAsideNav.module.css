@@ -1,0 +1,20 @@
+.menuItem {
+  font-weight: 700;
+  text-align: center;
+  padding-left: 10px;
+}
+
+.menuItemsBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.menuItem_callback {
+  flex-grow: 1;
+}
+
+.menuItem_mobile {
+  font-size: 18px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

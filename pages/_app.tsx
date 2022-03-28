@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app';
 import { MainLayout } from 'layouts/MainLayout';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import { wrapper } from 'store';
+
 import 'styles/globals.css';
 
 const theme = createTheme();
@@ -26,4 +28,4 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

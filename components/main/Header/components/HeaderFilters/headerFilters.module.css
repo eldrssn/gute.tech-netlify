@@ -1,0 +1,91 @@
+.mainContainer {
+  padding-bottom: 7px;
+  padding-top: 7px;
+  display: flex;
+}
+
+.itemsContainer {
+  flex-direction: row;
+}
+
+.filterText {
+  width: 100%;
+  color: #1c85c7;
+  font-size: 16px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.formAndCatalogContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.filterStepsForm {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.filterStepsForm input {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 60px;
+  min-width: 120px;
+}
+
+.filterStepsForm_shortHeader {
+  height: 40px;
+}
+
+.filterStepsForm_shortHeader input {
+  padding-top: 9px;
+  padding-bottom: 9px;
+  padding-left: 40px;
+  font-size: 12px;
+  min-width: 70px;
+}
+
+.stepButtonSubmit {
+  margin: 0;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 14px;
+  background-color: #fc5367;
+  flex-grow: 1;
+  padding: 12px 20px;
+  min-height: 50px;
+}
+
+.stepButtonSubmit:hover {
+  background-color: #fc5367;
+}
+
+.filterStepsForm_shortHeader .stepButtonSubmit {
+  padding: 0;
+  height: 88%;
+  min-width: 120px;
+  min-height: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.filterStepsForm_mobileView {
+  flex-direction: column;
+}
+
+.filterStepsForm_mobileView input {
+  min-width: calc(100vw - 90px);
+  padding-left: 60px;
+  font-size: 14px;
+}
+
+.filterStepsForm_mobileView .stepButtonSubmit {
+  min-height: 50px;
+  min-width: 100%;
+  margin-top: 20px;
+}

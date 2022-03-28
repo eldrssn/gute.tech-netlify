@@ -1,0 +1,26 @@
+.main {
+  padding: 24px 0 88px;
+}
+
+.mainTitle {
+  font-size: 28px;
+  letter-spacing: 1px;
+  line-height: 1.2em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.table {
+  margin-top: 10px;
+}
+
+.tableHead th {
+  font-weight: bold;
+}
+
+.orderTotal {
+  width: 100%;
+  text-align: right;
+  padding: 16px;
+  font-weight: bold;
+}

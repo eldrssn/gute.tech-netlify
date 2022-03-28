@@ -9,7 +9,7 @@ import {
   DescriptionTypes,
   TabsProps as Props,
 } from 'types/productTypes';
-import { descriptionTypeName, tabNameByType } from 'utility/utils/constants';
+import { descriptionTypeName, tabNameByType } from 'constants/variables';
 
 import styles from './tabsDesktopView.module.css';
 

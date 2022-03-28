@@ -1,0 +1,20 @@
+.menuItem {
+  font-weight: 700;
+  text-align: center;
+}
+
+.openFiltersButton {
+  font-weight: 400;
+  text-transform: none;
+  font-size: 14px;
+  background-color: #fc5367;
+  flex-grow: 1;
+  padding: 12px 20px;
+  min-height: 50px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.openFiltersButton:hover {
+  background-color: #fc5367;
+}
