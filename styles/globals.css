@@ -15,8 +15,17 @@ a {
   box-sizing: border-box;
 }
 
-/* Mui global styles  */
-.MuiTab-root.Mui-selected {
-  font-weight: 700;
-  color: black;
+.MuiOutlinedInput-notchedOutline {
+  border-radius: 0;
+  outline: none;
 }
+
+.MuiStep-root {
+  padding: 0;
+}
+
+.MuiStepButton-root.Mui-disabled {
+  z-index: 1;
+  color: #d7dee4;
+}
+

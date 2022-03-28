@@ -96,11 +96,11 @@ const items: Category[] = [
   },
 ];
 
-const sortedItems = sortItems(items);
+const sortedItems = items;
 
 const objByThree: GroupedItemsItem = { first: null, second: null, third: null };
 const objByThreeKeys: ItemKeys[] = Object.keys(objByThree) as ItemKeys[];
 
-const groupedItems = groupItems(sortedItems);
+const groupedItems = sortedItems;
 
 export { items, sortedItems, objByThree, objByThreeKeys, groupedItems };
