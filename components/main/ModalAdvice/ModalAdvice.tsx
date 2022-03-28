@@ -58,7 +58,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
             Мы перезвоним в течение 17 минут и предложим лучший вариант!
           </Typography>
           <Box component='div' className={styles.inputBox}>
-            <Box sx={{ width: '48%' }}>
+            <Box className={styles.inputContainer}>
               <FormInput
                 helperText={nameInput.fieldState.error?.message}
                 onChange={nameInput.field.onChange}
@@ -67,7 +67,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
                 isError={Boolean(nameInput.fieldState.error)}
               />
             </Box>
-            <Box sx={{ width: '48%' }}>
+            <Box className={styles.inputContainer}>
               <FormInput
                 helperText={phoneInput.fieldState.error?.message}
                 onChange={phoneInput.field.onChange}
