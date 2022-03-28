@@ -1,9 +1,9 @@
-import { TestStore } from './reducers/TestStore/types';
 import { CartStore } from './reducers/cart/types';
+import { ContentStore } from './reducers/content/types';
 
 type State = {
-  testStore: TestStore;
-  cartReducer: CartStore;
+  cartStore: CartStore;
+  conetentStore: ContentStore;
 };
 
 type ErrorAction = {
@@ -23,4 +23,4 @@ type StoreState = {
   error: StoreError | null;
 };
 
-export type { State, ErrorAction, StoreState, StoreError };
+export type { State, ErrorAction, StoreError, StoreState };

@@ -9,20 +9,22 @@ export const useWindowSize = () => {
   });
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        windowWidth: window.innerWidth,
-        windowHeight: window.innerHeight,
-      });
-    };
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setWindowSize({
+          windowWidth: window.innerWidth,
+          windowHeight: window.innerHeight,
+        });
+      };
 
-    window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize);
 
-    handleResize();
+      handleResize();
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   return windowSize;

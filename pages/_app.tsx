@@ -1,10 +1,11 @@
 import type { AppProps } from 'next/app';
 
+import { wrapper } from 'store';
 import { MainLayout } from 'layouts/MainLayout';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { wrapper } from 'store';
 
 import 'styles/globals.scss';
+import 'slick-carousel/slick/slick.scss';
 
 const theme = createTheme();
 

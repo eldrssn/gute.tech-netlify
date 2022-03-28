@@ -29,7 +29,9 @@ const View: React.FC<TOuterProps> = ({
   };
 
   useEffect(() => {
-    window.document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    if (window) {
+      window.document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    }
   }, [isOpen]);
 
   return (

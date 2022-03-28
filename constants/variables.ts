@@ -17,3 +17,5 @@ export const tabNameByType: Record<DescriptionType, string> = {
   [DescriptionTypes.installation]: 'Установка',
   [DescriptionTypes.faq]: 'Вопросы и ответы',
 };
+
+export const DEV_HOST = 'dev.gute.tech';

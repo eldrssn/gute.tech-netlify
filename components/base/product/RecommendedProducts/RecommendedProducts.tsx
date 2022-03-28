@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Box } from '@mui/material';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.scss';
 
 import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
 

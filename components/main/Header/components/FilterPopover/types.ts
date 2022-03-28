@@ -1,4 +1,4 @@
-import { CardDetailsProps } from 'components/main/Header/types';
+import { CardDetailsProps } from '../../types';
 
 type AnchorElProps = HTMLElement | null;
 
