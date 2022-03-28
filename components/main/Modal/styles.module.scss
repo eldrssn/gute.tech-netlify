@@ -1,3 +1,5 @@
+@import "~styles/colors.scss";
+
 .modalBackground {
   display: block;
   width: 100vw;
@@ -5,7 +7,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: #00000066;
+  background: $transparentBlack;
   justify-content: center;
   overflow: auto;
   opacity: 0;
@@ -41,7 +43,7 @@
   position: fixed;
   top: 8px;
   right: 8px;
-  background: #fc5367;
+  background: $red1;
   display: block;
   width: 40px;
   height: 40px;
@@ -50,6 +52,6 @@
   margin: 0;
   padding: 8px 12px;
   font-size: 20px;
-  color: #fff;
+  color: $white;
   cursor: pointer;
 }

@@ -11,7 +11,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Image from 'next/image';
 
 import { ICatalogCard } from './types';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 const CatalogCard: React.FC<ICatalogCard> = (props) => (
   <Card

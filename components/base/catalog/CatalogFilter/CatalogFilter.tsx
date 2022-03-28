@@ -7,7 +7,7 @@ import CheckboxGroup from 'components/ui/CheckboxGroup';
 import PriceRange from 'components/ui/PriceRange';
 
 import { filterOptions } from 'mock/CatalogFilter';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 const CatalogFilter: React.FC = () => (
   <>

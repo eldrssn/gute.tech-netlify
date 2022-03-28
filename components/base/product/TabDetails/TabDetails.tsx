@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 
 import { TabProps } from 'types/productTypes';
 
-import styles from './tabDetails.module.css';
+import styles from './tabDetails.module.scss';
 
 export const TabDetails: FC<TabProps> = ({ content }) => {
   if (!Array.isArray(content)) {

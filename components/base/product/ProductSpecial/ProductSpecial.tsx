@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { checkMobileView } from 'utility/helpers/checkViewType';
 
-import styles from './productSpecial.module.css';
+import styles from './productSpecial.module.scss';
 
 const cn = classnames.bind(styles);
 

@@ -25,17 +25,17 @@
   margin-top: -10px;
   width: 24px;
   height: 24px;
-  content: '';
+  content: "";
 }
 
 .helpIcon::before {
   /* TODO: absolute paths */
-  background: url('~/public/icons/help.png') 0 0 no-repeat;
+  background: url("~/public/icons/help.png") 0 0 no-repeat;
   background-size: contain;
 }
 
 .specialIcon::before {
-  background: url('~/public/icons/special.png') 0 0 no-repeat;
+  background: url("~/public/icons/special.png") 0 0 no-repeat;
   background-size: contain;
 }
 

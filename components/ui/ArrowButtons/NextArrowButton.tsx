@@ -1,5 +1,5 @@
 import { ArrowButton } from './types';
-import styles from './arrowButtons.module.css';
+import styles from './arrowButtons.module.scss';
 
 export const NextArrowButton = ({ onClick }: ArrowButton) => {
   return (

@@ -12,7 +12,7 @@ import { TabContentByType } from '../TabContentByType';
 import { descriptionTypeName, tabNameByType } from 'constants/variables';
 import { DescriptionType, TabsProps } from 'types/productTypes';
 
-import styles from './tabsMobileView.module.css';
+import styles from './tabsMobileView.module.scss';
 
 const cn = classnames.bind(styles);
 

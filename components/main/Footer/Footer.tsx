@@ -4,7 +4,7 @@ import { Box, Container } from '@mui/material';
 import { FooterText } from './components/FooterText';
 import { FooterSocialLinks } from './components/FooterSocialLinks';
 
-import styles from './footer.module.css';
+import styles from './footer.module.scss';
 
 export const Footer: FC = () => (
   <Box component='footer' className={styles.wrap}>

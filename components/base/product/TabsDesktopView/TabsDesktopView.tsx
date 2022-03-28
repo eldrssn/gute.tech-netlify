@@ -11,7 +11,7 @@ import {
 } from 'types/productTypes';
 import { descriptionTypeName, tabNameByType } from 'constants/variables';
 
-import styles from './tabsDesktopView.module.css';
+import styles from './tabsDesktopView.module.scss';
 
 export const TabsDesktopView: FC<Props> = ({ productInfo }) => {
   const [tabType, setTabType] = useState<DescriptionType>(

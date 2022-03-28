@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import { Props } from './types';
-import styles from './CategoryCard.module.css';
+import styles from './CategoryCard.module.scss';
 
 const CategoryCard: React.FC<Props> = (props) => (
   <div className={styles.categoryCard}>

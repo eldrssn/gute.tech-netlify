@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { Props } from './types';
-import styles from './productQuantity.module.css';
+import styles from './productQuantity.module.scss';
 
 export const ProductQuantity: FC<Props> = ({ quantity }) => (
   <div className={styles.quantity}>

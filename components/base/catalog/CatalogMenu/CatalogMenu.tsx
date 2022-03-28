@@ -2,7 +2,7 @@ import React from 'react';
 
 import List from '@mui/material/List';
 
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import { catalogProperties } from 'mock/CatalogMenu';
 import CatalogMenuItem from 'components/base/catalog/CatalogMenuItem';
 
