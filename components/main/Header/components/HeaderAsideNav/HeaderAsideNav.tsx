@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { menuNavItems } from 'mock/menuNavItems';
-import { IsDrawerProps } from '../../types';
+import { IsDrawerProps } from 'components/main/Header/types';
 
 import { HeaderContext } from '../HeaderContext';
 
