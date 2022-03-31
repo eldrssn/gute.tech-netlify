@@ -1,4 +1,4 @@
-import { CardDetailsProps } from '../../types';
+import { CardDetailsProps } from 'components/main/Header/types';
 
 export type Props = {
   handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
