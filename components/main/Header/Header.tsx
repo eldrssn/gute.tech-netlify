@@ -20,21 +20,19 @@ export const Header = () => {
   const [isFullHeader, setisFullHeader] = useState<boolean>(true);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const onScroll = () => {
-        if (document) {
-          const { scrollTop } = document.documentElement;
+    const onScroll = () => {
+      if (document) {
+        const { scrollTop } = document.documentElement;
 
-          setisFullHeader(() => !scrollTop);
-        }
-      };
+        setisFullHeader(() => !scrollTop);
+      }
+    };
 
-      window?.addEventListener('scroll', onScroll, false);
+    window?.addEventListener('scroll', onScroll, false);
 
-      () => {
-        window?.removeEventListener('scroll', onScroll, false);
-      };
-    }
+    return () => {
+      window?.removeEventListener('scroll', onScroll, false);
+    };
   }, []);
 
   const { windowWidth } = useWindowSize();
