@@ -4,7 +4,7 @@ import storeSelector from 'store/storeSelector';
 
 const selectContentStore = createSelector(
   storeSelector,
-  ({ conetentStore }) => conetentStore,
+  ({ contentStore }) => contentStore,
 );
 
 const selectBrands = createSelector(

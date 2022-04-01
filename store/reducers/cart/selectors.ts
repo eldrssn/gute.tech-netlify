@@ -4,7 +4,7 @@ import storeSelector from 'store/storeSelector';
 
 const selectAppStore = createSelector(
   storeSelector,
-  ({ cartReducer }) => cartReducer,
+  ({ cartStore }) => cartStore,
 );
 
 const selectCart = createSelector(selectAppStore, ({ data }) => data);
