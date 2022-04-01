@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app';
 import { wrapper } from 'store';
 import { MainLayout } from 'layouts/MainLayout';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 
 import 'styles/globals.scss';
 import 'slick-carousel/slick/slick.scss';
@@ -16,15 +18,22 @@ type ComponentWithPageLayout = AppProps & {
   };
 };
 
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
+
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const Wrapper = Component.PageLayout || MainLayout;
 
   return (
-    <ThemeProvider theme={theme}>
-      <Wrapper>
-        <Component {...pageProps} />
-      </Wrapper>
-    </ThemeProvider>
+    <CacheProvider value={cache}>
+      <ThemeProvider theme={theme}>
+        <Wrapper>
+          <Component {...pageProps} />
+        </Wrapper>
+      </ThemeProvider>
+    </CacheProvider>
   );
 }
 
