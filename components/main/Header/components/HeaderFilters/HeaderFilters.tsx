@@ -1,5 +1,7 @@
-import React, { useState, FC, useContext } from 'react';
+import React, { useState, FC, useContext, useEffect } from 'react';
 import classnames from 'classnames/bind';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm, useController } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -8,40 +10,36 @@ import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 
 import { CustomButton } from 'components/ui/CustomButton';
+import { fetchBrands, fetchModels } from 'store/reducers/content/actions';
 
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
 import { HeaderAsideNav } from '../HeaderAsideNav';
 import { FilterSteps } from '../FilterSteps';
-import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
 
-import { InputIds, InputId } from './types';
+import { FormData } from '../../types';
 
 import styles from './headerFilters.module.css';
 
 const cn = classnames.bind(styles);
 
 export const HeaderFilters: FC = () => {
+  const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView } =
     useContext(HeaderContext);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const [carDetails, setCarDetails] = useState<Record<InputId, string>>({
-    [InputIds.HEADER_CAR_SELECTION]: '',
-    [InputIds.HEADER_MODEL_SELECTION]: '',
-    [InputIds.HEADER_YEAR_SELECTION]: '',
-    [InputIds.HEADER_ENGINE_SELECTION]: '',
-  });
+  const { control, setValue } = useForm<FormData>();
 
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(-1);
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const anchor = event.target as HTMLElement;
-    if (anchor) {
-      setAnchorEl(anchor);
-    }
+  const getModel = (slug: string) => {
+    dispatch(fetchModels({ slug }));
   };
+
+  useEffect(() => {
+    dispatch(fetchBrands());
+  }, [dispatch]);
 
   return (
     <>
@@ -74,10 +72,10 @@ export const HeaderFilters: FC = () => {
               })}
             >
               <FilterSteps
-                handleClick={handleClick}
                 activeStep={activeStep}
                 setActiveStep={setActiveStep}
-                carDetails={carDetails}
+                control={control}
+                setValue={setValue}
               />
 
               <CustomButton customStyles={styles.stepButtonSubmit}>
@@ -89,13 +87,6 @@ export const HeaderFilters: FC = () => {
           </Box>
 
           {!isFullHeader && !isMobileView && <HeaderAsideNav />}
-
-          <FilterPopover
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            setCarDetails={setCarDetails}
-            carDetails={carDetails}
-          />
         </Box>
       </Container>
 

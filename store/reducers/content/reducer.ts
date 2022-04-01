@@ -2,16 +2,16 @@ import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
 import { fetchBrands, fetchModels } from './actions';
 
-import { ContentStore, BrandsData, ModelsData, ErrorAction } from './types';
+import { ContentStore, CarDetailsItemData, ErrorAction } from './types';
 
 const initialState: ContentStore = {
   brands: {
-    data: null,
+    data: [],
     isLoading: false,
     error: null,
   },
   models: {
-    data: null,
+    data: [],
     isLoading: false,
     error: null,
   },
@@ -23,7 +23,7 @@ const handlers = {
   },
   [fetchBrands.fulfilled.type]: (
     state: ContentStore,
-    { payload }: PayloadAction<BrandsData[]>,
+    { payload }: PayloadAction<CarDetailsItemData[]>,
   ) => {
     state.brands.data = payload;
     state.brands.isLoading = false;
@@ -43,7 +43,7 @@ const handlers = {
   },
   [fetchModels.fulfilled.type]: (
     state: ContentStore,
-    { payload }: PayloadAction<ModelsData[]>,
+    { payload }: PayloadAction<CarDetailsItemData[]>,
   ) => {
     state.models.data = payload;
     state.models.isLoading = false;

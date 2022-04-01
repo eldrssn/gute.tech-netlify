@@ -5,24 +5,19 @@ enum ContentStoreBlocks {
   MODELS = 'models',
 }
 
-type ModelsData = {
+type CarDetailsItemData = {
   title: string;
   slug: string;
 };
 
-type BrandsData = {
-  title: string;
-  slug: string;
-};
-
-type BrandSlug = Pick<BrandsData, 'slug'>;
+type BrandSlug = Pick<CarDetailsItemData, 'slug'>;
 
 type ModelsState = {
-  data: ModelsData[] | null;
+  data: CarDetailsItemData[] | [];
 } & StoreState;
 
 type BrandsState = {
-  data: BrandsData[] | null;
+  data: CarDetailsItemData[] | [];
 } & StoreState;
 
 type ContentStore = {
@@ -32,11 +27,10 @@ type ContentStore = {
 
 export type {
   ErrorAction,
-  BrandsData,
+  CarDetailsItemData,
   BrandSlug,
   StoreError,
   ContentStore,
-  ModelsData,
 };
 
 export { ContentStoreBlocks };

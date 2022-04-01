@@ -3,7 +3,7 @@ import { ContentStore } from './reducers/content/types';
 
 type State = {
   cartStore: CartStore;
-  conetentStore: ContentStore;
+  contentStore: ContentStore;
 };
 
 type ErrorAction = {

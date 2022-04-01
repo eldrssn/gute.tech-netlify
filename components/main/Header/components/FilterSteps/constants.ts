@@ -1,8 +1,20 @@
-import { InputIds } from '../HeaderFilters/types';
+import { filterStepsData, StepInputs } from './types';
 
-export const filterSteps = [
-  { name: 'Марка', inputId: InputIds.HEADER_CAR_SELECTION },
-  { name: 'Модель', inputId: InputIds.HEADER_MODEL_SELECTION },
-  { name: 'Год выпуска', inputId: InputIds.HEADER_YEAR_SELECTION },
-  { name: 'Двигатель', inputId: InputIds.HEADER_ENGINE_SELECTION },
+export const filterSteps: filterStepsData[] = [
+  {
+    name: 'brand',
+    step: StepInputs.BRAND,
+  },
+  {
+    name: 'model',
+    step: StepInputs.MODEL,
+  },
+  {
+    name: 'year',
+    step: StepInputs.YEAR,
+  },
+  {
+    name: 'engine',
+    step: StepInputs.ENGINE,
+  },
 ];

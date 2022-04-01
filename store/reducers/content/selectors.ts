@@ -4,7 +4,7 @@ import storeSelector from 'store/storeSelector';
 
 const selectContentStore = createSelector(
   storeSelector,
-  ({ conetentStore }) => conetentStore,
+  ({ contentStore }) => contentStore,
 );
 
 const selectBrands = createSelector(
@@ -12,6 +12,9 @@ const selectBrands = createSelector(
   ({ brands }) => brands.data,
 );
 
-const selectModels = createSelector(selectContentStore, ({ models }) => models);
+const selectModels = createSelector(
+  selectContentStore,
+  ({ models }) => models.data,
+);
 
 export { selectBrands, selectModels };

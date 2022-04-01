@@ -1,10 +1,7 @@
-import { CardDetailsProps } from '../../types';
-
-type AnchorElProps = HTMLElement | null;
-
 export type Props = {
-  anchorEl: AnchorElProps;
-  setAnchorEl: React.Dispatch<React.SetStateAction<AnchorElProps>>;
-  setCarDetails: React.Dispatch<React.SetStateAction<CardDetailsProps>>;
-  carDetails: CardDetailsProps;
+  isOpenPopover: boolean;
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+  setIsOpenPopover: (isOpenPopover: boolean) => void;
+  handleClick: (value: string) => void;
+  step: number;
 };

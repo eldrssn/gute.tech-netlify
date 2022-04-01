@@ -1,40 +1,36 @@
 import React, { FC } from 'react';
-
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
+import { useSelector } from 'react-redux';
+
+import { selectBrands, selectModels } from 'store/reducers/content/selectors';
+import { getModel } from 'api/getModel';
 
 import { Props } from './types';
 
 export const FilterPopover: FC<Props> = ({
-  anchorEl,
-  setAnchorEl,
-  setCarDetails,
-  carDetails,
+  isOpenPopover,
+  setActiveStep,
+  step,
+  handleClick,
+  setIsOpenPopover,
 }) => {
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = isOpenPopover ? 'simple-popover' : undefined;
 
-  function handleClose() {
-    setAnchorEl(null);
-  }
+  const brands = useSelector(selectBrands);
+  const models = useSelector(selectModels);
 
-  function handleChange() {
-    if (anchorEl) {
-      setCarDetails({ ...carDetails, [anchorEl.id]: 'new value' });
-    }
-
-    handleClose();
-  }
+  const handleClose = () => {
+    setActiveStep(-1);
+  };
 
   return (
     <Popover
       disableScrollLock
       id={id}
-      open={open}
+      open={isOpenPopover}
       onClose={handleClose}
       disableAutoFocus
-      anchorEl={anchorEl}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'center',
@@ -44,8 +40,16 @@ export const FilterPopover: FC<Props> = ({
         horizontal: 'center',
       }}
     >
-      <Typography>The content of the Popover.</Typography>
-      <Button onClick={handleChange}>next</Button>
+      {brands.map((item) => (
+        <Button
+          onClick={() => {
+            handleClick(item.title);
+          }}
+          key={item.slug}
+        >
+          {item.title}
+        </Button>
+      ))}
     </Popover>
   );
 };
