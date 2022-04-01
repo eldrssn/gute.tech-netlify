@@ -1,4 +1,4 @@
-import { WindowSideType } from 'types/productTypes';
+import { WindowSideType } from 'types/product';
 import { MOBILE_WIDTH, TABLET_WIDTH } from 'constants/variables';
 
 const checkTabletView = (windowWidth: WindowSideType) =>

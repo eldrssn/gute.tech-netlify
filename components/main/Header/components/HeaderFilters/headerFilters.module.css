@@ -6,6 +6,7 @@
 
 .itemsContainer {
   flex-direction: row;
+  flex-grow: 1;
 }
 
 .filterText {
@@ -20,7 +21,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  flex-grow: 1;
   justify-content: space-between;
 }
 

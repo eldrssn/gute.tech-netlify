@@ -1,10 +1,6 @@
 import React, { FC } from 'react';
 
-import {
-  DescriptionType,
-  DescriptionTypes,
-  TabProps,
-} from 'types/productTypes';
+import { DescriptionType, DescriptionTypes, TabProps } from 'types/product';
 
 import { TabDefault } from '../TabDefault';
 import { TabDetails } from '../TabDetails';

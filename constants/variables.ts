@@ -1,4 +1,4 @@
-import { DescriptionType, DescriptionTypes } from 'types/productTypes';
+import { DescriptionType, DescriptionTypes } from 'types/product';
 
 export const MOBILE_WIDTH = 830;
 export const TABLET_WIDTH = 1200;

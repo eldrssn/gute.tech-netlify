@@ -10,7 +10,7 @@ import classnames from 'classnames/bind';
 
 import { TabContentByType } from '../TabContentByType';
 import { descriptionTypeName, tabNameByType } from 'constants/variables';
-import { DescriptionType, TabsProps } from 'types/productTypes';
+import { DescriptionType, TabsProps } from 'types/product';
 
 import styles from './tabsMobileView.module.scss';
 

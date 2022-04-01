@@ -2,11 +2,11 @@
   font-weight: 700;
   text-align: center;
   padding-left: 10px;
+  padding-right: 10px;
 }
 
 .menuItemsBox {
   display: flex;
-  flex-direction: row;
 }
 
 .menuItem_callback {

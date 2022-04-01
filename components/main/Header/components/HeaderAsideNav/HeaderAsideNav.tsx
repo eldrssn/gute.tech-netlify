@@ -37,7 +37,10 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
         </MenuItem>
       )}
 
-      <Box className={styles.menuItemsBox}>
+      <Box
+        className={styles.menuItemsBox}
+        sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+      >
         {(!isMobileView || !isDrawer) && (
           <MenuItem>
             <ShoppingCartIcon />
@@ -56,7 +59,7 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
           )}
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem disableGutters>
           <SearchIcon />
           {isDrawer && (
             <Typography className={menuItemStyles}>

@@ -2,11 +2,11 @@ import React, { FC, useContext, useState } from 'react';
 import classnames from 'classnames/bind';
 
 import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
 
 import { CustomButton } from 'components/ui/CustomButton';
 
 import { HeaderContext } from '../HeaderContext';
+import { CatalogMenu } from '../CatalogMenu';
 
 import styles from './catalogButton.module.css';
 
@@ -61,8 +61,18 @@ export const CatalogButton: FC = () => {
           vertical: 'top',
           horizontal: popoverLocation,
         }}
+        sx={{
+          backgroundColor: '#00000031',
+
+          '&	.MuiPopover-paper': {
+            overflowY: 'inherit',
+            overflowX: 'inherit',
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+          },
+        }}
       >
-        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+        <CatalogMenu handleClose={handleClose} />
       </Popover>
     </>
   );

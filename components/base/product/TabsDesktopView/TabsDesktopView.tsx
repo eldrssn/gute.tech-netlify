@@ -4,16 +4,12 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 import { TabContentByType } from '../TabContentByType';
 
-import {
-  DescriptionType,
-  DescriptionTypes,
-  TabsProps as Props,
-} from 'types/productTypes';
+import { DescriptionType, DescriptionTypes, TabsProps } from 'types/product';
 import { descriptionTypeName, tabNameByType } from 'constants/variables';
 
 import styles from './tabsDesktopView.module.scss';
 
-export const TabsDesktopView: FC<Props> = ({ productInfo }) => {
+export const TabsDesktopView: FC<TabsProps> = ({ productInfo }) => {
   const [tabType, setTabType] = useState<DescriptionType>(
     DescriptionTypes.characteristic,
   );
