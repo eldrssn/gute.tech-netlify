@@ -6,7 +6,7 @@ import { checkMobileView } from 'utility/helpers/checkViewType';
 import { TabsMobileView } from '../TabsMobileView';
 import { TabsDesktopView } from '../TabsDesktopView';
 
-import { TabsProps } from 'types/productTypes';
+import { TabsProps } from 'types/product';
 
 export const ProductTabsDescription: FC<TabsProps> = ({ productInfo }) => {
   const { windowWidth } = useWindowSize();

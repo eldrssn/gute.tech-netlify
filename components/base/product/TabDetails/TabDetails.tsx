@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Box } from '@mui/material';
 
-import { TabProps } from 'types/productTypes';
+import { TabProps } from 'types/product';
 
 import styles from './tabDetails.module.scss';
 

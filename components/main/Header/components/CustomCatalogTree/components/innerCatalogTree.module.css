@@ -1,0 +1,17 @@
+.catalogList {
+  justify-content: space-between;
+  padding-left: 0;
+  padding-right: 5px;
+}
+
+.catalogItem_expanded {
+  color: #fc5367;
+}
+
+.catalogItem {
+  font-size: 1em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  margin: 5px;
+}

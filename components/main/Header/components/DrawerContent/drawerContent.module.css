@@ -3,6 +3,7 @@
   color: white;
   height: 100%;
   padding: 40px 20px;
+  transition: transform 400ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .location {
@@ -20,4 +21,20 @@
 
 .asideNavContainer {
   padding: 25px 0;
+}
+
+.catalogButton {
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+  margin: 0;
+  color: #0686c9;
+}
+
+.catalogButton:hover {
+  background-color: transparent;
+}
+
+.catalogButtonTitle {
+  padding-right: 5px;
 }
