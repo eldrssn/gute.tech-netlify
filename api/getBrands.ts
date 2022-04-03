@@ -1,6 +1,6 @@
 import { api } from './utils';
 
-import { CarDetailsItemData } from 'store/reducers/content/types';
+import { CarDetailsItemData } from 'store/reducers/transport/types';
 
 const getBrands = async () => {
   const { data } = await api.get<CarDetailsItemData[]>('/transport/brands/');

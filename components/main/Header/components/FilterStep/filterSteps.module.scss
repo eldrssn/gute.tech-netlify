@@ -18,6 +18,16 @@
   left: 10px;
 }
 
+.stepField {
+  caret-color: transparent;
+}
+
+.stepField input {
+  cursor: pointer;
+  z-index: 1301;
+  user-select: none;
+}
+
 .stepField input:disabled[placeholder] {
   background-color: gray;
   color: white;
@@ -35,7 +45,7 @@
   top: 50%;
   right: 15px;
   margin-top: -2px;
-  content: '';
+  content: "";
 }
 
 .stepper_mobileView {

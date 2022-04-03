@@ -10,8 +10,9 @@ import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
 
 import { Props } from './types';
+import { handleClickProps } from '../../types';
 
-import styles from './filterSteps.module.css';
+import styles from './filterSteps.module.scss';
 
 const cn = classnames.bind(styles);
 
@@ -23,7 +24,12 @@ export const FilterStep: FC<Props> = ({
   name,
   setValue,
   control,
+  inputStepId,
   currentStep,
+  setCurrentStep,
+  setAnchorEl,
+  anchorEl,
+  ...rest
 }) => {
   const input = useController({
     name: name,
@@ -32,31 +38,46 @@ export const FilterStep: FC<Props> = ({
   const { isFullHeader, isTabletView } = useContext(HeaderContext);
   const [isOpenPopover, setIsOpenPopover] = useState(false);
 
-  const isValue = Boolean(input.field.value);
-  console.log(isValue);
-  const isDisable = isValue && activeStep < currentStep;
+  const isValue = Boolean(input.field.value.title.length);
+  const isDisable = !isValue && currentStep < inputStepId && inputStepId !== 0;
 
-  const onClickStep = (currentStep: number) => () => {
-    setActiveStep(currentStep);
+  const onClickStep = (inputStepId: number) => () => {
+    if (!isDisable) {
+      setActiveStep(inputStepId);
+    }
   };
 
-  const handleClick = (value: string) => {
-    setValue(name, value);
+  const handleClickButton = ({
+    title,
+    slug,
+    inputStepId,
+  }: handleClickProps) => {
+    setValue(name, { title: title, slug: slug });
     setActiveStep(activeStep + 1);
+    setCurrentStep(inputStepId + 1);
+  };
+
+  const handleClickInput = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    const anchor = event.target as HTMLElement;
+    if (anchor) {
+      setAnchorEl(anchor);
+    }
   };
 
   useEffect(() => {
-    if (activeStep === currentStep) {
+    if (activeStep === inputStepId) {
       setIsOpenPopover(true);
       return;
     }
 
     setIsOpenPopover(false);
-  }, [activeStep, currentStep]);
+  }, [activeStep, inputStepId]);
 
   return (
     <Step key={name} completed={isValue}>
-      <div className={styles.stepWrap}>
+      <div onClick={handleClickInput} className={styles.stepWrap}>
         <StepButton
           className={cn(styles.stepNumber, {
             [styles.stepNumber_shortHeader]: !isFullHeader || isTabletView,
@@ -66,18 +87,21 @@ export const FilterStep: FC<Props> = ({
         <TextField
           className={styles.stepField}
           autoComplete='off'
+          aria-readonly
           name={name}
-          value={input.field.value}
+          value={input.field.value.title}
           placeholder={name}
-          onClick={onClickStep(currentStep)}
+          onClick={onClickStep(inputStepId)}
           disabled={isDisable}
         />
         <FilterPopover
+          anchorEl={anchorEl}
           setActiveStep={setActiveStep}
           setIsOpenPopover={setIsOpenPopover}
           isOpenPopover={isOpenPopover}
-          step={currentStep}
-          handleClick={handleClick}
+          inputStepId={inputStepId}
+          handleClick={handleClickButton}
+          {...rest}
         />
       </div>
     </Step>

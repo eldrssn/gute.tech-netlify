@@ -1,24 +1,52 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import { useSelector } from 'react-redux';
 
-import { selectBrands, selectModels } from 'store/reducers/content/selectors';
-import { getModel } from 'api/getModel';
+import {
+  selectBrands,
+  selectModels,
+  selectYears,
+  selectEngines,
+} from 'store/reducers/transport/selectors';
 
 import { Props } from './types';
+import { CarDetailsItemData } from 'store/reducers/transport/types';
+import { StepInputs } from '../../types';
+import styles from './styles.module.scss';
 
 export const FilterPopover: FC<Props> = ({
   isOpenPopover,
   setActiveStep,
-  step,
+  inputStepId,
   handleClick,
-  setIsOpenPopover,
 }) => {
+  const [listData, setListData] = useState<CarDetailsItemData[]>([]);
+
   const id = isOpenPopover ? 'simple-popover' : undefined;
 
   const brands = useSelector(selectBrands);
   const models = useSelector(selectModels);
+  const years = useSelector(selectYears);
+  const engines = useSelector(selectEngines);
+
+  useEffect(() => {
+    if (inputStepId === StepInputs.BRAND) {
+      setListData(brands);
+    }
+
+    if (inputStepId === StepInputs.MODEL) {
+      setListData(models);
+    }
+
+    if (inputStepId === StepInputs.YEAR) {
+      setListData(years);
+    }
+
+    if (inputStepId === StepInputs.ENGINE) {
+      setListData(engines);
+    }
+  }, [inputStepId, brands, models, years, engines]);
 
   const handleClose = () => {
     setActiveStep(-1);
@@ -26,24 +54,17 @@ export const FilterPopover: FC<Props> = ({
 
   return (
     <Popover
+      className={styles.popover}
       disableScrollLock
       id={id}
       open={isOpenPopover}
       onClose={handleClose}
       disableAutoFocus
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
     >
-      {brands.map((item) => (
+      {listData.map((item) => (
         <Button
           onClick={() => {
-            handleClick(item.title);
+            handleClick({ title: item.title, slug: item.slug, inputStepId });
           }}
           key={item.slug}
         >

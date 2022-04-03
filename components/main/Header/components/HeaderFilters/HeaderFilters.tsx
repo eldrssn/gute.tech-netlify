@@ -1,7 +1,7 @@
-import React, { useState, FC, useContext, useEffect } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import classnames from 'classnames/bind';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm, useController } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,7 +10,12 @@ import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 
 import { CustomButton } from 'components/ui/CustomButton';
-import { fetchBrands, fetchModels } from 'store/reducers/content/actions';
+import {
+  fetchBrands,
+  fetchModels,
+  fetchYears,
+  fetchEngines,
+} from 'store/reducers/transport/actions';
 
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
@@ -18,28 +23,76 @@ import { HeaderAsideNav } from '../HeaderAsideNav';
 import { FilterSteps } from '../FilterSteps';
 import { HeaderContext } from '../HeaderContext';
 
-import { FormData } from '../../types';
+import { FormData, FormDataItem } from '../../types';
+import { StepInputs } from '../../types';
 
 import styles from './headerFilters.module.css';
 
 const cn = classnames.bind(styles);
 
+const defaultValue: FormDataItem = {
+  title: '',
+  slug: '',
+};
+
 export const HeaderFilters: FC = () => {
   const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView } =
     useContext(HeaderContext);
+  const { getValues, control, setValue } = useForm<FormData>({
+    defaultValues: {
+      brand: defaultValue,
+      model: defaultValue,
+      year: defaultValue,
+      engine: defaultValue,
+    },
+  });
+  const [activeStep, setActiveStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
 
-  const { control, setValue } = useForm<FormData>();
-
-  const [activeStep, setActiveStep] = React.useState(-1);
-
-  const getModel = (slug: string) => {
-    dispatch(fetchModels({ slug }));
-  };
+  console.log(activeStep);
 
   useEffect(() => {
-    dispatch(fetchBrands());
-  }, [dispatch]);
+    const brandSlugValue = getValues('brand.slug');
+    const modelSlugValue = getValues('model.slug');
+    const yearSlugValue = getValues('year.slug');
+
+    if (currentStep === StepInputs.BRAND) {
+      dispatch(fetchBrands());
+      setValue('brand', defaultValue);
+      setValue('model', defaultValue);
+      setValue('year', defaultValue);
+      setValue('engine', defaultValue);
+    }
+
+    if (currentStep === StepInputs.MODEL) {
+      dispatch(fetchModels({ brandSlug: brandSlugValue }));
+      setValue('model', defaultValue);
+      setValue('year', defaultValue);
+      setValue('engine', defaultValue);
+    }
+
+    if (currentStep === StepInputs.YEAR) {
+      dispatch(
+        fetchYears({ brandSlug: brandSlugValue, modelSlug: modelSlugValue }),
+      );
+      setValue('year', defaultValue);
+      setValue('engine', defaultValue);
+    }
+
+    if (currentStep === StepInputs.ENGINE) {
+      dispatch(
+        fetchEngines({
+          brandSlug: brandSlugValue,
+          modelSlug: modelSlugValue,
+          yearSlug: yearSlugValue,
+        }),
+      );
+      setValue('engine', defaultValue);
+    }
+  }, [dispatch, currentStep, getValues, setValue]);
+
+  console.log(currentStep);
 
   return (
     <>
@@ -76,6 +129,8 @@ export const HeaderFilters: FC = () => {
                 setActiveStep={setActiveStep}
                 control={control}
                 setValue={setValue}
+                currentStep={currentStep}
+                setCurrentStep={setCurrentStep}
               />
 
               <CustomButton customStyles={styles.stepButtonSubmit}>
