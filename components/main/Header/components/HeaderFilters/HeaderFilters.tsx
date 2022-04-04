@@ -23,7 +23,7 @@ import { FilterSteps } from '../FilterSteps';
 import { HeaderContext } from '../HeaderContext';
 import { FormData, FormDataItem } from '../../types';
 import { StepInputs } from '../../types';
-import styles from './headerFilters.module.css';
+import styles from './headerFilters.module.scss';
 
 const cn = classnames.bind(styles);
 
@@ -44,10 +44,8 @@ export const HeaderFilters: FC = () => {
       engine: defaultValue,
     },
   });
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(StepInputs.INACTIVE);
   const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
-
-  console.log(activeStep);
 
   useEffect(() => {
     const brandSlugValue = getValues('brand.slug');

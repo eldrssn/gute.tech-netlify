@@ -7,7 +7,7 @@ import { FilterStep } from '../FilterStep';
 
 import { filterSteps } from '../../constants';
 import { Props } from './types';
-import styles from './filterSteps.module.css';
+import styles from './filterSteps.module.scss';
 
 const cn = classnames.bind(styles);
 
