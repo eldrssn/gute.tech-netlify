@@ -1,9 +1,9 @@
 import { Category } from 'components/base/main/CategoryCard/types';
 
 enum ItemKeysEnum {
-  first,
-  second,
-  third,
+  firstItem,
+  secondItem,
+  thirdItem,
 }
 
 export type ItemKeys = keyof typeof ItemKeysEnum;

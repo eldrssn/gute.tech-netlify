@@ -4,7 +4,7 @@ import { ParsedUrlQuery, ParsedUrlQueryInput } from 'querystring';
 
 import { RouterQuery } from './types';
 
-const useRouterQuery = () => {
+export const useRouterQuery = () => {
   const router = useRouter();
   const { query, pathname } = router;
 
@@ -97,5 +97,3 @@ const useRouterQuery = () => {
 
   return routerQuery;
 };
-
-export default useRouterQuery;

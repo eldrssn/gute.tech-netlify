@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-import useRouterQuery from 'hooks/useRouterQuery';
+import { useRouterQuery } from 'hooks/useRouterQuery';
 
 import { CheckboxGroupProps, CheckboxOption } from './types';
 

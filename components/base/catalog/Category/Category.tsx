@@ -16,19 +16,19 @@ export const Category: FC<CategoriesProps> = ({ url }) => {
   const category = catalogData.find((item) => item.url === url);
 
   const children = category?.children;
-  const header = category?.title;
+  const header = category?.name;
 
   const renderLastCategories = (child: CatalogChild) =>
     child.children?.map((child) => (
       <MenuItem className={styles.lastCategory_title} key={child.id}>
-        {child.title}
+        {child.name}
       </MenuItem>
     ));
 
   const renderSubcategories = (child: CatalogChild) =>
     child.children?.map((child) => (
       <Fragment key={child.id}>
-        <MenuItem className={styles.subcategory_title}>{child.title}</MenuItem>
+        <MenuItem className={styles.subcategory_title}>{child.name}</MenuItem>
         {child?.children.length > 0 && renderLastCategories(child)}
       </Fragment>
     ));
@@ -48,7 +48,7 @@ export const Category: FC<CategoriesProps> = ({ url }) => {
       >
         {children?.map((child) => (
           <Box key={child.id}>
-            <MenuItem className={styles.category_title}>{child.title}</MenuItem>
+            <MenuItem className={styles.category_title}>{child.name}</MenuItem>
 
             {child?.children.length > 0 && renderSubcategories(child)}
             <Divider light={true} />

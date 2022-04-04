@@ -31,7 +31,7 @@ export const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
   const renderItemChildren = (child: CatalogChild) =>
     child.children?.map((child) => (
       <MenuItem className={styles.itemChildren_title} key={child.id}>
-        {child.title}
+        {child.name}
       </MenuItem>
     ));
 
@@ -53,7 +53,7 @@ export const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
                 onMouseEnter={() => showCatalogItem(item)}
                 onClick={handleClose}
               >
-                {item.title}
+                {item.name}
               </MenuItem>
             </a>
           </Link>
@@ -77,7 +77,7 @@ export const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
             {childrenBox.map((child) => (
               <Fragment key={child.id}>
                 <MenuItem className={styles.catalogItem_title}>
-                  {child.title}
+                  {child.name}
                 </MenuItem>
 
                 {child?.children.length > 0 && renderItemChildren(child)}

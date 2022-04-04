@@ -1,14 +1,18 @@
-import { Category } from 'components/base/main/CategoryCard/types';
 import { objByThree, objByThreeKeys } from 'mock/categories';
 import { GroupedItemsItem } from 'components/base/home';
 import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
+import { CatalogChild } from 'types/catalog';
 
-const sortItems = (unsortedItems: Category[]) => {
+const sortItems = (unsortedItems: CatalogChild[]) => {
   return unsortedItems.sort((a, b) => (a.sort < b.sort ? -1 : 1));
 };
 
-const groupItems = (sortedItems: Category[]) => {
+const groupItems = (sortedItems?: CatalogChild[]) => {
+  if (!sortedItems) {
+    return null;
+  }
+
   const { groupedItems } = sortedItems.reduce<{
     groupedItems: GroupedItemsItem[];
     currentItem: GroupedItemsItem;
