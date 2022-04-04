@@ -40,18 +40,18 @@ export const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => (
       className={styles.treeViewContainer}
     >
       {catalogData.map((item) => (
-        <CustomCatalogTree key={item.id} nodeId={item.id} label={item.title}>
+        <CustomCatalogTree key={item.id} nodeId={item.id} label={item.name}>
           {item.children?.map((child) => (
             <CustomCatalogTree
               key={child.id}
               nodeId={child.id}
-              label={child.title}
+              label={child.name}
             >
               {child.children?.map((subchild) => (
                 <CustomCatalogTree
                   key={subchild.id}
                   nodeId={subchild.id}
-                  label={subchild.title}
+                  label={subchild.name}
                 />
               ))}
             </CustomCatalogTree>

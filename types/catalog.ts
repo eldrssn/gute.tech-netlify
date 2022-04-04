@@ -1,6 +1,9 @@
 export type CatalogChild = {
   id: string;
-  title: string;
-  url?: string;
+  name: string;
+  url: string;
+  image?: string;
+  quantity: number;
+  sort: number;
   children: CatalogChild[];
 };

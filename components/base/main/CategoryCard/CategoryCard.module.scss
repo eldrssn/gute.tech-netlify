@@ -15,7 +15,6 @@
 }
 
 .backgroundImage {
-  background: url(/public/germanika/bg.png) 0 0 no-repeat;
   background-size: cover;
   z-index: 10;
   position: absolute;
@@ -23,6 +22,7 @@
   top: 0;
   width: 100%;
   height: 100%;
+  background: linear-gradient(#000000b0, 35%, #ffffff00);
 }
 
 .categoryName {
@@ -37,6 +37,7 @@
   top: 40px;
   left: 20px;
   transition: all 0.6s ease;
+  word-break: break-word;
 }
 
 .categoryImage {

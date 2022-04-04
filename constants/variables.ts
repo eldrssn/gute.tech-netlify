@@ -19,3 +19,5 @@ export const tabNameByType: Record<DescriptionType, string> = {
 };
 
 export const DEV_HOST = 'dev.gute.tech';
+
+export const CATEGORY_QUERY = 'category';
