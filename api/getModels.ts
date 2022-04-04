@@ -1,6 +1,6 @@
 import { api } from './utils';
 
-import { BrandSlug } from 'store/reducers/transport/types';
+import { BrandSlug } from 'types/transportStore';
 
 const getModel = async ({ brandSlug }: BrandSlug) => {
   const { data } = await api.get(`/transport/brands/${brandSlug}/models/`);

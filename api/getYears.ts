@@ -1,6 +1,6 @@
 import { api } from './utils';
 
-import { YearsSlugs } from 'store/reducers/transport/types';
+import { YearsSlugs } from 'types/transportStore';
 
 const getYears = async ({ brandSlug, modelSlug }: YearsSlugs) => {
   const { data } = await api.get(

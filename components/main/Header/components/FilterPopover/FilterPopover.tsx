@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
-import Popover from '@mui/material/Popover';
 import { useSelector } from 'react-redux';
+import { Box } from '@mui/system';
 
 import {
   selectBrands,
@@ -9,9 +9,10 @@ import {
   selectYears,
   selectEngines,
 } from 'store/reducers/transport/selectors';
+import Modal from 'components/main/Modal';
 
 import { Props } from './types';
-import { CarDetailsItemData } from 'store/reducers/transport/types';
+import { ListOptionsItemData } from 'types/transportStore';
 import { StepInputs } from '../../types';
 import styles from './styles.module.scss';
 
@@ -21,9 +22,7 @@ export const FilterPopover: FC<Props> = ({
   inputStepId,
   handleClick,
 }) => {
-  const [listData, setListData] = useState<CarDetailsItemData[]>([]);
-
-  const id = isOpenPopover ? 'simple-popover' : undefined;
+  const [optionsList, setOptionsList] = useState<ListOptionsItemData[]>([]);
 
   const brands = useSelector(selectBrands);
   const models = useSelector(selectModels);
@@ -32,45 +31,41 @@ export const FilterPopover: FC<Props> = ({
 
   useEffect(() => {
     if (inputStepId === StepInputs.BRAND) {
-      setListData(brands);
+      setOptionsList(brands);
     }
 
     if (inputStepId === StepInputs.MODEL) {
-      setListData(models);
+      setOptionsList(models);
     }
 
     if (inputStepId === StepInputs.YEAR) {
-      setListData(years);
+      setOptionsList(years);
     }
 
     if (inputStepId === StepInputs.ENGINE) {
-      setListData(engines);
+      setOptionsList(engines);
     }
   }, [inputStepId, brands, models, years, engines]);
 
   const handleClose = () => {
-    setActiveStep(-1);
+    setActiveStep(StepInputs.INACTIVE);
   };
 
   return (
-    <Popover
-      className={styles.popover}
-      disableScrollLock
-      id={id}
-      open={isOpenPopover}
-      onClose={handleClose}
-      disableAutoFocus
-    >
-      {listData.map((item) => (
-        <Button
-          onClick={() => {
-            handleClick({ title: item.title, slug: item.slug, inputStepId });
-          }}
-          key={item.slug}
-        >
-          {item.title}
-        </Button>
-      ))}
-    </Popover>
+    <Modal isOpen={isOpenPopover} setIsOpen={handleClose}>
+      <Box component='div' className={styles.wrap}>
+        {optionsList.map((item) => (
+          <Button
+            className={styles.button}
+            onClick={() => {
+              handleClick({ title: item.title, slug: item.slug, inputStepId });
+            }}
+            key={item.slug}
+          >
+            {item.title}
+          </Button>
+        ))}
+      </Box>
+    </Modal>
   );
 };

@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
-
 import { CustomButton } from 'components/ui/CustomButton';
 import {
   fetchBrands,
@@ -22,10 +21,8 @@ import { HeaderLogo } from '../HeaderLogo';
 import { HeaderAsideNav } from '../HeaderAsideNav';
 import { FilterSteps } from '../FilterSteps';
 import { HeaderContext } from '../HeaderContext';
-
 import { FormData, FormDataItem } from '../../types';
 import { StepInputs } from '../../types';
-
 import styles from './headerFilters.module.css';
 
 const cn = classnames.bind(styles);

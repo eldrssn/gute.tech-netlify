@@ -6,5 +6,4 @@ export type Props = {
   setIsOpenPopover: (isOpenPopover: boolean) => void;
   handleClick: ({ title, slug, inputStepId }: handleClickProps) => void;
   inputStepId: number;
-  anchorEl: HTMLElement | null;
 };

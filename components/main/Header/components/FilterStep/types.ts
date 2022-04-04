@@ -7,6 +7,4 @@ export type Props = {
   inputStepId: number;
   currentStep: number;
   setCurrentStep: (currentStep: number) => void;
-  setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
-  anchorEl: HTMLElement | null;
 } & FormProps;

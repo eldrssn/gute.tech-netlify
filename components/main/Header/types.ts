@@ -45,6 +45,7 @@ export enum StepInputs {
   MODEL = 1,
   YEAR = 2,
   ENGINE = 3,
+  INACTIVE = -1,
 }
 
 export type filterStepsData = {

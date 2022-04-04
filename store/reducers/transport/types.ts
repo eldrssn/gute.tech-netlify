@@ -1,4 +1,5 @@
 import { StoreState, StoreError, ErrorAction } from 'store/types';
+import { ListOptionsItemData } from 'types/transportStore';
 
 enum TransportStoreBlocks {
   BRANDS = 'brands',
@@ -7,40 +8,20 @@ enum TransportStoreBlocks {
   ENGINES = 'engines',
 }
 
-type CarDetailsItemData = {
-  title: string;
-  slug: string;
-};
-
-type BrandSlug = {
-  brandSlug: string;
-};
-
-type YearsSlugs = {
-  brandSlug: string;
-  modelSlug: string;
-};
-
-type EnginesSlugs = {
-  brandSlug: string;
-  modelSlug: string;
-  yearSlug: string;
-};
-
 type YearsState = {
-  data: CarDetailsItemData[] | [];
+  data: ListOptionsItemData[] | [];
 } & StoreState;
 
 type EnginesState = {
-  data: CarDetailsItemData[] | [];
+  data: ListOptionsItemData[] | [];
 } & StoreState;
 
 type ModelsState = {
-  data: CarDetailsItemData[] | [];
+  data: ListOptionsItemData[] | [];
 } & StoreState;
 
 type BrandsState = {
-  data: CarDetailsItemData[] | [];
+  data: ListOptionsItemData[] | [];
 } & StoreState;
 
 type TransportStore = {
@@ -50,14 +31,6 @@ type TransportStore = {
   [TransportStoreBlocks.ENGINES]: EnginesState;
 };
 
-export type {
-  ErrorAction,
-  CarDetailsItemData,
-  BrandSlug,
-  YearsSlugs,
-  EnginesSlugs,
-  StoreError,
-  TransportStore,
-};
+export type { ErrorAction, StoreError, TransportStore };
 
 export { TransportStoreBlocks };

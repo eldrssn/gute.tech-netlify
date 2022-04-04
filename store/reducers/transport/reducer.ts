@@ -11,7 +11,8 @@ import {
   resetYears,
 } from './actions';
 
-import { TransportStore, CarDetailsItemData, ErrorAction } from './types';
+import { TransportStore, ErrorAction } from './types';
+import { ListOptionsItemData } from 'types/transportStore';
 
 const initialState: TransportStore = {
   brands: {
@@ -42,7 +43,7 @@ const handlers = {
   },
   [fetchBrands.fulfilled.type]: (
     state: TransportStore,
-    { payload }: PayloadAction<CarDetailsItemData[]>,
+    { payload }: PayloadAction<ListOptionsItemData[]>,
   ) => {
     state.brands.data = payload;
     state.brands.isLoading = false;
@@ -62,7 +63,7 @@ const handlers = {
   },
   [fetchModels.fulfilled.type]: (
     state: TransportStore,
-    { payload }: PayloadAction<CarDetailsItemData[]>,
+    { payload }: PayloadAction<ListOptionsItemData[]>,
   ) => {
     state.models.data = payload;
     state.models.isLoading = false;
@@ -84,13 +85,13 @@ const handlers = {
     state: TransportStore,
     { payload }: PayloadAction<string[]>,
   ) => {
-    const newPayload = payload.map((item) => {
+    const newData = payload.map((item) => {
       const title = item;
       const slug = item;
 
       return { title, slug };
     });
-    state.years.data = newPayload;
+    state.years.data = newData;
     state.years.isLoading = false;
     state.years.error = null;
   },
@@ -108,7 +109,7 @@ const handlers = {
   },
   [fetchEngines.fulfilled.type]: (
     state: TransportStore,
-    { payload }: PayloadAction<CarDetailsItemData[]>,
+    { payload }: PayloadAction<ListOptionsItemData[]>,
   ) => {
     state.engines.data = payload;
     state.engines.isLoading = false;

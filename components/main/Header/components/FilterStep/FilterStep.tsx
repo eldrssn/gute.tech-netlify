@@ -1,7 +1,6 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import classnames from 'classnames/bind';
 import { useController } from 'react-hook-form';
-
 import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import TextField from '@mui/material/TextField';
@@ -11,7 +10,7 @@ import { HeaderContext } from '../HeaderContext';
 
 import { Props } from './types';
 import { handleClickProps } from '../../types';
-
+import { StepInputs } from '../../types';
 import styles from './filterSteps.module.scss';
 
 const cn = classnames.bind(styles);
@@ -27,8 +26,6 @@ export const FilterStep: FC<Props> = ({
   inputStepId,
   currentStep,
   setCurrentStep,
-  setAnchorEl,
-  anchorEl,
   ...rest
 }) => {
   const input = useController({
@@ -39,7 +36,8 @@ export const FilterStep: FC<Props> = ({
   const [isOpenPopover, setIsOpenPopover] = useState(false);
 
   const isValue = Boolean(input.field.value.title.length);
-  const isDisable = !isValue && currentStep < inputStepId && inputStepId !== 0;
+  const isDisable =
+    !isValue && currentStep < inputStepId && inputStepId !== StepInputs.BRAND;
 
   const onClickStep = (inputStepId: number) => () => {
     if (!isDisable) {
@@ -57,15 +55,6 @@ export const FilterStep: FC<Props> = ({
     setCurrentStep(inputStepId + 1);
   };
 
-  const handleClickInput = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) => {
-    const anchor = event.target as HTMLElement;
-    if (anchor) {
-      setAnchorEl(anchor);
-    }
-  };
-
   useEffect(() => {
     if (activeStep === inputStepId) {
       setIsOpenPopover(true);
@@ -77,7 +66,7 @@ export const FilterStep: FC<Props> = ({
 
   return (
     <Step key={name} completed={isValue}>
-      <div onClick={handleClickInput} className={styles.stepWrap}>
+      <div className={styles.stepWrap}>
         <StepButton
           className={cn(styles.stepNumber, {
             [styles.stepNumber_shortHeader]: !isFullHeader || isTabletView,
@@ -95,7 +84,6 @@ export const FilterStep: FC<Props> = ({
           disabled={isDisable}
         />
         <FilterPopover
-          anchorEl={anchorEl}
           setActiveStep={setActiveStep}
           setIsOpenPopover={setIsOpenPopover}
           isOpenPopover={isOpenPopover}

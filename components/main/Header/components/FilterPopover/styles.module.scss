@@ -1,5 +1,9 @@
-.popover :nth-child(3) {
+.wrap {
   position: absolute;
   display: flex;
   flex-direction: column;
+}
+
+.button {
+  background-color: white;
 }

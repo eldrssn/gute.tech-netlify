@@ -5,7 +5,7 @@ import { getModel } from 'api/getModels';
 import { getYears } from 'api/getYears';
 import { getEngines } from 'api/getEngines';
 
-import { BrandSlug, YearsSlugs, EnginesSlugs } from './types';
+import { BrandSlug, YearsSlugs, EnginesSlugs } from 'types/transportStore';
 
 const fetchBrands = createAsyncThunk('ContentStore/fetchBrands', async () => {
   const data = await getBrands();
