@@ -23,4 +23,4 @@ type StoreState = {
   error: StoreError | null;
 };
 
-export type { State, ErrorAction, StoreError, StoreState };
+export type { State, ErrorAction, StoreState, StoreError };

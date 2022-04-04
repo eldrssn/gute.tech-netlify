@@ -8,7 +8,7 @@ import {
 
 import { setSmoothScroll } from 'utility/utils';
 
-import { TabProps } from 'types/productTypes';
+import { TabProps } from 'types/product';
 import styles from './tabFAQ.module.scss';
 
 export const TabFAQ: FC<TabProps> = ({ content }) => {

@@ -1,0 +1,38 @@
+.header {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.childrenList {
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  column-gap: 20px;
+}
+
+.category_title,
+.subcategory_title {
+  page-break-inside: avoid;
+  break-inside: avoid;
+
+  &:hover {
+    color: #0686c9;
+  }
+}
+
+.category_title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.subcategory_title {
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 25px;
+}
+
+.lastCategory_title {
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 35px;
+}

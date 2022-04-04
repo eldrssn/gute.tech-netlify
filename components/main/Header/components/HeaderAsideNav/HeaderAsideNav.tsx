@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { menuNavItems } from 'mock/menuNavItems';
-import { IsDrawerProps } from '../../types';
+import { IsDrawerProps } from 'components/main/Header/types';
 
 import { HeaderContext } from '../HeaderContext';
 
@@ -37,7 +37,10 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
         </MenuItem>
       )}
 
-      <Box className={styles.menuItemsBox}>
+      <Box
+        className={styles.menuItemsBox}
+        sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+      >
         {(!isMobileView || !isDrawer) && (
           <MenuItem>
             <ShoppingCartIcon />
@@ -56,7 +59,7 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
           )}
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem disableGutters>
           <SearchIcon />
           {isDrawer && (
             <Typography className={menuItemStyles}>

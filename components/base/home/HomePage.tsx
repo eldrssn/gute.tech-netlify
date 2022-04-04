@@ -18,8 +18,8 @@ const rowHashMap: Record<Index, FC<Items>> = {
   1: FirstRow,
   2: SecondRow,
   3: FirstRowReversed,
-  4: SecondRowReversed
-}
+  4: SecondRowReversed,
+};
 
 const Home: FC = () => (
   <>
@@ -32,7 +32,7 @@ const Home: FC = () => (
       sx={{ padding: '20px 0' }}
     >
       {groupedItems.map((items, index) => {
-        const type: Index = index % 4 + 1 as Index;
+        const type: Index = ((index % 4) + 1) as Index;
 
         const Component = rowHashMap[type];
 

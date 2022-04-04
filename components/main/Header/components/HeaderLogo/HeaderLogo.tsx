@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { IsDrawerProps } from '../../types';
+import { IsDrawerProps } from 'components/main/Header/types';
 
 import { HeaderContext } from '../HeaderContext';
 

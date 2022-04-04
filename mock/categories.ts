@@ -5,36 +5,8 @@ const sortItems = (unsortedItems: Category[]) => {
   return unsortedItems.sort((a, b) => (a.sort < b.sort ? -1 : 1));
 };
 
-const groupItems = (sortedItems: Category[]) => {
-  const { groupedItems } = sortedItems.reduce<{
-    groupedItems: GroupedItemsItem[];
-    currentItem: GroupedItemsItem;
-  }>(
-    (acc, value, index) => {
-      const currentItem = {
-        ...acc.currentItem,
-        [objByThreeKeys[index % 3]]: value,
-      };
-
-      if ((index + 1) % 3 == 0 || index + 1 == sortedItems.length) {
-        acc.groupedItems.push(currentItem);
-
-        acc.currentItem = { ...objByThree };
-        return acc;
-      }
-
-      acc.currentItem = currentItem;
-
-      return acc;
-    },
-    {
-      groupedItems: [],
-      currentItem: { ...objByThree },
-    },
-  );
-
-  return groupedItems;
-};
+const objByThree: GroupedItemsItem = { first: null, second: null, third: null };
+const objByThreeKeys: ItemKeys[] = Object.keys(objByThree) as ItemKeys[];
 
 const items: Category[] = [
   {
@@ -130,11 +102,39 @@ const items: Category[] = [
   },
 ];
 
-const sortedItems = sortItems(items);
+const groupItems = (sortedItems: Category[]) => {
+  const { groupedItems } = sortedItems.reduce<{
+    groupedItems: GroupedItemsItem[];
+    currentItem: GroupedItemsItem;
+  }>(
+    (acc, value, index) => {
+      const currentItem = {
+        ...acc.currentItem,
+        [objByThreeKeys[index % 3]]: value,
+      };
 
-const objByThree: GroupedItemsItem = { first: null, second: null, third: null };
-const objByThreeKeys: ItemKeys[] = Object.keys(objByThree) as ItemKeys[];
+      if ((index + 1) % 3 == 0 || index + 1 == sortedItems.length) {
+        acc.groupedItems.push(currentItem);
 
-const groupedItems = groupItems(sortedItems);
+        acc.currentItem = { ...objByThree };
+        return acc;
+      }
+
+      acc.currentItem = currentItem;
+
+      return acc;
+    },
+    {
+      groupedItems: [],
+      currentItem: { ...objByThree },
+    },
+  );
+
+  return groupedItems;
+};
+
+const sortedItems = groupItems(items);
+
+const groupedItems = sortedItems;
 
 export { items, sortedItems, objByThree, objByThreeKeys, groupedItems };

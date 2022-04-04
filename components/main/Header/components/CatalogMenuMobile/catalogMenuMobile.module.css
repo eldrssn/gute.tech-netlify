@@ -1,0 +1,40 @@
+.mainContainer {
+  background-color: #333333;
+  color: white;
+  padding: 10px;
+  position: relative;
+}
+
+.catalogButton {
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+  color: #0686c9;
+}
+
+.stickyButton {
+  position: sticky;
+  top: 0;
+  background-color: #333333;
+  z-index: 1200;
+}
+
+.catalogButton:hover {
+  background-color: transparent;
+}
+
+.divider {
+  border-color: #5c5c5c;
+}
+
+.treeViewContainer {
+  height: 100%;
+}
+
+.icon {
+  transition: transform 0.3s ease;
+}
+
+.icon_collapse {
+  transform: rotate(90deg);
+}

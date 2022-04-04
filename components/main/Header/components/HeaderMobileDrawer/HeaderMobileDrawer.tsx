@@ -46,11 +46,13 @@ export const HeaderMobileDrawer = () => {
       <Divider />
 
       <Drawer
+        transitionDuration={500}
         sx={{
           '& .MuiDrawer-paper': {
             width: '100vw',
             top: '62px',
             boxSizing: 'border-box',
+            borderRight: 'none',
           },
         }}
         variant='persistent'
