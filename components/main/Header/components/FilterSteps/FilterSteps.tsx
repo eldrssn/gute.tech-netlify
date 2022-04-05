@@ -19,8 +19,9 @@ export const FilterSteps: FC<Props> = ({ activeStep, ...rest }) => {
       activeStep={activeStep}
       className={cn({ [styles.stepper_mobileView]: isMobileView })}
     >
-      {filterSteps.map(({ name, inputStepId }) => (
+      {filterSteps.map(({ name, inputStepId, placeholder }) => (
         <FilterStep
+          placeholder={placeholder}
           name={name}
           key={name}
           activeStep={activeStep}

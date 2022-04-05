@@ -7,24 +7,15 @@ const selectContentStore = createSelector(
   ({ transportStore }) => transportStore,
 );
 
-const selectBrands = createSelector(
-  selectContentStore,
-  ({ brands }) => brands.data,
-);
+const selectBrands = createSelector(selectContentStore, ({ brands }) => brands);
 
-const selectModels = createSelector(
-  selectContentStore,
-  ({ models }) => models.data,
-);
+const selectModels = createSelector(selectContentStore, ({ models }) => models);
 
-const selectYears = createSelector(
-  selectContentStore,
-  ({ years }) => years.data,
-);
+const selectYears = createSelector(selectContentStore, ({ years }) => years);
 
 const selectEngines = createSelector(
   selectContentStore,
-  ({ engines }) => engines.data,
+  ({ engines }) => engines,
 );
 
 export { selectBrands, selectModels, selectYears, selectEngines };

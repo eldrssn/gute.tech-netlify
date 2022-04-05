@@ -2,8 +2,11 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import classnames from 'classnames/bind';
 import { useController } from 'react-hook-form';
 import Step from '@mui/material/Step';
-import StepButton from '@mui/material/StepButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@mui/material/TextField';
+import { Box } from '@mui/system';
+import { TailSpin } from 'react-loader-spinner';
 
 import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
@@ -12,6 +15,9 @@ import { Props } from './types';
 import { handleClickProps } from '../../types';
 import { StepInputs } from '../../types';
 import styles from './filterSteps.module.scss';
+
+import colors from 'styles/_export.module.scss';
+const loaderColor = colors.blue;
 
 const cn = classnames.bind(styles);
 
@@ -26,6 +32,7 @@ export const FilterStep: FC<Props> = ({
   inputStepId,
   currentStep,
   setCurrentStep,
+  placeholder,
   ...rest
 }) => {
   const input = useController({
@@ -34,8 +41,11 @@ export const FilterStep: FC<Props> = ({
   });
   const { isFullHeader, isTabletView } = useContext(HeaderContext);
   const [isOpenPopover, setIsOpenPopover] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const isValue = Boolean(input.field.value.title.length);
+  const inputNumber = inputStepId + 1;
+
+  const isValue = Boolean(input.field.value.title !== '');
   const isDisable =
     !isValue && currentStep < inputStepId && inputStepId !== StepInputs.BRAND;
 
@@ -65,25 +75,35 @@ export const FilterStep: FC<Props> = ({
   }, [activeStep, inputStepId]);
 
   return (
-    <Step key={name} completed={isValue}>
+    <Step key={name}>
       <div className={styles.stepWrap}>
-        <StepButton
+        <Box
           className={cn(styles.stepNumber, {
             [styles.stepNumber_shortHeader]: !isFullHeader || isTabletView,
+            [styles.stepNumberDisable]: isDisable,
+            [styles.stepNumberLoading]: isLoading,
           })}
-        />
-
+        >
+          {isLoading ? (
+            <TailSpin height={25} width={25} color={loaderColor} />
+          ) : isValue ? (
+            <FontAwesomeIcon icon={faCheck} />
+          ) : (
+            inputNumber
+          )}
+        </Box>
         <TextField
           className={styles.stepField}
           autoComplete='off'
           aria-readonly
           name={name}
           value={input.field.value.title}
-          placeholder={name}
+          placeholder={placeholder}
           onClick={onClickStep(inputStepId)}
           disabled={isDisable}
         />
         <FilterPopover
+          setIsLoading={setIsLoading}
           setActiveStep={setActiveStep}
           setIsOpenPopover={setIsOpenPopover}
           isOpenPopover={isOpenPopover}

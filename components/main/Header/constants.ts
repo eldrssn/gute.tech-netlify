@@ -10,17 +10,21 @@ export const filterSteps: filterStepsData[] = [
   {
     name: 'brand',
     inputStepId: StepInputs.BRAND,
+    placeholder: 'Марка',
   },
   {
     name: 'model',
     inputStepId: StepInputs.MODEL,
+    placeholder: 'Модель',
   },
   {
     name: 'year',
     inputStepId: StepInputs.YEAR,
+    placeholder: 'Год выпуска',
   },
   {
     name: 'engine',
     inputStepId: StepInputs.ENGINE,
+    placeholder: 'Двигатель',
   },
 ];

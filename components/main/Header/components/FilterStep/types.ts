@@ -7,4 +7,5 @@ export type Props = {
   inputStepId: number;
   currentStep: number;
   setCurrentStep: (currentStep: number) => void;
+  placeholder: string;
 } & FormProps;

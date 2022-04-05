@@ -14,6 +14,10 @@ import {
   fetchModels,
   fetchYears,
   fetchEngines,
+  resetBrands,
+  resetModels,
+  resetYears,
+  resetEngines,
 } from 'store/reducers/transport/actions';
 
 import { CatalogButton } from '../CatalogButton';
@@ -47,13 +51,17 @@ export const HeaderFilters: FC = () => {
   const [activeStep, setActiveStep] = useState(StepInputs.INACTIVE);
   const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
 
-  useEffect(() => {
-    const brandSlugValue = getValues('brand.slug');
-    const modelSlugValue = getValues('model.slug');
-    const yearSlugValue = getValues('year.slug');
+  const brandSlugValue = getValues('brand.slug');
+  const modelSlugValue = getValues('model.slug');
+  const yearSlugValue = getValues('year.slug');
 
+  useEffect(() => {
     if (currentStep === StepInputs.BRAND) {
       dispatch(fetchBrands());
+      dispatch(resetBrands());
+      dispatch(resetModels());
+      dispatch(resetYears());
+      dispatch(resetEngines());
       setValue('brand', defaultValue);
       setValue('model', defaultValue);
       setValue('year', defaultValue);
@@ -62,6 +70,9 @@ export const HeaderFilters: FC = () => {
 
     if (currentStep === StepInputs.MODEL) {
       dispatch(fetchModels({ brandSlug: brandSlugValue }));
+      dispatch(resetModels());
+      dispatch(resetYears());
+      dispatch(resetEngines());
       setValue('model', defaultValue);
       setValue('year', defaultValue);
       setValue('engine', defaultValue);
@@ -71,6 +82,8 @@ export const HeaderFilters: FC = () => {
       dispatch(
         fetchYears({ brandSlug: brandSlugValue, modelSlug: modelSlugValue }),
       );
+      dispatch(resetYears());
+      dispatch(resetEngines());
       setValue('year', defaultValue);
       setValue('engine', defaultValue);
     }
@@ -83,11 +96,18 @@ export const HeaderFilters: FC = () => {
           yearSlug: yearSlugValue,
         }),
       );
+      dispatch(resetEngines());
       setValue('engine', defaultValue);
     }
-  }, [dispatch, currentStep, getValues, setValue]);
-
-  console.log(currentStep);
+  }, [
+    dispatch,
+    currentStep,
+    getValues,
+    setValue,
+    brandSlugValue,
+    modelSlugValue,
+    yearSlugValue,
+  ]);
 
   return (
     <>

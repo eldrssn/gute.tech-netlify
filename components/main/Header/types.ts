@@ -51,6 +51,7 @@ export enum StepInputs {
 export type filterStepsData = {
   name: FilterInputName;
   inputStepId: number;
+  placeholder: string;
 };
 
 export type FilterInputName = keyof typeof FilterInputNames;
