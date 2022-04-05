@@ -12,8 +12,7 @@ import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
 
 import { Props } from './types';
-import { HandleClickProps } from '../../types';
-import { StepInputs } from '../../types';
+import { HandleClickProps, StepInputs } from '../../types';
 import styles from './filterSteps.module.scss';
 import colors from 'styles/_export.module.scss';
 
