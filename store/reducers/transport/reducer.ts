@@ -12,7 +12,7 @@ import {
 } from './actions';
 
 import { TransportStore, ErrorAction } from './types';
-import { ListOptionsItemData } from 'types/transportStore';
+import { ListOptionsItemData, ListOptionsYearData } from 'types/transportStore';
 
 const initialState: TransportStore = {
   brands: {
@@ -83,7 +83,7 @@ const handlers = {
   },
   [fetchYears.fulfilled.type]: (
     state: TransportStore,
-    { payload }: PayloadAction<string[]>,
+    { payload }: PayloadAction<ListOptionsYearData[]>,
   ) => {
     const newData = payload.map((item) => {
       const title = item;

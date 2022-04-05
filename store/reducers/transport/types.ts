@@ -9,19 +9,19 @@ enum TransportStoreBlocks {
 }
 
 type YearsState = {
-  data: ListOptionsItemData[] | [];
+  data: ListOptionsItemData[];
 } & StoreState;
 
 type EnginesState = {
-  data: ListOptionsItemData[] | [];
+  data: ListOptionsItemData[];
 } & StoreState;
 
 type ModelsState = {
-  data: ListOptionsItemData[] | [];
+  data: ListOptionsItemData[];
 } & StoreState;
 
 type BrandsState = {
-  data: ListOptionsItemData[] | [];
+  data: ListOptionsItemData[];
 } & StoreState;
 
 type TransportStore = {

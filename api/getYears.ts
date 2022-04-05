@@ -1,9 +1,10 @@
 import { api } from './utils';
 
-import { YearsSlugs } from 'types/transportStore';
+import { ListOptionsYearData } from 'types/transportStore';
+import { YearsSlugs } from 'models/transportModels';
 
 const getYears = async ({ brandSlug, modelSlug }: YearsSlugs) => {
-  const { data } = await api.get(
+  const { data } = await api.get<ListOptionsYearData[]>(
     `/transport/brands/${brandSlug}/models/${modelSlug}/years/`,
   );
 

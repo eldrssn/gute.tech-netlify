@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/system';
 import cn from 'classnames';
-import { TailSpin } from 'react-loader-spinner';
 
 import {
   selectBrands,
@@ -11,14 +10,11 @@ import {
   selectYears,
   selectEngines,
 } from 'store/reducers/transport/selectors';
-import colors from 'styles/_export.module.scss';
 
 import { Props } from './types';
 import { ListOptionsItem } from 'types/transportStore';
 import { StepInputs } from '../../types';
 import styles from './styles.module.scss';
-
-const loaderColor = colors.blue;
 
 export const FilterPopover: FC<Props> = ({
   isOpenPopover,
@@ -48,31 +44,21 @@ export const FilterPopover: FC<Props> = ({
     styles.wrapper,
   );
 
-  const listClassName = cn(
-    { [styles.isLoading]: optionIsLoading },
-    styles.list,
-  );
-
   const handleClose = () => {
     setActiveStep(StepInputs.INACTIVE);
   };
 
   useEffect(() => {
-    if (inputStepId === StepInputs.BRAND) {
-      setOptionsItem(brands);
-    }
+    const dataByStepId = {
+      [StepInputs.BRAND]: brands,
+      [StepInputs.MODEL]: models,
+      [StepInputs.YEAR]: years,
+      [StepInputs.ENGINE]: engines,
+    };
 
-    if (inputStepId === StepInputs.MODEL) {
-      setOptionsItem(models);
-    }
+    const data: ListOptionsItem = dataByStepId[inputStepId];
 
-    if (inputStepId === StepInputs.YEAR) {
-      setOptionsItem(years);
-    }
-
-    if (inputStepId === StepInputs.ENGINE) {
-      setOptionsItem(engines);
-    }
+    setOptionsItem(data);
   }, [inputStepId, brands, models, years, engines]);
 
   useEffect(() => {

@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: $white;
   top: 50%;
   left: 20px;
   padding: 0;
@@ -24,11 +24,11 @@
 }
 
 .stepNumberDisable {
-  background-color: rgb(151, 151, 151);
+  background-color: $gray2;
 }
 
 .stepNumberLoading {
-  background-color: white;
+  background-color: $white;
 }
 
 .stepNumber_shortHeader {
@@ -46,15 +46,15 @@
 }
 
 .stepField input:disabled[placeholder] {
-  background-color: gray;
-  color: white;
-  -webkit-text-fill-color: white;
+  background-color: $gray1;
+  color: $white;
+  -webkit-text-fill-color: $white;
 }
 
 .stepField::after {
   width: 0;
   height: 0;
-  border-top: 6px solid black;
+  border-top: 6px solid $black;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
   display: block;

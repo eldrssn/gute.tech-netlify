@@ -1,3 +1,6 @@
+@import "styles/colors.scss";
+@import "styles/breakpoints.scss";
+
 .wrapper {
   opacity: 0;
   visibility: hidden;
@@ -21,13 +24,6 @@
   border-top: 0;
 }
 
-.isLoading {
-  background-color: White;
-  align-items: center;
-  justify-content: center;
-  min-height: 100px;
-}
-
 .background {
   position: fixed;
   top: 0;
@@ -40,12 +36,19 @@
 }
 
 .button {
-  background-color: white;
+  background-color: $white;
   width: 100%;
   border-radius: 0;
 
   &:hover {
-    background-color: #1c85c7;
-    color: white;
+    background-color: $blue1;
+    color: $white;
+  }
+}
+
+@media (max-width: $mobile) {
+  .list {
+    z-index: 1303;
+    max-height: 30vh;
   }
 }

@@ -4,14 +4,6 @@ export type IsDrawerProps = {
   isDrawer?: boolean;
 };
 
-export type CardDetailsProps = Record<
-  | 'HEADER_CAR_SELECTION'
-  | 'HEADER_MODEL_SELECTION'
-  | 'HEADER_YEAR_SELECTION'
-  | 'HEADER_ENGINE_SELECTION',
-  string
->;
-
 export type FormDataItem = {
   title: string;
   slug: string;
@@ -29,7 +21,7 @@ export type FormProps = {
   setValue: UseFormSetValue<FormData>;
 };
 
-export type handleClickProps = {
+export type HandleClickProps = {
   inputStepId: number;
 } & FormDataItem;
 
@@ -48,9 +40,11 @@ export enum StepInputs {
   INACTIVE = -1,
 }
 
+export type inputStepId = 0 | 1 | 2 | 3;
+
 export type filterStepsData = {
   name: FilterInputName;
-  inputStepId: number;
+  inputStepId: inputStepId;
   placeholder: string;
 };
 

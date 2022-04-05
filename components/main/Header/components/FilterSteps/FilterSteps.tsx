@@ -11,7 +11,7 @@ import styles from './filterSteps.module.scss';
 
 const cn = classnames.bind(styles);
 
-export const FilterSteps: FC<Props> = ({ activeStep, ...rest }) => {
+export const FilterSteps: FC<Props> = ({ activeStep, ...restProps }) => {
   const { isMobileView } = useContext(HeaderContext);
 
   return (
@@ -26,7 +26,7 @@ export const FilterSteps: FC<Props> = ({ activeStep, ...rest }) => {
           key={name}
           activeStep={activeStep}
           inputStepId={inputStepId}
-          {...rest}
+          {...restProps}
         />
       ))}
     </Stepper>

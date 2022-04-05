@@ -12,16 +12,14 @@ import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
 
 import { Props } from './types';
-import { handleClickProps } from '../../types';
+import { HandleClickProps } from '../../types';
 import { StepInputs } from '../../types';
 import styles from './filterSteps.module.scss';
-
 import colors from 'styles/_export.module.scss';
+
 const loaderColor = colors.blue;
 
 const cn = classnames.bind(styles);
-
-//TODO: добавить диномический класс для отображение цвета стрелочки
 
 export const FilterStep: FC<Props> = ({
   activeStep,
@@ -33,7 +31,7 @@ export const FilterStep: FC<Props> = ({
   currentStep,
   setCurrentStep,
   placeholder,
-  ...rest
+  ...restProps
 }) => {
   const input = useController({
     name: name,
@@ -49,7 +47,7 @@ export const FilterStep: FC<Props> = ({
   const isDisable =
     !isValue && currentStep < inputStepId && inputStepId !== StepInputs.BRAND;
 
-  const onClickStep = (inputStepId: number) => () => {
+  const onClickStep = (inputStepId: number) => {
     if (!isDisable) {
       setActiveStep(inputStepId);
     }
@@ -59,19 +57,14 @@ export const FilterStep: FC<Props> = ({
     title,
     slug,
     inputStepId,
-  }: handleClickProps) => {
+  }: HandleClickProps) => {
     setValue(name, { title: title, slug: slug });
     setActiveStep(activeStep + 1);
     setCurrentStep(inputStepId + 1);
   };
 
   useEffect(() => {
-    if (activeStep === inputStepId) {
-      setIsOpenPopover(true);
-      return;
-    }
-
-    setIsOpenPopover(false);
+    setIsOpenPopover(activeStep === inputStepId);
   }, [activeStep, inputStepId]);
 
   return (
@@ -99,7 +92,7 @@ export const FilterStep: FC<Props> = ({
           name={name}
           value={input.field.value.title}
           placeholder={placeholder}
-          onClick={onClickStep(inputStepId)}
+          onClick={() => onClickStep(inputStepId)}
           disabled={isDisable}
         />
         <FilterPopover
@@ -109,7 +102,7 @@ export const FilterStep: FC<Props> = ({
           isOpenPopover={isOpenPopover}
           inputStepId={inputStepId}
           handleClick={handleClickButton}
-          {...rest}
+          {...restProps}
         />
       </div>
     </Step>
