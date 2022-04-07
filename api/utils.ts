@@ -13,4 +13,14 @@ const api = axios.create({
   },
 });
 
-export { api };
+const sendRequest = <ResponseType>({
+  path,
+  method,
+}: {
+  path: string;
+  method: 'get';
+}) => {
+  return api[method]<ResponseType>(path).then((response) => response.data);
+};
+
+export { sendRequest };

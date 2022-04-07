@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import classnames from 'classnames/bind';
 import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormSetValue } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -14,10 +14,10 @@ import {
   fetchModels,
   fetchYears,
   fetchEngines,
-  resetBrands,
-  resetModels,
-  resetYears,
-  resetEngines,
+  resetOptionsDataInBrandStep,
+  resetOptionsDataInModelStep,
+  resetOptionsDataInYearStep,
+  resetOptionsDataInEngineStep,
 } from 'store/reducers/transport/actions';
 
 import { CatalogButton } from '../CatalogButton';
@@ -25,7 +25,7 @@ import { HeaderLogo } from '../HeaderLogo';
 import { HeaderAsideNav } from '../HeaderAsideNav';
 import { FilterSteps } from '../FilterSteps';
 import { HeaderContext } from '../HeaderContext';
-import { FormData, FormDataItem } from '../../types';
+import { FormData, FormDataItem, FilterInputName } from '../../types';
 import { StepInputs } from '../../types';
 import styles from './headerFilters.module.scss';
 
@@ -55,50 +55,51 @@ export const HeaderFilters: FC = () => {
   const modelSlugValue = getValues('model.slug');
   const yearSlugValue = getValues('year.slug');
 
+  const setDefaultValueByName = (
+    nameArray: FilterInputName[],
+    setValue: UseFormSetValue<FormData>,
+  ) => {
+    nameArray.forEach((name) => {
+      setValue(name, defaultValue);
+    });
+  };
+
   useEffect(() => {
-    if (currentStep === StepInputs.BRAND) {
-      dispatch(fetchBrands());
-      dispatch(resetBrands());
-      dispatch(resetModels());
-      dispatch(resetYears());
-      dispatch(resetEngines());
-      setValue('brand', defaultValue);
-      setValue('model', defaultValue);
-      setValue('year', defaultValue);
-      setValue('engine', defaultValue);
-    }
+    const resetDataByStep = {
+      [StepInputs.BRAND]: () => {
+        dispatch(fetchBrands());
+        dispatch(resetOptionsDataInBrandStep());
+        setDefaultValueByName(['brand', 'engine', 'model', 'year'], setValue);
+      },
+      [StepInputs.MODEL]: () => {
+        dispatch(fetchModels({ brandSlug: brandSlugValue }));
+        dispatch(resetOptionsDataInModelStep());
+        setDefaultValueByName(['model', 'engine', 'year'], setValue);
+      },
+      [StepInputs.YEAR]: () => {
+        dispatch(
+          fetchYears({ brandSlug: brandSlugValue, modelSlug: modelSlugValue }),
+        );
+        dispatch(resetOptionsDataInYearStep());
+        setDefaultValueByName(['engine', 'year'], setValue);
+      },
+      [StepInputs.ENGINE]: () => {
+        dispatch(
+          fetchEngines({
+            brandSlug: brandSlugValue,
+            modelSlug: modelSlugValue,
+            yearSlug: yearSlugValue,
+          }),
+        );
+        dispatch(resetOptionsDataInEngineStep());
+        setDefaultValueByName(['engine'], setValue);
+      },
+      [StepInputs.INACTIVE]: () => {
+        null;
+      },
+    };
 
-    if (currentStep === StepInputs.MODEL) {
-      dispatch(fetchModels({ brandSlug: brandSlugValue }));
-      dispatch(resetModels());
-      dispatch(resetYears());
-      dispatch(resetEngines());
-      setValue('model', defaultValue);
-      setValue('year', defaultValue);
-      setValue('engine', defaultValue);
-    }
-
-    if (currentStep === StepInputs.YEAR) {
-      dispatch(
-        fetchYears({ brandSlug: brandSlugValue, modelSlug: modelSlugValue }),
-      );
-      dispatch(resetYears());
-      dispatch(resetEngines());
-      setValue('year', defaultValue);
-      setValue('engine', defaultValue);
-    }
-
-    if (currentStep === StepInputs.ENGINE) {
-      dispatch(
-        fetchEngines({
-          brandSlug: brandSlugValue,
-          modelSlug: modelSlugValue,
-          yearSlug: yearSlugValue,
-        }),
-      );
-      dispatch(resetEngines());
-      setValue('engine', defaultValue);
-    }
+    resetDataByStep[currentStep]();
   }, [
     dispatch,
     currentStep,

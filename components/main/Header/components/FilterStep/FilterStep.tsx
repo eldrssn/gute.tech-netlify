@@ -38,10 +38,13 @@ export const FilterStep: FC<Props> = ({
   });
   const { isFullHeader, isTabletView } = useContext(HeaderContext);
   const [isOpenPopover, setIsOpenPopover] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingoptionList, setIsLoadingOptionList] = useState(false);
+
+  useEffect(() => {
+    setIsOpenPopover(activeStep === inputStepId);
+  }, [activeStep, inputStepId]);
 
   const inputNumber = inputStepId + 1;
-
   const isValue = Boolean(input.field.value.title !== '');
   const isDisable =
     !isValue && currentStep < inputStepId && inputStepId !== StepInputs.BRAND;
@@ -59,12 +62,10 @@ export const FilterStep: FC<Props> = ({
   }: HandleClickProps) => {
     setValue(name, { title: title, slug: slug });
     setActiveStep(activeStep + 1);
-    setCurrentStep(inputStepId + 1);
+    setCurrentStep(
+      inputStepId === StepInputs.ENGINE ? StepInputs.ENGINE : inputStepId + 1,
+    );
   };
-
-  useEffect(() => {
-    setIsOpenPopover(activeStep === inputStepId);
-  }, [activeStep, inputStepId]);
 
   return (
     <Step key={name}>
@@ -73,10 +74,10 @@ export const FilterStep: FC<Props> = ({
           className={cn(styles.stepNumber, {
             [styles.stepNumber_shortHeader]: !isFullHeader || isTabletView,
             [styles.stepNumberDisable]: isDisable,
-            [styles.stepNumberLoading]: isLoading,
+            [styles.stepNumberLoading]: isLoadingoptionList,
           })}
         >
-          {isLoading ? (
+          {isLoadingoptionList ? (
             <TailSpin height={25} width={25} color={loaderColor} />
           ) : isValue ? (
             <FontAwesomeIcon icon={faCheck} />
@@ -95,7 +96,7 @@ export const FilterStep: FC<Props> = ({
           disabled={isDisable}
         />
         <FilterPopover
-          setIsLoading={setIsLoading}
+          setIsLoadingOptionList={setIsLoadingOptionList}
           setActiveStep={setActiveStep}
           setIsOpenPopover={setIsOpenPopover}
           isOpenPopover={isOpenPopover}

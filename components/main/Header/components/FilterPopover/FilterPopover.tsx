@@ -12,7 +12,7 @@ import {
 } from 'store/reducers/transport/selectors';
 
 import { Props } from './types';
-import { ListOptionsItem } from 'types/transportStore';
+import { ListOptionsItem } from 'api/models/transport';
 import { StepInputs } from '../../types';
 import styles from './styles.module.scss';
 
@@ -21,9 +21,9 @@ export const FilterPopover: FC<Props> = ({
   setActiveStep,
   inputStepId,
   handleClick,
-  setIsLoading,
+  setIsLoadingOptionList,
 }) => {
-  const [optionsItem, setOptionsItem] = useState<ListOptionsItem>({
+  const [activeOptionList, setActiveOptionsList] = useState<ListOptionsItem>({
     data: [],
     isLoading: false,
     error: {
@@ -31,22 +31,12 @@ export const FilterPopover: FC<Props> = ({
       message: '',
     },
   });
+  const { isLoading, data } = activeOptionList;
+
   const brands = useSelector(selectBrands);
   const models = useSelector(selectModels);
   const years = useSelector(selectYears);
   const engines = useSelector(selectEngines);
-
-  const optionList = optionsItem.data;
-  const optionIsLoading = optionsItem.isLoading;
-
-  const wrapperClassName = cn(
-    { [styles.isOpen]: isOpenPopover },
-    styles.wrapper,
-  );
-
-  const handleClose = () => {
-    setActiveStep(StepInputs.INACTIVE);
-  };
 
   useEffect(() => {
     const dataByStepId = {
@@ -58,12 +48,21 @@ export const FilterPopover: FC<Props> = ({
 
     const data: ListOptionsItem = dataByStepId[inputStepId];
 
-    setOptionsItem(data);
+    setActiveOptionsList(data);
   }, [inputStepId, brands, models, years, engines]);
 
   useEffect(() => {
-    setIsLoading(optionIsLoading);
-  }, [optionIsLoading, setIsLoading]);
+    setIsLoadingOptionList(isLoading);
+  }, [isLoading, setIsLoadingOptionList]);
+
+  const handleClose = () => {
+    setActiveStep(StepInputs.INACTIVE);
+  };
+
+  const wrapperClassName = cn(
+    { [styles.isOpen]: isOpenPopover },
+    styles.wrapper,
+  );
 
   return (
     <Box component='div' className={wrapperClassName}>
@@ -73,9 +72,9 @@ export const FilterPopover: FC<Props> = ({
         onClick={handleClose}
       ></Box>
       <Box component='div' className={styles.list}>
-        {optionIsLoading
+        {isLoading
           ? null
-          : optionList.map((item) => (
+          : data.map((item) => (
               <Button
                 className={styles.button}
                 onClick={() => {

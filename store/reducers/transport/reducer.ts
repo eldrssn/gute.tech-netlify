@@ -9,10 +9,14 @@ import {
   resetBrands,
   resetModels,
   resetYears,
+  resetOptionsDataInBrandStep,
+  resetOptionsDataInEngineStep,
+  resetOptionsDataInModelStep,
+  resetOptionsDataInYearStep,
 } from './actions';
 
 import { TransportStore, ErrorAction } from './types';
-import { ListOptionsItemData, ListOptionsYearData } from 'types/transportStore';
+import { ListOptionsItemData, ListOptionsYearData } from 'api/models/transport';
 
 const initialState: TransportStore = {
   brands: {
@@ -134,6 +138,25 @@ const handlers = {
     state.years.data = [];
   },
   [resetEngines.type]: (state: TransportStore) => {
+    state.engines.data = [];
+  },
+
+  [resetOptionsDataInBrandStep.type]: (state: TransportStore) => {
+    state.brands.data = [];
+    state.models.data = [];
+    state.years.data = [];
+    state.engines.data = [];
+  },
+  [resetOptionsDataInModelStep.type]: (state: TransportStore) => {
+    state.models.data = [];
+    state.years.data = [];
+    state.engines.data = [];
+  },
+  [resetOptionsDataInYearStep.type]: (state: TransportStore) => {
+    state.years.data = [];
+    state.engines.data = [];
+  },
+  [resetOptionsDataInEngineStep.type]: (state: TransportStore) => {
     state.engines.data = [];
   },
 };

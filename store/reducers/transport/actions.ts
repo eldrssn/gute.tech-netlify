@@ -1,11 +1,13 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 
-import { getBrands } from 'api/getBrands';
-import { getModel } from 'api/getModels';
-import { getYears } from 'api/getYears';
-import { getEngines } from 'api/getEngines';
+import {
+  getBrands,
+  getModel,
+  getYears,
+  getEngines,
+} from 'api/routes/transport';
 
-import { BrandSlug, YearsSlugs, EnginesSlugs } from 'models/transportModels';
+import { BrandSlug, YearsSlugs, EnginesSlugs } from 'api/models/transport';
 
 const fetchBrands = createAsyncThunk('ContentStore/fetchBrands', async () => {
   const data = await getBrands();
@@ -45,6 +47,13 @@ const resetModels = createAction('resetModels');
 const resetYears = createAction('resetYears');
 const resetEngines = createAction('resetEngines');
 
+const resetOptionsDataInBrandStep = createAction('resetOptionsDataInBrandStep');
+const resetOptionsDataInModelStep = createAction('resetOptionsDataInModelStep');
+const resetOptionsDataInYearStep = createAction('resetOptionsDataInYearStep');
+const resetOptionsDataInEngineStep = createAction(
+  'resetOptionsDataInEngineStep',
+);
+
 export {
   fetchBrands,
   fetchModels,
@@ -54,4 +63,8 @@ export {
   resetModels,
   resetYears,
   resetEngines,
+  resetOptionsDataInBrandStep,
+  resetOptionsDataInModelStep,
+  resetOptionsDataInYearStep,
+  resetOptionsDataInEngineStep,
 };
