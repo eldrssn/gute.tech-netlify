@@ -1,4 +1,4 @@
-import { StepInputs, filterStepsData } from './types';
+import { StepInputs, filterStepsData, INamesDefaultValueByStep } from './types';
 
 export const menuItemNames = {
   phone: '(499) 283-20-26',
@@ -28,3 +28,10 @@ export const filterSteps: filterStepsData[] = [
     placeholder: 'Двигатель',
   },
 ];
+
+export const namesDefaultValueByStep: INamesDefaultValueByStep = {
+  [StepInputs.BRAND]: ['brand', 'engine', 'model', 'year'],
+  [StepInputs.MODEL]: ['model', 'engine', 'year'],
+  [StepInputs.YEAR]: ['engine', 'year'],
+  [StepInputs.ENGINE]: ['engine'],
+};

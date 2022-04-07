@@ -19,6 +19,7 @@ import {
   resetOptionsDataInYearStep,
   resetOptionsDataInEngineStep,
 } from 'store/reducers/transport/actions';
+import { namesDefaultValueByStep } from '../../constants';
 
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
@@ -48,7 +49,7 @@ export const HeaderFilters: FC = () => {
       engine: defaultValue,
     },
   });
-  const [activeStep, setActiveStep] = useState(StepInputs.INACTIVE);
+  const [openPopoverId, setOpenPopoverId] = useState(StepInputs.INACTIVE);
   const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
 
   const brandSlugValue = getValues('brand.slug');
@@ -69,19 +70,22 @@ export const HeaderFilters: FC = () => {
       [StepInputs.BRAND]: () => {
         dispatch(fetchBrands());
         dispatch(resetOptionsDataInBrandStep());
-        setDefaultValueByName(['brand', 'engine', 'model', 'year'], setValue);
+        const names = namesDefaultValueByStep[StepInputs.BRAND];
+        setDefaultValueByName(names, setValue);
       },
       [StepInputs.MODEL]: () => {
         dispatch(fetchModels({ brandSlug: brandSlugValue }));
         dispatch(resetOptionsDataInModelStep());
-        setDefaultValueByName(['model', 'engine', 'year'], setValue);
+        const names = namesDefaultValueByStep[StepInputs.MODEL];
+        setDefaultValueByName(names, setValue);
       },
       [StepInputs.YEAR]: () => {
         dispatch(
           fetchYears({ brandSlug: brandSlugValue, modelSlug: modelSlugValue }),
         );
         dispatch(resetOptionsDataInYearStep());
-        setDefaultValueByName(['engine', 'year'], setValue);
+        const names = namesDefaultValueByStep[StepInputs.YEAR];
+        setDefaultValueByName(names, setValue);
       },
       [StepInputs.ENGINE]: () => {
         dispatch(
@@ -92,7 +96,8 @@ export const HeaderFilters: FC = () => {
           }),
         );
         dispatch(resetOptionsDataInEngineStep());
-        setDefaultValueByName(['engine'], setValue);
+        const names = namesDefaultValueByStep[StepInputs.ENGINE];
+        setDefaultValueByName(names, setValue);
       },
       [StepInputs.INACTIVE]: () => {
         null;
@@ -141,8 +146,8 @@ export const HeaderFilters: FC = () => {
               })}
             >
               <FilterSteps
-                activeStep={activeStep}
-                setActiveStep={setActiveStep}
+                openPopoverId={openPopoverId}
+                setOpenPopoverId={setOpenPopoverId}
                 control={control}
                 setValue={setValue}
                 currentStep={currentStep}

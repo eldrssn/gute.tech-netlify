@@ -40,6 +40,10 @@ export enum StepInputs {
   INACTIVE = -1,
 }
 
+export interface INamesDefaultValueByStep {
+  [inputId: number]: FilterInputName[];
+}
+
 export type inputStepId = 0 | 1 | 2 | 3;
 
 export type filterStepsData = {

@@ -11,12 +11,12 @@ import styles from './filterSteps.module.scss';
 
 const cn = classnames.bind(styles);
 
-export const FilterSteps: FC<Props> = ({ activeStep, ...restProps }) => {
+export const FilterSteps: FC<Props> = ({ openPopoverId, ...restProps }) => {
   const { isMobileView } = useContext(HeaderContext);
 
   return (
     <Stepper
-      activeStep={activeStep}
+      activeStep={openPopoverId}
       className={cn({ [styles.stepper_mobileView]: isMobileView })}
     >
       {filterSteps.map(({ name, inputStepId, placeholder }) => (
@@ -24,7 +24,7 @@ export const FilterSteps: FC<Props> = ({ activeStep, ...restProps }) => {
           placeholder={placeholder}
           name={name}
           key={name}
-          activeStep={activeStep}
+          openPopoverId={openPopoverId}
           inputStepId={inputStepId}
           {...restProps}
         />

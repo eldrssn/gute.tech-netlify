@@ -21,8 +21,8 @@ const loaderColor = colors.blue;
 const cn = classnames.bind(styles);
 
 export const FilterStep: FC<Props> = ({
-  activeStep,
-  setActiveStep,
+  openPopoverId,
+  setOpenPopoverId,
   name,
   setValue,
   control,
@@ -41,8 +41,8 @@ export const FilterStep: FC<Props> = ({
   const [isLoadingoptionList, setIsLoadingOptionList] = useState(false);
 
   useEffect(() => {
-    setIsOpenPopover(activeStep === inputStepId);
-  }, [activeStep, inputStepId]);
+    setIsOpenPopover(openPopoverId === inputStepId);
+  }, [openPopoverId, inputStepId]);
 
   const inputNumber = inputStepId + 1;
   const isValue = Boolean(input.field.value.title !== '');
@@ -51,7 +51,7 @@ export const FilterStep: FC<Props> = ({
 
   const onClickStep = (inputStepId: number) => {
     if (!isDisable) {
-      setActiveStep(inputStepId);
+      setOpenPopoverId(inputStepId);
     }
   };
 
@@ -61,7 +61,7 @@ export const FilterStep: FC<Props> = ({
     inputStepId,
   }: HandleClickProps) => {
     setValue(name, { title: title, slug: slug });
-    setActiveStep(activeStep + 1);
+    setOpenPopoverId(openPopoverId + 1);
     setCurrentStep(
       inputStepId === StepInputs.ENGINE ? StepInputs.ENGINE : inputStepId + 1,
     );
@@ -97,7 +97,7 @@ export const FilterStep: FC<Props> = ({
         />
         <FilterPopover
           setIsLoadingOptionList={setIsLoadingOptionList}
-          setActiveStep={setActiveStep}
+          setOpenPopoverId={setOpenPopoverId}
           setIsOpenPopover={setIsOpenPopover}
           isOpenPopover={isOpenPopover}
           inputStepId={inputStepId}

@@ -18,7 +18,7 @@ import styles from './styles.module.scss';
 
 export const FilterPopover: FC<Props> = ({
   isOpenPopover,
-  setActiveStep,
+  setOpenPopoverId,
   inputStepId,
   handleClick,
   setIsLoadingOptionList,
@@ -56,7 +56,7 @@ export const FilterPopover: FC<Props> = ({
   }, [isLoading, setIsLoadingOptionList]);
 
   const handleClose = () => {
-    setActiveStep(StepInputs.INACTIVE);
+    setOpenPopoverId(StepInputs.INACTIVE);
   };
 
   const wrapperClassName = cn(
