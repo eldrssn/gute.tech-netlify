@@ -1,51 +1,95 @@
-import React, { FC } from 'react';
-
+import React, { FC, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
+import { useSelector } from 'react-redux';
+import { Box } from '@mui/system';
+import cn from 'classnames';
+
+import {
+  selectBrands,
+  selectModels,
+  selectYears,
+  selectEngines,
+} from 'store/reducers/transport/selectors';
 
 import { Props } from './types';
+import { ListOptionsItem } from 'api/models/transport';
+import { StepInputs } from '../../types';
+import styles from './styles.module.scss';
 
 export const FilterPopover: FC<Props> = ({
-  anchorEl,
-  setAnchorEl,
-  setCarDetails,
-  carDetails,
+  isOpenPopover,
+  setOpenPopoverId,
+  inputStepId,
+  handleClick,
+  setIsLoadingOptionList,
 }) => {
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const [activeOptionList, setActiveOptionsList] = useState<ListOptionsItem>({
+    data: [],
+    isLoading: false,
+    error: {
+      name: '',
+      message: '',
+    },
+  });
+  const { isLoading, data } = activeOptionList;
 
-  function handleClose() {
-    setAnchorEl(null);
-  }
+  const brands = useSelector(selectBrands);
+  const models = useSelector(selectModels);
+  const years = useSelector(selectYears);
+  const engines = useSelector(selectEngines);
 
-  function handleChange() {
-    if (anchorEl) {
-      setCarDetails({ ...carDetails, [anchorEl.id]: 'new value' });
-    }
+  useEffect(() => {
+    const dataByStepId = {
+      [StepInputs.BRAND]: brands,
+      [StepInputs.MODEL]: models,
+      [StepInputs.YEAR]: years,
+      [StepInputs.ENGINE]: engines,
+    };
 
-    handleClose();
-  }
+    const data: ListOptionsItem = dataByStepId[inputStepId];
+
+    setActiveOptionsList(data);
+  }, [inputStepId, brands, models, years, engines]);
+
+  useEffect(() => {
+    setIsLoadingOptionList(isLoading);
+  }, [isLoading, setIsLoadingOptionList]);
+
+  const handleClose = () => {
+    setOpenPopoverId(StepInputs.INACTIVE);
+  };
+
+  const wrapperClassName = cn(
+    { [styles.isOpen]: isOpenPopover },
+    styles.wrapper,
+  );
 
   return (
-    <Popover
-      disableScrollLock
-      id={id}
-      open={open}
-      onClose={handleClose}
-      disableAutoFocus
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
-    >
-      <Typography>The content of the Popover.</Typography>
-      <Button onClick={handleChange}>next</Button>
-    </Popover>
+    <Box component='div' className={wrapperClassName}>
+      <Box
+        component='div'
+        className={styles.background}
+        onClick={handleClose}
+      ></Box>
+      <Box component='div' className={styles.list}>
+        {isLoading
+          ? null
+          : data.map((item) => (
+              <Button
+                className={styles.button}
+                onClick={() => {
+                  handleClick({
+                    title: item.title,
+                    slug: item.slug,
+                    inputStepId,
+                  });
+                }}
+                key={item.slug}
+              >
+                {item.title}
+              </Button>
+            ))}
+      </Box>
+    </Box>
   );
 };

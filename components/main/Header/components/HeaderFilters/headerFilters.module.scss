@@ -1,3 +1,5 @@
+@import "styles/colors.scss";
+
 .mainContainer {
   padding-bottom: 7px;
   padding-top: 7px;
@@ -11,7 +13,7 @@
 
 .filterText {
   width: 100%;
-  color: #1c85c7;
+  color: $blue1;
   font-size: 16px;
   padding-top: 18px;
   padding-bottom: 18px;
@@ -55,14 +57,14 @@
   font-weight: 400;
   text-transform: none;
   font-size: 14px;
-  background-color: #fc5367;
+  background-color: $red1;
   flex-grow: 1;
   padding: 12px 20px;
   min-height: 50px;
 }
 
 .stepButtonSubmit:hover {
-  background-color: #fc5367;
+  background-color: $red1;
 }
 
 .filterStepsForm_shortHeader .stepButtonSubmit {

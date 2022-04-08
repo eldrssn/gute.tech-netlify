@@ -1,3 +1,5 @@
+@import "styles/colors.scss";
+
 .stepWrap {
   position: relative;
 }
@@ -19,15 +21,15 @@
 }
 
 .stepField input:disabled[placeholder] {
-  background-color: gray;
-  color: white;
-  -webkit-text-fill-color: white;
+  background-color: $gray1;
+  color: $white;
+  -webkit-text-fill-color: $white;
 }
 
 .stepField::after {
   width: 0;
   height: 0;
-  border-top: 6px solid black;
+  border-top: 6px solid $black;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
   display: block;
@@ -35,7 +37,7 @@
   top: 50%;
   right: 15px;
   margin-top: -2px;
-  content: '';
+  content: "";
 }
 
 .stepper_mobileView {

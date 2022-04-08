@@ -1,9 +1,9 @@
 import { CartStore } from './reducers/cart/types';
-import { ContentStore } from './reducers/content/types';
+import { TransportStore } from './reducers/transport/types';
 
 type State = {
   cartStore: CartStore;
-  contentStore: ContentStore;
+  transportStore: TransportStore;
 };
 
 type ErrorAction = {

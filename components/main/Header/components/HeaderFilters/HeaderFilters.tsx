@@ -1,47 +1,119 @@
-import React, { useState, FC, useContext } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import classnames from 'classnames/bind';
+import { useDispatch } from 'react-redux';
+import { useForm, UseFormSetValue } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
-
 import { CustomButton } from 'components/ui/CustomButton';
+import {
+  fetchBrands,
+  fetchModels,
+  fetchYears,
+  fetchEngines,
+  resetOptionsDataInBrandStep,
+  resetOptionsDataInModelStep,
+  resetOptionsDataInYearStep,
+  resetOptionsDataInEngineStep,
+} from 'store/reducers/transport/actions';
+import { namesDefaultValueByStep } from '../../constants';
 
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
 import { HeaderAsideNav } from '../HeaderAsideNav';
 import { FilterSteps } from '../FilterSteps';
-import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
-
-import { InputIds, InputId } from './types';
-
-import styles from './headerFilters.module.css';
+import { FormData, FormDataItem, FilterInputName } from '../../types';
+import { StepInputs } from '../../types';
+import styles from './headerFilters.module.scss';
 
 const cn = classnames.bind(styles);
 
+const defaultValue: FormDataItem = {
+  title: '',
+  slug: '',
+};
+
 export const HeaderFilters: FC = () => {
+  const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView } =
     useContext(HeaderContext);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const [carDetails, setCarDetails] = useState<Record<InputId, string>>({
-    [InputIds.HEADER_CAR_SELECTION]: '',
-    [InputIds.HEADER_MODEL_SELECTION]: '',
-    [InputIds.HEADER_YEAR_SELECTION]: '',
-    [InputIds.HEADER_ENGINE_SELECTION]: '',
+  const { getValues, control, setValue } = useForm<FormData>({
+    defaultValues: {
+      brand: defaultValue,
+      model: defaultValue,
+      year: defaultValue,
+      engine: defaultValue,
+    },
   });
+  const [openPopoverId, setOpenPopoverId] = useState(StepInputs.INACTIVE);
+  const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
 
-  const [activeStep, setActiveStep] = React.useState(0);
+  const brandSlugValue = getValues('brand.slug');
+  const modelSlugValue = getValues('model.slug');
+  const yearSlugValue = getValues('year.slug');
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const anchor = event.target as HTMLElement;
-    if (anchor) {
-      setAnchorEl(anchor);
-    }
+  const setDefaultValueByName = (
+    nameArray: FilterInputName[],
+    setValue: UseFormSetValue<FormData>,
+  ) => {
+    nameArray.forEach((name) => {
+      setValue(name, defaultValue);
+    });
   };
+
+  useEffect(() => {
+    const resetDataByStep = {
+      [StepInputs.BRAND]: () => {
+        dispatch(fetchBrands());
+        dispatch(resetOptionsDataInBrandStep());
+        const names = namesDefaultValueByStep[StepInputs.BRAND];
+        setDefaultValueByName(names, setValue);
+      },
+      [StepInputs.MODEL]: () => {
+        dispatch(fetchModels({ brandSlug: brandSlugValue }));
+        dispatch(resetOptionsDataInModelStep());
+        const names = namesDefaultValueByStep[StepInputs.MODEL];
+        setDefaultValueByName(names, setValue);
+      },
+      [StepInputs.YEAR]: () => {
+        dispatch(
+          fetchYears({ brandSlug: brandSlugValue, modelSlug: modelSlugValue }),
+        );
+        dispatch(resetOptionsDataInYearStep());
+        const names = namesDefaultValueByStep[StepInputs.YEAR];
+        setDefaultValueByName(names, setValue);
+      },
+      [StepInputs.ENGINE]: () => {
+        dispatch(
+          fetchEngines({
+            brandSlug: brandSlugValue,
+            modelSlug: modelSlugValue,
+            yearSlug: yearSlugValue,
+          }),
+        );
+        dispatch(resetOptionsDataInEngineStep());
+        const names = namesDefaultValueByStep[StepInputs.ENGINE];
+        setDefaultValueByName(names, setValue);
+      },
+      [StepInputs.INACTIVE]: () => {
+        null;
+      },
+    };
+
+    resetDataByStep[currentStep]();
+  }, [
+    dispatch,
+    currentStep,
+    getValues,
+    setValue,
+    brandSlugValue,
+    modelSlugValue,
+    yearSlugValue,
+  ]);
 
   return (
     <>
@@ -74,10 +146,12 @@ export const HeaderFilters: FC = () => {
               })}
             >
               <FilterSteps
-                handleClick={handleClick}
-                activeStep={activeStep}
-                setActiveStep={setActiveStep}
-                carDetails={carDetails}
+                openPopoverId={openPopoverId}
+                setOpenPopoverId={setOpenPopoverId}
+                control={control}
+                setValue={setValue}
+                currentStep={currentStep}
+                setCurrentStep={setCurrentStep}
               />
 
               <CustomButton customStyles={styles.stepButtonSubmit}>
@@ -89,13 +163,6 @@ export const HeaderFilters: FC = () => {
           </Box>
 
           {!isFullHeader && !isMobileView && <HeaderAsideNav />}
-
-          <FilterPopover
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            setCarDetails={setCarDetails}
-            carDetails={carDetails}
-          />
         </Box>
       </Container>
 
