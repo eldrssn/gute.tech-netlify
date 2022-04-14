@@ -3,4 +3,8 @@ enum EValidatePattern {
   EMAIL = 'email',
 }
 
-export { EValidatePattern };
+enum CookieKey {
+  SELECTEDCITY = 'selectedCity',
+}
+
+export { EValidatePattern, CookieKey };

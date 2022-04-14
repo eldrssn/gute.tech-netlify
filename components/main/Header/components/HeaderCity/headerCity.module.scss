@@ -1,3 +1,5 @@
+@import "~styles/colors.scss";
+
 .cityWrapper {
   display: flex;
   justify-content: right;
@@ -5,6 +7,7 @@
 }
 
 .cityName {
-  color: #1c85c7;
+  color: $blue1;
   font-size: 14px;
+  cursor: pointer;
 }

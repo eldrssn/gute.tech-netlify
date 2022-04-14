@@ -4,6 +4,7 @@ type FormInputProps = {
   onChange: () => void;
   value: string;
   isError: boolean;
+  isAutocomplete?: boolean;
 };
 
 export type { FormInputProps };

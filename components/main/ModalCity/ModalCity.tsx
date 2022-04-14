@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm, useController } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import cn from 'classnames';
 import {
   Container,
   Box,
@@ -10,20 +12,26 @@ import {
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
-import { CitiesOption } from 'mock/CitiesOption';
+import { TailSpin } from 'react-loader-spinner';
 
 import ModalComponent from 'components/main/Modal';
 import FormInput from 'components/main/FormInput';
+import { filterRegionsOption } from 'utility/helpers';
+import { selectRegions } from 'store/reducers/regions/selectors';
+import { fetchRegions, selectRegion } from 'store/reducers/regions/actions';
+import colors from 'styles/_export.module.scss';
+import { cookieStorage } from 'utility/helpers';
+import { CookieKey } from 'constants/types';
 
-import { TCitiesOption, TFormData } from './types';
-
+import { TFormData, OuterProps } from './types';
 import styles from './styles.module.scss';
 
-const ModalCity: React.FC = () => {
-  const { watch, control, reset } = useForm<TFormData>();
-  const [desiredСity, setDesiredСity] = useState<string>();
-  const [isOpen, setIsOpen] = useState(true);
+const loaderColor = colors.blue;
+
+const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
+  const { control, reset } = useForm<TFormData>();
+  const [desiredСity, setDesiredСity] = useState<string>('');
+  const dispatch = useDispatch();
   const cityInput = useController({
     name: 'cityName',
     control,
@@ -31,41 +39,32 @@ const ModalCity: React.FC = () => {
       required: 'Обязательное поле',
     },
   });
+  const { data, isLoading } = useSelector(selectRegions);
 
-  //TODO: поменять на фильтрацию данных
-  const filterCitiesOption = (CitiesOption: TCitiesOption) => {
-    const searchedRegionOptions = CitiesOption.regions.filter((region) =>
-      region.cities.some(
-        ({ cityName }) => cityName.indexOf(desiredСity || '') >= 0,
-      ),
-    );
-    const searchedCityOption = searchedRegionOptions.map((region) => {
-      const filteredCity = region.cities.filter(
-        ({ cityName }) => cityName.indexOf(desiredСity || '') >= 0,
-      );
+  const searchedRegionsOption = filterRegionsOption(data, desiredСity);
 
-      return { ...region, cities: filteredCity };
-    });
-
-    return searchedCityOption;
-  };
-
-  const searchedCitiesOption = filterCitiesOption(CitiesOption);
   const closeModal = () => {
     setIsOpen(false);
   };
+
   const resetInput = () => {
     reset({ cityName: '' });
   };
 
+  const selectCity = (title: string) => {
+    dispatch(selectRegion(title));
+    cookieStorage.setItem(CookieKey.SELECTEDCITY, title);
+  };
+
   useEffect(() => {
-    const subscription = watch((value) => {
-      setDesiredСity(value.cityName);
-    });
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [watch]);
+    setDesiredСity(cityInput.field.value);
+  }, [cityInput.field.value]);
+
+  useEffect(() => {
+    dispatch(fetchRegions());
+  }, [dispatch]);
+
+  const regionsClassName = cn({ [styles.loader]: isLoading }, styles.regions);
 
   return (
     <ModalComponent isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -89,29 +88,39 @@ const ModalCity: React.FC = () => {
               helperText={cityInput.fieldState.error?.message}
               onChange={cityInput.field.onChange}
               value={cityInput.field.value}
-              label='Ваше имя'
+              label='Введите город'
               isError={Boolean(cityInput.fieldState.error)}
             />
             <Box className={styles.resetField} onClick={resetInput}>
               <FontAwesomeIcon icon={faTimes} />
             </Box>
           </Box>
-          <Box component='div' className={styles.regions}>
-            {searchedCitiesOption.map((region) => (
-              <Box component='div' className={styles.region} key={region.id}>
-                <Typography className={styles.regionTitle}>
-                  {region.regionName}
-                </Typography>
-                <List>
-                  {region.cities.map((city) => (
-                    <ListItemButton key={city.id}>
-                      {/* TODO: диспач id */}
-                      {city.cityName}
-                    </ListItemButton>
-                  ))}
-                </List>
-              </Box>
-            ))}
+          <Box component='div' className={regionsClassName}>
+            {isLoading ? (
+              <TailSpin height={60} width={60} color={loaderColor} />
+            ) : (
+              searchedRegionsOption.map((region) => (
+                <Box
+                  component='div'
+                  className={styles.region}
+                  key={region.title}
+                >
+                  <Typography className={styles.regionTitle}>
+                    {region.title}
+                  </Typography>
+                  <List>
+                    {region.cities.map((city) => (
+                      <ListItemButton
+                        key={city.slug}
+                        onClick={() => selectCity(city.title)}
+                      >
+                        {city.title}
+                      </ListItemButton>
+                    ))}
+                  </List>
+                </Box>
+              ))
+            )}
           </Box>
         </Box>
       </Container>

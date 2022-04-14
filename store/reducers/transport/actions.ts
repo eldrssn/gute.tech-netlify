@@ -9,14 +9,14 @@ import {
 
 import { BrandSlug, YearsSlugs, EnginesSlugs } from 'api/models/transport';
 
-const fetchBrands = createAsyncThunk('ContentStore/fetchBrands', async () => {
+const fetchBrands = createAsyncThunk('transport/fetchBrands', async () => {
   const data = await getBrands();
 
   return data;
 });
 
 const fetchModels = createAsyncThunk(
-  'ContentStore/fetchModel',
+  'transport/fetchModel',
   async ({ brandSlug }: BrandSlug) => {
     const data = await getModel({ brandSlug });
 
@@ -25,7 +25,7 @@ const fetchModels = createAsyncThunk(
 );
 
 const fetchYears = createAsyncThunk(
-  'ContentStore/fetchYears',
+  'transport/fetchYears',
   async ({ brandSlug, modelSlug }: YearsSlugs) => {
     const data = await getYears({ brandSlug, modelSlug });
 
@@ -34,7 +34,7 @@ const fetchYears = createAsyncThunk(
 );
 
 const fetchEngines = createAsyncThunk(
-  'ContentStore/fetchEngines',
+  'transport/fetchEngines',
   async ({ brandSlug, yearSlug, modelSlug }: EnginesSlugs) => {
     const data = await getEngines({ brandSlug, yearSlug, modelSlug });
 
