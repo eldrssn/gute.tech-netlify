@@ -9,8 +9,10 @@ const FormInput: React.FC<FormInputProps> = ({
   onChange,
   value,
   isError,
+  isAutocomplete,
 }) => (
   <TextField
+    autoComplete={isAutocomplete ? 'on' : 'off'}
     sx={{ width: '100%' }}
     helperText={helperText}
     error={isError}

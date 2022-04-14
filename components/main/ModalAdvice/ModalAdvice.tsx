@@ -7,13 +7,10 @@ import Link from 'next/link';
 
 import ModalComponent from 'components/main/Modal';
 import FormInput from 'components/main/FormInput';
-
 import { getInputRules } from 'utility/helpers';
-
 import { EValidatePattern } from 'constants/types';
 
 import { TFormData, TOuterProps } from './types';
-
 import styles from './styles.module.scss';
 
 const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
@@ -33,9 +30,11 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
     setIsOpen(false);
   };
 
-  //TODO: обработка отправки
+  //TODO: подвязать метод
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    const formData = new FormData();
+    formData.append('name', data.nameValue);
+    formData.append('phone', data.phoneNumber);
   });
 
   return (

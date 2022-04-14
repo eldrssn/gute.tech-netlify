@@ -3,6 +3,7 @@ import { GroupedItemsItem } from 'components/base/home';
 import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
 import { CatalogChild } from 'types/catalog';
+import { RegionData } from 'store/reducers/regions/types';
 
 const sortItems = (unsortedItems: CatalogChild[]) => {
   return unsortedItems.sort((a, b) => (a.sort < b.sort ? -1 : 1));
@@ -60,4 +61,57 @@ const getInputRules = (patternCategory?: EValidatePattern) => {
   };
 };
 
-export { groupItems, getInputRules, sortItems };
+const filterRegionsOption = (
+  RegionOption: RegionData[],
+  desiredСity: string,
+) => {
+  const searchedRegionOptions = RegionOption.filter((region) =>
+    region.cities.some(({ title }) => {
+      const lowerCaseTitle = title?.toLocaleLowerCase();
+      const lowerCaseDesiredCity = desiredСity?.toLocaleLowerCase();
+
+      return lowerCaseTitle.indexOf(lowerCaseDesiredCity || '') >= 0;
+    }),
+  );
+
+  const searchedCityOption = searchedRegionOptions.map((region) => {
+    const filteredCity = region.cities.filter(({ title }) => {
+      const lowerCaseTitle = title?.toLocaleLowerCase();
+      const lowerCaseDesiredCity = desiredСity?.toLocaleLowerCase();
+
+      return lowerCaseTitle.indexOf(lowerCaseDesiredCity || '') >= 0;
+    });
+
+    return { ...region, cities: filteredCity };
+  });
+
+  return searchedCityOption;
+};
+
+const cookieStorage = {
+  getItem: (key: string) => {
+    const cookies: any = document.cookie
+      .split(';')
+      .map((cookie) => cookie.split('='))
+      .reduce(
+        (accumulation, [key, value]) => ({
+          ...accumulation,
+          [key.trim()]: value,
+        }),
+        {},
+      );
+
+    return cookies[key];
+  },
+  setItem: (key: string, value: string) => {
+    document.cookie = `${key}=${value}`;
+  },
+};
+
+export {
+  groupItems,
+  getInputRules,
+  sortItems,
+  filterRegionsOption,
+  cookieStorage,
+};

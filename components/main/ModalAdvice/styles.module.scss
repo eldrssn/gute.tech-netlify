@@ -7,6 +7,7 @@
   background-color: $white;
   padding: 40px;
   padding-top: 32px;
+  color: $black;
 }
 
 .closeModal {
@@ -31,6 +32,7 @@
 }
 
 .title {
+  color: $black;
   font-size: 28px;
   letter-spacing: 1px;
   line-height: 1.2em;
@@ -49,6 +51,7 @@
   opacity: 0.5;
   margin: 15px 0px;
   width: 75%;
+  color: $black;
 
   a {
     text-decoration: underline;
