@@ -20,6 +20,7 @@ import {
   resetOptionsDataInEngineStep,
 } from 'store/reducers/transport/actions';
 import { namesDefaultValueByStep } from '../../constants';
+import { fetchSearchReadCategory } from 'store/reducers/catalog/actions';
 
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
@@ -41,7 +42,7 @@ export const HeaderFilters: FC = () => {
   const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView } =
     useContext(HeaderContext);
-  const { getValues, control, setValue } = useForm<FormData>({
+  const { getValues, control, setValue, handleSubmit } = useForm<FormData>({
     defaultValues: {
       brand: defaultValue,
       model: defaultValue,
@@ -115,6 +116,18 @@ export const HeaderFilters: FC = () => {
     yearSlugValue,
   ]);
 
+  const onSubmit = handleSubmit((data) => {
+    const { brand, model, year, engine } = data;
+    dispatch(
+      fetchSearchReadCategory({
+        brandSlug: brand.slug,
+        modelSlug: model.slug,
+        yearSlug: year.slug,
+        engineSlug: engine.slug,
+      }),
+    );
+  });
+
   return (
     <>
       <Container className={styles.mainContainer}>
@@ -154,7 +167,10 @@ export const HeaderFilters: FC = () => {
                 setCurrentStep={setCurrentStep}
               />
 
-              <CustomButton customStyles={styles.stepButtonSubmit}>
+              <CustomButton
+                onClick={onSubmit}
+                customStyles={styles.stepButtonSubmit}
+              >
                 Подобрать детали
               </CustomButton>
             </FormControl>
