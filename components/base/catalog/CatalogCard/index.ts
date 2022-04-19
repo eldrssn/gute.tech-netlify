@@ -1,3 +1,1 @@
-import CatalogCard from './CatalogCard';
-
-export default CatalogCard;
+export * from './CatalogCard';

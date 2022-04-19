@@ -27,7 +27,7 @@
   order: -1;
   height: 100%;
   margin-left: 0;
-  margin-right: auto;
+  margin-right: 30px;
 }
 
 .catalogButton_hidden .catalogTitle {

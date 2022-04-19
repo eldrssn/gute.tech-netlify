@@ -8,8 +8,10 @@ import {
 
 import { UseBreadcrumbs } from './types';
 
+// !TODO: убрать кривой каталог
 const defaultPath: Record<string, string> = {
   catalog: 'Каталог',
+  katalog: 'Каталог',
 };
 
 export const useBreadcrumbs: UseBreadcrumbs = (router, data, isQuery) =>

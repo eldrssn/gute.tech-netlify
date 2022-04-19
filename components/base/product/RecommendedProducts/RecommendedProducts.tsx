@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
 
 // TODO: CatalogCard должна уехать из components/base в components/main
-import CatalogCard from 'components/base/catalog/CatalogCard';
+import { CatalogCard } from 'components/base/catalog/CatalogCard';
 
 import styles from './recommendedProducts.module.scss';
 

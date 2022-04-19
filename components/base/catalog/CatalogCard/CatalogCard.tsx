@@ -5,51 +5,49 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { ICatalogCard } from './types';
-import styles from './styles.module.scss';
+import { CustomButton } from 'components/ui/CustomButton';
+import { CatalogCardType } from '../types';
 
-const CatalogCard: React.FC<ICatalogCard> = (props) => (
-  <Card
-    sx={{ maxWidth: 275, margin: '0.7em', display: 'flex', flexWrap: 'wrap' }}
-  >
+import styles from './catalogCard.module.scss';
+
+export const CatalogCard: React.FC<CatalogCardType> = ({
+  title,
+  price,
+  picture,
+}) => (
+  <Card component='article' className={styles.cardContainer}>
     <CardMedia
       component={'img'}
       height='250'
-      image={props.picture}
-      alt='green iguana'
+      image={picture}
+      alt={title}
+      className={styles.cardImage}
     />
-    <CardContent>
-      <Typography
-        sx={{ lineHeight: 1 }}
-        gutterBottom
-        variant='h6'
-        component='div'
-      >
-        {props.title}
+
+    <CardContent className={styles.cardInfo}>
+      <Divider className={styles.cardDivider} />
+
+      <Typography className={styles.cardTitle} gutterBottom component='h3'>
+        {title}
       </Typography>
+
+      <Box className={styles.cardBottom}>
+        <Typography className={styles.cardPrice}>{price} ₽</Typography>
+
+        <CardActions className={styles.cardActions}>
+          <CustomButton customStyles={styles.cardBuyButton}>
+            Купить
+          </CustomButton>
+
+          <CustomButton customStyles={styles.cardAddToShoppingButton}>
+            <ShoppingCartIcon />
+          </CustomButton>
+        </CardActions>
+      </Box>
     </CardContent>
-    <Box className={styles.catalog_card_actions_panel}>
-      <Typography
-        sx={{ alignSelf: 'center', paddingLeft: '1.5em' }}
-        variant='body2'
-        color='text.secondary'
-      >
-        {props.price}
-      </Typography>
-      <CardActions>
-        <Button variant='contained' size='small'>
-          Купить
-        </Button>
-        <Button variant='contained'>
-          <ShoppingCartIcon />
-        </Button>
-      </CardActions>
-    </Box>
   </Card>
 );
-
-export default CatalogCard;

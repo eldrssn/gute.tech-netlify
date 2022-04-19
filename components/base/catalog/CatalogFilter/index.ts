@@ -1,3 +1,1 @@
-import CatalogFilter from './CatalogFilter';
-
-export default CatalogFilter;
+export * from './CatalogFilter';

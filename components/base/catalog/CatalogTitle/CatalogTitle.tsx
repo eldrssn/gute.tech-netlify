@@ -1,18 +1,12 @@
 import React from 'react';
-
 import { Box, Typography } from '@mui/material';
 
-const CatalogTitle: React.FC = () => (
+import styles from './catalogTitle.module.scss';
+
+export const CatalogTitle: React.FC = () => (
   <Box>
-    <Typography
-      sx={{ paddingTop: '30px', paddingBottom: '30px' }}
-      gutterBottom
-      variant='h5'
-      component='div'
-    >
+    <Typography component='h2' className={styles.title}>
       Catalog Title
     </Typography>
   </Box>
 );
-
-export default CatalogTitle;

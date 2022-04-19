@@ -1,4 +1,5 @@
-import { useCallback } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery, ParsedUrlQueryInput } from 'querystring';
 
@@ -6,15 +7,23 @@ import { RouterQuery } from './types';
 
 export const useRouterQuery = () => {
   const router = useRouter();
-  const { query, pathname } = router;
+  const { query, pathname, isReady } = router;
 
-  const updateQuery = (newQuery: string | ParsedUrlQueryInput) =>
-    router.push({ pathname, query: newQuery });
+  const updateQuery = useCallback(
+    (newQuery: string | ParsedUrlQueryInput) => {
+      if (!isReady) {
+        return;
+      }
 
-  const getQueryOption = useCallback(
-    (name: string) => router.query[name],
-    [router],
+      router.push({ pathname, query: newQuery }, undefined, {
+        shallow: true,
+        scroll: false,
+      });
+    },
+    [router, isReady],
   );
+
+  const getQueryOption = useCallback((name: string) => query[name], [query]);
 
   /**
    * Param option required only for array queries. Function will try to delete from an array in query option. Either way it will delete whole query.
@@ -47,7 +56,7 @@ export const useRouterQuery = () => {
 
       updateQuery(newQuery);
     },
-    [router],
+    [query, updateQuery],
   );
 
   const setQueryOption = useCallback(
@@ -59,7 +68,7 @@ export const useRouterQuery = () => {
 
       updateQuery(newQuery);
     },
-    [router],
+    [updateQuery, query],
   );
 
   /**
@@ -85,15 +94,17 @@ export const useRouterQuery = () => {
 
       updateQuery(newQuery);
     },
-    [router],
+    [query, updateQuery],
   );
 
-  const routerQuery: RouterQuery = {
-    setQueryOption,
-    removeQuery,
-    getQueryOption,
-    updateQueryOption,
-  };
+  const routerQuery: RouterQuery = useMemo(() => {
+    return {
+      setQueryOption,
+      removeQuery,
+      getQueryOption,
+      updateQueryOption,
+    };
+  }, [setQueryOption, removeQuery, getQueryOption, updateQueryOption]);
 
   return routerQuery;
 };

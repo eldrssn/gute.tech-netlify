@@ -1,32 +1,24 @@
 import React from 'react';
-
 import Box from '@mui/material/Box';
 
-import CatalogMenu from 'components/base/catalog/CatalogMenu';
-import CheckboxGroup from 'components/ui/CheckboxGroup';
-import PriceRange from 'components/ui/PriceRange';
+import { CheckboxGroup } from 'components/ui/CheckboxGroup';
+import { Ranger } from 'components/ui/Ranger';
+import { RadioBox } from 'components/ui/RadioBox';
 
-import { filterOptions } from 'mock/CatalogFilter';
-import styles from './styles.module.scss';
+import { filterOptions, radioOptions, rangeOptions } from 'mock/CatalogFilter';
 
-const CatalogFilter: React.FC = () => (
-  <>
-    <Box
-      className={styles.catalog_filter_wrapper}
-      component='form'
-      noValidate
-      autoComplete='off'
-      sx={{ width: 300 }}
-    >
-      <PriceRange />
-      <CheckboxGroup
-        title='example title'
-        queryName='example'
-        options={filterOptions}
-      />
-    </Box>
-    <CatalogMenu />
-  </>
+import styles from './catalogFilter.module.scss';
+
+export const CatalogFilter: React.FC = () => (
+  <Box className={styles.catalogFilterContainer}>
+    <CheckboxGroup
+      title='example title'
+      queryName='example'
+      options={filterOptions}
+    />
+
+    <RadioBox title='radio title' queryName='radio' options={radioOptions} />
+
+    <Ranger title='Цена' queryNames={rangeOptions} />
+  </Box>
 );
-
-export default CatalogFilter;
