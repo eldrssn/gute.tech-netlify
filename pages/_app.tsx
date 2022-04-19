@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 
 import { wrapper } from 'store';
 import { MainLayout } from 'layouts/MainLayout';
+import { InitialLoader } from 'layouts/InitialLoader';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
@@ -29,9 +30,11 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   return (
     <CacheProvider value={cache}>
       <ThemeProvider theme={theme}>
-        <Wrapper>
-          <Component {...pageProps} />
-        </Wrapper>
+        <InitialLoader>
+          <Wrapper>
+            <Component {...pageProps} />
+          </Wrapper>
+        </InitialLoader>
       </ThemeProvider>
     </CacheProvider>
   );

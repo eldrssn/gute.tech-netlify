@@ -21,7 +21,7 @@ type ShowcaseData = {
 };
 
 type ShowcaseState = {
-  data: ShowcaseData | null;
+  data: ShowcaseData;
 } & StoreState;
 
 type ShowcaseStore = {

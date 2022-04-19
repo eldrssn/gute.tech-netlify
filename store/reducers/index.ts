@@ -5,6 +5,7 @@ import { transportReducer } from './transport';
 import { showcaseReducer } from './showcase';
 import { catalogReducer } from './catalog';
 import { regionReducer } from './regions';
+import { pagesReducer } from './pages';
 
 const reducers = combineReducers({
   cartStore: cartReducer,
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   showcaseStore: showcaseReducer,
   catalogStore: catalogReducer,
   regionStore: regionReducer,
+  pagesStore: pagesReducer,
 });
 
 export { reducers };

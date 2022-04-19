@@ -1,4 +1,5 @@
 import React, { FC, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -6,8 +7,8 @@ import Divider from '@mui/material/Divider';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Drawer from '@mui/material/Drawer';
 
-import { menuNavItems } from 'mock/menuNavItems';
 import { CustomButton } from 'components/ui/CustomButton';
+import { selectCity } from 'store/reducers/regions/selectors';
 
 import { HeaderAsideNav } from '../HeaderAsideNav';
 import { HeaderLogo } from '../HeaderLogo';
@@ -27,6 +28,8 @@ export const DrawerContent: FC = () => {
     [open],
   );
 
+  const city = useSelector(selectCity);
+
   return (
     <>
       <Container
@@ -40,8 +43,7 @@ export const DrawerContent: FC = () => {
         </Box>
         <Divider className={styles.divider} />
         <p className={styles.location}>
-          Выбран город:{' '}
-          <span className={styles.location_current}>{menuNavItems.city}</span>
+          Выбран город: <span className={styles.location_current}>{city}</span>
         </p>
         <CustomButton
           onClick={handleDrawerToggle}

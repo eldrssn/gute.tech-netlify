@@ -12,4 +12,6 @@ const selectShowcase = createSelector(
   ({ showcase }) => showcase,
 );
 
-export { selectShowcase };
+const selectShowcaseData = createSelector(selectShowcase, ({ data }) => data);
+
+export { selectShowcase, selectShowcaseData };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import classnames from 'classnames/bind';
+import { useSelector } from 'react-redux';
 
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
@@ -8,8 +9,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { menuNavItems } from 'mock/menuNavItems';
 import { CustomButton } from 'components/ui/CustomButton';
+import { selectOrderTotal } from 'store/reducers/cart/selectors';
 
 import { DrawerContent } from '../DrawerContent';
 
@@ -19,6 +20,8 @@ const cn = classnames.bind(styles);
 
 export const HeaderMobileDrawer = () => {
   const [open, setOpen] = useState(false);
+
+  const orderTotal = useSelector(selectOrderTotal);
 
   const handleDrawerToggle = () => {
     setOpen((open) => !open);
@@ -39,7 +42,7 @@ export const HeaderMobileDrawer = () => {
         <MenuItem>
           <ShoppingCartIcon />
           <Typography className={styles.menuItem}>
-            {menuNavItems.shoppingCart}
+            {orderTotal}&#8381;
           </Typography>
         </MenuItem>
       </Container>
