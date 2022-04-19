@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import classnames from 'classnames/bind';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -11,13 +12,12 @@ import HeadphonesIcon from '@mui/icons-material/Headphones';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { menuNavItems } from 'mock/menuNavItems';
 import { IsDrawerProps } from 'components/main/Header/types';
-
 import ModalAdvice from 'components/main/ModalAdvice';
+import { selectShowcaseData } from 'store/reducers/showcase/selectors';
+import { selectOrderTotal } from 'store/reducers/cart/selectors';
 
 import { HeaderContext } from '../HeaderContext';
-
 import styles from './headerAsideNav.module.css';
 
 const cn = classnames.bind(styles);
@@ -25,6 +25,9 @@ const cn = classnames.bind(styles);
 export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
   const { isFullHeader, isMobileView } = useContext(HeaderContext);
   const [isOpenModalAdvice, setIsOpenModalAdvice] = useState(false);
+
+  const { phone } = useSelector(selectShowcaseData);
+  const orderTotal = useSelector(selectOrderTotal);
 
   const menuItemStyles = cn(styles.menuItem, {
     [styles.menuItem_mobile]: isMobileView,
@@ -38,10 +41,8 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
       />
       {(isFullHeader || isMobileView || isDrawer) && (
         <MenuItem disableGutters>
-          <PhoneCallbackIcon className={styles.menuIcon} />
-          <Typography className={menuItemStyles}>
-            {menuNavItems.phone}
-          </Typography>
+          <PhoneCallbackIcon />
+          <Typography className={menuItemStyles}>{phone}</Typography>
         </MenuItem>
       )}
 
@@ -54,7 +55,7 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
             <MenuItem>
               <ShoppingCartIcon />
               <Typography className={styles.menuItem}>
-                {menuNavItems.shoppingCart}
+                {orderTotal}&#8381;
               </Typography>
             </MenuItem>
           </Link>
@@ -67,18 +68,14 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
         >
           <HeadphonesIcon />
           {(isFullHeader || isDrawer) && (
-            <Typography className={menuItemStyles}>
-              {menuNavItems.callback}
-            </Typography>
+            <Typography className={menuItemStyles}>Консультация</Typography>
           )}
         </MenuItem>
 
         <MenuItem className={menuItemStyles} disableGutters>
           <SearchIcon className={styles.menuIcon} />
           {isDrawer && (
-            <Typography className={menuItemStyles}>
-              {menuNavItems.search}
-            </Typography>
+            <Typography className={menuItemStyles}>Поиск</Typography>
           )}
         </MenuItem>
       </Box>

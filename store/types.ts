@@ -3,6 +3,7 @@ import { ShowcaseStore } from './reducers/showcase/types';
 import { TransportStore } from './reducers/transport/types';
 import { CatalogStore } from './reducers/catalog/types';
 import { RegionsStore } from './reducers/regions/types';
+import { PagesStore } from './reducers/pages/types';
 
 type State = {
   cartStore: CartStore;
@@ -10,6 +11,7 @@ type State = {
   showcaseStore: ShowcaseStore;
   catalogStore: CatalogStore;
   regionStore: RegionsStore;
+  pagesStore: PagesStore;
 };
 
 type ErrorAction = {

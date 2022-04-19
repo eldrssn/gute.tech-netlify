@@ -1,17 +1,21 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
+
+import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 
 import styles from './footerText.module.scss';
 
-export const FooterText: FC = () => (
-  <div>
-    <p className={styles.footerText}>
-      Автомир
-      <br />
-      Oфициальный дилер Volkswagen в Москве
-    </p>
-    <p className={styles.footerYear}>© 2022</p>
-    <a className={styles.footerLawLink} href='#'>
-      Мы соответствуем 54ФЗ
-    </a>
-  </div>
-);
+export const FooterText: FC = () => {
+  const { title, footerText } = useSelector(selectShowcaseData);
+
+  return (
+    <div>
+      <p className={styles.footerText}>{title}</p>
+      <p className={styles.footerYear}>© 2022</p>
+      <div
+        className={styles.footerLawLink}
+        dangerouslySetInnerHTML={{ __html: footerText }}
+      />
+    </div>
+  );
+};
