@@ -1,10 +1,11 @@
 import { WindowSideType } from 'types/product';
 import { MOBILE_WIDTH, TABLET_WIDTH } from 'constants/variables';
 
-const checkTabletView = (windowWidth: WindowSideType) =>
-  Boolean(windowWidth && windowWidth <= TABLET_WIDTH);
+const checkView = (viewCheckPoint: number, windowWidth: WindowSideType) =>
+  Boolean(windowWidth && windowWidth <= viewCheckPoint);
 
-const checkMobileView = (windowWidth: WindowSideType) =>
-  Boolean(windowWidth && windowWidth <= MOBILE_WIDTH);
+const checkTabletView = checkView.bind(null, TABLET_WIDTH);
 
-export { checkTabletView, checkMobileView };
+const checkMobileView = checkView.bind(null, MOBILE_WIDTH);
+
+export { checkTabletView, checkMobileView, checkView };

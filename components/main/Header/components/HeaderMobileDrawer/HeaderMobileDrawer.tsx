@@ -50,7 +50,7 @@ export const HeaderMobileDrawer = () => {
         sx={{
           '& .MuiDrawer-paper': {
             width: '100vw',
-            top: '62px',
+            top: '60px',
             boxSizing: 'border-box',
             borderRight: 'none',
           },

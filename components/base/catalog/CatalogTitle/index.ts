@@ -1,3 +1,1 @@
-import CatalogTitle from './CatalogTitle';
-
-export default CatalogTitle;
+export * from './CatalogTitle';

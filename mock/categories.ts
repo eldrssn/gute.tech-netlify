@@ -1,10 +1,6 @@
 import { Category } from 'components/base/main/CategoryCard/types';
 import { GroupedItemsItem, ItemKeys } from 'components/base/home';
 
-const sortItems = (unsortedItems: Category[]) => {
-  return unsortedItems.sort((a, b) => (a.sort < b.sort ? -1 : 1));
-};
-
 const objByThree: GroupedItemsItem = {
   firstItem: null,
   secondItem: null,

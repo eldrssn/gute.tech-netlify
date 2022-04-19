@@ -1,5 +1,5 @@
-import { StoreState, StoreError, ErrorAction } from 'store/types';
 import { ListOptionsItemData } from 'api/models/transport';
+import { StoreState, StoreError, ErrorAction } from 'store/types';
 
 enum TransportStoreBlocks {
   BRANDS = 'brands',

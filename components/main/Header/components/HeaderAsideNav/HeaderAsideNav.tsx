@@ -38,7 +38,7 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
       />
       {(isFullHeader || isMobileView || isDrawer) && (
         <MenuItem disableGutters>
-          <PhoneCallbackIcon />
+          <PhoneCallbackIcon className={styles.menuIcon} />
           <Typography className={menuItemStyles}>
             {menuNavItems.phone}
           </Typography>
@@ -73,8 +73,8 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
           )}
         </MenuItem>
 
-        <MenuItem disableGutters>
-          <SearchIcon />
+        <MenuItem className={menuItemStyles} disableGutters>
+          <SearchIcon className={styles.menuIcon} />
           {isDrawer && (
             <Typography className={menuItemStyles}>
               {menuNavItems.search}

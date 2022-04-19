@@ -5,4 +5,4 @@ export interface RouterQuery {
   updateQueryOption: (name: string, param: string) => void;
 }
 
-export type RouterQueryOptions = 'maxPrice' | 'minPrice';
+export type RouterQueryOptions = string;

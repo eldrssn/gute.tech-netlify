@@ -2,6 +2,7 @@ import { DescriptionType, DescriptionTypes } from 'types/product';
 
 export const MOBILE_WIDTH = 830;
 export const TABLET_WIDTH = 1200;
+export const CATALOG_MOBILE_WIDTH = 450;
 export const SCROLL_DELAY = 300;
 
 export const descriptionTypeName = [
