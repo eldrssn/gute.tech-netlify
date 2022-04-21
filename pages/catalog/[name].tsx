@@ -1,22 +1,25 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouter as useNextRouter } from 'next/router';
 
 import { Category } from 'components/base/catalog/Category';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { Catalog } from 'components/base/catalog/Catalog';
 
-import { catalogData } from 'mock/catalogData';
+import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 
 const CatalogPage: FC = () => {
   const router = useNextRouter();
 
-  const url = router.query.name;
-  const category = catalogData.find((item) => item.url === url);
+  const slug = router.query.name;
+  const categoriesTree = useSelector(selectCategoriesTreeList);
+
+  const category = categoriesTree.find((item) => item.slug === slug);
 
   return (
     <>
       <NavigationBreadcrumbs />
-      {category ? <Category url={url} /> : <Catalog />}
+      {category ? <Category slug={slug} /> : <Catalog />}
     </>
   );
 };

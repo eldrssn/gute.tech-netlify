@@ -1,16 +1,5 @@
-export type Props = {
-  name: string;
-  quantity: number | string;
-  image: string;
-  url: string;
-};
+import { TreeCategoryResponseData } from 'api/models/catalog';
 
-export type Category = {
-  id: number;
-  image: string;
-  name: string;
-  quantity: number;
-  sort: number;
-  children?: Category[];
-  url: string;
+export type Props = {
+  item: TreeCategoryResponseData;
 };

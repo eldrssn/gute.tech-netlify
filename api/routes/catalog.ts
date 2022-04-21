@@ -32,7 +32,7 @@ const getCategoriesSearchRead = ({
 
 const getCategoriesTreeList = () =>
   sendRequest<TreeCategoryResponseData[]>({
-    path: `/сatalog/categories/tree/`,
+    path: `/catalog/categories/tree/`,
     method: 'get',
   });
 

@@ -4,7 +4,6 @@ import { Grid } from '@mui/material';
 import { CATEGORY_QUERY } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { groupItems } from 'utility/helpers';
-import { catalogData } from 'mock/catalogData';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { Description } from 'components/base/main/Description';
@@ -19,6 +18,9 @@ import { Items } from 'components/base/main/rows/types';
 import { getGroupedChildren } from './helpers';
 import { Index } from './types';
 
+import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
+import { useSelector } from 'react-redux';
+
 const rowHashMap: Record<Index, FC<Items>> = {
   1: FirstRow,
   2: SecondRow,
@@ -28,14 +30,15 @@ const rowHashMap: Record<Index, FC<Items>> = {
 
 const Home: FC = () => {
   const router = useRouterQuery();
+  const categoriesTree = useSelector(selectCategoriesTreeList);
   const categoryQuery = router.getQueryOption(CATEGORY_QUERY);
 
   const groupedItems = useMemo(
     () =>
       categoryQuery
-        ? getGroupedChildren(categoryQuery, catalogData)
-        : groupItems(catalogData),
-    [categoryQuery],
+        ? getGroupedChildren(categoryQuery, categoriesTree)
+        : groupItems(categoriesTree),
+    [categoryQuery, categoriesTree],
   );
 
   return (

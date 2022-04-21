@@ -1,4 +1,5 @@
 import React, { FC, Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
 import Container from '@mui/material/Container';
@@ -6,38 +7,50 @@ import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 
-import { catalogData } from 'mock/catalogData';
-import { CatalogChild } from 'types/catalog';
+import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
+import { TreeCategoryResponseData } from 'api/models/catalog';
 
 import { CategoriesProps } from './types';
 import styles from './category.module.scss';
 
-export const Category: FC<CategoriesProps> = ({ url }) => {
-  const category = catalogData.find((item) => item.url === url);
+export const Category: FC<CategoriesProps> = ({ slug }) => {
+  const categoriesTree = useSelector(selectCategoriesTreeList);
+  const category = categoriesTree.find((item) => item.slug === slug);
 
   const children = category?.children;
-  const header = category?.name;
+  const title = category?.title;
 
-  const renderLastCategories = (child: CatalogChild) =>
+  const renderLastCategories = (child: TreeCategoryResponseData) =>
     child.children?.map((child) => (
-      <MenuItem className={styles.lastCategory_title} key={child.id}>
-        {child.name}
-      </MenuItem>
+      <Link href={`/catalog/${child.slug}`} key={child.slug}>
+        <a>
+          <MenuItem className={styles.lastCategory_title}>
+            {child.title}
+          </MenuItem>
+        </a>
+      </Link>
     ));
 
-  const renderSubcategories = (child: CatalogChild) =>
+  const renderSubcategories = (child: TreeCategoryResponseData) =>
     child.children?.map((child) => (
-      <Fragment key={child.id}>
-        <MenuItem className={styles.subcategory_title}>{child.name}</MenuItem>
-        {child?.children.length > 0 && renderLastCategories(child)}
+      <Fragment key={child.slug}>
+        <Link href={`/catalog/${child.slug}`} key={child.slug}>
+          <a>
+            <MenuItem className={styles.subcategory_title}>
+              {child.title}
+            </MenuItem>
+          </a>
+        </Link>
+
+        {Boolean(child.children) && renderLastCategories(child)}
       </Fragment>
     ));
 
   return (
     <Container disableGutters>
-      <Link href={`/catalog/${url}`}>
+      <Link href={`/catalog/${slug}`}>
         <a>
-          <h2 className={styles.header}>{header}</h2>
+          <h2 className={styles.header}>{title}</h2>
         </a>
       </Link>
 
@@ -47,10 +60,16 @@ export const Category: FC<CategoriesProps> = ({ url }) => {
         className={styles.childrenList}
       >
         {children?.map((child) => (
-          <Box key={child.id}>
-            <MenuItem className={styles.category_title}>{child.name}</MenuItem>
+          <Box key={child.slug} className={styles.childrenListItem}>
+            <Link href={`/catalog/${child.slug}`} key={child.slug}>
+              <a>
+                <MenuItem className={styles.category_title}>
+                  {child.title}
+                </MenuItem>
+              </a>
+            </Link>
 
-            {child?.children.length > 0 && renderSubcategories(child)}
+            {Boolean(child.children) && renderSubcategories(child)}
             <Divider light={true} />
           </Box>
         ))}

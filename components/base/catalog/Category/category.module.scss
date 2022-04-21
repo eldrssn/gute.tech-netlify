@@ -4,10 +4,11 @@
 }
 
 .childrenList {
-  flex-direction: column;
-  flex-wrap: wrap;
-
   column-gap: 20px;
+}
+
+.childrenListItem {
+  break-inside: avoid;
 }
 
 .category_title,

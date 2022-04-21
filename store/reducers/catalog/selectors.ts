@@ -12,4 +12,9 @@ const selectCategoriesProductRead = createSelector(
   ({ categoriesProductRead }) => categoriesProductRead,
 );
 
-export { selectCategoriesProductRead };
+const selectCategoriesTreeList = createSelector(
+  selectCatalogStore,
+  ({ categoriesTreeList }) => categoriesTreeList.data,
+);
+
+export { selectCategoriesProductRead, selectCategoriesTreeList };

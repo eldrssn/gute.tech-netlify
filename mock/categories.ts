@@ -1,4 +1,3 @@
-import { Category } from 'components/base/main/CategoryCard/types';
 import { GroupedItemsItem, ItemKeys } from 'components/base/home';
 
 const objByThree: GroupedItemsItem = {
@@ -8,7 +7,7 @@ const objByThree: GroupedItemsItem = {
 };
 const objByThreeKeys: ItemKeys[] = Object.keys(objByThree) as ItemKeys[];
 
-const items: Category[] = [
+const items = [
   {
     id: 1,
     image: 'amortizator',
@@ -473,39 +472,45 @@ const items: Category[] = [
   },
 ];
 
-const groupItems = (sortedItems: Category[]) => {
-  const { groupedItems } = sortedItems.reduce<{
-    groupedItems: GroupedItemsItem[];
-    currentItem: GroupedItemsItem;
-  }>(
-    (acc, value, index) => {
-      const currentItem = {
-        ...acc.currentItem,
-        [objByThreeKeys[index % 3]]: value,
-      };
+// const groupItems = (sortedItems: Category[]) => {
+//   const { groupedItems } = sortedItems.reduce<{
+//     groupedItems: GroupedItemsItem[];
+//     currentItem: GroupedItemsItem;
+//   }>(
+//     (acc, value, index) => {
+//       const currentItem = {
+//         ...acc.currentItem,
+//         [objByThreeKeys[index % 3]]: value,
+//       };
 
-      if ((index + 1) % 3 == 0 || index + 1 == sortedItems.length) {
-        acc.groupedItems.push(currentItem);
+//       if ((index + 1) % 3 == 0 || index + 1 == sortedItems.length) {
+//         acc.groupedItems.push(currentItem);
 
-        acc.currentItem = { ...objByThree };
-        return acc;
-      }
+//         acc.currentItem = { ...objByThree };
+//         return acc;
+//       }
 
-      acc.currentItem = currentItem;
+//       acc.currentItem = currentItem;
 
-      return acc;
-    },
-    {
-      groupedItems: [],
-      currentItem: { ...objByThree },
-    },
-  );
+//       return acc;
+//     },
+//     {
+//       groupedItems: [],
+//       currentItem: { ...objByThree },
+//     },
+//   );
 
-  return groupedItems;
+//   return groupedItems;
+// };
+
+// const sortedItems = groupItems(items);
+
+// const groupedItems = sortedItems;
+
+export {
+  items,
+  // sortedItems,
+  objByThree,
+  objByThreeKeys,
+  // groupedItems
 };
-
-const sortedItems = groupItems(items);
-
-const groupedItems = sortedItems;
-
-export { items, sortedItems, objByThree, objByThreeKeys, groupedItems };

@@ -9,33 +9,18 @@ const SecondRowReversed: FC<Items> = ({ items }) => (
   <Grid item xs={12} lg={6} container spacing={2}>
     {items.firstItem && (
       <Grid item xs={12} lg={6} sx={{ height: '305px' }}>
-        <CategoryCard
-          quantity={items.firstItem.quantity}
-          image={items.firstItem.image}
-          url={items.firstItem.url}
-          name={items.firstItem.name}
-        />
+        <CategoryCard item={items.firstItem} />
       </Grid>
     )}
     <Grid item xs={12} lg={6} container spacing={2}>
       {items.secondItem && (
         <Grid item xs={12} lg={6} sx={{ height: '305px' }}>
-          <CategoryCard
-            quantity={items.secondItem.quantity}
-            image={items.secondItem.image}
-            url={items.secondItem.url}
-            name={items.secondItem.name}
-          />
+          <CategoryCard item={items.secondItem} />
         </Grid>
       )}
       {items.thirdItem && (
         <Grid item xs={12} lg={6} sx={{ height: '305px' }}>
-          <CategoryCard
-            quantity={items.thirdItem.quantity}
-            image={items.thirdItem.image}
-            url={items.thirdItem.url}
-            name={items.thirdItem.name}
-          />
+          <CategoryCard item={items.thirdItem} />
         </Grid>
       )}
     </Grid>

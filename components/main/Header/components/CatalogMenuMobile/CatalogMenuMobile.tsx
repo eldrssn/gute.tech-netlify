@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 
 import classnames from 'classnames/bind';
 
@@ -9,55 +10,91 @@ import TreeView from '@mui/lab/TreeView';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-import { catalogData } from 'mock/catalogData';
+import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
+import { SCROLL_DELAY } from 'constants/variables';
 
 import { CustomCatalogTree } from '../CustomCatalogTree';
 
+import { LinkWrapper } from './components/LinkWrapper';
 import { CatalogMenuProps } from './types';
 import styles from './catalogMenuMobile.module.css';
 
 const cn = classnames.bind(styles);
 
-export const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => (
-  <Container className={styles.mainContainer} disableGutters>
-    <Box className={styles.stickyButton}>
-      <CustomButton onClick={handleClose} customStyles={styles.catalogButton}>
-        <ArrowBackIosIcon />
-        <p>Каталог товаров</p>
-      </CustomButton>
-      <Divider className={styles.divider} />
-    </Box>
+export const CatalogMenuMobile: FC<CatalogMenuProps> = ({
+  handleClose,
+  closeMainDrawer,
+}) => {
+  const categoriesTree = useSelector(selectCategoriesTreeList);
 
-    <TreeView
-      aria-label='catalog menu navigation'
-      defaultCollapseIcon={
-        <ArrowForwardIosIcon
-          className={cn(styles.icon, styles.icon_collapse)}
-        />
-      }
-      defaultExpandIcon={<ArrowForwardIosIcon className={styles.icon} />}
-      className={styles.treeViewContainer}
-    >
-      {catalogData.map((item) => (
-        <CustomCatalogTree key={item.id} nodeId={item.id} label={item.name}>
-          {item.children?.map((child) => (
+  const handlerCloseDrawers = () => {
+    handleClose();
+    setTimeout(closeMainDrawer, SCROLL_DELAY);
+  };
+
+  return (
+    <Container className={styles.mainContainer}>
+      <Box className={styles.stickyButton}>
+        <CustomButton onClick={handleClose} customStyles={styles.catalogButton}>
+          <ArrowBackIosIcon />
+          <p>Каталог товаров</p>
+        </CustomButton>
+        <Divider className={styles.divider} />
+      </Box>
+
+      <TreeView
+        aria-label='catalog menu navigation'
+        defaultCollapseIcon={
+          <ArrowForwardIosIcon
+            className={cn(styles.icon, styles.icon_collapse)}
+          />
+        }
+        defaultExpandIcon={<ArrowForwardIosIcon className={styles.icon} />}
+        className={styles.treeViewContainer}
+      >
+        {categoriesTree.map((item) => (
+          <LinkWrapper
+            onClick={handlerCloseDrawers}
+            key={item.slug}
+            item={item}
+          >
             <CustomCatalogTree
-              key={child.id}
-              nodeId={child.id}
-              label={child.name}
+              key={item.slug}
+              nodeId={item.slug}
+              label={item.title}
             >
-              {child.children?.map((subchild) => (
-                <CustomCatalogTree
-                  key={subchild.id}
-                  nodeId={subchild.id}
-                  label={subchild.name}
-                />
+              {item.children?.map((child) => (
+                <LinkWrapper
+                  onClick={handlerCloseDrawers}
+                  key={child.slug}
+                  item={child}
+                >
+                  <CustomCatalogTree
+                    key={child.slug}
+                    nodeId={child.slug}
+                    label={child.title}
+                  >
+                    {child.children?.map((subchild) => (
+                      <LinkWrapper
+                        onClick={handlerCloseDrawers}
+                        key={subchild.slug}
+                        item={subchild}
+                      >
+                        <CustomCatalogTree
+                          key={subchild.slug}
+                          nodeId={subchild.slug}
+                          label={subchild.title}
+                        />
+                      </LinkWrapper>
+                    ))}
+                  </CustomCatalogTree>
+                </LinkWrapper>
               ))}
             </CustomCatalogTree>
-          ))}
-        </CustomCatalogTree>
-      ))}
-    </TreeView>
-  </Container>
-);
+          </LinkWrapper>
+        ))}
+      </TreeView>
+    </Container>
+  );
+};

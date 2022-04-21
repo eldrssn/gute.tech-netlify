@@ -39,7 +39,7 @@ export type TreeCategoryResponseData = {
   title: string;
   slug: string;
   image?: string;
-  children?: string;
+  children?: TreeCategoryResponseData[];
 };
 
 export type FiltersCategoryResponseData = {

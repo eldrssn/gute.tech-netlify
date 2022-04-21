@@ -1,5 +1,5 @@
 import { NextRouter } from 'next/router';
-import { CatalogChild } from 'types/catalog';
+import { TreeCategoryResponseData } from 'api/models/catalog';
 
 type Crumb = {
   href: string;
@@ -13,6 +13,6 @@ export type GetCrumbs = (
 
 export type UseBreadcrumbs = (
   router: NextRouter,
-  data?: CatalogChild[],
+  data?: TreeCategoryResponseData[],
   isQuery?: boolean,
 ) => Crumb[];

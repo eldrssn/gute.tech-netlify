@@ -19,33 +19,18 @@ const FirstRow: FC<Items> = ({ items }) => (
     >
       {items.firstItem && (
         <Grid item sx={{ height: '305px' }}>
-          <CategoryCard
-            quantity={items.firstItem.quantity}
-            image={items.firstItem.image}
-            url={items.firstItem.url}
-            name={items.firstItem.name}
-          />
+          <CategoryCard item={items.firstItem} />
         </Grid>
       )}
       {items.secondItem && (
         <Grid item sx={{ height: '305px' }}>
-          <CategoryCard
-            quantity={items.secondItem.quantity}
-            image={items.secondItem.image}
-            url={items.secondItem.url}
-            name={items.secondItem.name}
-          />
+          <CategoryCard item={items.secondItem} />
         </Grid>
       )}
     </Grid>
     {items.thirdItem && (
       <Grid item xs={12} lg={6} sx={{ height: { xs: '305px', lg: '610px' } }}>
-        <CategoryCard
-          quantity={items.thirdItem.quantity}
-          image={items.thirdItem.image}
-          url={items.thirdItem.url}
-          name={items.thirdItem.name}
-        />
+        <CategoryCard item={items.thirdItem} />
       </Grid>
     )}
   </Grid>

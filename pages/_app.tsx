@@ -1,5 +1,3 @@
-import type { AppProps } from 'next/app';
-
 import { wrapper } from 'store';
 import { MainLayout } from 'layouts/MainLayout';
 import { InitialLoader } from 'layouts/InitialLoader';
@@ -10,14 +8,9 @@ import createCache from '@emotion/cache';
 import 'styles/globals.scss';
 import 'slick-carousel/slick/slick.scss';
 
-const theme = createTheme();
+import { ComponentWithPageLayout } from 'types';
 
-// TODO: types -> types.ts
-type ComponentWithPageLayout = AppProps & {
-  Component: AppProps['Component'] & {
-    PageLayout: React.ComponentType;
-  };
-};
+const theme = createTheme();
 
 const cache = createCache({
   key: 'css',

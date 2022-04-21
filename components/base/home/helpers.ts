@@ -1,15 +1,15 @@
-import { CatalogChild } from 'types/catalog';
+import { TreeCategoryResponseData } from 'api/models/catalog';
 import { groupItems } from 'utility/helpers';
 
 export const getGroupedChildren = (
   category?: string | string[],
-  catalogData?: CatalogChild[],
+  catalogTree?: TreeCategoryResponseData[],
 ) => {
   if (!category) {
     return;
   }
 
-  const choosenItem = catalogData?.find((item) => item.url === category);
+  const choosenItem = catalogTree?.find((item) => item.slug === category);
   const groupedChildren = choosenItem
     ? groupItems(choosenItem?.children)
     : null;
