@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 
-import { catalogData } from 'mock/catalogData';
+import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 
 import { Crumb } from './components/Crumb';
@@ -11,9 +12,10 @@ import { Query } from './types';
 
 export const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false }) => {
   const router = useRouter();
+  const categoriesTree = useSelector(selectCategoriesTreeList);
 
-  const breadcrumbs = useBreadcrumbs(router, catalogData);
-  const breadcrumbsQuery = useBreadcrumbs(router, catalogData, isQuery);
+  const breadcrumbs = useBreadcrumbs(router, categoriesTree);
+  const breadcrumbsQuery = useBreadcrumbs(router, categoriesTree, isQuery);
 
   return (
     <Breadcrumbs aria-label='breadcrumb'>

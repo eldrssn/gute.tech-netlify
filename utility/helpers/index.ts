@@ -2,14 +2,10 @@ import { objByThree, objByThreeKeys } from 'mock/categories';
 import { GroupedItemsItem } from 'components/base/home';
 import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
-import { CatalogChild } from 'types/catalog';
 import { RegionData } from 'store/reducers/regions/types';
+import { TreeCategoryResponseData } from 'api/models/catalog';
 
-const sortItems = (unsortedItems: CatalogChild[]) => {
-  return unsortedItems.sort((a, b) => (a.sort < b.sort ? -1 : 1));
-};
-
-const groupItems = (sortedItems?: CatalogChild[]) => {
+const groupItems = (sortedItems?: TreeCategoryResponseData[]) => {
   if (!sortedItems) {
     return null;
   }
@@ -90,6 +86,7 @@ const filterRegionsOption = (
 
 const cookieStorage = {
   getItem: (key: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const cookies: any = document.cookie
       .split(';')
       .map((cookie) => cookie.split('='))
@@ -108,10 +105,4 @@ const cookieStorage = {
   },
 };
 
-export {
-  groupItems,
-  getInputRules,
-  sortItems,
-  filterRegionsOption,
-  cookieStorage,
-};
+export { groupItems, getInputRules, filterRegionsOption, cookieStorage };

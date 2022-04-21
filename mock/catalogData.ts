@@ -1,6 +1,4 @@
-import { CatalogChild } from 'types/catalog';
-
-export const catalogData: CatalogChild[] = [
+export const catalogData = [
   {
     id: '1000',
     name: 'Каталоги с подбором по авто',

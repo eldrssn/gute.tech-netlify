@@ -62,7 +62,7 @@ export const HeaderMobileDrawer = () => {
         anchor='left'
         open={open}
       >
-        <DrawerContent />
+        <DrawerContent closeMainDrawer={handleDrawerToggle} />
       </Drawer>
     </>
   );

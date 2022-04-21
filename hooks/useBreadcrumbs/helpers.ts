@@ -1,13 +1,13 @@
-import { CatalogChild } from 'types/catalog';
+import { TreeCategoryResponseData } from 'api/models/catalog';
 import { GetCrumbs } from './types';
 
-export const getCrumbs = (catalogData?: CatalogChild[]) => {
-  if (!catalogData) {
+export const getCrumbs = (catalogTree?: TreeCategoryResponseData[]) => {
+  if (!catalogTree) {
     return {};
   }
 
-  return catalogData.reduce(
-    (crumbs, item) => ({ ...crumbs, [item.url]: item.name }),
+  return catalogTree.reduce(
+    (crumbs, item) => ({ ...crumbs, [item.slug]: item.title }),
     {},
   );
 };

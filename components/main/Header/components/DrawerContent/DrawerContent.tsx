@@ -14,9 +14,10 @@ import { HeaderAsideNav } from '../HeaderAsideNav';
 import { HeaderLogo } from '../HeaderLogo';
 import { CatalogMenuMobile } from '../CatalogMenuMobile';
 
+import { DrawerContentProps } from './types';
 import styles from './drawerContent.module.css';
 
-export const DrawerContent: FC = () => {
+export const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
   const [open, setOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -67,7 +68,10 @@ export const DrawerContent: FC = () => {
         anchor='right'
         open={open}
       >
-        <CatalogMenuMobile handleClose={handleDrawerToggle} />
+        <CatalogMenuMobile
+          handleClose={handleDrawerToggle}
+          closeMainDrawer={closeMainDrawer}
+        />
       </Drawer>
     </>
   );

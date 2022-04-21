@@ -1,4 +1,4 @@
-import { Category } from 'components/base/main/CategoryCard/types';
+import { TreeCategoryResponseData } from 'api/models/catalog';
 
 enum ItemKeysEnum {
   firstItem,
@@ -8,6 +8,9 @@ enum ItemKeysEnum {
 
 export type ItemKeys = keyof typeof ItemKeysEnum;
 
-export type GroupedItemsItem = Record<ItemKeys, Category | null>;
+export type GroupedItemsItem = Record<
+  ItemKeys,
+  TreeCategoryResponseData | null
+>;
 
 export type Index = 1 | 2 | 3 | 4;
