@@ -10,25 +10,25 @@ import {
 
 const getBrands = () =>
   sendRequest<ListOptionsItemData[]>({
-    path: `/transport/brands/`,
+    url: `/transport/brands/`,
     method: 'get',
   });
 
 const getModel = ({ brandSlug }: BrandSlug) =>
   sendRequest<ListOptionsItemData[]>({
-    path: `/transport/brands/${brandSlug}/models/`,
+    url: `/transport/brands/${brandSlug}/models/`,
     method: 'get',
   });
 
 const getYears = ({ brandSlug, modelSlug }: YearsSlugs) =>
   sendRequest<ListOptionsYearData[]>({
-    path: `/transport/brands/${brandSlug}/models/${modelSlug}/years/`,
+    url: `/transport/brands/${brandSlug}/models/${modelSlug}/years/`,
     method: 'get',
   });
 
 const getEngines = ({ brandSlug, modelSlug, yearSlug }: EnginesSlugs) =>
   sendRequest<ListOptionsItemData[]>({
-    path: `/transport/brands/${brandSlug}/models/${modelSlug}/years/${yearSlug}/engines/`,
+    url: `/transport/brands/${brandSlug}/models/${modelSlug}/years/${yearSlug}/engines/`,
     method: 'get',
   });
 

@@ -15,7 +15,7 @@ import {
 
 const getCategoriesList = () =>
   sendRequest<CategoryResponseData[]>({
-    path: `/catalog/categories/`,
+    url: `/catalog/categories/`,
     method: 'get',
   });
 
@@ -26,13 +26,13 @@ const getCategoriesSearchRead = ({
   engineSlug,
 }: CategoriesSearchReadRequestData) =>
   sendRequest<CategoryResponseData[]>({
-    path: `/catalog/categories/search/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
+    url: `/catalog/categories/search/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
     method: 'get',
   });
 
 const getCategoriesTreeList = () =>
   sendRequest<TreeCategoryResponseData[]>({
-    path: `/catalog/categories/tree/`,
+    url: `/catalog/categories/tree/`,
     method: 'get',
   });
 
@@ -40,7 +40,7 @@ const getCategoriesFiltersList = ({
   categorySlug,
 }: CategoriesFiltersListRequestData) =>
   sendRequest<FiltersCategoryResponseData[]>({
-    path: `/catalog/categories/${categorySlug}/filters/`,
+    url: `/catalog/categories/${categorySlug}/filters/`,
     method: 'get',
   });
 
@@ -48,7 +48,7 @@ const getCategoriesProductsList = ({
   categorySlug,
 }: CategoriesProductsListRequestData) =>
   sendRequest<CategoriesProductsListResponseData>({
-    path: `/catalog/categories/${categorySlug}/products/`,
+    url: `/catalog/categories/${categorySlug}/products/`,
     method: 'get',
   });
 
@@ -57,7 +57,7 @@ const getCategoriesProductsRead = ({
   productSlug,
 }: CategoriesProductsReadRequestData) =>
   sendRequest<CategoriesProductsReadResponseData>({
-    path: `/catalog/categories/${categorySlug}/products/${productSlug}/`,
+    url: `/catalog/categories/${categorySlug}/products/${productSlug}/`,
     method: 'get',
   });
 
@@ -65,7 +65,7 @@ const getCategoriesSubcategoriesList = ({
   categorySlug,
 }: CategoriesSubcategoriesListRequestData) =>
   sendRequest<CategoryResponseData[]>({
-    path: `/catalog/categories/${categorySlug}/subcategories/`,
+    url: `/catalog/categories/${categorySlug}/subcategories/`,
     method: 'get',
   });
 

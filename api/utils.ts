@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 
 import { DEV_HOST } from 'constants/variables';
 
@@ -14,17 +14,21 @@ const api = axios.create({
 });
 
 const sendRequest = <ResponseType>({
-  path,
+  url,
   method,
   config,
 }: {
-  path: string;
+  url: string;
   method: 'get' | 'post';
   config?: AxiosRequestConfig;
 }) => {
-  return api[method]<ResponseType>(path, config).then(
-    (response) => response.data,
-  );
+  return api
+    .request<ResponseType>({
+      method,
+      url,
+      ...config,
+    })
+    .then((response) => response.data);
 };
 
 export { sendRequest };
