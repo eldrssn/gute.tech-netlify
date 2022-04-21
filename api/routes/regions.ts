@@ -4,7 +4,7 @@ import { RegionData } from '../models/regions';
 
 const getRegions = () =>
   sendRequest<RegionData[]>({
-    path: `/branches/regions/`,
+    url: `/branches/regions/`,
     method: 'get',
   });
 

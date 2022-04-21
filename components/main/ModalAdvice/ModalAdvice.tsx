@@ -4,17 +4,19 @@ import { Container, Box, Typography, Button } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import InputMask from 'react-input-mask';
 
 import ModalComponent from 'components/main/Modal';
 import FormInput from 'components/main/FormInput';
 import { getInputRules } from 'utility/helpers';
 import { EValidatePattern } from 'constants/types';
+import { postFeedback } from 'api/routes/feedback';
 
 import { TFormData, TOuterProps } from './types';
 import styles from './styles.module.scss';
 
 const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
-  const { handleSubmit, control } = useForm<TFormData>();
+  const { handleSubmit, control, setError } = useForm<TFormData>();
   const phoneInput = useController({
     name: 'phoneNumber',
     control,
@@ -25,16 +27,29 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
     control,
     rules: getInputRules(),
   });
+  const message = useController({
+    name: 'message',
+    control,
+    rules: getInputRules(),
+  });
 
   const closeModal = () => {
     setIsOpen(false);
   };
 
-  //TODO: подвязать метод
   const onSubmit = handleSubmit((data) => {
-    const formData = new FormData();
-    formData.append('name', data.nameValue);
-    formData.append('phone', data.phoneNumber);
+    postFeedback({
+      name: data.nameValue,
+      phone: data.phoneNumber,
+      message: data.message,
+    })
+      .then(() => closeModal())
+      .catch(() =>
+        setError('phoneNumber', {
+          type: 'pattern',
+          message: 'Введен некорректный номер телефона',
+        }),
+      );
   });
 
   return (
@@ -67,14 +82,30 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
               />
             </Box>
             <Box className={styles.inputContainer}>
-              <FormInput
-                helperText={phoneInput.fieldState.error?.message}
+              <InputMask
                 onChange={phoneInput.field.onChange}
                 value={phoneInput.field.value}
-                label='Телефон'
-                isError={Boolean(phoneInput.fieldState.error)}
-              />
+                mask='+79999999999'
+              >
+                <FormInput
+                  helperText={phoneInput.fieldState.error?.message}
+                  onChange={phoneInput.field.onChange}
+                  value={phoneInput.field.value}
+                  label='Телефон'
+                  isError={Boolean(phoneInput.fieldState.error)}
+                />
+              </InputMask>
             </Box>
+          </Box>
+          <Box className={styles.textAreaContainer}>
+            <FormInput
+              helperText={message.fieldState.error?.message}
+              onChange={message.field.onChange}
+              value={message.field.value}
+              label='Введите ваше сообщение'
+              isError={Boolean(message.fieldState.error)}
+              textarea
+            />
           </Box>
           <Button onClick={onSubmit} variant={'contained'}>
             Отправить

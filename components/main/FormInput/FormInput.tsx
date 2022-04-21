@@ -10,6 +10,8 @@ const FormInput: React.FC<FormInputProps> = ({
   value,
   isError,
   isAutocomplete,
+  children,
+  textarea,
 }) => (
   <TextField
     autoComplete={isAutocomplete ? 'on' : 'off'}
@@ -21,7 +23,11 @@ const FormInput: React.FC<FormInputProps> = ({
     fullWidth
     label={label}
     variant='outlined'
-  />
+    multiline={textarea}
+    rows={textarea ? 4 : undefined}
+  >
+    {children}
+  </TextField>
 );
 
 export default FormInput;

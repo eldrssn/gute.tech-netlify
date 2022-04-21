@@ -2,7 +2,7 @@ import { EValidatePattern } from './types';
 
 const validatePatterns = {
   [EValidatePattern.PHONE_NUMBER]: {
-    pattern: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im,
+    pattern: /^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,11}$/im,
     message: 'Номер введен неверно',
   },
   [EValidatePattern.EMAIL]: {

@@ -6,6 +6,7 @@ type TOuterProps = {
 type TFormData = {
   nameValue: string;
   phoneNumber: string;
+  message: string;
 };
 
 export type { TFormData, TOuterProps };

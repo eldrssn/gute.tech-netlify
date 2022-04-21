@@ -2,7 +2,7 @@
 
 .cityWrapper {
   display: flex;
-  justify-content: right;
+  flex-direction: row-reverse;
   flex-wrap: wrap;
 }
 

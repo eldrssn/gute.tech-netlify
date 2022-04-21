@@ -112,7 +112,10 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
                     {region.cities.map((city) => (
                       <ListItemButton
                         key={city.slug}
-                        onClick={() => selectCity(city.title)}
+                        onClick={() => {
+                          selectCity(city.title);
+                          closeModal();
+                        }}
                       >
                         {city.title}
                       </ListItemButton>
