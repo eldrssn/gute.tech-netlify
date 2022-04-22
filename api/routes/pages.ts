@@ -4,13 +4,13 @@ import { PageMenuItemData, PageSlug, PageData } from '../models/pages';
 
 const getPagesMenu = () =>
   sendRequest<PageMenuItemData[]>({
-    path: `/pages/menu/`,
+    url: `/pages/menu/`,
     method: 'get',
   });
 
 const getPage = ({ slug }: PageSlug) =>
   sendRequest<PageData>({
-    path: `/pages/${slug}/`,
+    url: `/pages/${slug}/`,
     method: 'get',
   });
 
