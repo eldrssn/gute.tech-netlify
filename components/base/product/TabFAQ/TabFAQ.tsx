@@ -1,14 +1,12 @@
 import React, { FC, useCallback } from 'react';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-} from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Box from '@mui/material/Box';
 
 import { setSmoothScroll } from 'utility/utils';
-
 import { TabProps } from 'types/product';
+
 import styles from './tabFAQ.module.scss';
 
 export const TabFAQ: FC<TabProps> = ({ content }) => {
@@ -28,6 +26,11 @@ export const TabFAQ: FC<TabProps> = ({ content }) => {
     },
     [expanded],
   );
+
+  if (!content) {
+    return <p>Нет данных</p>;
+  }
+
   if (!Array.isArray(content)) {
     return <p>{content}</p>;
   }

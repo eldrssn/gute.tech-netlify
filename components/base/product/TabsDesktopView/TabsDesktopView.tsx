@@ -1,17 +1,21 @@
 import React, { FC, useState } from 'react';
-import { Box, Tab } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-import { TabContentByType } from '../TabContentByType';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
 
 import { DescriptionType, DescriptionTypes, TabsProps } from 'types/product';
 import { descriptionTypeName, tabNameByType } from 'constants/variables';
 
+import { TabContentByType } from '../TabContentByType';
+
 import styles from './tabsDesktopView.module.scss';
 
-export const TabsDesktopView: FC<TabsProps> = ({ productInfo }) => {
+export const TabsDesktopView: FC<TabsProps> = (props) => {
   const [tabType, setTabType] = useState<DescriptionType>(
-    DescriptionTypes.characteristic,
+    DescriptionTypes.properties,
   );
 
   const handleChange = (
@@ -21,7 +25,6 @@ export const TabsDesktopView: FC<TabsProps> = ({ productInfo }) => {
     setTabType(newValue);
   };
 
-  // !TODO: написать глобальные стили для заголовков табов
   return (
     <Box
       sx={{
@@ -45,7 +48,7 @@ export const TabsDesktopView: FC<TabsProps> = ({ productInfo }) => {
 
         {descriptionTypeName.map((type: DescriptionType) => (
           <TabPanel className={styles.tabPanel} key={type} value={type}>
-            <TabContentByType type={type} content={productInfo[type]} />
+            <TabContentByType type={type} content={props[type]} />
           </TabPanel>
         ))}
       </TabContext>

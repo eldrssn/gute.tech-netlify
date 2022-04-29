@@ -15,7 +15,7 @@ export const Crumb: FC<CrumbProps> = ({ text, href, last = false }) => {
   return (
     <Link href={href}>
       <a>
-        <p className={styles.crumb}>{text}</p>
+        <p className={styles.crumb}>{text || href}</p>
       </a>
     </Link>
   );

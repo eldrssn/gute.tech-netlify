@@ -1,11 +1,15 @@
 import React, { FC } from 'react';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 
 import { TabProps } from 'types/product';
 
 import styles from './tabDetails.module.scss';
 
 export const TabDetails: FC<TabProps> = ({ content }) => {
+  if (!content) {
+    return <p>Нет данных</p>;
+  }
+
   if (!Array.isArray(content)) {
     return <p>{content}</p>;
   }

@@ -1,22 +1,22 @@
 import React, { FC, useCallback } from 'react';
 
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-} from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Box from '@mui/material/Box';
+
 import classnames from 'classnames/bind';
 
-import { TabContentByType } from '../TabContentByType';
 import { descriptionTypeName, tabNameByType } from 'constants/variables';
 import { DescriptionType, TabsProps } from 'types/product';
+
+import { TabContentByType } from '../TabContentByType';
 
 import styles from './tabsMobileView.module.scss';
 
 const cn = classnames.bind(styles);
 
-export const TabsMobileView: FC<TabsProps> = ({ productInfo }) => {
+export const TabsMobileView: FC<TabsProps> = (props) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
@@ -34,7 +34,7 @@ export const TabsMobileView: FC<TabsProps> = ({ productInfo }) => {
   );
 
   return (
-    <Box>
+    <Box className={styles.mainContainer}>
       {descriptionTypeName.map((type: DescriptionType) => (
         <Accordion
           disableGutters
@@ -50,7 +50,7 @@ export const TabsMobileView: FC<TabsProps> = ({ productInfo }) => {
             <p className={styles.accordionSummaryText}>{tabNameByType[type]}</p>
           </AccordionSummary>
           <AccordionDetails className={styles.accordionDetails}>
-            <TabContentByType type={type} content={productInfo[type]} />
+            <TabContentByType type={type} content={props[type]} />
           </AccordionDetails>
         </Accordion>
       ))}

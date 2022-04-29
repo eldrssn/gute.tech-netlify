@@ -9,7 +9,7 @@ import {
   CategoriesSubcategoriesListRequestData,
   CategoriesSearchReadRequestData,
   CategoriesProductsListResponseData,
-  CategoriesProductsReadResponseData,
+  CategoriesProductReadResponseData,
   FiltersCategoryResponseData,
 } from 'api/models/catalog';
 
@@ -57,7 +57,7 @@ const getCategoriesProductsRead = ({
   categorySlug,
   productSlug,
 }: CategoriesProductsReadRequestData) =>
-  sendRequest<CategoriesProductsReadResponseData>({
+  sendRequest<CategoriesProductReadResponseData>({
     url: `/catalog/categories/${categorySlug}/products/${productSlug}/`,
     method: 'get',
   });

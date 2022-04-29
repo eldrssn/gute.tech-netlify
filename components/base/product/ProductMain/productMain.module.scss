@@ -1,0 +1,41 @@
+.title {
+  font-size: 28px;
+  letter-spacing: 1px;
+  line-height: 1.2em;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 25px;
+  margin-top: 0;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 24px;
+}
+
+.productContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+
+.buyButton {
+  text-transform: none;
+  margin: 2px;
+  padding: 14px;
+}
+
+.buttonsContainer {
+  display: flex;
+}
+
+.productInfoContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.productButtonsPriceWrapper {
+  display: flex;
+  justify-content: space-between;
+}

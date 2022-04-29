@@ -9,10 +9,12 @@ type Crumb = {
 export type GetCrumbs = (
   router: NextRouter,
   paths: Record<string, string>,
+  lastTitle?: string,
 ) => Crumb[];
 
-export type UseBreadcrumbs = (
-  router: NextRouter,
-  data?: TreeCategoryResponseData[],
-  isQuery?: boolean,
-) => Crumb[];
+export type UseBreadcrumbs = {
+  router: NextRouter;
+  data?: TreeCategoryResponseData[];
+  isQuery?: boolean;
+  lastTitle?: string;
+};

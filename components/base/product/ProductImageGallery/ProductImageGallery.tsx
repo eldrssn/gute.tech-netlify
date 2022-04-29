@@ -1,17 +1,25 @@
 import React, { FC } from 'react';
-import { Box } from '@mui/material';
 import ImageGallery from 'react-image-gallery';
+import { Box } from '@mui/material';
+
 import 'react-image-gallery/styles/css/image-gallery.css';
 
-import { Props } from './types';
+import { formatImages } from './helpers';
+import { ProductImageGalleryProps } from './types';
 
-export const ProductImageGallery: FC<Props> = ({ images }) => (
-  <Box sx={{ maxWidth: { sm: '50%' } }}>
-    <ImageGallery
-      showPlayButton={false}
-      items={images}
-      useTranslate3D={false}
-      showNav={false}
-    />
-  </Box>
-);
+export const ProductImageGallery: FC<ProductImageGalleryProps> = ({
+  images,
+}) => {
+  const galleryItems = formatImages(images);
+
+  return (
+    <Box sx={{ maxWidth: { sm: '50%' } }}>
+      <ImageGallery
+        showPlayButton={false}
+        items={galleryItems}
+        useTranslate3D={false}
+        showNav={false}
+      />
+    </Box>
+  );
+};

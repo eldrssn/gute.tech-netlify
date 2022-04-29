@@ -1,1 +1,1 @@
-export type Query = { isQuery?: boolean };
+export type Query = { isQuery?: boolean; lastTitle?: string };
