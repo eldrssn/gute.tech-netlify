@@ -2,6 +2,7 @@ import { Control, UseFormSetValue } from 'react-hook-form';
 
 export type IsDrawerProps = {
   isDrawer?: boolean;
+  closeMainDrawer?: () => void;
 };
 
 export type FormDataItem = {

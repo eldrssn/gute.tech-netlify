@@ -20,7 +20,7 @@ const CategoryCard: React.FC<Props> = ({ item }) => {
   const setQuery = () => routerQuery.setQueryOption(CATEGORY_QUERY, slug);
 
   const goToUrl = () =>
-    Router.push(`/catalog/${slug}`, undefined, {
+    Router.push(`/catalog/${slug}?page=1&order=byPopularDown`, undefined, {
       shallow: true,
     });
 
@@ -37,6 +37,7 @@ const CategoryCard: React.FC<Props> = ({ item }) => {
         src={image || `/germanika/deflectors.jpg`}
         alt={title || 'category name'}
         layout='fill'
+        priority
       />
     </div>
   );
