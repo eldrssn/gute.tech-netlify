@@ -24,10 +24,10 @@ type CategoryStoreRootCategory =
 type CategoriesProductsReadData = {
   title: string;
   manufacturer?: string | undefined;
-  vendorCode: string;
+  vendor_code: string;
   description?: string | undefined;
   price?: string | undefined;
-  images?: string | undefined;
+  images?: string[] | undefined;
   properties?: string | undefined;
   warehouses?: string | undefined;
 };

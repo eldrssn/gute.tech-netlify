@@ -70,13 +70,13 @@ export type CategoriesProductsListResponseData = {
   results: ProductListData[];
 };
 
-export type CategoriesProductsReadResponseData = {
+export type CategoriesProductReadResponseData = {
   title: string;
   manufacturer?: string;
   vendor_code: string;
   description?: string;
   price?: string;
-  images?: string;
+  images?: string[];
   properties?: string;
   warehouses?: string;
 };

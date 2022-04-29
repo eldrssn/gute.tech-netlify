@@ -6,14 +6,14 @@ export const SCROLL_DELAY = 500;
 export const CATALOG_MOBILE_WIDTH = 450;
 
 export const descriptionTypeName = [
-  DescriptionTypes.characteristic,
+  DescriptionTypes.properties,
   DescriptionTypes.description,
   DescriptionTypes.installation,
   DescriptionTypes.faq,
 ];
 
 export const tabNameByType: Record<DescriptionType, string> = {
-  [DescriptionTypes.characteristic]: 'Характеристики',
+  [DescriptionTypes.properties]: 'Характеристики',
   [DescriptionTypes.description]: 'Описание',
   [DescriptionTypes.installation]: 'Установка',
   [DescriptionTypes.faq]: 'Вопросы и ответы',

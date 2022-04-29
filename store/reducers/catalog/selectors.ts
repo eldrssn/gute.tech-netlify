@@ -42,9 +42,15 @@ const selectCategoriesFilterList = createSelector(
   ({ categoriesFilterList }) => categoriesFilterList,
 );
 
+const selectCategoriesSubcategoriesList = createSelector(
+  selectCatalogStore,
+  ({ categoriesSubcategoriesList }) => categoriesSubcategoriesList,
+);
+
 export {
   selectCategoriesProductRead,
   selectCategoriesTreeList,
+  selectCategoriesSubcategoriesList,
   selectRootCategories,
   selectCategoriesSearchRead,
   selectCategoriesProductList,

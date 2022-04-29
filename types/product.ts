@@ -1,13 +1,13 @@
-export type Content = string | string[][];
+export type Content = string | string[][] | undefined;
 
 export type TabProps = {
-  content: Content;
+  content?: Content;
 };
 
 export type WindowSideType = number | null;
 
 export enum DescriptionTypes {
-  characteristic = 'characteristic',
+  properties = 'properties',
   description = 'description',
   installation = 'installation',
   faq = 'faq',
@@ -15,6 +15,4 @@ export enum DescriptionTypes {
 
 export type DescriptionType = keyof typeof DescriptionTypes;
 
-export type TabsProps = {
-  productInfo: Record<string, Content>;
-};
+export type TabsProps = Record<DescriptionType, Content>;

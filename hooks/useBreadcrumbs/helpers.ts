@@ -33,7 +33,7 @@ export const getCrumblistFromQuery: GetCrumbs = (router, paths) => {
   return crumblist;
 };
 
-export const getCrumblistFromURL: GetCrumbs = (router, paths) => {
+export const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
   const [asPathWithoutQuery] = router.asPath.split('?');
   const asPathNestedRoutes = asPathWithoutQuery
     .split('/')
@@ -41,7 +41,7 @@ export const getCrumblistFromURL: GetCrumbs = (router, paths) => {
 
   const crumblist = asPathNestedRoutes.map((subpath, index) => {
     const href = '/' + asPathNestedRoutes.slice(0, index + 1).join('/');
-    const text = paths[subpath];
+    const text = paths[subpath] || lastTitle;
 
     return { href, text };
   });

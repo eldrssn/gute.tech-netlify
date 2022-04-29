@@ -10,12 +10,24 @@ import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 import { Crumb } from './components/Crumb';
 import { Query } from './types';
 
-export const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false }) => {
+export const NavigationBreadcrumbs: FC<Query> = ({
+  isQuery = false,
+  lastTitle,
+}) => {
   const router = useRouter();
   const categoriesTree = useSelector(selectCategoriesTreeList);
 
-  const breadcrumbs = useBreadcrumbs(router, categoriesTree);
-  const breadcrumbsQuery = useBreadcrumbs(router, categoriesTree, isQuery);
+  const breadcrumbs = useBreadcrumbs({
+    router,
+    data: categoriesTree,
+    lastTitle,
+  });
+
+  const breadcrumbsQuery = useBreadcrumbs({
+    router,
+    data: categoriesTree,
+    isQuery,
+  });
 
   return (
     <Breadcrumbs aria-label='breadcrumb'>

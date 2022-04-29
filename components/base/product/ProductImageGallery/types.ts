@@ -1,3 +1,3 @@
-export type Props = {
-  images: { original: string; thumbnail: string }[];
+export type ProductImageGalleryProps = {
+  images: string[];
 };

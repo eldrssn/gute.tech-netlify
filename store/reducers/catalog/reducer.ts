@@ -16,7 +16,7 @@ import {
   TreeCategoryResponseData,
   FiltersCategoryResponseData,
   CategoriesProductsListResponseData,
-  CategoriesProductsReadResponseData,
+  CategoriesProductReadResponseData,
 } from 'api/models/catalog';
 
 const initialState: CatalogStore = {
@@ -163,10 +163,10 @@ const handlers = {
   },
   [fetchCategoriesProductsRead.fulfilled.type]: (
     state: CatalogStore,
-    { payload }: PayloadAction<CategoriesProductsReadResponseData>,
+    { payload }: PayloadAction<CategoriesProductReadResponseData>,
   ) => {
     state.categoriesProductRead.data = {
-      vendorCode: payload.vendor_code,
+      // vendor_code: payload.vendor_code,
       ...payload,
     };
     state.categoriesProductRead.isLoading = false;

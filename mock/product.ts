@@ -1,4 +1,4 @@
-export const productInfo = {
+export const productMock = {
   id: 1,
   title: 'Решетка бампера D10 для Volkswagen Amarok 2016+',
   urlQuery: 'reshetka-bampera-d10-dlya-volkswagen-amarok-2016',
@@ -6,14 +6,10 @@ export const productInfo = {
   price: 5540,
   quantity: 2,
   images: [
-    {
-      original: '/images/mainProduct1.jpeg',
-      thumbnail: '/images/mainProduct1.jpeg',
-    },
-    {
-      original: '/images/mainProduct2.jpeg',
-      thumbnail: '/images/mainProduct2.jpeg',
-    },
+    '/images/mainProduct1.jpeg',
+    '/images/mainProduct2.jpeg',
+    '/images/mainProduct1.jpeg',
+    '/images/mainProduct2.jpeg',
   ],
   info: {
     characteristic: [
@@ -42,4 +38,15 @@ export const productInfo = {
       ],
     ],
   },
+};
+
+export const productInitData = {
+  title: '',
+  manufacturer: '',
+  vendor_code: '',
+  description: '',
+  price: '',
+  images: [],
+  properties: '',
+  warehouses: '',
 };
