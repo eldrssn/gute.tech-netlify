@@ -1,24 +1,24 @@
-import React from 'react';
-import Box from '@mui/material/Box';
+import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 
-import { CheckboxGroup } from 'components/ui/CheckboxGroup';
-import { Ranger } from 'components/ui/Ranger';
-import { RadioBox } from 'components/ui/RadioBox';
+import { selectCategoriesFilterList } from 'store/reducers/catalog/selectors';
+import { Loader } from 'components/ui/Loader';
 
-import { filterOptions, radioOptions, rangeOptions } from 'mock/CatalogFilter';
+import { componentByType } from './constants';
 
-import styles from './catalogFilter.module.scss';
+export const CatalogFilter: FC = () => {
+  const filtersResponce = useSelector(selectCategoriesFilterList);
+  const { isLoading, data } = filtersResponce;
 
-export const CatalogFilter: React.FC = () => (
-  <Box className={styles.catalogFilterContainer}>
-    <CheckboxGroup
-      title='example title'
-      queryName='example'
-      options={filterOptions}
-    />
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <>
+      {data.map((filter) => {
+        const Component = componentByType[filter.type];
 
-    <RadioBox title='radio title' queryName='radio' options={radioOptions} />
-
-    <Ranger title='Цена' queryNames={rangeOptions} />
-  </Box>
-);
+        return <Component key={filter.slug} filter={filter} />;
+      })}
+    </>
+  );
+};

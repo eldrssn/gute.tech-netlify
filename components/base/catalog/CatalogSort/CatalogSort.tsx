@@ -37,24 +37,26 @@ export const CatalogSort: FC = () => {
   return (
     <div className={styles.sortContainer}>
       <span className={styles.sortItem}>Сортировать по:</span>
-      <a
-        className={cn(styles.sortItem, styles.sortItemType, {
-          [styles.active]: isActive(ORDER_TYPES.byPopular),
-          [styles.up]: isUp(ORDER_TYPES.byPopular),
-        })}
-        onClick={setDirectionByPopular}
-      >
-        популярности
-      </a>
-      <a
-        className={cn(styles.sortItem, styles.sortItemType, {
-          [styles.active]: isActive(ORDER_TYPES.byPrice),
-          [styles.up]: isUp(ORDER_TYPES.byPrice),
-        })}
-        onClick={setDirectionByPrice}
-      >
-        цене
-      </a>
+      <div>
+        <a
+          className={cn(styles.sortItem, styles.sortItemType, {
+            [styles.active]: isActive(ORDER_TYPES.byPopular),
+            [styles.up]: isUp(ORDER_TYPES.byPopular),
+          })}
+          onClick={setDirectionByPopular}
+        >
+          популярности
+        </a>
+        <a
+          className={cn(styles.sortItem, styles.sortItemType, {
+            [styles.active]: isActive(ORDER_TYPES.byPrice),
+            [styles.up]: isUp(ORDER_TYPES.byPrice),
+          })}
+          onClick={setDirectionByPrice}
+        >
+          цене
+        </a>
+      </div>
     </div>
   );
 };

@@ -1,15 +1,20 @@
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { GetCrumbs } from './types';
 
-export const getCrumbs = (catalogTree?: TreeCategoryResponseData[]) => {
+export const getCrumbs = (
+  catalogTree?: TreeCategoryResponseData[],
+): Record<string, string> => {
   if (!catalogTree) {
     return {};
   }
 
-  return catalogTree.reduce(
-    (crumbs, item) => ({ ...crumbs, [item.slug]: item.title }),
-    {},
-  );
+  return catalogTree.reduce((crumbs, item) => {
+    const childrenCrumbs = item.children?.length
+      ? getCrumbs(item.children)
+      : {};
+
+    return { ...crumbs, [item.slug]: item.title, ...childrenCrumbs };
+  }, {});
 };
 
 export const getCrumblistFromQuery: GetCrumbs = (router, paths) => {

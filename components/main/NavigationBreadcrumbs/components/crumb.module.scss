@@ -1,7 +1,9 @@
+@import 'styles/colors.scss';
+
 .crumb {
   font-size: 14px;
   line-height: 1.57;
-  color: #1c85c7;
+  color: $blue1;
 }
 .crumb_last {
   color: black;

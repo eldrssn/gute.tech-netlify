@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Drawer } from '@mui/material';
-import { CatalogFilter } from '../CatalogFilter';
 
+import { CatalogFilter } from '../CatalogFilter';
 import { CatalogFilterDrawerProps } from './types';
 
 import styles from './catalogFilterDrawer.module.scss';

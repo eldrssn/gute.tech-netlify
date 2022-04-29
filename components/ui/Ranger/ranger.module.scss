@@ -12,10 +12,13 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .title {
   font-size: 14px;
   line-height: 1.57;
   color: black;
+  font-family: inherit;
 }

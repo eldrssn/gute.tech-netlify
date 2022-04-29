@@ -41,7 +41,7 @@ const initialState: CatalogStore = {
     error: null,
   },
   categoriesProductList: {
-    data: [],
+    data: { current: '', total: '', pages: '', results: [] },
     isLoading: false,
     error: null,
   },
@@ -143,7 +143,7 @@ const handlers = {
   },
   [fetchCategoriesProductsList.fulfilled.type]: (
     state: CatalogStore,
-    { payload }: PayloadAction<CategoriesProductsListResponseData[]>,
+    { payload }: PayloadAction<CategoriesProductsListResponseData>,
   ) => {
     state.categoriesProductList.data = payload;
     state.categoriesProductList.isLoading = false;

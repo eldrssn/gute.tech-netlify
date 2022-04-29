@@ -20,7 +20,7 @@ export const useRouterQuery = () => {
         scroll: false,
       });
     },
-    [router, isReady],
+    [isReady],
   );
 
   const getQueryOption = useCallback((name: string) => query[name], [query]);

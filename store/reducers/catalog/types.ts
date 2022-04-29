@@ -45,7 +45,7 @@ type CategoriesFilterListState = {
 } & StoreState;
 
 type CategoriesProductListState = {
-  data: CategoriesProductsListResponseData[];
+  data: CategoriesProductsListResponseData;
 } & StoreState;
 
 type CategoriesProductReadState = {

@@ -1,6 +1,4 @@
-import { CatalogCardType } from 'components/base/catalog/types';
-
-export const list: CatalogCardType[] = [
+export const list = [
   {
     title: '1 Багажник на крышу (бокс), 340 л',
     price: '42 790',

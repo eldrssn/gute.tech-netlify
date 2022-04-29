@@ -46,9 +46,10 @@ const getCategoriesFiltersList = ({
 
 const getCategoriesProductsList = ({
   categorySlug,
+  page,
 }: CategoriesProductsListRequestData) =>
   sendRequest<CategoriesProductsListResponseData>({
-    url: `/catalog/categories/${categorySlug}/products/`,
+    url: `/catalog/categories/${categorySlug}/products/?page=${page}&size=12`,
     method: 'get',
   });
 

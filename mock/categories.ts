@@ -472,45 +472,4 @@ const items = [
   },
 ];
 
-// const groupItems = (sortedItems: Category[]) => {
-//   const { groupedItems } = sortedItems.reduce<{
-//     groupedItems: GroupedItemsItem[];
-//     currentItem: GroupedItemsItem;
-//   }>(
-//     (acc, value, index) => {
-//       const currentItem = {
-//         ...acc.currentItem,
-//         [objByThreeKeys[index % 3]]: value,
-//       };
-
-//       if ((index + 1) % 3 == 0 || index + 1 == sortedItems.length) {
-//         acc.groupedItems.push(currentItem);
-
-//         acc.currentItem = { ...objByThree };
-//         return acc;
-//       }
-
-//       acc.currentItem = currentItem;
-
-//       return acc;
-//     },
-//     {
-//       groupedItems: [],
-//       currentItem: { ...objByThree },
-//     },
-//   );
-
-//   return groupedItems;
-// };
-
-// const sortedItems = groupItems(items);
-
-// const groupedItems = sortedItems;
-
-export {
-  items,
-  // sortedItems,
-  objByThree,
-  objByThreeKeys,
-  // groupedItems
-};
+export { items, objByThree, objByThreeKeys };

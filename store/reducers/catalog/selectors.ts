@@ -17,4 +17,19 @@ const selectCategoriesTreeList = createSelector(
   ({ categoriesTreeList }) => categoriesTreeList.data,
 );
 
-export { selectCategoriesProductRead, selectCategoriesTreeList };
+const selectCategoriesProductList = createSelector(
+  selectCatalogStore,
+  ({ categoriesProductList }) => categoriesProductList,
+);
+
+const selectCategoriesFilterList = createSelector(
+  selectCatalogStore,
+  ({ categoriesFilterList }) => categoriesFilterList,
+);
+
+export {
+  selectCategoriesProductRead,
+  selectCategoriesTreeList,
+  selectCategoriesProductList,
+  selectCategoriesFilterList,
+};

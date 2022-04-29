@@ -18,6 +18,7 @@ export type CategoriesFiltersListRequestData = {
 
 export type CategoriesProductsListRequestData = {
   categorySlug: string;
+  page?: number;
 };
 
 export type CategoriesProductsReadRequestData = {
@@ -42,17 +43,30 @@ export type TreeCategoryResponseData = {
   children?: TreeCategoryResponseData[];
 };
 
+type CheckboxValue = {
+  title: string;
+  value: null | string;
+};
+
+export enum FilterTypes {
+  CHECKBOX = 'CHECKBOX',
+  RANGE = 'RANGE',
+  RADIO = 'RADIO',
+}
+
 export type FiltersCategoryResponseData = {
   title: string;
   slug: string;
-  type?: string;
-  values?: string;
+  type: FilterTypes;
+  max?: null | string;
+  min?: null | string;
+  values?: CheckboxValue[];
 };
 
 export type CategoriesProductsListResponseData = {
-  count: number;
-  next: string;
-  previous: string;
+  current: string;
+  total: string;
+  pages: string;
   results: ProductListData[];
 };
 
