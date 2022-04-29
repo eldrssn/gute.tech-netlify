@@ -14,7 +14,10 @@ import styles from './headerLogo.module.css';
 
 const cn = classnames.bind(styles);
 
-export const HeaderLogo: FC<IsDrawerProps> = ({ isDrawer }) => {
+export const HeaderLogo: FC<IsDrawerProps> = ({
+  isDrawer,
+  closeMainDrawer,
+}) => {
   const { isFullHeader, isMobileView } = useContext(HeaderContext);
 
   const { logo, title } = useSelector(selectShowcaseData);
@@ -23,28 +26,33 @@ export const HeaderLogo: FC<IsDrawerProps> = ({ isDrawer }) => {
     <Box
       sx={{
         display: {
-          xs: isMobileView || isDrawer ? 'block' : 'none',
-          lg: 'flex',
+          xs: isMobileView || isDrawer ? 'flex' : 'none',
+          sm: 'flex',
         },
+        flexDirection: isDrawer ? 'column' : 'row',
       }}
     >
       <Link href={'/'} passHref>
-        <a>
+        <a
+          onClick={closeMainDrawer}
+          className={cn(styles.header_logo, {
+            [styles.header_logo_mobile]: isMobileView,
+          })}
+        >
           <Image
-            className={cn(styles.header_logo, {
-              [styles.header_logo_mobile]: isMobileView,
-            })}
+            className={styles.header_img}
             src={logo ? logo : '/logo-example.jpeg'}
             alt='header logo'
-            width={125}
-            height={44}
+            layout='fill'
           />
         </a>
       </Link>
+
       <Box
         sx={{
           display: isFullHeader || isDrawer ? 'flex' : 'none',
           alignItems: 'center',
+          marginLeft: isDrawer ? 0 : '15px',
         }}
       >
         <Typography

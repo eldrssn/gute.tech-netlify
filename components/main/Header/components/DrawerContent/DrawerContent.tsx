@@ -40,7 +40,7 @@ export const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
         className={styles.navContainer}
         sx={{ transform: sliderDirection }}
       >
-        <HeaderLogo isDrawer={true} />
+        <HeaderLogo isDrawer={true} closeMainDrawer={closeMainDrawer} />
         <Divider className={styles.divider} />
         <Box className={styles.asideNavContainer}>
           <HeaderAsideNav isDrawer={true} />

@@ -152,6 +152,7 @@ export const HeaderFilters: FC = () => {
 
           <Box className={styles.formAndCatalogContainer}>
             <FormControl
+              sx={{ flexWrap: { sm: 'wrap', lg: 'nowrap' } }}
               className={cn(styles.filterStepsForm, {
                 [styles.filterStepsForm_shortHeader]:
                   !isFullHeader || isTabletView,

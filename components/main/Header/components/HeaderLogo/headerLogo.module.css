@@ -1,11 +1,16 @@
 .header_logo {
   position: relative;
   float: left;
-  width: 125px;
+  width: 44px;
   height: 44px;
+  margin-right: 10px;
+}
+
+.header_img {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
+  object-fit: cover;
 }
 
 .headerTitle {
@@ -14,8 +19,8 @@
 }
 
 .header_logo_mobile {
-  width: 250px;
-  height: auto;
+  width: 150px;
+  height: 70px;
 }
 
 .headerTitle_mobile {

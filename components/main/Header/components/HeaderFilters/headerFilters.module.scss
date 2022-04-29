@@ -1,4 +1,4 @@
-@import "styles/colors.scss";
+@import 'styles/colors.scss';
 
 .mainContainer {
   padding-bottom: 7px;
@@ -48,11 +48,12 @@
 }
 
 .filterStepsForm_shortHeader input {
+  padding: 0;
   padding-top: 9px;
   padding-bottom: 9px;
   padding-left: 40px;
   font-size: 12px;
-  min-width: 70px;
+  min-width: 40px;
 }
 
 .stepButtonSubmit {
