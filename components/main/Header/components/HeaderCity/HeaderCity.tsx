@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Modal from 'components/main/ModalCity';
+import ModalCity from 'components/main/ModalCity';
 import { cookieStorage } from 'utility/helpers';
 import { selectRegion } from 'store/reducers/regions/actions';
 import { selectCity } from 'store/reducers/regions/selectors';
@@ -27,7 +27,7 @@ export const HeaderCity: FC = () => {
 
   return (
     <Container className={styles.cityWrapper}>
-      <Modal isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
+      <ModalCity isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
       <Box component='div' onClick={() => setIsOpenModal(true)}>
         <Typography className={styles.cityName}>
           {selectedCity.length

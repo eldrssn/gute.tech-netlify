@@ -25,6 +25,7 @@ const FormInput: React.FC<FormInputProps> = ({
     variant='outlined'
     multiline={textarea}
     rows={textarea ? 4 : undefined}
+    inputProps={{ maxLength: 200 }}
   >
     {children}
   </TextField>

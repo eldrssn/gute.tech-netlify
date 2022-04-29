@@ -9,10 +9,12 @@
 .location {
   font-size: 18px;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .location_current {
   font-weight: 400;
+  color: #0686c9;
 }
 
 .divider {

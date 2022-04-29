@@ -7,6 +7,7 @@ import Divider from '@mui/material/Divider';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Drawer from '@mui/material/Drawer';
 
+import ModalCity from 'components/main/ModalCity';
 import { CustomButton } from 'components/ui/CustomButton';
 import { selectCity } from 'store/reducers/regions/selectors';
 
@@ -18,6 +19,7 @@ import { DrawerContentProps } from './types';
 import styles from './drawerContent.module.css';
 
 export const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
+  const [isOpenCityModal, setIsOpenCityModal] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -33,6 +35,7 @@ export const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
 
   return (
     <>
+      <ModalCity isOpen={isOpenCityModal} setIsOpen={setIsOpenCityModal} />
       <Container
         className={styles.navContainer}
         sx={{ transform: sliderDirection }}
@@ -43,7 +46,7 @@ export const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
           <HeaderAsideNav isDrawer={true} />
         </Box>
         <Divider className={styles.divider} />
-        <p className={styles.location}>
+        <p className={styles.location} onClick={() => setIsOpenCityModal(true)}>
           Выбран город: <span className={styles.location_current}>{city}</span>
         </p>
         <CustomButton
