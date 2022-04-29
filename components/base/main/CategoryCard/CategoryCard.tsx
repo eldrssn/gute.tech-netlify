@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Router from 'next/router';
 
-import { CATEGORY_QUERY } from 'constants/variables';
+import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 
 import { Props } from './types';
@@ -15,9 +15,10 @@ const CategoryCard: React.FC<Props> = ({ item }) => {
 
   const routerQuery = useRouterQuery();
 
-  const isInCategory = routerQuery.getQueryOption(CATEGORY_QUERY);
+  const isInCategory = routerQuery.getQueryOption(QueryUrl.CATEGORY_QUERY);
 
-  const setQuery = () => routerQuery.setQueryOption(CATEGORY_QUERY, slug);
+  const setQuery = () =>
+    routerQuery.setQueryOption(QueryUrl.CATEGORY_QUERY, slug);
 
   const goToUrl = () =>
     Router.push(`/catalog/${slug}?page=1&order=byPopularDown`, undefined, {

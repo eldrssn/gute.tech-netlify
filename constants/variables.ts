@@ -21,4 +21,14 @@ export const tabNameByType: Record<DescriptionType, string> = {
 
 export const DEV_HOST = 'dev.gute.tech';
 
-export const CATEGORY_QUERY = 'category';
+export enum QueryUrl {
+  CATEGORY_QUERY = 'category',
+  TRANSPORT_QUERY = 'transport',
+}
+
+export enum Slugs {
+  BRAND_SLUG = 'brandSlug',
+  MODEL_SLUG = 'modelSlug',
+  YEAR_SLUG = 'yearSlug',
+  ENGINE_SLUG = 'engineSlug',
+}

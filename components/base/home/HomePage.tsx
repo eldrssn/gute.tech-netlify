@@ -1,9 +1,8 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Grid } from '@mui/material';
-
-import { CATEGORY_QUERY } from 'constants/variables';
-import { useRouterQuery } from 'hooks/useRouterQuery';
-import { groupItems } from 'utility/helpers';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { Description } from 'components/base/main/Description';
@@ -14,12 +13,15 @@ import {
   SecondRowReversed,
 } from 'components/base/main/rows';
 import { Items } from 'components/base/main/rows/types';
+import { QueryUrl } from 'constants/variables';
+import { useRouterQuery } from 'hooks/useRouterQuery';
+import { groupItems, getSlugsFromUrl } from 'utility/helpers';
+import { fetchSearchReadCategory } from 'store/reducers/catalog/actions';
+import { selectRootCategories } from 'store/reducers/catalog/selectors';
 
-import { getGroupedChildren } from './helpers';
+import { getGroupedChildren, getlastQueryUrl } from './helpers';
+import { rootCategories } from './constants';
 import { Index } from './types';
-
-import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
-import { useSelector } from 'react-redux';
 
 const rowHashMap: Record<Index, FC<Items>> = {
   1: FirstRow,
@@ -29,16 +31,39 @@ const rowHashMap: Record<Index, FC<Items>> = {
 };
 
 const Home: FC = () => {
-  const router = useRouterQuery();
-  const categoriesTree = useSelector(selectCategoriesTreeList);
-  const categoryQuery = router.getQueryOption(CATEGORY_QUERY);
+  const dispatch = useDispatch();
+  const { query } = useRouter();
+  const routerQuery = useRouterQuery();
+  const categoryQuery = routerQuery.getQueryOption(QueryUrl.CATEGORY_QUERY);
+  const transportQuery = routerQuery.getQueryOption(QueryUrl.TRANSPORT_QUERY);
+
+  const lastQueryUrl = getlastQueryUrl(query);
+
+  const CurrentRootCategories = useSelector(
+    selectRootCategories(rootCategories[lastQueryUrl]),
+  );
+
+  useEffect(() => {
+    if (!Array.isArray(transportQuery) && transportQuery) {
+      const { brandSlug, modelSlug, yearSlug, engineSlug } =
+        getSlugsFromUrl(transportQuery);
+      dispatch(
+        fetchSearchReadCategory({
+          brandSlug,
+          modelSlug,
+          yearSlug,
+          engineSlug,
+        }),
+      );
+    }
+  }, [transportQuery, dispatch]);
 
   const groupedItems = useMemo(
     () =>
       categoryQuery
-        ? getGroupedChildren(categoryQuery, categoriesTree)
-        : groupItems(categoriesTree),
-    [categoryQuery, categoriesTree],
+        ? getGroupedChildren(categoryQuery, CurrentRootCategories)
+        : groupItems(CurrentRootCategories),
+    [categoryQuery, CurrentRootCategories],
   );
 
   return (

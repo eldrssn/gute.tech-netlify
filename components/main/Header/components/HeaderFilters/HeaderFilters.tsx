@@ -2,6 +2,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import classnames from 'classnames/bind';
 import { useDispatch } from 'react-redux';
 import { useForm, UseFormSetValue } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -20,7 +21,7 @@ import {
   resetOptionsDataInEngineStep,
 } from 'store/reducers/transport/actions';
 import { namesDefaultValueByStep } from '../../constants';
-import { fetchSearchReadCategory } from 'store/reducers/catalog/actions';
+import { QueryUrl, Slugs } from 'constants/variables';
 
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
@@ -39,6 +40,7 @@ const defaultValue: FormDataItem = {
 };
 
 export const HeaderFilters: FC = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView } =
     useContext(HeaderContext);
@@ -118,14 +120,12 @@ export const HeaderFilters: FC = () => {
 
   const onSubmit = handleSubmit((data) => {
     const { brand, model, year, engine } = data;
-    dispatch(
-      fetchSearchReadCategory({
-        brandSlug: brand.slug,
-        modelSlug: model.slug,
-        yearSlug: year.slug,
-        engineSlug: engine.slug,
-      }),
-    );
+    const param = `${Slugs.BRAND_SLUG}=${brand.slug}&${Slugs.MODEL_SLUG}=${model.slug}&${Slugs.YEAR_SLUG}=${year.slug}&${Slugs.ENGINE_SLUG}=${engine.slug}`;
+    router.push({
+      query: {
+        [QueryUrl.TRANSPORT_QUERY]: param,
+      },
+    });
   });
 
   return (
