@@ -8,15 +8,13 @@ import {
 
 import { UseBreadcrumbs } from './types';
 
-// !TODO: убрать кривой каталог
 const defaultPath: Record<string, string> = {
   catalog: 'Каталог',
-  katalog: 'Каталог',
 };
 
 export const useBreadcrumbs: UseBreadcrumbs = (router, data, isQuery) =>
   useMemo(() => {
-    const newPaths: Record<string, string> = getCrumbs(data);
+    const newPaths = getCrumbs(data);
     const paths = { ...defaultPath, ...newPaths };
 
     const crumblist = isQuery

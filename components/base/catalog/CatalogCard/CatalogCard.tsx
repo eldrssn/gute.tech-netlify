@@ -1,4 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -9,45 +11,60 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
+import { ProductListData } from 'api/models/catalog';
+
 import { CustomButton } from 'components/ui/CustomButton';
-import { CatalogCardType } from '../types';
 
 import styles from './catalogCard.module.scss';
 
-export const CatalogCard: React.FC<CatalogCardType> = ({
-  title,
+export const CatalogCard: React.FC<ProductListData> = ({
+  image,
   price,
-  picture,
-}) => (
-  <Card component='article' className={styles.cardContainer}>
-    <CardMedia
-      component={'img'}
-      height='250'
-      image={picture}
-      alt={title}
-      className={styles.cardImage}
-    />
+  slug,
+  title,
+}) => {
+  const router = useRouter();
+  const { slug: categorySlug } = router.query;
 
-    <CardContent className={styles.cardInfo}>
-      <Divider className={styles.cardDivider} />
+  return (
+    <Card component='article' className={styles.cardContainer}>
+      <Link href={`/catalog/${categorySlug}/${slug}`}>
+        <a className={styles.cardLinkContainer}>
+          <CardMedia
+            component={'img'}
+            height='250'
+            image={image || '/card-example.jpeg'}
+            alt={title}
+            className={styles.cardImage}
+          />
 
-      <Typography className={styles.cardTitle} gutterBottom component='h3'>
-        {title}
-      </Typography>
+          <CardContent className={styles.cardInfo}>
+            <Divider className={styles.cardDivider} />
 
-      <Box className={styles.cardBottom}>
-        <Typography className={styles.cardPrice}>{price} ₽</Typography>
+            <Typography
+              className={styles.cardTitle}
+              gutterBottom
+              component='h3'
+            >
+              {title}
+            </Typography>
 
-        <CardActions className={styles.cardActions}>
-          <CustomButton customStyles={styles.cardBuyButton}>
-            Купить
-          </CustomButton>
+            <Box className={styles.cardBottom}>
+              <Typography className={styles.cardPrice}>{price} ₽</Typography>
 
-          <CustomButton customStyles={styles.cardAddToShoppingButton}>
-            <ShoppingCartIcon />
-          </CustomButton>
-        </CardActions>
-      </Box>
-    </CardContent>
-  </Card>
-);
+              <CardActions className={styles.cardActions}>
+                <CustomButton customStyles={styles.cardBuyButton}>
+                  Купить
+                </CustomButton>
+
+                <CustomButton customStyles={styles.cardAddToShoppingButton}>
+                  <ShoppingCartIcon />
+                </CustomButton>
+              </CardActions>
+            </Box>
+          </CardContent>
+        </a>
+      </Link>
+    </Card>
+  );
+};

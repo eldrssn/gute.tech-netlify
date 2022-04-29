@@ -54,11 +54,11 @@ export const RecommendedProducts: FC = () => (
   <Box>
     <h2>Вам обязательно понадобятся</h2>
     <Slider {...sliderSettings}>
-      <CatalogCard title='1' price='10' picture='' />
-      <CatalogCard title='2' price='20' picture='' />
-      <CatalogCard title='3' price='30' picture='' />
-      <CatalogCard title='4' price='40' picture='' />
-      <CatalogCard title='5' price='50' picture='' />
+      <CatalogCard title='1' price='10' image='' slug='aa' />
+      <CatalogCard title='2' price='20' image='' slug='bb' />
+      <CatalogCard title='3' price='30' image='' slug='cc' />
+      <CatalogCard title='4' price='40' image='' slug='dd' />
+      <CatalogCard title='5' price='50' image='' slug='ee' />
     </Slider>
   </Box>
 );

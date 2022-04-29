@@ -8,7 +8,6 @@ import styles from './crumb.module.scss';
 const cn = classnames.bind(styles);
 
 export const Crumb: FC<CrumbProps> = ({ text, href, last = false }) => {
-  // !TODO: узнать как отображать последнюю крошку
   if (last) {
     return <p className={cn(styles.crumb, styles.crumb_last)}>{text}</p>;
   }

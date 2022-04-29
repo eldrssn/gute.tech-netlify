@@ -1,11 +1,34 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 
-import { CatalogTitle } from 'components/base/catalog/CatalogTitle';
-import { CatalogMain } from 'components/base/catalog/CatalogMain';
+import { fetchCategoriesFiltersList } from 'store/reducers/catalog/actions';
 
-export const Catalog: FC = () => (
-  <>
-    <CatalogTitle />
-    <CatalogMain />
-  </>
-);
+import { CatalogTitle } from '../CatalogTitle';
+import { CatalogMain } from '../CatalogMain';
+
+import { makeStringify } from '../helpers';
+
+export const Catalog: FC = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { slug } = router.query;
+
+  useEffect(() => {
+    if (!slug) {
+      return;
+    }
+
+    const stringifySlug = makeStringify(slug);
+
+    dispatch(fetchCategoriesFiltersList({ categorySlug: stringifySlug }));
+  }, [slug, dispatch]);
+
+  return (
+    <>
+      <CatalogTitle />
+      <CatalogMain />
+    </>
+  );
+};
