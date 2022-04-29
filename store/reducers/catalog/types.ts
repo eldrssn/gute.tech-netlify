@@ -17,6 +17,10 @@ enum CategoryStoreBlocks {
   CATEGORIESSUBCATEGORIESLIST = 'categoriesSubcategoriesList',
 }
 
+type CategoryStoreRootCategory =
+  | CategoryStoreBlocks.CATEGORIESTREELIST
+  | CategoryStoreBlocks.SEARCHREADCATEGORY;
+
 type CategoriesProductsReadData = {
   title: string;
   manufacturer?: string | undefined;
@@ -66,4 +70,10 @@ type CatalogStore = {
   [CategoryStoreBlocks.CATEGORIESFILTERSLIST]: CategoriesFilterListState;
 };
 
-export type { ErrorAction, StoreError, CatalogStore };
+export type {
+  ErrorAction,
+  StoreError,
+  CatalogStore,
+  CategoryStoreRootCategory,
+};
+export { CategoryStoreBlocks };

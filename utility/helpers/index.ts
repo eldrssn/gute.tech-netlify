@@ -4,6 +4,7 @@ import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
 import { RegionData } from 'store/reducers/regions/types';
 import { TreeCategoryResponseData } from 'api/models/catalog';
+import { CategoriesSearchReadRequestData } from 'api/models/catalog';
 
 const groupItems = (sortedItems?: TreeCategoryResponseData[]) => {
   if (!sortedItems) {
@@ -105,4 +106,31 @@ const cookieStorage = {
   },
 };
 
-export { groupItems, getInputRules, filterRegionsOption, cookieStorage };
+const getSlugsFromUrl = (url: string): CategoriesSearchReadRequestData => {
+  const slicedUrl = url.split('&');
+  const slugs = slicedUrl.reduce(
+    (p, c) => {
+      const slug = c.split('=');
+      const name = slug[0];
+      const value = slug[1];
+
+      return { ...p, [name]: value };
+    },
+    {
+      brandSlug: '',
+      modelSlug: '',
+      yearSlug: '',
+      engineSlug: '',
+    },
+  );
+
+  return slugs;
+};
+
+export {
+  groupItems,
+  getInputRules,
+  filterRegionsOption,
+  cookieStorage,
+  getSlugsFromUrl,
+};
