@@ -42,7 +42,9 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
       {(isFullHeader || isMobileView || isDrawer) && (
         <MenuItem disableGutters>
           <PhoneCallbackIcon />
-          <Typography className={menuItemStyles}>{phone}</Typography>
+          <a href='tel:+74992832026' className={menuItemStyles}>
+            {phone}
+          </a>
         </MenuItem>
       )}
 

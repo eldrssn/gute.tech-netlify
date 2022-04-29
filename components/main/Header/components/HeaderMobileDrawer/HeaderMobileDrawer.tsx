@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import classnames from 'classnames/bind';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
@@ -39,12 +40,14 @@ export const HeaderMobileDrawer = () => {
             })}
           />
         </CustomButton>
-        <MenuItem>
-          <ShoppingCartIcon />
-          <Typography className={styles.menuItem}>
-            {orderTotal}&#8381;
-          </Typography>
-        </MenuItem>
+        <Link href={'/cart'} passHref>
+          <MenuItem onClick={handleDrawerToggle}>
+            <ShoppingCartIcon />
+            <Typography className={styles.menuItem}>
+              {orderTotal}&#8381;
+            </Typography>
+          </MenuItem>
+        </Link>
       </Container>
       <Divider />
 
