@@ -42,7 +42,7 @@ export const HeaderMobileDrawer = () => {
         </CustomButton>
         <Link href={'/cart'} passHref>
           <MenuItem onClick={handleDrawerToggle}>
-            <ShoppingCartIcon />
+            <ShoppingCartIcon sx={{ width: '24px', height: '24px' }} />
             <Typography className={styles.menuItem}>
               {orderTotal}&#8381;
             </Typography>

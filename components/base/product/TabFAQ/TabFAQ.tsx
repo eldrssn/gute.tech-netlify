@@ -5,7 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 
 import { setSmoothScroll } from 'utility/utils';
-import { TabProps } from 'types/product';
+import { Content, Property, TabProps } from 'types/product';
 
 import styles from './tabFAQ.module.scss';
 
@@ -27,11 +27,15 @@ export const TabFAQ: FC<TabProps> = ({ content }) => {
     [expanded],
   );
 
+  const isContent = (value: Content | Property[]): value is Content => {
+    return true;
+  };
+
   if (!content) {
     return <p>Нет данных</p>;
   }
 
-  if (!Array.isArray(content)) {
+  if (!Array.isArray(content) || !isContent(content)) {
     return <p>{content}</p>;
   }
 

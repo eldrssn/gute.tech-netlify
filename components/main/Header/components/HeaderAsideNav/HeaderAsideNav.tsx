@@ -55,7 +55,7 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
         {(!isMobileView || !isDrawer) && (
           <Link href={'/cart'} passHref>
             <MenuItem>
-              <ShoppingCartIcon />
+              <ShoppingCartIcon sx={{ width: '24px', height: '24px' }} />
               <Typography className={styles.menuItem}>
                 {orderTotal}&#8381;
               </Typography>
@@ -68,14 +68,17 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
           disableGutters
           onClick={() => setIsOpenModalAdvice(true)}
         >
-          <HeadphonesIcon />
+          <HeadphonesIcon sx={{ width: '24px', height: '24px' }} />
           {(isFullHeader || isDrawer) && (
             <Typography className={menuItemStyles}>Консультация</Typography>
           )}
         </MenuItem>
 
         <MenuItem className={menuItemStyles} disableGutters>
-          <SearchIcon className={styles.menuIcon} />
+          <SearchIcon
+            className={styles.menuIcon}
+            sx={{ width: '24px', height: '24px' }}
+          />
           {isDrawer && (
             <Typography className={menuItemStyles}>Поиск</Typography>
           )}

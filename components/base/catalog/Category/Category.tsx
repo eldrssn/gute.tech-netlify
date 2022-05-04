@@ -22,7 +22,10 @@ export const Category: FC<CategoriesProps> = ({ slug }) => {
 
   const renderLastCategories = (child: TreeCategoryResponseData) =>
     child.children?.map((child) => (
-      <Link href={`/catalog/${child.slug}`} key={child.slug}>
+      <Link
+        href={`/catalog/${child.slug}?page=1&order=byPopularDown`}
+        key={child.slug}
+      >
         <a>
           <MenuItem className={styles.lastCategory_title}>
             {child.title}
@@ -34,7 +37,10 @@ export const Category: FC<CategoriesProps> = ({ slug }) => {
   const renderSubcategories = (child: TreeCategoryResponseData) =>
     child.children?.map((child) => (
       <Fragment key={child.slug}>
-        <Link href={`/catalog/${child.slug}`} key={child.slug}>
+        <Link
+          href={`/catalog/${child.slug}?page=1&order=byPopularDown`}
+          key={child.slug}
+        >
           <a>
             <MenuItem className={styles.subcategory_title}>
               {child.title}
@@ -48,7 +54,7 @@ export const Category: FC<CategoriesProps> = ({ slug }) => {
 
   return (
     <Container disableGutters>
-      <Link href={`/catalog/${slug}`}>
+      <Link href={`/catalog/${slug}?page=1&order=byPopularDown`}>
         <a>
           <h2 className={styles.header}>{title}</h2>
         </a>
@@ -61,7 +67,10 @@ export const Category: FC<CategoriesProps> = ({ slug }) => {
       >
         {children?.map((child) => (
           <Box key={child.slug} className={styles.childrenListItem}>
-            <Link href={`/catalog/${child.slug}`} key={child.slug}>
+            <Link
+              href={`/catalog/${child.slug}?page=1&order=byPopularDown`}
+              key={child.slug}
+            >
               <a>
                 <MenuItem className={styles.category_title}>
                   {child.title}
