@@ -44,6 +44,8 @@ export const ProductMain: FC = () => {
     dispatch(addItemFromCart(createBasketItem(data)));
   };
 
+  const imagesGallary = images && images.length ? images : productMock.images;
+
   return isLoading ? (
     <p>...загрузка</p>
   ) : (
@@ -61,7 +63,7 @@ export const ProductMain: FC = () => {
             flexDirection: { xs: 'column', sm: 'row' },
           }}
         >
-          <ProductImageGallery images={images || productMock.images} />
+          <ProductImageGallery images={imagesGallary} />
 
           <Container className={styles.productInfoContainer}>
             <Box

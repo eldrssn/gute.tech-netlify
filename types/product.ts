@@ -1,7 +1,12 @@
 export type Content = string | string[][] | undefined;
 
+export interface Property {
+  title: string;
+  value: string;
+}
+
 export type TabProps = {
-  content?: Content;
+  content?: Property[] | Content;
 };
 
 export type WindowSideType = number | null;

@@ -20,7 +20,10 @@ export const Subcategories = () => {
       ) : (
         <>
           {data.map((category) => (
-            <Link key={category.slug} href={`/catalog/${category.slug}`}>
+            <Link
+              key={category.slug}
+              href={`/catalog/${category.slug}?page=1&order=byPopularDown`}
+            >
               <a>
                 <Box className={styles.catalogItem}>{category.title}</Box>
               </a>

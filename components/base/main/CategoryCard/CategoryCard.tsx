@@ -6,6 +6,7 @@ import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 
 import { Props } from './types';
+import { imageLoader } from './helpers';
 import styles from './CategoryCard.module.scss';
 
 const CategoryCard: React.FC<Props> = ({ item }) => {
@@ -34,6 +35,7 @@ const CategoryCard: React.FC<Props> = ({ item }) => {
 
       <div className={styles.categoryName}>{title}</div>
       <Image
+        loader={imageLoader}
         className={styles.categoryImage}
         src={image || `/germanika/deflectors.jpg`}
         alt={title || 'category name'}

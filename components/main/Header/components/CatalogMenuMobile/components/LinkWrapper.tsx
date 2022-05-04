@@ -12,7 +12,10 @@ export const LinkWrapper: FC<LinkWrapperProps> = ({
     {item.children?.length ? (
       children
     ) : (
-      <Link href={`/catalog/${item.slug}`} key={item.slug}>
+      <Link
+        href={`/catalog/${item.slug}?page=1&order=byPopularDown`}
+        key={item.slug}
+      >
         <a>
           <div onClick={onClick}>{children}</div>
         </a>

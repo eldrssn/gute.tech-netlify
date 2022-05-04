@@ -15,10 +15,7 @@ export const useRouterQuery = () => {
         return;
       }
 
-      router.push({ pathname, query: newQuery }, undefined, {
-        shallow: true,
-        scroll: false,
-      });
+      router.push({ pathname, query: newQuery });
     },
     [isReady],
   );

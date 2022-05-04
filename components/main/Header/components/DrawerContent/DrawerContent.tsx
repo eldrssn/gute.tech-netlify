@@ -64,6 +64,7 @@ export const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
             top: 0,
             borderLeft: 'none',
             backgroundColor: '#333333',
+            width: '100%',
           },
         }}
         transitionDuration={400}

@@ -1,26 +1,30 @@
 import React, { FC } from 'react';
 import Box from '@mui/material/Box';
 
-import { TabProps } from 'types/product';
+import { Content, Property, TabProps } from 'types/product';
 
 import styles from './tabDetails.module.scss';
 
 export const TabDetails: FC<TabProps> = ({ content }) => {
-  if (!content) {
+  if (!content?.length) {
     return <p>Нет данных</p>;
   }
 
-  if (!Array.isArray(content)) {
+  const isProperties = (value: Content | Property[]): value is Property[] => {
+    return true;
+  };
+
+  if (!Array.isArray(content) || !isProperties(content)) {
     return <p>{content}</p>;
   }
 
   return (
     <>
-      {content.map(([label, details]) => (
-        <Box className={styles.contentBox} key={label}>
-          <span className={styles.contentLabel}>{label}</span>
+      {content.map(({ title, value }) => (
+        <Box className={styles.contentBox} key={title}>
+          <span className={styles.contentLabel}>{title}</span>
           <span className={styles.spaceLine}></span>
-          <span className={styles.contentValue}>{details}</span>
+          <span className={styles.contentValue}>{value}</span>
         </Box>
       ))}
     </>

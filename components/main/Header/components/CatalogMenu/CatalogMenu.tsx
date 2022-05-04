@@ -36,7 +36,10 @@ export const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
   };
 
   const renderItem = ({ item, className, onMouseEnter }: RenderItem) => (
-    <Link href={`/catalog/${item.slug}`} key={item.slug}>
+    <Link
+      href={`/catalog/${item.slug}?page=1&order=byPopularDown`}
+      key={item.slug}
+    >
       <a>
         <MenuItem
           className={className}

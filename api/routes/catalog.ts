@@ -40,7 +40,7 @@ const getCategoriesFiltersList = ({
   categorySlug,
 }: CategoriesFiltersListRequestData) =>
   sendRequest<FiltersCategoryResponseData[]>({
-    url: `/catalog/categories/${categorySlug}/filters/`,
+    url: `/catalog/${categorySlug}/filters/`,
     method: 'get',
   });
 
@@ -49,16 +49,15 @@ const getCategoriesProductsList = ({
   page,
 }: CategoriesProductsListRequestData) =>
   sendRequest<CategoriesProductsListResponseData>({
-    url: `/catalog/categories/${categorySlug}/products/?page=${page}&size=12`,
-    method: 'get',
+    url: `/catalog/${categorySlug}/products/?page=${page}&size=12`,
+    method: 'post',
   });
 
 const getCategoriesProductsRead = ({
-  categorySlug,
   productSlug,
 }: CategoriesProductsReadRequestData) =>
   sendRequest<CategoriesProductReadResponseData>({
-    url: `/catalog/categories/${categorySlug}/products/${productSlug}/`,
+    url: `/catalog/products/${productSlug}/`,
     method: 'get',
   });
 
@@ -66,7 +65,7 @@ const getCategoriesSubcategoriesList = ({
   categorySlug,
 }: CategoriesSubcategoriesListRequestData) =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/categories/${categorySlug}/subcategories/`,
+    url: `/catalog/${categorySlug}/categories/`,
     method: 'get',
   });
 
