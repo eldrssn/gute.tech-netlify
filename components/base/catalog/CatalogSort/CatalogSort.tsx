@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import classnames from 'classnames/bind';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
@@ -8,14 +8,26 @@ import { ORDER_QUERY } from '../constants';
 import { changeOrderType } from './helpers';
 import { DIRECTIONS, ORDER_TYPES } from './constants';
 
+import { CatalogSortProps } from './types';
 import styles from './catalogSort.module.scss';
 
 const cn = classnames.bind(styles);
 
-export const CatalogSort: FC = () => {
+const CatalogSort: FC<CatalogSortProps> = ({ setSorting }) => {
   const routerQuery = useRouterQuery();
 
   const orderType = getQueryParams(routerQuery, ORDER_QUERY);
+
+  useEffect(() => {
+    const sortingTypes: Record<string, () => void> = {
+      byPopularDown: () => setSorting({ sort: 'popular', order: 'asc' }),
+      byPopularUp: () => setSorting({ sort: 'popular', order: 'desc' }),
+      byPriceDown: () => setSorting({ sort: 'price', order: 'asc' }),
+      byPriceUp: () => setSorting({ sort: 'price', order: 'desc' }),
+    };
+
+    orderType && sortingTypes[orderType]();
+  }, [orderType, setSorting]);
 
   const setDirectionByPopular = () => {
     const changedOrderType = changeOrderType(orderType, ORDER_TYPES.byPopular);
@@ -60,3 +72,5 @@ export const CatalogSort: FC = () => {
     </div>
   );
 };
+
+export { CatalogSort };

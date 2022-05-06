@@ -1,7 +1,7 @@
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { GetCrumbs } from './types';
 
-export const getCrumbs = (
+const getCrumbs = (
   catalogTree?: TreeCategoryResponseData[],
 ): Record<string, string> => {
   if (!catalogTree) {
@@ -17,7 +17,7 @@ export const getCrumbs = (
   }, {});
 };
 
-export const getCrumblistFromQuery: GetCrumbs = (router, paths) => {
+const getCrumblistFromQuery: GetCrumbs = (router, paths) => {
   const queryEntries = Object.entries(router.query);
 
   const crumblist = queryEntries.map(([key, subpath]) => {
@@ -33,7 +33,7 @@ export const getCrumblistFromQuery: GetCrumbs = (router, paths) => {
   return crumblist;
 };
 
-export const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
+const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
   const [asPathWithoutQuery] = router.asPath.split('?');
   const asPathNestedRoutes = asPathWithoutQuery
     .split('/')
@@ -48,3 +48,5 @@ export const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
 
   return crumblist;
 };
+
+export { getCrumbs, getCrumblistFromQuery, getCrumblistFromURL };

@@ -14,10 +14,7 @@ import styles from './headerLogo.module.css';
 
 const cn = classnames.bind(styles);
 
-export const HeaderLogo: FC<IsDrawerProps> = ({
-  isDrawer,
-  closeMainDrawer,
-}) => {
+const HeaderLogo: FC<IsDrawerProps> = ({ isDrawer, closeMainDrawer }) => {
   const { isFullHeader, isMobileView } = useContext(HeaderContext);
 
   const { logo, title } = useSelector(selectShowcaseData);
@@ -67,3 +64,5 @@ export const HeaderLogo: FC<IsDrawerProps> = ({
     </Box>
   );
 };
+
+export { HeaderLogo };

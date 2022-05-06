@@ -8,7 +8,7 @@ import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 
 import styles from './footerSocialLinks.module.scss';
 
-export const FooterSocialLinks: FC = () => {
+const FooterSocialLinks: FC = () => {
   const { socialLinkVk, socialLinkFacebook, socialLinkInstagram, phone } =
     useSelector(selectShowcaseData);
 
@@ -71,3 +71,5 @@ export const FooterSocialLinks: FC = () => {
     </Box>
   );
 };
+
+export { FooterSocialLinks };

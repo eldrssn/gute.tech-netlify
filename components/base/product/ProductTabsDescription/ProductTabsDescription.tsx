@@ -8,7 +8,7 @@ import { TabsProps } from 'types/product';
 import { TabsMobileView } from '../TabsMobileView';
 import { TabsDesktopView } from '../TabsDesktopView';
 
-export const ProductTabsDescription: FC<TabsProps> = (props) => {
+const ProductTabsDescription: FC<TabsProps> = (props) => {
   const { windowWidth } = useWindowSize();
 
   const Component = checkMobileView(windowWidth)
@@ -17,3 +17,5 @@ export const ProductTabsDescription: FC<TabsProps> = (props) => {
 
   return <Component {...props} />;
 };
+
+export { ProductTabsDescription };

@@ -3,11 +3,7 @@ import Link from 'next/link';
 
 import { LinkWrapperProps } from '../types';
 
-export const LinkWrapper: FC<LinkWrapperProps> = ({
-  item,
-  onClick,
-  children,
-}) => (
+const LinkWrapper: FC<LinkWrapperProps> = ({ item, onClick, children }) => (
   <>
     {item.children?.length ? (
       children
@@ -23,3 +19,5 @@ export const LinkWrapper: FC<LinkWrapperProps> = ({
     )}
   </>
 );
+
+export { LinkWrapper };

@@ -22,7 +22,7 @@ import styles from './headerAsideNav.module.css';
 
 const cn = classnames.bind(styles);
 
-export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
+const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
   const { isFullHeader, isMobileView } = useContext(HeaderContext);
   const [isOpenModalAdvice, setIsOpenModalAdvice] = useState(false);
 
@@ -87,3 +87,5 @@ export const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
     </>
   );
 };
+
+export { HeaderAsideNav };

@@ -13,7 +13,7 @@ import { TabContentByType } from '../TabContentByType';
 
 import styles from './tabsDesktopView.module.scss';
 
-export const TabsDesktopView: FC<TabsProps> = (props) => {
+const TabsDesktopView: FC<TabsProps> = (props) => {
   const [tabType, setTabType] = useState<DescriptionType>(
     DescriptionTypes.properties,
   );
@@ -55,3 +55,5 @@ export const TabsDesktopView: FC<TabsProps> = (props) => {
     </Box>
   );
 };
+
+export { TabsDesktopView };

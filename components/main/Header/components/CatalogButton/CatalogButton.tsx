@@ -12,7 +12,7 @@ import styles from './catalogButton.module.css';
 
 const cn = classnames.bind(styles);
 
-export const CatalogButton: FC = () => {
+const CatalogButton: FC = () => {
   const { isFullHeader, isTabletView } = useContext(HeaderContext);
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -77,3 +77,5 @@ export const CatalogButton: FC = () => {
     </>
   );
 };
+
+export { CatalogButton };

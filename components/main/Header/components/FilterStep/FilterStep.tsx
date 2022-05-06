@@ -11,7 +11,7 @@ import { TailSpin } from 'react-loader-spinner';
 import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
 
-import { Props } from './types';
+import { FilterStepProps } from './types';
 import { HandleClickProps, StepInputs } from '../../types';
 import styles from './filterSteps.module.scss';
 import colors from 'styles/_export.module.scss';
@@ -20,7 +20,7 @@ const loaderColor = colors.blue;
 
 const cn = classnames.bind(styles);
 
-export const FilterStep: FC<Props> = ({
+const FilterStep: FC<FilterStepProps> = ({
   openPopoverId,
   setOpenPopoverId,
   name,
@@ -108,3 +108,5 @@ export const FilterStep: FC<Props> = ({
     </Step>
   );
 };
+
+export { FilterStep };

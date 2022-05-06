@@ -9,7 +9,7 @@ import { HeaderMobileDrawer } from '../HeaderMobileDrawer';
 
 import styles from './headerMobile.module.css';
 
-export const HeaderMobile: FC = () => {
+const HeaderMobile: FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -85,3 +85,5 @@ export const HeaderMobile: FC = () => {
     </>
   );
 };
+
+export { HeaderMobile };

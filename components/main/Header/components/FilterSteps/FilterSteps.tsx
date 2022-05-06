@@ -6,12 +6,12 @@ import { HeaderContext } from '../HeaderContext';
 import { FilterStep } from '../FilterStep';
 
 import { filterSteps } from '../../constants';
-import { Props } from './types';
+import { FilterStepsProps } from './types';
 import styles from './filterSteps.module.scss';
 
 const cn = classnames.bind(styles);
 
-export const FilterSteps: FC<Props> = ({ openPopoverId, ...restProps }) => {
+const FilterSteps: FC<FilterStepsProps> = ({ openPopoverId, ...restProps }) => {
   const { isMobileView } = useContext(HeaderContext);
 
   return (
@@ -32,3 +32,5 @@ export const FilterSteps: FC<Props> = ({ openPopoverId, ...restProps }) => {
     </Stepper>
   );
 };
+
+export { FilterSteps };

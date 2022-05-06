@@ -1,6 +1,6 @@
 import { FormProps, FilterInputName, inputStepId } from '../../types';
 
-export type Props = {
+type FilterStepProps = {
   openPopoverId: number;
   setOpenPopoverId: React.Dispatch<React.SetStateAction<number>>;
   name: FilterInputName;
@@ -9,3 +9,5 @@ export type Props = {
   setCurrentStep: (currentStep: number) => void;
   placeholder: string;
 } & FormProps;
+
+export type { FilterStepProps };

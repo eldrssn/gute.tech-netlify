@@ -13,7 +13,7 @@ import { TreeCategoryResponseData } from 'api/models/catalog';
 import { CategoriesProps } from './types';
 import styles from './category.module.scss';
 
-export const Category: FC<CategoriesProps> = ({ slug }) => {
+const Category: FC<CategoriesProps> = ({ slug }) => {
   const categoriesTree = useSelector(selectCategoriesTreeList);
   const category = categoriesTree.find((item) => item.slug === slug);
 
@@ -86,3 +86,5 @@ export const Category: FC<CategoriesProps> = ({ slug }) => {
     </Container>
   );
 };
+
+export { Category };

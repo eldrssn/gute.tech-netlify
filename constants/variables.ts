@@ -1,34 +1,48 @@
 import { DescriptionType, DescriptionTypes } from 'types/product';
 
-export const MOBILE_WIDTH = 830;
-export const TABLET_WIDTH = 1200;
-export const SCROLL_DELAY = 500;
-export const CATALOG_MOBILE_WIDTH = 450;
+const MOBILE_WIDTH = 830;
+const TABLET_WIDTH = 1200;
+const DELAY = 500;
+const SCROLL_DELAY = DELAY;
+const CATALOG_MOBILE_WIDTH = 450;
 
-export const descriptionTypeName = [
+const descriptionTypeName = [
   DescriptionTypes.properties,
   DescriptionTypes.description,
   DescriptionTypes.installation,
   DescriptionTypes.faq,
 ];
 
-export const tabNameByType: Record<DescriptionType, string> = {
+const tabNameByType: Record<DescriptionType, string> = {
   [DescriptionTypes.properties]: 'Характеристики',
   [DescriptionTypes.description]: 'Описание',
   [DescriptionTypes.installation]: 'Установка',
   [DescriptionTypes.faq]: 'Вопросы и ответы',
 };
 
-export const DEV_HOST = 'dev.gute.tech';
+const DEV_HOST = 'dev.gute.tech';
 
-export enum QueryUrl {
+enum QueryUrl {
   CATEGORY_QUERY = 'category',
   TRANSPORT_QUERY = 'transport',
 }
 
-export enum Slugs {
+enum Slugs {
   BRAND_SLUG = 'brandSlug',
   MODEL_SLUG = 'modelSlug',
   YEAR_SLUG = 'yearSlug',
   ENGINE_SLUG = 'engineSlug',
 }
+
+export {
+  MOBILE_WIDTH,
+  TABLET_WIDTH,
+  DELAY,
+  SCROLL_DELAY,
+  CATALOG_MOBILE_WIDTH,
+  descriptionTypeName,
+  tabNameByType,
+  DEV_HOST,
+  QueryUrl,
+  Slugs,
+};

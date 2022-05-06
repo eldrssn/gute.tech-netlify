@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,17 +12,34 @@ import { Filter } from 'types';
 
 import styles from './radioGroup.module.scss';
 
-export const RadioBox: React.FC<Filter> = ({ filter }) => {
+const RadioBox: React.FC<Filter> = ({ filter, setFilterRequest }) => {
   const routerQuery = useRouterQuery();
 
   const { title, slug, values } = filter;
 
+  const queryOption = routerQuery.getQueryOption(slug);
+
   const onChange = setQueryParam(routerQuery, slug);
+
+  useEffect(() => {
+    if (queryOption) {
+      const options = Array.isArray(queryOption) ? queryOption : [queryOption];
+
+      setFilterRequest((filterRequest) => ({
+        ...filterRequest,
+        [slug]: options,
+      }));
+      return;
+    }
+
+    setFilterRequest((filterRequest) => ({
+      ...filterRequest,
+      [slug]: [],
+    }));
+  }, [setFilterRequest, queryOption, slug]);
 
   const getIsChecked = useCallback(
     (name: string) => {
-      const queryOption = routerQuery.getQueryOption(slug);
-
       if (!Array.isArray(queryOption)) {
         const isChecked = queryOption === name;
 
@@ -35,7 +52,7 @@ export const RadioBox: React.FC<Filter> = ({ filter }) => {
 
       return isChecked;
     },
-    [routerQuery, slug],
+    [queryOption],
   );
 
   return (
@@ -44,7 +61,7 @@ export const RadioBox: React.FC<Filter> = ({ filter }) => {
         {title}
       </FormLabel>
       <RadioGroup>
-        {values?.map(({ title }) => (
+        {values?.map(({ title, value }) => (
           <FormControlLabel
             sx={{
               '& Mui-FormLabel-root.Mui-focused': { color: 'black' },
@@ -60,15 +77,17 @@ export const RadioBox: React.FC<Filter> = ({ filter }) => {
                 paddingLeft: '8px',
               },
             }}
-            key={title}
+            key={value}
             control={
-              <Radio onChange={onChange} checked={getIsChecked(title)} />
+              <Radio onChange={onChange} checked={getIsChecked(value)} />
             }
             label={title}
-            value={title}
+            value={value}
           />
         ))}
       </RadioGroup>
     </FormControl>
   );
 };
+
+export { RadioBox };

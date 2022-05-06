@@ -5,7 +5,7 @@ import { Content, Property, TabProps } from 'types/product';
 
 import styles from './tabDetails.module.scss';
 
-export const TabDetails: FC<TabProps> = ({ content }) => {
+const TabDetails: FC<TabProps> = ({ content }) => {
   if (!content?.length) {
     return <p>Нет данных</p>;
   }
@@ -30,3 +30,5 @@ export const TabDetails: FC<TabProps> = ({ content }) => {
     </>
   );
 };
+
+export { TabDetails };

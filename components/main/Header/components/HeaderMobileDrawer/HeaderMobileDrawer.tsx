@@ -19,7 +19,7 @@ import styles from './headerMobileDrawer.module.css';
 
 const cn = classnames.bind(styles);
 
-export const HeaderMobileDrawer = () => {
+const HeaderMobileDrawer = () => {
   const [open, setOpen] = useState(false);
 
   const orderTotal = useSelector(selectOrderTotal);
@@ -70,3 +70,5 @@ export const HeaderMobileDrawer = () => {
     </>
   );
 };
+
+export { HeaderMobileDrawer };

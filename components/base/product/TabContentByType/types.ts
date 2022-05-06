@@ -1,6 +1,8 @@
 import { Content, DescriptionType } from 'types/product';
 
-export type Props = {
+type TabContentByTypeProps = {
   type: DescriptionType;
   content?: Content;
 };
+
+export type { TabContentByTypeProps };

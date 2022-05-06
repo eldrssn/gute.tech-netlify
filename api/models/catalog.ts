@@ -1,3 +1,5 @@
+import { FilterRequest } from 'types';
+
 export type ProductListData = {
   title: string;
   slug: string;
@@ -19,6 +21,9 @@ export type CategoriesFiltersListRequestData = {
 export type CategoriesProductsListRequestData = {
   categorySlug: string;
   page?: number;
+  sort?: string;
+  order?: string;
+  filter?: FilterRequest;
 };
 
 export type CategoriesProductsReadRequestData = {
@@ -43,9 +48,9 @@ export type TreeCategoryResponseData = {
   children?: TreeCategoryResponseData[];
 };
 
-type CheckboxValue = {
+export type CheckboxValue = {
   title: string;
-  value: null | string;
+  value: string;
 };
 
 export enum FilterTypes {

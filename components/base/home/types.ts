@@ -6,11 +6,10 @@ enum ItemKeysEnum {
   thirdItem,
 }
 
-export type ItemKeys = keyof typeof ItemKeysEnum;
+type ItemKeys = keyof typeof ItemKeysEnum;
 
-export type GroupedItemsItem = Record<
-  ItemKeys,
-  TreeCategoryResponseData | null
->;
+type GroupedItemsItem = Record<ItemKeys, TreeCategoryResponseData | null>;
 
-export type Index = 1 | 2 | 3 | 4;
+type Index = 1 | 2 | 3 | 4;
+
+export type { ItemKeys, GroupedItemsItem, Index };

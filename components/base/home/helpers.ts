@@ -2,7 +2,7 @@ import { TreeCategoryResponseData } from 'api/models/catalog';
 import { groupItems } from 'utility/helpers';
 import { ParsedUrlQuery } from 'querystring';
 
-export const getGroupedChildren = (
+const getGroupedChildren = (
   category?: string | string[],
   catalogTree?: TreeCategoryResponseData[],
 ) => {
@@ -17,5 +17,7 @@ export const getGroupedChildren = (
   return groupedChildren;
 };
 
-export const getlastQueryUrl = (query: ParsedUrlQuery) =>
+const getlastQueryUrl = (query: ParsedUrlQuery) =>
   Object.keys(query)[Object.keys(query).length - 1];
+
+export { getGroupedChildren, getlastQueryUrl };

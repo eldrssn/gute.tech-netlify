@@ -6,15 +6,17 @@ type Crumb = {
   text?: string;
 };
 
-export type GetCrumbs = (
+type GetCrumbs = (
   router: NextRouter,
   paths: Record<string, string>,
   lastTitle?: string,
 ) => Crumb[];
 
-export type UseBreadcrumbs = {
+type UseBreadcrumbs = {
   router: NextRouter;
   data?: TreeCategoryResponseData[];
   isQuery?: boolean;
   lastTitle?: string;
 };
+
+export type { GetCrumbs, UseBreadcrumbs };

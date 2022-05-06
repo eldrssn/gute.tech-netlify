@@ -6,6 +6,7 @@ import { InnerContent } from './components/InnerContent';
 
 const CustomContent = React.forwardRef(InnerContent);
 
-export const CustomCatalogTree: FC<TreeItemProps> = (props) => (
+const CustomCatalogTree: FC<TreeItemProps> = (props) => (
   <TreeItem ContentComponent={CustomContent} {...props} />
 );
+export { CustomCatalogTree };

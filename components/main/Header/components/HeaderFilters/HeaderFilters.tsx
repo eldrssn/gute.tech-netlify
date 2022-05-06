@@ -39,7 +39,7 @@ const defaultValue: FormDataItem = {
   slug: '',
 };
 
-export const HeaderFilters: FC = () => {
+const HeaderFilters: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView } =
@@ -187,3 +187,5 @@ export const HeaderFilters: FC = () => {
     </>
   );
 };
+
+export { HeaderFilters };

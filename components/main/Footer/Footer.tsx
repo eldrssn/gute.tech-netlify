@@ -6,7 +6,7 @@ import { FooterSocialLinks } from './components/FooterSocialLinks';
 
 import styles from './footer.module.scss';
 
-export const Footer: FC = () => (
+const Footer: FC = () => (
   <Box component='footer' className={styles.wrap}>
     <Container
       sx={{
@@ -20,3 +20,5 @@ export const Footer: FC = () => (
     </Container>
   </Box>
 );
+
+export { Footer };

@@ -1,8 +1,10 @@
-export interface RouterQuery {
+interface RouterQuery {
   setQueryOption: (name: string, param: string) => void;
   removeQuery: (name: string, param?: string | undefined) => void;
   getQueryOption: (name: string) => string | string[] | undefined;
   updateQueryOption: (name: string, param: string) => void;
 }
 
-export type RouterQueryOptions = string;
+type RouterQueryOptions = string;
+
+export type { RouterQuery, RouterQueryOptions };

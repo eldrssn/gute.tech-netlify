@@ -7,9 +7,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import { formatImages } from './helpers';
 import { ProductImageGalleryProps } from './types';
 
-export const ProductImageGallery: FC<ProductImageGalleryProps> = ({
-  images,
-}) => {
+const ProductImageGallery: FC<ProductImageGalleryProps> = ({ images }) => {
   const galleryItems = formatImages(images);
 
   return (
@@ -23,3 +21,5 @@ export const ProductImageGallery: FC<ProductImageGalleryProps> = ({
     </Box>
   );
 };
+
+export { ProductImageGallery };

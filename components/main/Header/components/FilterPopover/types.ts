@@ -1,6 +1,6 @@
 import { HandleClickProps, inputStepId } from '../../types';
 
-export type Props = {
+type FilterPopoverProps = {
   isOpenPopover: boolean;
   setOpenPopoverId: React.Dispatch<React.SetStateAction<number>>;
   setIsOpenPopover: (isOpenPopover: boolean) => void;
@@ -8,3 +8,5 @@ export type Props = {
   setIsLoadingOptionList: (isLoadingOptionList: boolean) => void;
   inputStepId: inputStepId;
 };
+
+export type { FilterPopoverProps };

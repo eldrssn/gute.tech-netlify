@@ -1,23 +1,34 @@
-export type Content = string | string[][] | undefined;
+type Content = string | string[][] | undefined;
 
-export interface Property {
+interface Property {
   title: string;
   value: string;
 }
 
-export type TabProps = {
+type TabProps = {
   content?: Property[] | Content;
 };
 
-export type WindowSideType = number | null;
+type WindowSideType = number | null;
 
-export enum DescriptionTypes {
+enum DescriptionTypes {
   properties = 'properties',
   description = 'description',
   installation = 'installation',
   faq = 'faq',
 }
 
-export type DescriptionType = keyof typeof DescriptionTypes;
+type DescriptionType = keyof typeof DescriptionTypes;
 
-export type TabsProps = Record<DescriptionType, Content>;
+type TabsProps = Record<DescriptionType, Content>;
+
+export { DescriptionTypes };
+
+export type {
+  Content,
+  Property,
+  TabProps,
+  WindowSideType,
+  DescriptionType,
+  TabsProps,
+};

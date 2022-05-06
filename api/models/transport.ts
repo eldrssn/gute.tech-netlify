@@ -1,27 +1,36 @@
 import { StoreState } from 'store/types';
 
-export type BrandSlug = {
+type BrandSlug = {
   brandSlug: string;
 };
 
-export type YearsSlugs = {
+type YearsSlugs = {
   brandSlug: string;
   modelSlug: string;
 };
 
-export type EnginesSlugs = {
+type EnginesSlugs = {
   brandSlug: string;
   modelSlug: string;
   yearSlug: string;
 };
 
-export type ListOptionsItemData = {
+type ListOptionsItemData = {
   title: string;
   slug: string;
 };
 
-export type ListOptionsYearData = string;
+type ListOptionsYearData = string;
 
-export type ListOptionsItem = {
+type ListOptionsItem = {
   data: ListOptionsItemData[];
 } & StoreState;
+
+export type {
+  BrandSlug,
+  YearsSlugs,
+  EnginesSlugs,
+  ListOptionsItemData,
+  ListOptionsYearData,
+  ListOptionsItem,
+};

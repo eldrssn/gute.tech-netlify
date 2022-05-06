@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import FormControl from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
@@ -6,29 +6,50 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
+import { CheckboxValue } from 'api/models/catalog';
 import { Filter } from 'types';
-
-import { CheckboxValue } from './types';
 
 import styles from './checkboxGroup.module.scss';
 
-export const CheckboxGroup: React.FC<Filter> = ({ filter }) => {
+const CheckboxGroup: React.FC<Filter> = ({ filter, setFilterRequest }) => {
   const { updateQueryOption, getQueryOption, removeQuery } = useRouterQuery();
 
   const { title, slug, values } = filter;
 
-  const setOnChange = (checked: boolean, { title }: CheckboxValue) => {
-    if (!checked) {
-      removeQuery(slug, title);
+  const queryOption = getQueryOption(slug);
+
+  useEffect(() => {
+    if (queryOption) {
+      const options = Array.isArray(queryOption) ? queryOption : [queryOption];
+
+      setFilterRequest((filterRequest) => ({
+        ...filterRequest,
+        [slug]: options,
+      }));
       return;
     }
 
-    updateQueryOption(slug, title);
+    setFilterRequest((filterRequest) => ({
+      ...filterRequest,
+      [slug]: [],
+    }));
+  }, [setFilterRequest, queryOption, slug]);
+
+  const setOnChange = (checked: boolean, { value }: CheckboxValue) => {
+    if (!checked) {
+      removeQuery(slug, value);
+
+      return;
+    }
+
+    updateQueryOption(slug, value);
   };
 
   const getIsChecked = useCallback(
     (name: string) => {
-      const queryOption = getQueryOption(slug);
+      if (!name) {
+        return;
+      }
 
       if (!Array.isArray(queryOption)) {
         const isChecked = queryOption === name;
@@ -42,7 +63,7 @@ export const CheckboxGroup: React.FC<Filter> = ({ filter }) => {
 
       return isChecked;
     },
-    [getQueryOption, slug],
+    [queryOption],
   );
 
   return (
@@ -50,12 +71,12 @@ export const CheckboxGroup: React.FC<Filter> = ({ filter }) => {
       <FormLabel focused={false} id={slug} className={styles.title}>
         {title}
       </FormLabel>
-      {values?.map((element: CheckboxValue, index) => {
-        const { title } = element;
+      {values?.map((element: CheckboxValue) => {
+        const { title, value } = element;
 
         return (
           <FormControlLabel
-            key={index}
+            key={value}
             sx={{
               '& .MuiFormControlLabel-label': {
                 fontWeight: 700,
@@ -72,13 +93,15 @@ export const CheckboxGroup: React.FC<Filter> = ({ filter }) => {
             control={
               <Checkbox
                 onChange={(event, checked) => setOnChange(checked, element)}
-                checked={getIsChecked(title)}
+                checked={getIsChecked(value)}
               />
             }
-            label={element.title}
+            label={title}
           />
         );
       })}
     </FormControl>
   );
 };
+
+export { CheckboxGroup };

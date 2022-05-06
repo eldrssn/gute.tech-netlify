@@ -12,7 +12,7 @@ import { CookieKey } from 'constants/types';
 
 import styles from './headerCity.module.scss';
 
-export const HeaderCity: FC = () => {
+const HeaderCity: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const dispatch = useDispatch();
   const selectedCity = useSelector(selectCity);
@@ -38,3 +38,5 @@ export const HeaderCity: FC = () => {
     </Container>
   );
 };
+
+export { HeaderCity };

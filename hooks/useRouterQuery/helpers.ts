@@ -1,6 +1,6 @@
 import { RouterQuery, RouterQueryOptions } from './types';
 
-export const setQueryParam =
+const setQueryParam =
   (routerQuery: RouterQuery, type: RouterQueryOptions) =>
   (event: ChangeEvent) => {
     const { value } = event.target;
@@ -12,11 +12,13 @@ export const setQueryParam =
     }
   };
 
-export const checkQueryValue = (queryValue?: string | string[]) => {
+const checkQueryValue = (queryValue?: string | string[]) => {
   return Array.isArray(queryValue) ? queryValue[0] : queryValue || '';
 };
 
-export const getQueryParams = (routerQuery: RouterQuery, query: string) => {
+const getQueryParams = (routerQuery: RouterQuery, query: string) => {
   const queryValue = routerQuery.getQueryOption(query);
   return checkQueryValue(queryValue);
 };
+
+export { setQueryParam, checkQueryValue, getQueryParams };

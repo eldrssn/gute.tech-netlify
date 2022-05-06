@@ -9,7 +9,7 @@ import { CatalogMain } from '../CatalogMain';
 
 import { makeStringify } from '../helpers';
 
-export const Catalog: FC = () => {
+const Catalog: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -32,3 +32,5 @@ export const Catalog: FC = () => {
     </>
   );
 };
+
+export { Catalog };
