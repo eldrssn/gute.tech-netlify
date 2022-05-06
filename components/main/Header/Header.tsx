@@ -16,7 +16,7 @@ import { HeaderMobile } from './components/HeaderMobile';
 
 import styles from './styles.module.scss';
 
-export const Header = () => {
+const Header = () => {
   const [isFullHeader, setisFullHeader] = useState<boolean>(true);
 
   useEffect(() => {
@@ -57,3 +57,5 @@ export const Header = () => {
     </HeaderContext.Provider>
   );
 };
+
+export { Header };

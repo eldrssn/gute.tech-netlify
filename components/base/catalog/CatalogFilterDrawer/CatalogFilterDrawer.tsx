@@ -6,9 +6,10 @@ import { CatalogFilterDrawerProps } from './types';
 
 import styles from './catalogFilterDrawer.module.scss';
 
-export const CatalogFilterDrawer: FC<CatalogFilterDrawerProps> = ({
+const CatalogFilterDrawer: FC<CatalogFilterDrawerProps> = ({
   openDrawer,
   handleDrawerToggle,
+  setFilterRequest,
 }) => (
   <Drawer
     transitionDuration={500}
@@ -25,7 +26,9 @@ export const CatalogFilterDrawer: FC<CatalogFilterDrawerProps> = ({
   >
     <div className={styles.drawerContainer}>
       <span className={styles.closeButton} onClick={handleDrawerToggle} />
-      <CatalogFilter />
+      <CatalogFilter setFilterRequest={setFilterRequest} />
     </div>
   </Drawer>
 );
+
+export { CatalogFilterDrawer };

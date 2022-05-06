@@ -22,7 +22,7 @@ import styles from './catalogMenuMobile.module.css';
 
 const cn = classnames.bind(styles);
 
-export const CatalogMenuMobile: FC<CatalogMenuProps> = ({
+const CatalogMenuMobile: FC<CatalogMenuProps> = ({
   handleClose,
   closeMainDrawer,
 }) => {
@@ -98,3 +98,5 @@ export const CatalogMenuMobile: FC<CatalogMenuProps> = ({
     </Container>
   );
 };
+
+export { CatalogMenuMobile };

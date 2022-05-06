@@ -10,10 +10,7 @@ import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 import { Crumb } from './components/Crumb';
 import { Query } from './types';
 
-export const NavigationBreadcrumbs: FC<Query> = ({
-  isQuery = false,
-  lastTitle,
-}) => {
+const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
   const router = useRouter();
   const categoriesTree = useSelector(selectCategoriesTreeList);
 
@@ -39,3 +36,5 @@ export const NavigationBreadcrumbs: FC<Query> = ({
     </Breadcrumbs>
   );
 };
+
+export { NavigationBreadcrumbs };

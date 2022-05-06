@@ -18,7 +18,7 @@ import { CatalogMenuProps, RenderItem } from './types';
 
 import styles from './catalogMenu.module.scss';
 
-export const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
+const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
   const categoriesTree = useSelector(selectCategoriesTreeList);
 
   const [childrenBox, setChildrenBox] = useState<
@@ -105,3 +105,5 @@ export const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
     </Container>
   );
 };
+
+export { CatalogMenu };

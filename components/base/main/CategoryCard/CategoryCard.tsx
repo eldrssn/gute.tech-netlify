@@ -5,11 +5,11 @@ import Router from 'next/router';
 import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 
-import { Props } from './types';
+import { CategoryCardProps } from './types';
 import { imageLoader } from './helpers';
 import styles from './CategoryCard.module.scss';
 
-const CategoryCard: React.FC<Props> = ({ item }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({ item }) => {
   const { title, image, slug } = item;
 
   const quantity = 10;

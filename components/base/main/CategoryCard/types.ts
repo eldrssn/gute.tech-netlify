@@ -1,5 +1,7 @@
 import { TreeCategoryResponseData } from 'api/models/catalog';
 
-export type Props = {
+type CategoryCardProps = {
   item: TreeCategoryResponseData;
 };
+
+export type { CategoryCardProps };

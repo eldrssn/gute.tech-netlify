@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -12,19 +13,41 @@ import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { ProductListData } from 'api/models/catalog';
+import { addItemFromCart } from 'store/reducers/cart/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
 
+import { createBasketItem } from '../helpers';
 import styles from './catalogCard.module.scss';
 
-export const CatalogCard: React.FC<ProductListData> = ({
+const CatalogCard: React.FC<ProductListData> = ({
   image,
   price,
   slug,
   title,
 }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { slug: categorySlug } = router.query;
+
+  const addItemToBasket = () => {
+    // !TODO: добавить сюда всплытие модалки
+    dispatch(
+      addItemFromCart(
+        createBasketItem({
+          images: typeof image === 'string' ? [image] : [],
+          price,
+          vendor_code: slug,
+          title,
+        }),
+      ),
+    );
+  };
+
+  const handleClickToBasket = (event: React.MouseEvent<HTMLElement>) => {
+    addItemToBasket();
+    event.preventDefault();
+  };
 
   return (
     <Card component='article' className={styles.cardContainer}>
@@ -57,7 +80,10 @@ export const CatalogCard: React.FC<ProductListData> = ({
                   Купить
                 </CustomButton>
 
-                <CustomButton customStyles={styles.cardAddToShoppingButton}>
+                <CustomButton
+                  customStyles={styles.cardAddToShoppingButton}
+                  onClick={handleClickToBasket}
+                >
                   <ShoppingCartIcon />
                 </CustomButton>
               </CardActions>
@@ -68,3 +94,5 @@ export const CatalogCard: React.FC<ProductListData> = ({
     </Card>
   );
 };
+
+export { CatalogCard };

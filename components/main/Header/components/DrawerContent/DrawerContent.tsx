@@ -18,7 +18,7 @@ import { CatalogMenuMobile } from '../CatalogMenuMobile';
 import { DrawerContentProps } from './types';
 import styles from './drawerContent.module.css';
 
-export const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
+const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
   const [isOpenCityModal, setIsOpenCityModal] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -80,3 +80,5 @@ export const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
     </>
   );
 };
+
+export { DrawerContent };

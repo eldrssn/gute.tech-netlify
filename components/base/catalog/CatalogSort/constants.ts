@@ -1,9 +1,11 @@
-export const DIRECTIONS = {
+const DIRECTIONS = {
   UP: 'Up',
   DOWN: 'Down',
 };
 
-export const ORDER_TYPES = {
+const ORDER_TYPES = {
   byPopular: 'byPopular',
   byPrice: 'byPrice',
 };
+
+export { DIRECTIONS, ORDER_TYPES };

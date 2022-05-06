@@ -7,7 +7,7 @@ import styles from './customButton.module.scss';
 
 const cn = classnames.bind(styles);
 
-export const CustomButton: React.FC<CustomButtonType> = ({
+const CustomButton: React.FC<CustomButtonType> = ({
   children,
   href,
   onClick,
@@ -22,3 +22,5 @@ export const CustomButton: React.FC<CustomButtonType> = ({
     {children}
   </Button>
 );
+
+export { CustomButton };

@@ -1,3 +1,5 @@
-export type ProductImageGalleryProps = {
+type ProductImageGalleryProps = {
   images: string[];
 };
+
+export type { ProductImageGalleryProps };

@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from 'react';
 
 import { WindowSidesType } from './types';
 
-export const useWindowSize = () => {
+const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState<WindowSidesType>({
     windowWidth: null,
     windowHeight: null,
@@ -29,3 +29,5 @@ export const useWindowSize = () => {
 
   return windowSize;
 };
+
+export { useWindowSize };

@@ -1,12 +1,22 @@
 import type { AppProps } from 'next/app';
 import { FiltersCategoryResponseData } from 'api/models/catalog';
 
-export type ComponentWithPageLayout = AppProps & {
+type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {
     PageLayout: React.ComponentType;
   };
 };
 
-export type Filter = {
-  filter: FiltersCategoryResponseData;
+type Sorting = {
+  sort: string;
+  order: string;
 };
+
+type FilterRequest = Record<string, (string | number)[]>;
+
+type Filter = {
+  filter: FiltersCategoryResponseData;
+  setFilterRequest: React.Dispatch<React.SetStateAction<FilterRequest>>;
+};
+
+export type { ComponentWithPageLayout, Sorting, FilterRequest, Filter };

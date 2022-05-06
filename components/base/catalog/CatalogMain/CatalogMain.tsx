@@ -15,6 +15,7 @@ import { checkMobileView } from 'utility/helpers/checkViewType';
 
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
+import { Sorting, FilterRequest } from 'types';
 
 import { CatalogFilter } from '../CatalogFilter';
 import { CatalogFilterDrawer } from '../CatalogFilterDrawer';
@@ -22,14 +23,14 @@ import { CatalogGrid } from '../CatalogGrid';
 import { CatalogPagination } from '../CatalogPagination';
 import { CatalogSort } from '../CatalogSort';
 
-import { PAGE_QUERY } from '../constants';
+import { PAGE_QUERY, sortingDefault } from '../constants';
 import { makeStringify } from '../helpers';
 
 import styles from './catalogMain.module.scss';
 
 const cn = classnames.bind(styles);
 
-export const CatalogMain: FC = () => {
+const CatalogMain: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { windowWidth } = useWindowSize();
@@ -38,6 +39,8 @@ export const CatalogMain: FC = () => {
 
   const [page, setPage] = useState(1);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [sorting, setSorting] = useState<Sorting>(sortingDefault);
+  const [filterRequest, setFilterRequest] = useState<FilterRequest>({});
 
   const { slug } = router.query;
 
@@ -63,9 +66,14 @@ export const CatalogMain: FC = () => {
     const stringifySlug = makeStringify(slug);
 
     dispatch(
-      fetchCategoriesProductsList({ categorySlug: stringifySlug, page }),
+      fetchCategoriesProductsList({
+        page,
+        categorySlug: stringifySlug,
+        filter: filterRequest,
+        ...sorting,
+      }),
     );
-  }, [slug, dispatch, page]);
+  }, [slug, dispatch, page, sorting, filterRequest]);
 
   const { isLoading, data } = useSelector(selectCategoriesProductList);
   const { pages, results } = data;
@@ -80,7 +88,7 @@ export const CatalogMain: FC = () => {
       <Box className={styles.catalogMainBox}>
         {!isMobileView && (
           <Box className={styles.catalogFilter_desktop}>
-            <CatalogFilter />
+            <CatalogFilter setFilterRequest={setFilterRequest} />
           </Box>
         )}
 
@@ -100,7 +108,7 @@ export const CatalogMain: FC = () => {
                 </CustomButton>
               </>
             )}
-            <CatalogSort />
+            <CatalogSort setSorting={setSorting} />
 
             {!isMobileView && (
               <CatalogPagination
@@ -127,7 +135,10 @@ export const CatalogMain: FC = () => {
       <CatalogFilterDrawer
         openDrawer={openDrawer}
         handleDrawerToggle={handleDrawerToggle}
+        setFilterRequest={setFilterRequest}
       />
     </Box>
   );
 };
+
+export { CatalogMain };

@@ -1,11 +1,13 @@
 import { TreeCategoryResponseData } from 'api/models/catalog';
 
-export type CatalogMenuProps = {
+type CatalogMenuProps = {
   handleClose: () => void;
   closeMainDrawer: () => void;
 };
 
-export type LinkWrapperProps = {
+type LinkWrapperProps = {
   item: TreeCategoryResponseData;
   onClick?: () => void;
 };
+
+export type { CatalogMenuProps, LinkWrapperProps };

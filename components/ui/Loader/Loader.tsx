@@ -6,7 +6,7 @@ import colors from 'styles/_export.module.scss';
 import { LoaderProps } from './types';
 import styles from './loader.module.scss';
 
-export const Loader: FC<LoaderProps> = ({
+const Loader: FC<LoaderProps> = ({
   width = 50,
   height = 50,
   color = 'blue',
@@ -18,3 +18,5 @@ export const Loader: FC<LoaderProps> = ({
     color={colors[color]}
   />
 );
+
+export { Loader };

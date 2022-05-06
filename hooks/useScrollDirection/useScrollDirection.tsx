@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SCROLL_DIRECTIONS } from './constants';
 
-export const useScrollDirection = ({
+const useScrollDirection = ({
   initialDirection = SCROLL_DIRECTIONS.UP,
   thresholdPixels = 64,
 } = {}) => {
@@ -41,3 +41,5 @@ export const useScrollDirection = ({
 
   return scrollDirection;
 };
+
+export { useScrollDirection };

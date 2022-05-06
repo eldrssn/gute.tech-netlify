@@ -12,7 +12,7 @@ import { makeStringify } from '../helpers';
 
 import styles from './catalogTitle.module.scss';
 
-export const CatalogTitle: FC = () => {
+const CatalogTitle: FC = () => {
   const router = useRouter();
   const { slug } = router.query;
   const stringifySlug = makeStringify(slug);
@@ -28,3 +28,5 @@ export const CatalogTitle: FC = () => {
     </Box>
   );
 };
+
+export { CatalogTitle };

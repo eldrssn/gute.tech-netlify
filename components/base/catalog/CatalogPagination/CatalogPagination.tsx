@@ -6,7 +6,7 @@ import { useRouterQuery } from 'hooks/useRouterQuery';
 import { PAGE_QUERY } from '../constants';
 import { CatalogPaginationProps } from './types';
 
-export const CatalogPagination: FC<CatalogPaginationProps> = ({
+const CatalogPagination: FC<CatalogPaginationProps> = ({
   pageCount,
   currentPage,
   setPage,
@@ -44,3 +44,5 @@ export const CatalogPagination: FC<CatalogPaginationProps> = ({
     />
   );
 };
+
+export { CatalogPagination };

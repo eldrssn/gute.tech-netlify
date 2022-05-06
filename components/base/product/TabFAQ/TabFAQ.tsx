@@ -9,7 +9,7 @@ import { Content, Property, TabProps } from 'types/product';
 
 import styles from './tabFAQ.module.scss';
 
-export const TabFAQ: FC<TabProps> = ({ content }) => {
+const TabFAQ: FC<TabProps> = ({ content }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
@@ -61,3 +61,5 @@ export const TabFAQ: FC<TabProps> = ({ content }) => {
     </Box>
   );
 };
+
+export { TabFAQ };

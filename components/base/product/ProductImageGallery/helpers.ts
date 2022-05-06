@@ -1,6 +1,6 @@
 import { ReactImageGalleryItem } from 'react-image-gallery';
 
-export const formatImages = (images: string[]) =>
+const formatImages = (images: string[]) =>
   images.reduce((accumulator: ReactImageGalleryItem[], image: string) => {
     const formatedImage = { original: image, thumbnail: image };
 
@@ -8,3 +8,5 @@ export const formatImages = (images: string[]) =>
       ? [...accumulator, formatedImage]
       : [formatedImage];
   }, []);
+
+export { formatImages };

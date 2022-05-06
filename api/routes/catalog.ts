@@ -47,10 +47,16 @@ const getCategoriesFiltersList = ({
 const getCategoriesProductsList = ({
   categorySlug,
   page,
+  sort = 'title',
+  order = 'asc',
+  filter = {},
 }: CategoriesProductsListRequestData) =>
   sendRequest<CategoriesProductsListResponseData>({
-    url: `/catalog/${categorySlug}/products/?page=${page}&size=12`,
+    url: `/catalog/${categorySlug}/products/?page=${page}&size=12&sort=${sort}&order=${order}`,
     method: 'post',
+    config: {
+      data: { page, sort, order, filter },
+    },
   });
 
 const getCategoriesProductsRead = ({

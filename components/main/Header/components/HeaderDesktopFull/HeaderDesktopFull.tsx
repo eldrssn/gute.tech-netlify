@@ -11,7 +11,7 @@ import { HeaderContext } from '../HeaderContext';
 
 import styles from './headerDesktopFull.module.css';
 
-export const HeaderDesktopFull: FC = () => {
+const HeaderDesktopFull: FC = () => {
   const { isFullHeader } = useContext(HeaderContext);
 
   if (!isFullHeader) {
@@ -42,3 +42,5 @@ export const HeaderDesktopFull: FC = () => {
     </>
   );
 };
+
+export { HeaderDesktopFull };

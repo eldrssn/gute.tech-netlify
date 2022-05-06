@@ -1,12 +1,12 @@
 import { StepInputs, filterStepsData, INamesDefaultValueByStep } from './types';
 
-export const menuItemNames = {
+const menuItemNames = {
   phone: '(499) 283-20-26',
   callback: 'Консультация',
   shoppingCart: '0',
 };
 
-export const filterSteps: filterStepsData[] = [
+const filterSteps: filterStepsData[] = [
   {
     name: 'brand',
     inputStepId: StepInputs.BRAND,
@@ -29,9 +29,11 @@ export const filterSteps: filterStepsData[] = [
   },
 ];
 
-export const namesDefaultValueByStep: INamesDefaultValueByStep = {
+const namesDefaultValueByStep: INamesDefaultValueByStep = {
   [StepInputs.BRAND]: ['brand', 'engine', 'model', 'year'],
   [StepInputs.MODEL]: ['model', 'engine', 'year'],
   [StepInputs.YEAR]: ['engine', 'year'],
   [StepInputs.ENGINE]: ['engine'],
 };
+
+export { menuItemNames, filterSteps, namesDefaultValueByStep };

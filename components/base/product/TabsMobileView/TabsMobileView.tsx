@@ -16,7 +16,7 @@ import styles from './tabsMobileView.module.scss';
 
 const cn = classnames.bind(styles);
 
-export const TabsMobileView: FC<TabsProps> = (props) => {
+const TabsMobileView: FC<TabsProps> = (props) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
@@ -57,3 +57,5 @@ export const TabsMobileView: FC<TabsProps> = (props) => {
     </Box>
   );
 };
+
+export { TabsMobileView };

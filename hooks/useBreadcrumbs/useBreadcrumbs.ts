@@ -12,12 +12,7 @@ const defaultPath: Record<string, string> = {
   catalog: 'Каталог',
 };
 
-export const useBreadcrumbs = ({
-  router,
-  data,
-  isQuery,
-  lastTitle,
-}: UseBreadcrumbs) =>
+const useBreadcrumbs = ({ router, data, isQuery, lastTitle }: UseBreadcrumbs) =>
   useMemo(() => {
     const newPaths = getCrumbs(data);
     const paths = { ...defaultPath, ...newPaths };
@@ -28,3 +23,5 @@ export const useBreadcrumbs = ({
 
     return [{ href: '/', text: 'Главная' }, ...crumblist];
   }, [router, data, isQuery, lastTitle]);
+
+export { useBreadcrumbs };

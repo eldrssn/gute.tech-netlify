@@ -1,3 +1,5 @@
-export type ArrowButton = {
+type ArrowButton = {
   onClick?: () => void;
 };
+
+export type { ArrowButton };

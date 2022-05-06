@@ -7,8 +7,10 @@ import { CheckboxGroup } from 'components/ui/CheckboxGroup';
 import { RadioBox } from 'components/ui/RadioBox';
 import { Ranger } from 'components/ui/Ranger';
 
-export const componentByType: Record<FilterTypes, FC<Filter>> = {
+const componentByType: Record<FilterTypes, FC<Filter>> = {
   [FilterTypes.CHECKBOX]: CheckboxGroup,
   [FilterTypes.RADIO]: RadioBox,
   [FilterTypes.RANGE]: Ranger,
 };
+
+export { componentByType };

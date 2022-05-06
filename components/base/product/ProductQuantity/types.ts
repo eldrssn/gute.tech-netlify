@@ -1,3 +1,5 @@
-export type Props = {
+type ProductQuantityProps = {
   quantity: number;
 };
+
+export type { ProductQuantityProps };

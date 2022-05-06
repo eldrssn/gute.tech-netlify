@@ -9,7 +9,7 @@ import { CatalogCard } from 'components/base/catalog/CatalogCard';
 
 import styles from './recommendedProducts.module.scss';
 
-export const sliderSettings = {
+const sliderSettings = {
   className: styles.slider,
   dots: false,
   infinite: true,
@@ -50,7 +50,7 @@ export const sliderSettings = {
   ],
 };
 
-export const RecommendedProducts: FC = () => (
+const RecommendedProducts: FC = () => (
   <Box>
     <h2>Вам обязательно понадобятся</h2>
     <Slider {...sliderSettings}>
@@ -62,3 +62,5 @@ export const RecommendedProducts: FC = () => (
     </Slider>
   </Box>
 );
+
+export { RecommendedProducts };

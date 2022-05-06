@@ -4,7 +4,9 @@ import {
   CategoryStoreRootCategory,
 } from 'store/reducers/catalog/types';
 
-export const rootCategories: Record<string, CategoryStoreRootCategory> = {
+const rootCategories: Record<string, CategoryStoreRootCategory> = {
   [QueryUrl.TRANSPORT_QUERY]: CategoryStoreBlocks.SEARCHREADCATEGORY,
   [QueryUrl.CATEGORY_QUERY]: CategoryStoreBlocks.CATEGORIESTREELIST,
 };
+
+export { rootCategories };

@@ -1,5 +1,7 @@
 import { ProductListData } from 'api/models/catalog';
 
-export type CatalogGridProps = {
+type CatalogGridProps = {
   items: never[] | ProductListData[];
 };
+
+export type { CatalogGridProps };

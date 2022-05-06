@@ -8,10 +8,10 @@ import styles from './innerCatalogTree.module.css';
 
 const cn = classnames.bind(styles);
 
-export const InnerContent: ForwardRefRenderFunction<
-  unknown,
-  TreeItemContentProps
-> = (props, ref) => {
+const InnerContent: ForwardRefRenderFunction<unknown, TreeItemContentProps> = (
+  props,
+  ref,
+) => {
   const {
     classes,
     className,
@@ -65,3 +65,5 @@ export const InnerContent: ForwardRefRenderFunction<
     </div>
   );
 };
+
+export { InnerContent };

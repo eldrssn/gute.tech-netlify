@@ -5,7 +5,7 @@ import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 
 import styles from './footerText.module.scss';
 
-export const FooterText: FC = () => {
+const FooterText: FC = () => {
   const { title, footerText } = useSelector(selectShowcaseData);
 
   return (
@@ -19,3 +19,5 @@ export const FooterText: FC = () => {
     </div>
   );
 };
+
+export { FooterText };

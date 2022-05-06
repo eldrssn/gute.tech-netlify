@@ -13,7 +13,7 @@ import styles from './productSpecial.module.scss';
 
 const cn = classnames.bind(styles);
 
-export const ProductSpecial: FC = () => {
+const ProductSpecial: FC = () => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState<boolean>(false);
 
   const openModalAdvice = () => {
@@ -56,3 +56,5 @@ export const ProductSpecial: FC = () => {
     </>
   );
 };
+
+export { ProductSpecial };

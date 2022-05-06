@@ -66,8 +66,20 @@ const fetchCategoriesFiltersList = createAsyncThunk(
 
 const fetchCategoriesProductsList = createAsyncThunk(
   'CatalogStore/fetchCategoriesProductsList',
-  async ({ categorySlug, page }: CategoriesProductsListRequestData) => {
-    const data = await getCategoriesProductsList({ categorySlug, page });
+  async ({
+    categorySlug,
+    page,
+    sort,
+    order,
+    filter,
+  }: CategoriesProductsListRequestData) => {
+    const data = await getCategoriesProductsList({
+      categorySlug,
+      page,
+      sort,
+      order,
+      filter,
+    });
 
     return data;
   },

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 
 import styles from './productPrice.module.scss';
 
-export const ProductPrice: FC = ({ children }) => (
+const ProductPrice: FC = ({ children }) => (
   <Box sx={{ marginTop: { xs: '20px', md: '10px' } }}>
     <p className={styles.priceWrapper}>
       <span className={styles.priceLabel}>Цена</span>
@@ -11,3 +11,5 @@ export const ProductPrice: FC = ({ children }) => (
     </p>
   </Box>
 );
+
+export { ProductPrice };

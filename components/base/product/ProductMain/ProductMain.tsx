@@ -11,6 +11,8 @@ import { addItemFromCart } from 'store/reducers/cart/actions';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { CustomButton } from 'components/ui/CustomButton';
+import { Loader } from 'components/ui/Loader';
+import { createBasketItem } from 'components/base/catalog/helpers';
 
 //  !TODO: добавить, когда появятся рекоммендованные товары на бэке
 // import { RecommendedProducts } from 'components/base/product/RecommendedProducts';
@@ -21,11 +23,10 @@ import { ProductImageGallery } from '../ProductImageGallery';
 import { ProductTabsDescription } from '../ProductTabsDescription';
 
 import { Subcategories } from '../Subcategories';
-import { createBasketItem } from './helpers';
 
 import styles from './productMain.module.scss';
 
-export const ProductMain: FC = () => {
+const ProductMain: FC = () => {
   const dispatch = useDispatch();
   const { data, isLoading } = useSelector(selectCategoriesProductRead);
 
@@ -47,7 +48,7 @@ export const ProductMain: FC = () => {
   const imagesGallary = images && images.length ? images : productMock.images;
 
   return isLoading ? (
-    <p>...загрузка</p>
+    <Loader />
   ) : (
     <Container className={styles.mainContainer} disableGutters>
       <Subcategories />
@@ -108,3 +109,5 @@ export const ProductMain: FC = () => {
     </Container>
   );
 };
+
+export { ProductMain };

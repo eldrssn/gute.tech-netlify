@@ -11,12 +11,12 @@ import {
   selectEngines,
 } from 'store/reducers/transport/selectors';
 
-import { Props } from './types';
+import { FilterPopoverProps } from './types';
 import { ListOptionsItem } from 'api/models/transport';
 import { StepInputs } from '../../types';
 import styles from './styles.module.scss';
 
-export const FilterPopover: FC<Props> = ({
+const FilterPopover: FC<FilterPopoverProps> = ({
   isOpenPopover,
   setOpenPopoverId,
   inputStepId,
@@ -93,3 +93,5 @@ export const FilterPopover: FC<Props> = ({
     </Box>
   );
 };
+
+export { FilterPopover };
