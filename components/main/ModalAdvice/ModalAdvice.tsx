@@ -7,13 +7,13 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import InputMask from 'react-input-mask';
 
-import ModalComponent from 'components/main/Modal';
-import FormInput from 'components/main/FormInput';
+import { ModalWrapper } from 'components/main/ModalWrapper';
+import { FormInput } from 'components/main/FormInput';
 import { getInputRules } from 'utility/helpers';
 import { EValidatePattern } from 'constants/types';
 import { postFeedback } from 'api/routes/feedback';
+import { inputMasks } from 'constants/patterns';
 
-import { inputMasks } from './сonstants';
 import { TFormData, TOuterProps } from './types';
 import styles from './styles.module.scss';
 
@@ -56,7 +56,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   const phoneInputIsError = Boolean(formState.errors.phoneNumber);
 
   return (
-    <ModalComponent isOpen={isOpen} setIsOpen={closeModal}>
+    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
       <Box className={styles.closeModal} onClick={closeModal}>
         <FontAwesomeIcon icon={faTimes} />
       </Box>
@@ -168,8 +168,8 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
           </Typography>
         </form>
       </Container>
-    </ModalComponent>
+    </ModalWrapper>
   );
 };
 
-export default ModalAdvice;
+export { ModalAdvice };

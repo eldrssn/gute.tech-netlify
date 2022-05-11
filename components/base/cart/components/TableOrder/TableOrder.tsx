@@ -1,47 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Table,
   TableCell,
   TableHead,
   TableRow,
   Typography,
+  MenuItem,
+  Box,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
+import { checkMobileView } from 'utility/helpers/checkViewType';
 import {
   addItemQuantity,
   removeItemQuantity,
   removeItemFromCart,
 } from 'store/reducers/cart/actions';
 import { useWindowSize } from 'hooks/useWindowSize';
-import DesktopTableBody from './DesktopTableBody';
-import MobileTableBody from './MobileTableBody';
+import { ModalAdvice } from 'components/main/ModalAdvice';
 
-import { TStateProps, CartItemData } from '../types';
-import styles from '../styles.module.css';
+import { DesktopTableBody } from '../DesktopTableBody';
+import { MobileTableBody } from '../MobileTableBody';
+import { TStateProps, CartItemData } from '../../types';
+import styles from '../../styles.module.scss';
 
 const TableOrder: React.FC<TStateProps> = ({ cart, orderTotal }) => {
+  const [isModalAdviceOpen, setModalAdviceOpen] = useState(false);
   const { windowWidth } = useWindowSize();
   const dispatch = useDispatch();
   const addCount = (item: CartItemData) => {
-    dispatch(addItemQuantity(item.id));
+    dispatch(addItemQuantity(item.slug));
   };
   const removeCount = (item: CartItemData) => {
-    dispatch(removeItemQuantity(item.id));
+    dispatch(removeItemQuantity(item.slug));
   };
   const removeItem = (item: CartItemData) => {
-    dispatch(removeItemFromCart(item.id));
+    dispatch(removeItemFromCart(item.slug));
   };
 
-  type WindowSideType = number | null;
+  const isMobileView = checkMobileView(windowWidth);
 
-  const isMobileView = (windowWidth: WindowSideType) =>
-    windowWidth && windowWidth <= 720;
+  const openModalAdvice = () => {
+    setModalAdviceOpen(true);
+  };
 
   return (
     <>
+      <ModalAdvice isOpen={isModalAdviceOpen} setIsOpen={setModalAdviceOpen} />
       <Table className={styles.table} aria-label='simple table'>
-        {isMobileView(windowWidth) ? null : (
+        {isMobileView ? null : (
           <TableHead className={styles.tableHead}>
             <TableRow>
               <TableCell>Товар</TableCell>
@@ -52,7 +59,7 @@ const TableOrder: React.FC<TStateProps> = ({ cart, orderTotal }) => {
             </TableRow>
           </TableHead>
         )}
-        {isMobileView(windowWidth) ? (
+        {isMobileView ? (
           <MobileTableBody
             cart={cart}
             addCount={addCount}
@@ -68,11 +75,19 @@ const TableOrder: React.FC<TStateProps> = ({ cart, orderTotal }) => {
           />
         )}
       </Table>
-      <Typography className={styles.orderTotal}>
-        Всего: {orderTotal}&#8381;
-      </Typography>
+      <Box className={styles.bottomOrderBox} component='div'>
+        <MenuItem onClick={openModalAdvice} className={styles.menuItem}>
+          Помочь с выбором товара
+        </MenuItem>
+        <MenuItem onClick={openModalAdvice} className={styles.menuItem}>
+          Получить спецпредложение
+        </MenuItem>
+        <Typography className={styles.orderTotal}>
+          Всего: {orderTotal}&#8381;
+        </Typography>
+      </Box>
     </>
   );
 };
 
-export default TableOrder;
+export { TableOrder };

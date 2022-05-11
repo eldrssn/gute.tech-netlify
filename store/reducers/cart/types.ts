@@ -1,33 +1,54 @@
 import { ErrorAction, StoreState, StoreError } from 'store/types';
 
-enum ContentStoreBlocks {
-  CART = 'cart',
+import {
+  PaymentMethodResponseData,
+  ProductResponseData,
+} from 'api/models/cart';
+
+enum CartStoreBlocks {
+  CARTITEMS = 'cartItems',
   ORDERTOTAL = 'orderTotal',
+  PAYMENTMETHODS = 'paymentMethods',
 }
 
 type orderTotal = number;
 
-type CartItemData = {
-  name: string;
+type CartItemSlug = string;
+
+type CartItemCount = {
   count: number;
-  price: number;
-  imagePath: string;
-  id: number;
 };
 
-type CartItemId = number;
+type CartItemQuantity = {
+  count: number;
+  slug: string;
+};
 
-type CartStore = {
+type CartItemData = ProductResponseData & { count: number };
+
+type PaymentMethodsState = {
+  data: PaymentMethodResponseData[];
+} & StoreState;
+
+type CartItemsState = {
   data: CartItemData[];
 } & StoreState;
 
+type CartStore = {
+  [CartStoreBlocks.CARTITEMS]: CartItemsState;
+  [CartStoreBlocks.PAYMENTMETHODS]: PaymentMethodsState;
+};
+
 export type {
+  CartItemQuantity,
   ErrorAction,
   StoreError,
   CartStore,
-  CartItemData,
   orderTotal,
-  CartItemId,
+  CartItemSlug,
+  ProductResponseData,
+  CartItemData,
+  CartItemCount,
 };
 
-export { ContentStoreBlocks };
+export { CartStoreBlocks };

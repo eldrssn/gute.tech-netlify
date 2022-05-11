@@ -13,11 +13,10 @@ import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { ProductListData } from 'api/models/catalog';
-import { addItemFromCart } from 'store/reducers/cart/actions';
+import { fetchItemFromCart } from 'store/reducers/cart/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
 
-import { createBasketItem } from '../helpers';
 import styles from './catalogCard.module.scss';
 
 const CatalogCard: React.FC<ProductListData> = ({
@@ -31,17 +30,7 @@ const CatalogCard: React.FC<ProductListData> = ({
   const { slug: categorySlug } = router.query;
 
   const addItemToBasket = () => {
-    // !TODO: добавить сюда всплытие модалки
-    dispatch(
-      addItemFromCart(
-        createBasketItem({
-          images: typeof image === 'string' ? [image] : [],
-          price,
-          vendor_code: slug,
-          title,
-        }),
-      ),
-    );
+    dispatch(fetchItemFromCart({ productSlug: slug }));
   };
 
   const handleClickToBasket = (event: React.MouseEvent<HTMLElement>) => {

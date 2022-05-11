@@ -5,6 +5,7 @@ enum EValidatePattern {
 
 enum CookieKey {
   SELECTEDCITY = 'selectedCity',
+  CARTITEMS = 'cartItems',
 }
 
 export { EValidatePattern, CookieKey };

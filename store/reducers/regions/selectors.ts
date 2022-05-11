@@ -12,9 +12,14 @@ const selectRegions = createSelector(
   ({ regions }) => regions,
 );
 
+const selectBranches = createSelector(
+  selectContentStore,
+  ({ branches }) => branches,
+);
+
 const selectCity = createSelector(
   selectContentStore,
   ({ selectedCity }) => selectedCity,
 );
 
-export { selectRegions, selectCity };
+export { selectRegions, selectCity, selectBranches };

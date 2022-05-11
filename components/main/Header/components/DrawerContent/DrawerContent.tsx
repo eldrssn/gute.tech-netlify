@@ -7,7 +7,7 @@ import Divider from '@mui/material/Divider';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Drawer from '@mui/material/Drawer';
 
-import ModalCity from 'components/main/ModalCity';
+import { ModalCity } from 'components/main/ModalCity';
 import { CustomButton } from 'components/ui/CustomButton';
 import { selectCity } from 'store/reducers/regions/selectors';
 

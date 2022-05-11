@@ -5,6 +5,7 @@ import { EValidatePattern } from 'constants/types';
 import { RegionData } from 'store/reducers/regions/types';
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { CategoriesSearchReadRequestData } from 'api/models/catalog';
+import { CartItemData } from 'store/reducers/cart/types';
 
 const groupItems = (sortedItems?: TreeCategoryResponseData[]) => {
   if (!sortedItems) {
@@ -127,9 +128,30 @@ const getSlugsFromUrl = (url: string): CategoriesSearchReadRequestData => {
   return slugs;
 };
 
+const getSlugsCartItemsFromString = (slugsItem: string) =>
+  slugsItem.split('&').map((item) => {
+    const itemArray = item.split(',');
+    const slug = itemArray[0].split(':')[1];
+    const count = itemArray[1].split(':')[1];
+
+    return {
+      slug: slug,
+      count: Number(count),
+    };
+  });
+
+const getSlugsCartItemsFromCart = (cart: CartItemData[]) =>
+  cart
+    .map((item) => {
+      return `slug:${item.slug},count:${item.count}`;
+    })
+    .join('&');
+
 export {
   groupItems,
   getInputRules,
+  getSlugsCartItemsFromString,
+  getSlugsCartItemsFromCart,
   filterRegionsOption,
   cookieStorage,
   getSlugsFromUrl,

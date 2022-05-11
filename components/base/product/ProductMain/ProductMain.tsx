@@ -7,12 +7,11 @@ import Container from '@mui/material/Container';
 import { productInitData, productMock } from 'mock/product';
 
 import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
-import { addItemFromCart } from 'store/reducers/cart/actions';
+import { fetchItemFromCart } from 'store/reducers/cart/actions';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
-import { createBasketItem } from 'components/base/catalog/helpers';
 
 //  !TODO: добавить, когда появятся рекоммендованные товары на бэке
 // import { RecommendedProducts } from 'components/base/product/RecommendedProducts';
@@ -30,7 +29,7 @@ const ProductMain: FC = () => {
   const dispatch = useDispatch();
   const { data, isLoading } = useSelector(selectCategoriesProductRead);
 
-  const { title, price, images, description, properties } = data
+  const { title, price, images, description, properties, slug } = data
     ? data
     : productInitData;
 
@@ -42,7 +41,7 @@ const ProductMain: FC = () => {
     }
 
     // !TODO: добавить сюда всплытие модалки
-    dispatch(addItemFromCart(createBasketItem(data)));
+    dispatch(fetchItemFromCart({ productSlug: slug }));
   };
 
   const imagesGallary = images && images.length ? images : productMock.images;

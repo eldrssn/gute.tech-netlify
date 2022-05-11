@@ -1,6 +1,6 @@
 import { sendRequest } from '../utils';
 
-import { RegionData } from '../models/regions';
+import { RegionData, BranchesData } from '../models/regions';
 
 const getRegions = () =>
   sendRequest<RegionData[]>({
@@ -8,4 +8,10 @@ const getRegions = () =>
     method: 'get',
   });
 
-export { getRegions };
+const getBranches = () =>
+  sendRequest<BranchesData[]>({
+    url: `/branches/`,
+    method: 'get',
+  });
+
+export { getRegions, getBranches };

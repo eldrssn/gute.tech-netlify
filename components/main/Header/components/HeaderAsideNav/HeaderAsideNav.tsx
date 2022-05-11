@@ -13,7 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { IsDrawerProps } from 'components/main/Header/types';
-import ModalAdvice from 'components/main/ModalAdvice';
+import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { selectOrderTotal } from 'store/reducers/cart/selectors';
 

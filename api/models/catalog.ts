@@ -77,6 +77,7 @@ export type CategoriesProductsListResponseData = {
 
 export type CategoriesProductReadResponseData = {
   title: string;
+  slug: string;
   manufacturer?: string;
   vendor_code: string;
   description?: string;
