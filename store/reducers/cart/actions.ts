@@ -1,15 +1,40 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { CartItemData, CartItemId } from './types';
+import { getPaymentMethods, getProductInfoFromSlug } from 'api/routes/cart';
+import { ProductRequestData } from 'api/models/cart';
 
-const addItemQuantity = createAction<CartItemId>('addItemQuantity');
-const removeItemQuantity = createAction<CartItemId>('removeItemQuantity');
-const addItemFromCart = createAction<CartItemData>('addItemFromCart');
-const removeItemFromCart = createAction<CartItemId>('removeItemFromCart');
+import { CartItemQuantity, CartItemSlug } from './types';
+
+const addItemQuantity = createAction<CartItemSlug>('addItemQuantity');
+const removeItemQuantity = createAction<CartItemSlug>('removeItemQuantity');
+const removeItemFromCart = createAction<CartItemSlug>('removeItemFromCart');
+const setItemQuantity = createAction<CartItemQuantity>('setItemQuantity');
+
+const fetchItemFromCart = createAsyncThunk(
+  'CartStore/fetchItemFromCart',
+  async ({ productSlug, count }: ProductRequestData) => {
+    const data = await getProductInfoFromSlug({ productSlug });
+
+    const currentCount = Number(count) >= 0 ? count : 1;
+
+    return { ...data, count: currentCount };
+  },
+);
+
+const fetchPaymentMethods = createAsyncThunk(
+  'CartStore/fetchPaymentMethods',
+  async () => {
+    const data = await getPaymentMethods();
+
+    return data;
+  },
+);
 
 export {
+  fetchItemFromCart,
+  fetchPaymentMethods,
+  setItemQuantity,
   addItemQuantity,
   removeItemQuantity,
   removeItemFromCart,
-  addItemFromCart,
 };

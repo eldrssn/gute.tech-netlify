@@ -23,6 +23,7 @@ type CategoryStoreRootCategory =
 
 type CategoriesProductsReadData = {
   title: string;
+  slug: string;
   manufacturer?: string | undefined;
   vendor_code: string;
   description?: string | undefined;

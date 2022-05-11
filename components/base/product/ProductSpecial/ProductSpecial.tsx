@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { checkMobileView } from 'utility/helpers/checkViewType';
 
-import ModalAdvice from 'components/main/ModalAdvice';
+import { ModalAdvice } from 'components/main/ModalAdvice';
 
 import styles from './productSpecial.module.scss';
 

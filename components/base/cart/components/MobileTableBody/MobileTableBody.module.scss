@@ -22,9 +22,12 @@
 
 .itemCount {
   margin-bottom: 10px;
+  user-select: none;
 }
 
-.itemCost {
+.btnCountInactive {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .itemInfo {
@@ -41,6 +44,10 @@
   padding: 10px 0;
   min-width: 0;
   background-color: #1976d2;
+
+  &:hover {
+    background-color: #1875d28a;
+  }
 }
 
 .btnCountAdd {

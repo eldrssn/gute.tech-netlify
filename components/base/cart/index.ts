@@ -1,3 +1,1 @@
-import CartPage from './CartPage';
-
-export default CartPage;
+export * from './CartPage';

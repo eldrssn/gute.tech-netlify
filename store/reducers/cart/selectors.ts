@@ -7,9 +7,17 @@ const selectAppStore = createSelector(
   ({ cartStore }) => cartStore,
 );
 
-const selectCart = createSelector(selectAppStore, ({ data }) => data);
-const selectOrderTotal = createSelector(selectAppStore, ({ data }) =>
-  data.reduce((total, item) => item.count * item.price + total, 0),
+const selectCart = createSelector(
+  selectAppStore,
+  ({ cartItems }) => cartItems.data,
+);
+const selectOrderTotal = createSelector(selectAppStore, ({ cartItems }) =>
+  cartItems.data.reduce((total, item) => item.count * item.price + total, 0),
 );
 
-export { selectCart, selectOrderTotal };
+const selectPaymentMethods = createSelector(
+  selectAppStore,
+  ({ paymentMethods }) => paymentMethods.data,
+);
+
+export { selectCart, selectOrderTotal, selectPaymentMethods };

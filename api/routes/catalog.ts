@@ -26,7 +26,7 @@ const getCategoriesSearchRead = ({
   engineSlug,
 }: CategoriesSearchReadRequestData) =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/categories/search/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
+    url: `/catalog/categories/tree/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
     method: 'get',
   });
 

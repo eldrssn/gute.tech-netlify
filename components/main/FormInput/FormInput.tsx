@@ -31,4 +31,4 @@ const FormInput: React.FC<FormInputProps> = ({
   </TextField>
 );
 
-export default FormInput;
+export { FormInput };

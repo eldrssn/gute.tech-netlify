@@ -5,7 +5,7 @@ import { TOuterProps } from './types';
 
 import styles from './styles.module.scss';
 
-const View: React.FC<TOuterProps> = ({
+const ModalWrapper: React.FC<TOuterProps> = ({
   children,
   isOpen,
   setIsOpen,
@@ -45,4 +45,4 @@ const View: React.FC<TOuterProps> = ({
   );
 };
 
-export default View;
+export { ModalWrapper };

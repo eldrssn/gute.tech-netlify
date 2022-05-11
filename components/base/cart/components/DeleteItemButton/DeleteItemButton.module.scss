@@ -1,0 +1,62 @@
+@import "styles/colors.scss";
+
+.confirmedBlock {
+  height: 200px;
+  width: 400px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.titleModal {
+  text-align: center;
+}
+
+.btnDelete {
+  position: absolute;
+  right: -45px;
+  top: calc(50% - 18px);
+  background-color: $red1;
+  color: white;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  min-width: 0;
+
+  &:hover {
+    background-color: $red2;
+  }
+}
+
+.buttonContainer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.btnSolution {
+  width: 100px;
+  margin: 0 20px;
+}
+
+.btnAccept {
+  background-color: $blue1;
+  color: $white;
+
+  &:hover {
+    background-color: $blue2;
+  }
+}
+
+.btnReject {
+  background-color: $red1;
+  color: $white;
+
+  &:hover {
+    background-color: $red2;
+  }
+}

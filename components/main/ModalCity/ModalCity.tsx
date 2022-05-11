@@ -14,11 +14,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { TailSpin } from 'react-loader-spinner';
 
-import ModalComponent from 'components/main/Modal';
-import FormInput from 'components/main/FormInput';
+import { ModalWrapper } from 'components/main/ModalWrapper';
+import { FormInput } from 'components/main/FormInput';
 import { filterRegionsOption } from 'utility/helpers';
 import { selectRegions } from 'store/reducers/regions/selectors';
-import { fetchRegions, selectRegion } from 'store/reducers/regions/actions';
+import { selectRegion } from 'store/reducers/regions/actions';
 import colors from 'styles/_export.module.scss';
 import { cookieStorage } from 'utility/helpers';
 import { CookieKey } from 'constants/types';
@@ -60,14 +60,10 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
     setDesiredСity(cityInput.field.value);
   }, [cityInput.field.value]);
 
-  useEffect(() => {
-    dispatch(fetchRegions());
-  }, [dispatch]);
-
   const regionsClassName = cn({ [styles.loader]: isLoading }, styles.regions);
 
   return (
-    <ModalComponent isOpen={isOpen} setIsOpen={setIsOpen}>
+    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
       <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box component='div' className={styles.container}>
           <Box className={styles.closeModal} onClick={closeModal}>
@@ -127,8 +123,8 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
           </Box>
         </Box>
       </Container>
-    </ModalComponent>
+    </ModalWrapper>
   );
 };
 
-export default ModalCity;
+export { ModalCity };

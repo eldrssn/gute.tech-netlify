@@ -1,3 +1,1 @@
-import ModalAdvice from './ModalAdvice';
-
-export default ModalAdvice;
+export * from './ModalAdvice';
