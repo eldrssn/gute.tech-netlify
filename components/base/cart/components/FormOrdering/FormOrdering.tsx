@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { Typography, Button } from '@mui/material';
@@ -14,7 +14,8 @@ import { TFormData } from '../../types';
 import styles from './FormOrdering.module.scss';
 
 const FormOrdering: React.FC = () => {
-  const { handleSubmit, control, setValue } = useForm<TFormData>({
+  const [otherError, setOtherError] = useState(false);
+  const { handleSubmit, control, setValue, setError } = useForm<TFormData>({
     defaultValues: {
       paymentMethod: 'CARD',
       paymentGateway: 'SBERBANK',
@@ -42,14 +43,26 @@ const FormOrdering: React.FC = () => {
       cart: cartOrder,
       branch_office_id: data.branch ? data.branch.id : 0,
     };
+    setOtherError(false);
     postOrdering(postData)
       .then((data) => {
         if (data.payment_url) {
           window.location.href = data.payment_url;
         }
       })
-      .catch((err) => console.log(err));
+      .catch((e) => {
+        if (e.response.data.phone) {
+          setError('phoneNumber', {
+            type: 'custom',
+            message: e.response.data.phone,
+          });
+          return;
+        }
+        setOtherError(true);
+      });
   });
+
+  const isCartItem = cart.length > 0;
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>
@@ -65,9 +78,19 @@ const FormOrdering: React.FC = () => {
       <PaymentMethod control={control} />
       <ContactInformation control={control} />
       <DeliveryAddress control={control} setValue={setValue} />
-      <Button sx={{ mt: '20px' }} onClick={onSubmit} variant={'contained'}>
+      <Button
+        disabled={!isCartItem}
+        sx={{ mt: '20px' }}
+        onClick={onSubmit}
+        variant={'contained'}
+      >
         Заказать
       </Button>
+      {otherError && (
+        <Typography className={styles.otherErrorMessage}>
+          Произошла ошибка, повторите попытку.
+        </Typography>
+      )}
       <Typography
         className={styles.policy}
         id='modal-modal-title'

@@ -6,6 +6,7 @@ type FormInputProps = {
   isError: boolean;
   isAutocomplete?: boolean;
   textarea?: boolean;
+  maxLength?: number;
 };
 
 export type { FormInputProps };

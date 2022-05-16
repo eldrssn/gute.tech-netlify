@@ -31,6 +31,7 @@ const InitialLoader: React.FC = ({ children }) => {
           fetchItemFromCart({
             productSlug: cartItem.slug,
             count: cartItem.count,
+            ordinalId: cartItem.ordinalId,
           }),
         );
       });

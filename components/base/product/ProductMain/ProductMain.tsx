@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
@@ -9,6 +9,7 @@ import { productInitData, productMock } from 'mock/product';
 import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
 
+import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
@@ -26,6 +27,7 @@ import { Subcategories } from '../Subcategories';
 import styles from './productMain.module.scss';
 
 const ProductMain: FC = () => {
+  const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
   const dispatch = useDispatch();
   const { data, isLoading } = useSelector(selectCategoriesProductRead);
 
@@ -40,7 +42,7 @@ const ProductMain: FC = () => {
       return;
     }
 
-    // !TODO: добавить сюда всплытие модалки
+    setIsOpenModalAddedItem(true);
     dispatch(fetchItemFromCart({ productSlug: slug }));
   };
 
@@ -49,63 +51,70 @@ const ProductMain: FC = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <Container className={styles.mainContainer} disableGutters>
-      <Subcategories />
+    <>
+      <ModalAddedItem
+        isOpen={isOpenModalAddedItem}
+        setIsOpen={setIsOpenModalAddedItem}
+        title={title}
+      />
+      <Container className={styles.mainContainer} disableGutters>
+        <Subcategories />
 
-      <Box>
-        <NavigationBreadcrumbs lastTitle={title || 'Имя отсутствует'} />
+        <Box>
+          <NavigationBreadcrumbs lastTitle={title || 'Имя отсутствует'} />
 
-        <h1 className={styles.title}>{title || 'Имя отсутствует'}</h1>
+          <h1 className={styles.title}>{title || 'Имя отсутствует'}</h1>
 
-        <Box
-          className={styles.productContainer}
-          sx={{
-            flexDirection: { xs: 'column', sm: 'row' },
-          }}
-        >
-          <ProductImageGallery images={imagesGallary} />
+          <Box
+            className={styles.productContainer}
+            sx={{
+              flexDirection: { xs: 'column', sm: 'row' },
+            }}
+          >
+            <ProductImageGallery images={imagesGallary} />
 
-          <Container className={styles.productInfoContainer}>
-            <Box
-              className={styles.productButtonsPriceWrapper}
-              sx={{
-                flexDirection: { xs: 'column', lg: 'row' },
-              }}
-            >
+            <Container className={styles.productInfoContainer}>
               <Box
-                className={styles.buttonsContainer}
+                className={styles.productButtonsPriceWrapper}
                 sx={{
-                  flexDirection: {
-                    xs: 'column',
-                    md: 'row',
-                  },
+                  flexDirection: { xs: 'column', lg: 'row' },
                 }}
               >
-                <CustomButton customStyles={styles.buyButton}>
-                  Купить в 1 клик
-                </CustomButton>
-                <CustomButton
-                  customStyles={styles.buyButton}
-                  onClick={addItemToBasket}
+                <Box
+                  className={styles.buttonsContainer}
+                  sx={{
+                    flexDirection: {
+                      xs: 'column',
+                      md: 'row',
+                    },
+                  }}
                 >
-                  В корзину
-                </CustomButton>
+                  <CustomButton customStyles={styles.buyButton}>
+                    Купить в 1 клик
+                  </CustomButton>
+                  <CustomButton
+                    customStyles={styles.buyButton}
+                    onClick={addItemToBasket}
+                  >
+                    В корзину
+                  </CustomButton>
+                </Box>
+
+                <ProductPrice>{price || 9999}</ProductPrice>
               </Box>
 
-              <ProductPrice>{price || 9999}</ProductPrice>
-            </Box>
+              <ProductQuantity quantity={productMock.quantity} />
+              <ProductSpecial />
+            </Container>
+          </Box>
 
-            <ProductQuantity quantity={productMock.quantity} />
-            <ProductSpecial />
-          </Container>
+          <ProductTabsDescription {...productInfo} />
+
+          {/* !TODO: добавить, когда появятся рекоммендованные товары на бэке */}
+          {/* <RecommendedProducts /> */}
         </Box>
-
-        <ProductTabsDescription {...productInfo} />
-
-        {/* !TODO: добавить, когда появятся рекоммендованные товары на бэке */}
-        {/* <RecommendedProducts /> */}
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 };
 

@@ -15,10 +15,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { IsDrawerProps } from 'components/main/Header/types';
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
-import { selectOrderTotal } from 'store/reducers/cart/selectors';
+import { selectOrderTotal, selectCart } from 'store/reducers/cart/selectors';
 
 import { HeaderContext } from '../HeaderContext';
-import styles from './headerAsideNav.module.css';
+import styles from './headerAsideNav.module.scss';
 
 const cn = classnames.bind(styles);
 
@@ -28,6 +28,10 @@ const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
 
   const { phone } = useSelector(selectShowcaseData);
   const orderTotal = useSelector(selectOrderTotal);
+  const cart = useSelector(selectCart);
+
+  const amountCartItems = cart.length;
+  const isCartEmpty = !cart.length;
 
   const menuItemStyles = cn(styles.menuItem, {
     [styles.menuItem_mobile]: isMobileView,
@@ -55,7 +59,14 @@ const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
         {(!isMobileView || !isDrawer) && (
           <Link href={'/cart'} passHref>
             <MenuItem>
-              <ShoppingCartIcon sx={{ width: '24px', height: '24px' }} />
+              <Box className={styles.shoppingCartIcon}>
+                <ShoppingCartIcon sx={{ width: '24px', height: '24px' }} />
+                {!isCartEmpty && (
+                  <Box component='div' className={styles.countCartItem}>
+                    {amountCartItems}
+                  </Box>
+                )}
+              </Box>
               <Typography className={styles.menuItem}>
                 {orderTotal}&#8381;
               </Typography>

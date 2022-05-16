@@ -21,10 +21,15 @@ import { ModalAdvice } from 'components/main/ModalAdvice';
 
 import { DesktopTableBody } from '../DesktopTableBody';
 import { MobileTableBody } from '../MobileTableBody';
-import { TStateProps, CartItemData } from '../../types';
+import { TTableOrderProps, CartItemData } from '../../types';
 import styles from '../../styles.module.scss';
 
-const TableOrder: React.FC<TStateProps> = ({ cart, orderTotal }) => {
+const TableOrder: React.FC<TTableOrderProps> = ({
+  cart,
+  orderTotal,
+  setSlugsRemovedElements,
+  slugsRemovedElements,
+}) => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState(false);
   const { windowWidth } = useWindowSize();
   const dispatch = useDispatch();
@@ -65,6 +70,8 @@ const TableOrder: React.FC<TStateProps> = ({ cart, orderTotal }) => {
             addCount={addCount}
             removeCount={removeCount}
             removeItem={removeItem}
+            setSlugsRemovedElements={setSlugsRemovedElements}
+            slugsRemovedElements={slugsRemovedElements}
           />
         ) : (
           <DesktopTableBody
@@ -72,6 +79,8 @@ const TableOrder: React.FC<TStateProps> = ({ cart, orderTotal }) => {
             addCount={addCount}
             removeCount={removeCount}
             removeItem={removeItem}
+            setSlugsRemovedElements={setSlugsRemovedElements}
+            slugsRemovedElements={slugsRemovedElements}
           />
         )}
       </Table>

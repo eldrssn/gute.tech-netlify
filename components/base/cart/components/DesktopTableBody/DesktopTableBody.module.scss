@@ -16,6 +16,14 @@
 .imageBox {
   width: 100px;
   height: 100px;
+  position: relative;
+}
+
+.checkbox {
+  position: absolute;
+  top: 50%;
+  left: -18px;
+  transform: translate(-50%, -50%);
 }
 
 .itemTitleBox {

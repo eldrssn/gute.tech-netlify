@@ -12,6 +12,8 @@ type TTableBodyProps = {
   removeItem: (item: CartItemData) => void;
   addCount: (item: CartItemData) => void;
   removeCount: (item: CartItemData) => void;
+  slugsRemovedElements: string[];
+  setSlugsRemovedElements: (idsArray: string[]) => void;
 } & Pick<TStateProps, 'cart'>;
 
 type TFormData = {
@@ -37,6 +39,13 @@ type TContactInformationProps = {
   control: Control<TFormData>;
 };
 
+type TTableOrderProps = {
+  slugsRemovedElements: string[];
+  setSlugsRemovedElements: (idsArray: string[]) => void;
+  cart: CartItemData[];
+  orderTotal: orderTotal;
+};
+
 type TDeliveryAddressProps = {
   control: Control<TFormData>;
   setValue: UseFormSetValue<TFormData>;
@@ -49,19 +58,27 @@ type TCounterProps = {
   stockBalance: number;
 };
 
+type TRemoveCheckedButtonProps = {
+  cart: CartItemData[];
+  slugsRemovedElements: string[];
+  setSlugsRemovedElements: (idsArray: string[]) => void;
+};
+
 type TFormCountData = {
   count: number;
 };
 
 export type {
+  TFormData,
   TStateProps,
   CartItemData,
-  TFormData,
-  TTableBodyProps,
-  TDeleteItemButtonProps,
-  TPaymentMethodProps,
-  TContactInformationProps,
-  TFormCountData,
-  TDeliveryAddressProps,
   TCounterProps,
+  TFormCountData,
+  TTableBodyProps,
+  TTableOrderProps,
+  TPaymentMethodProps,
+  TDeliveryAddressProps,
+  TDeleteItemButtonProps,
+  TContactInformationProps,
+  TRemoveCheckedButtonProps,
 };

@@ -46,6 +46,7 @@ type ProductResponseData = {
 type ProductRequestData = {
   productSlug: string;
   count?: number;
+  ordinalId?: number;
 };
 
 type OrderingProductCartRequestData = {

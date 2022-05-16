@@ -76,6 +76,7 @@ const ContactInformation: React.FC<TContactInformationProps> = ({
           value={emailInput.field.value}
           label='Email'
           isError={Boolean(emailInput.fieldState.error)}
+          maxLength={50}
         />
       </Box>
     </Box>

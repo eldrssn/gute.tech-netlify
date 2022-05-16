@@ -133,17 +133,19 @@ const getSlugsCartItemsFromString = (slugsItem: string) =>
     const itemArray = item.split(',');
     const slug = itemArray[0].split(':')[1];
     const count = itemArray[1].split(':')[1];
+    const ordinalId = itemArray[2].split(':')[1];
 
     return {
       slug: slug,
       count: Number(count),
+      ordinalId: Number(ordinalId),
     };
   });
 
 const getSlugsCartItemsFromCart = (cart: CartItemData[]) =>
   cart
     .map((item) => {
-      return `slug:${item.slug},count:${item.count}`;
+      return `slug:${item.slug},count:${item.count},ordinalId:${item.ordinalId}`;
     })
     .join('&');
 
