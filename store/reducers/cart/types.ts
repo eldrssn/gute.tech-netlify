@@ -15,8 +15,9 @@ type orderTotal = number;
 
 type CartItemSlug = string;
 
-type CartItemCount = {
+type CartItemAdditionalData = {
   count: number;
+  ordinalId: number;
 };
 
 type CartItemQuantity = {
@@ -24,7 +25,7 @@ type CartItemQuantity = {
   slug: string;
 };
 
-type CartItemData = ProductResponseData & { count: number };
+type CartItemData = ProductResponseData & { count: number; ordinalId: number };
 
 type PaymentMethodsState = {
   data: PaymentMethodResponseData[];
@@ -48,7 +49,7 @@ export type {
   CartItemSlug,
   ProductResponseData,
   CartItemData,
-  CartItemCount,
+  CartItemAdditionalData,
 };
 
 export { CartStoreBlocks };

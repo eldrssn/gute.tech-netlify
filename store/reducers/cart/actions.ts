@@ -9,15 +9,17 @@ const addItemQuantity = createAction<CartItemSlug>('addItemQuantity');
 const removeItemQuantity = createAction<CartItemSlug>('removeItemQuantity');
 const removeItemFromCart = createAction<CartItemSlug>('removeItemFromCart');
 const setItemQuantity = createAction<CartItemQuantity>('setItemQuantity');
+const removeItemBySlug = createAction<CartItemSlug[]>('removeItemBySlug');
+const resetOrdinalId = createAction('resetOrdinalId');
 
 const fetchItemFromCart = createAsyncThunk(
   'CartStore/fetchItemFromCart',
-  async ({ productSlug, count }: ProductRequestData) => {
+  async ({ productSlug, count, ordinalId }: ProductRequestData) => {
     const data = await getProductInfoFromSlug({ productSlug });
 
     const currentCount = Number(count) >= 0 ? count : 1;
 
-    return { ...data, count: currentCount };
+    return { ...data, count: currentCount, ordinalId };
   },
 );
 
@@ -33,8 +35,10 @@ const fetchPaymentMethods = createAsyncThunk(
 export {
   fetchItemFromCart,
   fetchPaymentMethods,
+  resetOrdinalId,
   setItemQuantity,
   addItemQuantity,
+  removeItemBySlug,
   removeItemQuantity,
   removeItemFromCart,
 };

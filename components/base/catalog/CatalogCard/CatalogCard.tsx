@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
+import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { ProductListData } from 'api/models/catalog';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
 
@@ -25,12 +26,14 @@ const CatalogCard: React.FC<ProductListData> = ({
   slug,
   title,
 }) => {
+  const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { slug: categorySlug } = router.query;
 
   const addItemToBasket = () => {
     dispatch(fetchItemFromCart({ productSlug: slug }));
+    setIsOpenModalAddedItem(true);
   };
 
   const handleClickToBasket = (event: React.MouseEvent<HTMLElement>) => {
@@ -39,48 +42,55 @@ const CatalogCard: React.FC<ProductListData> = ({
   };
 
   return (
-    <Card component='article' className={styles.cardContainer}>
-      <Link href={`/catalog/${categorySlug}/${slug}`}>
-        <a className={styles.cardLinkContainer}>
-          <CardMedia
-            component={'img'}
-            height='250'
-            image={image || '/card-example.jpeg'}
-            alt={title}
-            className={styles.cardImage}
-          />
+    <>
+      <ModalAddedItem
+        isOpen={isOpenModalAddedItem}
+        setIsOpen={setIsOpenModalAddedItem}
+        title={title}
+      />
+      <Card component='article' className={styles.cardContainer}>
+        <Link href={`/catalog/${categorySlug}/${slug}`}>
+          <a className={styles.cardLinkContainer}>
+            <CardMedia
+              component={'img'}
+              height='250'
+              image={image || '/card-example.jpeg'}
+              alt={title}
+              className={styles.cardImage}
+            />
 
-          <CardContent className={styles.cardInfo}>
-            <Divider className={styles.cardDivider} />
+            <CardContent className={styles.cardInfo}>
+              <Divider className={styles.cardDivider} />
 
-            <Typography
-              className={styles.cardTitle}
-              gutterBottom
-              component='h3'
-            >
-              {title}
-            </Typography>
+              <Typography
+                className={styles.cardTitle}
+                gutterBottom
+                component='h3'
+              >
+                {title}
+              </Typography>
 
-            <Box className={styles.cardBottom}>
-              <Typography className={styles.cardPrice}>{price} ₽</Typography>
+              <Box className={styles.cardBottom}>
+                <Typography className={styles.cardPrice}>{price} ₽</Typography>
 
-              <CardActions className={styles.cardActions}>
-                <CustomButton customStyles={styles.cardBuyButton}>
-                  Купить
-                </CustomButton>
+                <CardActions className={styles.cardActions}>
+                  <CustomButton customStyles={styles.cardBuyButton}>
+                    Купить
+                  </CustomButton>
 
-                <CustomButton
-                  customStyles={styles.cardAddToShoppingButton}
-                  onClick={handleClickToBasket}
-                >
-                  <ShoppingCartIcon />
-                </CustomButton>
-              </CardActions>
-            </Box>
-          </CardContent>
-        </a>
-      </Link>
-    </Card>
+                  <CustomButton
+                    customStyles={styles.cardAddToShoppingButton}
+                    onClick={handleClickToBasket}
+                  >
+                    <ShoppingCartIcon />
+                  </CustomButton>
+                </CardActions>
+              </Box>
+            </CardContent>
+          </a>
+        </Link>
+      </Card>
+    </>
   );
 };
 

@@ -1,6 +1,14 @@
 import React from 'react';
 import Image from 'next/image';
-import { TableBody, TableCell, TableRow, Typography, Box } from '@mui/material';
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+  Box,
+  FormControlLabel,
+  Checkbox,
+} from '@mui/material';
 
 import { getStockBalance } from '../../helpers';
 import { DeleteItemButton } from '../DeleteItemButton';
@@ -10,10 +18,28 @@ import styles from './DesktopTableBody.module.scss';
 
 const DesktopTableBody: React.FC<TTableBodyProps> = ({
   cart,
+  setSlugsRemovedElements,
+  slugsRemovedElements,
   addCount,
   removeCount,
   removeItem,
 }) => {
+  const handleChangeCheckBox = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    slug: string,
+  ) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setSlugsRemovedElements([...slugsRemovedElements, slug]);
+      return;
+    }
+
+    const newIdsRemovedElements = slugsRemovedElements.filter(
+      (removedElement) => removedElement !== slug,
+    );
+    setSlugsRemovedElements(newIdsRemovedElements);
+  };
+
   return (
     <>
       <TableBody className={styles.tableBody}>
@@ -32,6 +58,18 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
                   className={styles.tableBodyName}
                 >
                   <Box component='div' className={styles.imageBox}>
+                    <FormControlLabel
+                      className={styles.checkbox}
+                      label=''
+                      control={
+                        <Checkbox
+                          checked={slugsRemovedElements.includes(item.slug)}
+                          onChange={(event) =>
+                            handleChangeCheckBox(event, item.slug)
+                          }
+                        />
+                      }
+                    />
                     <Image
                       height='100px'
                       width='100px'

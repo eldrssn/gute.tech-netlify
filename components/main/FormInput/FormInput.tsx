@@ -12,6 +12,7 @@ const FormInput: React.FC<FormInputProps> = ({
   isAutocomplete,
   children,
   textarea,
+  maxLength = 200,
 }) => (
   <TextField
     autoComplete={isAutocomplete ? 'on' : 'off'}
@@ -25,7 +26,7 @@ const FormInput: React.FC<FormInputProps> = ({
     variant='outlined'
     multiline={textarea}
     rows={textarea ? 4 : undefined}
-    inputProps={{ maxLength: 200 }}
+    inputProps={{ maxLength: maxLength }}
   >
     {children}
   </TextField>

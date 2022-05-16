@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useForm, useController } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 import { Button, Box, TextField, Typography } from '@mui/material';
+import InputMask from 'react-input-mask';
 
 import { getInputRules } from 'utility/helpers';
 import { setItemQuantity } from 'store/reducers/cart/actions';
 import { TCounterProps, TFormCountData } from 'components/base/cart/types';
+import { inputMasks } from 'constants/patterns';
 
 import styles from './Counter.module.scss';
 
@@ -18,11 +20,6 @@ const Counter: React.FC<TCounterProps> = ({
 }) => {
   const { handleSubmit, control } = useForm<TFormCountData>();
   const dispatch = useDispatch();
-  const countInput = useController({
-    name: 'count',
-    control,
-    rules: { ...getInputRules(), max: stockBalance },
-  });
 
   const [isOpenCountModal, setIsOpenCountModal] = useState(false);
 
@@ -50,13 +47,26 @@ const Counter: React.FC<TCounterProps> = ({
           <Typography className={styles.titleModal}>
             Введите количество
           </Typography>
-          <TextField
-            className={styles.input}
-            variant='outlined'
-            value={countInput.field.value}
-            onChange={countInput.field.onChange}
-            error={Boolean(countInput.fieldState.error)}
-            inputProps={{ maxLength: 3 }}
+          <Controller
+            name='count'
+            control={control}
+            rules={{ ...getInputRules(), max: stockBalance }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <InputMask
+                mask={inputMasks.countMask}
+                maskPlaceholder={null}
+                value={value}
+                onChange={onChange}
+                autoComplete='off'
+              >
+                <TextField
+                  className={styles.input}
+                  variant='outlined'
+                  error={Boolean(error)}
+                  autoComplete='off'
+                />
+              </InputMask>
+            )}
           />
           <Box className={styles.buttonContainer}>
             <Button

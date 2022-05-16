@@ -7,10 +7,13 @@ const selectAppStore = createSelector(
   ({ cartStore }) => cartStore,
 );
 
-const selectCart = createSelector(
-  selectAppStore,
-  ({ cartItems }) => cartItems.data,
-);
+const selectCart = createSelector(selectAppStore, ({ cartItems }) => {
+  const cartForSort = [...cartItems.data];
+  const sortedCart = cartForSort.sort((prev, cur) => {
+    return prev.ordinalId - cur.ordinalId;
+  });
+  return sortedCart;
+});
 const selectOrderTotal = createSelector(selectAppStore, ({ cartItems }) =>
   cartItems.data.reduce((total, item) => item.count * item.price + total, 0),
 );

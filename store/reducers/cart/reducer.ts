@@ -5,8 +5,10 @@ import {
   setItemQuantity,
   removeItemQuantity,
   removeItemFromCart,
+  removeItemBySlug,
   fetchPaymentMethods,
   fetchItemFromCart,
+  resetOrdinalId,
 } from './actions';
 
 import { PaymentMethodResponseData } from 'api/models/cart';
@@ -14,7 +16,7 @@ import { PaymentMethodResponseData } from 'api/models/cart';
 import {
   CartStore,
   CartItemSlug,
-  CartItemCount,
+  CartItemAdditionalData,
   ErrorAction,
   CartItemQuantity,
   ProductResponseData,
@@ -30,10 +32,19 @@ const handlers = {
     state: CartStore,
     { payload }: { payload: CartItemSlug },
   ) => {
-    const itemIndex = state.cartItems.data.findIndex(
-      ({ slug }) => slug === payload,
-    );
-    state.cartItems.data[itemIndex].count += 1;
+    const cart = state.cartItems.data;
+    const itemIndex = cart.findIndex(({ slug }) => slug === payload);
+    const { count, ...otherItemData } = cart[itemIndex];
+    const newCount = count + 1;
+    const newItem = {
+      count: newCount,
+      ...otherItemData,
+    };
+    state.cartItems.data = [
+      ...cart.slice(0, itemIndex),
+      newItem,
+      ...cart.slice(itemIndex + 1),
+    ];
   },
   [setItemQuantity.type]: (
     state: CartStore,
@@ -42,7 +53,7 @@ const handlers = {
     const itemIndex = state.cartItems.data.findIndex(
       ({ slug }) => slug === payload.slug,
     );
-    state.cartItems.data[itemIndex].count = payload.count;
+    state.cartItems.data[itemIndex].count = Number(payload.count);
   },
   [removeItemQuantity.type]: (
     state: CartStore,
@@ -74,14 +85,35 @@ const handlers = {
       ...cart.slice(itemIndex + 1),
     ];
   },
+  [removeItemBySlug.type]: (
+    state: CartStore,
+    { payload }: { payload: CartItemSlug[] },
+  ) => {
+    const cart = state.cartItems.data;
+    const newCart = cart.filter(
+      (cartItem) => payload.findIndex((slug) => slug === cartItem.slug) < 0,
+    );
+    state.cartItems.data = newCart;
+  },
+  [resetOrdinalId.type]: (state: CartStore) => {
+    const newCart = state.cartItems.data.map((cartItem, index) => {
+      const { ordinalId, ...othedItemData } = cartItem;
+      return {
+        ordinalId: index + 1,
+        ...othedItemData,
+      };
+    });
+    state.cartItems.data = newCart;
+  },
 
   [fetchItemFromCart.fulfilled.type]: (
     state: CartStore,
-    { payload }: { payload: ProductResponseData & CartItemCount },
+    { payload }: { payload: ProductResponseData & CartItemAdditionalData },
   ) => {
-    const { slug: slugAddedItem } = payload;
+    const { slug: slugAddedItem, ordinalId: ordinalIdAddedItem } = payload;
     const cart = state.cartItems.data;
     const itemIndex = cart.findIndex(({ slug }) => slug === slugAddedItem);
+    const ordinalId = ordinalIdAddedItem ? ordinalIdAddedItem : cart.length + 1;
 
     if (itemIndex >= 0) {
       const { count, ...otherItemData } = cart[itemIndex];
@@ -94,7 +126,7 @@ const handlers = {
 
       return;
     }
-    state.cartItems.data = [...cart, payload];
+    state.cartItems.data = [...cart, { ...payload, ordinalId }];
   },
 
   [fetchPaymentMethods.pending.type]: (state: CartStore) => {

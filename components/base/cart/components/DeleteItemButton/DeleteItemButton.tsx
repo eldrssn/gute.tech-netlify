@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import cn from 'classnames';
+import { useDispatch } from 'react-redux';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import cn from 'classnames';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
+import { resetOrdinalId } from 'store/reducers/cart/actions';
 
 import { TDeleteItemButtonProps } from '../../types';
 import styles from './DeleteItemButton.module.scss';
@@ -15,9 +17,12 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
+  const dispatch = useDispatch();
+
   const confirmedSolution = () => {
     removeItem(item);
     window.document.body.style.overflow = 'auto';
+    dispatch(resetOrdinalId());
   };
 
   return (
