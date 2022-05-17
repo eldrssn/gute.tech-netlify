@@ -1,10 +1,19 @@
 import { FilterRequest } from 'types';
+import { ProductWarehouse } from './cart';
 
 export type ProductListData = {
   title: string;
   slug: string;
   image?: string;
   price?: string;
+};
+
+export type CategoriesProductsListRequestData = {
+  categorySlug: string;
+  page?: number;
+  sort?: string;
+  order?: string;
+  filter?: FilterRequest;
 };
 
 export type CategoriesSearchReadRequestData = {
@@ -14,11 +23,10 @@ export type CategoriesSearchReadRequestData = {
   engineSlug: string;
 };
 
-export type CategoriesFiltersListRequestData = {
-  categorySlug: string;
-};
+export type TransportFiltersProductsListRead =
+  CategoriesProductsListRequestData & CategoriesSearchReadRequestData;
 
-export type CategoriesProductsListRequestData = {
+export type CategoriesFiltersListRequestData = {
   categorySlug: string;
   page?: number;
   sort?: string;
@@ -39,12 +47,14 @@ export type CategoryResponseData = {
   title: string;
   slug: string;
   image: string;
+  found: number;
 };
 
 export type TreeCategoryResponseData = {
   title: string;
   slug: string;
   image?: string;
+  found: number;
   children?: TreeCategoryResponseData[];
 };
 
@@ -84,5 +94,5 @@ export type CategoriesProductReadResponseData = {
   price?: string;
   images?: string[];
   properties?: string;
-  warehouses?: string;
+  warehouses?: ProductWarehouse[];
 };

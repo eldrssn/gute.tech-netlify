@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import Menu from '@mui/material/Menu';
 
@@ -7,10 +7,14 @@ import { CustomButton } from 'components/ui/CustomButton';
 import { HeaderFilters } from '../HeaderFilters';
 import { HeaderMobileDrawer } from '../HeaderMobileDrawer';
 
+import { HeaderMobileProps } from './types';
 import styles from './headerMobile.module.css';
 
-const HeaderMobile: FC = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+const HeaderMobile: FC<HeaderMobileProps> = ({
+  transportText,
+  setTransportText,
+}) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
 
@@ -33,7 +37,9 @@ const HeaderMobile: FC = () => {
         onClick={handleClick}
         customStyles={styles.openFiltersButton}
       >
-        Выберите транспорт
+        {transportText
+          ? `Аксессуары для: ${transportText}`
+          : 'Выберите транспорт'}
       </CustomButton>
 
       <Menu
@@ -80,7 +86,11 @@ const HeaderMobile: FC = () => {
           },
         }}
       >
-        <HeaderFilters />
+        <HeaderFilters
+          transportText={transportText}
+          setTransportText={setTransportText}
+          closePopupMobile={handleClose}
+        />
       </Menu>
     </>
   );

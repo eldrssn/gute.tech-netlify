@@ -1,5 +1,4 @@
-import { objByThree, objByThreeKeys } from 'mock/categories';
-import { GroupedItemsItem } from 'components/base/home';
+import { GroupedItemsItem, ItemKeys } from 'components/base/home';
 import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
 import { RegionData } from 'store/reducers/regions/types';
@@ -7,8 +6,15 @@ import { TreeCategoryResponseData } from 'api/models/catalog';
 import { CategoriesSearchReadRequestData } from 'api/models/catalog';
 import { CartItemData } from 'store/reducers/cart/types';
 
+const objByThree: GroupedItemsItem = {
+  firstItem: null,
+  secondItem: null,
+  thirdItem: null,
+};
+const objByThreeKeys: ItemKeys[] = Object.keys(objByThree) as ItemKeys[];
+
 const groupItems = (sortedItems?: TreeCategoryResponseData[]) => {
-  if (!sortedItems) {
+  if (!sortedItems || !Array.isArray(sortedItems)) {
     return null;
   }
 
@@ -107,13 +113,30 @@ const cookieStorage = {
   },
 };
 
-const getSlugsFromUrl = (url: string): CategoriesSearchReadRequestData => {
-  const slicedUrl = url.split('&');
+const getSlugsFromUrl = (
+  urls: string | string[],
+): CategoriesSearchReadRequestData => {
+  if (Array.isArray(urls)) {
+    const slugs = urls.reduce(
+      (accumulator, url) => {
+        const [name, value] = url.split('=');
+        return { ...accumulator, [name]: value };
+      },
+      {
+        brandSlug: '',
+        modelSlug: '',
+        yearSlug: '',
+        engineSlug: '',
+      },
+    );
+
+    return slugs;
+  }
+
+  const slicedUrl = urls.split('&');
   const slugs = slicedUrl.reduce(
     (p, c) => {
-      const slug = c.split('=');
-      const name = slug[0];
-      const value = slug[1];
+      const [name, value] = c.split('=');
 
       return { ...p, [name]: value };
     },

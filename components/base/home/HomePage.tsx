@@ -12,6 +12,7 @@ import {
   FirstRowReversed,
   SecondRowReversed,
 } from 'components/base/main/rows';
+import { Loader } from 'components/ui/Loader';
 import { Items } from 'components/base/main/rows/types';
 import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
@@ -39,14 +40,17 @@ const Home: FC = () => {
 
   const lastQueryUrl = getlastQueryUrl(query);
 
-  const CurrentRootCategories = useSelector(
+  const currentRootCategories = useSelector(
     selectRootCategories(rootCategories[lastQueryUrl]),
   );
 
+  const { isLoading, data: categories } = currentRootCategories;
+
   useEffect(() => {
-    if (!Array.isArray(transportQuery) && transportQuery) {
+    if (transportQuery) {
       const { brandSlug, modelSlug, yearSlug, engineSlug } =
         getSlugsFromUrl(transportQuery);
+
       dispatch(
         fetchSearchReadCategory({
           brandSlug,
@@ -61,14 +65,14 @@ const Home: FC = () => {
   const groupedItems = useMemo(
     () =>
       categoryQuery
-        ? getGroupedChildren(categoryQuery, CurrentRootCategories)
-        : groupItems(CurrentRootCategories),
-    [categoryQuery, CurrentRootCategories],
+        ? getGroupedChildren(categoryQuery, categories)
+        : groupItems(categories),
+    [categoryQuery, categories],
   );
 
   return (
     <>
-      {categoryQuery && <NavigationBreadcrumbs isQuery />}
+      {(categoryQuery || transportQuery) && <NavigationBreadcrumbs isQuery />}
 
       <Grid
         container
@@ -78,13 +82,23 @@ const Home: FC = () => {
         direction={'column'}
         sx={{ padding: '20px 0' }}
       >
-        {groupedItems?.map((items, index) => {
-          const type: Index = ((index % 4) + 1) as Index;
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            {categories.length ? (
+              groupedItems?.map((items, index) => {
+                const type: Index = ((index % 4) + 1) as Index;
 
-          const Component = rowHashMap[type];
+                const Component = rowHashMap[type];
 
-          return <Component key={index} items={items} />;
-        })}
+                return <Component key={index} items={items} />;
+              })
+            ) : (
+              <p>Pезультаты не найдены</p>
+            )}
+          </>
+        )}
       </Grid>
       <Description />
     </>

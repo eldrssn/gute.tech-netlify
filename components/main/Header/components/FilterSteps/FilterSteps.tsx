@@ -1,12 +1,14 @@
 import React, { FC, useContext } from 'react';
 import classnames from 'classnames/bind';
-
 import Stepper from '@mui/material/Stepper';
+
+import { filterSteps } from 'components/main/Header/constants';
+
 import { HeaderContext } from '../HeaderContext';
 import { FilterStep } from '../FilterStep';
 
-import { filterSteps } from '../../constants';
 import { FilterStepsProps } from './types';
+
 import styles from './filterSteps.module.scss';
 
 const cn = classnames.bind(styles);

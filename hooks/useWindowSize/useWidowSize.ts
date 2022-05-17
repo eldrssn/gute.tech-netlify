@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { WindowSidesType } from './types';
 
@@ -8,7 +8,7 @@ const useWindowSize = () => {
     windowHeight: null,
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const handleResize = () => {
         setWindowSize({

@@ -64,8 +64,21 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     styles.wrapper,
   );
 
+  const cancelBodyScroll = () => {
+    document.body.style.overflow = 'hidden';
+  };
+
+  const backBodyScroll = () => {
+    document.body.style.overflow = 'auto';
+  };
+
   return (
-    <Box component='div' className={wrapperClassName}>
+    <Box
+      component='div'
+      className={wrapperClassName}
+      onMouseOver={cancelBodyScroll}
+      onMouseLeave={backBodyScroll}
+    >
       <Box
         component='div'
         className={styles.background}

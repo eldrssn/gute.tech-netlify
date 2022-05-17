@@ -4,7 +4,10 @@ import { useRouter } from 'next/router';
 import classnames from 'classnames/bind';
 import Box from '@mui/material/Box';
 
-import { fetchCategoriesProductsList } from 'store/reducers/catalog/actions';
+import {
+  fetchCategoriesProductsList,
+  fetchTransportFiltersProductsListRead,
+} from 'store/reducers/catalog/actions';
 import { selectCategoriesProductList } from 'store/reducers/catalog/selectors';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
@@ -12,6 +15,8 @@ import { useWindowSize } from 'hooks/useWindowSize';
 import { checkScrollUp } from 'hooks/useScrollDirection/helpers';
 import { useScrollDirection } from 'hooks/useScrollDirection';
 import { checkMobileView } from 'utility/helpers/checkViewType';
+import { getSlugsFromUrl } from 'utility/helpers';
+import { QueryUrl } from 'constants/variables';
 
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
@@ -47,6 +52,8 @@ const CatalogMain: FC = () => {
   const isMobileView = checkMobileView(windowWidth);
   const isScrollUp = checkScrollUp(scrollDirection);
 
+  const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
+
   useEffect(() => {
     if (!router.isReady) {
       return;
@@ -65,15 +72,48 @@ const CatalogMain: FC = () => {
 
     const stringifySlug = makeStringify(slug);
 
-    dispatch(
-      fetchCategoriesProductsList({
-        page,
-        categorySlug: stringifySlug,
-        filter: filterRequest,
-        ...sorting,
-      }),
-    );
-  }, [slug, dispatch, page, sorting, filterRequest]);
+    const fetchTransportList = () => {
+      if (typeof transportQuery === 'string' || !transportQuery) {
+        return;
+      }
+
+      const transportSlugs = getSlugsFromUrl(transportQuery);
+
+      const { brandSlug, modelSlug, yearSlug, engineSlug } = transportSlugs;
+
+      dispatch(
+        fetchTransportFiltersProductsListRead({
+          brandSlug,
+          modelSlug,
+          yearSlug,
+          engineSlug,
+          page,
+          categorySlug: stringifySlug,
+          filter: filterRequest,
+          ...sorting,
+        }),
+      );
+    };
+
+    transportQuery
+      ? fetchTransportList()
+      : dispatch(
+          fetchCategoriesProductsList({
+            page,
+            categorySlug: stringifySlug,
+            filter: filterRequest,
+            ...sorting,
+          }),
+        );
+  }, [
+    slug,
+    dispatch,
+    page,
+    sorting,
+    filterRequest,
+    getQueryOption,
+    transportQuery,
+  ]);
 
   const { isLoading, data } = useSelector(selectCategoriesProductList);
   const { pages, results } = data;
@@ -118,11 +158,12 @@ const CatalogMain: FC = () => {
               />
             )}
           </Box>
+
           {isLoading ? <Loader /> : <CatalogGrid items={results} />}
         </Box>
       </Box>
 
-      {isMobileView && (
+      {isMobileView && results.length && (
         <Box className={cn(styles.cardHeaderContainer, styles.pages)}>
           <CatalogPagination
             pageCount={pageCount}

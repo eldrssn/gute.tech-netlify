@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
+
 import { CustomButton } from 'components/ui/CustomButton';
 import {
   fetchBrands,
@@ -20,38 +21,48 @@ import {
   resetOptionsDataInYearStep,
   resetOptionsDataInEngineStep,
 } from 'store/reducers/transport/actions';
-import { namesDefaultValueByStep } from '../../constants';
-import { QueryUrl, Slugs } from 'constants/variables';
+import { namesDefaultValueByStep } from 'components/main/Header/constants';
+import {
+  FormData,
+  FilterInputName,
+  StepInputs,
+} from 'components/main/Header/types';
+import { QueryUrl } from 'constants/variables';
+import { useRouterQuery } from 'hooks/useRouterQuery';
 
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
 import { HeaderAsideNav } from '../HeaderAsideNav';
 import { FilterSteps } from '../FilterSteps';
 import { HeaderContext } from '../HeaderContext';
-import { FormData, FormDataItem, FilterInputName } from '../../types';
-import { StepInputs } from '../../types';
+
+import { defaultValue } from './constants';
+import { getTransportParams } from './helpers';
+import { HeaderFiltersProps } from './types';
+
 import styles from './headerFilters.module.scss';
 
 const cn = classnames.bind(styles);
 
-const defaultValue: FormDataItem = {
-  title: '',
-  slug: '',
-};
-
-const HeaderFilters: FC = () => {
+const HeaderFilters: FC<HeaderFiltersProps> = ({
+  transportText,
+  setTransportText,
+  closePopupMobile,
+}) => {
   const router = useRouter();
+  const { removeQuery, getQueryOption } = useRouterQuery();
   const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView } =
     useContext(HeaderContext);
-  const { getValues, control, setValue, handleSubmit } = useForm<FormData>({
-    defaultValues: {
-      brand: defaultValue,
-      model: defaultValue,
-      year: defaultValue,
-      engine: defaultValue,
-    },
-  });
+  const { getValues, control, setValue, handleSubmit, reset } =
+    useForm<FormData>({
+      defaultValues: {
+        brand: defaultValue,
+        model: defaultValue,
+        year: defaultValue,
+        engine: defaultValue,
+      },
+    });
   const [openPopoverId, setOpenPopoverId] = useState(StepInputs.INACTIVE);
   const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
 
@@ -67,6 +78,18 @@ const HeaderFilters: FC = () => {
       setValue(name, defaultValue);
     });
   };
+
+  useEffect(() => {
+    const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
+
+    if (transportQuery) {
+      return;
+    }
+
+    setTransportText('');
+    reset();
+    setCurrentStep(StepInputs.INACTIVE);
+  }, [getQueryOption, reset, setTransportText]);
 
   useEffect(() => {
     const resetDataByStep = {
@@ -119,14 +142,19 @@ const HeaderFilters: FC = () => {
   ]);
 
   const onSubmit = handleSubmit((data) => {
-    const { brand, model, year, engine } = data;
-    const param = `${Slugs.BRAND_SLUG}=${brand.slug}&${Slugs.MODEL_SLUG}=${model.slug}&${Slugs.YEAR_SLUG}=${year.slug}&${Slugs.ENGINE_SLUG}=${engine.slug}`;
-    router.push({
-      query: {
-        [QueryUrl.TRANSPORT_QUERY]: param,
-      },
-    });
+    const params = getTransportParams(data);
+    router.push(params);
+
+    closePopupMobile && closePopupMobile();
   });
+
+  const resetFilter = () => {
+    removeQuery(QueryUrl.TRANSPORT_QUERY);
+    setCurrentStep(StepInputs.INACTIVE);
+    setTransportText('');
+    reset();
+    router.push('/');
+  };
 
   return (
     <>
@@ -159,21 +187,40 @@ const HeaderFilters: FC = () => {
                 [styles.filterStepsForm_mobileView]: isMobileView,
               })}
             >
-              <FilterSteps
-                openPopoverId={openPopoverId}
-                setOpenPopoverId={setOpenPopoverId}
-                control={control}
-                setValue={setValue}
-                currentStep={currentStep}
-                setCurrentStep={setCurrentStep}
-              />
-
-              <CustomButton
-                onClick={onSubmit}
-                customStyles={styles.stepButtonSubmit}
-              >
-                Подобрать детали
-              </CustomButton>
+              {!transportText ? (
+                <>
+                  <FilterSteps
+                    openPopoverId={openPopoverId}
+                    setOpenPopoverId={setOpenPopoverId}
+                    control={control}
+                    setValue={setValue}
+                    currentStep={currentStep}
+                    setCurrentStep={setCurrentStep}
+                  />
+                  <CustomButton
+                    onClick={onSubmit}
+                    customStyles={styles.stepButtonSubmit}
+                  >
+                    Подобрать детали
+                  </CustomButton>
+                </>
+              ) : (
+                <Box
+                  className={cn(styles.choosenTransport_container, {
+                    [styles.choosenTransport_container_mobile]: isMobileView,
+                  })}
+                >
+                  <p className={styles.choosenTransport_text}>
+                    Показаны детали для: {transportText}
+                  </p>
+                  <CustomButton
+                    onClick={resetFilter}
+                    customStyles={styles.stepButtonSubmit}
+                  >
+                    Сбросить фильтр
+                  </CustomButton>
+                </Box>
+              )}
             </FormControl>
 
             {!isMobileView && <CatalogButton />}
