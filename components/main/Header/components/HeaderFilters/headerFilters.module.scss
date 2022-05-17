@@ -10,6 +10,7 @@
 .itemsContainer {
   flex-direction: row;
   flex-grow: 1;
+  justify-content: space-between;
 }
 
 .filterText {
@@ -82,6 +83,7 @@
 
 .filterStepsForm_mobileView {
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .filterStepsForm_mobileView input {
@@ -94,4 +96,19 @@
   min-height: 50px;
   min-width: 100%;
   margin-top: 20px;
+}
+
+.choosenTransport_container {
+  display: flex;
+  align-items: center;
+}
+
+.choosenTransport_text {
+  font-size: 16px;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.choosenTransport_container_mobile {
+  flex-direction: column;
+  width: 100%;
 }

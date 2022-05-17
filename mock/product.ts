@@ -39,15 +39,3 @@ export const productMock = {
     ],
   },
 };
-
-export const productInitData = {
-  slug: '',
-  title: '',
-  manufacturer: '',
-  vendor_code: '',
-  description: '',
-  price: '',
-  images: [],
-  properties: '',
-  warehouses: '',
-};

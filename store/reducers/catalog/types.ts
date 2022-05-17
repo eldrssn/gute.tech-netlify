@@ -6,6 +6,7 @@ import {
   CategoriesProductsListResponseData,
   FiltersCategoryResponseData,
 } from 'api/models/catalog';
+import { ProductWarehouse } from 'api/models/cart';
 
 enum CategoryStoreBlocks {
   SEARCHREADCATEGORY = 'searchReadCategory',
@@ -30,7 +31,7 @@ type CategoriesProductsReadData = {
   price?: string | undefined;
   images?: string[] | undefined;
   properties?: string | undefined;
-  warehouses?: string | undefined;
+  warehouses?: ProductWarehouse[];
 };
 
 type SearchReadCategoryState = {

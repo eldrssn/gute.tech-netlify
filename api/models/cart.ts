@@ -76,4 +76,5 @@ export type {
   ProductResponseData,
   ProductRequestData,
   OrderingResponseData,
+  ProductWarehouse,
 };

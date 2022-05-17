@@ -24,8 +24,8 @@ const selectCategoriesTreeList = createSelector(
 const selectRootCategories =
   (categoryStoreBlock: CategoryStoreRootCategory) => (state: State) =>
     categoryStoreBlock
-      ? state.catalogStore[categoryStoreBlock].data
-      : state.catalogStore.categoriesTreeList.data;
+      ? state.catalogStore[categoryStoreBlock]
+      : state.catalogStore.categoriesTreeList;
 
 const selectCategoriesSearchRead = createSelector(
   selectCatalogStore,

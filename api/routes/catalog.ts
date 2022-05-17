@@ -11,6 +11,7 @@ import {
   CategoriesProductsListResponseData,
   CategoriesProductReadResponseData,
   FiltersCategoryResponseData,
+  TransportFiltersProductsListRead,
 } from 'api/models/catalog';
 
 const getCategoriesList = () =>
@@ -28,6 +29,25 @@ const getCategoriesSearchRead = ({
   sendRequest<CategoryResponseData[]>({
     url: `/catalog/categories/tree/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
     method: 'get',
+  });
+
+const getTransportFiltersProductsListRead = ({
+  brandSlug,
+  modelSlug,
+  yearSlug,
+  engineSlug,
+  categorySlug,
+  page,
+  sort = 'title',
+  order = 'asc',
+  filter = {},
+}: TransportFiltersProductsListRead) =>
+  sendRequest<CategoriesProductsListResponseData>({
+    url: `/catalog/${categorySlug}/products/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
+    method: 'post',
+    config: {
+      data: { page, sort, order, filter },
+    },
   });
 
 const getCategoriesTreeList = () =>
@@ -83,4 +103,5 @@ export {
   getCategoriesProductsList,
   getCategoriesProductsRead,
   getCategoriesSubcategoriesList,
+  getTransportFiltersProductsListRead,
 };

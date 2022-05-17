@@ -1,10 +1,13 @@
 .priceLabel {
   position: absolute;
-  margin-top: -25px;
+  margin-top: -14px;
   opacity: 0.5;
+  line-height: 1.57;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   color: black;
+  text-transform: lowercase;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .priceWrapper {
@@ -13,8 +16,8 @@
   letter-spacing: 1px;
   line-height: 1.2em;
   text-transform: uppercase;
-  font-family: "GTWalsheimProBlack-Regular", sans-serif;
-  font-weight: bold;
+  font-family: 'GTWalsheimProBlack-Regular', sans-serif;
+  font-weight: 900;
   color: #1c85c7;
-  margin: auto 0;
+  margin: 5px 0;
 }

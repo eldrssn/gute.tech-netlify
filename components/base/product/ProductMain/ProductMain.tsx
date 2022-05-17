@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-import { productInitData, productMock } from 'mock/product';
+import { productMock } from 'mock/product';
 
 import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
@@ -21,24 +21,30 @@ import { ProductQuantity } from '../ProductQuantity';
 import { ProductSpecial } from '../ProductSpecial';
 import { ProductImageGallery } from '../ProductImageGallery';
 import { ProductTabsDescription } from '../ProductTabsDescription';
-
 import { Subcategories } from '../Subcategories';
 
+import { productInitData } from './constants';
 import styles from './productMain.module.scss';
 
 const ProductMain: FC = () => {
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
   const dispatch = useDispatch();
-  const { data, isLoading } = useSelector(selectCategoriesProductRead);
+  const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
 
-  const { title, price, images, description, properties, slug } = data
-    ? data
-    : productInitData;
+  const { title, price, images, description, properties, slug, warehouses } =
+    product ? product : productInitData;
+
+  const quantity =
+    warehouses &&
+    warehouses.reduce(
+      (accumulator, warehouse) => accumulator + Number(warehouse.quantity),
+      0,
+    );
 
   const productInfo = { faq: '', installation: '', description, properties };
 
   const addItemToBasket = () => {
-    if (!data) {
+    if (!product) {
       return;
     }
 
@@ -103,7 +109,7 @@ const ProductMain: FC = () => {
                 <ProductPrice>{price || 9999}</ProductPrice>
               </Box>
 
-              <ProductQuantity quantity={productMock.quantity} />
+              <ProductQuantity quantity={quantity || 0} />
               <ProductSpecial />
             </Container>
           </Box>

@@ -33,6 +33,8 @@ enum FilterInputNames {
   engine = 'engine',
 }
 
+type FilterInputName = keyof typeof FilterInputNames;
+
 enum StepInputs {
   BRAND = 0,
   MODEL = 1,
@@ -53,7 +55,19 @@ type filterStepsData = {
   placeholder: string;
 };
 
-type FilterInputName = keyof typeof FilterInputNames;
+type FilterField = {
+  title: string;
+  slug: string;
+};
+
+type FilterFields = {
+  brand: FilterField;
+  model: FilterField;
+  year: FilterField;
+  engine: FilterField;
+};
+
+export type { FilterFields };
 
 export { FilterInputNames, StepInputs };
 

@@ -8,6 +8,7 @@ import {
   getCategoriesProductsList,
   getCategoriesProductsRead,
   getCategoriesSubcategoriesList,
+  getTransportFiltersProductsListRead,
 } from 'api/routes/catalog';
 
 import {
@@ -16,6 +17,7 @@ import {
   CategoriesProductsListRequestData,
   CategoriesProductsReadRequestData,
   CategoriesSubcategoriesListRequestData,
+  TransportFiltersProductsListRead,
 } from 'api/models/catalog';
 
 const fetchSearchReadCategory = createAsyncThunk(
@@ -31,6 +33,35 @@ const fetchSearchReadCategory = createAsyncThunk(
       modelSlug,
       yearSlug,
       engineSlug,
+    });
+
+    return data;
+  },
+);
+
+const fetchTransportFiltersProductsListRead = createAsyncThunk(
+  'CatalogStore/fetchSearchReadCategory',
+  async ({
+    brandSlug,
+    modelSlug,
+    yearSlug,
+    engineSlug,
+    categorySlug,
+    page,
+    sort,
+    order,
+    filter,
+  }: TransportFiltersProductsListRead) => {
+    const data = await getTransportFiltersProductsListRead({
+      brandSlug,
+      modelSlug,
+      yearSlug,
+      engineSlug,
+      categorySlug,
+      page,
+      sort,
+      order,
+      filter,
     });
 
     return data;
@@ -113,4 +144,5 @@ export {
   fetchCategoriesProductsList,
   fetchCategoriesProductsRead,
   fetchCategoriesSubcategoriesList,
+  fetchTransportFiltersProductsListRead,
 };

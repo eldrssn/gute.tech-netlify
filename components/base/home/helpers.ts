@@ -11,9 +11,7 @@ const getGroupedChildren = (
   }
 
   const choosenItem = catalogTree?.find((item) => item.slug === category);
-  const groupedChildren = choosenItem
-    ? groupItems(choosenItem?.children)
-    : null;
+  const groupedChildren = choosenItem ? groupItems(choosenItem.children) : null;
   return groupedChildren;
 };
 
