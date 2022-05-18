@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { CustomButton } from 'components/ui/CustomButton';
 import {
@@ -41,6 +42,7 @@ import { getTransportParams } from './helpers';
 import { HeaderFiltersProps } from './types';
 
 import styles from './headerFilters.module.scss';
+import { MenuItem } from '@mui/material';
 
 const cn = classnames.bind(styles);
 
@@ -159,12 +161,12 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   return (
     <>
       <Container className={styles.mainContainer}>
-        {!isFullHeader && !isMobileView && <HeaderLogo />}
-
         <Box
           className={styles.itemsContainer}
           sx={{
             display: isFullHeader ? 'block' : 'flex',
+            flexDirection: 'row',
+            flexWrap: { xs: 'wrap', lg: 'nowrap' },
           }}
         >
           <Typography
@@ -178,9 +180,14 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
             детали для вашего транспорта
           </Typography>
 
-          <Box className={styles.formAndCatalogContainer}>
+          <Box
+            className={styles.formAndCatalogContainer}
+            sx={{
+              order: { xs: 1, lg: 0 },
+              marginTop: { sm: '5px', lg: 0 },
+            }}
+          >
             <FormControl
-              sx={{ flexWrap: { sm: 'wrap', lg: 'nowrap' } }}
               className={cn(styles.filterStepsForm, {
                 [styles.filterStepsForm_shortHeader]:
                   !isFullHeader || isTabletView,
@@ -223,8 +230,28 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
               )}
             </FormControl>
 
-            {!isMobileView && <CatalogButton />}
+            {isFullHeader && !isMobileView && <CatalogButton />}
           </Box>
+
+          {!isFullHeader && !isMobileView && (
+            <Box
+              sx={{
+                order: -1,
+                display: 'flex',
+              }}
+            >
+              {!isMobileView && <HeaderLogo />}
+
+              <CatalogButton />
+
+              <MenuItem>
+                <SearchIcon
+                  className={styles.menuIcon}
+                  sx={{ width: '24px', height: '24px' }}
+                />
+              </MenuItem>
+            </Box>
+          )}
 
           {!isFullHeader && !isMobileView && <HeaderAsideNav />}
         </Box>

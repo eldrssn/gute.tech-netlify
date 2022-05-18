@@ -8,7 +8,6 @@
 }
 
 .itemsContainer {
-  flex-direction: row;
   flex-grow: 1;
   justify-content: space-between;
 }
@@ -28,6 +27,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .filterStepsForm {
@@ -35,6 +35,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  width: 100%;
 }
 
 .filterStepsForm input {
@@ -66,6 +67,7 @@
   flex-grow: 1;
   padding: 12px 20px;
   min-height: 50px;
+  border: 2px solid $red1;
 }
 
 .stepButtonSubmit:hover {
@@ -79,6 +81,7 @@
   min-height: 35px;
   padding-left: 10px;
   padding-right: 10px;
+  width: 20%;
 }
 
 .filterStepsForm_mobileView {

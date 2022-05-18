@@ -5,7 +5,7 @@ import Step from '@mui/material/Step';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@mui/material/TextField';
-import { Box } from '@mui/system';
+import Box from '@mui/material/Box';
 import { TailSpin } from 'react-loader-spinner';
 
 import { FilterPopover } from '../FilterPopover';
@@ -13,6 +13,7 @@ import { HeaderContext } from '../HeaderContext';
 
 import { FilterStepProps } from './types';
 import { HandleClickProps, StepInputs } from '../../types';
+
 import styles from './filterSteps.module.scss';
 import colors from 'styles/_export.module.scss';
 
@@ -68,7 +69,7 @@ const FilterStep: FC<FilterStepProps> = ({
   };
 
   return (
-    <Step key={name}>
+    <Step key={name} sx={{ width: '100%' }}>
       <div className={styles.stepWrap}>
         <Box
           className={cn(styles.stepNumber, {

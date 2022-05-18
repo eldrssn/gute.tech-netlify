@@ -2,6 +2,7 @@
 
 .stepWrap {
   position: relative;
+  width: auto;
 }
 
 .stepNumber {
@@ -37,12 +38,14 @@
 
 .stepField {
   caret-color: transparent;
+  width: 100%;
 }
 
 .stepField input {
   cursor: pointer;
   z-index: 1301;
   user-select: none;
+  border: 1px solid #d7dee4;
 }
 
 .stepField input:disabled[placeholder] {

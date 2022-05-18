@@ -19,7 +19,10 @@ const FilterSteps: FC<FilterStepsProps> = ({ openPopoverId, ...restProps }) => {
   return (
     <Stepper
       activeStep={openPopoverId}
-      className={cn({ [styles.stepper_mobileView]: isMobileView })}
+      className={cn({
+        [styles.stepper_mobileView]: isMobileView,
+        [styles.stepper_notMobileView]: !isMobileView,
+      })}
     >
       {filterSteps.map(({ name, inputStepId, placeholder }) => (
         <FilterStep

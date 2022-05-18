@@ -82,15 +82,17 @@ const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
           )}
         </MenuItem>
 
-        <MenuItem className={menuItemStyles} disableGutters>
-          <SearchIcon
-            className={styles.menuIcon}
-            sx={{ width: '24px', height: '24px' }}
-          />
-          {isDrawer && (
-            <Typography className={menuItemStyles}>Поиск</Typography>
-          )}
-        </MenuItem>
+        {isMobileView && (
+          <MenuItem className={menuItemStyles} disableGutters>
+            <SearchIcon
+              className={styles.menuIcon}
+              sx={{ width: '24px', height: '24px' }}
+            />
+            {isDrawer && (
+              <Typography className={menuItemStyles}>Поиск</Typography>
+            )}
+          </MenuItem>
+        )}
       </Box>
     </>
   );
