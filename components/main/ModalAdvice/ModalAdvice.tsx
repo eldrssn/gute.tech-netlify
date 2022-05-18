@@ -39,18 +39,27 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   };
 
   const onSubmit = handleSubmit((data) => {
-    postFeedback({
-      name: data.nameValue,
-      phone: data.phoneNumber,
-      message: data.message,
-    })
-      .then(() => closeModal())
-      .catch(() =>
-        setError('phoneNumber', {
-          type: 'pattern',
-          message: 'Введен некорректный номер телефона',
-        }),
-      );
+    const { nameValue, phoneNumber, message } = data;
+    if (nameValue && phoneNumber && message) {
+      nameValue;
+      postFeedback({
+        name: nameValue,
+        phone: phoneNumber,
+        message: message,
+      })
+        .then(() => {
+          closeModal();
+          resetField('message');
+          resetField('nameValue');
+          resetField('phoneNumber');
+        })
+        .catch(() =>
+          setError('phoneNumber', {
+            type: 'pattern',
+            message: 'Введен некорректный номер телефона',
+          }),
+        );
+    }
   });
 
   const phoneInputIsError = Boolean(formState.errors.phoneNumber);
@@ -74,85 +83,83 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
           <Typography id='modal-modal-description' sx={{ mb: 3 }}>
             Мы перезвоним в течение 17 минут и предложим лучший вариант!
           </Typography>
-          {isOpen && (
-            <>
-              <Box component='div' className={styles.inputBox}>
-                <Box
-                  className={cn(styles.inputContainer, {
-                    [styles.inputIsError]: Boolean(nameInput.fieldState.error),
-                  })}
-                >
-                  <InputMask
-                    mask={inputMasks.nameMask}
-                    value={nameInput.field.value}
-                    onChange={nameInput.field.onChange}
-                    maskPlaceholder=''
-                  >
-                    <FormInput
-                      helperText={nameInput.fieldState.error?.message}
-                      onChange={nameInput.field.onChange}
-                      value={nameInput.field.value}
-                      label='Ваше имя'
-                      isError={Boolean(nameInput.fieldState.error)}
-                    />
-                  </InputMask>
-                </Box>
-                <Box
-                  className={cn(styles.inputContainer, {
-                    [styles.inputIsError]: phoneInputIsError,
-                  })}
-                >
-                  <Controller
-                    name='phoneNumber'
-                    control={control}
-                    rules={getInputRules(EValidatePattern.PHONE_NUMBER)}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { error },
-                    }) => (
-                      <InputMask
-                        mask={inputMasks.phoneMask}
-                        value={value}
-                        onChange={onChange}
-                      >
-                        <TextField
-                          error={Boolean(error)}
-                          helperText={error?.message}
-                          label='Телефон'
-                          variant='outlined'
-                          type='text'
-                          fullWidth
-                        />
-                      </InputMask>
-                    )}
-                  />
-                </Box>
-              </Box>
+          <>
+            <Box component='div' className={styles.inputBox}>
               <Box
-                className={cn(styles.textAreaContainer, {
-                  [styles.inputIsError]: Boolean(message.fieldState.error),
+                className={cn(styles.inputContainer, {
+                  [styles.inputIsError]: Boolean(nameInput.fieldState.error),
                 })}
               >
-                <FormInput
-                  helperText={message.fieldState.error?.message}
-                  onChange={message.field.onChange}
-                  value={message.field.value}
-                  label='Введите ваше сообщение'
-                  isError={Boolean(message.fieldState.error)}
-                  textarea
-                />
-                <Typography
-                  className={cn(styles.footnote, {
-                    [styles.footnoteErrorActive]: Boolean(
-                      message.fieldState.error,
-                    ),
-                  })}
+                <InputMask
+                  mask={inputMasks.nameMask}
+                  value={nameInput.field.value ? nameInput.field.value : ''}
+                  onChange={nameInput.field.onChange}
+                  maskPlaceholder=''
                 >
-                  максимальное количество символов 200
-                </Typography>
+                  <FormInput
+                    helperText={nameInput.fieldState.error?.message}
+                    onChange={nameInput.field.onChange}
+                    value={nameInput.field.value ? nameInput.field.value : ''}
+                    label='Ваше имя'
+                    isError={Boolean(nameInput.fieldState.error)}
+                  />
+                </InputMask>
               </Box>
-            </>
-          )}
+              <Box
+                className={cn(styles.inputContainer, {
+                  [styles.inputIsError]: phoneInputIsError,
+                })}
+              >
+                <Controller
+                  name='phoneNumber'
+                  control={control}
+                  rules={getInputRules(EValidatePattern.PHONE_NUMBER)}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <InputMask
+                      mask={inputMasks.phoneMask}
+                      value={value ? value : ''}
+                      onChange={onChange}
+                    >
+                      <TextField
+                        error={Boolean(error)}
+                        helperText={error?.message}
+                        label='Телефон'
+                        variant='outlined'
+                        type='text'
+                        fullWidth
+                      />
+                    </InputMask>
+                  )}
+                />
+              </Box>
+            </Box>
+            <Box
+              className={cn(styles.textAreaContainer, {
+                [styles.inputIsError]: Boolean(message.fieldState.error),
+              })}
+            >
+              <FormInput
+                helperText={message.fieldState.error?.message}
+                onChange={message.field.onChange}
+                value={message.field.value ? message.field.value : ''}
+                label='Введите ваше сообщение'
+                isError={Boolean(message.fieldState.error)}
+                textarea
+              />
+              <Typography
+                className={cn(styles.footnote, {
+                  [styles.footnoteErrorActive]: Boolean(
+                    message.fieldState.error,
+                  ),
+                })}
+              >
+                максимальное количество символов 200
+              </Typography>
+            </Box>
+          </>
           <Button onClick={onSubmit} variant={'contained'}>
             Отправить
           </Button>

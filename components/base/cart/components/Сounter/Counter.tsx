@@ -18,20 +18,24 @@ const Counter: React.FC<TCounterProps> = ({
   addCount,
   stockBalance,
 }) => {
-  const { handleSubmit, control } = useForm<TFormCountData>();
+  const { handleSubmit, control, reset } = useForm<TFormCountData>();
   const dispatch = useDispatch();
 
   const [isOpenCountModal, setIsOpenCountModal] = useState(false);
 
-  const IsItemCountZero = item.count === 0;
+  const isItemCountZero = item.count === 0;
+  const isItemCountMax = item.count >= stockBalance;
 
   const onSubmit = handleSubmit((data) => {
-    dispatch(
-      setItemQuantity({
-        slug: item.slug,
-        count: data.count,
-      }),
-    );
+    if (data.count) {
+      dispatch(
+        setItemQuantity({
+          slug: item.slug,
+          count: data.count,
+        }),
+      );
+    }
+    reset({ count: null });
     setIsOpenCountModal(false);
   });
 
@@ -55,7 +59,7 @@ const Counter: React.FC<TCounterProps> = ({
               <InputMask
                 mask={inputMasks.countMask}
                 maskPlaceholder={null}
-                value={value}
+                value={value ? value : ''}
                 onChange={onChange}
                 autoComplete='off'
               >
@@ -84,11 +88,14 @@ const Counter: React.FC<TCounterProps> = ({
           </Box>
         </form>
       </Box>
+
       <Button
         className={cn(styles.btnCount, styles.btnCountRemove, {
-          [styles.btnCountInactive]: IsItemCountZero,
+          [styles.btnCountInactive]: isItemCountZero,
         })}
-        onClick={() => removeCount(item)}
+        onClick={() => {
+          removeCount(item);
+        }}
       >
         -
       </Button>
@@ -104,9 +111,11 @@ const Counter: React.FC<TCounterProps> = ({
       </Box>
       <Button
         className={cn(styles.btnCount, styles.btnCountAdd, {
-          [styles.btnCountInactive]: item.count >= stockBalance,
+          [styles.btnCountInactive]: isItemCountMax,
         })}
-        onClick={() => addCount(item)}
+        onClick={() => {
+          addCount(item);
+        }}
       >
         +
       </Button>

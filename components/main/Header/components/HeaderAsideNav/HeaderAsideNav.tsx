@@ -31,7 +31,6 @@ const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
   const cart = useSelector(selectCart);
 
   const amountCartItems = cart.length;
-  const isCartEmpty = !cart.length;
 
   const menuItemStyles = cn(styles.menuItem, {
     [styles.menuItem_mobile]: isMobileView,
@@ -61,15 +60,13 @@ const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
             <MenuItem>
               <Box className={styles.shoppingCartIcon}>
                 <ShoppingCartIcon sx={{ width: '24px', height: '24px' }} />
-                {!isCartEmpty && (
-                  <Box component='div' className={styles.countCartItem}>
-                    {amountCartItems}
-                  </Box>
-                )}
+                <Box component='div' className={styles.countCartItem}>
+                  {amountCartItems}
+                </Box>
+                <Typography className={styles.orderTotalCard}>
+                  {orderTotal}&#8381;
+                </Typography>
               </Box>
-              <Typography className={styles.menuItem}>
-                {orderTotal}&#8381;
-              </Typography>
             </MenuItem>
           </Link>
         )}
