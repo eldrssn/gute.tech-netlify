@@ -65,7 +65,7 @@ type TRemoveCheckedButtonProps = {
 };
 
 type TFormCountData = {
-  count: number;
+  count: number | null;
 };
 
 export type {

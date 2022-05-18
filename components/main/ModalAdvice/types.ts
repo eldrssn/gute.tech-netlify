@@ -4,9 +4,9 @@ type TOuterProps = {
 };
 
 type TFormData = {
-  nameValue: string;
-  phoneNumber: string;
-  message: string;
+  nameValue: string | null;
+  phoneNumber: string | null;
+  message: string | null;
 };
 
 export type { TFormData, TOuterProps };

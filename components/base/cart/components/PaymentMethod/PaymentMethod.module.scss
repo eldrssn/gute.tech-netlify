@@ -31,10 +31,36 @@
 .paymentMethod {
   margin-bottom: 20px;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+}
+
+.divider {
+  height: 100px;
+  width: 1px;
+  background-color: $gray2;
+}
+
+.infoPayment {
+  width: 50%;
+  margin-left: 2%;
+  padding-left: 2%;
+  border-left: 1px solid $gray2;
+}
+
+.imageIconCard {
+  object-fit: contain;
+  width: 100px;
+  height: 50px;
+  img {
+    object-fit: contain;
+  }
 }
 
 .radioButtonContainer {
-  width: 100%;
+  width: 48%;
   padding: 16.5px 14px;
   border: solid 1px #dedede;
   height: 56px;
