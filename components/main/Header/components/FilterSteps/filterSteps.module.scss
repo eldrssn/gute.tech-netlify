@@ -40,7 +40,12 @@
   content: "";
 }
 
+.stepper_notMobileView {
+  width: 80%;
+}
+
 .stepper_mobileView {
   display: flex;
   flex-direction: column;
 }
+

@@ -5,6 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import SearchIcon from '@mui/icons-material/Search';
+import MenuItem from '@mui/material/MenuItem';
 
 import { IsDrawerProps } from 'components/main/Header/types';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
@@ -61,6 +63,18 @@ const HeaderLogo: FC<IsDrawerProps> = ({ isDrawer, closeMainDrawer }) => {
           {title}
         </Typography>
       </Box>
+
+      {isFullHeader && !isMobileView && (
+        <MenuItem disableGutters>
+          <SearchIcon
+            sx={{
+              width: '24px',
+              height: '24px',
+              margin: '0 5px',
+            }}
+          />
+        </MenuItem>
+      )}
     </Box>
   );
 };
