@@ -39,8 +39,22 @@ const Counter: React.FC<TCounterProps> = ({
     setIsOpenCountModal(false);
   });
 
+  const openModal = () => {
+    setIsOpenCountModal(true);
+  };
+
+  const closeModal = () => {
+    setIsOpenCountModal(false);
+  };
+
   return (
     <Box className={styles.countContainer}>
+      <Box
+        className={cn(styles.modalBackground, {
+          [styles.countModalOpen]: isOpenCountModal,
+        })}
+        onClick={closeModal}
+      />
       <Box
         component='div'
         className={cn(styles.countModal, {
@@ -81,7 +95,7 @@ const Counter: React.FC<TCounterProps> = ({
             </Button>
             <Button
               className={cn(styles.btnSolution, styles.btnReject)}
-              onClick={() => setIsOpenCountModal(false)}
+              onClick={closeModal}
             >
               Отмена
             </Button>
@@ -99,11 +113,7 @@ const Counter: React.FC<TCounterProps> = ({
       >
         -
       </Button>
-      <Box
-        onClick={() => setIsOpenCountModal(true)}
-        component='div'
-        className={styles.count}
-      >
+      <Box onClick={openModal} component='div' className={styles.count}>
         {item.count}
       </Box>
       <Box component='div' className={styles.stockBalance}>

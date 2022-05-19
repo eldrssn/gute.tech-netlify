@@ -25,7 +25,7 @@ const ModalAddedItem: React.FC<TOuterProps> = ({
           <FontAwesomeIcon icon={faTimes} />
         </Box>
         <Typography className={styles.title}>&quot;{title}&quot;</Typography>
-        <Typography>добавлен в корзину</Typography>
+        <Typography className={styles.action}>добавлен в корзину</Typography>
         <Link href='/cart' passHref>
           <Button className={styles.button}>Перейти в Корзину</Button>
         </Link>

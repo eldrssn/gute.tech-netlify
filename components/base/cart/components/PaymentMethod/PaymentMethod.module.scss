@@ -1,4 +1,5 @@
 @import "styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .formTitle {
   font-size: 28px;
@@ -97,4 +98,29 @@
 
 .paymentBox {
   margin-bottom: 40px;
+}
+
+.info {
+}
+
+@media (max-width: $xsMobile) {
+  .radioButtonContainer {
+    width: 100%;
+  }
+
+  .paymentMethod {
+    flex-direction: column;
+  }
+
+  .infoPayment {
+    width: 100%;
+    padding-top: 10px;
+    border-left: 0;
+    margin: 10px 0 0;
+    padding: 0;
+  }
+
+  .info {
+    font-size: 12px;
+  }
 }

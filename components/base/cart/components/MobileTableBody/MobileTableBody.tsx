@@ -5,26 +5,46 @@ import {
   TableCell,
   TableRow,
   Typography,
-  Button,
+  FormControlLabel,
+  Checkbox,
   Box,
 } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import cn from 'classnames';
+// import cn from 'classnames';
 
+import { getStockBalance } from '../../helpers';
+import { DeleteItemButton } from '../DeleteItemButton';
+import { Counter } from '../Сounter';
 import { TTableBodyProps } from '../../types';
 import styles from './MobileTableBody.module.scss';
 
 const MobileTableBody: React.FC<TTableBodyProps> = ({
   cart,
+  slugsRemovedElements,
+  setSlugsRemovedElements,
   addCount,
   removeCount,
   removeItem,
 }) => {
+  const handleChangeCheckBox = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    slug: string,
+  ) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setSlugsRemovedElements([...slugsRemovedElements, slug]);
+      return;
+    }
+
+    const newIdsRemovedElements = slugsRemovedElements.filter(
+      (removedElement) => removedElement !== slug,
+    );
+    setSlugsRemovedElements(newIdsRemovedElements);
+  };
+
   return (
     <TableBody className={styles.tableBody}>
       {cart.map((item) => {
-        const IsItemCountZero = item.count === 0;
+        const stockBalance = getStockBalance(item);
 
         return (
           <TableRow
@@ -36,44 +56,48 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
               scope='row'
               className={styles.tableBodyName}
             >
-              <Image
-                height='150px'
-                width='150px'
-                src='/germanika/deflectors.jpg'
-                alt='item'
-              />
+              <Box className={styles.imageBox}>
+                <FormControlLabel
+                  className={styles.checkbox}
+                  label=''
+                  control={
+                    <Checkbox
+                      checked={slugsRemovedElements.includes(item.slug)}
+                      onChange={(event) =>
+                        handleChangeCheckBox(event, item.slug)
+                      }
+                    />
+                  }
+                />
+                <Image
+                  height='150px'
+                  width='150px'
+                  src='/germanika/deflectors.jpg'
+                  alt='item'
+                />
+              </Box>
             </TableCell>
             <TableCell className={styles.itemInfo}>
               <Typography className={styles.itemTitle}>{item.title}</Typography>
               <Typography className={styles.itemPrice}>
                 Цена: {item.price}&#8381;{' '}
               </Typography>
-              <Box className={styles.itemCount}>
-                <Button
-                  className={cn(styles.btnCount, styles.btnCountRemove, {
-                    [styles.btnCountInactive]: IsItemCountZero,
-                  })}
-                  onClick={() => removeCount(item)}
-                >
-                  -
-                </Button>
-                {item.count}
-                <Button
-                  className={cn(styles.btnCount, styles.btnCountAdd)}
-                  onClick={() => addCount(item)}
-                >
-                  +
-                </Button>
-              </Box>
+              <Counter
+                item={item}
+                addCount={addCount}
+                removeCount={removeCount}
+                stockBalance={stockBalance}
+              />
               <Typography className={styles.itemCost}>
                 Стоимость: {item.count * item.price}&#8381;
               </Typography>
-              <Button
+              {/* <Button
                 className={styles.btnDelete}
                 onClick={() => removeItem(item)}
               >
                 <FontAwesomeIcon icon={faTimes} />
-              </Button>
+              </Button> */}
+              <DeleteItemButton item={item} removeItem={removeItem} />
             </TableCell>
           </TableRow>
         );

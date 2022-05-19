@@ -1,3 +1,6 @@
+@import "styles/colors.scss";
+@import "~styles/breakpoints.scss";
+
 .inputContainer {
   width: 48%;
   margin-top: 20px;
@@ -23,4 +26,10 @@
 
 .contactInfoBox {
   margin-bottom: 40px;
+}
+
+@media (max-width: $xsMobile) {
+  .inputContainer {
+    width: 100%;
+  }
 }

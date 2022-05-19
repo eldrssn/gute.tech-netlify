@@ -18,8 +18,8 @@ import styles from './DesktopTableBody.module.scss';
 
 const DesktopTableBody: React.FC<TTableBodyProps> = ({
   cart,
-  setSlugsRemovedElements,
   slugsRemovedElements,
+  setSlugsRemovedElements,
   addCount,
   removeCount,
   removeItem,
