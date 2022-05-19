@@ -1,4 +1,5 @@
-@import "styles/colors.scss";
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .countModal {
   display: flex;
@@ -13,11 +14,22 @@
   border-radius: 4px;
   height: 120px;
   width: 150px;
-  z-index: 1;
+  z-index: 1301;
   box-shadow: 1px 0px 11px 0px rgba(34, 60, 80, 0.2);
   visibility: hidden;
   transition: 0.3s;
   opacity: 0;
+}
+
+.modalBackground {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1300;
 }
 
 .countModalOpen {
@@ -133,4 +145,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-weight: 100;
+}
+
+@media (max-width: $mobile) {
+  .countContainer {
+    width: 120px;
+    margin-bottom: 30px;
+    margin-right: auto;
+    margin-left: 0;
+  }
+
+  .stockBalance {
+    top: 130%;
+  }
 }

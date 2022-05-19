@@ -1,4 +1,5 @@
 @import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .wrap {
   position: relative;
@@ -35,4 +36,31 @@
 
 .title {
   font-weight: bold;
+  text-align: center;
+}
+
+@media (max-width: $sMobile) {
+  .wrap {
+    width: 100%;
+  }
+}
+
+@media (max-width: $xsMobile) {
+  .wrap {
+    height: 200px;
+    width: 300px;
+  }
+
+  .title {
+    font-size: 14px;
+  }
+
+  .button {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+  .action {
+    margin-top: 5px;
+  }
 }

@@ -1,4 +1,5 @@
-@import "styles/colors.scss";
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .checkboxContainer {
   position: relative;
@@ -74,5 +75,28 @@
 
   &:hover {
     background-color: $red2;
+  }
+}
+
+@media (max-width: $mobile) {
+  .button {
+    font-size: 10px;
+  }
+
+  .checkboxSelectAll {
+    top: 50%;
+    left: 49px;
+
+    span {
+      font-size: 15px;
+    }
+  }
+
+  .checkboxContainer {
+    margin-bottom: 10px;
+  }
+
+  .confirmedBlock {
+    width: 90%;
   }
 }

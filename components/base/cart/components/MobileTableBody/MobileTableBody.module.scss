@@ -1,5 +1,9 @@
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
+
 .tableBody {
   border-bottom: 1px solid rgba(224, 224, 224, 1);
+  border-top: 1px solid rgba(224, 224, 224, 1);
 }
 
 .tableBody th {
@@ -11,6 +15,19 @@
   height: 250px;
 }
 
+.imageBox {
+  width: 150px;
+  height: 150px;
+  position: relative;
+}
+
+.checkbox {
+  position: absolute;
+  top: 50%;
+  left: -18px;
+  transform: translate(-50%, -50%);
+}
+
 .itemTitle {
   font-weight: bold;
   margin-bottom: 10px;
@@ -18,6 +35,10 @@
 
 .itemPrice {
   margin-bottom: 10px;
+}
+
+.itemCost {
+  font-weight: bold;
 }
 
 .itemCount {
@@ -68,4 +89,23 @@
   height: 15px;
   padding: 0;
   min-width: 0;
+}
+
+@media (max-width: $xsMobile) {
+  .imageBox {
+    width: 100px;
+    height: 100px;
+  }
+
+  .itemTitle {
+    font-size: 14px;
+  }
+
+  .itemPrice {
+    font-size: 12px;
+  }
+
+  .itemCost {
+    font-size: 12px;
+  }
 }

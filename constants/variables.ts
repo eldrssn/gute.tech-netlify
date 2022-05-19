@@ -1,6 +1,7 @@
 import { DescriptionType, DescriptionTypes } from 'types/product';
 
 const MOBILE_WIDTH = 830;
+const MOBILE_XS_WIDTH = 479;
 const TABLET_WIDTH = 1200;
 const DELAY = 500;
 const SCROLL_DELAY = DELAY;
@@ -37,6 +38,7 @@ enum Slugs {
 export {
   MOBILE_WIDTH,
   TABLET_WIDTH,
+  MOBILE_XS_WIDTH,
   DELAY,
   SCROLL_DELAY,
   CATALOG_MOBILE_WIDTH,

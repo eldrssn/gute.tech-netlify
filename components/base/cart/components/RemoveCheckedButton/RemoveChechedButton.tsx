@@ -47,6 +47,14 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
     setIsOpenModal(false);
   };
 
+  const openModal = () => {
+    setIsOpenModal(true);
+  };
+
+  const closeModal = () => {
+    setIsOpenModal(false);
+  };
+
   return (
     <>
       <ModalWrapper isOpen={isOpenModal} setIsOpen={setIsOpenModal}>
@@ -64,7 +72,7 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
               </Button>
               <Button
                 className={cn(styles.btnSolution, styles.btnReject)}
-                onClick={() => setIsOpenModal(false)}
+                onClick={closeModal}
               >
                 Отмена
               </Button>
@@ -84,7 +92,11 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
             />
           }
         />
-        <Button disabled={isRemovedItem} onClick={() => setIsOpenModal(true)}>
+        <Button
+          disabled={isRemovedItem}
+          onClick={openModal}
+          className={styles.button}
+        >
           Очистить корзину
         </Button>
       </Box>

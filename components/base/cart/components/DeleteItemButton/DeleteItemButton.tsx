@@ -32,7 +32,10 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
           <Box component='div' className={styles.confirmedBlock}>
             <Typography className={styles.titleModal}>
               Вы действительно хотите удалить
-              <Typography sx={{ fontWeight: 'bold' }}>
+              <Typography
+                sx={{ fontWeight: 'bold' }}
+                className={styles.nameProduct}
+              >
                 &#8222;
                 {item.title}&#8220;
               </Typography>{' '}

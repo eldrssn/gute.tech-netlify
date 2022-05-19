@@ -1,29 +1,31 @@
 import React from 'react';
-// import { Controller } from 'react-hook-form';
-// import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import Image from 'next/image';
-import {
-  Typography,
-  Box,
-  // RadioGroup,
-  // Radio,
-  // FormControlLabel,
-} from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 // import { selectPaymentMethods } from 'store/reducers/cart/selectors';
+import { useWindowSize } from 'hooks/useWindowSize';
+import { checkXSMobileView } from 'utility/helpers/checkViewType';
 import { TPaymentMethodProps } from 'components/base/cart/types';
 import { paymantCardIconPatch } from 'components/base/cart/constants';
 
 import styles from './PaymentMethod.module.scss';
 
 const PaymentMethod: React.FC<TPaymentMethodProps> = () => {
+  const { windowWidth } = useWindowSize();
   // const [paymentType, setPaymentType] = useState('');
   // const paymentMethods = useSelector(selectPaymentMethods);
 
   // const paymentMethodValue = paymentMethods.find(
   //   (method) => method.payment_type === paymentType,
   // )?.values;
+
+  const isXSMobileView = checkXSMobileView(windowWidth);
+
+  const imageSize = {
+    width: isXSMobileView ? 75 : 100,
+    height: isXSMobileView ? 37 : 50,
+  };
 
   return (
     <Box component='div' className={styles.paymentBox}>
@@ -40,14 +42,13 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = () => {
           {paymantCardIconPatch.map((cardIcon) => (
             <Image
               className={styles.imageIconCard}
-              height={50}
-              width={100}
               src={cardIcon.path}
               key={cardIcon.name}
               alt={cardIcon.name}
+              {...imageSize}
             />
           ))}
-          <Typography>
+          <Typography className={styles.info}>
             Для оплаты (ввода реквизитов Вашей карты) Вы будете перенаправлены
             на платёжный шлюз ПАО СБЕРБАНК. Соединение с платёжным шлюзом и
             передача информации осуществляется в защищённом режиме с
