@@ -18,12 +18,13 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 64px;
+  width: 100%;
 }
 
 .buyButton {
   text-transform: none;
-  margin: 2px;
-  padding: 14px;
+  margin: 5px 2px;
+  margin-right: 2px;
 }
 
 .buttonsContainer {
@@ -33,6 +34,7 @@
 .productInfoContainer {
   display: flex;
   flex-direction: column;
+  padding-right: 0;
 }
 
 .productButtonsPriceWrapper {

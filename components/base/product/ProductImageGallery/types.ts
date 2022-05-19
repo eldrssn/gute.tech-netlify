@@ -1,5 +1,12 @@
 type ProductImageGalleryProps = {
-  images: string[];
+  images?: string[];
+  title: string;
 };
 
-export type { ProductImageGalleryProps };
+type FullscreenGalleryProps = {
+  images: string[];
+  title: string;
+  toggleFullscreen: () => void;
+};
+
+export type { ProductImageGalleryProps, FullscreenGalleryProps };

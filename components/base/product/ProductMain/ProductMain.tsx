@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-import { productMock } from 'mock/product';
-
 import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
 
@@ -52,8 +50,6 @@ const ProductMain: FC = () => {
     dispatch(fetchItemFromCart({ productSlug: slug }));
   };
 
-  const imagesGallary = images && images.length ? images : productMock.images;
-
   return isLoading ? (
     <Loader />
   ) : (
@@ -66,20 +62,30 @@ const ProductMain: FC = () => {
       <Container className={styles.mainContainer} disableGutters>
         <Subcategories />
 
-        <Box>
+        <Container
+          disableGutters
+          // sx={{ width: '100%' }}
+        >
           <NavigationBreadcrumbs lastTitle={title || 'Имя отсутствует'} />
 
           <h1 className={styles.title}>{title || 'Имя отсутствует'}</h1>
 
-          <Box
+          <Container
+            disableGutters
             className={styles.productContainer}
             sx={{
               flexDirection: { xs: 'column', sm: 'row' },
             }}
           >
-            <ProductImageGallery images={imagesGallary} />
+            <ProductImageGallery
+              images={images}
+              title={title || 'Имя отсутствует'}
+            />
 
-            <Container className={styles.productInfoContainer}>
+            <Container
+              sx={{ width: { xs: '100%', sm: '50%', md: '50%' } }}
+              className={styles.productInfoContainer}
+            >
               <Box
                 className={styles.productButtonsPriceWrapper}
                 sx={{
@@ -112,13 +118,13 @@ const ProductMain: FC = () => {
               <ProductQuantity quantity={quantity || 0} />
               <ProductSpecial />
             </Container>
-          </Box>
+          </Container>
 
           <ProductTabsDescription {...productInfo} />
 
           {/* !TODO: добавить, когда появятся рекоммендованные товары на бэке */}
           {/* <RecommendedProducts /> */}
-        </Box>
+        </Container>
       </Container>
     </>
   );
