@@ -9,6 +9,7 @@ import { componentByType } from './constants';
 import { CatalogFilterProps } from './types';
 
 import styles from './catalogFilter.module.scss';
+import { Box } from '@mui/material';
 
 const CatalogFilter: FC<CatalogFilterProps> = ({ setFilterRequest }) => {
   const { removeQuery } = useRouterQuery();
@@ -52,9 +53,13 @@ const CatalogFilter: FC<CatalogFilterProps> = ({ setFilterRequest }) => {
         );
       })}
 
-      <a className={styles.resetButton} onClick={handleResetClick}>
+      <Box
+        sx={{ marginBottom: { xs: '40px', md: 0 } }}
+        className={styles.resetButton}
+        onClick={handleResetClick}
+      >
         Cбросить фильтры
-      </a>
+      </Box>
     </>
   );
 };
