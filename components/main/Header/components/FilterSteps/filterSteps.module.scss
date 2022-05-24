@@ -1,4 +1,5 @@
 @import "styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .stepWrap {
   position: relative;
@@ -44,8 +45,21 @@
   width: 80%;
 }
 
+.stepperBox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
 .stepper_mobileView {
   display: flex;
   flex-direction: column;
 }
 
+@media (max-width: $mobile) {
+  .stepperBox {
+    display: flex;
+    flex-direction: column;
+  }
+}

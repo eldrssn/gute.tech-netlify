@@ -1,4 +1,9 @@
-import { StepInputs, filterStepsData, INamesDefaultValueByStep } from './types';
+import {
+  StepInputs,
+  filterStepsData,
+  INamesDefaultValueByStep,
+  INamesSearchValueByStep,
+} from './types';
 
 const menuItemNames = {
   phone: '(499) 283-20-26',
@@ -36,4 +41,34 @@ const namesDefaultValueByStep: INamesDefaultValueByStep = {
   [StepInputs.ENGINE]: ['engine'],
 };
 
-export { menuItemNames, filterSteps, namesDefaultValueByStep };
+const nameSearchValueByStep: INamesSearchValueByStep = {
+  [StepInputs.BRAND]: 'brand',
+  [StepInputs.MODEL]: 'model',
+  [StepInputs.YEAR]: 'engine',
+  [StepInputs.ENGINE]: 'engine',
+};
+
+const widthListByStep = {
+  [StepInputs.BRAND]: '100%',
+  [StepInputs.MODEL]: '75%',
+  [StepInputs.YEAR]: '50%',
+  [StepInputs.ENGINE]: '25%',
+  [StepInputs.INACTIVE]: '0',
+};
+
+const widthButtonByStep = {
+  [StepInputs.BRAND]: '25%',
+  [StepInputs.MODEL]: '33.333333%',
+  [StepInputs.YEAR]: '50%',
+  [StepInputs.ENGINE]: '100%',
+  [StepInputs.INACTIVE]: '0',
+};
+
+export {
+  menuItemNames,
+  filterSteps,
+  namesDefaultValueByStep,
+  nameSearchValueByStep,
+  widthListByStep,
+  widthButtonByStep,
+};

@@ -1,7 +1,12 @@
-import { FormProps, FilterInputName, inputStepId } from '../../types';
+import {
+  FormProps,
+  FilterInputName,
+  inputStepId,
+  StepInputs,
+} from '../../types';
 
 type FilterStepProps = {
-  openPopoverId: number;
+  openPopoverId: StepInputs;
   setOpenPopoverId: React.Dispatch<React.SetStateAction<number>>;
   name: FilterInputName;
   inputStepId: inputStepId;
