@@ -8,6 +8,7 @@ type IsDrawerProps = {
 type FormDataItem = {
   title: string;
   slug: string;
+  searchValue: string | null;
 };
 
 type FormData = {
@@ -15,6 +16,19 @@ type FormData = {
   model: FormDataItem;
   year: FormDataItem;
   engine: FormDataItem;
+};
+
+type WatchormDataItem = {
+  title?: string;
+  slug?: string;
+  searchValue?: string | null;
+};
+
+type WatchFormData = {
+  brand?: WatchormDataItem;
+  model?: WatchormDataItem;
+  year?: WatchormDataItem;
+  engine?: WatchormDataItem;
 };
 
 type FormProps = {
@@ -47,6 +61,10 @@ interface INamesDefaultValueByStep {
   [inputId: number]: FilterInputName[];
 }
 
+interface INamesSearchValueByStep {
+  [inputId: number]: FilterInputName;
+}
+
 type inputStepId = 0 | 1 | 2 | 3;
 
 type filterStepsData = {
@@ -73,7 +91,9 @@ export { FilterInputNames, StepInputs };
 
 export type {
   INamesDefaultValueByStep,
+  INamesSearchValueByStep,
   IsDrawerProps,
+  WatchFormData,
   FormDataItem,
   FormData,
   FormProps,

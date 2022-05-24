@@ -12,12 +12,14 @@ const CustomButton: React.FC<CustomButtonType> = ({
   href,
   onClick,
   customStyles,
+  disabled = false,
 }) => (
   <Button
     className={cn(styles.button, customStyles)}
     href={href}
     onClick={onClick}
     disableRipple={true}
+    disabled={disabled}
   >
     {children}
   </Button>

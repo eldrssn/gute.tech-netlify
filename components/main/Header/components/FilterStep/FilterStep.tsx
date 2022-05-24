@@ -10,11 +10,10 @@ import { TailSpin } from 'react-loader-spinner';
 
 import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
-
 import { FilterStepProps } from './types';
 import { HandleClickProps, StepInputs } from '../../types';
-
 import styles from './filterSteps.module.scss';
+
 import colors from 'styles/_export.module.scss';
 
 const loaderColor = colors.blue;
@@ -23,32 +22,36 @@ const cn = classnames.bind(styles);
 
 const FilterStep: FC<FilterStepProps> = ({
   openPopoverId,
-  setOpenPopoverId,
   name,
-  setValue,
   control,
   inputStepId,
   currentStep,
-  setCurrentStep,
   placeholder,
+  setOpenPopoverId,
+  setValue,
+  setCurrentStep,
   ...restProps
 }) => {
   const input = useController({
     name: name,
     control,
+    rules: { required: true },
   });
   const { isFullHeader, isTabletView } = useContext(HeaderContext);
   const [isOpenPopover, setIsOpenPopover] = useState(false);
   const [isLoadingoptionList, setIsLoadingOptionList] = useState(false);
 
+  const { searchValue, title, slug } = input.field.value;
+  const inputNumber = inputStepId + 1;
+  const isValue = Boolean(title !== '');
+  const isDisable =
+    !isValue && currentStep < inputStepId && inputStepId !== StepInputs.BRAND;
+  const valueTextField =
+    typeof searchValue === 'string' && isOpenPopover ? searchValue : title;
+
   useEffect(() => {
     setIsOpenPopover(openPopoverId === inputStepId);
   }, [openPopoverId, inputStepId]);
-
-  const inputNumber = inputStepId + 1;
-  const isValue = Boolean(input.field.value.title !== '');
-  const isDisable =
-    !isValue && currentStep < inputStepId && inputStepId !== StepInputs.BRAND;
 
   const onClickStep = (inputStepId: number) => {
     if (!isDisable) {
@@ -61,52 +64,69 @@ const FilterStep: FC<FilterStepProps> = ({
     slug,
     inputStepId,
   }: HandleClickProps) => {
-    setValue(name, { title: title, slug: slug });
+    setValue(name, { title, slug, searchValue: null });
     setOpenPopoverId(openPopoverId + 1);
     setCurrentStep(
       inputStepId === StepInputs.ENGINE ? StepInputs.ENGINE : inputStepId + 1,
     );
   };
 
+  const handleClosePopover = () => {
+    setOpenPopoverId(StepInputs.INACTIVE);
+    setValue(name, { title, slug, searchValue: null });
+  };
+
+  const onChangeTextField = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setCurrentStep(inputStepId);
+    setValue(name, { title, slug, searchValue: event.target.value });
+  };
+
   return (
-    <Step key={name} sx={{ width: '100%' }}>
-      <div className={styles.stepWrap}>
-        <Box
-          className={cn(styles.stepNumber, {
-            [styles.stepNumber_shortHeader]: !isFullHeader || isTabletView,
-            [styles.stepNumberDisable]: isDisable,
-            [styles.stepNumberLoading]: isLoadingoptionList,
-          })}
-        >
-          {isLoadingoptionList ? (
-            <TailSpin height={25} width={25} color={loaderColor} />
-          ) : isValue ? (
-            <FontAwesomeIcon icon={faCheck} />
-          ) : (
-            inputNumber
-          )}
-        </Box>
-        <TextField
-          className={styles.stepField}
-          autoComplete='off'
-          aria-readonly
-          name={name}
-          value={input.field.value.title}
-          placeholder={placeholder}
-          onClick={() => onClickStep(inputStepId)}
-          disabled={isDisable}
-        />
-        <FilterPopover
-          setIsLoadingOptionList={setIsLoadingOptionList}
-          setOpenPopoverId={setOpenPopoverId}
-          setIsOpenPopover={setIsOpenPopover}
-          isOpenPopover={isOpenPopover}
-          inputStepId={inputStepId}
-          handleClick={handleClickButton}
-          {...restProps}
-        />
-      </div>
-    </Step>
+    <>
+      <FilterPopover
+        setIsLoadingOptionList={setIsLoadingOptionList}
+        setOpenPopoverId={setOpenPopoverId}
+        openPopoverId={openPopoverId}
+        setIsOpenPopover={setIsOpenPopover}
+        isOpenPopover={isOpenPopover}
+        inputStepId={inputStepId}
+        handleClick={handleClickButton}
+        searchValue={searchValue}
+        handleClosePopover={handleClosePopover}
+        {...restProps}
+      />
+      <Step key={name} sx={{ width: '100%' }}>
+        <div className={styles.stepWrap}>
+          <Box
+            className={cn(styles.stepNumber, {
+              [styles.stepNumber_shortHeader]: !isFullHeader || isTabletView,
+              [styles.stepNumberDisable]: isDisable,
+              [styles.stepNumberLoading]: isLoadingoptionList,
+            })}
+          >
+            {isLoadingoptionList ? (
+              <TailSpin height={25} width={25} color={loaderColor} />
+            ) : isValue ? (
+              <FontAwesomeIcon icon={faCheck} />
+            ) : (
+              inputNumber
+            )}
+          </Box>
+          <TextField
+            className={styles.stepField}
+            autoComplete='off'
+            name={name}
+            value={valueTextField}
+            onChange={onChangeTextField}
+            placeholder={placeholder}
+            onClick={() => onClickStep(inputStepId)}
+            disabled={isDisable}
+          />
+        </div>
+      </Step>
+    </>
   );
 };
 

@@ -11,6 +11,8 @@ import {
   selectEngines,
 } from 'store/reducers/transport/selectors';
 
+import { filterData } from './helpers';
+import { widthListByStep, widthButtonByStep } from '../../constants';
 import { FilterPopoverProps } from './types';
 import { ListOptionsItem } from 'api/models/transport';
 import { StepInputs } from '../../types';
@@ -18,10 +20,12 @@ import styles from './styles.module.scss';
 
 const FilterPopover: FC<FilterPopoverProps> = ({
   isOpenPopover,
-  setOpenPopoverId,
+  handleClosePopover,
   inputStepId,
   handleClick,
   setIsLoadingOptionList,
+  openPopoverId,
+  searchValue,
 }) => {
   const [activeOptionList, setActiveOptionsList] = useState<ListOptionsItem>({
     data: [],
@@ -55,10 +59,6 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     setIsLoadingOptionList(isLoading);
   }, [isLoading, setIsLoadingOptionList]);
 
-  const handleClose = () => {
-    setOpenPopoverId(StepInputs.INACTIVE);
-  };
-
   const wrapperClassName = cn(
     { [styles.isOpen]: isOpenPopover },
     styles.wrapper,
@@ -72,6 +72,10 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     document.body.style.overflow = 'auto';
   };
 
+  const widthList = widthListByStep[openPopoverId];
+  const widthButton = widthButtonByStep[openPopoverId];
+  const filteredData = searchValue ? filterData(searchValue, data) : data;
+
   return (
     <Box
       component='div'
@@ -82,18 +86,20 @@ const FilterPopover: FC<FilterPopoverProps> = ({
       <Box
         component='div'
         className={styles.background}
-        onClick={handleClose}
+        onClick={handleClosePopover}
       ></Box>
-      <Box component='div' className={styles.list}>
+      <Box component='div' className={styles.list} sx={{ width: widthList }}>
         {isLoading
           ? null
-          : data.map((item) => (
+          : filteredData.map((item) => (
               <Button
+                sx={{ width: widthButton }}
                 className={styles.button}
                 onClick={() => {
                   handleClick({
                     title: item.title,
                     slug: item.slug,
+                    searchValue: null,
                     inputStepId,
                   });
                 }}

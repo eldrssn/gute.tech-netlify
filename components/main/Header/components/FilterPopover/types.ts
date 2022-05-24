@@ -1,4 +1,4 @@
-import { HandleClickProps, inputStepId } from '../../types';
+import { HandleClickProps, inputStepId, StepInputs } from '../../types';
 
 type FilterPopoverProps = {
   isOpenPopover: boolean;
@@ -7,6 +7,9 @@ type FilterPopoverProps = {
   handleClick: ({ title, slug, inputStepId }: HandleClickProps) => void;
   setIsLoadingOptionList: (isLoadingOptionList: boolean) => void;
   inputStepId: inputStepId;
+  openPopoverId: StepInputs;
+  searchValue?: string | null;
+  handleClosePopover: () => void;
 };
 
 export type { FilterPopoverProps };

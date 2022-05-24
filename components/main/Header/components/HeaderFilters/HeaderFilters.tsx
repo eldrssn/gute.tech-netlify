@@ -25,6 +25,7 @@ import {
 import { namesDefaultValueByStep } from 'components/main/Header/constants';
 import {
   FormData,
+  WatchFormData,
   FilterInputName,
   StepInputs,
 } from 'components/main/Header/types';
@@ -56,7 +57,7 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView } =
     useContext(HeaderContext);
-  const { getValues, control, setValue, handleSubmit, reset } =
+  const { getValues, control, setValue, handleSubmit, reset, watch } =
     useForm<FormData>({
       defaultValues: {
         brand: defaultValue,
@@ -67,19 +68,17 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
     });
   const [openPopoverId, setOpenPopoverId] = useState(StepInputs.INACTIVE);
   const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
+  const [valueForm, setValueForm] = useState<WatchFormData>();
 
   const brandSlugValue = getValues('brand.slug');
   const modelSlugValue = getValues('model.slug');
   const yearSlugValue = getValues('year.slug');
+  const engineSlug = getValues('engine.slug');
 
-  const setDefaultValueByName = (
-    nameArray: FilterInputName[],
-    setValue: UseFormSetValue<FormData>,
-  ) => {
-    nameArray.forEach((name) => {
-      setValue(name, defaultValue);
-    });
-  };
+  useEffect(() => {
+    const subscription = watch((value) => setValueForm(value));
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   useEffect(() => {
     const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
@@ -94,6 +93,20 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   }, [getQueryOption, reset, setTransportText]);
 
   useEffect(() => {
+    const setDefaultValueByName = (
+      nameArray: FilterInputName[],
+      setValue: UseFormSetValue<FormData>,
+    ) => {
+      nameArray.forEach((name) => {
+        const searchValue = valueForm ? valueForm[name]?.searchValue : '';
+        setValue(name, {
+          title: '',
+          slug: '',
+          searchValue: searchValue ? searchValue : null,
+        });
+      });
+    };
+
     const resetDataByStep = {
       [StepInputs.BRAND]: () => {
         dispatch(fetchBrands());
@@ -144,6 +157,10 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   ]);
 
   const onSubmit = handleSubmit((data) => {
+    if (engineSlug === '') {
+      return;
+    }
+
     const params = getTransportParams(data);
     router.push(params);
 
@@ -157,6 +174,8 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
     reset();
     router.push('/');
   };
+
+  const isDisableButton = engineSlug === '';
 
   return (
     <>
@@ -206,7 +225,10 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
                   />
                   <CustomButton
                     onClick={onSubmit}
-                    customStyles={styles.stepButtonSubmit}
+                    customStyles={cn(styles.stepButtonSubmit, {
+                      [styles.stepButtonSubmitInactive]: isDisableButton,
+                    })}
+                    disabled={isDisableButton}
                   >
                     Подобрать детали
                   </CustomButton>
