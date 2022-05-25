@@ -23,4 +23,9 @@ const selectPaymentMethods = createSelector(
   ({ paymentMethods }) => paymentMethods.data,
 );
 
-export { selectCart, selectOrderTotal, selectPaymentMethods };
+const selectStatus = createSelector(
+  selectAppStore,
+  ({ paymentStatus }) => paymentStatus,
+);
+
+export { selectCart, selectOrderTotal, selectPaymentMethods, selectStatus };

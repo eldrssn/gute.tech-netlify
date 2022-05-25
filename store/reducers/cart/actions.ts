@@ -1,7 +1,11 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getPaymentMethods, getProductInfoFromSlug } from 'api/routes/cart';
-import { ProductRequestData } from 'api/models/cart';
+import {
+  getPaymentMethods,
+  getProductInfoFromSlug,
+  getStatus,
+} from 'api/routes/cart';
+import { ProductRequestData, StatusRequestData } from 'api/models/cart';
 
 import { CartItemQuantity, CartItemSlug } from './types';
 
@@ -11,6 +15,7 @@ const removeItemFromCart = createAction<CartItemSlug>('removeItemFromCart');
 const setItemQuantity = createAction<CartItemQuantity>('setItemQuantity');
 const removeItemBySlug = createAction<CartItemSlug[]>('removeItemBySlug');
 const resetOrdinalId = createAction('resetOrdinalId');
+const clearCart = createAction('clearCart');
 
 const fetchItemFromCart = createAsyncThunk(
   'CartStore/fetchItemFromCart',
@@ -32,13 +37,24 @@ const fetchPaymentMethods = createAsyncThunk(
   },
 );
 
+const fetchStatusPayment = createAsyncThunk(
+  'CartStore/fetchStatusPayment',
+  async ({ orderId }: StatusRequestData) => {
+    const data = await getStatus({ orderId });
+
+    return data;
+  },
+);
+
 export {
   fetchItemFromCart,
   fetchPaymentMethods,
+  fetchStatusPayment,
   resetOrdinalId,
   setItemQuantity,
   addItemQuantity,
   removeItemBySlug,
   removeItemQuantity,
   removeItemFromCart,
+  clearCart,
 };

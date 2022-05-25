@@ -1,0 +1,38 @@
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
+
+.box {
+  padding: 40px 80px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+}
+
+.detail {
+  margin: 10px 0;
+  text-align: center;
+  min-height: 60px;
+}
+
+.button {
+  width: 100%;
+}
+
+.loader {
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+@media (max-width: $mobile) {
+  .box {
+    padding: 20px 40px;
+    background-color: white;
+  }
+}

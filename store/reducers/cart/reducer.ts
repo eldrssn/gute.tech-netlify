@@ -7,8 +7,10 @@ import {
   removeItemFromCart,
   removeItemBySlug,
   fetchPaymentMethods,
+  fetchStatusPayment,
   fetchItemFromCart,
   resetOrdinalId,
+  clearCart,
 } from './actions';
 
 import { PaymentMethodResponseData } from 'api/models/cart';
@@ -20,11 +22,13 @@ import {
   ErrorAction,
   CartItemQuantity,
   ProductResponseData,
+  StatusResponseData,
 } from './types';
 
 const initialState: CartStore = {
   cartItems: { data: [], isLoading: false, error: null },
   paymentMethods: { data: [], isLoading: false, error: null },
+  paymentStatus: { data: null, isLoading: false, error: null },
 };
 
 const handlers = {
@@ -54,6 +58,9 @@ const handlers = {
       ({ slug }) => slug === payload.slug,
     );
     state.cartItems.data[itemIndex].count = Number(payload.count);
+  },
+  [clearCart.type]: (state: CartStore) => {
+    state.cartItems.data = [];
   },
   [removeItemQuantity.type]: (
     state: CartStore,
@@ -147,6 +154,26 @@ const handlers = {
     const errorData = { name: error.name, message: error.message };
     state.paymentMethods.isLoading = false;
     state.paymentMethods.error = errorData;
+  },
+
+  [fetchStatusPayment.pending.type]: (state: CartStore) => {
+    state.paymentStatus.isLoading = true;
+  },
+  [fetchStatusPayment.fulfilled.type]: (
+    state: CartStore,
+    { payload }: PayloadAction<StatusResponseData>,
+  ) => {
+    state.paymentStatus.data = payload;
+    state.paymentStatus.isLoading = false;
+    state.paymentStatus.error = null;
+  },
+  [fetchStatusPayment.rejected.type]: (
+    state: CartStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.paymentStatus.isLoading = false;
+    state.paymentStatus.error = errorData;
   },
 };
 

@@ -9,18 +9,18 @@ import {
 import { ProductWarehouse } from 'api/models/cart';
 
 enum CategoryStoreBlocks {
-  SEARCHREADCATEGORY = 'searchReadCategory',
-  CATEGORIESLIST = 'categoriesList',
-  CATEGORIESTREELIST = 'categoriesTreeList',
-  CATEGORIESFILTERSLIST = 'categoriesFilterList',
-  CATEGORIESPRODUCTLIST = 'categoriesProductList',
-  CATEGORIESPRODUCTREAD = 'categoriesProductRead',
-  CATEGORIESSUBCATEGORIESLIST = 'categoriesSubcategoriesList',
+  SEARCH_READ_CATEGORY = 'searchReadCategory',
+  CATEGORIES_LIST = 'categoriesList',
+  CATEGORIES_TREE_LIST = 'categoriesTreeList',
+  CATEGORIES_FILTERS_LIST = 'categoriesFilterList',
+  CATEGORIES_PRODUCT_LIST = 'categoriesProductList',
+  CATEGORIES_PRODUCT_READ = 'categoriesProductRead',
+  CATEGORIES_SUBCATEGORIES_LIST = 'categoriesSubcategoriesList',
 }
 
 type CategoryStoreRootCategory =
-  | CategoryStoreBlocks.CATEGORIESTREELIST
-  | CategoryStoreBlocks.SEARCHREADCATEGORY;
+  | CategoryStoreBlocks.CATEGORIES_TREE_LIST
+  | CategoryStoreBlocks.SEARCH_READ_CATEGORY;
 
 type CategoriesProductsReadData = {
   title: string;
@@ -63,13 +63,13 @@ type CategoriesSubcategoriesListState = {
 } & StoreState;
 
 type CatalogStore = {
-  [CategoryStoreBlocks.SEARCHREADCATEGORY]: SearchReadCategoryState;
-  [CategoryStoreBlocks.CATEGORIESLIST]: CategoriesListState;
-  [CategoryStoreBlocks.CATEGORIESPRODUCTLIST]: CategoriesProductListState;
-  [CategoryStoreBlocks.CATEGORIESPRODUCTREAD]: CategoriesProductReadState;
-  [CategoryStoreBlocks.CATEGORIESSUBCATEGORIESLIST]: CategoriesSubcategoriesListState;
-  [CategoryStoreBlocks.CATEGORIESTREELIST]: CategoriesTreeListState;
-  [CategoryStoreBlocks.CATEGORIESFILTERSLIST]: CategoriesFilterListState;
+  [CategoryStoreBlocks.SEARCH_READ_CATEGORY]: SearchReadCategoryState;
+  [CategoryStoreBlocks.CATEGORIES_LIST]: CategoriesListState;
+  [CategoryStoreBlocks.CATEGORIES_PRODUCT_LIST]: CategoriesProductListState;
+  [CategoryStoreBlocks.CATEGORIES_PRODUCT_READ]: CategoriesProductReadState;
+  [CategoryStoreBlocks.CATEGORIES_SUBCATEGORIES_LIST]: CategoriesSubcategoriesListState;
+  [CategoryStoreBlocks.CATEGORIES_TREE_LIST]: CategoriesTreeListState;
+  [CategoryStoreBlocks.CATEGORIES_FILTERS_LIST]: CategoriesFilterListState;
 };
 
 export type {
