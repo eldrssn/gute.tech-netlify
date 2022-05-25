@@ -70,11 +70,21 @@ type OrderingResponseData = {
   payment_type: string;
 };
 
+type StatusRequestData = {
+  orderId: string | string[] | undefined;
+};
+
+type StatusResponseData = {
+  detail: string;
+};
+
 export type {
   OrderingRequestData,
   PaymentMethodResponseData,
   ProductResponseData,
+  StatusResponseData,
   ProductRequestData,
   OrderingResponseData,
   ProductWarehouse,
+  StatusRequestData,
 };

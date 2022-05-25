@@ -4,7 +4,7 @@ import { RegionData, BranchesData } from 'api/models/regions';
 enum RegionsStoreBlocks {
   REGIONS = 'regions',
   BRANCHES = 'branches',
-  SELECTEDCITY = 'selectedCity',
+  SELECTED_CITY = 'selectedCity',
 }
 
 type BranchesState = {
@@ -20,7 +20,7 @@ type SelectedCity = string;
 type RegionsStore = {
   [RegionsStoreBlocks.REGIONS]: RegionsState;
   [RegionsStoreBlocks.BRANCHES]: BranchesState;
-  [RegionsStoreBlocks.SELECTEDCITY]: SelectedCity;
+  [RegionsStoreBlocks.SELECTED_CITY]: SelectedCity;
 };
 
 export type {

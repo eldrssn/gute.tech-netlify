@@ -2,13 +2,14 @@ import { ErrorAction, StoreState, StoreError } from 'store/types';
 
 import {
   PaymentMethodResponseData,
+  StatusResponseData,
   ProductResponseData,
 } from 'api/models/cart';
 
 enum CartStoreBlocks {
-  CARTITEMS = 'cartItems',
-  ORDERTOTAL = 'orderTotal',
-  PAYMENTMETHODS = 'paymentMethods',
+  CART_ITEMS = 'cartItems',
+  PAYMENT_METHODS = 'paymentMethods',
+  PAYMENT_STATUS = 'paymentStatus',
 }
 
 type orderTotal = number;
@@ -35,9 +36,14 @@ type CartItemsState = {
   data: CartItemData[];
 } & StoreState;
 
+type PaymentStatus = {
+  data: StatusResponseData | null;
+} & StoreState;
+
 type CartStore = {
-  [CartStoreBlocks.CARTITEMS]: CartItemsState;
-  [CartStoreBlocks.PAYMENTMETHODS]: PaymentMethodsState;
+  [CartStoreBlocks.CART_ITEMS]: CartItemsState;
+  [CartStoreBlocks.PAYMENT_METHODS]: PaymentMethodsState;
+  [CartStoreBlocks.PAYMENT_STATUS]: PaymentStatus;
 };
 
 export type {
@@ -50,6 +56,7 @@ export type {
   ProductResponseData,
   CartItemData,
   CartItemAdditionalData,
+  StatusResponseData,
 };
 
 export { CartStoreBlocks };

@@ -3,9 +3,11 @@ import { sendRequest } from '../utils';
 import {
   PaymentMethodResponseData,
   ProductResponseData,
+  StatusResponseData,
   ProductRequestData,
   OrderingRequestData,
   OrderingResponseData,
+  StatusRequestData,
 } from '../models/cart';
 
 const getPaymentMethods = () =>
@@ -29,4 +31,15 @@ const postOrdering = (data: OrderingRequestData) =>
     },
   });
 
-export { getPaymentMethods, getProductInfoFromSlug, postOrdering };
+const getStatus = ({ orderId }: StatusRequestData) =>
+  sendRequest<StatusResponseData>({
+    url: `payment/status/`,
+    method: 'get',
+    config: {
+      params: {
+        orderId,
+      },
+    },
+  });
+
+export { getPaymentMethods, getProductInfoFromSlug, postOrdering, getStatus };

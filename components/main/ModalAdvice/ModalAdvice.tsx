@@ -148,6 +148,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
                 label='Введите ваше сообщение'
                 isError={Boolean(message.fieldState.error)}
                 textarea
+                maxLength={1000}
               />
               <Typography
                 className={cn(styles.footnote, {
@@ -156,7 +157,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
                   ),
                 })}
               >
-                максимальное количество символов 200
+                максимальное количество символов 1000
               </Typography>
             </Box>
           </>
