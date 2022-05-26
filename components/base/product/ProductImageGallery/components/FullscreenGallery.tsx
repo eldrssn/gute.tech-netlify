@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 
@@ -8,26 +8,26 @@ const FullscreenGallery: FC<FullscreenGalleryProps> = ({
   toggleFullscreen,
   images,
   title,
+  fullscreenIndex,
+  slideToIndex,
 }) => {
-  const [photoIndex, setPhotoIndex] = useState<number>(0);
+  const nextFullscreenIndex = (fullscreenIndex + 1) % images.length;
+  const prevFullscreenIndex =
+    (fullscreenIndex + images.length - 1) % images.length;
 
   const handleMovePrevRequest = () => {
-    setPhotoIndex((photoIndex + images.length - 1) % images.length);
+    slideToIndex(prevFullscreenIndex);
   };
 
   const handleMoveNextRequest = () => {
-    setPhotoIndex((photoIndex + 1) % images.length);
+    slideToIndex(nextFullscreenIndex);
   };
-
-  const mainSource = images[photoIndex];
-  const nextSource = images[(photoIndex + 1) % images.length];
-  const prevSource = images[(photoIndex + images.length - 1) % images.length];
 
   return (
     <Lightbox
-      mainSrc={mainSource}
-      nextSrc={nextSource}
-      prevSrc={prevSource}
+      mainSrc={images[fullscreenIndex]}
+      nextSrc={images[nextFullscreenIndex]}
+      prevSrc={images[prevFullscreenIndex]}
       onCloseRequest={toggleFullscreen}
       onMovePrevRequest={handleMovePrevRequest}
       onMoveNextRequest={handleMoveNextRequest}

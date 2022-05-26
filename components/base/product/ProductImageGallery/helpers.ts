@@ -9,7 +9,6 @@ const formatImages = (images: string[]) =>
       thumbnailClass: 'customThumbnail',
       originalClass: 'customOriginal',
     };
-    console.log(image);
 
     return accumulator.length
       ? [...accumulator, formatedImage]
