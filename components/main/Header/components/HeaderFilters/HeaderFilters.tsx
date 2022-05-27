@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
-import SearchIcon from '@mui/icons-material/Search';
 
 import { CustomButton } from 'components/ui/CustomButton';
 import {
@@ -37,13 +36,13 @@ import { HeaderLogo } from '../HeaderLogo';
 import { HeaderAsideNav } from '../HeaderAsideNav';
 import { FilterSteps } from '../FilterSteps';
 import { HeaderContext } from '../HeaderContext';
+import { SearchField } from '../SearchField';
 
 import { defaultValue } from './constants';
 import { getTransportParams } from './helpers';
 import { HeaderFiltersProps } from './types';
 
 import styles from './headerFilters.module.scss';
-import { MenuItem } from '@mui/material';
 
 const cn = classnames.bind(styles);
 
@@ -51,11 +50,12 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   transportText,
   setTransportText,
   closePopupMobile,
+  setIsFocusSearchField,
 }) => {
   const router = useRouter();
   const { removeQuery, getQueryOption } = useRouterQuery();
   const dispatch = useDispatch();
-  const { isFullHeader, isMobileView, isTabletView } =
+  const { isFullHeader, isMobileView, isTabletView, isFocusSearchField } =
     useContext(HeaderContext);
   const { getValues, control, setValue, handleSubmit, reset, watch } =
     useForm<FormData>({
@@ -146,6 +146,7 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
     };
 
     resetDataByStep[currentStep]();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     dispatch,
     currentStep,
@@ -176,6 +177,7 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   };
 
   const isDisableButton = engineSlug === '';
+  const hiddenFilter = !isFullHeader && isFocusSearchField && !isTabletView;
 
   return (
     <>
@@ -199,83 +201,83 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
             детали для вашего транспорта
           </Typography>
 
-          <Box
-            className={styles.formAndCatalogContainer}
-            sx={{
-              order: { xs: 1, lg: 0 },
-              marginTop: { sm: '5px', lg: 0 },
-            }}
-          >
-            <FormControl
-              className={cn(styles.filterStepsForm, {
-                [styles.filterStepsForm_shortHeader]:
-                  !isFullHeader || isTabletView,
-                [styles.filterStepsForm_mobileView]: isMobileView,
-              })}
-            >
-              {!transportText ? (
-                <>
-                  <FilterSteps
-                    openPopoverId={openPopoverId}
-                    setOpenPopoverId={setOpenPopoverId}
-                    control={control}
-                    setValue={setValue}
-                    currentStep={currentStep}
-                    setCurrentStep={setCurrentStep}
-                  />
-                  <CustomButton
-                    onClick={onSubmit}
-                    customStyles={cn(styles.stepButtonSubmit, {
-                      [styles.stepButtonSubmitInactive]: isDisableButton,
-                    })}
-                    disabled={isDisableButton}
-                  >
-                    Подобрать детали
-                  </CustomButton>
-                </>
-              ) : (
-                <Box
-                  className={cn(styles.choosenTransport_container, {
-                    [styles.choosenTransport_container_mobile]: isMobileView,
-                  })}
-                >
-                  <p className={styles.choosenTransport_text}>
-                    Показаны детали для: {transportText}
-                  </p>
-                  <CustomButton
-                    onClick={resetFilter}
-                    customStyles={styles.stepButtonSubmit}
-                  >
-                    Сбросить фильтр
-                  </CustomButton>
-                </Box>
-              )}
-            </FormControl>
-
-            {isFullHeader && !isMobileView && <CatalogButton />}
-          </Box>
-
-          {!isFullHeader && !isMobileView && (
+          {!hiddenFilter && (
             <Box
+              className={styles.formAndCatalogContainer}
               sx={{
-                order: -1,
-                display: 'flex',
+                order: { xs: 1, lg: 0 },
+                marginTop: { sm: '5px', lg: 0 },
               }}
             >
-              {!isMobileView && <HeaderLogo />}
+              <FormControl
+                className={cn(styles.filterStepsForm, {
+                  [styles.filterStepsForm_shortHeader]:
+                    !isFullHeader || isTabletView,
+                  [styles.filterStepsForm_mobileView]: isMobileView,
+                })}
+              >
+                {!transportText ? (
+                  <>
+                    <FilterSteps
+                      openPopoverId={openPopoverId}
+                      setOpenPopoverId={setOpenPopoverId}
+                      control={control}
+                      setValue={setValue}
+                      currentStep={currentStep}
+                      setCurrentStep={setCurrentStep}
+                    />
+                    <CustomButton
+                      onClick={onSubmit}
+                      customStyles={cn(styles.stepButtonSubmit, {
+                        [styles.stepButtonSubmitInactive]: isDisableButton,
+                      })}
+                      disabled={isDisableButton}
+                    >
+                      Подобрать детали
+                    </CustomButton>
+                  </>
+                ) : (
+                  <Box
+                    className={cn(styles.choosenTransport_container, {
+                      [styles.choosenTransport_container_mobile]: isMobileView,
+                    })}
+                  >
+                    <p className={styles.choosenTransport_text}>
+                      Показаны детали для: {transportText}
+                    </p>
+                    <CustomButton
+                      onClick={resetFilter}
+                      customStyles={styles.stepButtonSubmit}
+                    >
+                      Сбросить фильтр
+                    </CustomButton>
+                  </Box>
+                )}
+              </FormControl>
 
-              <CatalogButton />
-
-              <MenuItem>
-                <SearchIcon
-                  className={styles.menuIcon}
-                  sx={{ width: '24px', height: '24px' }}
-                />
-              </MenuItem>
+              {isFullHeader && !isMobileView && <CatalogButton />}
             </Box>
           )}
 
-          {!isFullHeader && !isMobileView && <HeaderAsideNav />}
+          {!isFullHeader && !isMobileView && (
+            <>
+              <Box
+                sx={{
+                  order: -1,
+                  display: 'flex',
+                }}
+              >
+                {!isMobileView && <HeaderLogo />}
+
+                <CatalogButton />
+              </Box>
+              <SearchField setIsFocusSearchField={setIsFocusSearchField} />
+            </>
+          )}
+
+          {!isFullHeader && !isMobileView && (
+            <HeaderAsideNav setIsFocusSearchField={setIsFocusSearchField} />
+          )}
         </Box>
       </Container>
 

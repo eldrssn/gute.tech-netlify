@@ -13,6 +13,7 @@ import styles from './headerMobile.module.css';
 const HeaderMobile: FC<HeaderMobileProps> = ({
   transportText,
   setTransportText,
+  setIsFocusSearchField,
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -28,7 +29,7 @@ const HeaderMobile: FC<HeaderMobileProps> = ({
 
   return (
     <>
-      <HeaderMobileDrawer />
+      <HeaderMobileDrawer setIsFocusSearchField={setIsFocusSearchField} />
 
       <CustomButton
         aria-controls={open}
@@ -90,6 +91,7 @@ const HeaderMobile: FC<HeaderMobileProps> = ({
           transportText={transportText}
           setTransportText={setTransportText}
           closePopupMobile={handleClose}
+          setIsFocusSearchField={setIsFocusSearchField}
         />
       </Menu>
     </>

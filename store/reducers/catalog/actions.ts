@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 
 import {
   getTransportProductListRead,
@@ -8,6 +8,7 @@ import {
   getCategoriesProductsList,
   getCategoriesProductsRead,
   getCategoriesSubcategoriesList,
+  getCatalogSearchRead,
   getTransportFilterList,
   getTransportCategoriesRead,
 } from 'api/routes/catalog';
@@ -19,7 +20,10 @@ import {
   CategoriesProductsReadRequestData,
   CategoriesSubcategoriesListRequestData,
   TransportProductListRead,
+  CatalogSearchReadRequestData,
 } from 'api/models/catalog';
+
+const clearCatalogSearchRead = createAction('CatalogSearchRead');
 
 const fetchTransportFilterList = createAsyncThunk(
   'CatalogStore/fetchTransportFiltersList',
@@ -158,9 +162,22 @@ const fetchCategoriesSubcategoriesList = createAsyncThunk(
   },
 );
 
+const fetchCatalogSearchRead = createAsyncThunk(
+  'CatalogStore/fetchCatalogSearchRead',
+  async ({ searchValue }: CatalogSearchReadRequestData) => {
+    const data = await getCatalogSearchRead({
+      searchValue,
+    });
+
+    return data;
+  },
+);
+
 export {
   fetchTransportReadCategories,
   fetchCategoriesList,
+  fetchCatalogSearchRead,
+  clearCatalogSearchRead,
   fetchCategoriesTreeList,
   fetchCategoriesFiltersList,
   fetchCategoriesProductsList,

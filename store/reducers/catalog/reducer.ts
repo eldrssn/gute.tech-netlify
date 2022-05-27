@@ -8,6 +8,8 @@ import {
   fetchCategoriesProductsList,
   fetchCategoriesProductsRead,
   fetchCategoriesSubcategoriesList,
+  fetchCatalogSearchRead,
+  clearCatalogSearchRead,
   fetchTransportProductList,
   fetchTransportFilterList,
 } from './actions';
@@ -19,6 +21,7 @@ import {
   FiltersCategoryResponseData,
   CategoriesProductListResponseData,
   CategoriesProductReadResponseData,
+  CatalogSearchReadResponseData,
 } from 'api/models/catalog';
 
 const initialState: CatalogStore = {
@@ -67,9 +70,18 @@ const initialState: CatalogStore = {
     isLoading: false,
     error: null,
   },
+  catalogSearchRead: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
 };
 
 const handlers = {
+  [clearCatalogSearchRead.type]: (state: CatalogStore) => {
+    state.catalogSearchRead.data = null;
+  },
+
   [fetchTransportProductList.pending.type]: (state: CatalogStore) => {
     state.transportProductList.isLoading = true;
   },
@@ -89,6 +101,7 @@ const handlers = {
     state.transportProductList.isLoading = false;
     state.transportProductList.error = errorData;
   },
+
   [fetchTransportReadCategories.pending.type]: (state: CatalogStore) => {
     state.transportReadCategories.isLoading = true;
   },
@@ -249,6 +262,26 @@ const handlers = {
     const errorData = { name: error.name, message: error.message };
     state.categoriesSubcategoriesList.isLoading = false;
     state.categoriesSubcategoriesList.error = errorData;
+  },
+
+  [fetchCatalogSearchRead.pending.type]: (state: CatalogStore) => {
+    state.catalogSearchRead.isLoading = true;
+  },
+  [fetchCatalogSearchRead.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<CatalogSearchReadResponseData>,
+  ) => {
+    state.catalogSearchRead.data = payload;
+    state.catalogSearchRead.isLoading = false;
+    state.catalogSearchRead.error = null;
+  },
+  [fetchCatalogSearchRead.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.catalogSearchRead.isLoading = false;
+    state.catalogSearchRead.error = errorData;
   },
 };
 

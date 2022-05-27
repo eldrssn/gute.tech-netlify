@@ -1,0 +1,168 @@
+@import "styles/colors.scss";
+
+.searchMenuItem {
+  flex: 1 auto;
+  margin: auto 20px;
+  padding: 0;
+  position: relative;
+  transition: 0.3s;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1201;
+  width: 100%;
+  height: 100%;
+}
+
+.searchBox {
+  position: relative;
+  z-index: 1201;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $gray4;
+  border-radius: 2px;
+  padding: 0;
+  background-color: $white !important;
+}
+
+.activeSearchBox {
+  border-bottom: 0;
+}
+
+.textField {
+  flex: 1 auto;
+
+  input {
+    height: 30px;
+    padding: 5px 20px;
+    border: none;
+  }
+
+  fieldset {
+    border: 0;
+  }
+}
+
+.searchIcon {
+  width: 40px;
+  height: 24px;
+  margin: 0 5px;
+}
+
+.popupBox {
+  position: absolute;
+  max-height: 70vh;
+  top: 41px;
+  height: 0px;
+  transition: 0.1s;
+  background-color: $white;
+  width: 80vh;
+  z-index: 1305;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: pre-line;
+}
+
+.divider {
+  position: absolute;
+  top: 35px;
+  width: 97%;
+  margin: 0 auto 10px;
+  border-color: $blue1;
+}
+
+.activePopupBox {
+  height: 50vh;
+  border: 1px solid $gray4;
+  box-shadow: 0px 10px 8px 5px rgba(34, 60, 80, 0.2);
+  border-top: 0;
+}
+
+.errorPopupBox {
+  height: 50px;
+  border: 1px solid $gray4;
+  box-shadow: 0px 10px 8px 5px rgba(34, 60, 80, 0.2);
+  border-top: 0;
+}
+
+.categoryList {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.productsList {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.listTitle {
+  text-transform: uppercase;
+  font-weight: 100;
+  padding: 10px 20px;
+}
+
+.productItem {
+  padding: 10px 25px;
+  min-height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+
+  &:hover {
+    background-color: $gray5;
+  }
+}
+
+.productImage {
+  width: 70px;
+  height: 70px;
+  img {
+    object-fit: contain;
+  }
+}
+
+.productTitleBox {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-left: 10px;
+  box-sizing: border-box;
+}
+
+.productTitle {
+  width: 100%;
+  font-size: 14px;
+}
+
+.productPrice {
+  margin-top: 5px;
+  font-weight: 100;
+  font-size: 12px;
+}
+
+.categoryListItem {
+  padding: 10px 25px;
+  width: 100%;
+  font-size: 14px;
+  &:hover {
+    background-color: $gray5;
+  }
+}
+
+.errorMessage {
+  padding: 10px 20px;
+  font-size: 14px;
+}

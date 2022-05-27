@@ -14,13 +14,22 @@ import { selectCity } from 'store/reducers/regions/selectors';
 import { HeaderAsideNav } from '../HeaderAsideNav';
 import { HeaderLogo } from '../HeaderLogo';
 import { CatalogMenuMobile } from '../CatalogMenuMobile';
+import { SearchMenuMobile } from '../SearchMenuMobile';
 
-import { DrawerContentProps } from './types';
+import { DrawerContentProps, DrawerContentKeys } from './types';
 import styles from './drawerContent.module.css';
 
-const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
+const DrawerContent: FC<DrawerContentProps> = ({
+  closeMainDrawer,
+  setIsFocusSearchField,
+}) => {
   const [isOpenCityModal, setIsOpenCityModal] = useState(false);
   const [open, setOpen] = useState(false);
+  const [drawerContentKey, setDrawerContentKey] = useState<DrawerContentKeys>(
+    DrawerContentKeys.CATALOG,
+  );
+
+  const city = useSelector(selectCity);
 
   const handleDrawerToggle = () => {
     setOpen((open) => !open);
@@ -31,7 +40,20 @@ const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
     [open],
   );
 
-  const city = useSelector(selectCity);
+  const drawerContent = {
+    [DrawerContentKeys.CATALOG]: (
+      <CatalogMenuMobile
+        handleClose={handleDrawerToggle}
+        closeMainDrawer={closeMainDrawer}
+      />
+    ),
+    [DrawerContentKeys.SEARCH]: (
+      <SearchMenuMobile
+        handleClose={handleDrawerToggle}
+        closeMainDrawer={closeMainDrawer}
+      />
+    ),
+  };
 
   return (
     <>
@@ -43,17 +65,33 @@ const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
         <HeaderLogo isDrawer={true} closeMainDrawer={closeMainDrawer} />
         <Divider className={styles.divider} />
         <Box className={styles.asideNavContainer}>
-          <HeaderAsideNav isDrawer={true} />
+          <HeaderAsideNav
+            isDrawer={true}
+            setIsFocusSearchField={setIsFocusSearchField}
+          />
         </Box>
         <Divider className={styles.divider} />
         <p className={styles.location} onClick={() => setIsOpenCityModal(true)}>
           Выбран город: <span className={styles.location_current}>{city}</span>
         </p>
         <CustomButton
-          onClick={handleDrawerToggle}
+          onClick={() => {
+            handleDrawerToggle();
+            setDrawerContentKey(DrawerContentKeys.CATALOG);
+          }}
           customStyles={styles.catalogButton}
         >
           <p className={styles.catalogButtonTitle}>Каталог товаров</p>
+          <ArrowForwardIosIcon />
+        </CustomButton>
+        <CustomButton
+          onClick={() => {
+            handleDrawerToggle();
+            setDrawerContentKey(DrawerContentKeys.SEARCH);
+          }}
+          customStyles={styles.catalogButton}
+        >
+          <p className={styles.catalogButtonTitle}>Поиск</p>
           <ArrowForwardIosIcon />
         </CustomButton>
       </Container>
@@ -72,10 +110,7 @@ const DrawerContent: FC<DrawerContentProps> = ({ closeMainDrawer }) => {
         anchor='right'
         open={open}
       >
-        <CatalogMenuMobile
-          handleClose={handleDrawerToggle}
-          closeMainDrawer={closeMainDrawer}
-        />
+        {drawerContent[drawerContentKey]}
       </Drawer>
     </>
   );

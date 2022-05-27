@@ -8,10 +8,14 @@ import { HeaderLogo } from '../HeaderLogo';
 import { HeaderAsideNav } from '../HeaderAsideNav';
 import { HeaderCity } from '../HeaderCity';
 import { HeaderContext } from '../HeaderContext';
+import { SearchField } from '../SearchField';
 
 import styles from './headerDesktopFull.module.css';
+import { HeaderDesktopFullProps } from './types';
 
-const HeaderDesktopFull: FC = () => {
+const HeaderDesktopFull: FC<HeaderDesktopFullProps> = ({
+  setIsFocusSearchField,
+}) => {
   const { isFullHeader } = useContext(HeaderContext);
 
   if (!isFullHeader) {
@@ -35,7 +39,8 @@ const HeaderDesktopFull: FC = () => {
           }}
         >
           <HeaderLogo />
-          <HeaderAsideNav />
+          <SearchField setIsFocusSearchField={setIsFocusSearchField} />
+          <HeaderAsideNav setIsFocusSearchField={setIsFocusSearchField} />
         </Box>
       </Container>
       <Divider />

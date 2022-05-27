@@ -47,10 +47,16 @@ const selectCategoriesSubcategoriesList = createSelector(
   ({ categoriesSubcategoriesList }) => categoriesSubcategoriesList,
 );
 
+const selectCatalogSearchRead = createSelector(
+  selectCatalogStore,
+  ({ catalogSearchRead }) => catalogSearchRead,
+);
+
 export {
   selectCategoriesProductRead,
   selectCategoriesTreeList,
   selectCategoriesSubcategoriesList,
+  selectCatalogSearchRead,
   selectSearchProductList,
   selectCategoriesSearchRead,
   selectCategoriesProductList,

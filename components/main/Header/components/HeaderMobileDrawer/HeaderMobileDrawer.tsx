@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import classnames from 'classnames/bind';
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
@@ -14,19 +14,30 @@ import { CustomButton } from 'components/ui/CustomButton';
 import { selectOrderTotal } from 'store/reducers/cart/selectors';
 
 import { DrawerContent } from '../DrawerContent';
+import { HeaderMobileDrawerProps } from './types';
 
 import styles from './headerMobileDrawer.module.css';
 
 const cn = classnames.bind(styles);
 
-const HeaderMobileDrawer = () => {
+const HeaderMobileDrawer: FC<HeaderMobileDrawerProps> = ({
+  setIsFocusSearchField,
+}) => {
   const [open, setOpen] = useState(false);
+
+  const router = useRouter();
 
   const orderTotal = useSelector(selectOrderTotal);
 
   const handleDrawerToggle = () => {
     setOpen((open) => !open);
   };
+
+  const handleClickCart = () => {
+    setOpen(false);
+    router.push('/cart');
+  };
+
   return (
     <>
       <Container className={styles.headerMobileContainer}>
@@ -40,14 +51,12 @@ const HeaderMobileDrawer = () => {
             })}
           />
         </CustomButton>
-        <Link href={'/cart'} passHref>
-          <MenuItem>
-            <ShoppingCartIcon sx={{ width: '24px', height: '24px' }} />
-            <Typography className={styles.menuItem}>
-              {orderTotal}&#8381;
-            </Typography>
-          </MenuItem>
-        </Link>
+        <MenuItem onClick={handleClickCart}>
+          <ShoppingCartIcon sx={{ width: '24px', height: '24px' }} />
+          <Typography className={styles.menuItem}>
+            {orderTotal}&#8381;
+          </Typography>
+        </MenuItem>
       </Container>
       <Divider />
 
@@ -65,7 +74,10 @@ const HeaderMobileDrawer = () => {
         anchor='left'
         open={open}
       >
-        <DrawerContent closeMainDrawer={handleDrawerToggle} />
+        <DrawerContent
+          closeMainDrawer={handleDrawerToggle}
+          setIsFocusSearchField={setIsFocusSearchField}
+        />
       </Drawer>
     </>
   );
