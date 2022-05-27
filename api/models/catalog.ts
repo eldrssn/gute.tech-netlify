@@ -98,3 +98,27 @@ export type CategoriesProductReadResponseData = {
   properties?: string;
   warehouses?: ProductWarehouse[];
 };
+
+export type CatalogSearchReadRequestData = {
+  searchValue: string;
+};
+
+export type CatalogSearchReadProductData = {
+  title: string;
+  slug: string;
+  image: string;
+  price: number;
+  is_service: boolean;
+  categories: string[];
+};
+
+export type CatalogSearchReadCategoryData = {
+  title: string;
+  slug: string;
+  image: string;
+};
+
+export type CatalogSearchReadResponseData = {
+  categories: CatalogSearchReadCategoryData[];
+  products: CatalogSearchReadProductData[];
+};

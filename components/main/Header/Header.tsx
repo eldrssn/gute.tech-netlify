@@ -22,6 +22,7 @@ import { getTransportTitles } from './helpers';
 
 const Header = () => {
   const [isFullHeader, setisFullHeader] = useState<boolean>(true);
+  const [isFocusSearchField, setIsFocusSearchField] = useState(false);
   const [transportText, setTransportText] = useState<string>('');
 
   const { getQueryOption } = useRouterQuery();
@@ -72,6 +73,7 @@ const Header = () => {
         isFullHeader,
         isTabletView,
         isMobileView,
+        isFocusSearchField,
       }}
     >
       <AppBar className={styles.headerWrapper} position='sticky'>
@@ -79,13 +81,15 @@ const Header = () => {
           <HeaderMobile
             transportText={transportText}
             setTransportText={setTransportText}
+            setIsFocusSearchField={setIsFocusSearchField}
           />
         ) : (
           <>
-            <HeaderDesktopFull />
+            <HeaderDesktopFull setIsFocusSearchField={setIsFocusSearchField} />
             <HeaderFilters
               transportText={transportText}
               setTransportText={setTransportText}
+              setIsFocusSearchField={setIsFocusSearchField}
             />
           </>
         )}

@@ -9,22 +9,25 @@ import MenuItem from '@mui/material/MenuItem';
 
 import PhoneCallbackIcon from '@mui/icons-material/PhoneCallback';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
-import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { IsDrawerProps } from 'components/main/Header/types';
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { selectOrderTotal, selectCart } from 'store/reducers/cart/selectors';
+import { useWindowSize } from 'hooks/useWindowSize';
+import { HIDE_PHONE_WIDTH } from 'constants/variables';
 
 import { HeaderContext } from '../HeaderContext';
 import styles from './headerAsideNav.module.scss';
+import { HeaderAsideNavProps } from './types';
 
 const cn = classnames.bind(styles);
 
-const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
-  const { isFullHeader, isMobileView } = useContext(HeaderContext);
+const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
+  const { isFullHeader, isMobileView, isFocusSearchField } =
+    useContext(HeaderContext);
   const [isOpenModalAdvice, setIsOpenModalAdvice] = useState(false);
+  const { windowWidth } = useWindowSize();
 
   const { phone } = useSelector(selectShowcaseData);
   const orderTotal = useSelector(selectOrderTotal);
@@ -36,13 +39,16 @@ const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
     [styles.menuItem_mobile]: isMobileView,
   });
 
+  const windowSize = windowWidth ? windowWidth : 0;
+  const hidePhone = isFocusSearchField && windowSize < HIDE_PHONE_WIDTH;
+
   return (
     <>
       <ModalAdvice
         isOpen={isOpenModalAdvice}
         setIsOpen={setIsOpenModalAdvice}
       />
-      {(isFullHeader || isMobileView || isDrawer) && (
+      {(isFullHeader || isMobileView || isDrawer) && !hidePhone && (
         <MenuItem disableGutters>
           <PhoneCallbackIcon />
           <a href='tel:+74992832026' className={menuItemStyles}>
@@ -81,18 +87,6 @@ const HeaderAsideNav: React.FC<IsDrawerProps> = ({ isDrawer }) => {
             <Typography className={menuItemStyles}>Консультация</Typography>
           )}
         </MenuItem>
-
-        {isMobileView && (
-          <MenuItem className={menuItemStyles} disableGutters>
-            <SearchIcon
-              className={styles.menuIcon}
-              sx={{ width: '24px', height: '24px' }}
-            />
-            {isDrawer && (
-              <Typography className={menuItemStyles}>Поиск</Typography>
-            )}
-          </MenuItem>
-        )}
       </Box>
     </>
   );

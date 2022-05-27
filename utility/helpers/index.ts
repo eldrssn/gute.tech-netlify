@@ -179,6 +179,26 @@ const getSlugsCartItemsFromCart = (cart: CartItemData[]) =>
     })
     .join('&');
 
+const getParentCategory = ({
+  categoriesTreeList,
+  childrenCategorySlug,
+}: {
+  categoriesTreeList: TreeCategoryResponseData[];
+  childrenCategorySlug: string;
+}) => {
+  const categorySearch = categoriesTreeList.find((category) => {
+    if (!category.children) {
+      return false;
+    }
+
+    return category.children.some(
+      (childrenCategory) => childrenCategory.slug === childrenCategorySlug,
+    );
+  });
+
+  return categorySearch?.slug;
+};
+
 // !TODO: переделать и переиспользовать три функции ниже
 const getTransportSlugs = (transportQuery?: string | string[]) => {
   const isTransportQuery =
@@ -219,6 +239,7 @@ export {
   filterRegionsOption,
   cookieStorage,
   getSlugsFromUrl,
+  getParentCategory,
   getTransportSlugs,
   goToCatalog,
   goToTransportCatalog,

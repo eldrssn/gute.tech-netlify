@@ -6,6 +6,7 @@ const TABLET_WIDTH = 1200;
 const DELAY = 500;
 const SCROLL_DELAY = DELAY;
 const CATALOG_MOBILE_WIDTH = 450;
+const HIDE_PHONE_WIDTH = 1000;
 
 const descriptionTypeName = [
   DescriptionTypes.properties,
@@ -39,6 +40,7 @@ export {
   MOBILE_WIDTH,
   TABLET_WIDTH,
   MOBILE_XS_WIDTH,
+  HIDE_PHONE_WIDTH,
   DELAY,
   SCROLL_DELAY,
   CATALOG_MOBILE_WIDTH,

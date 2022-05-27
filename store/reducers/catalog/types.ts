@@ -5,6 +5,7 @@ import {
   TreeCategoryResponseData,
   CategoriesProductListResponseData,
   FiltersCategoryResponseData,
+  CatalogSearchReadResponseData,
 } from 'api/models/catalog';
 import { ProductWarehouse } from 'api/models/cart';
 
@@ -18,6 +19,7 @@ enum CategoryStoreBlocks {
   CATEGORIES_PRODUCT_LIST = 'categoriesProductList',
   CATEGORIES_PRODUCT_READ = 'categoriesProductRead',
   CATEGORIES_SUBCATEGORIES_LIST = 'categoriesSubcategoriesList',
+  CATALOG_SEARCH_READ = 'catalogSearchRead',
 }
 
 type CategoriesProductsReadData = {
@@ -44,6 +46,10 @@ type CategoriesFilterListState = {
   data: FiltersCategoryResponseData[];
 } & StoreState;
 
+type CatalogSearchReadState = {
+  data: CatalogSearchReadResponseData | null;
+} & StoreState;
+
 type CategoriesProductListState = {
   data: CategoriesProductListResponseData;
 } & StoreState;
@@ -66,6 +72,7 @@ type CatalogStore = {
   [CategoryStoreBlocks.CATEGORIES_SUBCATEGORIES_LIST]: CategoriesSubcategoriesListState;
   [CategoryStoreBlocks.CATEGORIES_TREE_LIST]: CategoriesTreeListState;
   [CategoryStoreBlocks.CATEGORIES_FILTERS_LIST]: CategoriesFilterListState;
+  [CategoryStoreBlocks.CATALOG_SEARCH_READ]: CatalogSearchReadState;
 };
 
 export type { ErrorAction, StoreError, CatalogStore };

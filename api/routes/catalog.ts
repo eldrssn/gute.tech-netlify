@@ -12,6 +12,8 @@ import {
   FiltersCategoryResponseData,
   TransportProductListRead,
   TransportSearchRequestData,
+  CatalogSearchReadRequestData,
+  CatalogSearchReadResponseData,
 } from 'api/models/catalog';
 
 const getCategoriesList = () =>
@@ -107,8 +109,20 @@ const getCategoriesSubcategoriesList = ({
     method: 'get',
   });
 
+const getCatalogSearchRead = ({ searchValue }: CatalogSearchReadRequestData) =>
+  sendRequest<CatalogSearchReadResponseData>({
+    url: '/catalog/search/',
+    method: 'get',
+    config: {
+      params: {
+        query: searchValue,
+      },
+    },
+  });
+
 export {
   getCategoriesList,
+  getCatalogSearchRead,
   getTransportCategoriesRead,
   getCategoriesTreeList,
   getCategoriesFiltersList,

@@ -6,6 +6,7 @@ const HeaderContext = React.createContext<HeaderContentType>({
   isFullHeader: true,
   isTabletView: false,
   isMobileView: false,
+  isFocusSearchField: false,
 });
 
 export { HeaderContext };
