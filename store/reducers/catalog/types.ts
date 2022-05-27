@@ -3,13 +3,15 @@ import { StoreState, StoreError, ErrorAction } from 'store/types';
 import {
   CategoryResponseData,
   TreeCategoryResponseData,
-  CategoriesProductsListResponseData,
+  CategoriesProductListResponseData,
   FiltersCategoryResponseData,
 } from 'api/models/catalog';
 import { ProductWarehouse } from 'api/models/cart';
 
 enum CategoryStoreBlocks {
-  SEARCH_READ_CATEGORY = 'searchReadCategory',
+  TRANSPORT_READ_CATEGORY = 'transportReadCategories',
+  TRANSPORT_PRODUCT_LIST = 'transportProductList',
+  TRANSPORT_FILTER_LIST = 'transportFilterList',
   CATEGORIES_LIST = 'categoriesList',
   CATEGORIES_TREE_LIST = 'categoriesTreeList',
   CATEGORIES_FILTERS_LIST = 'categoriesFilterList',
@@ -17,10 +19,6 @@ enum CategoryStoreBlocks {
   CATEGORIES_PRODUCT_READ = 'categoriesProductRead',
   CATEGORIES_SUBCATEGORIES_LIST = 'categoriesSubcategoriesList',
 }
-
-type CategoryStoreRootCategory =
-  | CategoryStoreBlocks.CATEGORIES_TREE_LIST
-  | CategoryStoreBlocks.SEARCH_READ_CATEGORY;
 
 type CategoriesProductsReadData = {
   title: string;
@@ -33,10 +31,6 @@ type CategoriesProductsReadData = {
   properties?: string | undefined;
   warehouses?: ProductWarehouse[];
 };
-
-type SearchReadCategoryState = {
-  data: CategoryResponseData[];
-} & StoreState;
 
 type CategoriesListState = {
   data: CategoryResponseData[];
@@ -51,7 +45,7 @@ type CategoriesFilterListState = {
 } & StoreState;
 
 type CategoriesProductListState = {
-  data: CategoriesProductsListResponseData;
+  data: CategoriesProductListResponseData;
 } & StoreState;
 
 type CategoriesProductReadState = {
@@ -63,7 +57,9 @@ type CategoriesSubcategoriesListState = {
 } & StoreState;
 
 type CatalogStore = {
-  [CategoryStoreBlocks.SEARCH_READ_CATEGORY]: SearchReadCategoryState;
+  [CategoryStoreBlocks.TRANSPORT_READ_CATEGORY]: CategoriesTreeListState;
+  [CategoryStoreBlocks.TRANSPORT_PRODUCT_LIST]: CategoriesProductListState;
+  [CategoryStoreBlocks.TRANSPORT_FILTER_LIST]: CategoriesFilterListState;
   [CategoryStoreBlocks.CATEGORIES_LIST]: CategoriesListState;
   [CategoryStoreBlocks.CATEGORIES_PRODUCT_LIST]: CategoriesProductListState;
   [CategoryStoreBlocks.CATEGORIES_PRODUCT_READ]: CategoriesProductReadState;
@@ -72,10 +68,5 @@ type CatalogStore = {
   [CategoryStoreBlocks.CATEGORIES_FILTERS_LIST]: CategoriesFilterListState;
 };
 
-export type {
-  ErrorAction,
-  StoreError,
-  CatalogStore,
-  CategoryStoreRootCategory,
-};
+export type { ErrorAction, StoreError, CatalogStore };
 export { CategoryStoreBlocks };

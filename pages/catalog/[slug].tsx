@@ -14,7 +14,9 @@ const CatalogPage: FC = () => {
   const { slug } = router.query;
   const categoriesTree = useSelector(selectCategoriesTreeList);
 
-  const category = categoriesTree.find((item) => item.slug === slug);
+  const { data: categories } = categoriesTree;
+
+  const category = categories.find((item) => item.slug === slug);
 
   return (
     <>

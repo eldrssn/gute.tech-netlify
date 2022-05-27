@@ -8,7 +8,7 @@ import { Category } from 'components/base/catalog/Category';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 
 const CatalogMain: FC = () => {
-  const categoriesTree = useSelector(selectCategoriesTreeList);
+  const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
 
   return (
     <>

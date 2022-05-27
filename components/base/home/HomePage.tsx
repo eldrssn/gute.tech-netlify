@@ -1,7 +1,6 @@
 import { FC, useEffect, useMemo } from 'react';
 import { Grid } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
@@ -17,11 +16,13 @@ import { Items } from 'components/base/main/rows/types';
 import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { groupItems, getSlugsFromUrl } from 'utility/helpers';
-import { fetchSearchReadCategory } from 'store/reducers/catalog/actions';
-import { selectRootCategories } from 'store/reducers/catalog/selectors';
+import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
+import {
+  selectCategoriesSearchRead,
+  selectCategoriesTreeList,
+} from 'store/reducers/catalog/selectors';
 
-import { getGroupedChildren, getlastQueryUrl } from './helpers';
-import { rootCategories } from './constants';
+import { getGroupedChildren } from './helpers';
 import { Index } from './types';
 
 const rowHashMap: Record<Index, FC<Items>> = {
@@ -33,18 +34,15 @@ const rowHashMap: Record<Index, FC<Items>> = {
 
 const Home: FC = () => {
   const dispatch = useDispatch();
-  const { query } = useRouter();
-  const routerQuery = useRouterQuery();
-  const categoryQuery = routerQuery.getQueryOption(QueryUrl.CATEGORY_QUERY);
-  const transportQuery = routerQuery.getQueryOption(QueryUrl.TRANSPORT_QUERY);
+  const { getQueryOption } = useRouterQuery();
+  const categoryQuery = getQueryOption(QueryUrl.CATEGORY_QUERY);
+  const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
 
-  const lastQueryUrl = getlastQueryUrl(query);
+  const currentSelector = transportQuery
+    ? selectCategoriesSearchRead
+    : selectCategoriesTreeList;
 
-  const currentRootCategories = useSelector(
-    selectRootCategories(rootCategories[lastQueryUrl]),
-  );
-
-  const { isLoading, data: categories } = currentRootCategories;
+  const { isLoading, data: categories } = useSelector(currentSelector);
 
   useEffect(() => {
     if (transportQuery) {
@@ -52,7 +50,7 @@ const Home: FC = () => {
         getSlugsFromUrl(transportQuery);
 
       dispatch(
-        fetchSearchReadCategory({
+        fetchTransportReadCategories({
           brandSlug,
           modelSlug,
           yearSlug,
@@ -70,6 +68,8 @@ const Home: FC = () => {
     [categoryQuery, categories],
   );
 
+  const isCategories = categories.length > 0;
+
   return (
     <>
       {(categoryQuery || transportQuery) && <NavigationBreadcrumbs isQuery />}
@@ -86,13 +86,19 @@ const Home: FC = () => {
           <Loader />
         ) : (
           <>
-            {categories.length ? (
+            {isCategories ? (
               groupedItems?.map((items, index) => {
                 const type: Index = ((index % 4) + 1) as Index;
 
                 const Component = rowHashMap[type];
 
-                return <Component key={index} items={items} />;
+                return (
+                  <Component
+                    key={index}
+                    items={items}
+                    isTransportSearch={!!transportQuery}
+                  />
+                );
               })
             ) : (
               <p>Pезультаты не найдены</p>

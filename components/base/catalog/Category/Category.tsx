@@ -14,7 +14,7 @@ import { CategoriesProps } from './types';
 import styles from './category.module.scss';
 
 const Category: FC<CategoriesProps> = ({ slug }) => {
-  const categoriesTree = useSelector(selectCategoriesTreeList);
+  const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
   const category = categoriesTree.find((item) => item.slug === slug);
 
   const children = category?.children;

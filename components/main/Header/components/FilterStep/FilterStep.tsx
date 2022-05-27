@@ -15,6 +15,7 @@ import { HandleClickProps, StepInputs } from '../../types';
 import styles from './filterSteps.module.scss';
 
 import colors from 'styles/_export.module.scss';
+import { addItemToLocaleStorage } from '../../helpers';
 
 const loaderColor = colors.blue;
 
@@ -69,6 +70,8 @@ const FilterStep: FC<FilterStepProps> = ({
     setCurrentStep(
       inputStepId === StepInputs.ENGINE ? StepInputs.ENGINE : inputStepId + 1,
     );
+
+    addItemToLocaleStorage({ slug, title });
   };
 
   const handleClosePopover = () => {

@@ -17,8 +17,9 @@ const CatalogTitle: FC = () => {
   const { slug } = router.query;
   const stringifySlug = makeStringify(slug);
 
-  const categoriesTree = useSelector(selectCategoriesTreeList);
-  const names = getCrumbs(categoriesTree);
+  const { data: categories } = useSelector(selectCategoriesTreeList);
+
+  const names = getCrumbs(categories);
 
   return (
     <Box>

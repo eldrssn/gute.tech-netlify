@@ -12,17 +12,17 @@ import { Query } from './types';
 
 const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
   const router = useRouter();
-  const categoriesTree = useSelector(selectCategoriesTreeList);
+  const { data: categories } = useSelector(selectCategoriesTreeList);
 
   const breadcrumbs = useBreadcrumbs({
     router,
-    data: categoriesTree,
+    data: categories,
     lastTitle,
   });
 
   const breadcrumbsQuery = useBreadcrumbs({
     router,
-    data: categoriesTree,
+    data: categories,
     isQuery,
   });
 

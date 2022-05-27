@@ -6,9 +6,12 @@ import Box from '@mui/material/Box';
 
 import {
   fetchCategoriesProductsList,
-  fetchTransportFiltersProductsListRead,
+  fetchTransportProductList,
 } from 'store/reducers/catalog/actions';
-import { selectCategoriesProductList } from 'store/reducers/catalog/selectors';
+import {
+  selectCategoriesProductList,
+  selectSearchProductList,
+} from 'store/reducers/catalog/selectors';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { useWindowSize } from 'hooks/useWindowSize';
@@ -28,8 +31,8 @@ import { CatalogGrid } from '../CatalogGrid';
 import { CatalogPagination } from '../CatalogPagination';
 import { CatalogSort } from '../CatalogSort';
 
-import { PAGE_QUERY, sortingDefault } from '../constants';
-import { makeStringify } from '../helpers';
+import { PAGE_QUERY } from '../constants';
+import { isNotEnoughtItems, makeStringify } from '../helpers';
 
 import styles from './catalogMain.module.scss';
 
@@ -44,8 +47,7 @@ const CatalogMain: FC = () => {
 
   const [page, setPage] = useState(1);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [sorting, setSorting] = useState<Sorting>(sortingDefault);
-  const [filterRequest, setFilterRequest] = useState<FilterRequest>({});
+  const [sorting, setSorting] = useState<Sorting | null>(null);
 
   const { slug } = router.query;
 
@@ -53,6 +55,18 @@ const CatalogMain: FC = () => {
   const isScrollUp = checkScrollUp(scrollDirection);
 
   const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
+
+  const [filterRequest, setFilterRequest] = useState<FilterRequest | null>(
+    null,
+  );
+
+  const currentSelector = transportQuery
+    ? selectSearchProductList
+    : selectCategoriesProductList;
+
+  const { isLoading, data } = useSelector(currentSelector);
+  const { pages, results, total } = data;
+  const pageCount = Number(pages);
 
   useEffect(() => {
     if (!router.isReady) {
@@ -63,10 +77,14 @@ const CatalogMain: FC = () => {
     if (pageFromQuery) {
       setPage(pageFromQuery);
     }
-  }, [router.isReady, getQueryOption]);
+
+    if (isNotEnoughtItems(total)) {
+      setPage(1);
+    }
+  }, [router.isReady, getQueryOption, total]);
 
   useEffect(() => {
-    if (!slug) {
+    if (!slug || !sorting || !filterRequest || !router.isReady) {
       return;
     }
 
@@ -82,7 +100,7 @@ const CatalogMain: FC = () => {
       const { brandSlug, modelSlug, yearSlug, engineSlug } = transportSlugs;
 
       dispatch(
-        fetchTransportFiltersProductsListRead({
+        fetchTransportProductList({
           brandSlug,
           modelSlug,
           yearSlug,
@@ -106,18 +124,14 @@ const CatalogMain: FC = () => {
           }),
         );
   }, [
+    router.isReady,
     slug,
     dispatch,
     page,
     sorting,
     filterRequest,
-    getQueryOption,
     transportQuery,
   ]);
-
-  const { isLoading, data } = useSelector(selectCategoriesProductList);
-  const { pages, results } = data;
-  const pageCount = Number(pages);
 
   const handleDrawerToggle = () => {
     setOpenDrawer((openDrawer) => !openDrawer);

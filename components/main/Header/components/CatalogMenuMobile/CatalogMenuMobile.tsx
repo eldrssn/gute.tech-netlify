@@ -26,7 +26,7 @@ const CatalogMenuMobile: FC<CatalogMenuProps> = ({
   handleClose,
   closeMainDrawer,
 }) => {
-  const categoriesTree = useSelector(selectCategoriesTreeList);
+  const { data: categories } = useSelector(selectCategoriesTreeList);
 
   const handlerCloseDrawers = () => {
     handleClose();
@@ -53,7 +53,7 @@ const CatalogMenuMobile: FC<CatalogMenuProps> = ({
         defaultExpandIcon={<ArrowForwardIosIcon className={styles.icon} />}
         className={styles.treeViewContainer}
       >
-        {categoriesTree.map((item) => (
+        {categories.map((item) => (
           <LinkWrapper
             onClick={handlerCloseDrawers}
             key={item.slug}
