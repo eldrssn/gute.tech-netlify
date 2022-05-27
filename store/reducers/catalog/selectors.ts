@@ -2,10 +2,6 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import storeSelector from 'store/storeSelector';
 
-import { CategoryStoreRootCategory } from 'store/reducers/catalog/types';
-
-import { State } from '../../types';
-
 const selectCatalogStore = createSelector(
   storeSelector,
   ({ catalogStore }) => catalogStore,
@@ -18,23 +14,27 @@ const selectCategoriesProductRead = createSelector(
 
 const selectCategoriesTreeList = createSelector(
   selectCatalogStore,
-  ({ categoriesTreeList }) => categoriesTreeList.data,
+  ({ categoriesTreeList }) => categoriesTreeList,
 );
-
-const selectRootCategories =
-  (categoryStoreBlock: CategoryStoreRootCategory) => (state: State) =>
-    categoryStoreBlock
-      ? state.catalogStore[categoryStoreBlock]
-      : state.catalogStore.categoriesTreeList;
 
 const selectCategoriesSearchRead = createSelector(
   selectCatalogStore,
-  ({ searchReadCategory }) => searchReadCategory.data,
+  ({ transportReadCategories }) => transportReadCategories,
 );
 
 const selectCategoriesProductList = createSelector(
   selectCatalogStore,
   ({ categoriesProductList }) => categoriesProductList,
+);
+
+const selectTransportFilterList = createSelector(
+  selectCatalogStore,
+  ({ transportFilterList }) => transportFilterList,
+);
+
+const selectSearchProductList = createSelector(
+  selectCatalogStore,
+  ({ transportProductList }) => transportProductList,
 );
 
 const selectCategoriesFilterList = createSelector(
@@ -51,8 +51,9 @@ export {
   selectCategoriesProductRead,
   selectCategoriesTreeList,
   selectCategoriesSubcategoriesList,
-  selectRootCategories,
+  selectSearchProductList,
   selectCategoriesSearchRead,
   selectCategoriesProductList,
   selectCategoriesFilterList,
+  selectTransportFilterList,
 };

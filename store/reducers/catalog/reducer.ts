@@ -1,13 +1,15 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
 import {
-  fetchSearchReadCategory,
+  fetchTransportReadCategories,
   fetchCategoriesList,
   fetchCategoriesTreeList,
   fetchCategoriesFiltersList,
   fetchCategoriesProductsList,
   fetchCategoriesProductsRead,
   fetchCategoriesSubcategoriesList,
+  fetchTransportProductList,
+  fetchTransportFilterList,
 } from './actions';
 
 import { CatalogStore, ErrorAction } from './types';
@@ -15,12 +17,22 @@ import {
   CategoryResponseData,
   TreeCategoryResponseData,
   FiltersCategoryResponseData,
-  CategoriesProductsListResponseData,
+  CategoriesProductListResponseData,
   CategoriesProductReadResponseData,
 } from 'api/models/catalog';
 
 const initialState: CatalogStore = {
-  searchReadCategory: {
+  transportReadCategories: {
+    data: [],
+    isLoading: false,
+    error: null,
+  },
+  transportProductList: {
+    data: { current: '', total: '', pages: '', results: [] },
+    isLoading: false,
+    error: null,
+  },
+  transportFilterList: {
     data: [],
     isLoading: false,
     error: null,
@@ -58,24 +70,43 @@ const initialState: CatalogStore = {
 };
 
 const handlers = {
-  [fetchSearchReadCategory.pending.type]: (state: CatalogStore) => {
-    state.searchReadCategory.isLoading = true;
+  [fetchTransportProductList.pending.type]: (state: CatalogStore) => {
+    state.transportProductList.isLoading = true;
   },
-  [fetchSearchReadCategory.fulfilled.type]: (
+  [fetchTransportProductList.fulfilled.type]: (
     state: CatalogStore,
-    { payload }: PayloadAction<CategoryResponseData[]>,
+    { payload }: PayloadAction<CategoriesProductListResponseData>,
   ) => {
-    state.searchReadCategory.data = payload;
-    state.searchReadCategory.isLoading = false;
-    state.searchReadCategory.error = null;
+    state.transportProductList.data = payload;
+    state.transportProductList.isLoading = false;
+    state.transportProductList.error = null;
   },
-  [fetchSearchReadCategory.rejected.type]: (
+  [fetchTransportProductList.rejected.type]: (
     state: CatalogStore,
     { error }: ErrorAction,
   ) => {
     const errorData = { name: error.name, message: error.message };
-    state.searchReadCategory.isLoading = false;
-    state.searchReadCategory.error = errorData;
+    state.transportProductList.isLoading = false;
+    state.transportProductList.error = errorData;
+  },
+  [fetchTransportReadCategories.pending.type]: (state: CatalogStore) => {
+    state.transportReadCategories.isLoading = true;
+  },
+  [fetchTransportReadCategories.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<CategoryResponseData[]>,
+  ) => {
+    state.transportReadCategories.data = payload;
+    state.transportReadCategories.isLoading = false;
+    state.transportReadCategories.error = null;
+  },
+  [fetchTransportReadCategories.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.transportReadCategories.isLoading = false;
+    state.transportReadCategories.error = errorData;
   },
 
   [fetchCategoriesList.pending.type]: (state: CatalogStore) => {
@@ -118,6 +149,26 @@ const handlers = {
     state.categoriesTreeList.error = errorData;
   },
 
+  [fetchTransportFilterList.pending.type]: (state: CatalogStore) => {
+    state.transportFilterList.isLoading = true;
+  },
+  [fetchTransportFilterList.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<FiltersCategoryResponseData[]>,
+  ) => {
+    state.transportFilterList.data = payload;
+    state.transportFilterList.isLoading = false;
+    state.transportFilterList.error = null;
+  },
+  [fetchTransportFilterList.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.transportFilterList.isLoading = false;
+    state.transportFilterList.error = errorData;
+  },
+
   [fetchCategoriesFiltersList.pending.type]: (state: CatalogStore) => {
     state.categoriesFilterList.isLoading = true;
   },
@@ -143,7 +194,7 @@ const handlers = {
   },
   [fetchCategoriesProductsList.fulfilled.type]: (
     state: CatalogStore,
-    { payload }: PayloadAction<CategoriesProductsListResponseData>,
+    { payload }: PayloadAction<CategoriesProductListResponseData>,
   ) => {
     state.categoriesProductList.data = payload;
     state.categoriesProductList.isLoading = false;
@@ -166,7 +217,6 @@ const handlers = {
     { payload }: PayloadAction<CategoriesProductReadResponseData>,
   ) => {
     state.categoriesProductRead.data = {
-      // vendor_code: payload.vendor_code,
       ...payload,
     };
     state.categoriesProductRead.isLoading = false;

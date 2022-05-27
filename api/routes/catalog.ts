@@ -7,11 +7,11 @@ import {
   CategoriesProductsListRequestData,
   CategoriesProductsReadRequestData,
   CategoriesSubcategoriesListRequestData,
-  CategoriesSearchReadRequestData,
-  CategoriesProductsListResponseData,
+  CategoriesProductListResponseData,
   CategoriesProductReadResponseData,
   FiltersCategoryResponseData,
-  TransportFiltersProductsListRead,
+  TransportProductListRead,
+  TransportSearchRequestData,
 } from 'api/models/catalog';
 
 const getCategoriesList = () =>
@@ -20,30 +20,42 @@ const getCategoriesList = () =>
     method: 'get',
   });
 
-const getCategoriesSearchRead = ({
+const getTransportCategoriesRead = ({
   brandSlug,
   modelSlug,
   yearSlug,
   engineSlug,
-}: CategoriesSearchReadRequestData) =>
+}: TransportSearchRequestData) =>
   sendRequest<CategoryResponseData[]>({
     url: `/catalog/categories/tree/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
     method: 'get',
   });
 
-const getTransportFiltersProductsListRead = ({
+const getTransportFilterList = ({
+  categorySlug,
+  brandSlug,
+  modelSlug,
+  yearSlug,
+  engineSlug,
+}: TransportProductListRead) =>
+  sendRequest<CategoryResponseData[]>({
+    url: `/catalog/${categorySlug}/filters/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
+    method: 'get',
+  });
+
+const getTransportProductListRead = ({
   brandSlug,
   modelSlug,
   yearSlug,
   engineSlug,
   categorySlug,
   page,
-  sort = 'title',
+  sort = 'popular',
   order = 'asc',
   filter = {},
-}: TransportFiltersProductsListRead) =>
-  sendRequest<CategoriesProductsListResponseData>({
-    url: `/catalog/${categorySlug}/products/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
+}: TransportProductListRead) =>
+  sendRequest<CategoriesProductListResponseData>({
+    url: `/catalog/${categorySlug}/products/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/?page=${page}&size=12&sort=${sort}&order=${order}`,
     method: 'post',
     config: {
       data: { page, sort, order, filter },
@@ -67,11 +79,11 @@ const getCategoriesFiltersList = ({
 const getCategoriesProductsList = ({
   categorySlug,
   page,
-  sort = 'title',
-  order = 'asc',
-  filter = {},
+  sort,
+  order,
+  filter,
 }: CategoriesProductsListRequestData) =>
-  sendRequest<CategoriesProductsListResponseData>({
+  sendRequest<CategoriesProductListResponseData>({
     url: `/catalog/${categorySlug}/products/?page=${page}&size=12&sort=${sort}&order=${order}`,
     method: 'post',
     config: {
@@ -97,11 +109,12 @@ const getCategoriesSubcategoriesList = ({
 
 export {
   getCategoriesList,
-  getCategoriesSearchRead,
+  getTransportCategoriesRead,
   getCategoriesTreeList,
   getCategoriesFiltersList,
   getCategoriesProductsList,
   getCategoriesProductsRead,
   getCategoriesSubcategoriesList,
-  getTransportFiltersProductsListRead,
+  getTransportProductListRead,
+  getTransportFilterList,
 };

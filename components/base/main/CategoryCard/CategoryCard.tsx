@@ -1,5 +1,7 @@
 import React from 'react';
 import CardMedia from '@mui/material/CardMedia';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 
 import { QueryUrl } from 'constants/variables';
@@ -8,10 +10,13 @@ import { useRouterQuery } from 'hooks/useRouterQuery';
 import { CategoryCardProps } from './types';
 import styles from './CategoryCard.module.scss';
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ item }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({
+  item,
+  isTransportSearch,
+}) => {
   const router = useRouter();
 
-  const { title, image, slug, found } = item;
+  const { title, image, slug, found, total } = item;
 
   const routerQuery = useRouterQuery();
 
@@ -63,10 +68,26 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item }) => {
 
   return (
     <div className={styles.categoryCard} onClick={handleClick}>
-      <span className={styles.categoryQuantity}>{found} деталей всего</span>
+      <Box
+        className={styles.categoryQuantity_container}
+        sx={{ display: { xs: 'flex', sm: 'block' } }}
+      >
+        {isTransportSearch && (
+          <span className={styles.categoryQuantity_found}>
+            {found} деталей для вашего авто
+          </span>
+        )}
+        <span className={styles.categoryQuantity}>{total} деталей всего</span>
+      </Box>
       <div className={styles.backgroundImage}></div>
 
-      <div className={styles.categoryName}>{title}</div>
+      <Typography
+        component='h4'
+        className={styles.categoryName}
+        sx={{ top: { xs: '60px', sm: '50px' } }}
+      >
+        {title}
+      </Typography>
       <CardMedia
         component='img'
         className={styles.categoryImage}

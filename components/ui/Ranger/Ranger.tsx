@@ -34,12 +34,20 @@ const Ranger: React.FC<Filter> = ({ filter, setFilterRequest }) => {
   const maxValue = getQueryParams(routerQuery, maxValueQuery);
 
   useEffect(() => {
+    if (minValue || maxValue) {
+      setFilterRequest((filterRequest) => ({
+        ...filterRequest,
+        [slug]: [
+          Number(minValue || min || '0'),
+          Number(maxValue || max || '99999999'),
+        ],
+      }));
+      return;
+    }
+
     setFilterRequest((filterRequest) => ({
       ...filterRequest,
-      [slug]: [
-        Number(minValue || min || '0'),
-        Number(maxValue || max || '99999999'),
-      ],
+      [slug]: [],
     }));
   }, [slug, minValue, maxValue, setFilterRequest, min, max]);
 

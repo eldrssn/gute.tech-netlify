@@ -3,8 +3,10 @@ import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
 import { RegionData } from 'store/reducers/regions/types';
 import { TreeCategoryResponseData } from 'api/models/catalog';
-import { CategoriesSearchReadRequestData } from 'api/models/catalog';
+import { TransportSearchRequestData } from 'api/models/catalog';
 import { CartItemData } from 'store/reducers/cart/types';
+import { QueryUrl } from 'constants/variables';
+import { NextRouter } from 'next/router';
 
 const objByThree: GroupedItemsItem = {
   firstItem: null,
@@ -18,17 +20,22 @@ const groupItems = (sortedItems?: TreeCategoryResponseData[]) => {
     return null;
   }
 
-  const { groupedItems } = sortedItems.reduce<{
+  const filterItems = sortedItems.filter((item) => item.found !== 0);
+
+  const { groupedItems } = filterItems.reduce<{
     groupedItems: GroupedItemsItem[];
     currentItem: GroupedItemsItem;
   }>(
     (acc, value, index) => {
-      const currentItem = {
-        ...acc.currentItem,
-        [objByThreeKeys[index % 3]]: value,
-      };
+      const currentItem =
+        value.found === 0
+          ? { ...acc.currentItem }
+          : {
+              ...acc.currentItem,
+              [objByThreeKeys[index % 3]]: value,
+            };
 
-      if ((index + 1) % 3 == 0 || index + 1 == sortedItems.length) {
+      if ((index + 1) % 3 == 0 || index + 1 == filterItems.length) {
         acc.groupedItems.push(currentItem);
 
         acc.currentItem = { ...objByThree };
@@ -115,7 +122,7 @@ const cookieStorage = {
 
 const getSlugsFromUrl = (
   urls: string | string[],
-): CategoriesSearchReadRequestData => {
+): TransportSearchRequestData => {
   if (Array.isArray(urls)) {
     const slugs = urls.reduce(
       (accumulator, url) => {
@@ -172,6 +179,38 @@ const getSlugsCartItemsFromCart = (cart: CartItemData[]) =>
     })
     .join('&');
 
+// !TODO: переделать и переиспользовать три функции ниже
+const getTransportSlugs = (transportQuery?: string | string[]) => {
+  const isTransportQuery =
+    Array.isArray(transportQuery) && transportQuery.length > 0;
+
+  if (isTransportQuery) {
+    const transportQueryFormatted = transportQuery.map(
+      (query) => `${QueryUrl.TRANSPORT_QUERY}=${query}`,
+    );
+    return transportQueryFormatted.join('&');
+  }
+};
+
+const goToCatalog = (slug: string, router: NextRouter) =>
+  router.push(`/catalog/${slug}?page=1&order=byPopularDown`, undefined, {
+    shallow: true,
+  });
+
+const goToTransportCatalog = (
+  slug: string,
+  transportQuery: string | string[],
+  router: NextRouter,
+) => {
+  const transportSlugs = getTransportSlugs(transportQuery);
+
+  router.push(
+    `/catalog/${slug}?${transportSlugs}&page=1&order=byPopularDown`,
+    undefined,
+    { shallow: true },
+  );
+};
+
 export {
   groupItems,
   getInputRules,
@@ -180,4 +219,7 @@ export {
   filterRegionsOption,
   cookieStorage,
   getSlugsFromUrl,
+  getTransportSlugs,
+  goToCatalog,
+  goToTransportCatalog,
 };

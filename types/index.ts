@@ -16,7 +16,7 @@ type FilterRequest = Record<string, (string | number)[]>;
 
 type Filter = {
   filter: FiltersCategoryResponseData;
-  setFilterRequest: React.Dispatch<React.SetStateAction<FilterRequest>>;
+  setFilterRequest: React.Dispatch<React.SetStateAction<FilterRequest | null>>;
 };
 
 export type { ComponentWithPageLayout, Sorting, FilterRequest, Filter };

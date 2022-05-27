@@ -1,34 +1,37 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  getCategoriesSearchRead,
+  getTransportProductListRead,
   getCategoriesList,
   getCategoriesTreeList,
   getCategoriesFiltersList,
   getCategoriesProductsList,
   getCategoriesProductsRead,
   getCategoriesSubcategoriesList,
-  getTransportFiltersProductsListRead,
+  getTransportFilterList,
+  getTransportCategoriesRead,
 } from 'api/routes/catalog';
 
 import {
-  CategoriesSearchReadRequestData,
+  TransportSearchRequestData,
   CategoriesFiltersListRequestData,
   CategoriesProductsListRequestData,
   CategoriesProductsReadRequestData,
   CategoriesSubcategoriesListRequestData,
-  TransportFiltersProductsListRead,
+  TransportProductListRead,
 } from 'api/models/catalog';
 
-const fetchSearchReadCategory = createAsyncThunk(
-  'CatalogStore/fetchSearchReadCategory',
+const fetchTransportFilterList = createAsyncThunk(
+  'CatalogStore/fetchTransportFiltersList',
   async ({
+    categorySlug,
     brandSlug,
     modelSlug,
     yearSlug,
     engineSlug,
-  }: CategoriesSearchReadRequestData) => {
-    const data = await getCategoriesSearchRead({
+  }: TransportProductListRead) => {
+    const data = await getTransportFilterList({
+      categorySlug,
       brandSlug,
       modelSlug,
       yearSlug,
@@ -39,8 +42,27 @@ const fetchSearchReadCategory = createAsyncThunk(
   },
 );
 
-const fetchTransportFiltersProductsListRead = createAsyncThunk(
-  'CatalogStore/fetchSearchReadCategory',
+const fetchTransportReadCategories = createAsyncThunk(
+  'CatalogStore/fetchTransportReadCategories',
+  async ({
+    brandSlug,
+    modelSlug,
+    yearSlug,
+    engineSlug,
+  }: TransportSearchRequestData) => {
+    const data = await getTransportCategoriesRead({
+      brandSlug,
+      modelSlug,
+      yearSlug,
+      engineSlug,
+    });
+
+    return data;
+  },
+);
+
+const fetchTransportProductList = createAsyncThunk(
+  'CatalogStore/fetchSearchProductList',
   async ({
     brandSlug,
     modelSlug,
@@ -51,8 +73,8 @@ const fetchTransportFiltersProductsListRead = createAsyncThunk(
     sort,
     order,
     filter,
-  }: TransportFiltersProductsListRead) => {
-    const data = await getTransportFiltersProductsListRead({
+  }: TransportProductListRead) => {
+    const data = await getTransportProductListRead({
       brandSlug,
       modelSlug,
       yearSlug,
@@ -137,12 +159,13 @@ const fetchCategoriesSubcategoriesList = createAsyncThunk(
 );
 
 export {
-  fetchSearchReadCategory,
+  fetchTransportReadCategories,
   fetchCategoriesList,
   fetchCategoriesTreeList,
   fetchCategoriesFiltersList,
   fetchCategoriesProductsList,
   fetchCategoriesProductsRead,
   fetchCategoriesSubcategoriesList,
-  fetchTransportFiltersProductsListRead,
+  fetchTransportProductList,
+  fetchTransportFilterList,
 };

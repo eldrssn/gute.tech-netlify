@@ -16,15 +16,15 @@ export type CategoriesProductsListRequestData = {
   filter?: FilterRequest;
 };
 
-export type CategoriesSearchReadRequestData = {
+export type TransportSearchRequestData = {
   brandSlug: string;
   modelSlug: string;
   yearSlug: string;
   engineSlug: string;
 };
 
-export type TransportFiltersProductsListRead =
-  CategoriesProductsListRequestData & CategoriesSearchReadRequestData;
+export type TransportProductListRead = CategoriesProductsListRequestData &
+  TransportSearchRequestData;
 
 export type CategoriesFiltersListRequestData = {
   categorySlug: string;
@@ -47,6 +47,7 @@ export type CategoryResponseData = {
   title: string;
   slug: string;
   image: string;
+  total: number;
   found: number;
 };
 
@@ -55,6 +56,7 @@ export type TreeCategoryResponseData = {
   slug: string;
   image?: string;
   found: number;
+  total: number;
   children?: TreeCategoryResponseData[];
 };
 
@@ -78,7 +80,7 @@ export type FiltersCategoryResponseData = {
   values?: CheckboxValue[];
 };
 
-export type CategoriesProductsListResponseData = {
+export type CategoriesProductListResponseData = {
   current: string;
   total: string;
   pages: string;

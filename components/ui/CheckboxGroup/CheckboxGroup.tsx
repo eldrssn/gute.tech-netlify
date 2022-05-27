@@ -26,6 +26,7 @@ const CheckboxGroup: React.FC<Filter> = ({ filter, setFilterRequest }) => {
         ...filterRequest,
         [slug]: options,
       }));
+
       return;
     }
 
@@ -35,15 +36,18 @@ const CheckboxGroup: React.FC<Filter> = ({ filter, setFilterRequest }) => {
     }));
   }, [setFilterRequest, queryOption, slug]);
 
-  const setOnChange = (checked: boolean, { value }: CheckboxValue) => {
-    if (!checked) {
-      removeQuery(slug, value);
+  const setOnChange = useCallback(
+    (checked: boolean, { value }: CheckboxValue) => {
+      if (!checked) {
+        removeQuery(slug, value);
 
-      return;
-    }
+        return;
+      }
 
-    updateQueryOption(slug, value);
-  };
+      updateQueryOption(slug, value);
+    },
+    [removeQuery, slug, updateQueryOption],
+  );
 
   const getIsChecked = useCallback(
     (name: string) => {

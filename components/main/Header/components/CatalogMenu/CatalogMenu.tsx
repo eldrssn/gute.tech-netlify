@@ -19,7 +19,7 @@ import { CatalogMenuProps, RenderItem } from './types';
 import styles from './catalogMenu.module.scss';
 
 const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
-  const categoriesTree = useSelector(selectCategoriesTreeList);
+  const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
 
   const [childrenBox, setChildrenBox] = useState<
     null | TreeCategoryResponseData[]

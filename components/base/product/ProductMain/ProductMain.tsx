@@ -62,10 +62,7 @@ const ProductMain: FC = () => {
       <Container className={styles.mainContainer} disableGutters>
         <Subcategories />
 
-        <Container
-          disableGutters
-          // sx={{ width: '100%' }}
-        >
+        <Container disableGutters>
           <NavigationBreadcrumbs lastTitle={title || 'Имя отсутствует'} />
 
           <h1 className={styles.title}>{title || 'Имя отсутствует'}</h1>
