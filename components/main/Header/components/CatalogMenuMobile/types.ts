@@ -8,6 +8,7 @@ type CatalogMenuProps = {
 type LinkWrapperProps = {
   item: TreeCategoryResponseData;
   onClick?: () => void;
+  parentSlug?: string;
 };
 
 export type { CatalogMenuProps, LinkWrapperProps };

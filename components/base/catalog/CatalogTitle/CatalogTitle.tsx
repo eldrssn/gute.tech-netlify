@@ -7,15 +7,14 @@ import Box from '@mui/material/Box';
 
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import { getCrumbs } from 'hooks/useBreadcrumbs/helpers';
-
-import { makeStringify } from '../helpers';
+import { makeStringify } from 'utility/helpers';
 
 import styles from './catalogTitle.module.scss';
 
 const CatalogTitle: FC = () => {
   const router = useRouter();
-  const { slug } = router.query;
-  const stringifySlug = makeStringify(slug);
+  const { subcategorySlug } = router.query;
+  const stringifySlug = makeStringify(subcategorySlug);
 
   const { data: categories } = useSelector(selectCategoriesTreeList);
 

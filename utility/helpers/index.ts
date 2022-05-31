@@ -3,10 +3,8 @@ import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
 import { RegionData } from 'store/reducers/regions/types';
 import { TreeCategoryResponseData } from 'api/models/catalog';
-import { TransportSearchRequestData } from 'api/models/catalog';
 import { CartItemData } from 'store/reducers/cart/types';
-import { QueryUrl } from 'constants/variables';
-import { NextRouter } from 'next/router';
+import { ListOptionsItemData } from 'api/models/transport';
 
 const objByThree: GroupedItemsItem = {
   firstItem: null,
@@ -120,9 +118,7 @@ const cookieStorage = {
   },
 };
 
-const getSlugsFromUrl = (
-  urls: string | string[],
-): TransportSearchRequestData => {
+const getSlugsFromUrl = (urls: string | string[]) => {
   if (Array.isArray(urls)) {
     const slugs = urls.reduce(
       (accumulator, url) => {
@@ -179,6 +175,9 @@ const getSlugsCartItemsFromCart = (cart: CartItemData[]) =>
     })
     .join('&');
 
+const makeStringify = (value?: string[] | string) =>
+  typeof value === 'string' ? value : value?.toString() || '';
+
 const getParentCategory = ({
   categoriesTreeList,
   childrenCategorySlug,
@@ -199,36 +198,17 @@ const getParentCategory = ({
   return categorySearch?.slug;
 };
 
-// !TODO: переделать и переиспользовать три функции ниже
-const getTransportSlugs = (transportQuery?: string | string[]) => {
-  const isTransportQuery =
-    Array.isArray(transportQuery) && transportQuery.length > 0;
+const checkBrandsList = (data: ListOptionsItemData[]): ListOptionsItemData[] =>
+  data[0]?.brands
+    ? data.flatMap((item) => (item.brands ? item.brands : item))
+    : data;
 
-  if (isTransportQuery) {
-    const transportQueryFormatted = transportQuery.map(
-      (query) => `${QueryUrl.TRANSPORT_QUERY}=${query}`,
-    );
-    return transportQueryFormatted.join('&');
-  }
-};
-
-const goToCatalog = (slug: string, router: NextRouter) =>
-  router.push(`/catalog/${slug}?page=1&order=byPopularDown`, undefined, {
-    shallow: true,
-  });
-
-const goToTransportCatalog = (
-  slug: string,
-  transportQuery: string | string[],
-  router: NextRouter,
-) => {
-  const transportSlugs = getTransportSlugs(transportQuery);
-
-  router.push(
-    `/catalog/${slug}?${transportSlugs}&page=1&order=byPopularDown`,
-    undefined,
-    { shallow: true },
+const findTransportType = (data: ListOptionsItemData[], slug: string) => {
+  const type = data.find((item) =>
+    item.brands?.find((type) => type.slug === slug),
   );
+
+  return type?.slug;
 };
 
 export {
@@ -239,8 +219,8 @@ export {
   filterRegionsOption,
   cookieStorage,
   getSlugsFromUrl,
+  makeStringify,
+  checkBrandsList,
+  findTransportType,
   getParentCategory,
-  getTransportSlugs,
-  goToCatalog,
-  goToTransportCatalog,
 };

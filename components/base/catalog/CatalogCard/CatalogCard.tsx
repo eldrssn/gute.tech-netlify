@@ -19,6 +19,12 @@ import { fetchItemFromCart } from 'store/reducers/cart/actions';
 import { CustomButton } from 'components/ui/CustomButton';
 
 import styles from './catalogCard.module.scss';
+import {
+  getLinkToProductPage,
+  getLinkToTransportProductPage,
+} from 'utility/helpers/linkmakers';
+import { QueryUrl } from 'constants/variables';
+import { useRouterQuery } from 'hooks/useRouterQuery';
 
 const CatalogCard: React.FC<ProductListData> = ({
   image,
@@ -29,7 +35,11 @@ const CatalogCard: React.FC<ProductListData> = ({
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const { slug: categorySlug } = router.query;
+
+  const { getQueryOption } = useRouterQuery();
+  const { categorySlug, subcategorySlug } = router.query;
+  const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
+  const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
 
   const addItemToBasket = () => {
     dispatch(fetchItemFromCart({ productSlug: slug }));
@@ -41,6 +51,20 @@ const CatalogCard: React.FC<ProductListData> = ({
     event.preventDefault();
   };
 
+  const linkToProductPage = transportQuery
+    ? getLinkToTransportProductPage({
+        categorySlug,
+        subcategorySlug,
+        productSlug: slug,
+        transportQuery,
+        transportId,
+      })
+    : getLinkToProductPage({
+        categorySlug,
+        subcategorySlug,
+        productSlug: slug,
+      });
+
   return (
     <>
       <ModalAddedItem
@@ -49,7 +73,7 @@ const CatalogCard: React.FC<ProductListData> = ({
         title={title}
       />
       <Card component='article' className={styles.cardContainer}>
-        <Link href={`/catalog/${categorySlug}/${slug}`}>
+        <Link href={linkToProductPage}>
           <a className={styles.cardLinkContainer}>
             <CardMedia
               component={'img'}

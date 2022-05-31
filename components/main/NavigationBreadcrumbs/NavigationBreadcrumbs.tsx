@@ -27,7 +27,10 @@ const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
   });
 
   return (
-    <Breadcrumbs aria-label='breadcrumb'>
+    <Breadcrumbs
+      aria-label='breadcrumb'
+      sx={{ paddingTop: { xs: '15px', md: 0 } }}
+    >
       {isQuery
         ? breadcrumbsQuery.map((crumb, index) => (
             <Crumb {...crumb} key={index} />

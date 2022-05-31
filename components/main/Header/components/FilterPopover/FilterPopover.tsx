@@ -10,12 +10,14 @@ import {
   selectYears,
   selectEngines,
 } from 'store/reducers/transport/selectors';
+import { checkBrandsList } from 'utility/helpers';
 
 import { filterData } from './helpers';
 import { widthListByStep, widthButtonByStep } from '../../constants';
 import { FilterPopoverProps } from './types';
 import { ListOptionsItem } from 'api/models/transport';
 import { StepInputs } from '../../types';
+
 import styles from './styles.module.scss';
 
 const FilterPopover: FC<FilterPopoverProps> = ({
@@ -74,7 +76,10 @@ const FilterPopover: FC<FilterPopoverProps> = ({
 
   const widthList = widthListByStep[openPopoverId];
   const widthButton = widthButtonByStep[openPopoverId];
-  const filteredData = searchValue ? filterData(searchValue, data) : data;
+
+  const filteredData = searchValue
+    ? filterData(searchValue, checkBrandsList(data))
+    : checkBrandsList(data);
 
   return (
     <Box
@@ -87,7 +92,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
         component='div'
         className={styles.background}
         onClick={handleClosePopover}
-      ></Box>
+      />
       <Box component='div' className={styles.list} sx={{ width: widthList }}>
         {isLoading
           ? null

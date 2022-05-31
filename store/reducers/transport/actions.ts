@@ -17,8 +17,8 @@ const fetchBrands = createAsyncThunk('transport/fetchBrands', async () => {
 
 const fetchModels = createAsyncThunk(
   'transport/fetchModel',
-  async ({ brandSlug }: BrandSlug) => {
-    const data = await getModel({ brandSlug });
+  async ({ transportType, brandSlug }: BrandSlug) => {
+    const data = await getModel({ transportType, brandSlug });
 
     return data;
   },
@@ -26,8 +26,8 @@ const fetchModels = createAsyncThunk(
 
 const fetchYears = createAsyncThunk(
   'transport/fetchYears',
-  async ({ brandSlug, modelSlug }: YearsSlugs) => {
-    const data = await getYears({ brandSlug, modelSlug });
+  async ({ transportType, brandSlug, modelSlug }: YearsSlugs) => {
+    const data = await getYears({ transportType, brandSlug, modelSlug });
 
     return data;
   },
@@ -35,8 +35,13 @@ const fetchYears = createAsyncThunk(
 
 const fetchEngines = createAsyncThunk(
   'transport/fetchEngines',
-  async ({ brandSlug, yearSlug, modelSlug }: EnginesSlugs) => {
-    const data = await getEngines({ brandSlug, yearSlug, modelSlug });
+  async ({ transportType, brandSlug, yearSlug, modelSlug }: EnginesSlugs) => {
+    const data = await getEngines({
+      transportType,
+      brandSlug,
+      yearSlug,
+      modelSlug,
+    });
 
     return data;
   },

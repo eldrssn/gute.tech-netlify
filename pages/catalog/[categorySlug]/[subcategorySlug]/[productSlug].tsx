@@ -1,4 +1,3 @@
-import { makeStringify } from 'components/base/catalog/helpers';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -8,14 +7,15 @@ import {
 } from 'store/reducers/catalog/actions';
 
 import { ProductMain } from 'components/base/product/ProductMain';
+import { makeStringify } from 'utility/helpers';
 
 const Product = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { slug, productSlug } = router.query;
+  const { categorySlug, productSlug } = router.query;
 
-  const stringifiedCategorySlug = makeStringify(slug);
+  const stringifiedCategorySlug = makeStringify(categorySlug);
   const stringifiedProductSlug = makeStringify(productSlug);
 
   useEffect(() => {

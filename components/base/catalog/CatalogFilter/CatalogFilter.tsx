@@ -10,6 +10,10 @@ import {
   selectTransportFilterList,
 } from 'store/reducers/catalog/selectors';
 import { Loader } from 'components/ui/Loader';
+import {
+  getLinkToCatalog,
+  getLinkToTransportCatalog,
+} from 'utility/helpers/linkmakers';
 
 import { componentByType } from './constants';
 import { CatalogFilterProps } from './types';
@@ -17,38 +21,19 @@ import { CatalogFilterProps } from './types';
 import styles from './catalogFilter.module.scss';
 
 const CatalogFilter: FC<CatalogFilterProps> = ({ setFilterRequest }) => {
-  const routerQuery = useRouterQuery();
   const router = useRouter();
+  const { getQueryOption } = useRouterQuery();
 
-  const { slug } = router.query;
+  const { categorySlug, subcategorySlug } = router.query;
 
-  const transportQuery = routerQuery.getQueryOption(QueryUrl.TRANSPORT_QUERY);
+  const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
+  const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
 
   const currentSelector = transportQuery
     ? selectTransportFilterList
     : selectCategoriesFilterList;
 
   const { isLoading, data: filters } = useSelector(currentSelector);
-
-  const isTransportQuery =
-    Array.isArray(transportQuery) && transportQuery.length > 0;
-
-  const getTransportSlug = () => {
-    if (isTransportQuery) {
-      const transportQueryFormatted = transportQuery.map(
-        (query) => `${QueryUrl.TRANSPORT_QUERY}=${query}`,
-      );
-      return transportQueryFormatted.join('&');
-    }
-  };
-
-  const goToFiltersUrl = () => {
-    router.push(
-      `/catalog/${slug}?${getTransportSlug()}&page=1&order=byPopularDown`,
-      undefined,
-      { shallow: true },
-    );
-  };
 
   useEffect(
     () => () => {
@@ -58,10 +43,17 @@ const CatalogFilter: FC<CatalogFilterProps> = ({ setFilterRequest }) => {
     [],
   );
 
+  const linkToTransportCatalog = getLinkToTransportCatalog({
+    categorySlug,
+    subcategorySlug,
+    transportQuery,
+    transportId,
+  });
+
+  const linkToCatalog = getLinkToCatalog({ categorySlug, subcategorySlug });
+
   const handleResetClick = () => {
-    transportQuery
-      ? goToFiltersUrl()
-      : router.push(`/catalog/${slug}?page=1&order=byPopularDown`);
+    router.push(transportQuery ? linkToTransportCatalog : linkToCatalog);
   };
 
   return isLoading ? (

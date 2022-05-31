@@ -12,6 +12,7 @@ type FormDataItem = {
 };
 
 type FormData = {
+  type: FormDataItem;
   brand: FormDataItem;
   model: FormDataItem;
   year: FormDataItem;

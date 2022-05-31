@@ -1,5 +1,5 @@
-import { TransportSearchRequestData } from 'api/models/catalog';
 import { getBrands, getEngines, getModel } from 'api/routes/transport';
+import { checkBrandsList, findTransportType } from 'utility/helpers';
 
 const addItemToLocaleStorage = ({ slug, title }: Record<string, string>) => {
   try {
@@ -11,9 +11,7 @@ const addItemToLocaleStorage = ({ slug, title }: Record<string, string>) => {
   }
 };
 
-const getTransportTitles = async (
-  transportSlugs: TransportSearchRequestData,
-) => {
+const getTransportTitles = async (transportSlugs: Record<string, string>) => {
   const { brandSlug, modelSlug, yearSlug, engineSlug } = transportSlugs;
 
   const brandTitle = localStorage[brandSlug];
@@ -21,9 +19,14 @@ const getTransportTitles = async (
   const year = localStorage[yearSlug];
   const engineTitle = localStorage[engineSlug];
 
+  let typeSlug: string | undefined;
+
   const getBrandTitle = async () => {
-    const brands = await getBrands();
+    const brandsData = await getBrands();
+    const brands = checkBrandsList(brandsData);
     const brand = brands.find((brand) => brand.slug === brandSlug);
+
+    typeSlug = findTransportType(brands, brandSlug);
 
     if (!brand) {
       return '';
@@ -38,7 +41,7 @@ const getTransportTitles = async (
   };
 
   const getModelTitle = async () => {
-    const models = await getModel({ brandSlug });
+    const models = await getModel({ transportType: typeSlug, brandSlug });
     const model = models.find((model) => model.slug === modelSlug);
 
     if (!model) {
@@ -54,7 +57,12 @@ const getTransportTitles = async (
   };
 
   const getEngineTitle = async () => {
-    const engines = await getEngines({ brandSlug, modelSlug, yearSlug });
+    const engines = await getEngines({
+      transportType: typeSlug,
+      brandSlug,
+      modelSlug,
+      yearSlug,
+    });
     const engine = engines.find((engine) => engine.slug === engineSlug);
 
     if (!engine) {

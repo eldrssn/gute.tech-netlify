@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
@@ -8,53 +8,26 @@ import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
-import { TreeCategoryResponseData } from 'api/models/catalog';
+import {
+  getLinkToCatalog,
+  getLinkToCategory,
+} from 'utility/helpers/linkmakers';
 
 import { CategoriesProps } from './types';
 import styles from './category.module.scss';
 
-const Category: FC<CategoriesProps> = ({ slug }) => {
+const Category: FC<CategoriesProps> = ({ categorySlug }) => {
   const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
-  const category = categoriesTree.find((item) => item.slug === slug);
+  const category = categoriesTree.find((item) => item.slug === categorySlug);
 
   const children = category?.children;
   const title = category?.title;
 
-  const renderLastCategories = (child: TreeCategoryResponseData) =>
-    child.children?.map((child) => (
-      <Link
-        href={`/catalog/${child.slug}?page=1&order=byPopularDown`}
-        key={child.slug}
-      >
-        <a>
-          <MenuItem className={styles.lastCategory_title}>
-            {child.title}
-          </MenuItem>
-        </a>
-      </Link>
-    ));
-
-  const renderSubcategories = (child: TreeCategoryResponseData) =>
-    child.children?.map((child) => (
-      <Fragment key={child.slug}>
-        <Link
-          href={`/catalog/${child.slug}?page=1&order=byPopularDown`}
-          key={child.slug}
-        >
-          <a>
-            <MenuItem className={styles.subcategory_title}>
-              {child.title}
-            </MenuItem>
-          </a>
-        </Link>
-
-        {Boolean(child.children) && renderLastCategories(child)}
-      </Fragment>
-    ));
+  const linkToCategory = getLinkToCategory(categorySlug);
 
   return (
     <Container disableGutters>
-      <Link href={`/catalog/${slug}?page=1&order=byPopularDown`}>
+      <Link href={linkToCategory}>
         <a>
           <h2 className={styles.header}>{title}</h2>
         </a>
@@ -65,23 +38,26 @@ const Category: FC<CategoriesProps> = ({ slug }) => {
         sx={{ columnCount: { sm: 1, md: 3, lg: 4 } }}
         className={styles.childrenList}
       >
-        {children?.map((child) => (
-          <Box key={child.slug} className={styles.childrenListItem}>
-            <Link
-              href={`/catalog/${child.slug}?page=1&order=byPopularDown`}
-              key={child.slug}
-            >
-              <a>
-                <MenuItem className={styles.category_title}>
-                  {child.title}
-                </MenuItem>
-              </a>
-            </Link>
+        {children?.map((child) => {
+          const linkToCatalog = getLinkToCatalog({
+            categorySlug,
+            subcategorySlug: child.slug,
+          });
 
-            {Boolean(child.children) && renderSubcategories(child)}
-            <Divider light={true} />
-          </Box>
-        ))}
+          return (
+            <Box key={child.slug} className={styles.childrenListItem}>
+              <Link href={linkToCatalog} key={child.slug}>
+                <a>
+                  <MenuItem className={styles.category_title}>
+                    {child.title}
+                  </MenuItem>
+                </a>
+              </Link>
+
+              <Divider light={true} />
+            </Box>
+          );
+        })}
       </Container>
     </Container>
   );

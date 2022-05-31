@@ -4,10 +4,12 @@ type CatalogMenuProps = {
   handleClose: () => void;
 };
 
-type RenderItem = {
+type CatalogMenuItemProps = {
   item: TreeCategoryResponseData;
   className?: string;
   onMouseEnter?: () => void;
+  parentSlug?: string;
+  handleClose: () => void;
 };
 
-export type { CatalogMenuProps, RenderItem };
+export type { CatalogMenuProps, CatalogMenuItemProps };

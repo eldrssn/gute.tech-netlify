@@ -6,6 +6,10 @@ import { useRouter } from 'next/router';
 
 import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
+import {
+  getLinkToCatalog,
+  getLinkToTransportCatalog,
+} from 'utility/helpers/linkmakers';
 
 import { CategoryCardProps } from './types';
 import styles from './CategoryCard.module.scss';
@@ -20,49 +24,31 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
 
   const routerQuery = useRouterQuery();
 
-  const isInCategory = routerQuery.getQueryOption(QueryUrl.CATEGORY_QUERY);
+  const categorySlug = routerQuery.getQueryOption(QueryUrl.CATEGORY_QUERY);
 
   const transportQuery = routerQuery.getQueryOption(QueryUrl.TRANSPORT_QUERY);
+  const transportId = routerQuery.getQueryOption(QueryUrl.TRANSPORT_ID);
 
   const setQuery = () =>
     routerQuery.setQueryOption(QueryUrl.CATEGORY_QUERY, slug);
 
-  const isTransportQuery =
-    Array.isArray(transportQuery) && transportQuery.length > 0;
+  const linkToTransportCatalog = getLinkToTransportCatalog({
+    categorySlug,
+    subcategorySlug: slug,
+    transportQuery,
+    transportId,
+  });
 
-  const getTransportSlug = () => {
-    if (isTransportQuery) {
-      const transportQueryFormatted = transportQuery.map(
-        (query) => `${QueryUrl.TRANSPORT_QUERY}=${query}`,
-      );
-      return transportQueryFormatted.join('&');
-    }
-  };
-
-  const goToUrl = () =>
-    router.push(`/catalog/${slug}?page=1&order=byPopularDown`, undefined, {
-      shallow: true,
-    });
-
-  const goToFiltersUrl = () => {
-    router.push(
-      `/catalog/${slug}?${getTransportSlug()}&page=1&order=byPopularDown`,
-      undefined,
-      { shallow: true },
-    );
-  };
+  const linkToCatalog = getLinkToCatalog({
+    categorySlug,
+    subcategorySlug: slug,
+  });
 
   const handleClick = () => {
-    if (isTransportQuery && isInCategory) {
-      goToFiltersUrl();
+    if (categorySlug) {
+      router.push(transportId ? linkToTransportCatalog : linkToCatalog);
       return;
     }
-
-    if (isInCategory) {
-      goToUrl();
-      return;
-    }
-
     setQuery();
   };
 

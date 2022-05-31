@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { defaultPaths } from './constants';
 import {
   getCrumblistFromQuery,
   getCrumblistFromURL,
@@ -8,20 +9,15 @@ import {
 
 import { UseBreadcrumbs } from './types';
 
-const defaultPath: Record<string, string> = {
-  catalog: 'Каталог',
-};
-
 const useBreadcrumbs = ({ router, data, isQuery, lastTitle }: UseBreadcrumbs) =>
   useMemo(() => {
-    const newPaths = getCrumbs(data);
-    const paths = { ...defaultPath, ...newPaths };
+    const paths = getCrumbs(data);
 
     const crumblist = isQuery
       ? getCrumblistFromQuery(router, paths)
       : getCrumblistFromURL(router, paths, lastTitle);
 
-    return [{ href: '/', text: 'Главная' }, ...crumblist];
+    return [...defaultPaths, ...crumblist];
   }, [router, data, isQuery, lastTitle]);
 
 export { useBreadcrumbs };

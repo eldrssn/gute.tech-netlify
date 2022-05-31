@@ -68,27 +68,14 @@ const CatalogMenuMobile: FC<CatalogMenuProps> = ({
                 <LinkWrapper
                   onClick={handlerCloseDrawers}
                   key={child.slug}
+                  parentSlug={item.slug}
                   item={child}
                 >
                   <CustomCatalogTree
                     key={child.slug}
                     nodeId={child.slug}
                     label={child.title}
-                  >
-                    {child.children?.map((subchild) => (
-                      <LinkWrapper
-                        onClick={handlerCloseDrawers}
-                        key={subchild.slug}
-                        item={subchild}
-                      >
-                        <CustomCatalogTree
-                          key={subchild.slug}
-                          nodeId={subchild.slug}
-                          label={subchild.title}
-                        />
-                      </LinkWrapper>
-                    ))}
-                  </CustomCatalogTree>
+                  />
                 </LinkWrapper>
               ))}
             </CustomCatalogTree>

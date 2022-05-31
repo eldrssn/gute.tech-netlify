@@ -5,6 +5,8 @@ type FilterStepsProps = {
   setOpenPopoverId: React.Dispatch<React.SetStateAction<number>>;
   currentStep: number;
   setCurrentStep: (currentStep: number) => void;
+  setTransportType: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setTransportId: React.Dispatch<React.SetStateAction<string | undefined>>;
 } & FormProps;
 
 type filterStepsData = {
