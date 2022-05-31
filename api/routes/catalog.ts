@@ -23,41 +23,32 @@ const getCategoriesList = () =>
   });
 
 const getTransportCategoriesRead = ({
-  brandSlug,
-  modelSlug,
-  yearSlug,
-  engineSlug,
+  transportId,
 }: TransportSearchRequestData) =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/categories/tree/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
+    url: `/catalog/categories/tree/${transportId}/`,
     method: 'get',
   });
 
 const getTransportFilterList = ({
-  categorySlug,
-  brandSlug,
-  modelSlug,
-  yearSlug,
-  engineSlug,
+  subcategorySlug,
+  transportId,
 }: TransportProductListRead) =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/${categorySlug}/filters/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/`,
+    url: `/catalog/${subcategorySlug}/filters/${transportId}/`,
     method: 'get',
   });
 
 const getTransportProductListRead = ({
-  brandSlug,
-  modelSlug,
-  yearSlug,
-  engineSlug,
-  categorySlug,
+  transportId,
+  subcategorySlug,
   page,
   sort = 'popular',
   order = 'asc',
   filter = {},
 }: TransportProductListRead) =>
   sendRequest<CategoriesProductListResponseData>({
-    url: `/catalog/${categorySlug}/products/${brandSlug}/${modelSlug}/${yearSlug}/${engineSlug}/?page=${page}&size=12&sort=${sort}&order=${order}`,
+    url: `/catalog/${subcategorySlug}/products/${transportId}/?page=${page}&size=12&sort=${sort}&order=${order}`,
     method: 'post',
     config: {
       data: { page, sort, order, filter },
@@ -71,22 +62,22 @@ const getCategoriesTreeList = () =>
   });
 
 const getCategoriesFiltersList = ({
-  categorySlug,
+  subcategorySlug,
 }: CategoriesFiltersListRequestData) =>
   sendRequest<FiltersCategoryResponseData[]>({
-    url: `/catalog/${categorySlug}/filters/`,
+    url: `/catalog/${subcategorySlug}/filters/`,
     method: 'get',
   });
 
 const getCategoriesProductsList = ({
-  categorySlug,
+  subcategorySlug,
   page,
   sort,
   order,
   filter,
 }: CategoriesProductsListRequestData) =>
   sendRequest<CategoriesProductListResponseData>({
-    url: `/catalog/${categorySlug}/products/?page=${page}&size=12&sort=${sort}&order=${order}`,
+    url: `/catalog/${subcategorySlug}/products/?page=${page}&size=12&sort=${sort}&order=${order}`,
     method: 'post',
     config: {
       data: { page, sort, order, filter },

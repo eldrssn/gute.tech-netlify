@@ -18,7 +18,7 @@ import { useWindowSize } from 'hooks/useWindowSize';
 import { checkScrollUp } from 'hooks/useScrollDirection/helpers';
 import { useScrollDirection } from 'hooks/useScrollDirection';
 import { checkMobileView } from 'utility/helpers/checkViewType';
-import { getSlugsFromUrl } from 'utility/helpers';
+import { makeStringify } from 'utility/helpers';
 import { QueryUrl } from 'constants/variables';
 
 import { CustomButton } from 'components/ui/CustomButton';
@@ -32,7 +32,7 @@ import { CatalogPagination } from '../CatalogPagination';
 import { CatalogSort } from '../CatalogSort';
 
 import { PAGE_QUERY } from '../constants';
-import { isNotEnoughtItems, makeStringify } from '../helpers';
+import { isNotEnoughtItems } from '../helpers';
 
 import styles from './catalogMain.module.scss';
 
@@ -48,19 +48,17 @@ const CatalogMain: FC = () => {
   const [page, setPage] = useState(1);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [sorting, setSorting] = useState<Sorting | null>(null);
-
-  const { slug } = router.query;
-
-  const isMobileView = checkMobileView(windowWidth);
-  const isScrollUp = checkScrollUp(scrollDirection);
-
-  const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
-
   const [filterRequest, setFilterRequest] = useState<FilterRequest | null>(
     null,
   );
 
-  const currentSelector = transportQuery
+  const { subcategorySlug } = router.query;
+  const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
+
+  const isMobileView = checkMobileView(windowWidth);
+  const isScrollUp = checkScrollUp(scrollDirection);
+
+  const currentSelector = transportId
     ? selectSearchProductList
     : selectCategoriesProductList;
 
@@ -84,53 +82,46 @@ const CatalogMain: FC = () => {
   }, [router.isReady, getQueryOption, total]);
 
   useEffect(() => {
-    if (!slug || !sorting || !filterRequest || !router.isReady) {
+    if (!subcategorySlug || !sorting || !filterRequest || !router.isReady) {
       return;
     }
 
-    const stringifySlug = makeStringify(slug);
+    const stringifySlug = makeStringify(subcategorySlug);
 
     const fetchTransportList = () => {
-      if (typeof transportQuery === 'string' || !transportQuery) {
+      if (Array.isArray(transportId) || !transportId) {
         return;
       }
 
-      const transportSlugs = getSlugsFromUrl(transportQuery);
-
-      const { brandSlug, modelSlug, yearSlug, engineSlug } = transportSlugs;
-
       dispatch(
         fetchTransportProductList({
-          brandSlug,
-          modelSlug,
-          yearSlug,
-          engineSlug,
+          transportId,
           page,
-          categorySlug: stringifySlug,
+          subcategorySlug: stringifySlug,
           filter: filterRequest,
           ...sorting,
         }),
       );
     };
 
-    transportQuery
+    transportId
       ? fetchTransportList()
       : dispatch(
           fetchCategoriesProductsList({
             page,
-            categorySlug: stringifySlug,
+            subcategorySlug: stringifySlug,
             filter: filterRequest,
             ...sorting,
           }),
         );
   }, [
     router.isReady,
-    slug,
+    subcategorySlug,
     dispatch,
     page,
     sorting,
     filterRequest,
-    transportQuery,
+    transportId,
   ]);
 
   const handleDrawerToggle = () => {

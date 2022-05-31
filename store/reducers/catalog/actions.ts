@@ -30,19 +30,10 @@ const setIsLoadingCatalogSearchRead = createAction(
 
 const fetchTransportFilterList = createAsyncThunk(
   'CatalogStore/fetchTransportFiltersList',
-  async ({
-    categorySlug,
-    brandSlug,
-    modelSlug,
-    yearSlug,
-    engineSlug,
-  }: TransportProductListRead) => {
+  async ({ subcategorySlug, transportId }: TransportProductListRead) => {
     const data = await getTransportFilterList({
-      categorySlug,
-      brandSlug,
-      modelSlug,
-      yearSlug,
-      engineSlug,
+      subcategorySlug,
+      transportId,
     });
 
     return data;
@@ -51,17 +42,9 @@ const fetchTransportFilterList = createAsyncThunk(
 
 const fetchTransportReadCategories = createAsyncThunk(
   'CatalogStore/fetchTransportReadCategories',
-  async ({
-    brandSlug,
-    modelSlug,
-    yearSlug,
-    engineSlug,
-  }: TransportSearchRequestData) => {
+  async ({ transportId }: TransportSearchRequestData) => {
     const data = await getTransportCategoriesRead({
-      brandSlug,
-      modelSlug,
-      yearSlug,
-      engineSlug,
+      transportId,
     });
 
     return data;
@@ -71,22 +54,16 @@ const fetchTransportReadCategories = createAsyncThunk(
 const fetchTransportProductList = createAsyncThunk(
   'CatalogStore/fetchSearchProductList',
   async ({
-    brandSlug,
-    modelSlug,
-    yearSlug,
-    engineSlug,
-    categorySlug,
+    transportId,
+    subcategorySlug,
     page,
     sort,
     order,
     filter,
   }: TransportProductListRead) => {
     const data = await getTransportProductListRead({
-      brandSlug,
-      modelSlug,
-      yearSlug,
-      engineSlug,
-      categorySlug,
+      transportId,
+      subcategorySlug,
       page,
       sort,
       order,
@@ -117,8 +94,8 @@ const fetchCategoriesTreeList = createAsyncThunk(
 
 const fetchCategoriesFiltersList = createAsyncThunk(
   'CatalogStore/fetchCategoriesFiltersList',
-  async ({ categorySlug }: CategoriesFiltersListRequestData) => {
-    const data = await getCategoriesFiltersList({ categorySlug });
+  async ({ subcategorySlug }: CategoriesFiltersListRequestData) => {
+    const data = await getCategoriesFiltersList({ subcategorySlug });
 
     return data;
   },
@@ -127,14 +104,14 @@ const fetchCategoriesFiltersList = createAsyncThunk(
 const fetchCategoriesProductsList = createAsyncThunk(
   'CatalogStore/fetchCategoriesProductsList',
   async ({
-    categorySlug,
+    subcategorySlug,
     page,
     sort,
     order,
     filter,
   }: CategoriesProductsListRequestData) => {
     const data = await getCategoriesProductsList({
-      categorySlug,
+      subcategorySlug,
       page,
       sort,
       order,

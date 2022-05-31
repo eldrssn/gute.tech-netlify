@@ -9,7 +9,7 @@ export type ProductListData = {
 };
 
 export type CategoriesProductsListRequestData = {
-  categorySlug: string;
+  subcategorySlug: string;
   page?: number;
   sort?: string;
   order?: string;
@@ -17,17 +17,14 @@ export type CategoriesProductsListRequestData = {
 };
 
 export type TransportSearchRequestData = {
-  brandSlug: string;
-  modelSlug: string;
-  yearSlug: string;
-  engineSlug: string;
+  transportId: string;
 };
 
 export type TransportProductListRead = CategoriesProductsListRequestData &
   TransportSearchRequestData;
 
 export type CategoriesFiltersListRequestData = {
-  categorySlug: string;
+  subcategorySlug: string;
   page?: number;
   sort?: string;
   order?: string;

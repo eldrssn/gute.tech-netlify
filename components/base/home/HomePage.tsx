@@ -1,7 +1,6 @@
 import { FC, useEffect, useMemo } from 'react';
 import { Grid } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { Description } from 'components/base/main/Description';
@@ -15,7 +14,7 @@ import { Loader } from 'components/ui/Loader';
 import { Items } from 'components/base/main/rows/types';
 import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
-import { groupItems, getSlugsFromUrl } from 'utility/helpers';
+import { groupItems } from 'utility/helpers';
 import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
 import {
   selectCategoriesSearchRead,
@@ -36,29 +35,19 @@ const Home: FC = () => {
   const dispatch = useDispatch();
   const { getQueryOption } = useRouterQuery();
   const categoryQuery = getQueryOption(QueryUrl.CATEGORY_QUERY);
-  const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
+  const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
 
-  const currentSelector = transportQuery
+  const currentSelector = transportId
     ? selectCategoriesSearchRead
     : selectCategoriesTreeList;
 
   const { isLoading, data: categories } = useSelector(currentSelector);
 
   useEffect(() => {
-    if (transportQuery) {
-      const { brandSlug, modelSlug, yearSlug, engineSlug } =
-        getSlugsFromUrl(transportQuery);
-
-      dispatch(
-        fetchTransportReadCategories({
-          brandSlug,
-          modelSlug,
-          yearSlug,
-          engineSlug,
-        }),
-      );
+    if (typeof transportId === 'string') {
+      dispatch(fetchTransportReadCategories({ transportId }));
     }
-  }, [transportQuery, dispatch]);
+  }, [transportId, dispatch]);
 
   const groupedItems = useMemo(
     () =>
@@ -72,7 +61,7 @@ const Home: FC = () => {
 
   return (
     <>
-      {(categoryQuery || transportQuery) && <NavigationBreadcrumbs isQuery />}
+      {(categoryQuery || transportId) && <NavigationBreadcrumbs isQuery />}
 
       <Grid
         container
@@ -96,7 +85,7 @@ const Home: FC = () => {
                   <Component
                     key={index}
                     items={items}
-                    isTransportSearch={!!transportQuery}
+                    isTransportSearch={!!transportId}
                   />
                 );
               })

@@ -14,21 +14,26 @@ const getBrands = () =>
     method: 'get',
   });
 
-const getModel = ({ brandSlug }: BrandSlug) =>
+const getModel = ({ transportType, brandSlug }: BrandSlug) =>
   sendRequest<ListOptionsItemData[]>({
-    url: `/transport/brands/${brandSlug}/models/`,
+    url: `/transport/${transportType}/${brandSlug}/models/`,
     method: 'get',
   });
 
-const getYears = ({ brandSlug, modelSlug }: YearsSlugs) =>
+const getYears = ({ transportType, brandSlug, modelSlug }: YearsSlugs) =>
   sendRequest<ListOptionsYearData[]>({
-    url: `/transport/brands/${brandSlug}/models/${modelSlug}/years/`,
+    url: `/transport/${transportType}/${brandSlug}/${modelSlug}/years/`,
     method: 'get',
   });
 
-const getEngines = ({ brandSlug, modelSlug, yearSlug }: EnginesSlugs) =>
+const getEngines = ({
+  transportType,
+  brandSlug,
+  modelSlug,
+  yearSlug,
+}: EnginesSlugs) =>
   sendRequest<ListOptionsItemData[]>({
-    url: `/transport/brands/${brandSlug}/models/${modelSlug}/years/${yearSlug}/engines/`,
+    url: `/transport/${transportType}/${brandSlug}/${modelSlug}/${yearSlug}/engines/`,
     method: 'get',
   });
 

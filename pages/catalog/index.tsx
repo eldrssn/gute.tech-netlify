@@ -16,7 +16,7 @@ const CatalogMain: FC = () => {
 
       {categoriesTree?.map((category) => (
         <Fragment key={category.slug}>
-          <Category slug={category.slug} />
+          <Category categorySlug={category.slug} />
           <Divider sx={{ paddingTop: '20px' }} />
         </Fragment>
       ))}

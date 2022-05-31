@@ -27,6 +27,7 @@ const DEV_HOST = 'dev.gute.tech';
 enum QueryUrl {
   CATEGORY_QUERY = 'category',
   TRANSPORT_QUERY = 'transport',
+  TRANSPORT_ID = 'transport_id',
 }
 
 enum Slugs {

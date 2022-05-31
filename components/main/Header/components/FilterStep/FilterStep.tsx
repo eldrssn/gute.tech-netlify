@@ -7,15 +7,22 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { TailSpin } from 'react-loader-spinner';
+import { useSelector } from 'react-redux';
+
+import {
+  selectBrands,
+  selectEngines,
+} from 'store/reducers/transport/selectors';
+import { findTransportType } from 'utility/helpers';
+import colors from 'styles/_export.module.scss';
 
 import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
 import { FilterStepProps } from './types';
 import { HandleClickProps, StepInputs } from '../../types';
-import styles from './filterSteps.module.scss';
-
-import colors from 'styles/_export.module.scss';
 import { addItemToLocaleStorage } from '../../helpers';
+
+import styles from './filterSteps.module.scss';
 
 const loaderColor = colors.blue;
 
@@ -31,6 +38,8 @@ const FilterStep: FC<FilterStepProps> = ({
   setOpenPopoverId,
   setValue,
   setCurrentStep,
+  setTransportType,
+  setTransportId,
   ...restProps
 }) => {
   const input = useController({
@@ -50,6 +59,9 @@ const FilterStep: FC<FilterStepProps> = ({
   const valueTextField =
     typeof searchValue === 'string' && isOpenPopover ? searchValue : title;
 
+  const { data: brands } = useSelector(selectBrands);
+  const { data: engines } = useSelector(selectEngines);
+
   useEffect(() => {
     setIsOpenPopover(openPopoverId === inputStepId);
   }, [openPopoverId, inputStepId]);
@@ -66,6 +78,17 @@ const FilterStep: FC<FilterStepProps> = ({
     inputStepId,
   }: HandleClickProps) => {
     setValue(name, { title, slug, searchValue: null });
+
+    if (inputStepId === StepInputs.BRAND) {
+      const typeSlug = findTransportType(brands, slug);
+      setTransportType(typeSlug);
+    }
+
+    if (inputStepId === StepInputs.ENGINE) {
+      const currentEngine = engines.find((engine) => engine.slug === slug);
+      setTransportId(currentEngine?.transport_id);
+    }
+
     setOpenPopoverId(openPopoverId + 1);
     setCurrentStep(
       inputStepId === StepInputs.ENGINE ? StepInputs.ENGINE : inputStepId + 1,

@@ -68,6 +68,8 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
     });
   const [openPopoverId, setOpenPopoverId] = useState(StepInputs.INACTIVE);
   const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
+  const [transportType, setTransportType] = useState<string | undefined>();
+  const [transportId, setTransportId] = useState<string | undefined>();
   const [valueForm, setValueForm] = useState<WatchFormData>();
 
   const brandSlugValue = getValues('brand.slug');
@@ -115,14 +117,18 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
         setDefaultValueByName(names, setValue);
       },
       [StepInputs.MODEL]: () => {
-        dispatch(fetchModels({ brandSlug: brandSlugValue }));
+        dispatch(fetchModels({ transportType, brandSlug: brandSlugValue }));
         dispatch(resetOptionsDataInModelStep());
         const names = namesDefaultValueByStep[StepInputs.MODEL];
         setDefaultValueByName(names, setValue);
       },
       [StepInputs.YEAR]: () => {
         dispatch(
-          fetchYears({ brandSlug: brandSlugValue, modelSlug: modelSlugValue }),
+          fetchYears({
+            transportType,
+            brandSlug: brandSlugValue,
+            modelSlug: modelSlugValue,
+          }),
         );
         dispatch(resetOptionsDataInYearStep());
         const names = namesDefaultValueByStep[StepInputs.YEAR];
@@ -131,6 +137,7 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
       [StepInputs.ENGINE]: () => {
         dispatch(
           fetchEngines({
+            transportType,
             brandSlug: brandSlugValue,
             modelSlug: modelSlugValue,
             yearSlug: yearSlugValue,
@@ -158,11 +165,11 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   ]);
 
   const onSubmit = handleSubmit((data) => {
-    if (engineSlug === '') {
+    if (engineSlug === '' || !transportId) {
       return;
     }
 
-    const params = getTransportParams(data);
+    const params = getTransportParams(data, transportId);
     router.push(params);
 
     closePopupMobile && closePopupMobile();
@@ -225,6 +232,8 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
                       setValue={setValue}
                       currentStep={currentStep}
                       setCurrentStep={setCurrentStep}
+                      setTransportType={setTransportType}
+                      setTransportId={setTransportId}
                     />
                     <CustomButton
                       onClick={onSubmit}

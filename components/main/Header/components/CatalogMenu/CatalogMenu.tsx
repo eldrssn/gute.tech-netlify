@@ -1,9 +1,7 @@
 import React, { FC, useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
 
 import Container from '@mui/material/Container';
-import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
@@ -13,50 +11,31 @@ import { TreeCategoryResponseData } from 'api/models/catalog';
 
 import { HeaderContext } from '../HeaderContext';
 
+import { CatalogMenuItem } from './components/CatalogMenuItem';
 import { BOX_SHADOW } from './constants';
-import { CatalogMenuProps, RenderItem } from './types';
+import { CatalogMenuProps } from './types';
 
 import styles from './catalogMenu.module.scss';
 
 const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
   const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
 
-  const [childrenBox, setChildrenBox] = useState<
-    null | TreeCategoryResponseData[]
-  >(null);
+  const [choosenCategory, setChoosenCategory] =
+    useState<null | TreeCategoryResponseData>(null);
 
   const { isFullHeader, isTabletView } = useContext(HeaderContext);
 
   const isTabletShortView = !isFullHeader && !isTabletView;
 
-  const resetChildren = () => setChildrenBox(null);
+  const resetCategory = () => setChoosenCategory(null);
 
   const showCatalogItem = (item: TreeCategoryResponseData) => {
-    item.children ? setChildrenBox(item.children) : resetChildren();
+    item.children ? setChoosenCategory(item) : resetCategory();
   };
 
-  const renderItem = ({ item, className, onMouseEnter }: RenderItem) => (
-    <Link
-      href={`/catalog/${item.slug}?page=1&order=byPopularDown`}
-      key={item.slug}
-    >
-      <a>
-        <MenuItem
-          className={className}
-          key={item.slug}
-          onClick={handleClose}
-          onMouseEnter={onMouseEnter}
-        >
-          {item.title}
-        </MenuItem>
-      </a>
-    </Link>
-  );
-
-  const renderItemChildren = (child: TreeCategoryResponseData) =>
-    child.children?.map((child) =>
-      renderItem({ item: child, className: styles.itemChildren_title }),
-    );
+  const childrenBox = choosenCategory?.children
+    ? choosenCategory.children
+    : null;
 
   return (
     <Container
@@ -69,9 +48,14 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
       }}
     >
       <MenuList className={styles.mainCategories}>
-        {categoriesTree.map((item: TreeCategoryResponseData) =>
-          renderItem({ item, onMouseEnter: () => showCatalogItem(item) }),
-        )}
+        {categoriesTree.map((item: TreeCategoryResponseData) => (
+          <CatalogMenuItem
+            key={item.slug}
+            item={item}
+            onMouseEnter={() => showCatalogItem(item)}
+            handleClose={handleClose}
+          />
+        ))}
       </MenuList>
 
       {childrenBox && (
@@ -90,12 +74,12 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
           >
             {childrenBox.map((child) => (
               <Box key={child.slug} className={styles.childrenListItem}>
-                {renderItem({
-                  item: child,
-                  className: styles.catalogItem_title,
-                })}
-
-                {Boolean(child.children) && renderItemChildren(child)}
+                <CatalogMenuItem
+                  item={child}
+                  className={styles.catalogItem_title}
+                  handleClose={handleClose}
+                  parentSlug={choosenCategory?.slug}
+                />
                 <Divider />
               </Box>
             ))}

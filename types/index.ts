@@ -19,4 +19,14 @@ type Filter = {
   setFilterRequest: React.Dispatch<React.SetStateAction<FilterRequest | null>>;
 };
 
-export type { ComponentWithPageLayout, Sorting, FilterRequest, Filter };
+type Slug = string | string[] | undefined;
+type Slugs = Record<string, Slug>;
+
+export type {
+  ComponentWithPageLayout,
+  Sorting,
+  FilterRequest,
+  Filter,
+  Slug,
+  Slugs,
+};
