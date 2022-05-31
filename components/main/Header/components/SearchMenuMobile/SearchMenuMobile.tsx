@@ -1,10 +1,16 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
-import Image from 'next/image';
-
-import { TextField, Typography, Container, Divider, Box } from '@mui/material';
+import {
+  TextField,
+  Typography,
+  Container,
+  Divider,
+  Box,
+  CardMedia,
+} from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import cn from 'classnames';
 
 import {
   fetchCatalogSearchRead,
@@ -16,6 +22,7 @@ import {
 } from 'store/reducers/catalog/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { SCROLL_DELAY } from 'constants/variables';
+import { useDebounce } from 'hooks/useDebounce';
 
 import { SearchMenuProps } from './types';
 import styles from './styles.module.scss';
@@ -25,14 +32,23 @@ const SearchMenuMobile: FC<SearchMenuProps> = ({
   closeMainDrawer,
 }) => {
   const [searchValue, setSearchValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   const dispatch = useDispatch();
   const router = useRouter();
-
   const catalogSearchRead = useSelector(selectCatalogSearchRead);
+  const debouncedSearchTerm = useDebounce(searchValue, 1000);
 
   const categorySearch = catalogSearchRead.data?.categories;
   const productSeacrh = catalogSearchRead.data?.products;
+
+  const debouncedSearchTermValid = debouncedSearchTerm.length >= 3;
+  const isLoading = catalogSearchRead.isLoading;
+  const isCategorySearch = categorySearch
+    ? Boolean(categorySearch.length)
+    : false;
+  const isProductSeacrh = productSeacrh ? Boolean(productSeacrh.length) : false;
+  const isCatalogSearchRead = isCategorySearch || isProductSeacrh || isLoading;
 
   const handleClick = (link: string) => {
     router.push(link);
@@ -47,23 +63,25 @@ const SearchMenuMobile: FC<SearchMenuProps> = ({
     setSearchValue(searchValue);
   };
 
-  const searchValueValid = searchValue.length >= 3;
-
   useEffect(() => {
-    if (searchValueValid) {
-      dispatch(fetchCatalogSearchRead({ searchValue }));
+    if (debouncedSearchTermValid) {
+      dispatch(fetchCatalogSearchRead({ searchValue: debouncedSearchTerm }));
       return;
     }
 
     dispatch(clearCatalogSearchRead());
-  }, [searchValue, dispatch, searchValueValid]);
+  }, [dispatch, debouncedSearchTerm, debouncedSearchTermValid]);
 
-  const isLoading = catalogSearchRead.isLoading;
-  const isCategorySearch = categorySearch
-    ? Boolean(categorySearch.length)
-    : false;
-  const isProductSeacrh = productSeacrh ? Boolean(productSeacrh.length) : false;
-  const isCatalogSearchRead = isCategorySearch || isProductSeacrh || isLoading;
+  useEffect(() => {
+    const errorMessage = cn({
+      ['Ничего не найдено']: debouncedSearchTermValid && !isLoading,
+      ['Минимальное количество символов для поиска: 3']:
+        !debouncedSearchTermValid && !isLoading,
+      ['Загрузка...']: isLoading,
+    });
+    setErrorMessage(errorMessage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchTerm, catalogSearchRead]);
 
   return (
     <Container className={styles.mainContainer}>
@@ -78,6 +96,7 @@ const SearchMenuMobile: FC<SearchMenuProps> = ({
             className={styles.textField}
             onChange={(event) => handleChangeInput(event)}
             value={searchValue}
+            placeholder='Введите артикул, наименование или код запчасти'
           />
         </Box>
       </Box>
@@ -119,11 +138,11 @@ const SearchMenuMobile: FC<SearchMenuProps> = ({
                     key={product.slug}
                     onClick={() => handleClick(link)}
                   >
-                    <Image
+                    <CardMedia
+                      component={'img'}
                       className={styles.productImage}
                       src={product.image}
-                      width={70}
-                      height={70}
+                      height='70'
                       alt={product.title}
                     />
                     <Box className={styles.productTitleBox}>
@@ -141,11 +160,7 @@ const SearchMenuMobile: FC<SearchMenuProps> = ({
           )}
         </Box>
       ) : (
-        <Typography className={styles.errorMessage}>
-          {searchValueValid
-            ? 'Ничего не найдено'
-            : 'Минимальное количество символов для поиска: 3'}
-        </Typography>
+        <Typography className={styles.errorMessage}>{errorMessage}</Typography>
       )}
     </Container>
   );
