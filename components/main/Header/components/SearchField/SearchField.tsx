@@ -1,10 +1,16 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import { MenuItem, Box, TextField, Typography, Divider } from '@mui/material';
+import {
+  MenuItem,
+  Box,
+  TextField,
+  Typography,
+  Divider,
+  CardMedia,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import cn from 'classnames';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
+import cn from 'classnames';
 
 import {
   fetchCatalogSearchRead,
@@ -14,6 +20,7 @@ import {
   selectCatalogSearchRead,
   // selectCategoriesTreeList,
 } from 'store/reducers/catalog/selectors';
+import { useDebounce } from 'hooks/useDebounce';
 // import { getParentCategory } from 'utility/helpers'; TODO: добавить при праи=вильной урле
 
 import { HeaderContext } from '../HeaderContext';
@@ -24,14 +31,28 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
   const { isFullHeader, isMobileView, isTabletView, isFocusSearchField } =
     useContext(HeaderContext);
   const [searchValue, setSearchValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   const router = useRouter();
   const dispatch = useDispatch();
   const catalogSearchRead = useSelector(selectCatalogSearchRead);
   // const categoriesTreeList = useSelector(selectCategoriesTreeList); TODO: добавить при праи=вильной урле
+  const debouncedSearchTerm = useDebounce(
+    searchValue,
+    searchValue.length >= 3 ? 500 : 1,
+  );
 
   const categorySearch = catalogSearchRead.data?.categories;
   const productSeacrh = catalogSearchRead.data?.products;
+
+  const debouncedSearchTermValid = debouncedSearchTerm.length >= 3;
+  const isLoading = catalogSearchRead.isLoading;
+  const isActivePopup = isFocusSearchField && debouncedSearchTermValid;
+  const isCategorySearch = categorySearch
+    ? Boolean(categorySearch.length)
+    : false;
+  const isProductSeacrh = productSeacrh ? Boolean(productSeacrh.length) : false;
+  const isCatalogSearchRead = isCategorySearch || isProductSeacrh;
 
   const handleChangeInput = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -55,28 +76,28 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
     setIsFocusSearchField(true);
   };
 
-  const searchValueValid = searchValue.length >= 3;
-
   useEffect(() => {
-    if (searchValueValid) {
-      dispatch(fetchCatalogSearchRead({ searchValue }));
-      return;
+    if (debouncedSearchTerm.length >= 3) {
+      dispatch(fetchCatalogSearchRead({ searchValue: debouncedSearchTerm }));
     }
 
     dispatch(clearCatalogSearchRead());
-  }, [searchValue, dispatch, searchValueValid]);
+  }, [debouncedSearchTerm, dispatch]);
 
   useEffect(() => {
     setIsFocusSearchField(false);
   }, [isFullHeader, isMobileView, isTabletView, setIsFocusSearchField]);
 
-  const isLoading = catalogSearchRead.isLoading;
-  const isActivePopup = isFocusSearchField && searchValueValid;
-  const isCategorySearch = categorySearch
-    ? Boolean(categorySearch.length)
-    : false;
-  const isProductSeacrh = productSeacrh ? Boolean(productSeacrh.length) : false;
-  const isCatalogSearchRead = isCategorySearch || isProductSeacrh || isLoading;
+  useEffect(() => {
+    const errorMessage = cn({
+      ['Ничего не найдено']: debouncedSearchTermValid && !isLoading,
+      ['Минимальное количество символов для поиска: 3']:
+        !debouncedSearchTermValid && !isLoading,
+      ['Загрузка...']: isLoading,
+    });
+    setErrorMessage(errorMessage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchTerm, catalogSearchRead]);
 
   if (!isFullHeader && isMobileView) {
     return null;
@@ -100,7 +121,7 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
           className={styles.textField}
           onChange={(event) => handleChangeInput(event)}
           onClick={handleOpenPopover}
-          placeholder='Поиск...'
+          placeholder='Введите артикул, наименование или код запчасти'
           value={searchValue}
         />
         <SearchIcon className={styles.searchIcon} />
@@ -114,64 +135,66 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
       >
         {isCatalogSearchRead ? (
           <>
-            <Box className={styles.categoryList}>
-              <Typography className={styles.listTitle}>Категории</Typography>
-              {categorySearch?.map((category) => {
-                const link = `/catalog/${category.slug}`;
+            {isCategorySearch && (
+              <Box className={styles.categoryList}>
+                <Typography className={styles.listTitle}>Категории</Typography>
+                {categorySearch?.map((category) => {
+                  const link = `/catalog/${category.slug}`;
 
-                return (
-                  <Typography
-                    onClick={() => handleClick(link)}
-                    key={category.slug}
-                    className={styles.categoryListItem}
-                  >
-                    {category.title}
-                  </Typography>
-                );
-              })}
-            </Box>
-            <Box className={styles.productsList}>
-              <Typography className={styles.listTitle}>Товары</Typography>
-              {productSeacrh?.map((product) => {
-                // TODO: добавить при праи=вильной урле
-                // const parentCategory = getParentCategory({
-                //   categoriesTreeList,
-                //   childrenCategorySlug: product.categories[0],
-                // });
+                  return (
+                    <Typography
+                      onClick={() => handleClick(link)}
+                      key={category.slug}
+                      className={styles.categoryListItem}
+                    >
+                      {category.title}
+                    </Typography>
+                  );
+                })}
+              </Box>
+            )}
+            {isProductSeacrh && (
+              <Box className={styles.productsList}>
+                <Typography className={styles.listTitle}>Товары</Typography>
+                {productSeacrh?.map((product) => {
+                  // TODO: добавить при праи=вильной урле
+                  // const parentCategory = getParentCategory({
+                  //   categoriesTreeList,
+                  //   childrenCategorySlug: product.categories[0],
+                  // });
 
-                const link = `/catalog/${product.categories[0]}/${product.slug}`;
+                  const link = `/catalog/${product.categories[0]}/${product.slug}`;
 
-                return (
-                  <Box
-                    className={styles.productItem}
-                    key={product.slug}
-                    onClick={() => handleClick(link)}
-                  >
-                    <Image
-                      className={styles.productImage}
-                      src={product.image}
-                      width={70}
-                      height={70}
-                      alt={product.title}
-                    />
-                    <Box className={styles.productTitleBox}>
-                      <Typography className={styles.productTitle}>
-                        {product.title}
-                      </Typography>
-                      <Typography className={styles.productPrice}>
-                        Цена: {product.price}
-                      </Typography>
+                  return (
+                    <Box
+                      className={styles.productItem}
+                      key={product.slug}
+                      onClick={() => handleClick(link)}
+                    >
+                      <CardMedia
+                        component={'img'}
+                        className={styles.productImage}
+                        src={product.image}
+                        height='70'
+                        alt={product.title}
+                      />
+                      <Box className={styles.productTitleBox}>
+                        <Typography className={styles.productTitle}>
+                          {product.title}
+                        </Typography>
+                        <Typography className={styles.productPrice}>
+                          Цена: {product.price}
+                        </Typography>
+                      </Box>
                     </Box>
-                  </Box>
-                );
-              })}
-            </Box>
+                  );
+                })}
+              </Box>
+            )}
           </>
         ) : (
           <Typography className={styles.errorMessage}>
-            {searchValueValid
-              ? 'Ничего не найдено'
-              : 'Минимальное количество символов для поиска: 3'}
+            {errorMessage}
           </Typography>
         )}
       </Box>

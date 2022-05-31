@@ -12,6 +12,7 @@ import {
   clearCatalogSearchRead,
   fetchTransportProductList,
   fetchTransportFilterList,
+  setIsLoadingCatalogSearchRead,
 } from './actions';
 
 import { CatalogStore, ErrorAction } from './types';
@@ -80,6 +81,9 @@ const initialState: CatalogStore = {
 const handlers = {
   [clearCatalogSearchRead.type]: (state: CatalogStore) => {
     state.catalogSearchRead.data = null;
+  },
+  [setIsLoadingCatalogSearchRead.type]: (state: CatalogStore) => {
+    state.catalogSearchRead.isLoading = true;
   },
 
   [fetchTransportProductList.pending.type]: (state: CatalogStore) => {

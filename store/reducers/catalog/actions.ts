@@ -23,7 +23,10 @@ import {
   CatalogSearchReadRequestData,
 } from 'api/models/catalog';
 
-const clearCatalogSearchRead = createAction('CatalogSearchRead');
+const clearCatalogSearchRead = createAction('clearCatalogSearchRead');
+const setIsLoadingCatalogSearchRead = createAction(
+  'setIsLoadingCatalogSearchRead',
+);
 
 const fetchTransportFilterList = createAsyncThunk(
   'CatalogStore/fetchTransportFiltersList',
@@ -178,6 +181,7 @@ export {
   fetchCategoriesList,
   fetchCatalogSearchRead,
   clearCatalogSearchRead,
+  setIsLoadingCatalogSearchRead,
   fetchCategoriesTreeList,
   fetchCategoriesFiltersList,
   fetchCategoriesProductsList,
