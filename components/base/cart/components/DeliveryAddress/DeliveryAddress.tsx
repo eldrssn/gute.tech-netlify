@@ -72,6 +72,7 @@ const DeliveryAddress: React.FC<TDeliveryAddressProps> = ({
               {...field}
               disabled={Boolean(!branches.length)}
               options={branches}
+              noOptionsText='Нет совпадений'
               getOptionLabel={(option: BranchOfficeData) => option.street}
               onChange={(_, data) => field.onChange(data)}
               renderInput={(params) => (

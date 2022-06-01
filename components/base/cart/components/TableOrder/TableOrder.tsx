@@ -9,6 +9,7 @@ import {
   Box,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import cn from 'classnames';
 
 import { checkMobileView } from 'utility/helpers/checkViewType';
 import {
@@ -85,11 +86,21 @@ const TableOrder: React.FC<TTableOrderProps> = ({
         )}
       </Table>
       <Box className={styles.bottomOrderBox} component='div'>
-        <MenuItem onClick={openModalAdvice} className={styles.menuItem}>
-          Помочь с выбором товара
+        <MenuItem
+          onClick={openModalAdvice}
+          className={cn(styles.menuItem, styles.menuItemSpecialOffer)}
+        >
+          <Typography className={styles.specialOffer}>
+            Помочь с выбором товара
+          </Typography>
         </MenuItem>
-        <MenuItem onClick={openModalAdvice} className={styles.menuItem}>
-          Получить спецпредложение
+        <MenuItem
+          onClick={openModalAdvice}
+          className={cn(styles.menuItem, styles.menuItemSpecialOffer)}
+        >
+          <Typography className={styles.specialOffer}>
+            Помочь с выбором товара
+          </Typography>
         </MenuItem>
         <Typography className={styles.orderTotal}>
           Всего: {orderTotal}&#8381;

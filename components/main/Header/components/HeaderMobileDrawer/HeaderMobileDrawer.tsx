@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import classnames from 'classnames/bind';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -37,6 +37,10 @@ const HeaderMobileDrawer: FC<HeaderMobileDrawerProps> = ({
     setOpen(false);
     router.push('/cart');
   };
+
+  useEffect(() => {
+    setOpen(false);
+  }, [router]);
 
   return (
     <>

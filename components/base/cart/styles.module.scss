@@ -37,6 +37,18 @@
   color: $blue1;
 }
 
+.menuItemSpecialOffer {
+  &:hover {
+    p {
+      border-bottom: hidden;
+    }
+  }
+}
+
+.specialOffer {
+  border-bottom: 1px dashed $blue1;
+}
+
 @media (max-width: $mobile) {
   .bottomOrderBox {
     display: flex;

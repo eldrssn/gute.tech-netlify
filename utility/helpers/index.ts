@@ -179,13 +179,13 @@ const makeStringify = (value?: string[] | string) =>
   typeof value === 'string' ? value : value?.toString() || '';
 
 const getParentCategory = ({
-  categoriesTreeList,
+  categoriesTreeListData,
   childrenCategorySlug,
 }: {
-  categoriesTreeList: TreeCategoryResponseData[];
+  categoriesTreeListData: TreeCategoryResponseData[];
   childrenCategorySlug: string;
 }) => {
-  const categorySearch = categoriesTreeList.find((category) => {
+  const categorySearch = categoriesTreeListData.find((category) => {
     if (!category.children) {
       return false;
     }
