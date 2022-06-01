@@ -18,25 +18,26 @@ import {
 } from 'store/reducers/catalog/actions';
 import {
   selectCatalogSearchRead,
-  // selectCategoriesTreeList, //TODO: добавить при праи=вильной урле
+  selectCategoriesTreeList,
 } from 'store/reducers/catalog/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { SCROLL_DELAY } from 'constants/variables';
 import { useDebounce } from 'hooks/useDebounce';
+import { getParentCategory } from 'utility/helpers';
 
 import { SearchMenuProps } from './types';
 import styles from './styles.module.scss';
 
-const SearchMenuMobile: FC<SearchMenuProps> = ({
-  handleClose,
-  closeMainDrawer,
-}) => {
+const SearchMenuMobile: FC<SearchMenuProps> = ({ handleClose }) => {
   const [searchValue, setSearchValue] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const dispatch = useDispatch();
   const router = useRouter();
   const catalogSearchRead = useSelector(selectCatalogSearchRead);
+  const { data: categoriesTreeListData } = useSelector(
+    selectCategoriesTreeList,
+  );
   const debouncedSearchTerm = useDebounce(searchValue, 1000);
 
   const categorySearch = catalogSearchRead.data?.categories;
@@ -52,8 +53,7 @@ const SearchMenuMobile: FC<SearchMenuProps> = ({
 
   const handleClick = (link: string) => {
     router.push(link);
-    handleClose();
-    setTimeout(closeMainDrawer, SCROLL_DELAY);
+    setTimeout(handleClose, SCROLL_DELAY);
   };
 
   const handleChangeInput = (
@@ -106,7 +106,11 @@ const SearchMenuMobile: FC<SearchMenuProps> = ({
             <Box className={styles.categoryList}>
               <Typography className={styles.listTitle}>Категории</Typography>
               {categorySearch?.map((category) => {
-                const link = `/catalog/${category.slug}`;
+                const parentCategory = getParentCategory({
+                  categoriesTreeListData,
+                  childrenCategorySlug: category.slug,
+                });
+                const link = `/catalog/${parentCategory}/${category.slug}`;
 
                 return (
                   <Typography
@@ -124,13 +128,11 @@ const SearchMenuMobile: FC<SearchMenuProps> = ({
             <Box className={styles.productsList}>
               <Typography className={styles.listTitle}>Товары</Typography>
               {productSeacrh?.map((product) => {
-                // TODO: добавить при праи=вильной урле
-                // const parentCategory = getParentCategory({
-                //   categoriesTreeList,
-                //   childrenCategorySlug: product.categories[0],
-                // });
-
-                const link = `/catalog/${product.categories[0]}/${product.slug}`;
+                const parentCategory = getParentCategory({
+                  categoriesTreeListData,
+                  childrenCategorySlug: product.categories[0],
+                });
+                const link = `/catalog/${parentCategory}/${product.categories[0]}/${product.slug}`;
 
                 return (
                   <Box

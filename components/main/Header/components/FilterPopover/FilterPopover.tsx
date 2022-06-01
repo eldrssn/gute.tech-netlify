@@ -11,6 +11,8 @@ import {
   selectEngines,
 } from 'store/reducers/transport/selectors';
 import { checkBrandsList } from 'utility/helpers';
+import { useWindowSize } from 'hooks/useWindowSize';
+import { checkMobileView } from 'utility/helpers/checkViewType';
 
 import { filterData } from './helpers';
 import { widthListByStep, widthButtonByStep } from '../../constants';
@@ -29,6 +31,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
   openPopoverId,
   searchValue,
 }) => {
+  const { windowWidth } = useWindowSize();
   const [activeOptionList, setActiveOptionsList] = useState<ListOptionsItem>({
     data: [],
     isLoading: false,
@@ -76,6 +79,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
 
   const widthList = widthListByStep[openPopoverId];
   const widthButton = widthButtonByStep[openPopoverId];
+  const isMobileView = checkMobileView(windowWidth);
 
   const filteredData = searchValue
     ? filterData(searchValue, checkBrandsList(data))
@@ -93,12 +97,19 @@ const FilterPopover: FC<FilterPopoverProps> = ({
         className={styles.background}
         onClick={handleClosePopover}
       />
-      <Box component='div' className={styles.list} sx={{ width: widthList }}>
+      <Box
+        component='div'
+        className={cn({
+          [styles.list]: !isMobileView,
+          [styles.listMobile]: isMobileView,
+        })}
+        sx={{ width: isMobileView ? '100%' : widthList }}
+      >
         {isLoading
           ? null
           : filteredData.map((item) => (
               <Button
-                sx={{ width: widthButton }}
+                sx={{ width: isMobileView ? '100%' : widthButton }}
                 className={styles.button}
                 onClick={() => {
                   handleClick({

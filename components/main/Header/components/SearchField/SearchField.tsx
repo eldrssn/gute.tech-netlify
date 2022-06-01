@@ -18,10 +18,10 @@ import {
 } from 'store/reducers/catalog/actions';
 import {
   selectCatalogSearchRead,
-  // selectCategoriesTreeList,
+  selectCategoriesTreeList,
 } from 'store/reducers/catalog/selectors';
 import { useDebounce } from 'hooks/useDebounce';
-// import { getParentCategory } from 'utility/helpers'; TODO: добавить при праи=вильной урле
+import { getParentCategory } from 'utility/helpers';
 
 import { HeaderContext } from '../HeaderContext';
 import styles from './styles.module.scss';
@@ -36,7 +36,9 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const catalogSearchRead = useSelector(selectCatalogSearchRead);
-  // const categoriesTreeList = useSelector(selectCategoriesTreeList); TODO: добавить при праи=вильной урле
+  const { data: categoriesTreeListData } = useSelector(
+    selectCategoriesTreeList,
+  );
   const debouncedSearchTerm = useDebounce(
     searchValue,
     searchValue.length >= 3 ? 500 : 1,
@@ -139,7 +141,11 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
               <Box className={styles.categoryList}>
                 <Typography className={styles.listTitle}>Категории</Typography>
                 {categorySearch?.map((category) => {
-                  const link = `/catalog/${category.slug}`;
+                  const parentCategory = getParentCategory({
+                    categoriesTreeListData,
+                    childrenCategorySlug: category.slug,
+                  });
+                  const link = `/catalog/${parentCategory}/${category.slug}`;
 
                   return (
                     <Typography
@@ -157,13 +163,12 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
               <Box className={styles.productsList}>
                 <Typography className={styles.listTitle}>Товары</Typography>
                 {productSeacrh?.map((product) => {
-                  // TODO: добавить при праи=вильной урле
-                  // const parentCategory = getParentCategory({
-                  //   categoriesTreeList,
-                  //   childrenCategorySlug: product.categories[0],
-                  // });
+                  const parentCategory = getParentCategory({
+                    categoriesTreeListData,
+                    childrenCategorySlug: product.categories[0],
+                  });
 
-                  const link = `/catalog/${product.categories[0]}/${product.slug}`;
+                  const link = `/catalog/${parentCategory}/${product.categories[0]}/${product.slug}`;
 
                   return (
                     <Box

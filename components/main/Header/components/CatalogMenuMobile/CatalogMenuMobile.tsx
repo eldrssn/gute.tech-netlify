@@ -22,15 +22,11 @@ import styles from './catalogMenuMobile.module.css';
 
 const cn = classnames.bind(styles);
 
-const CatalogMenuMobile: FC<CatalogMenuProps> = ({
-  handleClose,
-  closeMainDrawer,
-}) => {
+const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => {
   const { data: categories } = useSelector(selectCategoriesTreeList);
 
   const handlerCloseDrawers = () => {
-    handleClose();
-    setTimeout(closeMainDrawer, SCROLL_DELAY);
+    setTimeout(handleClose, SCROLL_DELAY);
   };
 
   return (

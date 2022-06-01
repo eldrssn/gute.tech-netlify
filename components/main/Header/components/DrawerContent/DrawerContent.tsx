@@ -35,6 +35,10 @@ const DrawerContent: FC<DrawerContentProps> = ({
     setOpen((open) => !open);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const sliderDirection = useMemo(
     () => (open ? 'translateX(-100vw)' : 'translateX(0)'),
     [open],
@@ -43,13 +47,13 @@ const DrawerContent: FC<DrawerContentProps> = ({
   const drawerContent = {
     [DrawerContentKeys.CATALOG]: (
       <CatalogMenuMobile
-        handleClose={handleDrawerToggle}
+        handleClose={handleClose}
         closeMainDrawer={closeMainDrawer}
       />
     ),
     [DrawerContentKeys.SEARCH]: (
       <SearchMenuMobile
-        handleClose={handleDrawerToggle}
+        handleClose={handleClose}
         closeMainDrawer={closeMainDrawer}
       />
     ),
