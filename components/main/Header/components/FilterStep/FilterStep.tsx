@@ -22,7 +22,7 @@ import { FilterStepProps } from './types';
 import { HandleClickProps, StepInputs } from '../../types';
 import { addItemToLocaleStorage } from '../../helpers';
 
-import styles from './filterSteps.module.scss';
+import styles from './filterStep.module.scss';
 
 const loaderColor = colors.blue;
 
@@ -137,7 +137,13 @@ const FilterStep: FC<FilterStepProps> = ({
             ) : isValue ? (
               <FontAwesomeIcon icon={faCheck} />
             ) : (
-              inputNumber
+              <span
+                className={cn(styles.stepNumber_number, {
+                  [styles.stepNumber_numberOne]: inputNumber === 1,
+                })}
+              >
+                {inputNumber}
+              </span>
             )}
           </Box>
           <TextField

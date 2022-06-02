@@ -19,8 +19,14 @@ import { componentByType } from './constants';
 import { CatalogFilterProps } from './types';
 
 import styles from './catalogFilter.module.scss';
+import { CatalogFilterButton } from '../CatalogFilterButton';
 
-const CatalogFilter: FC<CatalogFilterProps> = ({ setFilterRequest }) => {
+const CatalogFilter: FC<CatalogFilterProps> = ({
+  setFilterRequest,
+  anchorApplyButton,
+  setAnchorApplyButton,
+  handleDrawerToggle,
+}) => {
   const router = useRouter();
   const { getQueryOption } = useRouterQuery();
 
@@ -52,7 +58,13 @@ const CatalogFilter: FC<CatalogFilterProps> = ({ setFilterRequest }) => {
 
   const linkToCatalog = getLinkToCatalog({ categorySlug, subcategorySlug });
 
+  const handleAnchorClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorApplyButton(event.currentTarget);
+  };
+
   const handleResetClick = () => {
+    setAnchorApplyButton(null);
+    handleDrawerToggle && handleDrawerToggle();
     router.push(transportQuery ? linkToTransportCatalog : linkToCatalog);
   };
 
@@ -68,6 +80,7 @@ const CatalogFilter: FC<CatalogFilterProps> = ({ setFilterRequest }) => {
             key={filter.slug}
             filter={filter}
             setFilterRequest={setFilterRequest}
+            handleAnchorClick={handleAnchorClick}
           />
         );
       })}
@@ -79,6 +92,12 @@ const CatalogFilter: FC<CatalogFilterProps> = ({ setFilterRequest }) => {
       >
         Cбросить фильтры
       </Box>
+
+      <CatalogFilterButton
+        anchorApplyButton={anchorApplyButton}
+        setAnchorApplyButton={setAnchorApplyButton}
+        handleDrawerToggle={handleDrawerToggle}
+      />
     </>
   );
 };

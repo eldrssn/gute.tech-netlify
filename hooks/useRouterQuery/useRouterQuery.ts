@@ -10,12 +10,12 @@ const useRouterQuery = () => {
   const { query, pathname, isReady } = router;
 
   const updateQuery = useCallback(
-    (newQuery: string | ParsedUrlQueryInput) => {
+    (newQuery: string | ParsedUrlQueryInput, scroll = true) => {
       if (!isReady) {
         return;
       }
 
-      router.push({ pathname, query: newQuery });
+      router.push({ pathname, query: newQuery }, undefined, { scroll });
     },
     [isReady],
   );
@@ -26,7 +26,7 @@ const useRouterQuery = () => {
    * Param option required only for array queries. Function will try to delete from an array in query option. Either way it will delete whole query.
    */
   const removeQuery = useCallback(
-    (name: string, param?: string) => {
+    (name: string, param?: string, scroll = true) => {
       const queryOption = query[name];
 
       if (Array.isArray(queryOption) && param) {
@@ -35,7 +35,7 @@ const useRouterQuery = () => {
           [name]: queryOption.filter((option) => option !== param),
         };
 
-        updateQuery(newQuery);
+        updateQuery(newQuery, scroll);
 
         return;
       }
@@ -51,19 +51,19 @@ const useRouterQuery = () => {
         {},
       );
 
-      updateQuery(newQuery);
+      updateQuery(newQuery, scroll);
     },
     [query, updateQuery],
   );
 
   const setQueryOption = useCallback(
-    (name: string, param: string) => {
+    (name: string, param: string, scroll = true) => {
       const newQuery = {
         ...query,
         [name]: param,
       };
 
-      updateQuery(newQuery);
+      updateQuery(newQuery, scroll);
     },
     [updateQuery, query],
   );
@@ -72,14 +72,14 @@ const useRouterQuery = () => {
    * Function will try to push or create array of queries, if same key already exists in query. Either way it will create new query parameter
    */
   const updateQueryOption = useCallback(
-    (name: string, param: string) => {
+    (name: string, param: string, scroll = true) => {
       const queryOption = query[name];
 
       if (Array.isArray(queryOption)) {
         const newQueryArray = [...queryOption, param];
         const newQuery = { ...query, [name]: newQueryArray };
 
-        updateQuery(newQuery);
+        updateQuery(newQuery, scroll);
 
         return;
       }
@@ -89,7 +89,7 @@ const useRouterQuery = () => {
         [name]: queryOption ? [queryOption, param] : param,
       };
 
-      updateQuery(newQuery);
+      updateQuery(newQuery, scroll);
     },
     [query, updateQuery],
   );

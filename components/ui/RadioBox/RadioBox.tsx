@@ -12,14 +12,18 @@ import { Filter } from 'types';
 
 import styles from './radioGroup.module.scss';
 
-const RadioBox: React.FC<Filter> = ({ filter, setFilterRequest }) => {
+const RadioBox: React.FC<Filter> = ({
+  filter,
+  setFilterRequest,
+  handleAnchorClick,
+}) => {
   const routerQuery = useRouterQuery();
 
   const { title, slug, values } = filter;
 
   const queryOption = routerQuery.getQueryOption(slug);
 
-  const onChange = setQueryParam(routerQuery, slug);
+  const onChange = setQueryParam(routerQuery, slug, false);
 
   useEffect(() => {
     if (queryOption) {
@@ -79,7 +83,11 @@ const RadioBox: React.FC<Filter> = ({ filter, setFilterRequest }) => {
             }}
             key={value}
             control={
-              <Radio onChange={onChange} checked={getIsChecked(value)} />
+              <Radio
+                onChange={onChange}
+                checked={getIsChecked(value)}
+                onClick={handleAnchorClick}
+              />
             }
             label={title}
             value={value}

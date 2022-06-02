@@ -12,7 +12,11 @@ import { Filter } from 'types';
 
 import styles from './ranger.module.scss';
 
-const Ranger: React.FC<Filter> = ({ filter, setFilterRequest }) => {
+const Ranger: React.FC<Filter> = ({
+  filter,
+  setFilterRequest,
+  handleAnchorClick,
+}) => {
   const routerQuery = useRouterQuery();
 
   const { title, slug, min, max } = filter;
@@ -21,12 +25,12 @@ const Ranger: React.FC<Filter> = ({ filter, setFilterRequest }) => {
   const maxValueQuery = `max${slug}`;
 
   const setMinValue = debounce(
-    setQueryParam(routerQuery, minValueQuery),
+    setQueryParam(routerQuery, minValueQuery, false),
     DELAY,
   );
 
   const setMaxValue = debounce(
-    setQueryParam(routerQuery, maxValueQuery),
+    setQueryParam(routerQuery, maxValueQuery, false),
     DELAY,
   );
 
@@ -59,7 +63,11 @@ const Ranger: React.FC<Filter> = ({ filter, setFilterRequest }) => {
         {title}
       </FormLabel>
 
-      <Box className={styles.price_range_wrapper} component='div'>
+      <Box
+        className={styles.price_range_wrapper}
+        component='div'
+        onClick={handleAnchorClick}
+      >
         <TextField
           onChange={setMinValue}
           type='number'
