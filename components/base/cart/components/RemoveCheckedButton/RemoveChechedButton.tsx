@@ -97,7 +97,7 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
           onClick={openModal}
           className={styles.button}
         >
-          Очистить корзину
+          {isAllItemsSelect ? 'Очистить корзину' : 'Очистить выбранное'}
         </Button>
       </Box>
     </>
