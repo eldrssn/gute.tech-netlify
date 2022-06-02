@@ -1,8 +1,8 @@
+const MAIN_TITLE = 'Главная';
+
 const defaultPaths = [
-  { href: '/', text: 'Главная' },
+  { href: '/', text: MAIN_TITLE },
   { href: '/catalog', text: 'Каталог' },
 ];
 
-const SEARCH_TEXT = 'Поиск по вашему авто';
-
-export { defaultPaths, SEARCH_TEXT };
+export { defaultPaths, MAIN_TITLE };

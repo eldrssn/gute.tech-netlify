@@ -2,7 +2,7 @@ import { TreeCategoryResponseData } from 'api/models/catalog';
 import { PAGE_QUERY } from 'components/base/catalog/constants';
 import { QueryUrl } from 'constants/variables';
 import { getTransportSlugs } from 'utility/helpers/linkmakers';
-import { SEARCH_TEXT } from './constants';
+import { defaultPaths, MAIN_TITLE } from './constants';
 import { GetCrumbs } from './types';
 
 const getCrumbs = (
@@ -45,7 +45,7 @@ const getCrumblistFromQuery: GetCrumbs = (router, paths) => {
             href: currentPath,
           }
         : {
-            text: 'Поиск по вашему авто',
+            text: MAIN_TITLE,
             href,
           };
     });
@@ -70,13 +70,13 @@ const getCrumblistFromQuery: GetCrumbs = (router, paths) => {
         : subpath?.map((path) => paths[path]).join(' ');
 
     if (href?.startsWith('?transport') && !href?.includes('category')) {
-      text = SEARCH_TEXT;
+      text = MAIN_TITLE;
     }
 
     return { href, text };
   });
 
-  return crumblist;
+  return [...defaultPaths, ...crumblist];
 };
 
 const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
@@ -118,7 +118,7 @@ const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
     });
 
     const homeCrumb = {
-      text: SEARCH_TEXT,
+      text: MAIN_TITLE,
       href: `/?${transportDetails}`,
     };
 
@@ -132,7 +132,7 @@ const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
     return { href, text };
   });
 
-  return crumblist.slice(1);
+  return [...defaultPaths, ...crumblist.slice(1)];
 };
 
 export { getCrumbs, getCrumblistFromQuery, getCrumblistFromURL };
