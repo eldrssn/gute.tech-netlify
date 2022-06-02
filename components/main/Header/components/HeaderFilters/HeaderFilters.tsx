@@ -252,7 +252,10 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
                     })}
                   >
                     <p className={styles.choosenTransport_text}>
-                      Показаны товары для: {transportText}
+                      <p>Показаны товары для: &nbsp;</p>
+                      <p className={styles.choosenTransport_text_auto}>
+                        {transportText}
+                      </p>
                     </p>
                     <CustomButton
                       onClick={resetFilter}

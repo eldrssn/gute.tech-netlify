@@ -38,7 +38,7 @@ const HeaderMobile: FC<HeaderMobileProps> = ({
         onClick={handleClick}
         customStyles={styles.openFiltersButton}
       >
-        {transportText ? `Товары для: ${transportText}` : 'Выберите транспорт'}
+        {transportText ? `${transportText}` : 'Выберите транспорт'}
       </CustomButton>
 
       <Menu

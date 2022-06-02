@@ -42,6 +42,7 @@ const DeliveryAddress: React.FC<TDeliveryAddressProps> = ({
               <Autocomplete
                 {...field}
                 options={branchesCity}
+                noOptionsText='Нет совпадений'
                 getOptionLabel={(option: BranchesData) => option.title}
                 onChange={(_, data) => {
                   field.onChange(data);

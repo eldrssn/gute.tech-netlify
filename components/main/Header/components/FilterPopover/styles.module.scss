@@ -36,7 +36,7 @@
   max-height: 70vh;
   z-index: 1303;
   overflow-x: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
   box-shadow: 0px 5px 8px 0px rgba(34, 60, 80, 0.2);
   border-top: 0;
   background-color: $white;
@@ -57,6 +57,8 @@
   background-color: $white;
   border-radius: 0;
   height: 40px;
+  white-space: pre-line;
+  line-height: 15px;
 
   &:hover {
     background-color: $blue1;
@@ -68,5 +70,11 @@
   .list {
     z-index: 1303;
     max-height: 30vh;
+  }
+
+  .listMobile {
+    position: fixed;
+    max-height: 30vh;
+    width: calc(100% - 29px);
   }
 }

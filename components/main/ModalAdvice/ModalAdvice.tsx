@@ -66,10 +66,10 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
 
   return (
     <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
-      <Box className={styles.closeModal} onClick={closeModal}>
-        <FontAwesomeIcon icon={faTimes} />
-      </Box>
       <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box className={styles.closeModal} onClick={closeModal}>
+          <FontAwesomeIcon icon={faTimes} />
+        </Box>
         <form onSubmit={onSubmit} className={styles.container}>
           <Typography
             className={styles.title}
