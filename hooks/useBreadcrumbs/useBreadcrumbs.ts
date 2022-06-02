@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { defaultPaths } from './constants';
 import {
   getCrumblistFromQuery,
   getCrumblistFromURL,
@@ -17,7 +16,7 @@ const useBreadcrumbs = ({ router, data, isQuery, lastTitle }: UseBreadcrumbs) =>
       ? getCrumblistFromQuery(router, paths)
       : getCrumblistFromURL(router, paths, lastTitle);
 
-    return [...defaultPaths, ...crumblist];
+    return crumblist;
   }, [router, data, isQuery, lastTitle]);
 
 export { useBreadcrumbs };
