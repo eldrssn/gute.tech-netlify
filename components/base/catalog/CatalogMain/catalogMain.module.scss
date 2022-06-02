@@ -1,3 +1,6 @@
+@import '~styles/breakpoints.scss';
+@import '~styles/colors.scss';
+
 .catalogMainBox {
   display: flex;
   height: 100%;
@@ -43,18 +46,6 @@
   z-index: 1000;
 }
 
-.cardHeaderMobile {
-  top: 121px;
-  transition: transform 0.5s ease-in-out;
-
-  &_show {
-    transform: translateY(0);
-  }
-  &_hide {
-    transform: translateY(-300px);
-  }
-}
-
 .pages {
   transition: transform 0.5s ease-in-out;
   position: sticky;
@@ -62,12 +53,29 @@
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
+}
 
-  &_show {
-    transform: translateY(0);
-  }
+.filterButton_mobile {
+  position: fixed;
+  top: 3px;
+  right: 3px;
+  z-index: 1100;
+}
 
-  &_hide {
-    transform: translateY(100px);
+@media (max-width: $xxsMobile) {
+  .filterButton_mobile {
+    background-color: transparent;
+    font-size: 12px;
+    color: $blue1;
+    padding: 3px;
+
+    top: 17px;
+    right: 3px;
+
+    &:hover {
+      background-color: transparent;
+      color: $blue1;
+      padding: 3px;
+    }
   }
 }

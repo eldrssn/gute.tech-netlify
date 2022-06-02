@@ -1,0 +1,81 @@
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
+
+.button {
+  background-color: $red1;
+  font-size: 14px;
+  position: relative;
+  margin: 0;
+  padding: 13px;
+  transition: background-color 0.2s ease-in-out;
+  margin-left: 220px;
+
+  &:hover {
+    background-color: $red3;
+  }
+}
+
+.button_ranger {
+  margin-left: 23px;
+  transition: none;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  left: -40px;
+  top: 0;
+  border: 20px solid transparent;
+  border-right: 20px solid $red1;
+  transition: border-right 0.2s ease-in-out;
+}
+
+.button:hover::before {
+  border: 20px solid transparent;
+  border-right: 20px solid $red3;
+}
+
+@media (max-width: $mobile) {
+  .button {
+    background-color: transparent;
+    font-size: 14px;
+    color: $blue1;
+    position: relative;
+    margin: 0;
+    padding: 5px 0;
+    transition: none;
+    margin-left: calc(100vw - 155px);
+    z-index: 1300 !important;
+    border-bottom: 1px dashed $blue1;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .button::before {
+    content: none;
+  }
+  .popper {
+    z-index: 1101;
+  }
+
+  .button_ranger {
+    margin-left: -70px;
+    margin-top: 70px;
+    transition: none;
+  }
+
+  .button_sortings {
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: $xsMobile) {
+  .button_sortings {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 30px;
+  }
+}

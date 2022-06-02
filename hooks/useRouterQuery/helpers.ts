@@ -1,14 +1,14 @@
 import { RouterQuery, RouterQueryOptions } from './types';
 
 const setQueryParam =
-  (routerQuery: RouterQuery, type: RouterQueryOptions) =>
+  (routerQuery: RouterQuery, type: RouterQueryOptions, scroll = true) =>
   (event: ChangeEvent) => {
     const { value } = event.target;
 
-    routerQuery.setQueryOption(type, value);
+    routerQuery.setQueryOption(type, value, scroll);
 
     if (!value) {
-      routerQuery.removeQuery(type);
+      routerQuery.removeQuery(type, undefined, scroll);
     }
   };
 

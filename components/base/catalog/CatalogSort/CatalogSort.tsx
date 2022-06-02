@@ -13,7 +13,10 @@ import styles from './catalogSort.module.scss';
 
 const cn = classnames.bind(styles);
 
-const CatalogSort: FC<CatalogSortProps> = ({ setSorting }) => {
+const CatalogSort: FC<CatalogSortProps> = ({
+  setSorting,
+  setAnchorApplyButton,
+}) => {
   const routerQuery = useRouterQuery();
 
   const orderType = getQueryParams(routerQuery, ORDER_QUERY);
@@ -28,6 +31,14 @@ const CatalogSort: FC<CatalogSortProps> = ({ setSorting }) => {
 
     orderType && sortingTypes[orderType]();
   }, [orderType, setSorting]);
+
+  const handleAnchorClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!setAnchorApplyButton || !event) {
+      return;
+    }
+    setAnchorApplyButton(null);
+    setAnchorApplyButton(event.currentTarget);
+  };
 
   const setDirectionByPopular = () => {
     const changedOrderType = changeOrderType(orderType, ORDER_TYPES.byPopular);
@@ -49,7 +60,7 @@ const CatalogSort: FC<CatalogSortProps> = ({ setSorting }) => {
   return (
     <div className={styles.sortContainer}>
       <span className={styles.sortItem}>Сортировать по:</span>
-      <div>
+      <div className='sortButtons' onClick={handleAnchorClick}>
         <a
           className={cn(styles.sortItem, styles.sortItemType, {
             [styles.active]: isActive(ORDER_TYPES.byPopular),

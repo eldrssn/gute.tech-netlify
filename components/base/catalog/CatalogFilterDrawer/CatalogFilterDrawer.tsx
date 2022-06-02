@@ -5,11 +5,15 @@ import { CatalogFilter } from '../CatalogFilter';
 import { CatalogFilterDrawerProps } from './types';
 
 import styles from './catalogFilterDrawer.module.scss';
+import { CatalogSort } from '../CatalogSort';
 
 const CatalogFilterDrawer: FC<CatalogFilterDrawerProps> = ({
   openDrawer,
   handleDrawerToggle,
   setFilterRequest,
+  anchorApplyButton,
+  setAnchorApplyButton,
+  setSorting,
 }) => (
   <Drawer
     transitionDuration={500}
@@ -18,6 +22,7 @@ const CatalogFilterDrawer: FC<CatalogFilterDrawerProps> = ({
         width: '100vw',
         boxSizing: 'border-box',
         borderRight: 'none',
+        zIndex: 1101,
       },
     }}
     variant='persistent'
@@ -26,7 +31,16 @@ const CatalogFilterDrawer: FC<CatalogFilterDrawerProps> = ({
   >
     <div className={styles.drawerContainer}>
       <span className={styles.closeButton} onClick={handleDrawerToggle} />
-      <CatalogFilter setFilterRequest={setFilterRequest} />
+      <CatalogSort
+        setSorting={setSorting}
+        setAnchorApplyButton={setAnchorApplyButton}
+      />
+      <CatalogFilter
+        setFilterRequest={setFilterRequest}
+        anchorApplyButton={anchorApplyButton}
+        setAnchorApplyButton={setAnchorApplyButton}
+        handleDrawerToggle={handleDrawerToggle}
+      />
     </div>
   </Drawer>
 );

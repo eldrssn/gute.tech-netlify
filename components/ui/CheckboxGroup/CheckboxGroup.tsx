@@ -11,7 +11,11 @@ import { Filter } from 'types';
 
 import styles from './checkboxGroup.module.scss';
 
-const CheckboxGroup: React.FC<Filter> = ({ filter, setFilterRequest }) => {
+const CheckboxGroup: React.FC<Filter> = ({
+  filter,
+  setFilterRequest,
+  handleAnchorClick,
+}) => {
   const { updateQueryOption, getQueryOption, removeQuery } = useRouterQuery();
 
   const { title, slug, values } = filter;
@@ -21,15 +25,12 @@ const CheckboxGroup: React.FC<Filter> = ({ filter, setFilterRequest }) => {
   useEffect(() => {
     if (queryOption) {
       const options = Array.isArray(queryOption) ? queryOption : [queryOption];
-
       setFilterRequest((filterRequest) => ({
         ...filterRequest,
         [slug]: options,
       }));
-
       return;
     }
-
     setFilterRequest((filterRequest) => ({
       ...filterRequest,
       [slug]: [],
@@ -39,12 +40,10 @@ const CheckboxGroup: React.FC<Filter> = ({ filter, setFilterRequest }) => {
   const setOnChange = useCallback(
     (checked: boolean, { value }: CheckboxValue) => {
       if (!checked) {
-        removeQuery(slug, value);
-
+        removeQuery(slug, value, false);
         return;
       }
-
-      updateQueryOption(slug, value);
+      updateQueryOption(slug, value, false);
     },
     [removeQuery, slug, updateQueryOption],
   );
@@ -98,6 +97,7 @@ const CheckboxGroup: React.FC<Filter> = ({ filter, setFilterRequest }) => {
               <Checkbox
                 onChange={(event, checked) => setOnChange(checked, element)}
                 checked={getIsChecked(value)}
+                onClick={handleAnchorClick}
               />
             }
             label={title}
