@@ -15,7 +15,6 @@ import {
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { checkMobileView } from 'utility/helpers/checkViewType';
 import { makeStringify } from 'utility/helpers';
 import { QueryUrl } from 'constants/variables';
 
@@ -39,7 +38,7 @@ const cn = classnames.bind(styles);
 const CatalogMain: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { windowWidth } = useWindowSize();
+  const { isMobile } = useWindowSize();
   const { getQueryOption } = useRouterQuery();
 
   const [page, setPage] = useState(1);
@@ -53,8 +52,6 @@ const CatalogMain: FC = () => {
 
   const { subcategorySlug } = router.query;
   const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
-
-  const isMobileView = checkMobileView(windowWidth);
 
   const currentSelector = transportId
     ? selectSearchProductList
@@ -134,7 +131,7 @@ const CatalogMain: FC = () => {
   return (
     <Box sx={{ position: 'relative' }}>
       <Box className={styles.catalogMainBox}>
-        {!isMobileView && (
+        {!isMobile && (
           <Box className={styles.catalogFilter_desktop}>
             <CatalogFilter
               setFilterRequest={setFilterRequest}
@@ -145,7 +142,7 @@ const CatalogMain: FC = () => {
         )}
 
         <Box className={styles.catalogMainContent}>
-          {isMobileView && (
+          {isMobile && (
             <CustomButton
               onClick={handleDrawerToggle}
               customStyles={styles.filterButton_mobile}
@@ -154,7 +151,7 @@ const CatalogMain: FC = () => {
             </CustomButton>
           )}
 
-          {!isMobileView && (
+          {!isMobile && (
             <Box
               component='section'
               className={cn(styles.cardHeader, styles.cardHeaderContainer)}
@@ -173,7 +170,7 @@ const CatalogMain: FC = () => {
         </Box>
       </Box>
 
-      {isMobileView && results.length && (
+      {isMobile && results.length && (
         <Box className={cn(styles.cardHeaderContainer, styles.pages)}>
           <CatalogPagination
             pageCount={pageCount}

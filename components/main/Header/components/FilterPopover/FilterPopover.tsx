@@ -12,7 +12,6 @@ import {
 } from 'store/reducers/transport/selectors';
 import { checkBrandsList } from 'utility/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { checkMobileView } from 'utility/helpers/checkViewType';
 
 import { filterData } from './helpers';
 import { widthListByStep, widthButtonByStep } from '../../constants';
@@ -31,7 +30,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
   openPopoverId,
   searchValue,
 }) => {
-  const { windowWidth } = useWindowSize();
+  const { isMobile } = useWindowSize();
   const [activeOptionList, setActiveOptionsList] = useState<ListOptionsItem>({
     data: [],
     isLoading: false,
@@ -70,16 +69,21 @@ const FilterPopover: FC<FilterPopoverProps> = ({
   );
 
   const cancelBodyScroll = () => {
+    //TODO проверить решение
+    const documentWidth = document.documentElement.clientWidth;
+    const windowsWidth = window.innerWidth;
+    const scrollbarWidth = windowsWidth - documentWidth;
+    document.body.style.marginRight = `${scrollbarWidth}px`;
     document.body.style.overflow = 'hidden';
   };
 
   const backBodyScroll = () => {
     document.body.style.overflow = 'auto';
+    document.body.style.marginRight = '0px';
   };
 
   const widthList = widthListByStep[openPopoverId];
   const widthButton = widthButtonByStep[openPopoverId];
-  const isMobileView = checkMobileView(windowWidth);
 
   const filteredData = searchValue
     ? filterData(searchValue, checkBrandsList(data))
@@ -100,16 +104,16 @@ const FilterPopover: FC<FilterPopoverProps> = ({
       <Box
         component='div'
         className={cn({
-          [styles.list]: !isMobileView,
-          [styles.listMobile]: isMobileView,
+          [styles.list]: !isMobile,
+          [styles.listMobile]: isMobile,
         })}
-        sx={{ width: isMobileView ? '100%' : widthList }}
+        sx={{ width: isMobile ? '100%' : widthList }}
       >
         {isLoading
           ? null
           : filteredData.map((item) => (
               <Button
-                sx={{ width: isMobileView ? '100%' : widthButton }}
+                sx={{ width: isMobile ? '100%' : widthButton }}
                 className={styles.button}
                 onClick={() => {
                   handleClick({

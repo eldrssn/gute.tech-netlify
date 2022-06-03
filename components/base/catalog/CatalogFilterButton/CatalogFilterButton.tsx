@@ -3,7 +3,6 @@ import Popper from '@mui/material/Popper';
 import classnames from 'classnames/bind';
 
 import { useWindowSize } from 'hooks/useWindowSize';
-import { checkMobileView } from 'utility/helpers/checkViewType';
 import { CustomButton } from 'components/ui/CustomButton';
 
 import { CatalogFilterButtonProps } from './types';
@@ -16,13 +15,12 @@ const CatalogFilterButton: FC<CatalogFilterButtonProps> = ({
   setAnchorApplyButton,
   handleDrawerToggle,
 }) => {
-  const { windowWidth } = useWindowSize();
-  const isMobileView = checkMobileView(windowWidth);
+  const { isMobile } = useWindowSize();
 
   const handleClose = () => {
     setAnchorApplyButton(null);
 
-    if (handleDrawerToggle && isMobileView) {
+    if (handleDrawerToggle && isMobile) {
       handleDrawerToggle();
     }
   };

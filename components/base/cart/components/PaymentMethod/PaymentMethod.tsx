@@ -5,14 +5,13 @@ import { Typography, Box } from '@mui/material';
 
 // import { selectPaymentMethods } from 'store/reducers/cart/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { checkXSMobileView } from 'utility/helpers/checkViewType';
 import { TPaymentMethodProps } from 'components/base/cart/types';
 import { paymantCardIconPatch } from 'components/base/cart/constants';
 
 import styles from './PaymentMethod.module.scss';
 
 const PaymentMethod: React.FC<TPaymentMethodProps> = () => {
-  const { windowWidth } = useWindowSize();
+  const { isXSMobile } = useWindowSize();
   // const [paymentType, setPaymentType] = useState('');
   // const paymentMethods = useSelector(selectPaymentMethods);
 
@@ -20,11 +19,9 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = () => {
   //   (method) => method.payment_type === paymentType,
   // )?.values;
 
-  const isXSMobileView = checkXSMobileView(windowWidth);
-
   const imageSize = {
-    width: isXSMobileView ? 75 : 100,
-    height: isXSMobileView ? 37 : 50,
+    width: isXSMobile ? 75 : 100,
+    height: isXSMobile ? 37 : 50,
   };
 
   return (

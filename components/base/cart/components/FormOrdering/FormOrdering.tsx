@@ -51,13 +51,25 @@ const FormOrdering: React.FC = () => {
         }
       })
       .catch((e) => {
-        if (e.response.data.phone) {
+        const { phone, email } = e.response.data;
+        if (phone) {
           setError('phoneNumber', {
             type: 'custom',
-            message: e.response.data.phone,
+            message: phone,
           });
+        }
+
+        if (email) {
+          setError('emailValue', {
+            type: 'custom',
+            message: email,
+          });
+        }
+
+        if (phone || email) {
           return;
         }
+
         setOtherError(true);
       });
   });

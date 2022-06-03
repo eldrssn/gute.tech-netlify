@@ -106,7 +106,12 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
   }
 
   return (
-    <MenuItem disableGutters className={styles.searchMenuItem}>
+    <MenuItem
+      disableGutters
+      className={cn(styles.searchMenuItem, {
+        [styles.searchMenuItemSmallHeader]: !isFullHeader && isTabletView,
+      })}
+    >
       {isFocusSearchField && (
         <Box
           component='div'

@@ -49,7 +49,6 @@ const HeaderLogo: FC<IsDrawerProps> = ({ isDrawer, closeMainDrawer }) => {
         sx={{
           display: isFullHeader || isDrawer ? 'flex' : 'none',
           alignItems: 'center',
-          marginLeft: isDrawer ? 0 : '15px',
         }}
       >
         <Typography

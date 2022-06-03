@@ -2,11 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 
-import {
-  checkMobileView,
-  checkTabletView,
-} from 'utility/helpers/checkViewType';
-
 import { useWindowSize } from 'hooks/useWindowSize';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { getSlugsFromUrl } from 'utility/helpers';
@@ -26,12 +21,12 @@ const Header = () => {
   const [transportText, setTransportText] = useState<string>('');
 
   const { getQueryOption } = useRouterQuery();
-  const { windowWidth } = useWindowSize();
+  const { isTablet, isMobile } = useWindowSize();
 
   const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
 
-  const isTabletView = checkTabletView(windowWidth);
-  const isMobileView = checkMobileView(windowWidth);
+  const isTabletView = isTablet;
+  const isMobileView = isMobile;
 
   useEffect(() => {
     const onScroll = () => {
