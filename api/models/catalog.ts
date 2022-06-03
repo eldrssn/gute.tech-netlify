@@ -93,6 +93,7 @@ export type CategoriesProductReadResponseData = {
   price?: string;
   images?: string[];
   properties?: string;
+  is_service: boolean;
   warehouses?: ProductWarehouse[];
 };
 

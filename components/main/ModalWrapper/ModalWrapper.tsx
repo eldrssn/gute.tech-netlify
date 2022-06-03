@@ -28,11 +28,16 @@ const ModalWrapper: React.FC<TOuterProps> = ({
     event.stopPropagation();
   };
 
+  const documentWidth = document.documentElement.clientWidth;
+  const windowsWidth = window.innerWidth;
+  const scrollbarWidth = windowsWidth - documentWidth;
+
   useEffect(() => {
     if (window) {
       window.document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+      document.body.style.marginRight = isOpen ? `${scrollbarWidth}px` : '0px';
     }
-  }, [isOpen]);
+  }, [isOpen, scrollbarWidth]);
 
   return (
     <div className={modalBackgroundClassName} onClick={closeModal}>

@@ -39,6 +39,7 @@ type ProductResponseData = {
   faq: ProductFAQ[];
   price: number;
   images: string[];
+  is_service: boolean;
   warehouses: ProductWarehouse[];
   properties: ProductProperties[];
 };
