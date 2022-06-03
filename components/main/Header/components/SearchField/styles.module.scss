@@ -37,6 +37,10 @@
   background-color: $white !important;
 }
 
+.searchBoxSmallHeader {
+  height: 36px;
+}
+
 .activeSearchBox {
   border-bottom: 0;
 }
@@ -76,12 +80,20 @@
   white-space: pre-line;
 }
 
+.popupBoxSmallHeader {
+  top: 31px;
+}
+
 .divider {
   position: absolute;
   top: 35px;
   width: 97%;
   margin: 0 auto 10px;
   border-color: $blue1;
+}
+
+.dividerSmallHeader {
+  top: 29px;
 }
 
 .activePopupBox {

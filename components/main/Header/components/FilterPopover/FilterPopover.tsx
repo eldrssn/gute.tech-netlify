@@ -68,11 +68,12 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     styles.wrapper,
   );
 
+  //TODO проверить решение
+  const documentWidth = document.documentElement.clientWidth;
+  const windowsWidth = window.innerWidth;
+  const scrollbarWidth = windowsWidth - documentWidth;
+
   const cancelBodyScroll = () => {
-    //TODO проверить решение
-    const documentWidth = document.documentElement.clientWidth;
-    const windowsWidth = window.innerWidth;
-    const scrollbarWidth = windowsWidth - documentWidth;
     document.body.style.marginRight = `${scrollbarWidth}px`;
     document.body.style.overflow = 'hidden';
   };

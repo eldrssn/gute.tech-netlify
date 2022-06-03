@@ -45,6 +45,7 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
 
   const closeModal = () => {
     setIsOpen(false);
+    reset({ cityName: '' });
   };
 
   const resetInput = () => {
@@ -54,6 +55,7 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
   const selectCity = (title: string) => {
     dispatch(selectRegion(title));
     cookieStorage.setItem(CookieKey.SELECTEDCITY, title);
+    reset({ cityName: '' });
   };
 
   useEffect(() => {

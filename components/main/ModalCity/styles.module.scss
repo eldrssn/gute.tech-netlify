@@ -8,6 +8,7 @@
   background-color: $white;
   padding: 40px;
   padding-top: 32px;
+  min-height: 580px;
 }
 
 .closeModal {
@@ -37,6 +38,7 @@
   top: 30%;
   right: 20px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .title {
