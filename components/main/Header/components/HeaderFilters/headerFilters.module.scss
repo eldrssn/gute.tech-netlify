@@ -39,9 +39,7 @@
 }
 
 .filterStepsForm input {
-  padding-top: 14px;
-  padding-bottom: 14px;
-  padding-left: 60px;
+  padding: 14px 0 14px 60px;
   min-width: 120px;
 }
 
@@ -66,7 +64,7 @@
   background-color: $red1;
   flex-grow: 1;
   padding: 12px 20px;
-  min-height: 50px;
+  min-height: 52px;
   border: 2px solid $red1;
 }
 
@@ -130,5 +128,16 @@
 @media (max-width: $mobile) {
   .formAndCatalogContainer {
     width: 100%;
+  }
+}
+
+@media (max-width: $tablet) {
+  .choosenTransport_container {
+    width: 630px;
+  }
+
+  .stepButtonSubmit {
+    width: 150px !important;
+    flex-grow: 0;
   }
 }

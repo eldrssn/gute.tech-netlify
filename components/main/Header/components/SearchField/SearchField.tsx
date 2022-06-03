@@ -122,6 +122,7 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
       <Box
         className={cn(styles.searchBox, {
           [styles.activeSearchBox]: isActivePopup,
+          [styles.searchBoxSmallHeader]: !isFullHeader,
         })}
       >
         <TextField
@@ -132,12 +133,19 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
           value={searchValue}
         />
         <SearchIcon className={styles.searchIcon} />
-        {isFocusSearchField && <Divider className={styles.divider} />}
+        {isFocusSearchField && (
+          <Divider
+            className={cn(styles.divider, {
+              [styles.dividerSmallHeader]: !isFullHeader,
+            })}
+          />
+        )}
       </Box>
       <Box
         className={cn(styles.popupBox, {
           [styles.activePopupBox]: isActivePopup,
           [styles.errorPopupBox]: !isCatalogSearchRead && isFocusSearchField,
+          [styles.popupBoxSmallHeader]: !isFullHeader,
         })}
       >
         {isCatalogSearchRead ? (
