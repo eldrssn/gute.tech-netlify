@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/system';
-import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import Image from 'next/image';
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 
@@ -65,7 +65,7 @@ const FooterSocialLinks: FC = () => {
       </Box>
 
       <a href='tel:+74992832026' className={styles.footerPhone}>
-        <CallRoundedIcon className={styles.footerPhoneIcon} />
+        <PhoneIphoneIcon className={styles.footerPhoneIcon} />
         <span className={styles.footerPhoneNumber}>{phone}</span>
       </a>
     </Box>

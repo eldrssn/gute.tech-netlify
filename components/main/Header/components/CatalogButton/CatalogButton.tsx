@@ -8,7 +8,7 @@ import { CustomButton } from 'components/ui/CustomButton';
 import { HeaderContext } from '../HeaderContext';
 import { CatalogMenu } from '../CatalogMenu';
 
-import styles from './catalogButton.module.css';
+import styles from './catalogButton.module.scss';
 
 const cn = classnames.bind(styles);
 
@@ -38,12 +38,14 @@ const CatalogButton: FC = () => {
         customStyles={cn(styles.catalogButton, {
           [styles.catalogButton_hidden]: !isFullHeader,
           [styles.catalogButton_tablet]: isTabletView && isFullHeader,
+          [styles.catalogButton_full]: isFullHeader,
         })}
       >
         <span className={styles.catalogTitle}>Каталог</span>
         <span
           className={cn(styles.catalogIcon, styles.catalogIconLines, {
             [styles.catalogIconLines_open]: open,
+            [styles.catalogIconLines_full]: isFullHeader,
           })}
         />
       </CustomButton>

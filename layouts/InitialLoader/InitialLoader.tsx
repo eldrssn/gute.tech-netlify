@@ -6,6 +6,7 @@ import {
   getSlugsCartItemsFromString,
   getSlugsCartItemsFromCart,
 } from 'utility/helpers';
+import { useWindowSize } from 'hooks/useWindowSize';
 import { CookieKey } from 'constants/types';
 import { fetchRegions } from 'store/reducers/regions/actions';
 import { selectCart } from 'store/reducers/cart/selectors';
@@ -14,6 +15,8 @@ import { fetchCategoriesTreeList } from 'store/reducers/catalog/actions';
 import { fetchShowcase } from 'store/reducers/showcase/actions';
 
 const InitialLoader: React.FC = ({ children }) => {
+  const { windowWidth } = useWindowSize();
+
   const dispatch = useDispatch();
 
   const cart = useSelector(selectCart);
@@ -41,6 +44,10 @@ const InitialLoader: React.FC = ({ children }) => {
   useEffect(() => {
     cookieStorage.setItem(CookieKey.CARTITEMS, getSlugsCartItemsFromCart(cart));
   }, [cart]);
+
+  if (!windowWidth) {
+    return null;
+  }
 
   return <>{children}</>;
 };

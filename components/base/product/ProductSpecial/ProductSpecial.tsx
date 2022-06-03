@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 
 import { useWindowSize } from 'hooks/useWindowSize';
-import { checkMobileView } from 'utility/helpers/checkViewType';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 
@@ -20,8 +19,7 @@ const ProductSpecial: FC = () => {
     setModalAdviceOpen(true);
   };
 
-  const { windowWidth } = useWindowSize();
-  const isMobileView = checkMobileView(windowWidth);
+  const { isMobile } = useWindowSize();
 
   return (
     <>
@@ -33,7 +31,7 @@ const ProductSpecial: FC = () => {
           alignItems: { xs: 'center', sm: 'start' },
         }}
         className={cn(styles.productSpecialWrapper, {
-          [styles.mobileView]: isMobileView,
+          [styles.mobileView]: isMobile,
         })}
       >
         <Link

@@ -11,7 +11,6 @@ import {
 import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 
-import { checkMobileView } from 'utility/helpers/checkViewType';
 import {
   addItemQuantity,
   removeItemQuantity,
@@ -32,7 +31,7 @@ const TableOrder: React.FC<TTableOrderProps> = ({
   slugsRemovedElements,
 }) => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState(false);
-  const { windowWidth } = useWindowSize();
+  const { isMobile } = useWindowSize();
   const dispatch = useDispatch();
   const addCount = (item: CartItemData) => {
     dispatch(addItemQuantity(item.slug));
@@ -44,8 +43,6 @@ const TableOrder: React.FC<TTableOrderProps> = ({
     dispatch(removeItemFromCart(item.slug));
   };
 
-  const isMobileView = checkMobileView(windowWidth);
-
   const openModalAdvice = () => {
     setModalAdviceOpen(true);
   };
@@ -54,7 +51,7 @@ const TableOrder: React.FC<TTableOrderProps> = ({
     <>
       <ModalAdvice isOpen={isModalAdviceOpen} setIsOpen={setModalAdviceOpen} />
       <Table className={styles.table} aria-label='simple table'>
-        {isMobileView ? null : (
+        {isMobile ? null : (
           <TableHead className={styles.tableHead}>
             <TableRow>
               <TableCell>Товар</TableCell>
@@ -65,7 +62,7 @@ const TableOrder: React.FC<TTableOrderProps> = ({
             </TableRow>
           </TableHead>
         )}
-        {isMobileView ? (
+        {isMobile ? (
           <MobileTableBody
             cart={cart}
             addCount={addCount}

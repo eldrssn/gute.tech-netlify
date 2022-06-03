@@ -123,14 +123,6 @@ const handlers = {
     const ordinalId = ordinalIdAddedItem ? ordinalIdAddedItem : cart.length + 1;
 
     if (itemIndex >= 0) {
-      const { count, ...otherItemData } = cart[itemIndex];
-      const newItem = { count: count + 1, ...otherItemData };
-      state.cartItems.data = [
-        ...cart.slice(0, itemIndex),
-        newItem,
-        ...cart.slice(itemIndex + 1),
-      ];
-
       return;
     }
     state.cartItems.data = [...cart, { ...payload, ordinalId }];

@@ -7,9 +7,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 
-import PhoneCallbackIcon from '@mui/icons-material/PhoneCallback';
-import HeadphonesIcon from '@mui/icons-material/Headphones';
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CurrencyRubleIcon from '@mui/icons-material/CurrencyRuble';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
@@ -49,8 +50,8 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
         setIsOpen={setIsOpenModalAdvice}
       />
       {(isFullHeader || isMobileView || isDrawer) && !hidePhone && (
-        <MenuItem disableGutters>
-          <PhoneCallbackIcon />
+        <MenuItem disableGutters sx={{ display: 'flex' }}>
+          <PhoneIphoneIcon />
           <a href='tel:+74992832026' className={menuItemStyles}>
             {phone}
           </a>
@@ -70,7 +71,10 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
                   {amountCartItems}
                 </Box>
                 <Typography className={styles.orderTotalCard}>
-                  {orderTotal}&#8381;
+                  {orderTotal}
+                  <CurrencyRubleIcon
+                    sx={{ width: '20px', height: '25px', fontWeight: 'bold' }}
+                  />
                 </Typography>
               </Box>
             </MenuItem>
@@ -82,7 +86,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
           disableGutters
           onClick={() => setIsOpenModalAdvice(true)}
         >
-          <HeadphonesIcon sx={{ width: '24px', height: '24px' }} />
+          <HeadsetMicIcon sx={{ width: '24px', height: '24px' }} />
           {(isFullHeader || isDrawer) && (
             <Typography className={menuItemStyles}>Консультация</Typography>
           )}

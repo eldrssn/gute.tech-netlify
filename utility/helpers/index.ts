@@ -211,6 +211,11 @@ const findTransportType = (data: ListOptionsItemData[], slug: string) => {
   return type?.slug;
 };
 
+const setBreakpointSize = (breakpoint: string) =>
+  Number(breakpoint.slice(0, -2));
+
+export default setBreakpointSize;
+
 export {
   groupItems,
   getInputRules,
@@ -223,4 +228,5 @@ export {
   checkBrandsList,
   findTransportType,
   getParentCategory,
+  setBreakpointSize,
 };

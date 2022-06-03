@@ -2,6 +2,8 @@
   display: flex;
   position: relative;
   box-sizing: content-box;
+  justify-content: center;
+  align-items: center;
 
   background-color: white;
   color: #0686c9;
@@ -13,6 +15,9 @@
 
   padding: 17px 43px;
   margin: 0;
+}
+
+.catalogButton_full {
   margin-left: 15px;
 }
 
@@ -25,8 +30,6 @@
   padding: 0;
   border: none;
   height: 100%;
-  margin-left: 10px;
-  margin-right: 10px;
   margin-top: auto;
   margin-bottom: auto;
 }
@@ -44,12 +47,16 @@
   display: block;
   width: 24px;
   height: 14px;
+  margin-right: 10px;
   transform: rotate(180deg);
   margin-left: auto;
 }
 
-.catalogIconLines {
+.catalogIconLines_full {
   margin-left: 12px;
+}
+
+.catalogIconLines {
   margin-top: 1px;
 
   transition: 0.1s;
@@ -69,12 +76,12 @@
 }
 
 .catalogIconLines::before {
-  content: '';
+  content: "";
   top: -4px;
 }
 
 .catalogIconLines::after {
-  content: '';
+  content: "";
   top: 2px;
 }
 
