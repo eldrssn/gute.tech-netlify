@@ -11,6 +11,7 @@ import { DeliveryAddress } from '../DeliveryAddress';
 import { ContactInformation } from '../ContactInformation';
 import { PaymentMethod } from '../PaymentMethod';
 import { TFormData } from '../../types';
+import { getCartOrder } from './helpers';
 import styles from './FormOrdering.module.scss';
 
 const FormOrdering: React.FC = () => {
@@ -30,10 +31,7 @@ const FormOrdering: React.FC = () => {
   const cart = useSelector(selectCart);
 
   const onSubmit = handleSubmit((data) => {
-    const cartOrder = cart.map((item) => ({
-      quantity: Number(item.count),
-      slug: item.slug,
-    }));
+    const cartOrder = getCartOrder(cart);
     const postData = {
       name: data.nameValue,
       phone: data.phoneNumber,

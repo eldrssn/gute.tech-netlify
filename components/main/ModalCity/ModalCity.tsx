@@ -65,7 +65,7 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
   const regionsClassName = cn({ [styles.loader]: isLoading }, styles.regions);
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
       <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box component='div' className={styles.container}>
           <Box className={styles.closeModal} onClick={closeModal}>

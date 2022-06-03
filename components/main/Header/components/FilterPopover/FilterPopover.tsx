@@ -68,20 +68,9 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     styles.wrapper,
   );
 
-  //TODO проверить решение
   const documentWidth = document.documentElement.clientWidth;
   const windowsWidth = window.innerWidth;
   const scrollbarWidth = windowsWidth - documentWidth;
-
-  const cancelBodyScroll = () => {
-    document.body.style.marginRight = `${scrollbarWidth}px`;
-    document.body.style.overflow = 'hidden';
-  };
-
-  const backBodyScroll = () => {
-    document.body.style.overflow = 'auto';
-    document.body.style.marginRight = '0px';
-  };
 
   const widthList = widthListByStep[openPopoverId];
   const widthButton = widthButtonByStep[openPopoverId];
@@ -90,13 +79,19 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     ? filterData(searchValue, checkBrandsList(data))
     : checkBrandsList(data);
 
+  useEffect(() => {
+    if (isOpenPopover) {
+      document.body.style.marginRight = `${scrollbarWidth}px`;
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+
+    document.body.style.overflow = 'auto';
+    document.body.style.marginRight = '0px';
+  }, [isOpenPopover, scrollbarWidth]);
+
   return (
-    <Box
-      component='div'
-      className={wrapperClassName}
-      onMouseOver={cancelBodyScroll}
-      onMouseLeave={backBodyScroll}
-    >
+    <Box component='div' className={wrapperClassName}>
       <Box
         component='div'
         className={styles.background}

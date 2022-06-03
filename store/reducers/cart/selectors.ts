@@ -14,8 +14,15 @@ const selectCart = createSelector(selectAppStore, ({ cartItems }) => {
   });
   return sortedCart;
 });
+
 const selectOrderTotal = createSelector(selectAppStore, ({ cartItems }) =>
-  cartItems.data.reduce((total, item) => item.count * item.price + total, 0),
+  cartItems.data.reduce((total, item) => {
+    if (item.is_service) {
+      return total;
+    }
+
+    return item.count * item.price + total;
+  }, 0),
 );
 
 const selectPaymentMethods = createSelector(

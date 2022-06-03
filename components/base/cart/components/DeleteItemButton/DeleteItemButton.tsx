@@ -22,6 +22,7 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
   const confirmedSolution = () => {
     removeItem(item);
     window.document.body.style.overflow = 'auto';
+    document.body.style.marginRight = '0px';
     dispatch(resetOrdinalId());
   };
 
