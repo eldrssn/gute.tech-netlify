@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .tableBody {
   border-bottom: 1px solid rgba(224, 224, 224, 1);
@@ -59,15 +59,15 @@
 }
 
 .btnCount {
-  color: white;
+  color: $white;
   width: 35px;
   height: 35px;
   padding: 10px 0;
   min-width: 0;
-  background-color: #1976d2;
+  background-color: $blue4;
 
   &:hover {
-    background-color: #1875d28a;
+    background-color: $blue2;
   }
 }
 
@@ -84,7 +84,7 @@
   top: 10px;
   right: 0px;
   background-color: red;
-  color: white;
+  color: $white;
   width: 15px;
   height: 15px;
   padding: 0;

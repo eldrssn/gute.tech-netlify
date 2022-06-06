@@ -8,7 +8,7 @@ import { HeaderFilters } from '../HeaderFilters';
 import { HeaderMobileDrawer } from '../HeaderMobileDrawer';
 
 import { HeaderMobileProps } from './types';
-import styles from './headerMobile.module.css';
+import styles from './headerMobile.module.scss';
 
 const HeaderMobile: FC<HeaderMobileProps> = ({
   transportText,
@@ -52,22 +52,26 @@ const HeaderMobile: FC<HeaderMobileProps> = ({
         }}
         id='mobile-filter'
         anchorEl={anchorEl}
+        anchorReference='none'
         open={open}
         onClose={handleClose}
         sx={{
+          overflowY: 'auto !important',
+          top: '121px !important',
+
           '& .MuiPopover-paper': {
             borderRadius: 0,
             margin: 0,
             maxWidth: '100vw',
             maxHeight: '350px',
 
-            boxContent: 'border-box',
+            boxSizing: 'border-box',
             left: '0px !important',
             display: 'block',
           },
           '& .MuiMenu-list': {
             display: 'block',
-            height: '350px',
+            height: transportText ? '170px' : '350px',
             overflow: 'visible',
             maxHeight: '350px',
             width: '100vw',

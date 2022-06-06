@@ -1,3 +1,5 @@
+@import '~styles/colors.scss';
+
 .menuItem {
   font-weight: 700;
   text-align: center;
@@ -7,7 +9,7 @@
   font-weight: 400;
   text-transform: none;
   font-size: 14px;
-  background-color: #fc5367;
+  background-color: $red1;
   flex-grow: 1;
   padding: 12px 20px;
   min-height: 50px;
@@ -16,5 +18,5 @@
 }
 
 .openFiltersButton:hover {
-  background-color: #fc5367;
+  background-color: $red1;
 }

@@ -1,6 +1,8 @@
+@import '~styles/colors.scss';
+
 .tabTittle {
   font-weight: 400;
-  color: #000;
+  color: $black;
   font-size: 18px;
   text-transform: none;
 }

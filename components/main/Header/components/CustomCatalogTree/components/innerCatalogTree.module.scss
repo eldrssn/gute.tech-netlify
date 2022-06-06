@@ -1,3 +1,5 @@
+@import '~styles/colors.scss';
+
 .catalogList {
   justify-content: space-between;
   padding-left: 0;
@@ -5,7 +7,7 @@
 }
 
 .catalogItem_expanded {
-  color: #fc5367;
+  color: $red1;
 }
 
 .catalogItem {

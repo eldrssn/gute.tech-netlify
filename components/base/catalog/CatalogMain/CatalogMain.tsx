@@ -128,6 +128,8 @@ const CatalogMain: FC = () => {
     setAnchorApplyButton(null);
   };
 
+  const isResults = results.length > 0;
+
   return (
     <Box sx={{ position: 'relative' }}>
       <Box className={styles.catalogMainBox}>
@@ -140,7 +142,6 @@ const CatalogMain: FC = () => {
             />
           </Box>
         )}
-
         <Box className={styles.catalogMainContent}>
           {isMobile && (
             <CustomButton
@@ -166,11 +167,15 @@ const CatalogMain: FC = () => {
             </Box>
           )}
 
-          {isLoading ? <Loader /> : <CatalogGrid items={results} />}
+          {isLoading || !isResults ? (
+            <Loader />
+          ) : (
+            <CatalogGrid items={results} />
+          )}
         </Box>
       </Box>
 
-      {isMobile && results.length && (
+      {isMobile && isResults && (
         <Box className={cn(styles.cardHeaderContainer, styles.pages)}>
           <CatalogPagination
             pageCount={pageCount}

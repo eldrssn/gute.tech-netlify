@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .countModal {
   display: flex;
@@ -10,7 +10,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: $white;
   border-radius: 4px;
   height: 120px;
   width: 150px;
@@ -112,7 +112,7 @@
 }
 
 .btnCount {
-  color: white;
+  color: $white;
   width: 35px;
   height: 35px;
   padding: 0;

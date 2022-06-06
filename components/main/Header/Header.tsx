@@ -12,8 +12,8 @@ import { HeaderDesktopFull } from './components/HeaderDesktopFull';
 import { HeaderContext } from './components/HeaderContext';
 import { HeaderMobile } from './components/HeaderMobile';
 
-import styles from './styles.module.scss';
 import { getTransportTitles } from './helpers';
+import styles from './styles.module.scss';
 
 const Header = () => {
   const [isFullHeader, setisFullHeader] = useState<boolean>(true);

@@ -1,3 +1,5 @@
+@import '~styles/colors.scss';
+
 .header {
   font-size: 24px;
   font-weight: 500;
@@ -17,7 +19,7 @@
   break-inside: avoid;
 
   &:hover {
-    color: #0686c9;
+    color: $blue3;
   }
 }
 

@@ -1,37 +1,42 @@
 import React, { FC } from 'react';
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
+import ImgsViewer from 'react-images-viewer';
 
 import { FullscreenGalleryProps } from '../types';
 
 const FullscreenGallery: FC<FullscreenGalleryProps> = ({
   toggleFullscreen,
   images,
-  title,
   fullscreenIndex,
   slideToIndex,
+  isFullscreen,
 }) => {
   const nextFullscreenIndex = (fullscreenIndex + 1) % images.length;
   const prevFullscreenIndex =
     (fullscreenIndex + images.length - 1) % images.length;
 
-  const handleMovePrevRequest = () => {
+  const prevButtonPressed = () => {
     slideToIndex(prevFullscreenIndex);
   };
 
-  const handleMoveNextRequest = () => {
+  const nextButtonPressed = () => {
     slideToIndex(nextFullscreenIndex);
   };
 
+  const onClickThumbnail = (index: number) => {
+    slideToIndex(index);
+  };
+
   return (
-    <Lightbox
-      mainSrc={images[fullscreenIndex]}
-      nextSrc={images[nextFullscreenIndex]}
-      prevSrc={images[prevFullscreenIndex]}
-      onCloseRequest={toggleFullscreen}
-      onMovePrevRequest={handleMovePrevRequest}
-      onMoveNextRequest={handleMoveNextRequest}
-      imageCaption={title}
+    <ImgsViewer
+      imgs={images}
+      isOpen={isFullscreen}
+      onClickPrev={prevButtonPressed}
+      onClickNext={nextButtonPressed}
+      onClose={toggleFullscreen}
+      currImg={fullscreenIndex}
+      onClickThumbnail={onClickThumbnail}
+      showThumbnails={true}
+      enableKeyboardInput={false}
     />
   );
 };

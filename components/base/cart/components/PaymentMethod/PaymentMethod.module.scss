@@ -1,5 +1,5 @@
-@import "styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import 'styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .formTitle {
   font-size: 28px;
@@ -63,7 +63,7 @@
 .radioButtonContainer {
   width: 48%;
   padding: 16.5px 14px;
-  border: solid 1px #dedede;
+  border: solid 1px $white1;
   height: 56px;
   transition: 0.2s;
   cursor: pointer;

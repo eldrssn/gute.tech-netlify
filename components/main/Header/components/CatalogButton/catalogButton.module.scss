@@ -1,3 +1,5 @@
+@import '~styles/colors.scss';
+
 .catalogButton {
   display: flex;
   position: relative;
@@ -5,10 +7,10 @@
   justify-content: center;
   align-items: center;
 
-  background-color: white;
-  color: #0686c9;
+  background-color: $white;
+  color: $blue3;
 
-  border: 2px solid #0686c9;
+  border: 2px solid $blue3;
   font-size: 14px;
   font-weight: 400;
   text-transform: none;
@@ -22,7 +24,7 @@
 }
 
 .catalogButton:hover {
-  background-color: white;
+  background-color: $white;
 }
 
 .catalogButton_hidden {
@@ -70,7 +72,7 @@
   position: relative;
   height: 2px;
   width: 12px;
-  background-color: #0686c9;
+  background-color: $blue3;
   transition: 0.4s;
   border-radius: 2px;
 }
@@ -93,13 +95,13 @@
 .catalogIconLines_open::before {
   top: -2px;
   transform: rotate(45deg);
-  background-color: #0686c9;
+  background-color: $blue3;
   width: 14px;
 }
 
 .catalogIconLines_open::after {
   top: -4px;
   transform: rotate(-45deg);
-  background-color: #0686c9;
+  background-color: $blue3;
   width: 14px;
 }

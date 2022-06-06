@@ -1,3 +1,5 @@
+@import '~styles/colors.scss';
+
 .categoryCard {
   height: 100%;
   display: flex;
@@ -11,7 +13,7 @@
 }
 
 .categoryCard:hover > .categoryName {
-  color: #52a9cd;
+  color: $blue5;
 }
 
 .backgroundImage {
@@ -32,7 +34,7 @@
   line-height: 1.2em;
   text-transform: uppercase;
   font-weight: bold;
-  color: #fff;
+  color: $white;
   z-index: 12;
   left: 20px;
   transition: all 0.6s ease;
@@ -46,7 +48,7 @@
 
 .categoryQuantity {
   font-size: 14px;
-  color: #fff;
+  color: $white;
 }
 
 .categoryQuantity_container {
@@ -60,6 +62,6 @@
 }
 
 .categoryQuantity_found {
-  color: #f94f66;
+  color: $red4;
   margin-right: 14px;
 }

@@ -1,4 +1,5 @@
 import { ReactImageGalleryItem } from 'react-image-gallery';
+import { FormatImagesFullscreen } from './types';
 
 const formatImages = (images: string[]) =>
   images.reduce((accumulator: ReactImageGalleryItem[], image: string) => {
@@ -15,4 +16,16 @@ const formatImages = (images: string[]) =>
       : [formatedImage];
   }, []);
 
-export { formatImages };
+const formatImagesFullscreen = (images: string[], title: string) =>
+  images.reduce((accumulator: FormatImagesFullscreen[], image: string) => {
+    const formatedImage = {
+      src: image,
+      caption: title,
+    };
+
+    return accumulator.length
+      ? [...accumulator, formatedImage]
+      : [formatedImage];
+  }, []);
+
+export { formatImages, formatImagesFullscreen };

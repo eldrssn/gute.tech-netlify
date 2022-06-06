@@ -4,7 +4,7 @@ import classnames from 'classnames/bind';
 import { useTreeItem, TreeItemContentProps } from '@mui/lab/TreeItem';
 import Typography from '@mui/material/Typography';
 
-import styles from './innerCatalogTree.module.css';
+import styles from './innerCatalogTree.module.scss';
 
 const cn = classnames.bind(styles);
 

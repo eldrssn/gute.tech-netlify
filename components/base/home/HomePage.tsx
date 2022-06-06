@@ -52,8 +52,8 @@ const Home: FC = () => {
   const groupedItems = useMemo(
     () =>
       categoryQuery
-        ? getGroupedChildren(categoryQuery, categories)
-        : groupItems(categories),
+        ? getGroupedChildren(categoryQuery, [...categories, ...categories])
+        : groupItems([...categories, ...categories, ...categories]),
     [categoryQuery, categories],
   );
 

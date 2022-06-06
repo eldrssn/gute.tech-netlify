@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .checkboxContainer {
   position: relative;
@@ -20,7 +20,7 @@
 .confirmedBlock {
   height: 200px;
   width: 400px;
-  background-color: white;
+  background-color: $white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,7 +37,7 @@
   right: -45px;
   top: calc(50% - 18px);
   background-color: $red1;
-  color: white;
+  color: $white;
   width: 35px;
   height: 35px;
   padding: 0;

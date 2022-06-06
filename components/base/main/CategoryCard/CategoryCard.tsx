@@ -14,10 +14,7 @@ import {
 import { CategoryCardProps } from './types';
 import styles from './CategoryCard.module.scss';
 
-const CategoryCard: React.FC<CategoryCardProps> = ({
-  item,
-  isTransportSearch,
-}) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
   const router = useRouter();
 
   const { title, image, slug, found, total } = item;
@@ -31,6 +28,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
 
   const setQuery = () =>
     routerQuery.setQueryOption(QueryUrl.CATEGORY_QUERY, slug);
+
+  const isTransportSearch = transportQuery && transportId;
 
   const linkToTransportCatalog = getLinkToTransportCatalog({
     categorySlug,
@@ -46,7 +45,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
 
   const handleClick = () => {
     if (categorySlug) {
-      router.push(transportId ? linkToTransportCatalog : linkToCatalog);
+      router.push(isTransportSearch ? linkToTransportCatalog : linkToCatalog);
       return;
     }
     setQuery();
@@ -56,7 +55,13 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     <div className={styles.categoryCard} onClick={handleClick}>
       <Box
         className={styles.categoryQuantity_container}
-        sx={{ display: { xs: 'flex', sm: 'block' } }}
+        sx={{
+          display: {
+            xs: 'flex',
+            sm: 'block',
+            lg: isSmallBox && isTransportSearch ? 'flex' : 'block',
+          },
+        }}
       >
         {isTransportSearch && (
           <span className={styles.categoryQuantity_found}>
@@ -70,7 +75,13 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
       <Typography
         component='h4'
         className={styles.categoryName}
-        sx={{ top: { xs: '60px', sm: '50px' } }}
+        sx={{
+          top: {
+            xs: isTransportSearch ? '70px' : '40px',
+            sm: '50px',
+            lg: isSmallBox && isTransportSearch ? '70px' : '40px',
+          },
+        }}
       >
         {title}
       </Typography>
