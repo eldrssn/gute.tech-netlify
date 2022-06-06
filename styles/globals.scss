@@ -22,6 +22,20 @@
   font-family: sans-serif;
 }
 
+@font-face {
+  font-family: "GTWalsheimProBlack-Regular";
+  src: url("../assets/fonts/GTWalsheimPro-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-family: sans-serif;
+}
+
+@font-face {
+  font-family: "GTWalsheimProBlack-Regular";
+  src: url("../assets/fonts/GTWalsheimPro-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
 html,
 body {
   padding: 0;

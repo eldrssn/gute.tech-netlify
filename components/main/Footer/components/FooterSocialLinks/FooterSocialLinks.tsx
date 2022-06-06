@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/system';
 import Image from 'next/image';
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import PhoneIcon from '@mui/icons-material/Phone';
 
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 
@@ -65,7 +65,7 @@ const FooterSocialLinks: FC = () => {
       </Box>
 
       <a href='tel:+74992832026' className={styles.footerPhone}>
-        <PhoneIphoneIcon className={styles.footerPhoneIcon} />
+        <PhoneIcon className={styles.footerPhoneIcon} />
         <span className={styles.footerPhoneNumber}>{phone}</span>
       </a>
     </Box>
