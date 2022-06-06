@@ -2,7 +2,7 @@ import { TreeCategoryResponseData } from 'api/models/catalog';
 
 type CategoryCardProps = {
   item: TreeCategoryResponseData;
-  isTransportSearch: boolean;
+  isSmallBox?: boolean;
 };
 
 export type { CategoryCardProps };

@@ -1,3 +1,5 @@
+@import '~styles/colors.scss';
+
 .contentBox {
   display: flex;
   flex-direction: row;
@@ -11,7 +13,7 @@
 }
 
 .spaceLine {
-  border-bottom: 1px dashed #d7dee4;
+  border-bottom: 1px dashed $transparentBlue4;
   flex-grow: 1;
   margin: 6px;
 }

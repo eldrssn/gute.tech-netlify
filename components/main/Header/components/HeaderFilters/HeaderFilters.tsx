@@ -53,7 +53,7 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   setIsFocusSearchField,
 }) => {
   const router = useRouter();
-  const { removeQuery, getQueryOption } = useRouterQuery();
+  const { getQueryOption } = useRouterQuery();
   const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView, isFocusSearchField } =
     useContext(HeaderContext);
@@ -176,7 +176,6 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   });
 
   const resetFilter = () => {
-    removeQuery(QueryUrl.TRANSPORT_QUERY);
     setCurrentStep(StepInputs.INACTIVE);
     setTransportText('');
     reset();

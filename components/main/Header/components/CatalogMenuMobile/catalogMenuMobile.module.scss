@@ -1,6 +1,8 @@
+@import '~styles/colors.scss';
+
 .mainContainer {
-  background-color: #333333;
-  color: white;
+  background-color: $gray7;
+  color: $white;
   padding: 10px;
   position: relative;
 }
@@ -9,13 +11,13 @@
   background-color: transparent;
   padding: 0;
   display: flex;
-  color: #0686c9;
+  color: $blue3;
 }
 
 .stickyButton {
   position: sticky;
   top: 0;
-  background-color: #333333;
+  background-color: $gray7;
   z-index: 1200;
 }
 
@@ -24,7 +26,7 @@
 }
 
 .divider {
-  border-color: #5c5c5c;
+  border-color: $gray8;
 }
 
 .treeViewContainer {

@@ -6,7 +6,7 @@ import { CategoryCard } from 'components/base/main/CategoryCard';
 
 import { Items } from './types';
 
-const FirstRow: FC<Items> = ({ items, isTransportSearch }) => (
+const FirstRow: FC<Items> = ({ items }) => (
   <Grid item xs={12} lg={6} container spacing={2}>
     <Grid
       item
@@ -19,27 +19,18 @@ const FirstRow: FC<Items> = ({ items, isTransportSearch }) => (
     >
       {items.firstItem && (
         <Grid item sx={{ height: '305px' }}>
-          <CategoryCard
-            item={items.firstItem}
-            isTransportSearch={isTransportSearch}
-          />
+          <CategoryCard item={items.firstItem} />
         </Grid>
       )}
       {items.secondItem && (
         <Grid item sx={{ height: '305px' }}>
-          <CategoryCard
-            item={items.secondItem}
-            isTransportSearch={isTransportSearch}
-          />
+          <CategoryCard item={items.secondItem} />
         </Grid>
       )}
     </Grid>
     {items.thirdItem && (
       <Grid item xs={12} lg={6} sx={{ height: { xs: '305px', lg: '610px' } }}>
-        <CategoryCard
-          item={items.thirdItem}
-          isTransportSearch={isTransportSearch}
-        />
+        <CategoryCard item={items.thirdItem} />
       </Grid>
     )}
   </Grid>

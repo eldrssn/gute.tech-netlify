@@ -9,7 +9,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import { Loader } from 'components/ui/Loader';
 
 import { FullscreenGallery } from './components/FullscreenGallery';
-import { formatImages } from './helpers';
+import { formatImages, formatImagesFullscreen } from './helpers';
 import { ProductImageGalleryProps } from './types';
 
 const ProductImageGallery: FC<ProductImageGalleryProps> = ({
@@ -38,6 +38,7 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
   }
 
   const formattedItems = formatImages(images);
+  const formattedItemsFullscreen = formatImagesFullscreen(images, title);
 
   const toggleFullscreen = () => {
     setFullscreen((isFullscreen) => !isFullscreen);
@@ -60,8 +61,9 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
           showNav={false}
           useBrowserFullscreen={false}
           showFullscreenButton={isFullscreen}
-          onSlide={onSlide}
+          onBeforeSlide={onSlide}
           lazyLoad={true}
+          slideOnThumbnailOver={true}
         />
       </Box>
 
@@ -69,9 +71,9 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
         <FullscreenGallery
           toggleFullscreen={toggleFullscreen}
           fullscreenIndex={fullscreenIndex}
-          images={images}
-          title={title}
+          images={formattedItemsFullscreen}
           slideToIndex={slideToIndex}
+          isFullscreen={isFullscreen}
         />
       )}
     </>

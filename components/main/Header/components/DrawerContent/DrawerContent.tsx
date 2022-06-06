@@ -17,7 +17,7 @@ import { CatalogMenuMobile } from '../CatalogMenuMobile';
 import { SearchMenuMobile } from '../SearchMenuMobile';
 
 import { DrawerContentProps, DrawerContentKeys } from './types';
-import styles from './drawerContent.module.css';
+import styles from './drawerContent.module.scss';
 
 const DrawerContent: FC<DrawerContentProps> = ({
   closeMainDrawer,

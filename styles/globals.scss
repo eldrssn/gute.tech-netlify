@@ -1,22 +1,23 @@
-@import "./product-image-gallety.module.scss";
+@import './product-image-gallety.module.scss';
+@import '~styles/colors.scss';
 
 @font-face {
-  font-family: "UbuntuMedium";
-  src: url("../assets/fonts/Ubuntu-Medium.ttf") format("truetype");
+  font-family: 'UbuntuMedium';
+  src: url('../assets/fonts/Ubuntu-Medium.ttf') format('truetype');
   font-weight: normal;
   font-family: sans-serif;
 }
 
 @font-face {
-  font-family: "UbuntuMedium";
-  src: url("../assets/fonts/Ubuntu-Light.ttf") format("truetype");
+  font-family: 'UbuntuMedium';
+  src: url('../assets/fonts/Ubuntu-Light.ttf') format('truetype');
   font-weight: lighter;
   font-family: sans-serif;
 }
 
 @font-face {
-  font-family: "UbuntuMedium";
-  src: url("../assets/fonts/Ubuntu-Bold.ttf") format("truetype");
+  font-family: 'UbuntuMedium';
+  src: url('../assets/fonts/Ubuntu-Bold.ttf') format('truetype');
   font-weight: bold;
   font-family: sans-serif;
 }
@@ -25,8 +26,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-    Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -36,7 +37,7 @@ a {
 
 * {
   box-sizing: border-box;
-  font-family: "UbuntuMedium", sans-serif !important;
+  font-family: 'UbuntuMedium', sans-serif !important;
 }
 
 .MuiOutlinedInput-notchedOutline {
@@ -50,7 +51,7 @@ a {
 
 .MuiStepButton-root.Mui-disabled {
   z-index: 1;
-  color: #d7dee4;
+  color: $transparentBlue4;
 }
 
 .MuiStepConnector-root {

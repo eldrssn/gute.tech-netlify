@@ -1,7 +1,9 @@
+@import '~styles/colors.scss';
+
 .title {
   font-size: 14px;
   line-height: 1.57;
-  color: black;
+  color: $black;
   font-family: inherit;
   margin-bottom: 12px;
 }

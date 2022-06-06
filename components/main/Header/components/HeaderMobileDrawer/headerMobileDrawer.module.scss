@@ -1,3 +1,5 @@
+@import '~styles/colors.scss';
+
 .headerMobileContainer {
   display: flex;
   justify-content: center;
@@ -71,13 +73,13 @@
 .catalogIconLines_open::before {
   top: 0px;
   transform: rotate(45deg);
-  background-color: black;
+  background-color: $black;
   width: 20px;
 }
 
 .catalogIconLines_open::after {
   top: -3px;
   transform: rotate(-45deg);
-  background-color: black;
+  background-color: $black;
   width: 20px;
 }

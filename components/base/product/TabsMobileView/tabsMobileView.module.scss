@@ -1,22 +1,24 @@
+@import '~styles/colors.scss';
+
 .mainContainer {
   margin-bottom: 40px;
 }
 
 .accordion {
   box-shadow: none;
-  border-bottom: 1px solid #1c85c7;
+  border-bottom: 1px solid $blue1;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
 .accordion:first-of-type {
-  border-top: 1px solid #1c85c7;
+  border-top: 1px solid $blue1;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
 .accordion:last-of-type {
-  border-bottom: 1px solid #1c85c7;
+  border-bottom: 1px solid $blue1;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -35,14 +37,14 @@
 
 .accordionSummaryText {
   margin: 0;
-  color: #1c85c7;
+  color: $blue1;
   font-size: 24px;
 }
 
 .accordionSummary::before {
   width: 0;
   height: 0;
-  border-top: 6px solid #1c85c7;
+  border-top: 6px solid $blue1;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
   display: block;
@@ -50,12 +52,12 @@
   top: 50%;
   right: 10px;
   margin-top: -2px;
-  content: "";
+  content: '';
 }
 
 .accordionSummaryExpanded::before {
   border-top: none;
-  border-bottom: 6px solid #1c85c7;
+  border-bottom: 6px solid $blue1;
 }
 
 .accordionDetails {

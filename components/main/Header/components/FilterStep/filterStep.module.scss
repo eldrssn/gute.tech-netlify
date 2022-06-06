@@ -1,4 +1,4 @@
-@import "styles/colors.scss";
+@import 'styles/colors.scss';
 
 .stepWrap {
   position: relative;
@@ -55,7 +55,7 @@
   cursor: pointer;
   z-index: 1301;
   user-select: none;
-  border: 1px solid #d7dee4;
+  border-right: 1px solid $transparentBlue4;
 }
 
 .stepField input:disabled[placeholder] {
@@ -75,7 +75,7 @@
   top: 50%;
   right: 15px;
   margin-top: -2px;
-  content: "";
+  content: '';
 }
 
 .stepper_mobileView {

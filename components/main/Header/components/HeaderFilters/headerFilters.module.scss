@@ -1,5 +1,5 @@
-@import "styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import 'styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .mainContainer {
   padding-bottom: 14px;
@@ -60,8 +60,7 @@
   font-size: 14px;
   background-color: $red1;
   flex-grow: 1;
-  padding: 12px 20px;
-  min-height: 52px;
+  padding: 16.5px 20px;
   border: 2px solid $red1;
 }
 
@@ -89,7 +88,7 @@
 }
 
 .filterStepsForm_mobileView input {
-  min-width: calc(100vw - 90px);
+  min-width: calc(100vw - 110px);
   padding-left: 60px;
   font-size: 14px;
 }
@@ -103,18 +102,21 @@
 .choosenTransport_container {
   display: flex;
   align-items: center;
+  margin: 5px 0;
 }
 
 .choosenTransport_text {
   font-size: 16px;
-  margin-right: 20px;
+  margin: 0;
+  margin-right: 10px;
+  margin-left: 5px;
   color: $blue1;
   display: flex;
 }
 
 .choosenTransport_text_auto {
   font-weight: bold;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .choosenTransport_container_mobile {

@@ -1,6 +1,8 @@
+@import '~styles/colors.scss';
+
 .quantity {
   font-size: 14px;
-  color: black;
+  color: $black;
   opacity: 0.5;
   margin-bottom: 45px;
 }

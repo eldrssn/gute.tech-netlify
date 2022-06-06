@@ -21,7 +21,6 @@ import { ProductImageGallery } from '../ProductImageGallery';
 import { ProductTabsDescription } from '../ProductTabsDescription';
 import { Subcategories } from '../Subcategories';
 
-import { productInitData } from './constants';
 import styles from './productMain.module.scss';
 
 const ProductMain: FC = () => {
@@ -29,8 +28,12 @@ const ProductMain: FC = () => {
   const dispatch = useDispatch();
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
 
+  if (!product || isLoading) {
+    return <Loader />;
+  }
+
   const { title, price, images, description, properties, slug, warehouses } =
-    product ? product : productInitData;
+    product;
 
   const quantity =
     warehouses &&
@@ -50,9 +53,7 @@ const ProductMain: FC = () => {
     dispatch(fetchItemFromCart({ productSlug: slug }));
   };
 
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <>
       <ModalAddedItem
         isOpen={isOpenModalAddedItem}
@@ -80,7 +81,10 @@ const ProductMain: FC = () => {
             />
 
             <Container
-              sx={{ width: { xs: '100%', sm: '50%', md: '50%' } }}
+              sx={{
+                width: { xs: '100%', sm: '50%', md: '50%' },
+                paddingLeft: { xs: 0, sm: '16px' },
+              }}
               className={styles.productInfoContainer}
             >
               <Box

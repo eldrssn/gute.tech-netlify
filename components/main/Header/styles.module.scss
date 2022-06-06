@@ -1,11 +1,13 @@
+@import '~styles/colors.scss';
+
 .logo_button {
   padding: 0;
 }
 
 .headerWrapper {
-  color: black;
+  color: $black;
   height: auto;
-  background: white;
+  background: $white;
   box-shadow: none;
 }
 
@@ -14,7 +16,7 @@
   white-space: break-spaces;
   padding: 0;
   display: inline-block;
-  color: #000;
+  color: $black;
   font-size: 14px;
   line-height: 1.2;
 }

@@ -16,7 +16,7 @@ import { selectOrderTotal } from 'store/reducers/cart/selectors';
 import { DrawerContent } from '../DrawerContent';
 import { HeaderMobileDrawerProps } from './types';
 
-import styles from './headerMobileDrawer.module.css';
+import styles from './headerMobileDrawer.module.scss';
 
 const cn = classnames.bind(styles);
 

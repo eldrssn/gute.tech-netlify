@@ -4,11 +4,20 @@ type ProductImageGalleryProps = {
 };
 
 type FullscreenGalleryProps = {
-  images: string[];
-  title: string;
+  images: FormatImagesFullscreen[];
   toggleFullscreen: () => void;
   fullscreenIndex: number;
   slideToIndex: (index: number) => void;
+  isFullscreen: boolean;
 };
 
-export type { ProductImageGalleryProps, FullscreenGalleryProps };
+type FormatImagesFullscreen = {
+  src: string;
+  caption: string;
+};
+
+export type {
+  ProductImageGalleryProps,
+  FullscreenGalleryProps,
+  FormatImagesFullscreen,
+};

@@ -5,31 +5,22 @@ import { Grid } from '@mui/material';
 import { CategoryCard } from 'components/base/main/CategoryCard';
 import { Items } from './types';
 
-const SecondRowReversed: FC<Items> = ({ items, isTransportSearch }) => (
+const SecondRowReversed: FC<Items> = ({ items }) => (
   <Grid item xs={12} lg={6} container spacing={2}>
     {items.firstItem && (
       <Grid item xs={12} lg={6} sx={{ height: '305px' }}>
-        <CategoryCard
-          item={items.firstItem}
-          isTransportSearch={isTransportSearch}
-        />
+        <CategoryCard item={items.firstItem} />
       </Grid>
     )}
     <Grid item xs={12} lg={6} container spacing={2}>
       {items.secondItem && (
         <Grid item xs={12} lg={6} sx={{ height: '305px' }}>
-          <CategoryCard
-            item={items.secondItem}
-            isTransportSearch={isTransportSearch}
-          />
+          <CategoryCard item={items.secondItem} isSmallBox />
         </Grid>
       )}
       {items.thirdItem && (
         <Grid item xs={12} lg={6} sx={{ height: '305px' }}>
-          <CategoryCard
-            item={items.thirdItem}
-            isTransportSearch={isTransportSearch}
-          />
+          <CategoryCard item={items.thirdItem} isSmallBox />
         </Grid>
       )}
     </Grid>

@@ -18,7 +18,7 @@ import { CustomCatalogTree } from '../CustomCatalogTree';
 
 import { LinkWrapper } from './components/LinkWrapper';
 import { CatalogMenuProps } from './types';
-import styles from './catalogMenuMobile.module.css';
+import styles from './catalogMenuMobile.module.scss';
 
 const cn = classnames.bind(styles);
 
