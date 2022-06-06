@@ -1,4 +1,4 @@
-@import '~styles/colors.scss';
+@import "~styles/colors.scss";
 
 .priceLabel {
   position: absolute;
@@ -9,7 +9,7 @@
   font-size: 14px;
   color: $black;
   text-transform: lowercase;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 
 .priceWrapper {
@@ -18,7 +18,7 @@
   letter-spacing: 1px;
   line-height: 1.2em;
   text-transform: uppercase;
-  font-family: 'GTWalsheimProBlack-Regular', sans-serif;
+  font-family: "GTWalsheimProBlack-Regular", sans-serif;
   font-weight: 900;
   color: $blue1;
   margin: 5px 0;

@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import PhoneIcon from '@mui/icons-material/Phone';
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CurrencyRubleIcon from '@mui/icons-material/CurrencyRuble';
@@ -51,7 +51,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
       />
       {(isFullHeader || isMobileView || isDrawer) && !hidePhone && (
         <MenuItem disableGutters sx={{ display: 'flex' }}>
-          <PhoneIphoneIcon />
+          <PhoneIcon />
           <a href='tel:+74992832026' className={menuItemStyles}>
             {phone}
           </a>
