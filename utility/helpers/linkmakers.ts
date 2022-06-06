@@ -61,6 +61,10 @@ const getLinkToTransportProductPage = ({
   )}/${makeStringify(productSlug)}?${transportSlugs}`;
 };
 
+const getLinkToVidgetCategory = (categorySlug: string) => {
+  return `/?${QueryUrl.CATEGORY_QUERY}=${categorySlug}`;
+};
+
 export {
   getLinkToProductPage,
   getLinkToTransportProductPage,
@@ -68,4 +72,5 @@ export {
   getLinkToCatalog,
   getLinkToTransportCatalog,
   getTransportSlugs,
+  getLinkToVidgetCategory,
 };

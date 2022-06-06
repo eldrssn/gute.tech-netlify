@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import ImgsViewer from 'react-images-viewer';
 
+import { theme } from './theme';
 import { FullscreenGalleryProps } from '../types';
 
 const FullscreenGallery: FC<FullscreenGalleryProps> = ({
@@ -37,6 +38,7 @@ const FullscreenGallery: FC<FullscreenGalleryProps> = ({
       onClickThumbnail={onClickThumbnail}
       showThumbnails={true}
       enableKeyboardInput={false}
+      theme={theme}
     />
   );
 };

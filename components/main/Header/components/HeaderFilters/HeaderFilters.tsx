@@ -250,9 +250,11 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
                       [styles.choosenTransport_container_mobile]: isMobileView,
                     })}
                   >
-                    <p className={styles.choosenTransport_text}>
-                      <p>Показаны товары для: &nbsp;</p>
-                      <p className={styles.choosenTransport_text_auto}>
+                    <p className={styles.choosenTransport}>
+                      <p className={styles.choosenTransport_label}>
+                        Показаны товары для: &nbsp;
+                      </p>
+                      <p className={styles.choosenTransport_text}>
                         {transportText}
                       </p>
                     </p>

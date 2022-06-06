@@ -1,5 +1,5 @@
-@import "styles/colors.scss";
-@import "styles/breakpoints.scss";
+@import 'styles/colors.scss';
+@import 'styles/breakpoints.scss';
 
 .wrapper {
   opacity: 0;
@@ -75,6 +75,6 @@
   .listMobile {
     position: fixed;
     max-height: 30vh;
-    width: calc(100% - 29px);
+    width: calc(100% - 20px);
   }
 }

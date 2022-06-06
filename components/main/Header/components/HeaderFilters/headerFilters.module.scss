@@ -1,4 +1,4 @@
-@import 'styles/colors.scss';
+@import '~styles/colors.scss';
 @import '~styles/breakpoints.scss';
 
 .mainContainer {
@@ -105,7 +105,7 @@
   margin: 5px 0;
 }
 
-.choosenTransport_text {
+.choosenTransport {
   font-size: 16px;
   margin: 0;
   margin-right: 10px;
@@ -114,7 +114,7 @@
   display: flex;
 }
 
-.choosenTransport_text_auto {
+.choosenTransport_text {
   font-weight: bold;
   margin-right: 10px;
 }
@@ -127,5 +127,22 @@
 @media (max-width: $mobile) {
   .formAndCatalogContainer {
     width: 100%;
+  }
+
+  .choosenTransport {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+
+  .choosenTransport_text {
+    margin: 0;
+    text-align: center;
+  }
+
+  .choosenTransport_label {
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
   }
 }
