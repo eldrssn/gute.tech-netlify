@@ -1,7 +1,12 @@
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { PAGE_QUERY } from 'components/base/catalog/constants';
 import { QueryUrl } from 'constants/variables';
-import { getTransportSlugs } from 'utility/helpers/linkmakers';
+import {
+  getLinkToVidgetCategory,
+  getTransportSlugs,
+} from 'utility/helpers/linkmakers';
+import { IS_FROM_WIDGETS } from 'utility/utils/constants';
+
 import { defaultPaths, MAIN_TITLE } from './constants';
 import { GetCrumbs } from './types';
 
@@ -125,8 +130,14 @@ const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
     return [homeCrumb, ...transportCrumblist.slice(1)];
   }
 
+  const isFromVidgets = Number(localStorage[IS_FROM_WIDGETS]);
+  const isPathToVidgets = (index: number) => index === 1 && isFromVidgets;
+
   const crumblist = asPathNestedRoutes.map((subpath, index) => {
-    const href = '/' + asPathNestedRoutes.slice(0, index + 1).join('/');
+    const href = isPathToVidgets(index)
+      ? getLinkToVidgetCategory(subpath)
+      : '/' + asPathNestedRoutes.slice(0, index + 1).join('/');
+
     const text = paths[subpath] || lastTitle;
 
     return { href, text };

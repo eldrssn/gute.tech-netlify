@@ -22,7 +22,10 @@ import {
 } from 'store/reducers/catalog/selectors';
 
 import { getGroupedChildren } from './helpers';
+import { isFromWidgets } from './constants';
 import { Index } from './types';
+import { addItemToLocaleStorage } from 'components/main/Header/helpers';
+import { IS_FROM_WIDGETS } from 'utility/utils/constants';
 
 const rowHashMap: Record<Index, FC<Items>> = {
   1: FirstRow,
@@ -48,6 +51,18 @@ const Home: FC = () => {
       dispatch(fetchTransportReadCategories({ transportId }));
     }
   }, [transportId, dispatch]);
+
+  useEffect(() => {
+    categoryQuery
+      ? addItemToLocaleStorage({
+          slug: IS_FROM_WIDGETS,
+          title: isFromWidgets.TRUE,
+        })
+      : addItemToLocaleStorage({
+          slug: IS_FROM_WIDGETS,
+          title: isFromWidgets.FALSE,
+        });
+  }, [categoryQuery]);
 
   const groupedItems = useMemo(
     () =>

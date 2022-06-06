@@ -43,7 +43,7 @@ const useWindowSize = () => {
     isTablet: windowWidth ? windowWidth < tablet : false,
     isXSMobile: windowWidth ? windowWidth < xsMobile : false,
     isSMobile: windowWidth ? windowWidth < sMobile : false,
-    isMobile: windowWidth ? windowWidth < mobile : false,
+    isMobile: windowWidth ? windowWidth <= mobile : false,
   };
 };
 
