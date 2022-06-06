@@ -1,4 +1,5 @@
 import React, { useEffect, MouseEvent } from 'react';
+import useScrollbarSize from 'react-scrollbar-size';
 import cn from 'classnames';
 
 import { TOuterProps } from './types';
@@ -11,10 +12,7 @@ const ModalWrapper: React.FC<TOuterProps> = ({
   setIsOpen,
   isCloseDisable,
 }) => {
-  const modalBackgroundClassName = cn(
-    { [styles.modalOpen]: isOpen },
-    styles.modalBackground,
-  );
+  const { width: widthScrollBar } = useScrollbarSize();
 
   const closeModal = () => {
     if (isCloseDisable) {
@@ -28,16 +26,23 @@ const ModalWrapper: React.FC<TOuterProps> = ({
     event.stopPropagation();
   };
 
-  const documentWidth = document.documentElement.clientWidth;
-  const windowsWidth = window.innerWidth;
-  const scrollbarWidth = windowsWidth - documentWidth;
+  const modalBackgroundClassName = cn(
+    { [styles.modalOpen]: isOpen },
+    styles.modalBackground,
+  );
+
+  console.log(document.body.style.marginRight);
 
   useEffect(() => {
-    if (window) {
-      window.document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-      document.body.style.marginRight = isOpen ? `${scrollbarWidth}px` : '0px';
+    if (isOpen) {
+      document.body.style.marginRight = `${widthScrollBar}px`;
+      document.body.style.overflow = 'hidden';
+      return;
     }
-  }, [isOpen, scrollbarWidth]);
+
+    document.body.style.overflow = 'auto';
+    document.body.style.marginRight = '0px';
+  }, [isOpen, widthScrollBar]);
 
   return (
     <div className={modalBackgroundClassName} onClick={closeModal}>

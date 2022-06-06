@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import useScrollbarSize from 'react-scrollbar-size';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/system';
@@ -31,6 +32,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
   searchValue,
 }) => {
   const { isMobile } = useWindowSize();
+  const { width: widthScrollBar } = useScrollbarSize();
   const [activeOptionList, setActiveOptionsList] = useState<ListOptionsItem>({
     data: [],
     isLoading: false,
@@ -68,10 +70,6 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     styles.wrapper,
   );
 
-  const documentWidth = document.documentElement.clientWidth;
-  const windowsWidth = window.innerWidth;
-  const scrollbarWidth = windowsWidth - documentWidth;
-
   const widthList = widthListByStep[openPopoverId];
   const widthButton = widthButtonByStep[openPopoverId];
 
@@ -81,14 +79,14 @@ const FilterPopover: FC<FilterPopoverProps> = ({
 
   useEffect(() => {
     if (isOpenPopover) {
-      document.body.style.marginRight = `${scrollbarWidth}px`;
+      document.body.style.marginRight = `${widthScrollBar}px`;
       document.body.style.overflow = 'hidden';
       return;
     }
 
     document.body.style.overflow = 'auto';
     document.body.style.marginRight = '0px';
-  }, [isOpenPopover, scrollbarWidth]);
+  }, [isOpenPopover, widthScrollBar]);
 
   return (
     <Box component='div' className={wrapperClassName}>

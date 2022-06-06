@@ -35,6 +35,7 @@
     "react-input-mask": "^3.0.0-alpha.2",
     "react-loader-spinner": "^6.0.0-0",
     "react-redux": "^7.2.6",
+    "react-scrollbar-size": "^5.0.0",
     "react-slick": "^0.28.1",
     "sass": "^1.49.9",
     "sharp": "^0.30.4",

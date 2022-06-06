@@ -129,14 +129,3 @@
     width: 100%;
   }
 }
-
-@media (max-width: $tablet) {
-  .choosenTransport_container {
-    width: 630px;
-  }
-
-  .stepButtonSubmit {
-    width: 150px !important;
-    flex-grow: 0;
-  }
-}
