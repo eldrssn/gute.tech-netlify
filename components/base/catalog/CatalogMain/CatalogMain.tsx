@@ -167,7 +167,7 @@ const CatalogMain: FC = () => {
             </Box>
           )}
 
-          {isLoading || !isResults ? (
+          {isLoading && !isResults ? (
             <Loader />
           ) : (
             <CatalogGrid items={results} />

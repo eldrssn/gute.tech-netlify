@@ -5,7 +5,10 @@ import {
   getLinkToVidgetCategory,
   getTransportSlugs,
 } from 'utility/helpers/linkmakers';
-import { IS_FROM_WIDGETS } from 'utility/utils/constants';
+import {
+  CATALOG_QUERY_DEFAULT,
+  IS_FROM_WIDGETS,
+} from 'utility/utils/constants';
 
 import { defaultPaths, MAIN_TITLE } from './constants';
 import { GetCrumbs } from './types';
@@ -139,6 +142,10 @@ const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
       : '/' + asPathNestedRoutes.slice(0, index + 1).join('/');
 
     const text = paths[subpath] || lastTitle;
+
+    if (index === 2) {
+      return { href: `${href}?${CATALOG_QUERY_DEFAULT}`, text };
+    }
 
     return { href, text };
   });

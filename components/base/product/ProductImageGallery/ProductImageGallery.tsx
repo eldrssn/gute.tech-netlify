@@ -8,75 +8,72 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 
 import { Loader } from 'components/ui/Loader';
 
-import { FullscreenGallery } from './components/FullscreenGallery';
-import { formatImages, formatImagesFullscreen } from './helpers';
+import { formatImages } from './helpers';
 import { ProductImageGalleryProps } from './types';
+
+import styles from './productImageGallery.module.scss';
 
 const ProductImageGallery: FC<ProductImageGalleryProps> = ({
   images,
   title,
 }) => {
   const [isFullscreen, setFullscreen] = useState<boolean>(false);
-  const [fullscreenIndex, setFullscreenIndex] = useState<number>(0);
 
   const refImg = useRef<ReactImageGallery | null>(null);
-
-  const onSlide = (currentIndex: number) => {
-    setFullscreenIndex(currentIndex);
-  };
-
-  const slideToIndex = (index: number) => {
-    if (!refImg.current) {
-      return;
-    }
-
-    refImg.current.slideToIndex(index);
-  };
 
   if (!images) {
     return <Loader />;
   }
 
-  const formattedItems = formatImages(images);
-  const formattedItemsFullscreen = formatImagesFullscreen(images, title);
+  const formattedItems = formatImages(images, title);
 
-  const toggleFullscreen = () => {
-    setFullscreen((isFullscreen) => !isFullscreen);
+  const toggleFullscreen = () => setFullscreen((isFullscreen) => !isFullscreen);
+
+  const openFullscreen = () => {
+    if (!refImg.current) {
+      return;
+    }
+    refImg.current.fullScreen();
+    toggleFullscreen();
   };
 
-  return (
-    <>
-      <Box
-        sx={{
-          width: { xs: '100%', sm: '50%' },
-          display: isFullscreen ? 'none' : 'block',
-        }}
-      >
-        <ImageGallery
-          startIndex={fullscreenIndex}
-          ref={refImg}
-          showPlayButton={false}
-          items={formattedItems}
-          onClick={toggleFullscreen}
-          showNav={false}
-          useBrowserFullscreen={false}
-          showFullscreenButton={isFullscreen}
-          onBeforeSlide={onSlide}
-          lazyLoad={true}
-          slideOnThumbnailOver={true}
-        />
-      </Box>
+  const closeFullscreen = () => {
+    if (!refImg.current) {
+      return;
+    }
+    refImg.current.exitFullScreen();
+    toggleFullscreen();
+  };
 
-      {isFullscreen && (
-        <FullscreenGallery
-          toggleFullscreen={toggleFullscreen}
-          fullscreenIndex={fullscreenIndex}
-          images={formattedItemsFullscreen}
-          slideToIndex={slideToIndex}
-          isFullscreen={isFullscreen}
-        />
-      )}
-    </>
+  const renderCustomControls = () => (
+    <Box
+      component='span'
+      sx={{ display: isFullscreen ? 'block' : 'none' }}
+      className={styles.closeButton}
+      onClick={closeFullscreen}
+    />
+  );
+
+  return (
+    <Box
+      sx={{
+        width: { xs: '100%', sm: '50%' },
+      }}
+    >
+      <ImageGallery
+        ref={refImg}
+        showPlayButton={false}
+        items={formattedItems}
+        onClick={openFullscreen}
+        showNav={isFullscreen}
+        useBrowserFullscreen={false}
+        showFullscreenButton={false}
+        lazyLoad={true}
+        slideOnThumbnailOver={true}
+        showIndex={isFullscreen}
+        renderCustomControls={renderCustomControls}
+      />
+    </Box>
   );
 };
 
