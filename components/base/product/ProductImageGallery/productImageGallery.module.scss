@@ -9,7 +9,7 @@
   opacity: 1;
   cursor: pointer;
   transition: opacity ease 0.5s;
-  z-index: 1300;
+  z-index: 1501;
 
   &::before,
   &::after {
@@ -37,5 +37,26 @@
   &:hover::before,
   &:hover::after {
     background: $white;
+  }
+}
+
+.closeArea {
+  z-index: 1500;
+  position: absolute;
+
+  &_up {
+    height: 25%;
+    width: 100%;
+  }
+
+  &_left {
+    height: 90%;
+    width: 25%;
+  }
+
+  &_right {
+    height: 100%;
+    width: 25%;
+    right: 0;
   }
 }
