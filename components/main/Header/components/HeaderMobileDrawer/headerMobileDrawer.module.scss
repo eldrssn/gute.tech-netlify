@@ -1,4 +1,4 @@
-@import '~styles/colors.scss';
+@import "~styles/colors.scss";
 
 .headerMobileContainer {
   display: flex;
@@ -56,12 +56,12 @@
 }
 
 .catalogIconLines::before {
-  content: '';
+  content: "";
   top: -6px;
 }
 
 .catalogIconLines::after {
-  content: '';
+  content: "";
   top: 3px;
 }
 
@@ -82,4 +82,13 @@
   transform: rotate(-45deg);
   background-color: $black;
   width: 20px;
+}
+
+.shoppingCart {
+  width: 24px;
+  height: 24px;
+  background-image: url("~assets/images/shoppingCart.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 10px;
 }

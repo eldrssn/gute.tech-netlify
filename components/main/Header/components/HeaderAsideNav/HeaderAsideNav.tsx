@@ -7,10 +7,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 
-import PhoneIcon from '@mui/icons-material/Phone';
-import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CurrencyRubleIcon from '@mui/icons-material/CurrencyRuble';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone } from '@fortawesome/free-solid-svg-icons';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
@@ -51,7 +50,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
       />
       {(isFullHeader || isMobileView || isDrawer) && !hidePhone && (
         <MenuItem disableGutters sx={{ display: 'flex' }}>
-          <PhoneIcon />
+          <FontAwesomeIcon icon={faPhone} className={styles.phoneIcon} />
           <a href='tel:+74992832026' className={menuItemStyles}>
             {phone}
           </a>
@@ -66,7 +65,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
           <Link href={'/cart'} passHref>
             <MenuItem>
               <Box className={styles.shoppingCartIcon}>
-                <ShoppingCartIcon sx={{ width: '24px', height: '24px' }} />
+                <Box className={styles.shoppingCart} />
                 <Box component='div' className={styles.countCartItem}>
                   {amountCartItems}
                 </Box>
@@ -86,7 +85,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
           disableGutters
           onClick={() => setIsOpenModalAdvice(true)}
         >
-          <HeadsetMicIcon sx={{ width: '24px', height: '24px' }} />
+          <Box className={styles.consiltIcon} />
           {(isFullHeader || isDrawer) && (
             <Typography className={menuItemStyles}>Консультация</Typography>
           )}

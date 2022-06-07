@@ -1,4 +1,5 @@
 @import "styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .menuItem {
   font-weight: 700;
@@ -58,4 +59,31 @@
   display: flex;
   position: relative;
   width: 100px;
+}
+
+.shoppingCart {
+  width: 24px;
+  height: 24px;
+  background-image: url("~assets/images/shoppingCart.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.consiltIcon {
+  width: 20px;
+  height: 24px;
+  background-image: url("~assets/images/consultIcon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: $mobile) {
+  .consiltIcon {
+    margin-right: 10px;
+    filter: invert(100%);
+  }
+
+  .phoneIcon {
+    margin-right: 10px;
+  }
 }

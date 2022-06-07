@@ -1,4 +1,4 @@
-@import 'styles/colors.scss';
+@import "styles/colors.scss";
 
 .cardContainer {
   border-radius: 0;
@@ -75,6 +75,9 @@
   margin-right: 5px;
   padding: 0;
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:not(:first-of-type) {
     margin-left: 5px;
@@ -95,4 +98,13 @@
   letter-spacing: -1px;
   font-size: 18px;
   font-weight: 700;
+}
+
+.shoppingCart {
+  width: 24px;
+  height: 24px;
+  background-image: url("~assets/images/shoppingCart.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: invert(100%);
 }
