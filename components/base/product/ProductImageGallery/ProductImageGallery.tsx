@@ -11,6 +11,7 @@ import { Loader } from 'components/ui/Loader';
 
 import { formatImages } from './helpers';
 import { ProductImageGalleryProps } from './types';
+import { IMG_CLASSNAME } from './constants';
 
 import styles from './productImageGallery.module.scss';
 
@@ -40,8 +41,15 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
     toggleFullscreen();
   };
 
-  const openFullscreen = () => {
+  const openFullscreen = (event: React.MouseEvent<HTMLElement>) => {
     if (isFullscreen) {
+      const isBackground = !(event.target as Element).classList.contains(
+        IMG_CLASSNAME,
+      );
+
+      if (isBackground) {
+        closeFullscreen();
+      }
       return;
     }
 
