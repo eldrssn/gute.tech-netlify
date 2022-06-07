@@ -72,8 +72,9 @@
 
   .image-gallery-right-nav,
   .image-gallery-left-nav {
-    width: 35%;
-    height: 100%;
+    width: 10%;
+    height: 60%;
+    z-index: 1501;
   }
 
   .image-gallery-left-nav svg {

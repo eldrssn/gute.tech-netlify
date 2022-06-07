@@ -3,6 +3,7 @@ import React, { FC, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 import ReactImageGallery from 'react-image-gallery';
 import Box from '@mui/material/Box';
+import classnames from 'classnames/bind';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 
@@ -12,6 +13,8 @@ import { formatImages } from './helpers';
 import { ProductImageGalleryProps } from './types';
 
 import styles from './productImageGallery.module.scss';
+
+const cn = classnames.bind(styles);
 
 const ProductImageGallery: FC<ProductImageGalleryProps> = ({
   images,
@@ -29,14 +32,6 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
 
   const toggleFullscreen = () => setFullscreen((isFullscreen) => !isFullscreen);
 
-  const openFullscreen = () => {
-    if (!refImg.current) {
-      return;
-    }
-    refImg.current.fullScreen();
-    toggleFullscreen();
-  };
-
   const closeFullscreen = () => {
     if (!refImg.current) {
       return;
@@ -45,13 +40,44 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
     toggleFullscreen();
   };
 
+  const openFullscreen = () => {
+    if (isFullscreen) {
+      return;
+    }
+
+    if (!refImg.current) {
+      return;
+    }
+    refImg.current.fullScreen();
+    toggleFullscreen();
+  };
+
+  const displayCustomControls = isFullscreen ? 'block' : 'none';
+
   const renderCustomControls = () => (
-    <Box
-      component='span'
-      sx={{ display: isFullscreen ? 'block' : 'none' }}
-      className={styles.closeButton}
-      onClick={closeFullscreen}
-    />
+    <>
+      <Box
+        component='span'
+        sx={{ display: displayCustomControls }}
+        className={styles.closeButton}
+        onClick={closeFullscreen}
+      />
+      <Box
+        onClick={closeFullscreen}
+        sx={{ display: displayCustomControls }}
+        className={cn(styles.closeArea, styles.closeArea_up)}
+      />
+      <Box
+        onClick={closeFullscreen}
+        sx={{ display: displayCustomControls }}
+        className={cn(styles.closeArea, styles.closeArea_left)}
+      />
+      <Box
+        onClick={closeFullscreen}
+        sx={{ display: displayCustomControls }}
+        className={cn(styles.closeArea, styles.closeArea_right)}
+      />
+    </>
   );
 
   return (
