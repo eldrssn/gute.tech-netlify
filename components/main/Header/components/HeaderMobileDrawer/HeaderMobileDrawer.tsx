@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Box } from '@mui/system';
 
 import { CustomButton } from 'components/ui/CustomButton';
 import { selectOrderTotal } from 'store/reducers/cart/selectors';
@@ -56,7 +56,7 @@ const HeaderMobileDrawer: FC<HeaderMobileDrawerProps> = ({
           />
         </CustomButton>
         <MenuItem onClick={handleClickCart}>
-          <ShoppingCartIcon sx={{ width: '24px', height: '24px' }} />
+          <Box className={styles.shoppingCart} />
           <Typography className={styles.menuItem}>
             {orderTotal}&#8381;
           </Typography>

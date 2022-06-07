@@ -10,7 +10,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { ProductListData } from 'api/models/catalog';
@@ -106,7 +105,7 @@ const CatalogCard: React.FC<ProductListData> = ({
                     customStyles={styles.cardAddToShoppingButton}
                     onClick={handleClickToBasket}
                   >
-                    <ShoppingCartIcon />
+                    <Box className={styles.shoppingCart} />
                   </CustomButton>
                 </CardActions>
               </Box>
