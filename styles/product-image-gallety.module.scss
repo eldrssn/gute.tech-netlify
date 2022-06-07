@@ -48,6 +48,15 @@
     left: 0;
     top: 50%;
     transform: translateY(-50%);
+    height: 100%;
+  }
+
+  .image-gallery-slides {
+    height: 100%;
+  }
+
+  .image-gallery-slide {
+    height: 100%;
   }
 
   .image-gallery-slide-wrapper {
@@ -61,6 +70,10 @@
 
   .image-gallery-image {
     object-fit: scale-down;
+    width: auto;
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
   }
 
   .image-gallery-description {
