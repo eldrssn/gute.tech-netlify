@@ -10,7 +10,7 @@ import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { IsDrawerProps } from 'components/main/Header/types';
 
 import { HeaderContext } from '../HeaderContext';
-import styles from './headerLogo.module.css';
+import styles from './headerLogo.module.scss';
 
 const cn = classnames.bind(styles);
 

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
@@ -15,11 +15,12 @@ import {
   getLinkToTransportCatalog,
 } from 'utility/helpers/linkmakers';
 
+import { CatalogFilterButton } from '../CatalogFilterButton';
+
 import { componentByType } from './constants';
 import { CatalogFilterProps } from './types';
 
 import styles from './catalogFilter.module.scss';
-import { CatalogFilterButton } from '../CatalogFilterButton';
 
 const CatalogFilter: FC<CatalogFilterProps> = ({
   setFilterRequest,
@@ -40,14 +41,6 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
     : selectCategoriesFilterList;
 
   const { isLoading, data: filters } = useSelector(currentSelector);
-
-  useEffect(
-    () => () => {
-      setFilterRequest({});
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
 
   const linkToTransportCatalog = getLinkToTransportCatalog({
     categorySlug,

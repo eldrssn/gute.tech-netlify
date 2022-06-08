@@ -7,10 +7,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 
-import CurrencyRubleIcon from '@mui/icons-material/CurrencyRuble';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
-
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { selectOrderTotal, selectCart } from 'store/reducers/cart/selectors';
@@ -50,7 +46,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
       />
       {(isFullHeader || isMobileView || isDrawer) && !hidePhone && (
         <MenuItem disableGutters sx={{ display: 'flex' }}>
-          <FontAwesomeIcon icon={faPhone} className={styles.phoneIcon} />
+          <i className={styles.icon_phone} />
           <a href='tel:+74992832026' className={menuItemStyles}>
             {phone}
           </a>
@@ -71,9 +67,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
                 </Box>
                 <Typography className={styles.orderTotalCard}>
                   {orderTotal}
-                  <CurrencyRubleIcon
-                    sx={{ width: '20px', height: '25px', fontWeight: 'bold' }}
-                  />
+                  <i className={styles.icon_ruble} />
                 </Typography>
               </Box>
             </MenuItem>

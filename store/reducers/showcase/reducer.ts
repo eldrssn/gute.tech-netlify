@@ -1,31 +1,10 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchShowcase } from './actions';
-
-import { ShowcaseStore, ErrorAction } from './types';
 import { ShowcaseResponseData } from 'api/models/showcase';
 
-const initialState: ShowcaseStore = {
-  showcase: {
-    data: {
-      footerText: '',
-      privacyPolicyLink: '',
-      showLogoInFooter: false,
-      socialLinkVk: '',
-      socialLinkInstagram: '',
-      socialLinkFacebook: '',
-      tagline: '',
-      description: '',
-      phone: '',
-      email: '',
-      favicon: '',
-      logo: '',
-      title: '',
-    },
-    isLoading: false,
-    error: null,
-  },
-};
+import { fetchShowcase } from './actions';
+import { ShowcaseStore, ErrorAction } from './types';
+import { initialState } from './constants';
 
 const handlers = {
   [fetchShowcase.pending.type]: (state: ShowcaseStore) => {

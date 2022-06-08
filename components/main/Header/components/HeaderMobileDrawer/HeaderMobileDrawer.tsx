@@ -57,9 +57,8 @@ const HeaderMobileDrawer: FC<HeaderMobileDrawerProps> = ({
         </CustomButton>
         <MenuItem onClick={handleClickCart}>
           <Box className={styles.shoppingCart} />
-          <Typography className={styles.menuItem}>
-            {orderTotal}&#8381;
-          </Typography>
+          <Typography className={styles.menuItem}>{orderTotal}</Typography>
+          <i className={styles.icon_ruble} />
         </MenuItem>
       </Container>
       <Divider />

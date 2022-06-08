@@ -58,11 +58,11 @@ const CatalogMain: FC = () => {
     : selectCategoriesProductList;
 
   const { isLoading, data } = useSelector(currentSelector);
-  const { pages, results, total } = data;
+  const { pages, results, total } = data || {};
   const pageCount = Number(pages);
 
   useEffect(() => {
-    if (!router.isReady) {
+    if (!router.isReady || !total) {
       return;
     }
     const pageFromQuery = Number(getQueryOption(PAGE_QUERY));
@@ -128,7 +128,7 @@ const CatalogMain: FC = () => {
     setAnchorApplyButton(null);
   };
 
-  const isResults = results.length > 0;
+  const isResults = results && results.length > 0;
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -170,7 +170,7 @@ const CatalogMain: FC = () => {
           {isLoading && !isResults ? (
             <Loader />
           ) : (
-            <CatalogGrid items={results} />
+            <CatalogGrid items={results || []} />
           )}
         </Box>
       </Box>

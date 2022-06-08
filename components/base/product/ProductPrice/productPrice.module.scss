@@ -18,8 +18,17 @@
   letter-spacing: 1px;
   line-height: 1.2em;
   text-transform: uppercase;
-  font-family: "GTWalsheimProBlack-Regular", sans-serif;
+  font-family: "GTWalsheimProBlack-Regular", sans-serif !important;
   font-weight: 900;
   color: $blue1;
   margin: 5px 0;
+}
+
+.icon_ruble::before {
+  font-family: 'icons';
+  content: "\e906";
+  font-weight: 400;
+  font-size: 85%;
+  font-style: normal;
+  margin-left: 5px;
 }

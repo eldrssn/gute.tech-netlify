@@ -1,5 +1,7 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
+import { PaymentMethodResponseData } from 'api/models/cart';
+
 import {
   addItemQuantity,
   setItemQuantity,
@@ -12,8 +14,7 @@ import {
   resetOrdinalId,
   clearCart,
 } from './actions';
-
-import { PaymentMethodResponseData } from 'api/models/cart';
+import { initialState } from './constants';
 
 import {
   CartStore,
@@ -24,12 +25,6 @@ import {
   ProductResponseData,
   StatusResponseData,
 } from './types';
-
-const initialState: CartStore = {
-  cartItems: { data: [], isLoading: false, error: null },
-  paymentMethods: { data: [], isLoading: false, error: null },
-  paymentStatus: { data: null, isLoading: false, error: null },
-};
 
 const handlers = {
   [addItemQuantity.type]: (

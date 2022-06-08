@@ -1,22 +1,10 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchPagesMenu, fetchPage } from './actions';
 import { PageMenuItemData, PageData } from 'api/models/pages';
+import { fetchPagesMenu, fetchPage } from './actions';
+import { initialState } from './constants';
 
 import { PagesStore, ErrorAction } from './types';
-
-const initialState: PagesStore = {
-  pagesmenu: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  page: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
-};
 
 const handlers = {
   [fetchPagesMenu.pending.type]: (state: PagesStore) => {

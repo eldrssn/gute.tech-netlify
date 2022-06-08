@@ -5,7 +5,6 @@ const formatImages = (images: string[], title: string) =>
     const formatedImage = {
       original: image,
       thumbnail: image,
-      thumbnailWidth: 92,
       thumbnailClass: 'customThumbnail',
       originalClass: 'customOriginal',
       description: title,

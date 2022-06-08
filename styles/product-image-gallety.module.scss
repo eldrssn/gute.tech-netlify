@@ -71,6 +71,7 @@
   .image-gallery-image {
     object-fit: scale-down;
     width: auto;
+    height: 75%;
     position: absolute;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
@@ -108,12 +109,26 @@
     z-index: 4;
     font-size: 16px;
   }
+
+  .image-gallery-thumbnail  {
+    height: 50px;
+    width: 50px;
+  }
 }
 
 @media (max-width: $mobile) {
   .image-gallery.fullscreen-modal {
     .image-gallery-description {
       bottom: 0;
+    }
+
+    .image-gallery-image {
+      width: 100%;
+    }
+  
+
+    .image-gallery-thumbnails {
+      max-width: 80vw;
     }
   }
 }
