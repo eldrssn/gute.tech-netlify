@@ -11,6 +11,8 @@ import {
 } from '@mui/material';
 // import cn from 'classnames';
 
+import { formatPrice } from 'utility/helpers';
+
 import { getStockBalance } from '../../helpers';
 import { DeleteItemButton } from '../DeleteItemButton';
 import { Counter } from '../Сounter';
@@ -45,6 +47,8 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
     <TableBody className={styles.tableBody}>
       {cart.map((item) => {
         const stockBalance = getStockBalance(item);
+        const itemPrice = formatPrice(item.price);
+        const countItemsPrice = formatPrice(item.count * item.price);
 
         return (
           <TableRow
@@ -80,7 +84,7 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
             <TableCell className={styles.itemInfo}>
               <Typography className={styles.itemTitle}>{item.title}</Typography>
               <Typography className={styles.itemPrice}>
-                Цена: {item.price}&#8381;{' '}
+                Цена: {itemPrice}&#8381;{' '}
               </Typography>
               <Counter
                 item={item}
@@ -89,7 +93,7 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
                 stockBalance={stockBalance}
               />
               <Typography className={styles.itemCost}>
-                Стоимость: {item.count * item.price}&#8381;
+                Стоимость: {countItemsPrice}&#8381;
               </Typography>
               {/* <Button
                 className={styles.btnDelete}

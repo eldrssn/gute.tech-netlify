@@ -24,6 +24,7 @@ import {
 } from 'utility/helpers/linkmakers';
 import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
+import { formatPrice } from 'utility/helpers';
 
 const CatalogCard: React.FC<ProductListData> = ({
   image,
@@ -50,6 +51,12 @@ const CatalogCard: React.FC<ProductListData> = ({
     event.preventDefault();
   };
 
+  const buyItNow = (event: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(fetchItemFromCart({ productSlug: slug }));
+    router.push('/cart');
+    event.preventDefault();
+  };
+
   const linkToProductPage = transportQuery
     ? getLinkToTransportProductPage({
         categorySlug,
@@ -63,6 +70,8 @@ const CatalogCard: React.FC<ProductListData> = ({
         subcategorySlug,
         productSlug: slug,
       });
+
+  const formattedPrice = formatPrice(price);
 
   return (
     <>
@@ -94,10 +103,20 @@ const CatalogCard: React.FC<ProductListData> = ({
               </Typography>
 
               <Box className={styles.cardBottom}>
-                <Typography className={styles.cardPrice}>{price} ₽</Typography>
+                <div className={styles.cardBottom_price}>
+                  <Typography className={styles.cardPrice}>
+                    {formattedPrice}
+                  </Typography>
+                  <Typography className={styles.cardPrice} sx={{}}>
+                    <i className={styles.icon_ruble} />
+                  </Typography>
+                </div>
 
                 <CardActions className={styles.cardActions}>
-                  <CustomButton customStyles={styles.cardBuyButton}>
+                  <CustomButton
+                    customStyles={styles.cardBuyButton}
+                    onClick={buyItNow}
+                  >
                     Купить
                   </CustomButton>
 

@@ -12,6 +12,7 @@ import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { selectOrderTotal, selectCart } from 'store/reducers/cart/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { HIDE_PHONE_WIDTH } from 'constants/variables';
+import { formatPrice } from 'utility/helpers';
 
 import { HeaderContext } from '../HeaderContext';
 import styles from './headerAsideNav.module.scss';
@@ -37,6 +38,8 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
 
   const windowSize = windowWidth ? windowWidth : 0;
   const hidePhone = isFocusSearchField && windowSize < HIDE_PHONE_WIDTH;
+
+  const formattedOrderTotal = formatPrice(orderTotal);
 
   return (
     <>
@@ -66,7 +69,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
                   {amountCartItems}
                 </Box>
                 <Typography className={styles.orderTotalCard}>
-                  {orderTotal}
+                  {formattedOrderTotal}
                   <i className={styles.icon_ruble} />
                 </Typography>
               </Box>

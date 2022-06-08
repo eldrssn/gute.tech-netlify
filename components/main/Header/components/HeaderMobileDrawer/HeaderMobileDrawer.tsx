@@ -12,6 +12,7 @@ import { Box } from '@mui/system';
 
 import { CustomButton } from 'components/ui/CustomButton';
 import { selectOrderTotal } from 'store/reducers/cart/selectors';
+import { formatPrice } from 'utility/helpers';
 
 import { DrawerContent } from '../DrawerContent';
 import { HeaderMobileDrawerProps } from './types';
@@ -42,6 +43,8 @@ const HeaderMobileDrawer: FC<HeaderMobileDrawerProps> = ({
     setOpen(false);
   }, [router]);
 
+  const formattedOrderTotal = formatPrice(orderTotal);
+
   return (
     <>
       <Container className={styles.headerMobileContainer}>
@@ -57,7 +60,9 @@ const HeaderMobileDrawer: FC<HeaderMobileDrawerProps> = ({
         </CustomButton>
         <MenuItem onClick={handleClickCart}>
           <Box className={styles.shoppingCart} />
-          <Typography className={styles.menuItem}>{orderTotal}</Typography>
+          <Typography className={styles.menuItem}>
+            {formattedOrderTotal}
+          </Typography>
           <i className={styles.icon_ruble} />
         </MenuItem>
       </Container>

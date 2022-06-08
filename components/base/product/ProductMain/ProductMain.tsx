@@ -1,11 +1,13 @@
 import React, { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
 import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
+import { formatPrice } from 'utility/helpers';
 
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
@@ -24,6 +26,7 @@ import { Subcategories } from '../Subcategories';
 import styles from './productMain.module.scss';
 
 const ProductMain: FC = () => {
+  const router = useRouter();
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
   const dispatch = useDispatch();
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
@@ -44,6 +47,15 @@ const ProductMain: FC = () => {
 
   const productInfo = { faq: '', installation: '', description, properties };
 
+  const buyItNow = () => {
+    if (!product) {
+      return;
+    }
+
+    dispatch(fetchItemFromCart({ productSlug: slug }));
+    router.push('/cart');
+  };
+
   const addItemToBasket = () => {
     if (!product) {
       return;
@@ -52,6 +64,8 @@ const ProductMain: FC = () => {
     setIsOpenModalAddedItem(true);
     dispatch(fetchItemFromCart({ productSlug: slug }));
   };
+
+  const formattedPrice = formatPrice(price);
 
   return (
     <>
@@ -102,8 +116,11 @@ const ProductMain: FC = () => {
                     },
                   }}
                 >
-                  <CustomButton customStyles={styles.buyButton}>
-                    Купить в 1 клик
+                  <CustomButton
+                    customStyles={styles.buyButton}
+                    onClick={buyItNow}
+                  >
+                    Купить сейчас
                   </CustomButton>
                   <CustomButton
                     customStyles={styles.buyButton}
@@ -113,7 +130,7 @@ const ProductMain: FC = () => {
                   </CustomButton>
                 </Box>
 
-                <ProductPrice>{price || 9999}</ProductPrice>
+                <ProductPrice>{formattedPrice || 9999}</ProductPrice>
               </Box>
 
               <ProductQuantity quantity={quantity || 0} />

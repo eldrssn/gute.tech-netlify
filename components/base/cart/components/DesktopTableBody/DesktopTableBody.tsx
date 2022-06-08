@@ -10,6 +10,8 @@ import {
   Checkbox,
 } from '@mui/material';
 
+import { formatPrice } from 'utility/helpers';
+
 import { getStockBalance } from '../../helpers';
 import { DeleteItemButton } from '../DeleteItemButton';
 import { Counter } from '../Сounter';
@@ -46,6 +48,8 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
         {cart.length ? (
           cart.map((item) => {
             const stockBalance = getStockBalance(item);
+            const itemPrice = formatPrice(item.price);
+            const countItemsPrice = formatPrice(item.count * item.price);
 
             return (
               <TableRow
@@ -86,7 +90,7 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
                     </Typography>
                   </Typography>
                 </TableCell>
-                <TableCell align='right'>{item.price}&#8381;</TableCell>
+                <TableCell align='right'>{itemPrice}&#8381;</TableCell>
                 <TableCell align='right'>
                   <Counter
                     item={item}
@@ -96,7 +100,7 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
                   />
                 </TableCell>
                 <TableCell sx={{ position: 'relative' }} align='right'>
-                  {item.count * item.price}&#8381;
+                  {countItemsPrice}&#8381;
                   <DeleteItemButton item={item} removeItem={removeItem} />
                 </TableCell>
               </TableRow>
