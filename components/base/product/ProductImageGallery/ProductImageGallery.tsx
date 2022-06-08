@@ -26,7 +26,7 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
     return <Loader />;
   }
 
-  const formattedItems = formatImages(images, title);
+  const formattedItems = formatImages(images);
 
   const toggleFullscreen = () => setFullscreen((isFullscreen) => !isFullscreen);
 
@@ -60,12 +60,20 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
   const displayCustomControls = isFullscreen ? 'block' : 'none';
 
   const renderCustomControls = () => (
-    <Box
-      component='span'
-      sx={{ display: displayCustomControls }}
-      className={styles.closeButton}
-      onClick={closeFullscreen}
-    />
+    <>
+      <Box
+        component='span'
+        sx={{ display: displayCustomControls }}
+        className={styles.closeButton}
+        onClick={closeFullscreen}
+      />
+      <Box
+        className={styles.imageDescription}
+        sx={{ display: displayCustomControls }}
+      >
+        {title}
+      </Box>
+    </>
   );
 
   return (

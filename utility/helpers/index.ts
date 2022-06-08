@@ -214,6 +214,15 @@ const findTransportType = (data: ListOptionsItemData[], slug: string) => {
 const setBreakpointSize = (breakpoint: string) =>
   Number(breakpoint.slice(0, -2));
 
+const formatPrice = (price?: string | number) => {
+  if (!price) {
+    return;
+  }
+
+  return typeof price === 'number'
+    ? price.toLocaleString('ru')
+    : Number(price).toLocaleString('ru');
+};
 export default setBreakpointSize;
 
 export {
@@ -229,4 +238,5 @@ export {
   findTransportType,
   getParentCategory,
   setBreakpointSize,
+  formatPrice,
 };

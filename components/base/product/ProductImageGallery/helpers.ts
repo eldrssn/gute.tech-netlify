@@ -1,13 +1,12 @@
 import { ReactImageGalleryItem } from 'react-image-gallery';
 
-const formatImages = (images: string[], title: string) =>
+const formatImages = (images: string[]) =>
   images.reduce((accumulator: ReactImageGalleryItem[], image: string) => {
     const formatedImage = {
       original: image,
       thumbnail: image,
       thumbnailClass: 'customThumbnail',
       originalClass: 'customOriginal',
-      description: title,
     };
 
     return accumulator.length

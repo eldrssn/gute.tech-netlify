@@ -69,6 +69,27 @@
   padding: 0;
 }
 
+.cardBottom_price {
+  display: inline-flex;
+  align-items: center;
+}
+.icon_ruble {
+  font-weight: 400;
+  font-size: 85%;
+  font-style: normal;
+  height: auto;
+  justify-content: center;
+  display: block;
+  margin-left: 5px;
+  margin-top: 2px;
+ 
+  text-align: center;
+}
+.icon_ruble::before {
+  font-family: 'icons';
+  content: "\e906";
+}
+
 .cardAddToShoppingButton {
   width: 36px;
   height: 36px;
