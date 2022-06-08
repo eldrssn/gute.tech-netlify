@@ -1,6 +1,15 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
 import {
+  CategoryResponseData,
+  TreeCategoryResponseData,
+  FiltersCategoryResponseData,
+  CategoriesProductListResponseData,
+  CategoriesProductReadResponseData,
+  CatalogSearchReadResponseData,
+} from 'api/models/catalog';
+
+import {
   fetchTransportReadCategories,
   fetchCategoriesList,
   fetchCategoriesTreeList,
@@ -13,70 +22,11 @@ import {
   fetchTransportProductList,
   fetchTransportFilterList,
   setIsLoadingCatalogSearchRead,
+  clearCatalog,
 } from './actions';
 
 import { CatalogStore, ErrorAction } from './types';
-import {
-  CategoryResponseData,
-  TreeCategoryResponseData,
-  FiltersCategoryResponseData,
-  CategoriesProductListResponseData,
-  CategoriesProductReadResponseData,
-  CatalogSearchReadResponseData,
-} from 'api/models/catalog';
-
-const initialState: CatalogStore = {
-  transportReadCategories: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  transportProductList: {
-    data: { current: '', total: '', pages: '', results: [] },
-    isLoading: false,
-    error: null,
-  },
-  transportFilterList: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  categoriesList: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  categoriesTreeList: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  categoriesFilterList: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  categoriesProductList: {
-    data: { current: '', total: '', pages: '', results: [] },
-    isLoading: false,
-    error: null,
-  },
-  categoriesProductRead: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
-  categoriesSubcategoriesList: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  catalogSearchRead: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
-};
+import { initialState, initProductList } from './constants';
 
 const handlers = {
   [clearCatalogSearchRead.type]: (state: CatalogStore) => {
@@ -286,6 +236,12 @@ const handlers = {
     const errorData = { name: error.name, message: error.message };
     state.catalogSearchRead.isLoading = false;
     state.catalogSearchRead.error = errorData;
+  },
+  [clearCatalog.type]: (state: CatalogStore) => {
+    state.transportProductList.data = initProductList;
+    state.transportFilterList.data = [];
+    state.categoriesFilterList.data = [];
+    state.categoriesProductList.data = initProductList;
   },
 };
 

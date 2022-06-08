@@ -1,5 +1,7 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
+import { ListOptionsItemData, ListOptionsYearData } from 'api/models/transport';
+
 import {
   fetchBrands,
   fetchModels,
@@ -14,32 +16,8 @@ import {
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
 } from './actions';
-
 import { TransportStore, ErrorAction } from './types';
-import { ListOptionsItemData, ListOptionsYearData } from 'api/models/transport';
-
-const initialState: TransportStore = {
-  brands: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  models: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  years: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  engines: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-};
+import { initialState } from './constants';
 
 const handlers = {
   [fetchBrands.pending.type]: (state: TransportStore) => {

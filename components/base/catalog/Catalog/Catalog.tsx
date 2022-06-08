@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import {
+  clearCatalog,
   fetchCategoriesFiltersList,
   fetchTransportFilterList,
 } from 'store/reducers/catalog/actions';
@@ -48,6 +49,10 @@ const Catalog: FC = () => {
       : dispatch(
           fetchCategoriesFiltersList({ subcategorySlug: stringifySlug }),
         );
+
+    return () => {
+      dispatch(clearCatalog());
+    };
   }, [subcategorySlug, dispatch, transportId]);
 
   return (

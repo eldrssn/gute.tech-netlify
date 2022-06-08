@@ -7,7 +7,8 @@ const ProductPrice: FC = ({ children }) => (
   <Box sx={{ marginTop: { xs: '20px', md: '10px' } }}>
     <p className={styles.priceWrapper}>
       <span className={styles.priceLabel}>Цена</span>
-      {children} ₽
+      {children} 
+      <i className={styles.icon_ruble} />
     </p>
   </Box>
 );

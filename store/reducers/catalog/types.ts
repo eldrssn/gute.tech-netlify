@@ -20,6 +20,7 @@ enum CategoryStoreBlocks {
   CATEGORIES_PRODUCT_READ = 'categoriesProductRead',
   CATEGORIES_SUBCATEGORIES_LIST = 'categoriesSubcategoriesList',
   CATALOG_SEARCH_READ = 'catalogSearchRead',
+  CLEAR_CATALOG = 'clearCatalog',
 }
 
 type CategoriesProductsReadData = {
@@ -51,7 +52,7 @@ type CatalogSearchReadState = {
 } & StoreState;
 
 type CategoriesProductListState = {
-  data: CategoriesProductListResponseData;
+  data: CategoriesProductListResponseData | null;
 } & StoreState;
 
 type CategoriesProductReadState = {

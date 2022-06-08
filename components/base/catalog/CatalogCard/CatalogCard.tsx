@@ -77,7 +77,7 @@ const CatalogCard: React.FC<ProductListData> = ({
             <CardMedia
               component={'img'}
               height='250'
-              image={image || '/card-example.jpeg'}
+              image={image}
               alt={title}
               className={styles.cardImage}
             />

@@ -19,4 +19,4 @@ type UseBreadcrumbs = {
   lastTitle?: string;
 };
 
-export type { GetCrumbs, UseBreadcrumbs };
+export type { GetCrumbs, UseBreadcrumbs, Crumb };

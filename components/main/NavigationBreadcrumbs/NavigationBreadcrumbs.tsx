@@ -9,6 +9,7 @@ import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 
 import { Crumb } from './components/Crumb';
 import { Query } from './types';
+import { checkLoadingCrumbs } from './helpers';
 
 const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
   const router = useRouter();
@@ -28,14 +29,15 @@ const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
 
   const currentCrumbs = isQuery ? breadcrumbsQuery : breadcrumbs;
 
+  const isLoading = checkLoadingCrumbs(currentCrumbs);
+
   return (
     <Breadcrumbs
       aria-label='breadcrumb'
       sx={{ paddingTop: { xs: '15px', md: 0 } }}
     >
-      {currentCrumbs.map((crumb, index) => (
-        <Crumb {...crumb} key={index} />
-      ))}
+      {!isLoading &&
+        currentCrumbs.map((crumb, index) => <Crumb {...crumb} key={index} />)}
     </Breadcrumbs>
   );
 };

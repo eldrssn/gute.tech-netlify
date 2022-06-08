@@ -3,7 +3,6 @@ import React, { FC, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 import ReactImageGallery from 'react-image-gallery';
 import Box from '@mui/material/Box';
-import classnames from 'classnames/bind';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 
@@ -14,8 +13,6 @@ import { ProductImageGalleryProps } from './types';
 import { IMG_CLASSNAME } from './constants';
 
 import styles from './productImageGallery.module.scss';
-
-const cn = classnames.bind(styles);
 
 const ProductImageGallery: FC<ProductImageGalleryProps> = ({
   images,
@@ -63,29 +60,12 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
   const displayCustomControls = isFullscreen ? 'block' : 'none';
 
   const renderCustomControls = () => (
-    <>
-      <Box
-        component='span'
-        sx={{ display: displayCustomControls }}
-        className={styles.closeButton}
-        onClick={closeFullscreen}
-      />
-      <Box
-        onClick={closeFullscreen}
-        sx={{ display: displayCustomControls }}
-        className={cn(styles.closeArea, styles.closeArea_up)}
-      />
-      <Box
-        onClick={closeFullscreen}
-        sx={{ display: displayCustomControls }}
-        className={cn(styles.closeArea, styles.closeArea_left)}
-      />
-      <Box
-        onClick={closeFullscreen}
-        sx={{ display: displayCustomControls }}
-        className={cn(styles.closeArea, styles.closeArea_right)}
-      />
-    </>
+    <Box
+      component='span'
+      sx={{ display: displayCustomControls }}
+      className={styles.closeButton}
+      onClick={closeFullscreen}
+    />
   );
 
   return (

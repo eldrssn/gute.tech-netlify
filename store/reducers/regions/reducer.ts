@@ -1,6 +1,7 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
 import { fetchRegions, selectRegion, fetchBranches } from './actions';
+import { initialState } from './constants';
 
 import {
   RegionsStore,
@@ -9,20 +10,6 @@ import {
   SelectedCity,
   BranchesData,
 } from './types';
-
-const initialState: RegionsStore = {
-  regions: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  branches: {
-    data: [],
-    isLoading: false,
-    error: null,
-  },
-  selectedCity: '',
-};
 
 const handlers = {
   [fetchRegions.pending.type]: (state: RegionsStore) => {

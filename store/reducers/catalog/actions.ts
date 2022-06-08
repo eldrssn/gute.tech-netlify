@@ -153,7 +153,10 @@ const fetchCatalogSearchRead = createAsyncThunk(
   },
 );
 
+const clearCatalog = createAction('CatalogStore/clearCatalog');
+
 export {
+  clearCatalog,
   fetchTransportReadCategories,
   fetchCategoriesList,
   fetchCatalogSearchRead,

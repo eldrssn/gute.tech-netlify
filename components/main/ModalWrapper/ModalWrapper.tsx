@@ -31,8 +31,6 @@ const ModalWrapper: React.FC<TOuterProps> = ({
     styles.modalBackground,
   );
 
-  console.log(document.body.style.marginRight);
-
   useEffect(() => {
     if (isOpen) {
       document.body.style.marginRight = `${widthScrollBar}px`;
