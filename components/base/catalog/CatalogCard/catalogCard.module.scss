@@ -1,4 +1,4 @@
-@import "styles/colors.scss";
+@import 'styles/colors.scss';
 
 .cardContainer {
   border-radius: 0;
@@ -82,12 +82,12 @@
   display: block;
   margin-left: 5px;
   margin-top: 2px;
- 
+
   text-align: center;
 }
 .icon_ruble::before {
   font-family: 'icons';
-  content: "\e906";
+  content: '\e906';
 }
 
 .cardAddToShoppingButton {
@@ -124,8 +124,25 @@
 .shoppingCart {
   width: 24px;
   height: 24px;
-  background-image: url("~assets/images/shoppingCart.png");
+  background-image: url('~assets/images/shoppingCart.png');
   background-size: contain;
   background-repeat: no-repeat;
   filter: invert(100%);
+}
+
+.shoppingIcon {
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 85%;
+  -webkit-font-smoothing: antialiased;
+  margin-right: 2px;
+  margin-top: 2px;
+}
+
+.shoppingIcon::before {
+  font-family: 'icons';
+  content: '\e908';
 }

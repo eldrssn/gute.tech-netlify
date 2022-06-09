@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .main {
   padding: 24px 0 88px;
@@ -10,7 +10,7 @@
   letter-spacing: 1px;
   line-height: 1.2em;
   text-transform: uppercase;
-  font-family: "GTWalsheimProBlack-Regular", sans-serif !important;
+  font-family: Roboto, sans-serif !important;
   font-weight: bold;
 }
 

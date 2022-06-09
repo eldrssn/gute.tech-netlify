@@ -95,6 +95,8 @@ export type CategoriesProductReadResponseData = {
   properties?: string;
   is_service: boolean;
   warehouses?: ProductWarehouse[];
+  faq: Record<string, string>[];
+  installation: string;
 };
 
 export type CatalogSearchReadRequestData = {

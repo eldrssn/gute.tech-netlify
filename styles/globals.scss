@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
+
 @import './product-image-gallety.module.scss';
 @import '~styles/colors.scss';
 
@@ -15,48 +17,6 @@
   font-display: block;
 }
 
-@font-face {
-  font-family: 'Ubuntu';
-  src: url('../assets/fonts/Ubuntu-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-family: sans-serif;
-}
-
-@font-face {
-  font-family: 'UbuntuMedium';
-  src: url('../assets/fonts/Ubuntu-Medium.ttf') format('truetype');
-  font-weight: normal;
-  font-family: sans-serif;
-}
-
-@font-face {
-  font-family: 'UbuntuMedium';
-  src: url('../assets/fonts/Ubuntu-Light.ttf') format('truetype');
-  font-weight: lighter;
-  font-family: sans-serif;
-}
-
-@font-face {
-  font-family: 'UbuntuMedium';
-  src: url('../assets/fonts/Ubuntu-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-family: sans-serif;
-}
-
-@font-face {
-  font-family: "GTWalsheimProBlack-Regular";
-  src: url("../assets/fonts/GTWalsheimPro-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-family: sans-serif;
-}
-
-@font-face {
-  font-family: "GTWalsheimProBlack-Regular";
-  src: url("../assets/fonts/GTWalsheimPro-Bold.ttf") format("truetype");
-  font-weight: bold;
-  font-family: sans-serif;
-}
-
 html,
 body {
   padding: 0;
@@ -72,7 +32,7 @@ a {
 
 * {
   box-sizing: border-box;
-  font-family: 'UbuntuMedium', sans-serif !important;
+  font-family: Roboto, sans-serif !important;
 }
 
 .MuiOutlinedInput-notchedOutline {

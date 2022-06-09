@@ -1,5 +1,5 @@
-@import "styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import 'styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .menuItem {
   font-weight: 700;
@@ -7,7 +7,7 @@
   padding-left: 10px;
   padding-right: 10px;
   font-size: 18px;
-  font-family: 'Ubuntu', sans-serif !important;
+  font-family: Roboto, sans-serif !important;
   font-weight: bold;
 }
 
@@ -56,12 +56,12 @@
   transform: translate(-50%, -50%);
   font-weight: bold;
   font-size: 18px;
-  font-family: 'Ubuntu', sans-serif !important;
+  font-family: Roboto, sans-serif !important;
 }
 
 .icon_ruble::before {
   font-family: 'icons';
-  content: "\e906";
+  content: '\e906';
   font-weight: 400;
   font-size: 85%;
   font-style: normal;
@@ -70,7 +70,7 @@
 
 .icon_phone::before {
   font-family: 'fontawesome';
-  content: "\f095";
+  content: '\f095';
   font: normal normal normal 14px/1 FontAwesome;
   font-size: 24px;
   width: 30px;
@@ -87,7 +87,7 @@
 .shoppingCart {
   width: 24px;
   height: 24px;
-  background-image: url("~assets/images/shoppingCart.png");
+  background-image: url('~assets/images/shoppingCart.png');
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -95,7 +95,7 @@
 .consiltIcon {
   width: 20px;
   height: 24px;
-  background-image: url("~assets/images/consultIcon.png");
+  background-image: url('~assets/images/consultIcon.png');
   background-size: contain;
   background-repeat: no-repeat;
 }

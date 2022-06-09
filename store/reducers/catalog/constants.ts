@@ -14,7 +14,6 @@ const initialState: CatalogStore = {
     error: null,
   },
   transportProductList: {
-    // data: initProductList,
     data: null,
     isLoading: false,
     error: null,
@@ -40,7 +39,6 @@ const initialState: CatalogStore = {
     error: null,
   },
   categoriesProductList: {
-    // data: initProductList,
     data: null,
     isLoading: false,
     error: null,

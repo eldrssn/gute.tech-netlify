@@ -4,10 +4,10 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 
-import { setSmoothScroll } from 'utility/utils';
 import { Content, Property, TabProps } from 'types/product';
 
 import styles from './tabFAQ.module.scss';
+import { TabDefault } from '../TabDefault';
 
 const TabFAQ: FC<TabProps> = ({ content }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -15,7 +15,6 @@ const TabFAQ: FC<TabProps> = ({ content }) => {
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
-      setSmoothScroll(event.currentTarget);
     };
 
   const getIconClasses = useCallback(
@@ -39,25 +38,38 @@ const TabFAQ: FC<TabProps> = ({ content }) => {
     return <p>{content}</p>;
   }
 
+  const renderAccordionItem = ({
+    question,
+    answer,
+  }: Record<string, string>) => (
+    <Accordion
+      disableGutters
+      expanded={expanded === question}
+      onChange={handleChange(question)}
+      TransitionProps={{ unmountOnExit: true }}
+      className={styles.accordionItem}
+      key={question}
+    >
+      <AccordionSummary id={question} className={getIconClasses(question)}>
+        <p className={styles.accordionSummaryText}>{question}</p>
+      </AccordionSummary>
+      <AccordionDetails>
+        <TabDefault className={styles.accordionDetails} content={answer} />
+      </AccordionDetails>
+    </Accordion>
+  );
+
   return (
     <Box className={styles.accordionList}>
-      {content.map(([question, answer]) => (
-        <Accordion
-          disableGutters
-          expanded={expanded === question}
-          onChange={handleChange(question)}
-          TransitionProps={{ unmountOnExit: true }}
-          className={styles.accordionItem}
-          key={question}
-        >
-          <AccordionSummary id={question} className={getIconClasses(question)}>
-            <p className={styles.accordionSummaryText}>{question}</p>
-          </AccordionSummary>
-          <AccordionDetails>
-            <p className={styles.accordionDetails}>{answer}</p>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+      {content.map((field) => {
+        if (Array.isArray(field)) {
+          const [question, answer] = field;
+          return renderAccordionItem({ question, answer });
+        }
+
+        const { question, answer } = field;
+        return renderAccordionItem({ question, answer });
+      })}
     </Box>
   );
 };

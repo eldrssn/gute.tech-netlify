@@ -31,7 +31,7 @@ const Subcategories = () => {
   return (
     <Box
       className={styles.mainContainer}
-      sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}
+      sx={{ display: { xs: 'none', md: 'block' } }}
     >
       {isLoading ? (
         <Loader />
