@@ -216,7 +216,7 @@ const setBreakpointSize = (breakpoint: string) =>
 
 const formatPrice = (price?: string | number) => {
   if (!price) {
-    return;
+    return '0';
   }
 
   return typeof price === 'number'

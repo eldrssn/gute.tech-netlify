@@ -33,6 +33,8 @@ type CategoriesProductsReadData = {
   images?: string[] | undefined;
   properties?: string | undefined;
   warehouses?: ProductWarehouse[];
+  faq: Record<string, string>[];
+  installation: string;
 };
 
 type CategoriesListState = {

@@ -1,4 +1,4 @@
-type Content = string | string[][] | undefined;
+type Content = string | string[][] | undefined | Record<string, string>[];
 
 interface Property {
   title: string;
@@ -7,6 +7,7 @@ interface Property {
 
 type TabProps = {
   content?: Property[] | Content;
+  className?: string;
 };
 
 type WindowSideType = number | null;

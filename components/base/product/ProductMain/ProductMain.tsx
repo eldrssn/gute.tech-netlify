@@ -35,8 +35,17 @@ const ProductMain: FC = () => {
     return <Loader />;
   }
 
-  const { title, price, images, description, properties, slug, warehouses } =
-    product;
+  const {
+    title,
+    price,
+    images,
+    description,
+    properties,
+    slug,
+    warehouses,
+    faq,
+    installation,
+  } = product;
 
   const quantity =
     warehouses &&
@@ -45,7 +54,7 @@ const ProductMain: FC = () => {
       0,
     );
 
-  const productInfo = { faq: '', installation: '', description, properties };
+  const productInfo = { faq, installation, description, properties };
 
   const buyItNow = () => {
     if (!product) {
@@ -74,16 +83,19 @@ const ProductMain: FC = () => {
         setIsOpen={setIsOpenModalAddedItem}
         title={title}
       />
-      <Container className={styles.mainContainer} disableGutters>
+      <Box className={styles.mainContainer}>
         <Subcategories />
 
-        <Container disableGutters>
+        <Box
+          sx={{
+            maxWidth: { xs: '100%', md: '75%', lg: '80%' },
+          }}
+        >
           <NavigationBreadcrumbs lastTitle={title || 'Имя отсутствует'} />
 
           <h1 className={styles.title}>{title || 'Имя отсутствует'}</h1>
 
-          <Container
-            disableGutters
+          <Box
             className={styles.productContainer}
             sx={{
               flexDirection: { xs: 'column', sm: 'row' },
@@ -114,6 +126,7 @@ const ProductMain: FC = () => {
                       xs: 'column',
                       md: 'row',
                     },
+                    marginRight: { xs: 0, md: '5px', lg: '15px' },
                   }}
                 >
                   <CustomButton
@@ -136,14 +149,14 @@ const ProductMain: FC = () => {
               <ProductQuantity quantity={quantity || 0} />
               <ProductSpecial />
             </Container>
-          </Container>
+          </Box>
 
           <ProductTabsDescription {...productInfo} />
 
           {/* !TODO: добавить, когда появятся рекоммендованные товары на бэке */}
           {/* <RecommendedProducts /> */}
-        </Container>
-      </Container>
+        </Box>
+      </Box>
     </>
   );
 };
