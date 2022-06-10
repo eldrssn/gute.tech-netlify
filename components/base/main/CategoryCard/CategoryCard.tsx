@@ -1,10 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 
 import { QueryUrl } from 'constants/variables';
+import { selectTransportStore } from 'store/reducers/transport/selectors';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import {
   getLinkToCatalog,
@@ -21,20 +23,18 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
 
   const routerQuery = useRouterQuery();
 
-  const categorySlug = routerQuery.getQueryOption(QueryUrl.CATEGORY_QUERY);
+  const { transportId } = useSelector(selectTransportStore);
 
-  const transportQuery = routerQuery.getQueryOption(QueryUrl.TRANSPORT_QUERY);
-  const transportId = routerQuery.getQueryOption(QueryUrl.TRANSPORT_ID);
+  const categorySlug = routerQuery.getQueryOption(QueryUrl.CATEGORY_QUERY);
 
   const setQuery = () =>
     routerQuery.setQueryOption(QueryUrl.CATEGORY_QUERY, slug);
 
-  const isTransportSearch = transportQuery && transportId;
+  const isTransportSearch = transportId;
 
   const linkToTransportCatalog = getLinkToTransportCatalog({
     categorySlug,
     subcategorySlug: slug,
-    transportQuery,
     transportId,
   });
 

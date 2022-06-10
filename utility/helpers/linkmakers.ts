@@ -20,27 +20,15 @@ const getLinkToCatalog = ({ categorySlug, subcategorySlug }: Slugs) =>
     subcategorySlug,
   )}?${CATALOG_QUERY_DEFAULT}`;
 
-const getTransportSlugs = ({ transportQuery, transportId }: Slugs) => {
-  const isTransportQuery =
-    Array.isArray(transportQuery) && transportQuery.length > 0;
-
-  if (isTransportQuery) {
-    const transportQueryFormatted = transportQuery.map(
-      (query) => `${QueryUrl.TRANSPORT_QUERY}=${query}`,
-    );
-    return `${transportQueryFormatted.join('&')}&${
-      QueryUrl.TRANSPORT_ID
-    }=${makeStringify(transportId)}`;
-  }
-};
+const getTransportSlugs = ({ transportId }: Slugs) =>
+  `&${QueryUrl.TRANSPORT_ID}=${makeStringify(transportId)}`;
 
 const getLinkToTransportCatalog = ({
   categorySlug,
   subcategorySlug,
-  transportQuery,
   transportId,
 }: Slugs) => {
-  const transportSlugs = getTransportSlugs({ transportQuery, transportId });
+  const transportSlugs = getTransportSlugs({ transportId });
 
   return `/catalog/${makeStringify(categorySlug)}/${makeStringify(
     subcategorySlug,
@@ -51,10 +39,9 @@ const getLinkToTransportProductPage = ({
   categorySlug,
   subcategorySlug,
   productSlug,
-  transportQuery,
   transportId,
 }: Slugs) => {
-  const transportSlugs = getTransportSlugs({ transportQuery, transportId });
+  const transportSlugs = getTransportSlugs({ transportId });
 
   return `/catalog/${makeStringify(categorySlug)}/${makeStringify(
     subcategorySlug,

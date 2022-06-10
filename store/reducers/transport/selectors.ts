@@ -2,20 +2,44 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import storeSelector from 'store/storeSelector';
 
-const selectContentStore = createSelector(
+const selectTransportStore = createSelector(
   storeSelector,
   ({ transportStore }) => transportStore,
 );
 
-const selectBrands = createSelector(selectContentStore, ({ brands }) => brands);
+const selectBrands = createSelector(
+  selectTransportStore,
+  ({ brands }) => brands,
+);
 
-const selectModels = createSelector(selectContentStore, ({ models }) => models);
+const selectModels = createSelector(
+  selectTransportStore,
+  ({ models }) => models,
+);
 
-const selectYears = createSelector(selectContentStore, ({ years }) => years);
+const selectYears = createSelector(selectTransportStore, ({ years }) => years);
 
 const selectEngines = createSelector(
-  selectContentStore,
+  selectTransportStore,
   ({ engines }) => engines,
 );
 
-export { selectBrands, selectModels, selectYears, selectEngines };
+const selectTransportInfo = createSelector(
+  selectTransportStore,
+  ({ transportInfo }) => transportInfo,
+);
+
+const selectTransportId = createSelector(
+  selectTransportStore,
+  ({ transportId }) => transportId,
+);
+
+export {
+  selectTransportStore,
+  selectBrands,
+  selectModels,
+  selectYears,
+  selectEngines,
+  selectTransportInfo,
+  selectTransportId,
+};

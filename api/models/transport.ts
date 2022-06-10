@@ -31,10 +31,29 @@ type ListOptionsItem = {
   data: ListOptionsItemData[];
 } & StoreState;
 
+type TransportInfoItem = {
+  title: string;
+  slug: string;
+};
+
+type TransportInfoResponseData = {
+  type: TransportInfoItem;
+  brand: TransportInfoItem;
+  model: TransportInfoItem;
+  years: number[];
+  engine: TransportInfoItem;
+};
+
+type TransportInfoRequestData = {
+  transportId: string;
+};
+
 export type {
   BrandSlug,
   YearsSlugs,
   EnginesSlugs,
+  TransportInfoResponseData,
+  TransportInfoRequestData,
   ListOptionsItemData,
   ListOptionsYearData,
   ListOptionsItem,

@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
 
 import Container from '@mui/material/Container';
@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
+import { clearTransportId } from 'store/reducers/transport/actions';
 import {
   getLinkToCatalog,
   getLinkToCategory,
@@ -17,6 +18,7 @@ import { CategoriesProps } from './types';
 import styles from './category.module.scss';
 
 const Category: FC<CategoriesProps> = ({ categorySlug }) => {
+  const dispatch = useDispatch();
   const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
   const category = categoriesTree.find((item) => item.slug === categorySlug);
 
@@ -24,6 +26,10 @@ const Category: FC<CategoriesProps> = ({ categorySlug }) => {
   const title = category?.title;
 
   const linkToCategory = getLinkToCategory(categorySlug);
+
+  useEffect(() => {
+    dispatch(clearTransportId());
+  }, [dispatch]);
 
   return (
     <Container disableGutters>

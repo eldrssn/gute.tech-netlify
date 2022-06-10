@@ -20,12 +20,13 @@ import {
   selectCategoriesSearchRead,
   selectCategoriesTreeList,
 } from 'store/reducers/catalog/selectors';
+import { selectTransportStore } from 'store/reducers/transport/selectors';
+import { addItemToLocaleStorage } from 'components/main/Header/helpers';
+import { IS_FROM_WIDGETS } from 'utility/utils/constants';
 
 import { getGroupedChildren } from './helpers';
 import { isFromWidgets } from './constants';
 import { Index } from './types';
-import { addItemToLocaleStorage } from 'components/main/Header/helpers';
-import { IS_FROM_WIDGETS } from 'utility/utils/constants';
 
 const rowHashMap: Record<Index, FC<Items>> = {
   1: FirstRow,
@@ -37,23 +38,24 @@ const rowHashMap: Record<Index, FC<Items>> = {
 const Home: FC = () => {
   const dispatch = useDispatch();
   const { getQueryOption } = useRouterQuery();
-  const categoryQuery = getQueryOption(QueryUrl.CATEGORY_QUERY);
-  const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
+
+  const { transportId } = useSelector(selectTransportStore);
 
   const currentSelector = transportId
     ? selectCategoriesSearchRead
     : selectCategoriesTreeList;
 
   const { isLoading, data: categories } = useSelector(currentSelector);
+  const categoryQuery = getQueryOption(QueryUrl.CATEGORY_QUERY);
 
   useEffect(() => {
-    if (typeof transportId === 'string') {
+    if (transportId) {
       dispatch(fetchTransportReadCategories({ transportId }));
     }
   }, [transportId, dispatch]);
 
   useEffect(() => {
-    categoryQuery
+    transportId
       ? addItemToLocaleStorage({
           slug: IS_FROM_WIDGETS,
           title: isFromWidgets.TRUE,
@@ -62,7 +64,7 @@ const Home: FC = () => {
           slug: IS_FROM_WIDGETS,
           title: isFromWidgets.FALSE,
         });
-  }, [categoryQuery]);
+  }, [transportId]);
 
   const groupedItems = useMemo(
     () =>

@@ -25,8 +25,11 @@ const tabNameByType: Record<DescriptionType, string> = {
 const DEV_HOST = 'dev.gute.tech';
 
 enum QueryUrl {
+  BRAND_SLUG = 'brandSlug',
+  MODEL_SLUG = 'modelSlug',
+  YEAR_SLUG = 'yearSlug',
+  ENGINE_SLUG = 'engineSlug',
   CATEGORY_QUERY = 'category',
-  TRANSPORT_QUERY = 'transport',
   TRANSPORT_ID = 'transport_id',
 }
 

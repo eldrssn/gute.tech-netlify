@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 
+import { clearTransportId } from 'store/reducers/transport/actions';
 import {
   fetchCatalogSearchRead,
   clearCatalogSearchRead,
@@ -67,6 +68,7 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
     router.push(link);
     setIsFocusSearchField(false);
     setSearchValue('');
+    dispatch(clearTransportId());
   };
 
   const handleClosePopover = () => {

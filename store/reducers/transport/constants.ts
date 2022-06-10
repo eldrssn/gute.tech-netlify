@@ -21,6 +21,12 @@ const initialState: TransportStore = {
     isLoading: false,
     error: null,
   },
+  transportId: '',
+  transportInfo: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
 };
 
 export { initialState };

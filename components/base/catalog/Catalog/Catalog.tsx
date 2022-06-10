@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import {
@@ -7,10 +7,8 @@ import {
   fetchCategoriesFiltersList,
   fetchTransportFilterList,
 } from 'store/reducers/catalog/actions';
-
-import { QueryUrl } from 'constants/variables';
-import { useRouterQuery } from 'hooks/useRouterQuery';
 import { makeStringify } from 'utility/helpers';
+import { selectTransportId } from 'store/reducers/transport/selectors';
 
 import { CatalogTitle } from '../CatalogTitle';
 import { CatalogMain } from '../CatalogMain';
@@ -18,9 +16,8 @@ import { CatalogMain } from '../CatalogMain';
 const Catalog: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { getQueryOption } = useRouterQuery();
 
-  const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
+  const transportId = useSelector(selectTransportId);
 
   const { subcategorySlug } = router.query;
 
@@ -30,7 +27,7 @@ const Catalog: FC = () => {
     }
 
     const getSearchTransportFilterList = (subcategorySlug: string) => {
-      if (!transportId || Array.isArray(transportId)) {
+      if (!transportId) {
         return;
       }
 

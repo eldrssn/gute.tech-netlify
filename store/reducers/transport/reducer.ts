@@ -1,12 +1,17 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { ListOptionsItemData, ListOptionsYearData } from 'api/models/transport';
+import {
+  ListOptionsItemData,
+  ListOptionsYearData,
+  TransportInfoResponseData,
+} from 'api/models/transport';
 
 import {
   fetchBrands,
   fetchModels,
   fetchYears,
   fetchEngines,
+  fetchTransportInfo,
   resetEngines,
   resetBrands,
   resetModels,
@@ -15,11 +20,44 @@ import {
   resetOptionsDataInEngineStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
+  setTransportId,
+  clearTransportId,
 } from './actions';
-import { TransportStore, ErrorAction } from './types';
 import { initialState } from './constants';
 
+import { TransportStore, ErrorAction, TransportIdData } from './types';
+
 const handlers = {
+  [setTransportId.type]: (
+    state: TransportStore,
+    { payload }: PayloadAction<TransportIdData>,
+  ) => {
+    state.transportId = payload;
+  },
+  [clearTransportId.type]: (state: TransportStore) => {
+    state.transportId = '';
+  },
+
+  [fetchTransportInfo.pending.type]: (state: TransportStore) => {
+    state.transportInfo.isLoading = true;
+  },
+  [fetchTransportInfo.fulfilled.type]: (
+    state: TransportStore,
+    { payload }: PayloadAction<TransportInfoResponseData>,
+  ) => {
+    state.transportInfo.data = payload;
+    state.transportInfo.isLoading = false;
+    state.transportInfo.error = null;
+  },
+  [fetchTransportInfo.rejected.type]: (
+    state: TransportStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.transportInfo.isLoading = false;
+    state.transportInfo.error = errorData;
+  },
+
   [fetchBrands.pending.type]: (state: TransportStore) => {
     state.brands.isLoading = true;
   },

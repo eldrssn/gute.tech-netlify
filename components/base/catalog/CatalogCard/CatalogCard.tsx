@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -11,6 +11,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { ProductListData } from 'api/models/catalog';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
@@ -22,8 +23,6 @@ import {
   getLinkToProductPage,
   getLinkToTransportProductPage,
 } from 'utility/helpers/linkmakers';
-import { QueryUrl } from 'constants/variables';
-import { useRouterQuery } from 'hooks/useRouterQuery';
 import { formatPrice } from 'utility/helpers';
 
 const CatalogCard: React.FC<ProductListData> = ({
@@ -36,10 +35,8 @@ const CatalogCard: React.FC<ProductListData> = ({
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { getQueryOption } = useRouterQuery();
   const { categorySlug, subcategorySlug } = router.query;
-  const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
-  const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
+  const transportId = useSelector(selectTransportId);
 
   const addItemToBasket = () => {
     dispatch(fetchItemFromCart({ productSlug: slug }));
@@ -57,12 +54,11 @@ const CatalogCard: React.FC<ProductListData> = ({
     event.preventDefault();
   };
 
-  const linkToProductPage = transportQuery
+  const linkToProductPage = transportId
     ? getLinkToTransportProductPage({
         categorySlug,
         subcategorySlug,
         productSlug: slug,
-        transportQuery,
         transportId,
       })
     : getLinkToProductPage({

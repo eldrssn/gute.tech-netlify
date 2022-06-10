@@ -6,7 +6,9 @@ type FilterStepsProps = {
   currentStep: number;
   setCurrentStep: (currentStep: number) => void;
   setTransportType: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setTransportId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setCurrentTransportId: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >;
 } & FormProps;
 
 type filterStepsData = {

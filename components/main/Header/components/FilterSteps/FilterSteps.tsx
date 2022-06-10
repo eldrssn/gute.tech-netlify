@@ -17,7 +17,7 @@ const cn = classnames.bind(styles);
 const FilterSteps: FC<FilterStepsProps> = ({
   openPopoverId,
   setTransportType,
-  setTransportId,
+  setCurrentTransportId,
   ...restProps
 }) => {
   const { isMobileView } = useContext(HeaderContext);
@@ -39,7 +39,7 @@ const FilterSteps: FC<FilterStepsProps> = ({
             openPopoverId={openPopoverId}
             inputStepId={inputStepId}
             setTransportType={setTransportType}
-            setTransportId={setTransportId}
+            setCurrentTransportId={setCurrentTransportId}
             {...restProps}
           />
         ))}

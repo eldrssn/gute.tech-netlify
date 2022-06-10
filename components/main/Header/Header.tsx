@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import AppBar from '@mui/material/AppBar';
 
 import { useWindowSize } from 'hooks/useWindowSize';
-import { useRouterQuery } from 'hooks/useRouterQuery';
-import { getSlugsFromUrl } from 'utility/helpers';
-import { QueryUrl } from 'constants/variables';
+import { selectTransportStore } from 'store/reducers/transport/selectors';
 
 import { HeaderFilters } from './components/HeaderFilters';
 import { HeaderDesktopFull } from './components/HeaderDesktopFull';
 import { HeaderContext } from './components/HeaderContext';
 import { HeaderMobile } from './components/HeaderMobile';
 
-import { getTransportTitles } from './helpers';
+import { getYearsInfo } from './helpers';
 import styles from './styles.module.scss';
 
 const Header = () => {
@@ -20,10 +19,10 @@ const Header = () => {
   const [isFocusSearchField, setIsFocusSearchField] = useState(false);
   const [transportText, setTransportText] = useState<string>('');
 
-  const { getQueryOption } = useRouterQuery();
   const { isTablet, isMobile } = useWindowSize();
 
-  const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
+  const transport = useSelector(selectTransportStore);
+  const { transportInfo, transportId } = transport;
 
   const isTabletView = isTablet;
   const isMobileView = isMobile;
@@ -45,22 +44,19 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    if (!transportQuery) {
+    if (!transportInfo.data) {
       return;
     }
 
-    const transportSlugs = getSlugsFromUrl(transportQuery);
+    const { brand, years, engine, model } = transportInfo.data;
+    const yearsInfo = getYearsInfo(years);
 
-    const transportFromQuery = async () => {
-      const { brand, model, year, engine } = await getTransportTitles(
-        transportSlugs,
-      );
+    const transportText = transportId
+      ? `${brand.title} ${model.title} ${yearsInfo} ${engine.title}`
+      : '';
 
-      setTransportText(`${brand} ${model} ${year} ${engine}`);
-    };
-
-    transportFromQuery();
-  }, [getQueryOption, transportQuery]);
+    setTransportText(transportText);
+  }, [transportInfo, transportId]);
 
   return (
     <HeaderContext.Provider
@@ -75,7 +71,6 @@ const Header = () => {
         {isMobileView ? (
           <HeaderMobile
             transportText={transportText}
-            setTransportText={setTransportText}
             setIsFocusSearchField={setIsFocusSearchField}
           />
         ) : (
@@ -83,7 +78,6 @@ const Header = () => {
             <HeaderDesktopFull setIsFocusSearchField={setIsFocusSearchField} />
             <HeaderFilters
               transportText={transportText}
-              setTransportText={setTransportText}
               setIsFocusSearchField={setIsFocusSearchField}
             />
           </>
