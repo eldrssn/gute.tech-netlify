@@ -1,6 +1,6 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import classnames from 'classnames/bind';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm, UseFormSetValue } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -20,7 +20,10 @@ import {
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
   resetOptionsDataInEngineStep,
+  setTransportId,
+  clearTransportId,
 } from 'store/reducers/transport/actions';
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import { namesDefaultValueByStep } from 'components/main/Header/constants';
 import {
   FormData,
@@ -28,8 +31,6 @@ import {
   FilterInputName,
   StepInputs,
 } from 'components/main/Header/types';
-import { QueryUrl } from 'constants/variables';
-import { useRouterQuery } from 'hooks/useRouterQuery';
 
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
@@ -48,12 +49,10 @@ const cn = classnames.bind(styles);
 
 const HeaderFilters: FC<HeaderFiltersProps> = ({
   transportText,
-  setTransportText,
   closePopupMobile,
   setIsFocusSearchField,
 }) => {
   const router = useRouter();
-  const { getQueryOption } = useRouterQuery();
   const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView, isFocusSearchField } =
     useContext(HeaderContext);
@@ -69,7 +68,9 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   const [openPopoverId, setOpenPopoverId] = useState(StepInputs.INACTIVE);
   const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
   const [transportType, setTransportType] = useState<string | undefined>();
-  const [transportId, setTransportId] = useState<string | undefined>();
+  const [currentTransportId, setCurrentTransportId] = useState<
+    string | undefined
+  >();
   const [valueForm, setValueForm] = useState<WatchFormData>();
 
   const brandSlugValue = getValues('brand.slug');
@@ -77,22 +78,12 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   const yearSlugValue = getValues('year.slug');
   const engineSlug = getValues('engine.slug');
 
+  const transportId = useSelector(selectTransportId);
+
   useEffect(() => {
     const subscription = watch((value) => setValueForm(value));
     return () => subscription.unsubscribe();
   }, [watch]);
-
-  useEffect(() => {
-    const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
-
-    if (transportQuery) {
-      return;
-    }
-
-    setTransportText('');
-    reset();
-    setCurrentStep(StepInputs.INACTIVE);
-  }, [getQueryOption, reset, setTransportText]);
 
   useEffect(() => {
     const setDefaultValueByName = (
@@ -164,22 +155,30 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
     yearSlugValue,
   ]);
 
-  const onSubmit = handleSubmit((data) => {
-    if (engineSlug === '' || !transportId) {
+  useEffect(() => {
+    if (transportId) {
       return;
     }
 
-    const params = getTransportParams(data, transportId);
+    reset();
+    setCurrentStep(StepInputs.INACTIVE);
+  }, [transportId, reset]);
+
+  const onSubmit = handleSubmit(() => {
+    if (engineSlug === '' || !currentTransportId) {
+      return;
+    }
+
+    const params = getTransportParams(currentTransportId);
+    dispatch(setTransportId(currentTransportId));
     router.push(params);
 
     closePopupMobile && closePopupMobile();
   });
 
   const resetFilter = () => {
-    setCurrentStep(StepInputs.INACTIVE);
-    setTransportText('');
-    reset();
     router.push('/');
+    dispatch(clearTransportId());
   };
 
   const isDisableButton = engineSlug === '';
@@ -232,7 +231,7 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
                       currentStep={currentStep}
                       setCurrentStep={setCurrentStep}
                       setTransportType={setTransportType}
-                      setTransportId={setTransportId}
+                      setCurrentTransportId={setCurrentTransportId}
                     />
                     <CustomButton
                       onClick={onSubmit}

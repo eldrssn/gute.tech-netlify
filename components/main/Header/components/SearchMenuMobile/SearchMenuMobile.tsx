@@ -12,6 +12,7 @@ import {
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import cn from 'classnames';
 
+import { clearTransportId } from 'store/reducers/transport/actions';
 import {
   fetchCatalogSearchRead,
   clearCatalogSearchRead,
@@ -54,6 +55,7 @@ const SearchMenuMobile: FC<SearchMenuProps> = ({ handleClose }) => {
   const handleClick = (link: string) => {
     router.push(link);
     setTimeout(handleClose, SCROLL_DELAY);
+    dispatch(clearTransportId());
   };
 
   const handleChangeInput = (

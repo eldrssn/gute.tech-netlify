@@ -118,42 +118,6 @@ const cookieStorage = {
   },
 };
 
-const getSlugsFromUrl = (urls: string | string[]) => {
-  if (Array.isArray(urls)) {
-    const slugs = urls.reduce(
-      (accumulator, url) => {
-        const [name, value] = url.split('=');
-        return { ...accumulator, [name]: value };
-      },
-      {
-        brandSlug: '',
-        modelSlug: '',
-        yearSlug: '',
-        engineSlug: '',
-      },
-    );
-
-    return slugs;
-  }
-
-  const slicedUrl = urls.split('&');
-  const slugs = slicedUrl.reduce(
-    (p, c) => {
-      const [name, value] = c.split('=');
-
-      return { ...p, [name]: value };
-    },
-    {
-      brandSlug: '',
-      modelSlug: '',
-      yearSlug: '',
-      engineSlug: '',
-    },
-  );
-
-  return slugs;
-};
-
 const getSlugsCartItemsFromString = (slugsItem: string) =>
   slugsItem.split('&').map((item) => {
     const itemArray = item.split(',');
@@ -232,7 +196,6 @@ export {
   getSlugsCartItemsFromCart,
   filterRegionsOption,
   cookieStorage,
-  getSlugsFromUrl,
   makeStringify,
   checkBrandsList,
   findTransportType,

@@ -2,12 +2,10 @@ import React, { FC, useContext, useState } from 'react';
 import classnames from 'classnames/bind';
 
 import Popover from '@mui/material/Popover';
-
 import { CustomButton } from 'components/ui/CustomButton';
 
 import { HeaderContext } from '../HeaderContext';
 import { CatalogMenu } from '../CatalogMenu';
-
 import styles from './catalogButton.module.scss';
 
 const cn = classnames.bind(styles);

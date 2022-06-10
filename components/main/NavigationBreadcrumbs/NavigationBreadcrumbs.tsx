@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 
 import { Crumb } from './components/Crumb';
@@ -14,17 +15,20 @@ import { checkLoadingCrumbs } from './helpers';
 const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
   const router = useRouter();
   const { data: categories } = useSelector(selectCategoriesTreeList);
+  const transportId = useSelector(selectTransportId);
 
   const breadcrumbs = useBreadcrumbs({
     router,
     data: categories,
     lastTitle,
+    transportId,
   });
 
   const breadcrumbsQuery = useBreadcrumbs({
     router,
     data: categories,
     isQuery,
+    transportId,
   });
 
   const currentCrumbs = isQuery ? breadcrumbsQuery : breadcrumbs;

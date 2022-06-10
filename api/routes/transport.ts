@@ -6,6 +6,8 @@ import {
   YearsSlugs,
   ListOptionsYearData,
   ListOptionsItemData,
+  TransportInfoResponseData,
+  TransportInfoRequestData,
 } from '../models/transport';
 
 const getBrands = () =>
@@ -37,4 +39,10 @@ const getEngines = ({
     method: 'get',
   });
 
-export { getModel, getEngines, getBrands, getYears };
+const getTransportInfo = ({ transportId }: TransportInfoRequestData) =>
+  sendRequest<TransportInfoResponseData>({
+    url: `/transport/${transportId}/`,
+    method: 'get',
+  });
+
+export { getModel, getEngines, getBrands, getYears, getTransportInfo };

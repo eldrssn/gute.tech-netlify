@@ -8,15 +8,21 @@ import {
 
 import { UseBreadcrumbs } from './types';
 
-const useBreadcrumbs = ({ router, data, isQuery, lastTitle }: UseBreadcrumbs) =>
+const useBreadcrumbs = ({
+  router,
+  data,
+  isQuery,
+  lastTitle,
+  transportId,
+}: UseBreadcrumbs) =>
   useMemo(() => {
     const paths = getCrumbs(data);
 
     const crumblist = isQuery
-      ? getCrumblistFromQuery(router, paths)
-      : getCrumblistFromURL(router, paths, lastTitle);
+      ? getCrumblistFromQuery(router, paths, transportId)
+      : getCrumblistFromURL(router, paths, lastTitle, transportId);
 
     return crumblist;
-  }, [router, data, isQuery, lastTitle]);
+  }, [router, data, isQuery, lastTitle, transportId]);
 
 export { useBreadcrumbs };

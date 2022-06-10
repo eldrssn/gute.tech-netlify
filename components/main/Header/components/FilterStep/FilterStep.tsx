@@ -20,7 +20,6 @@ import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
 import { FilterStepProps } from './types';
 import { HandleClickProps, StepInputs } from '../../types';
-import { addItemToLocaleStorage } from '../../helpers';
 
 import styles from './filterStep.module.scss';
 
@@ -39,7 +38,7 @@ const FilterStep: FC<FilterStepProps> = ({
   setValue,
   setCurrentStep,
   setTransportType,
-  setTransportId,
+  setCurrentTransportId,
   ...restProps
 }) => {
   const input = useController({
@@ -86,15 +85,13 @@ const FilterStep: FC<FilterStepProps> = ({
 
     if (inputStepId === StepInputs.ENGINE) {
       const currentEngine = engines.find((engine) => engine.slug === slug);
-      setTransportId(currentEngine?.transport_id);
+      setCurrentTransportId(currentEngine?.transport_id);
     }
 
     setOpenPopoverId(openPopoverId + 1);
     setCurrentStep(
       inputStepId === StepInputs.ENGINE ? StepInputs.ENGINE : inputStepId + 1,
     );
-
-    addItemToLocaleStorage({ slug, title });
   };
 
   const handleClosePopover = () => {

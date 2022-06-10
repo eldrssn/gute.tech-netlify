@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import classnames from 'classnames/bind';
 
@@ -10,6 +10,7 @@ import TreeView from '@mui/lab/TreeView';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+import { clearTransportId } from 'store/reducers/transport/actions';
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { SCROLL_DELAY } from 'constants/variables';
@@ -23,10 +24,12 @@ import styles from './catalogMenuMobile.module.scss';
 const cn = classnames.bind(styles);
 
 const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => {
+  const dispatch = useDispatch();
   const { data: categories } = useSelector(selectCategoriesTreeList);
 
-  const handlerCloseDrawers = () => {
+  const handleClickCategory = () => {
     setTimeout(handleClose, SCROLL_DELAY);
+    dispatch(clearTransportId());
   };
 
   return (
@@ -51,7 +54,7 @@ const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => {
       >
         {categories.map((item) => (
           <LinkWrapper
-            onClick={handlerCloseDrawers}
+            onClick={handleClickCategory}
             key={item.slug}
             item={item}
           >
@@ -62,7 +65,7 @@ const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => {
             >
               {item.children?.map((child) => (
                 <LinkWrapper
-                  onClick={handlerCloseDrawers}
+                  onClick={handleClickCategory}
                   key={child.slug}
                   parentSlug={item.slug}
                   item={child}

@@ -33,10 +33,10 @@ const getCrumbs = (
   }, {});
 };
 
-const getCrumblistFromQuery: GetCrumbs = (router, paths) => {
-  const { transport, transport_id, category } = router.query;
+const getCrumblistFromQuery: GetCrumbs = (router, paths, transportId) => {
+  const { category } = router.query;
 
-  if (transport && transport_id) {
+  if (transportId) {
     const currentPath = router.asPath;
 
     const parsedPaths = currentPath.split('category=');
@@ -87,20 +87,22 @@ const getCrumblistFromQuery: GetCrumbs = (router, paths) => {
   return [...defaultPaths, ...crumblist];
 };
 
-const getCrumblistFromURL: GetCrumbs = (router, paths, lastTitle) => {
+const getCrumblistFromURL: GetCrumbs = (
+  router,
+  paths,
+  lastTitle,
+  transportId,
+) => {
   const [asPathWithoutQuery] = router.asPath.split('?');
   const asPathNestedRoutes = asPathWithoutQuery
     .split('/')
     .filter((slug) => slug.length > 0);
 
-  const { transport, transport_id } = router.query;
-
   const [, category, subcategory] = asPathNestedRoutes;
 
-  if (transport && transport_id) {
+  if (transportId) {
     const transportDetails = getTransportSlugs({
-      transportQuery: transport,
-      transportId: transport_id,
+      transportId,
     });
 
     const transportCrumblist = asPathNestedRoutes.map((subpath, index) => {

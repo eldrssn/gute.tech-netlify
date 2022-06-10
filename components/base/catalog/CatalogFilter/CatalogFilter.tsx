@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 
-import { QueryUrl } from 'constants/variables';
-import { useRouterQuery } from 'hooks/useRouterQuery';
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import {
   selectCategoriesFilterList,
   selectTransportFilterList,
@@ -29,14 +28,12 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
   handleDrawerToggle,
 }) => {
   const router = useRouter();
-  const { getQueryOption } = useRouterQuery();
 
   const { categorySlug, subcategorySlug } = router.query;
 
-  const transportQuery = getQueryOption(QueryUrl.TRANSPORT_QUERY);
-  const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
+  const transportId = useSelector(selectTransportId);
 
-  const currentSelector = transportQuery
+  const currentSelector = transportId
     ? selectTransportFilterList
     : selectCategoriesFilterList;
 
@@ -45,7 +42,6 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
   const linkToTransportCatalog = getLinkToTransportCatalog({
     categorySlug,
     subcategorySlug,
-    transportQuery,
     transportId,
   });
 
@@ -58,7 +54,7 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
   const handleResetClick = () => {
     setAnchorApplyButton(null);
     handleDrawerToggle && handleDrawerToggle();
-    router.push(transportQuery ? linkToTransportCatalog : linkToCatalog);
+    router.push(transportId ? linkToTransportCatalog : linkToCatalog);
   };
 
   return isLoading ? (

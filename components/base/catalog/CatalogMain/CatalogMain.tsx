@@ -12,12 +12,10 @@ import {
   selectCategoriesProductList,
   selectSearchProductList,
 } from 'store/reducers/catalog/selectors';
-
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { makeStringify } from 'utility/helpers';
-import { QueryUrl } from 'constants/variables';
-
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
 import { Sorting, FilterRequest } from 'types';
@@ -27,10 +25,8 @@ import { CatalogFilterDrawer } from '../CatalogFilterDrawer';
 import { CatalogGrid } from '../CatalogGrid';
 import { CatalogPagination } from '../CatalogPagination';
 import { CatalogSort } from '../CatalogSort';
-
 import { PAGE_QUERY } from '../constants';
 import { isNotEnoughtItems } from '../helpers';
-
 import styles from './catalogMain.module.scss';
 
 const cn = classnames.bind(styles);
@@ -51,7 +47,7 @@ const CatalogMain: FC = () => {
     useState<HTMLElement | null>(null);
 
   const { subcategorySlug } = router.query;
-  const transportId = getQueryOption(QueryUrl.TRANSPORT_ID);
+  const transportId = useSelector(selectTransportId);
 
   const currentSelector = transportId
     ? selectSearchProductList

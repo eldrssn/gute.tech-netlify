@@ -1,5 +1,5 @@
 import React, { FC, useContext, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Container from '@mui/material/Container';
 import MenuList from '@mui/material/MenuList';
@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import { TreeCategoryResponseData } from 'api/models/catalog';
+import { clearTransportId } from 'store/reducers/transport/actions';
 
 import { HeaderContext } from '../HeaderContext';
 
@@ -18,19 +19,25 @@ import { CatalogMenuProps } from './types';
 import styles from './catalogMenu.module.scss';
 
 const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
+  const dispatch = useDispatch();
+
   const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
-
-  const [choosenCategory, setChoosenCategory] =
-    useState<null | TreeCategoryResponseData>(null);
-
   const { isFullHeader, isTabletView } = useContext(HeaderContext);
 
   const isTabletShortView = !isFullHeader && !isTabletView;
+
+  const [choosenCategory, setChoosenCategory] =
+    useState<null | TreeCategoryResponseData>(null);
 
   const resetCategory = () => setChoosenCategory(null);
 
   const showCatalogItem = (item: TreeCategoryResponseData) => {
     item.children ? setChoosenCategory(item) : resetCategory();
+  };
+
+  const handleClickMenuItem = () => {
+    handleClose();
+    dispatch(clearTransportId());
   };
 
   const childrenBox = choosenCategory?.children
@@ -53,7 +60,7 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
             key={item.slug}
             item={item}
             onMouseEnter={() => showCatalogItem(item)}
-            handleClose={handleClose}
+            handleClick={handleClickMenuItem}
           />
         ))}
       </MenuList>
@@ -77,7 +84,7 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
                 <CatalogMenuItem
                   item={child}
                   className={styles.catalogItem_title}
-                  handleClose={handleClose}
+                  handleClick={handleClickMenuItem}
                   parentSlug={choosenCategory?.slug}
                 />
                 <Divider />

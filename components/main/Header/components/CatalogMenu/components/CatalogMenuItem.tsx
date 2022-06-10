@@ -14,7 +14,7 @@ const CatalogMenuItem: FC<CatalogMenuItemProps> = ({
   className,
   onMouseEnter,
   parentSlug,
-  handleClose,
+  handleClick,
 }) => {
   const href = parentSlug
     ? getLinkToCatalog({
@@ -29,7 +29,7 @@ const CatalogMenuItem: FC<CatalogMenuItemProps> = ({
         <MenuItem
           className={className}
           key={item.slug}
-          onClick={handleClose}
+          onClick={handleClick}
           onMouseEnter={onMouseEnter}
         >
           {item.title}

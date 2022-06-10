@@ -12,7 +12,6 @@ import styles from './headerMobile.module.scss';
 
 const HeaderMobile: FC<HeaderMobileProps> = ({
   transportText,
-  setTransportText,
   setIsFocusSearchField,
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -91,7 +90,6 @@ const HeaderMobile: FC<HeaderMobileProps> = ({
       >
         <HeaderFilters
           transportText={transportText}
-          setTransportText={setTransportText}
           closePopupMobile={handleClose}
           setIsFocusSearchField={setIsFocusSearchField}
         />

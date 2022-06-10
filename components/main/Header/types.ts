@@ -74,20 +74,6 @@ type filterStepsData = {
   placeholder: string;
 };
 
-type FilterField = {
-  title: string;
-  slug: string;
-};
-
-type FilterFields = {
-  brand: FilterField;
-  model: FilterField;
-  year: FilterField;
-  engine: FilterField;
-};
-
-export type { FilterFields };
-
 export { FilterInputNames, StepInputs };
 
 export type {

@@ -5,9 +5,16 @@ import {
   getModel,
   getYears,
   getEngines,
+  getTransportInfo,
 } from 'api/routes/transport';
 
-import { BrandSlug, YearsSlugs, EnginesSlugs } from 'api/models/transport';
+import {
+  BrandSlug,
+  YearsSlugs,
+  EnginesSlugs,
+  TransportInfoRequestData,
+} from 'api/models/transport';
+import { TransportIdData } from './types';
 
 const fetchBrands = createAsyncThunk('transport/fetchBrands', async () => {
   const data = await getBrands();
@@ -47,6 +54,15 @@ const fetchEngines = createAsyncThunk(
   },
 );
 
+const fetchTransportInfo = createAsyncThunk(
+  'transport/fetchTransportInfo',
+  async ({ transportId }: TransportInfoRequestData) => {
+    const data = await getTransportInfo({ transportId });
+
+    return data;
+  },
+);
+
 const resetBrands = createAction('resetBrands');
 const resetModels = createAction('resetModels');
 const resetYears = createAction('resetYears');
@@ -59,11 +75,15 @@ const resetOptionsDataInEngineStep = createAction(
   'resetOptionsDataInEngineStep',
 );
 
+const setTransportId = createAction<TransportIdData>('setTransportSlugs');
+const clearTransportId = createAction('clearTransportId');
+
 export {
   fetchBrands,
   fetchModels,
   fetchYears,
   fetchEngines,
+  fetchTransportInfo,
   resetBrands,
   resetModels,
   resetYears,
@@ -72,4 +92,6 @@ export {
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
   resetOptionsDataInEngineStep,
+  setTransportId,
+  clearTransportId,
 };
