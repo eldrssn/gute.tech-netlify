@@ -40,6 +40,11 @@ export type CategoriesSubcategoriesListRequestData = {
   categorySlug: string;
 };
 
+export type CategoriesSubcategoriesReadRequestData = {
+  categorySlug: string;
+  transportId: string;
+};
+
 export type CategoryResponseData = {
   title: string;
   slug: string;

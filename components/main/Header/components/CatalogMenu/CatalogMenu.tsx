@@ -1,14 +1,18 @@
 import React, { FC, useContext, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import cn from 'classnames';
 
 import Container from '@mui/material/Container';
 import MenuList from '@mui/material/MenuList';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 
-import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
+import {
+  selectCategoriesSearchRead,
+  selectCategoriesTreeList,
+} from 'store/reducers/catalog/selectors';
+import { selectTransportStore } from 'store/reducers/transport/selectors';
 import { TreeCategoryResponseData } from 'api/models/catalog';
-import { clearTransportId } from 'store/reducers/transport/actions';
 
 import { HeaderContext } from '../HeaderContext';
 
@@ -19,15 +23,17 @@ import { CatalogMenuProps } from './types';
 import styles from './catalogMenu.module.scss';
 
 const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
-  const dispatch = useDispatch();
-
-  const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
   const { isFullHeader, isTabletView } = useContext(HeaderContext);
-
-  const isTabletShortView = !isFullHeader && !isTabletView;
-
   const [choosenCategory, setChoosenCategory] =
     useState<null | TreeCategoryResponseData>(null);
+
+  const { transportId } = useSelector(selectTransportStore);
+
+  const currentSelector = transportId
+    ? selectCategoriesSearchRead
+    : selectCategoriesTreeList;
+
+  const { data: categoriesTree } = useSelector(currentSelector);
 
   const resetCategory = () => setChoosenCategory(null);
 
@@ -37,9 +43,9 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
 
   const handleClickMenuItem = () => {
     handleClose();
-    dispatch(clearTransportId());
   };
 
+  const isTabletShortView = !isFullHeader && !isTabletView;
   const childrenBox = choosenCategory?.children
     ? choosenCategory.children
     : null;
@@ -54,6 +60,16 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
         flexDirection: isFullHeader ? 'row-reverse' : 'row',
       }}
     >
+      {transportId && (
+        <Box
+          className={cn(styles.warningMessage, {
+            [styles.warningMessageSmallHeader]: !isFullHeader,
+          })}
+        >
+          Показаны категории для вашего авто, чтобы посмотреть все категории -
+          очистите фильтр
+        </Box>
+      )}
       <MenuList className={styles.mainCategories}>
         {categoriesTree.map((item: TreeCategoryResponseData) => (
           <CatalogMenuItem

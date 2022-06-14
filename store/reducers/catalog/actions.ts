@@ -11,6 +11,7 @@ import {
   getCatalogSearchRead,
   getTransportFilterList,
   getTransportCategoriesRead,
+  getCategoriesSubcategoriesRead,
 } from 'api/routes/catalog';
 
 import {
@@ -21,6 +22,7 @@ import {
   CategoriesSubcategoriesListRequestData,
   TransportProductListRead,
   CatalogSearchReadRequestData,
+  CategoriesSubcategoriesReadRequestData,
 } from 'api/models/catalog';
 
 const clearCatalogSearchRead = createAction('clearCatalogSearchRead');
@@ -153,6 +155,21 @@ const fetchCatalogSearchRead = createAsyncThunk(
   },
 );
 
+const fetchCategoriesSubcategoriesRead = createAsyncThunk(
+  'CatalogStore/fetchCategoriesSubcategoriesRead',
+  async ({
+    categorySlug,
+    transportId,
+  }: CategoriesSubcategoriesReadRequestData) => {
+    const data = await getCategoriesSubcategoriesRead({
+      categorySlug,
+      transportId,
+    });
+
+    return data;
+  },
+);
+
 const clearCatalog = createAction('CatalogStore/clearCatalog');
 
 export {
@@ -167,6 +184,7 @@ export {
   fetchCategoriesProductsList,
   fetchCategoriesProductsRead,
   fetchCategoriesSubcategoriesList,
+  fetchCategoriesSubcategoriesRead,
   fetchTransportProductList,
   fetchTransportFilterList,
 };

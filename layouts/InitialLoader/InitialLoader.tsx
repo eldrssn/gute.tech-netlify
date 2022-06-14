@@ -16,6 +16,7 @@ import {
   fetchTransportInfo,
   setTransportId,
 } from 'store/reducers/transport/actions';
+import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
 import { fetchCategoriesTreeList } from 'store/reducers/catalog/actions';
 import { fetchShowcase } from 'store/reducers/showcase/actions';
@@ -43,7 +44,13 @@ const InitialLoader: React.FC = ({ children }) => {
     dispatch(fetchShowcase());
     dispatch(fetchCategoriesTreeList());
     dispatch(fetchRegions());
+  }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(fetchTransportReadCategories({ transportId }));
+  }, [dispatch, transportId]);
+
+  useEffect(() => {
     const cartSaved = cookiesCartItems.cartItems;
 
     if (cartSaved) {
@@ -57,7 +64,8 @@ const InitialLoader: React.FC = ({ children }) => {
         );
       });
     }
-  }, [dispatch, cookiesCartItems]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cookiesCartItems]);
 
   useEffect(() => {
     const transportIdSaved = cookiesTransportId.transportId;

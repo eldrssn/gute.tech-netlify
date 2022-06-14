@@ -1,4 +1,4 @@
-@import '~styles/colors.scss';
+@import "~styles/colors.scss";
 
 .mainContainer {
   background-color: $gray7;
@@ -39,4 +39,9 @@
 
 .icon_collapse {
   transform: rotate(90deg);
+}
+
+.warningMessage {
+  border-bottom: 1px solid $gray8;
+  padding: 10px;
 }

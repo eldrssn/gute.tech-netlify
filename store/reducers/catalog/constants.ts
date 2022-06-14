@@ -53,6 +53,11 @@ const initialState: CatalogStore = {
     isLoading: false,
     error: null,
   },
+  categoriesSubcategoriesRead: {
+    data: [],
+    isLoading: false,
+    error: null,
+  },
   catalogSearchRead: {
     data: null,
     isLoading: false,
