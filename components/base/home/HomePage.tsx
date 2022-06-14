@@ -14,18 +14,16 @@ import { Loader } from 'components/ui/Loader';
 import { Items } from 'components/base/main/rows/types';
 import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
-import { groupItems } from 'utility/helpers';
+import { addItemToLocaleStorage, groupItems } from 'utility/helpers';
 import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
 import {
   selectCategoriesSearchRead,
   selectCategoriesTreeList,
 } from 'store/reducers/catalog/selectors';
 import { selectTransportStore } from 'store/reducers/transport/selectors';
-import { addItemToLocaleStorage } from 'components/main/Header/helpers';
-import { IS_FROM_WIDGETS } from 'utility/utils/constants';
+import { IS_FROM_WIDGETS, isFromWidgets } from 'utility/utils/constants';
 
 import { getGroupedChildren } from './helpers';
-import { isFromWidgets } from './constants';
 import { Index } from './types';
 
 const rowHashMap: Record<Index, FC<Items>> = {
@@ -55,7 +53,7 @@ const Home: FC = () => {
   }, [transportId, dispatch]);
 
   useEffect(() => {
-    transportId
+    categoryQuery
       ? addItemToLocaleStorage({
           slug: IS_FROM_WIDGETS,
           title: isFromWidgets.TRUE,
@@ -64,7 +62,7 @@ const Home: FC = () => {
           slug: IS_FROM_WIDGETS,
           title: isFromWidgets.FALSE,
         });
-  }, [transportId]);
+  }, [categoryQuery]);
 
   const groupedItems = useMemo(
     () =>

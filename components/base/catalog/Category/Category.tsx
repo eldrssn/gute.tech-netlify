@@ -13,6 +13,8 @@ import {
   getLinkToCatalog,
   getLinkToCategory,
 } from 'utility/helpers/linkmakers';
+import { addItemToLocaleStorage } from 'utility/helpers';
+import { isFromWidgets, IS_FROM_WIDGETS } from 'utility/utils/constants';
 
 import { CategoriesProps } from './types';
 import styles from './category.module.scss';
@@ -28,6 +30,11 @@ const Category: FC<CategoriesProps> = ({ categorySlug }) => {
   const linkToCategory = getLinkToCategory(categorySlug);
 
   useEffect(() => {
+    addItemToLocaleStorage({
+      slug: IS_FROM_WIDGETS,
+      title: isFromWidgets.FALSE,
+    });
+
     dispatch(clearTransportId());
   }, [dispatch]);
 
