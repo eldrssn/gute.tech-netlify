@@ -53,7 +53,7 @@ const CatalogMain: FC = () => {
     ? selectSearchProductList
     : selectCategoriesProductList;
 
-  const { isLoading, data } = useSelector(currentSelector);
+  const { data } = useSelector(currentSelector);
   const { pages, results, total } = data || {};
   const pageCount = Number(pages);
 
@@ -124,12 +124,10 @@ const CatalogMain: FC = () => {
     setAnchorApplyButton(null);
   };
 
-  const isResults = results && results.length > 0;
-
   return (
     <Box sx={{ position: 'relative' }}>
       <Box className={styles.catalogMainBox}>
-        {!isMobile && (
+        {!isMobile && !!data && (
           <Box className={styles.catalogFilter_desktop}>
             <CatalogFilter
               setFilterRequest={setFilterRequest}
@@ -148,7 +146,7 @@ const CatalogMain: FC = () => {
             </CustomButton>
           )}
 
-          {!isMobile && (
+          {!isMobile && !!data && (
             <Box
               component='section'
               className={cn(styles.cardHeader, styles.cardHeaderContainer)}
@@ -163,15 +161,11 @@ const CatalogMain: FC = () => {
             </Box>
           )}
 
-          {isLoading && !isResults ? (
-            <Loader />
-          ) : (
-            <CatalogGrid items={results || []} />
-          )}
+          {!data ? <Loader /> : <CatalogGrid items={results || []} />}
         </Box>
       </Box>
 
-      {isMobile && isResults && (
+      {isMobile && data && (
         <Box className={cn(styles.cardHeaderContainer, styles.pages)}>
           <CatalogPagination
             pageCount={pageCount}

@@ -187,9 +187,21 @@ const formatPrice = (price?: string | number) => {
     ? price.toLocaleString('ru')
     : Number(price).toLocaleString('ru');
 };
+
+const addItemToLocaleStorage = ({ slug, title }: Record<string, string>) => {
+  try {
+    localStorage.setItem(slug, title);
+  } catch (error) {
+    if (error == 'QUOTA_EXCEEDED_ERR') {
+      console.warn('Не достаточно места в localStorage');
+    }
+  }
+};
+
 export default setBreakpointSize;
 
 export {
+  addItemToLocaleStorage,
   groupItems,
   getInputRules,
   getSlugsCartItemsFromString,

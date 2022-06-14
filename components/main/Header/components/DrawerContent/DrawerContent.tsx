@@ -1,5 +1,5 @@
 import React, { FC, useMemo, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
