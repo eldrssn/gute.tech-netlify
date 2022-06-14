@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import classnames from 'classnames/bind';
 
@@ -10,7 +10,6 @@ import TreeView from '@mui/lab/TreeView';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-import { clearTransportId } from 'store/reducers/transport/actions';
 import {
   selectCategoriesSearchRead,
   selectCategoriesTreeList,
@@ -28,8 +27,6 @@ import styles from './catalogMenuMobile.module.scss';
 const cn = classnames.bind(styles);
 
 const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => {
-  const dispatch = useDispatch();
-
   const { transportId } = useSelector(selectTransportStore);
 
   const currentSelector = transportId
@@ -40,7 +37,6 @@ const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => {
 
   const handleClickCategory = () => {
     setTimeout(handleClose, SCROLL_DELAY);
-    dispatch(clearTransportId());
   };
 
   return (

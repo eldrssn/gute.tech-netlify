@@ -1,10 +1,13 @@
 import React, { FC } from 'react';
-import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import { MenuItem } from '@mui/material';
 
+import { selectTransportStore } from 'store/reducers/transport/selectors';
 import {
   getLinkToCatalog,
   getLinkToCategory,
+  getLinkToVidgetCategory,
 } from 'utility/helpers/linkmakers';
 
 import { CatalogMenuItemProps } from '../types';
@@ -15,27 +18,43 @@ const CatalogMenuItem: FC<CatalogMenuItemProps> = ({
   onMouseEnter,
   parentSlug,
   handleClick,
+  isCategory = false,
 }) => {
-  const href = parentSlug
-    ? getLinkToCatalog({
-        categorySlug: parentSlug,
-        subcategorySlug: item.slug,
-      })
-    : getLinkToCategory(item.slug);
+  const router = useRouter();
+  const { transportId } = useSelector(selectTransportStore);
+
+  const handleClickMenuItem = () => {
+    handleClick();
+
+    if (!isCategory) {
+      router.push(
+        getLinkToCatalog({
+          categorySlug: parentSlug,
+          subcategorySlug: item.slug,
+        }),
+      );
+    }
+
+    if (isCategory && !transportId) {
+      router.push(getLinkToCategory(item.slug));
+    }
+
+    if (transportId && isCategory) {
+      router.push(getLinkToVidgetCategory(parentSlug || ''));
+    }
+  };
 
   return (
-    <Link href={href} key={item.slug}>
-      <a>
-        <MenuItem
-          className={className}
-          key={item.slug}
-          onClick={handleClick}
-          onMouseEnter={onMouseEnter}
-        >
-          {item.title}
-        </MenuItem>
-      </a>
-    </Link>
+    <a>
+      <MenuItem
+        className={className}
+        key={item.slug}
+        onClick={handleClickMenuItem}
+        onMouseEnter={onMouseEnter}
+      >
+        {item.title}
+      </MenuItem>
+    </a>
   );
 };
 

@@ -60,11 +60,12 @@
 }
 
 .warningMessage {
-  position: absolute;
-  top: -50px;
-  left: 48px;
-  background-color: $white;
-  padding: 10px;
+  white-space: pre-line;
+  width: 180px;
+  border-bottom: 1px solid $gray8;
+  font-size: 12px;
+  margin: 0 10px;
+  padding: 5px;
 }
 
 .warningMessageSmallHeader {
