@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
-import { selectCategoriesSubcategoriesList } from 'store/reducers/catalog/selectors';
+import {
+  selectCategoriesSubcategoriesList,
+  selectCategoriesSubcategoriesRead,
+} from 'store/reducers/catalog/selectors';
 import { Loader } from 'components/ui/Loader';
 import {
   getLinkToCatalog,
@@ -16,12 +19,15 @@ import styles from './subcategories.module.scss';
 
 const Subcategories = () => {
   const router = useRouter();
-  const { data: subcategories, isLoading } = useSelector(
-    selectCategoriesSubcategoriesList,
-  );
+  const transportId = useSelector(selectTransportId);
+
+  const currentSelector = transportId
+    ? selectCategoriesSubcategoriesRead
+    : selectCategoriesSubcategoriesList;
+
+  const { data: subcategories, isLoading } = useSelector(currentSelector);
 
   const { categorySlug } = router.query;
-  const transportId = useSelector(selectTransportId);
 
   const isTransportSearch = transportId;
 

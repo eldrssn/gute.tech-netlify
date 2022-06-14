@@ -19,7 +19,23 @@ const selectCategoriesTreeList = createSelector(
 
 const selectCategoriesSearchRead = createSelector(
   selectCatalogStore,
-  ({ transportReadCategories }) => transportReadCategories,
+  ({ transportReadCategories }) => {
+    const filterDataCategories = transportReadCategories.data.filter(
+      (category) => category.found > 0,
+    );
+    const filterDataChildren = filterDataCategories.map((category) => {
+      const { children, ...otherData } = category;
+      const filterChildren = children?.filter((child) => child.found > 0);
+
+      return { children: filterChildren, ...otherData };
+    });
+
+    return {
+      data: filterDataChildren,
+      isLoading: transportReadCategories.isLoading,
+      error: transportReadCategories.error,
+    };
+  },
 );
 
 const selectCategoriesProductList = createSelector(
@@ -47,6 +63,21 @@ const selectCategoriesSubcategoriesList = createSelector(
   ({ categoriesSubcategoriesList }) => categoriesSubcategoriesList,
 );
 
+const selectCategoriesSubcategoriesRead = createSelector(
+  selectCatalogStore,
+  ({ categoriesSubcategoriesRead }) => {
+    const filteredDataSubcategories = categoriesSubcategoriesRead.data.filter(
+      (subcategory) => subcategory.found > 0,
+    );
+
+    return {
+      data: filteredDataSubcategories,
+      isLoading: categoriesSubcategoriesRead.isLoading,
+      error: categoriesSubcategoriesRead.error,
+    };
+  },
+);
+
 const selectCatalogSearchRead = createSelector(
   selectCatalogStore,
   ({ catalogSearchRead }) => catalogSearchRead,
@@ -56,6 +87,7 @@ export {
   selectCategoriesProductRead,
   selectCategoriesTreeList,
   selectCategoriesSubcategoriesList,
+  selectCategoriesSubcategoriesRead,
   selectCatalogSearchRead,
   selectSearchProductList,
   selectCategoriesSearchRead,

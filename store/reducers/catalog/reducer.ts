@@ -17,6 +17,7 @@ import {
   fetchCategoriesProductsList,
   fetchCategoriesProductsRead,
   fetchCategoriesSubcategoriesList,
+  fetchCategoriesSubcategoriesRead,
   fetchCatalogSearchRead,
   clearCatalogSearchRead,
   fetchTransportProductList,
@@ -216,6 +217,26 @@ const handlers = {
     const errorData = { name: error.name, message: error.message };
     state.categoriesSubcategoriesList.isLoading = false;
     state.categoriesSubcategoriesList.error = errorData;
+  },
+
+  [fetchCategoriesSubcategoriesRead.pending.type]: (state: CatalogStore) => {
+    state.categoriesSubcategoriesRead.isLoading = true;
+  },
+  [fetchCategoriesSubcategoriesRead.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<CategoryResponseData[]>,
+  ) => {
+    state.categoriesSubcategoriesRead.data = payload;
+    state.categoriesSubcategoriesRead.isLoading = false;
+    state.categoriesSubcategoriesRead.error = null;
+  },
+  [fetchCategoriesSubcategoriesRead.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.categoriesSubcategoriesRead.isLoading = false;
+    state.categoriesSubcategoriesRead.error = errorData;
   },
 
   [fetchCatalogSearchRead.pending.type]: (state: CatalogStore) => {

@@ -11,7 +11,11 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import { clearTransportId } from 'store/reducers/transport/actions';
-import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
+import {
+  selectCategoriesSearchRead,
+  selectCategoriesTreeList,
+} from 'store/reducers/catalog/selectors';
+import { selectTransportStore } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { SCROLL_DELAY } from 'constants/variables';
 
@@ -25,7 +29,14 @@ const cn = classnames.bind(styles);
 
 const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => {
   const dispatch = useDispatch();
-  const { data: categories } = useSelector(selectCategoriesTreeList);
+
+  const { transportId } = useSelector(selectTransportStore);
+
+  const currentSelector = transportId
+    ? selectCategoriesSearchRead
+    : selectCategoriesTreeList;
+
+  const { data: categories } = useSelector(currentSelector);
 
   const handleClickCategory = () => {
     setTimeout(handleClose, SCROLL_DELAY);
@@ -41,7 +52,12 @@ const CatalogMenuMobile: FC<CatalogMenuProps> = ({ handleClose }) => {
         </CustomButton>
         <Divider className={styles.divider} />
       </Box>
-
+      {transportId && (
+        <Box className={styles.warningMessage}>
+          Показаны категории для вашего авто, чтобы посмотреть все категории -
+          очистите фильтр
+        </Box>
+      )}
       <TreeView
         aria-label='catalog menu navigation'
         defaultCollapseIcon={

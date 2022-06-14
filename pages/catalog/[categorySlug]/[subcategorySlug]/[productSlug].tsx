@@ -1,10 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   fetchCategoriesProductsRead,
   fetchCategoriesSubcategoriesList,
+  fetchCategoriesSubcategoriesRead,
 } from 'store/reducers/catalog/actions';
+import { selectTransportId } from 'store/reducers/transport/selectors';
 
 import { ProductMain } from 'components/base/product/ProductMain';
 import { makeStringify } from 'utility/helpers';
@@ -12,6 +15,8 @@ import { makeStringify } from 'utility/helpers';
 const Product = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const transportId = useSelector(selectTransportId);
 
   const { categorySlug, productSlug } = router.query;
 
@@ -23,18 +28,30 @@ const Product = () => {
       return;
     }
 
+    if (transportId) {
+      dispatch(
+        fetchCategoriesSubcategoriesRead({
+          transportId,
+          categorySlug: stringifiedCategorySlug,
+        }),
+      );
+    }
+
+    if (!transportId) {
+      dispatch(
+        fetchCategoriesSubcategoriesList({
+          categorySlug: stringifiedCategorySlug,
+        }),
+      );
+    }
+
     dispatch(
       fetchCategoriesProductsRead({
         categorySlug: stringifiedCategorySlug,
         productSlug: stringifiedProductSlug,
       }),
     );
-    dispatch(
-      fetchCategoriesSubcategoriesList({
-        categorySlug: stringifiedCategorySlug,
-      }),
-    );
-  }, [stringifiedCategorySlug, stringifiedProductSlug, dispatch]);
+  }, [stringifiedCategorySlug, stringifiedProductSlug, transportId, dispatch]);
 
   return <ProductMain />;
 };

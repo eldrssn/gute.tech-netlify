@@ -19,6 +19,7 @@ enum CategoryStoreBlocks {
   CATEGORIES_PRODUCT_LIST = 'categoriesProductList',
   CATEGORIES_PRODUCT_READ = 'categoriesProductRead',
   CATEGORIES_SUBCATEGORIES_LIST = 'categoriesSubcategoriesList',
+  CATEGORIES_SUBCATEGORIES_READ = 'categoriesSubcategoriesRead',
   CATALOG_SEARCH_READ = 'catalogSearchRead',
   CLEAR_CATALOG = 'clearCatalog',
 }
@@ -65,6 +66,10 @@ type CategoriesSubcategoriesListState = {
   data: CategoryResponseData[];
 } & StoreState;
 
+type CategoriesSubcategoriesReadState = {
+  data: CategoryResponseData[];
+} & StoreState;
+
 type CatalogStore = {
   [CategoryStoreBlocks.TRANSPORT_READ_CATEGORY]: CategoriesTreeListState;
   [CategoryStoreBlocks.TRANSPORT_PRODUCT_LIST]: CategoriesProductListState;
@@ -73,6 +78,7 @@ type CatalogStore = {
   [CategoryStoreBlocks.CATEGORIES_PRODUCT_LIST]: CategoriesProductListState;
   [CategoryStoreBlocks.CATEGORIES_PRODUCT_READ]: CategoriesProductReadState;
   [CategoryStoreBlocks.CATEGORIES_SUBCATEGORIES_LIST]: CategoriesSubcategoriesListState;
+  [CategoryStoreBlocks.CATEGORIES_SUBCATEGORIES_READ]: CategoriesSubcategoriesReadState;
   [CategoryStoreBlocks.CATEGORIES_TREE_LIST]: CategoriesTreeListState;
   [CategoryStoreBlocks.CATEGORIES_FILTERS_LIST]: CategoriesFilterListState;
   [CategoryStoreBlocks.CATALOG_SEARCH_READ]: CatalogSearchReadState;
