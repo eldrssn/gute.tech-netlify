@@ -10,6 +10,7 @@ type CatalogMenuItemProps = {
   onMouseEnter?: () => void;
   parentSlug?: string;
   handleClick: () => void;
+  isCategory?: boolean;
 };
 
 export type { CatalogMenuProps, CatalogMenuItemProps };

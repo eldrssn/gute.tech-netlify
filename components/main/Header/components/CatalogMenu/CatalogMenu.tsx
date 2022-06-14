@@ -1,7 +1,7 @@
 import React, { FC, useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
 
+import { MenuItem } from '@mui/material';
 import Container from '@mui/material/Container';
 import MenuList from '@mui/material/MenuList';
 import Divider from '@mui/material/Divider';
@@ -60,23 +60,21 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
         flexDirection: isFullHeader ? 'row-reverse' : 'row',
       }}
     >
-      {transportId && (
-        <Box
-          className={cn(styles.warningMessage, {
-            [styles.warningMessageSmallHeader]: !isFullHeader,
-          })}
-        >
-          Показаны категории для вашего авто, чтобы посмотреть все категории -
-          очистите фильтр
-        </Box>
-      )}
       <MenuList className={styles.mainCategories}>
+        {transportId && (
+          <MenuItem className={styles.warningMessage}>
+            Показаны категории для вашего авто, чтобы посмотреть все категории -
+            очистите фильтр
+          </MenuItem>
+        )}
         {categoriesTree.map((item: TreeCategoryResponseData) => (
           <CatalogMenuItem
             key={item.slug}
             item={item}
+            parentSlug={item.slug}
             onMouseEnter={() => showCatalogItem(item)}
             handleClick={handleClickMenuItem}
+            isCategory
           />
         ))}
       </MenuList>
