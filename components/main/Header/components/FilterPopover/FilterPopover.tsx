@@ -3,6 +3,7 @@ import useScrollbarSize from 'react-scrollbar-size';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/system';
+import { Divider } from '@mui/material';
 import cn from 'classnames';
 
 import {
@@ -11,9 +12,9 @@ import {
   selectYears,
   selectEngines,
 } from 'store/reducers/transport/selectors';
-import { checkBrandsList } from 'utility/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
 
+import { checkBrandsList } from './helpers';
 import { filterData } from './helpers';
 import { widthListByStep, widthButtonByStep } from '../../constants';
 import { FilterPopoverProps } from './types';
@@ -41,12 +42,18 @@ const FilterPopover: FC<FilterPopoverProps> = ({
       message: '',
     },
   });
+  const [activeTransportType, setActiveTransportType] = useState<string>('');
+
   const { isLoading, data } = activeOptionList;
 
   const brands = useSelector(selectBrands);
   const models = useSelector(selectModels);
   const years = useSelector(selectYears);
   const engines = useSelector(selectEngines);
+
+  const handleTransportTypeButton = (slug: string) => () => {
+    setActiveTransportType(slug);
+  };
 
   useEffect(() => {
     const dataByStepId = {
@@ -65,18 +72,6 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     setIsLoadingOptionList(isLoading);
   }, [isLoading, setIsLoadingOptionList]);
 
-  const wrapperClassName = cn(
-    { [styles.isOpen]: isOpenPopover },
-    styles.wrapper,
-  );
-
-  const widthList = widthListByStep[openPopoverId];
-  const widthButton = widthButtonByStep[openPopoverId];
-
-  const filteredData = searchValue
-    ? filterData(searchValue, checkBrandsList(data))
-    : checkBrandsList(data);
-
   useEffect(() => {
     if (isOpenPopover) {
       document.body.style.marginRight = `${widthScrollBar}px`;
@@ -88,6 +83,29 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     document.body.style.marginRight = '0px';
   }, [isOpenPopover, widthScrollBar]);
 
+  useEffect(() => {
+    if (openPopoverId !== StepInputs.BRAND || activeTransportType) {
+      return;
+    }
+
+    setActiveTransportType(brands.data[0].slug);
+  }, [openPopoverId, brands.data, activeTransportType]);
+
+  const wrapperClassName = cn(
+    { [styles.isOpen]: isOpenPopover },
+    styles.wrapper,
+  );
+
+  const widthList = widthListByStep[openPopoverId];
+  const widthButton = widthButtonByStep[openPopoverId];
+  const transportTypes = brands.data;
+
+  const isBrand = inputStepId === StepInputs.BRAND;
+
+  const filteredData = searchValue
+    ? filterData(searchValue, checkBrandsList(data, activeTransportType))
+    : checkBrandsList(data, activeTransportType);
+
   return (
     <Box component='div' className={wrapperClassName}>
       <Box
@@ -98,30 +116,59 @@ const FilterPopover: FC<FilterPopoverProps> = ({
       <Box
         component='div'
         className={cn({
-          [styles.list]: !isMobile,
-          [styles.listMobile]: isMobile,
+          [styles.listContainer]: !isMobile,
+          [styles.listContainerMobile]: isMobile,
         })}
         sx={{ width: isMobile ? '100%' : widthList }}
       >
-        {isLoading
-          ? null
-          : filteredData.map((item) => (
-              <Button
-                sx={{ width: isMobile ? '100%' : widthButton }}
-                className={styles.button}
-                onClick={() => {
-                  handleClick({
-                    title: item.title,
-                    slug: item.slug,
-                    searchValue: null,
-                    inputStepId,
-                  });
-                }}
-                key={item.slug}
-              >
-                {item.title}
-              </Button>
-            ))}
+        {!isLoading && (
+          <>
+            {isBrand && (
+              <>
+                <Box className={styles.transportTypeContainer}>
+                  {transportTypes.map((transportType) => (
+                    <Button
+                      className={cn(styles.transportTypeButton, {
+                        [styles.transportTypeButtonActive]:
+                          activeTransportType === transportType.slug,
+                        [styles.transportTypeButtonMobile]: isMobile,
+                      })}
+                      key={transportType.slug}
+                      onClick={handleTransportTypeButton(transportType.slug)}
+                    >
+                      {transportType.title}
+                    </Button>
+                  ))}
+                </Box>
+                {!isMobile && <Divider className={styles.divider} />}
+              </>
+            )}
+            <Box
+              className={cn(styles.list, {
+                [styles.brandList]: isBrand,
+              })}
+              sx={{ width: isMobile ? '100%' : widthList }}
+            >
+              {filteredData.map((item) => (
+                <Button
+                  sx={{ width: isMobile ? '100%' : widthButton }}
+                  className={styles.button}
+                  onClick={() => {
+                    handleClick({
+                      title: item.title,
+                      slug: item.slug,
+                      searchValue: null,
+                      inputStepId,
+                    });
+                  }}
+                  key={item.slug}
+                >
+                  {item.title}
+                </Button>
+              ))}
+            </Box>
+          </>
+        )}
       </Box>
     </Box>
   );

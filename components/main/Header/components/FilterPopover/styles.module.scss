@@ -1,5 +1,5 @@
-@import 'styles/colors.scss';
-@import 'styles/breakpoints.scss';
+@import "styles/colors.scss";
+@import "styles/breakpoints.scss";
 
 .wrapper {
   opacity: 0;
@@ -12,7 +12,7 @@
   visibility: visible;
 }
 
-.list {
+.listContainer {
   position: absolute;
   top: 65px;
   display: flex;
@@ -20,14 +20,12 @@
   flex-direction: row;
   max-height: 70vh;
   z-index: 1102;
-  overflow-x: auto;
-  overflow-y: auto;
   box-shadow: 0px 5px 8px 0px rgba(34, 60, 80, 0.2);
   border-top: 0;
   background-color: $white;
 }
 
-.listMobile {
+.listContainerMobile {
   margin-top: 50px;
   position: absolute;
   display: flex;
@@ -35,11 +33,47 @@
   flex-direction: row;
   max-height: 70vh;
   z-index: 1303;
-  overflow-x: auto;
-  overflow-y: auto;
   box-shadow: 0px 5px 8px 0px rgba(34, 60, 80, 0.2);
   border-top: 0;
   background-color: $white;
+}
+
+.list {
+  width: 100%;
+  max-height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.transportTypeContainer {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.transportTypeButton {
+  width: 20%;
+  border-radius: 0;
+  margin: 0 2.5% 1px;
+}
+
+.transportTypeButtonMobile {
+  width: 80%;
+  border-radius: 0;
+  margin: 0 10% 1px calc(10% + 1px);
+  justify-content: flex-start;
+}
+
+.transportTypeButtonActive {
+  border-bottom: 1px solid $blue1;
+  margin-bottom: 0;
+}
+
+.divider {
+  width: 95%;
+  margin: auto;
+  margin-bottom: 5px;
 }
 
 .background {
@@ -67,14 +101,41 @@
 }
 
 @media (max-width: $mobile) {
-  .list {
+  .listContainer {
     z-index: 1303;
     max-height: 30vh;
   }
 
-  .listMobile {
+  .listContainerMobile {
     position: fixed;
+    flex-direction: row;
     max-height: 30vh;
     width: calc(100% - 20px);
+  }
+
+  .list {
+    max-height: 30vh;
+    width: 100%;
+  }
+
+  .brandList {
+    width: 60%;
+  }
+
+  .transportTypeButton {
+    height: 30px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+  }
+
+  .transportTypeContainer {
+    height: 100%;
+    width: 40%;
+  }
+
+  .transportTypeButtonActive {
+    border-bottom: 0;
+    border-left: 1px solid $blue1;
+    margin-left: 10%;
   }
 }

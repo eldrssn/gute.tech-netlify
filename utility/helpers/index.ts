@@ -162,11 +162,6 @@ const getParentCategory = ({
   return categorySearch?.slug;
 };
 
-const checkBrandsList = (data: ListOptionsItemData[]): ListOptionsItemData[] =>
-  data[0]?.brands
-    ? data.flatMap((item) => (item.brands ? item.brands : item))
-    : data;
-
 const findTransportType = (data: ListOptionsItemData[], slug: string) => {
   const type = data.find((item) =>
     item.brands?.find((type) => type.slug === slug),
@@ -209,7 +204,6 @@ export {
   filterRegionsOption,
   cookieStorage,
   makeStringify,
-  checkBrandsList,
   findTransportType,
   getParentCategory,
   setBreakpointSize,

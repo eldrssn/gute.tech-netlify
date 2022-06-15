@@ -1,5 +1,5 @@
-@import '~styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .main {
   padding: 24px 0 88px;
@@ -19,7 +19,7 @@
 }
 
 .orderTotal {
-  width: 100%;
+  width: 25%;
   text-align: right;
   padding: 16px;
   font-weight: bold;
@@ -32,6 +32,7 @@
   font-weight: bold;
   display: flex;
   padding: 16px;
+  display: flex;
 }
 
 .menuItem {
@@ -50,11 +51,12 @@
   border-bottom: 1px dashed $blue1;
 }
 
-@media (max-width: $mobile) {
-  .bottomOrderBox {
-    display: flex;
-    flex-direction: column-reverse;
-  }
+.action {
+  width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  white-space: pre-line;
 }
 
 @media (max-width: $sMobile) {
@@ -69,5 +71,18 @@
   .orderTotal {
     margin-top: 10px;
     padding: 0px;
+  }
+}
+
+@media (max-width: $xsMobile) {
+  .action {
+    p {
+      font-size: 14px !important;
+    }
+  }
+
+  .menuItem {
+    padding: 3px;
+    font-size: 10px;
   }
 }

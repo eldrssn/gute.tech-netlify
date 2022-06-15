@@ -83,22 +83,24 @@ const TableOrder: React.FC<TTableOrderProps> = ({
         )}
       </Table>
       <Box className={styles.bottomOrderBox} component='div'>
-        <MenuItem
-          onClick={openModalAdvice}
-          className={cn(styles.menuItem, styles.menuItemSpecialOffer)}
-        >
-          <Typography className={styles.specialOffer}>
-            Помочь с выбором товара
-          </Typography>
-        </MenuItem>
-        <MenuItem
-          onClick={openModalAdvice}
-          className={cn(styles.menuItem, styles.menuItemSpecialOffer)}
-        >
-          <Typography className={styles.specialOffer}>
-            Помочь с выбором товара
-          </Typography>
-        </MenuItem>
+        <Box className={styles.action}>
+          <MenuItem
+            onClick={openModalAdvice}
+            className={cn(styles.menuItem, styles.menuItemSpecialOffer)}
+          >
+            <Typography className={styles.specialOffer}>
+              Помочь с выбором товара
+            </Typography>
+          </MenuItem>
+          <MenuItem
+            onClick={openModalAdvice}
+            className={cn(styles.menuItem, styles.menuItemSpecialOffer)}
+          >
+            <Typography className={styles.specialOffer}>
+              Получить спецпредложение
+            </Typography>
+          </MenuItem>
+        </Box>
         <Typography className={styles.orderTotal}>
           Всего: {orderTotal}&#8381;
         </Typography>
