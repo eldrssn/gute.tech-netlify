@@ -12,4 +12,19 @@ const filterData = (searchValue: string, data: ListOptionsItemData[]) => {
   return filteredData;
 };
 
-export { filterData };
+const checkBrandsList = (
+  data: ListOptionsItemData[],
+  activeTransportType: string,
+) => {
+  if (!data[0]?.brands) {
+    return data;
+  }
+
+  const findData = data.find(
+    (transportType) => transportType.slug === activeTransportType,
+  );
+
+  return findData?.brands ? findData.brands : [];
+};
+
+export { filterData, checkBrandsList };
