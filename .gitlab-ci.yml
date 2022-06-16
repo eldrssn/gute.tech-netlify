@@ -4,23 +4,55 @@ services:
   - docker:dind
 
 variables:
+  STAGE_SERVER_IP: 185.148.83.32
+  STAGE_SERVER_USER: user
+  STAGE_IMAGE_FRONTEND_TAG: registry.gitlab.com/g4687/gute.tech-frontend/frontend:stage
+  STAGE_API_URL: https://api-stage.gute.tech/api/v1
   PROD_SERVER_IP: 185.148.83.32
   PROD_SERVER_USER: user
   PROD_IMAGE_FRONTEND_TAG: registry.gitlab.com/g4687/gute.tech-frontend/frontend:prod
+  PROD_API_URL: https://api.gute.tech/api/v1
 
 stages:
-  - release
+  - build
   - deploy
 
-release:
-  stage: release
+build-for-stage:
+  stage: build
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_BUILD_TOKEN $CI_REGISTRY_IMAGE
+    - echo "IMAGE_FRONTEND_TAG=$STAGE_IMAGE_FRONTEND_TAG" >> .env
+    - echo "API_URL=$STAGE_API_URL" >> .env
+    - docker-compose build
+    - docker-compose push
+  only:
+    - stage
+
+build-for-prod:
+  stage: build
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_BUILD_TOKEN $CI_REGISTRY_IMAGE
     - echo "IMAGE_FRONTEND_TAG=$PROD_IMAGE_FRONTEND_TAG" >> .env
+    - echo "API_URL=$PROD_API_URL" >> .env
     - docker-compose build
     - docker-compose push
   only:
     - main
+
+deploy-to-stage:
+  stage: deploy
+  script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_STAGE_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - docker login -u $CI_REGISTRY_USER -p $CI_BUILD_TOKEN $CI_REGISTRY_IMAGE
+    - echo "IMAGE_FRONTEND_TAG=$STAGE_IMAGE_FRONTEND_TAG" >> .env
+    - echo "API_URL=$STAGE_API_URL" >> .env
+    - docker-compose -H "ssh://$STAGE_SERVER_USER@$STAGE_SERVER_IP" down --remove-orphans
+    - docker-compose -H "ssh://$STAGE_SERVER_USER@$STAGE_SERVER_IP" pull
+    - docker-compose -H "ssh://$STAGE_SERVER_USER@$STAGE_SERVER_IP" up -d
+  only:
+    - stage
+  when: manual
 
 deploy-to-prod:
   stage: deploy
@@ -29,6 +61,7 @@ deploy-to-prod:
     - echo "$SSH_PROD_SERVER_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - docker login -u $CI_REGISTRY_USER -p $CI_BUILD_TOKEN $CI_REGISTRY_IMAGE
     - echo "IMAGE_FRONTEND_TAG=$PROD_IMAGE_FRONTEND_TAG" >> .env
+    - echo "API_URL=$PROD_API_URL" >> .env
     - docker-compose -H "ssh://$PROD_SERVER_USER@$PROD_SERVER_IP" down --remove-orphans
     - docker-compose -H "ssh://$PROD_SERVER_USER@$PROD_SERVER_IP" pull
     - docker-compose -H "ssh://$PROD_SERVER_USER@$PROD_SERVER_IP" up -d
