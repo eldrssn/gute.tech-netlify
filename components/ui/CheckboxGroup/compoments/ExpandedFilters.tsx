@@ -34,8 +34,18 @@ const ExpandedFilters: FC<ExpandedFilterProps> = ({
     setSearchValue(searchValue);
   };
 
-  const resetAll = () => {
-    removeQuery(slug);
+  const handleClickReset = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+  ) => {
+    removeQuery(slug, undefined, false);
+    handleAnchorClick(event);
+  };
+
+  const handleClickChooseAllFilters = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+  ) => {
+    handleAnchorClick(event);
+    chooseAllFilters(router, slug, filters);
   };
 
   return (
@@ -47,9 +57,9 @@ const ExpandedFilters: FC<ExpandedFilterProps> = ({
         value={searchValue}
       />
       {isAllFiltersChoosen ? (
-        <SmallButton onClick={resetAll}>Снять все</SmallButton>
+        <SmallButton onClick={handleClickReset}>Снять все</SmallButton>
       ) : (
-        <SmallButton onClick={() => chooseAllFilters(router, slug, filters)}>
+        <SmallButton onClick={handleClickChooseAllFilters}>
           Выбрать все
         </SmallButton>
       )}

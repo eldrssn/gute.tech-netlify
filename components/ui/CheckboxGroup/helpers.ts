@@ -47,7 +47,7 @@ const chooseAllFilters = (
 
   const { asPath } = router;
   const href = `${asPath}${checkboxQuery}`;
-  router.push(href);
+  router.push(href, undefined, { scroll: false });
 };
 
 const filterFilters = (searchValue: string, filters?: CheckboxValue[]) =>
