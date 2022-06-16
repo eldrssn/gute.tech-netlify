@@ -1,8 +1,6 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import FormControl from '@mui/material/FormControl';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
@@ -10,17 +8,35 @@ import { CheckboxValue } from 'api/models/catalog';
 import { Filter } from 'types';
 
 import styles from './checkboxGroup.module.scss';
+import { checkFilterListLarge, sliceFilters } from './helpers';
+import { Button } from './compoments/Button';
+import { Filters } from './compoments/Filters';
+import { ExpandedFilters } from './compoments/ExpandedFilters';
 
 const CheckboxGroup: React.FC<Filter> = ({
   filter,
   setFilterRequest,
   handleAnchorClick,
 }) => {
+  const [isHiddenFilters, setHiddenFilters] = useState(true);
   const { updateQueryOption, getQueryOption, removeQuery } = useRouterQuery();
 
   const { title, slug, values } = filter;
 
   const queryOption = getQueryOption(slug);
+
+  const isFilterListLarge = checkFilterListLarge(values);
+
+  const toggleHiddenFilters = () =>
+    setHiddenFilters((isHiddenFilters) => !isHiddenFilters);
+
+  const filters = useMemo(() => {
+    if (isHiddenFilters) {
+      return isFilterListLarge ? sliceFilters(values) : values;
+    }
+
+    return values;
+  }, [values, isFilterListLarge, isHiddenFilters]);
 
   useEffect(() => {
     if (queryOption) {
@@ -49,7 +65,7 @@ const CheckboxGroup: React.FC<Filter> = ({
   );
 
   const getIsChecked = useCallback(
-    (name: string) => {
+    (name?: string) => {
       if (!name) {
         return;
       }
@@ -74,36 +90,29 @@ const CheckboxGroup: React.FC<Filter> = ({
       <FormLabel focused={false} id={slug} className={styles.title}>
         {title}
       </FormLabel>
-      {values?.map((element: CheckboxValue) => {
-        const { title, value } = element;
 
-        return (
-          <FormControlLabel
-            key={value}
-            sx={{
-              '& .MuiFormControlLabel-label': {
-                fontWeight: 700,
-                fontSize: '14px',
-                lineHeight: 1.57,
-                color: 'black',
-                fontFamily: 'inherit',
-              },
-              '& .MuiCheckbox-root': {
-                padding: '5px',
-                paddingLeft: '8px',
-              },
-            }}
-            control={
-              <Checkbox
-                onChange={(event, checked) => setOnChange(checked, element)}
-                checked={getIsChecked(value)}
-                onClick={handleAnchorClick}
-              />
-            }
-            label={title}
-          />
-        );
-      })}
+      {isHiddenFilters ? (
+        <Filters
+          filters={filters}
+          setOnChange={setOnChange}
+          getIsChecked={getIsChecked}
+          handleAnchorClick={handleAnchorClick}
+        />
+      ) : (
+        <ExpandedFilters
+          slug={slug}
+          filters={filters}
+          setOnChange={setOnChange}
+          getIsChecked={getIsChecked}
+          handleAnchorClick={handleAnchorClick}
+        />
+      )}
+
+      {isFilterListLarge && (
+        <Button onClick={toggleHiddenFilters}>
+          {isHiddenFilters ? 'Показать все' : 'Свернуть'}
+        </Button>
+      )}
     </FormControl>
   );
 };

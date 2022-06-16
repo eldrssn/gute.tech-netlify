@@ -1,0 +1,3 @@
+const MIN_FILTERS_COUNT = 6;
+
+export { MIN_FILTERS_COUNT };

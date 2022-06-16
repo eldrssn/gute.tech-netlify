@@ -1,0 +1,10 @@
+@import '~styles/colors.scss';
+
+.item {
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $gray5;
+  }
+}
