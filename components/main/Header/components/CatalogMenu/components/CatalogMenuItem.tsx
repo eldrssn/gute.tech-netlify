@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { MenuItem } from '@mui/material';
+import Box from '@mui/material/Box';
+import classnames from 'classnames/bind';
 
 import { selectTransportStore } from 'store/reducers/transport/selectors';
 import {
@@ -11,6 +12,9 @@ import {
 } from 'utility/helpers/linkmakers';
 
 import { CatalogMenuItemProps } from '../types';
+import styles from './catalogMenuItem.module.scss';
+
+const cn = classnames.bind(styles);
 
 const CatalogMenuItem: FC<CatalogMenuItemProps> = ({
   item,
@@ -45,16 +49,14 @@ const CatalogMenuItem: FC<CatalogMenuItemProps> = ({
   };
 
   return (
-    <a>
-      <MenuItem
-        className={className}
-        key={item.slug}
-        onClick={handleClickMenuItem}
-        onMouseEnter={onMouseEnter}
-      >
-        {item.title}
-      </MenuItem>
-    </a>
+    <Box
+      className={cn(styles.item, className)}
+      key={item.slug}
+      onClick={handleClickMenuItem}
+      onMouseEnter={onMouseEnter}
+    >
+      {item.title}
+    </Box>
   );
 };
 
