@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { DEV_HOST } from 'constants/variables';
 
 const api = axios.create({
-  baseURL: 'https://api.gute.tech/api/v1',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api-stage.gute.tech/api/v1',
   headers: {
     'content-type': 'application/json',
     'X-Client-Host':
