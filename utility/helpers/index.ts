@@ -193,9 +193,19 @@ const addItemToLocaleStorage = ({ slug, title }: Record<string, string>) => {
   }
 };
 
+const scrollToTop = () => {
+  if (window) {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
+};
+
 export default setBreakpointSize;
 
 export {
+  scrollToTop,
   addItemToLocaleStorage,
   groupItems,
   getInputRules,

@@ -14,7 +14,7 @@ import {
 } from 'store/reducers/catalog/selectors';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { makeStringify } from 'utility/helpers';
+import { makeStringify, scrollToTop } from 'utility/helpers';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
@@ -106,6 +106,7 @@ const CatalogMain: FC = () => {
               ...sorting,
             }),
           );
+      scrollToTop();
     }
   }, [
     anchorApplyButton,

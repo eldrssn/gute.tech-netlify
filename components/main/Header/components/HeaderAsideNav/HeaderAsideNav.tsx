@@ -15,8 +15,10 @@ import { HIDE_PHONE_WIDTH } from 'constants/variables';
 import { formatPrice } from 'utility/helpers';
 
 import { HeaderContext } from '../HeaderContext';
-import styles from './headerAsideNav.module.scss';
+import { LoginButton } from '../LoginButton';
+
 import { HeaderAsideNavProps } from './types';
+import styles from './headerAsideNav.module.scss';
 
 const cn = classnames.bind(styles);
 
@@ -62,7 +64,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
       >
         {(!isMobileView || !isDrawer) && (
           <Link href={'/cart'} passHref>
-            <MenuItem>
+            <MenuItem disableGutters>
               <Box className={styles.shoppingCartIcon}>
                 <Box className={styles.shoppingCart} />
                 <Box component='div' className={styles.countCartItem}>
@@ -79,7 +81,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
 
         <MenuItem
           className={styles.menuItem_callback}
-          disableGutters
+          disableGutters={!isFullHeader}
           onClick={() => setIsOpenModalAdvice(true)}
         >
           <Box className={styles.consiltIcon} />
@@ -87,6 +89,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
             <Typography className={menuItemStyles}>Консультация</Typography>
           )}
         </MenuItem>
+        <LoginButton />
       </Box>
     </>
   );
