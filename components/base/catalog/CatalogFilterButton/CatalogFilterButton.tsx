@@ -30,6 +30,8 @@ const CatalogFilterButton: FC<CatalogFilterButtonProps> = ({
 
   const isRanger = anchorApplyButton?.className.includes('ranger');
   const isSorting = anchorApplyButton?.className.includes('sortButtons');
+  const isExpandedCheckbox =
+    anchorApplyButton?.className.includes('button_small');
 
   return (
     <Popper
@@ -46,7 +48,7 @@ const CatalogFilterButton: FC<CatalogFilterButtonProps> = ({
       <CustomButton
         onClick={handleClose}
         customStyles={cn(styles.button, {
-          [styles.button_ranger]: isRanger,
+          [styles.button_ranger]: isRanger || isExpandedCheckbox,
           [styles.button_sortings]: isSorting,
         })}
       >

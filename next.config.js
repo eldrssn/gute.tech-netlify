@@ -6,6 +6,6 @@ const nextConfig = {
 module.exports = {
   ...nextConfig,
   images: {
-    domains: ['api.gute.tech'],
+    domains: ['api-stage.gute.tech', 'api.gute.tech'],
   },
 };
