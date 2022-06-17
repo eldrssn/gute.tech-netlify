@@ -3,7 +3,6 @@ version: '3.3'
 services:
   frontend:
     image: ${IMAGE_FRONTEND_TAG}
-    container_name: gutetech-frontend-prod
     stdin_open: true
     tty: true
     build:

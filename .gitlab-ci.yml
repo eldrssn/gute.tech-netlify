@@ -23,8 +23,8 @@ build-for-stage:
     - docker login -u $CI_REGISTRY_USER -p $CI_BUILD_TOKEN $CI_REGISTRY_IMAGE
     - echo "IMAGE_FRONTEND_TAG=$STAGE_IMAGE_FRONTEND_TAG" >> .env
     - echo "API_URL=$STAGE_API_URL" >> .env
-    - docker-compose -f docker-compose.stage.yml build
-    - docker-compose -f docker-compose.stage.yml push
+    - docker-compose -f docker-compose.stage.yml -p frontend-stage build
+    - docker-compose -f docker-compose.stage.yml -p frontend-stage push
   only:
     - stage
 
@@ -34,8 +34,8 @@ build-for-prod:
     - docker login -u $CI_REGISTRY_USER -p $CI_BUILD_TOKEN $CI_REGISTRY_IMAGE
     - echo "IMAGE_FRONTEND_TAG=$PROD_IMAGE_FRONTEND_TAG" >> .env
     - echo "API_URL=$PROD_API_URL" >> .env
-    - docker-compose -f docker-compose.prod.yml build
-    - docker-compose -f docker-compose.prod.yml push
+    - docker-compose -f docker-compose.prod.yml -p frontend-prod build
+    - docker-compose -f docker-compose.prod.yml -p frontend-prod push
   only:
     - main
 
@@ -47,9 +47,9 @@ deploy-to-stage:
     - docker login -u $CI_REGISTRY_USER -p $CI_BUILD_TOKEN $CI_REGISTRY_IMAGE
     - echo "IMAGE_FRONTEND_TAG=$STAGE_IMAGE_FRONTEND_TAG" >> .env
     - echo "API_URL=$STAGE_API_URL" >> .env
-    - docker-compose -f docker-compose.stage.yml -H "ssh://$STAGE_SERVER_USER@$STAGE_SERVER_IP" down
-    - docker-compose -f docker-compose.stage.yml -H "ssh://$STAGE_SERVER_USER@$STAGE_SERVER_IP" pull
-    - docker-compose -f docker-compose.stage.yml -H "ssh://$STAGE_SERVER_USER@$STAGE_SERVER_IP" up -d
+    - docker-compose -f docker-compose.stage.yml -p frontend-stage -H "ssh://$STAGE_SERVER_USER@$STAGE_SERVER_IP" down
+    - docker-compose -f docker-compose.stage.yml -p frontend-stage -H "ssh://$STAGE_SERVER_USER@$STAGE_SERVER_IP" pull
+    - docker-compose -f docker-compose.stage.yml -p frontend-stage -H "ssh://$STAGE_SERVER_USER@$STAGE_SERVER_IP" up -d
   only:
     - stage
   when: manual
@@ -62,9 +62,9 @@ deploy-to-prod:
     - docker login -u $CI_REGISTRY_USER -p $CI_BUILD_TOKEN $CI_REGISTRY_IMAGE
     - echo "IMAGE_FRONTEND_TAG=$PROD_IMAGE_FRONTEND_TAG" >> .env
     - echo "API_URL=$PROD_API_URL" >> .env
-    - docker-compose -f docker-compose.prod.yml -H "ssh://$PROD_SERVER_USER@$PROD_SERVER_IP" down
-    - docker-compose -f docker-compose.prod.yml -H "ssh://$PROD_SERVER_USER@$PROD_SERVER_IP" pull
-    - docker-compose -f docker-compose.prod.yml -H "ssh://$PROD_SERVER_USER@$PROD_SERVER_IP" up -d
+    - docker-compose -f docker-compose.prod.yml -p frontend-prod -H "ssh://$PROD_SERVER_USER@$PROD_SERVER_IP" down
+    - docker-compose -f docker-compose.prod.yml -p frontend-prod -H "ssh://$PROD_SERVER_USER@$PROD_SERVER_IP" pull
+    - docker-compose -f docker-compose.prod.yml -p frontend-prod -H "ssh://$PROD_SERVER_USER@$PROD_SERVER_IP" up -d
   only:
     - main
   when: manual
