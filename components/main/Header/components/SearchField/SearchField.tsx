@@ -134,7 +134,7 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
           placeholder='Введите артикул, наименование или код запчасти'
           value={searchValue}
         />
-        <SearchIcon className={styles.searchIcon} />
+        <SearchIcon className={styles.searchIcon} onClick={handleOpenPopover} />
         {isFocusSearchField && (
           <Divider
             className={cn(styles.divider, {

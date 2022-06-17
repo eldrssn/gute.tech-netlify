@@ -1,0 +1,19 @@
+.image {
+  border-radius: 25px;
+  width: 40px;
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.username {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: 5px;
+}
