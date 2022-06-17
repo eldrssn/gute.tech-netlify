@@ -17,7 +17,7 @@
 
 .button_ranger {
   margin-left: 23px;
-  transition: none;
+  transition: transform none;
 }
 
 .button::before {
@@ -44,7 +44,7 @@
     margin: 0;
     padding: 5px 0;
     transition: none;
-    margin-left: calc(100vw - 155px);
+    margin-left: calc(100vw - 185px);
     z-index: 1300 !important;
     border-bottom: 1px dashed $blue1;
 
@@ -61,7 +61,7 @@
   }
 
   .button_ranger {
-    margin-left: -70px;
+    margin-left: -90px;
     margin-top: 70px;
     transition: none;
   }

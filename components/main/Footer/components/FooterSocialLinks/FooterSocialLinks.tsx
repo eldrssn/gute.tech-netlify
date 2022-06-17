@@ -35,13 +35,13 @@ const FooterSocialLinks: FC = () => {
     <Box
       sx={{
         display: 'flex',
-        flexDirection: { xs: 'row', sm: 'column', md: 'row' },
+        flexDirection: { xs: 'row', sm: 'row', md: 'row' },
       }}
     >
       <Box
         component='ul'
         sx={{
-          margin: { xs: '0 20px 20px 0', sm: '0 auto', md: '0 20px' },
+          margin: { xs: '0 20px 20px 0', sm: '0 20px 20px 0', md: '0 20px' },
         }}
         className={styles.socialIconList}
       >
