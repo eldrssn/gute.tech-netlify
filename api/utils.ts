@@ -3,10 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { DEV_HOST } from 'constants/variables';
 
 const api = axios.create({
-  // FIXME: когда запустим stage, переезжаем на api-stage...
-  // саму строчку удалить и занести в .env.local локально
-  // NEXT_PUBLIC_API_URL=https://api-stage.gute.tech/api/v1
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api-stage.gute.tech/api/v1',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'content-type': 'application/json',
     'X-Client-Host':
