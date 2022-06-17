@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  frontend:
+    image: ${IMAGE_FRONTEND_TAG}
+    container_name: gutetech-frontend-prod
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: docker/prod/Dockerfile
+    ports:
+      - "3001:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - COMPOSE_CONVERT_WINDOWS_PATHS=1
+      - NEXT_PUBLIC_API_URL=${API_URL}
