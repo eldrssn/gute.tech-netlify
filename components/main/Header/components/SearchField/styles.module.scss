@@ -1,5 +1,5 @@
-@import "styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import 'styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .searchMenuItem {
   flex: 1 auto;
@@ -48,6 +48,7 @@
 
 .textField {
   flex: 1 auto;
+  width: 1px;
 
   input {
     height: 30px;

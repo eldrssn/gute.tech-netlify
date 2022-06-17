@@ -26,7 +26,7 @@ const HeaderCity: FC = () => {
   }, [dispatch]);
 
   return (
-    <Container className={styles.cityWrapper}>
+    <Container className={styles.cityWrapper} disableGutters>
       <ModalCity isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
       <Box component='div' onClick={() => setIsOpenModal(true)}>
         <Typography className={styles.cityName}>

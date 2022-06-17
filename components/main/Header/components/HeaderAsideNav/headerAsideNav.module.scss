@@ -8,7 +8,6 @@
   padding-right: 10px;
   font-size: 18px;
   font-family: Roboto, sans-serif !important;
-  font-weight: bold;
 }
 
 .menuIcon {
@@ -22,6 +21,8 @@
 
 .menuItem_callback {
   flex-grow: 1;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .menuItem_mobile {
@@ -48,15 +49,13 @@
 }
 
 .orderTotalCard {
-  position: absolute;
+  width: fit-content;
   display: flex;
   align-items: center;
-  top: 50%;
-  left: 70%;
-  transform: translate(-50%, -50%);
   font-weight: bold;
   font-size: 18px;
   font-family: Roboto, sans-serif !important;
+  margin-left: 10px;
 }
 
 .icon_ruble::before {
@@ -74,14 +73,16 @@
   font: normal normal normal 14px/1 FontAwesome;
   font-size: 24px;
   width: 30px;
-  display: inline-block;
-  padding-top: 6px;
+  display: block;
+  margin-top: 4px;
+  margin-right: -15px;
 }
 
 .shoppingCartIcon {
   display: flex;
+  flex-direction: row;
   position: relative;
-  width: 100px;
+  padding: 5px;
 }
 
 .shoppingCart {
