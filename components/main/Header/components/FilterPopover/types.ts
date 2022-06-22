@@ -10,6 +10,7 @@ type FilterPopoverProps = {
   openPopoverId: StepInputs;
   searchValue?: string | null;
   handleClosePopover: () => void;
+  setTransportType: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 export type { FilterPopoverProps };
