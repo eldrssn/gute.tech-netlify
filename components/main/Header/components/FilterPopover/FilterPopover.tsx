@@ -31,6 +31,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
   setIsLoadingOptionList,
   openPopoverId,
   searchValue,
+  setTransportType,
 }) => {
   const { isMobile } = useWindowSize();
   const { width: widthScrollBar } = useScrollbarSize();
@@ -53,6 +54,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
 
   const handleTransportTypeButton = (slug: string) => () => {
     setActiveTransportType(slug);
+    setTransportType(slug);
   };
 
   useEffect(() => {
