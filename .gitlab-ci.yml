@@ -4,12 +4,8 @@ services:
   - docker:dind
 
 variables:
-  STAGE_SERVER_IP: 185.148.83.32
-  STAGE_SERVER_USER: user
   STAGE_IMAGE_FRONTEND_TAG: registry.gitlab.com/g4687/gute.tech-frontend/frontend:stage
   STAGE_API_URL: https://api-stage.gute.tech/api/v1
-  PROD_SERVER_IP: 185.148.83.32
-  PROD_SERVER_USER: user
   PROD_IMAGE_FRONTEND_TAG: registry.gitlab.com/g4687/gute.tech-frontend/frontend:prod
   PROD_API_URL: https://api.gute.tech/api/v1
 
