@@ -9,11 +9,7 @@ import Box from '@mui/material/Box';
 import { TailSpin } from 'react-loader-spinner';
 import { useSelector } from 'react-redux';
 
-import {
-  selectBrands,
-  selectEngines,
-} from 'store/reducers/transport/selectors';
-import { findTransportType } from 'utility/helpers';
+import { selectEngines } from 'store/reducers/transport/selectors';
 import colors from 'styles/_export.module.scss';
 
 import { FilterPopover } from '../FilterPopover';
@@ -58,7 +54,6 @@ const FilterStep: FC<FilterStepProps> = ({
   const valueTextField =
     typeof searchValue === 'string' && isOpenPopover ? searchValue : title;
 
-  const { data: brands } = useSelector(selectBrands);
   const { data: engines } = useSelector(selectEngines);
 
   useEffect(() => {
@@ -77,11 +72,6 @@ const FilterStep: FC<FilterStepProps> = ({
     inputStepId,
   }: HandleClickProps) => {
     setValue(name, { title, slug, searchValue: null });
-
-    if (inputStepId === StepInputs.BRAND) {
-      const typeSlug = findTransportType(brands, slug);
-      setTransportType(typeSlug);
-    }
 
     if (inputStepId === StepInputs.ENGINE) {
       const currentEngine = engines.find((engine) => engine.slug === slug);
@@ -118,6 +108,7 @@ const FilterStep: FC<FilterStepProps> = ({
         handleClick={handleClickButton}
         searchValue={searchValue}
         handleClosePopover={handleClosePopover}
+        setTransportType={setTransportType}
         {...restProps}
       />
       <Step key={name} sx={{ width: '100%' }}>

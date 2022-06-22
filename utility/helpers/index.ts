@@ -4,7 +4,6 @@ import { EValidatePattern } from 'constants/types';
 import { RegionData } from 'store/reducers/regions/types';
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { CartItemData } from 'store/reducers/cart/types';
-import { ListOptionsItemData } from 'api/models/transport';
 
 const objByThree: GroupedItemsItem = {
   firstItem: null,
@@ -162,14 +161,6 @@ const getParentCategory = ({
   return categorySearch?.slug;
 };
 
-const findTransportType = (data: ListOptionsItemData[], slug: string) => {
-  const type = data.find((item) =>
-    item.brands?.find((type) => type.slug === slug),
-  );
-
-  return type?.slug;
-};
-
 const setBreakpointSize = (breakpoint: string) =>
   Number(breakpoint.slice(0, -2));
 
@@ -214,7 +205,6 @@ export {
   filterRegionsOption,
   cookieStorage,
   makeStringify,
-  findTransportType,
   getParentCategory,
   setBreakpointSize,
   formatPrice,
