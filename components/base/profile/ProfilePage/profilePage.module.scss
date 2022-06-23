@@ -1,0 +1,9 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.userInfo {
+  margin: 30px;
+  flex-grow: 1;
+}
