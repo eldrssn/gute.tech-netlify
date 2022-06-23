@@ -1,0 +1,36 @@
+@import '~styles/colors.scss';
+
+.formContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.formLabel {
+  color: $black;
+  font-weight: 700;
+  padding-bottom: 10px;
+  padding-left: 15px;
+}
+
+.inputField {
+  margin: 10px;
+}
+
+.inputField_error {
+  margin-top: 0;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.buttonsContainer {
+  display: flex;
+  margin-left: 5px;
+  margin-bottom: 25px;
+}
