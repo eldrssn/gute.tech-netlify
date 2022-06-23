@@ -50,7 +50,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
         setIsOpen={setIsOpenModalAdvice}
       />
       {(isFullHeader || isMobileView || isDrawer) && !hidePhone && (
-        <MenuItem disableGutters sx={{ display: 'flex', height: '44px' }}>
+        <MenuItem disableGutters>
           <i className={styles.icon_phone} />
           <a href='tel:+74992832026' className={menuItemStyles}>
             {phone}

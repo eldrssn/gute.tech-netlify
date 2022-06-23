@@ -1,0 +1,37 @@
+@import '~styles/colors.scss';
+
+.navContainer {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 400px;
+  
+
+  background-color: $white2;
+  border: 1px solid $transparentBlue1;
+}
+
+.navItem {
+  width: 97%;
+  margin-left: 3px;
+}
+.navItem_active {
+  border-right: 2px solid $blue1;
+  color: $blue1;
+}
+
+.userImage {
+  width: 200px;
+  margin:  10px auto;
+}
+
+.userName {
+  display: block;
+  margin:  10px auto;
+
+}
+
+.divider {
+  width: 100px;
+  margin: 5px auto;
+}

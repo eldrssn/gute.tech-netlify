@@ -121,7 +121,6 @@ const CatalogCard: React.FC<ProductListData> = ({
                     onClick={handleClickToBasket}
                   >
                     <i className={styles.shoppingIcon} />
-                    {/* // <Box className={styles.shoppingCart} /> */}
                   </CustomButton>
                 </CardActions>
               </Box>
