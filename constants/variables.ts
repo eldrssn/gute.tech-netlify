@@ -7,6 +7,8 @@ const DELAY = 500;
 const SCROLL_DELAY = DELAY;
 const CATALOG_MOBILE_WIDTH = 450;
 const HIDE_PHONE_WIDTH = 1000;
+const TOKEN_CACHE_TTL = 30 * 24 * 60 * 60 * 1000;
+const TOKEN_CACHE_TTL_DELETE = -1 * 24 * 60 * 60 * 1000;
 
 const descriptionTypeName = [
   DescriptionTypes.properties,
@@ -48,6 +50,8 @@ export {
   DELAY,
   SCROLL_DELAY,
   CATALOG_MOBILE_WIDTH,
+  TOKEN_CACHE_TTL,
+  TOKEN_CACHE_TTL_DELETE,
   descriptionTypeName,
   tabNameByType,
   DEV_HOST,

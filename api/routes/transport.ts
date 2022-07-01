@@ -1,5 +1,7 @@
 import { sendRequest } from '../utils';
 
+import { ApiMethods } from 'constants/types';
+
 import {
   EnginesSlugs,
   BrandSlug,
@@ -13,19 +15,19 @@ import {
 const getBrands = () =>
   sendRequest<ListOptionsItemData[]>({
     url: `/transport/brands/`,
-    method: 'get',
+    method: ApiMethods.GET,
   });
 
 const getModel = ({ transportType, brandSlug }: BrandSlug) =>
   sendRequest<ListOptionsItemData[]>({
     url: `/transport/${transportType}/${brandSlug}/models/`,
-    method: 'get',
+    method: ApiMethods.GET,
   });
 
 const getYears = ({ transportType, brandSlug, modelSlug }: YearsSlugs) =>
   sendRequest<ListOptionsYearData[]>({
     url: `/transport/${transportType}/${brandSlug}/${modelSlug}/years/`,
-    method: 'get',
+    method: ApiMethods.GET,
   });
 
 const getEngines = ({
@@ -36,13 +38,13 @@ const getEngines = ({
 }: EnginesSlugs) =>
   sendRequest<ListOptionsItemData[]>({
     url: `/transport/${transportType}/${brandSlug}/${modelSlug}/${yearSlug}/engines/`,
-    method: 'get',
+    method: ApiMethods.GET,
   });
 
 const getTransportInfo = ({ transportId }: TransportInfoRequestData) =>
   sendRequest<TransportInfoResponseData>({
     url: `/transport/${transportId}/`,
-    method: 'get',
+    method: ApiMethods.GET,
   });
 
 export { getModel, getEngines, getBrands, getYears, getTransportInfo };

@@ -112,7 +112,12 @@ const handlers = {
     state: CartStore,
     { payload }: { payload: ProductResponseData & CartItemAdditionalData },
   ) => {
-    const { slug: slugAddedItem, ordinalId: ordinalIdAddedItem } = payload;
+    const {
+      slug: slugAddedItem,
+      ordinalId: ordinalIdAddedItem,
+      count,
+    } = payload;
+    const currentCount = Number(count) >= 0 ? count : 1;
     const cart = state.cartItems.data;
     const itemIndex = cart.findIndex(({ slug }) => slug === slugAddedItem);
     const ordinalId = ordinalIdAddedItem ? ordinalIdAddedItem : cart.length + 1;
@@ -120,7 +125,10 @@ const handlers = {
     if (itemIndex >= 0) {
       return;
     }
-    state.cartItems.data = [...cart, { ...payload, ordinalId }];
+    state.cartItems.data = [
+      ...cart,
+      { ...payload, ordinalId, count: currentCount },
+    ];
   },
 
   [fetchPaymentMethods.pending.type]: (state: CartStore) => {

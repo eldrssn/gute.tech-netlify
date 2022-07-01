@@ -7,6 +7,7 @@ type FormInputProps = {
   isAutocomplete?: boolean;
   textarea?: boolean;
   maxLength?: number;
+  hideValue?: boolean;
 };
 
 export type { FormInputProps };

@@ -4,6 +4,8 @@ import { TransportStore } from './reducers/transport/types';
 import { CatalogStore } from './reducers/catalog/types';
 import { RegionsStore } from './reducers/regions/types';
 import { PagesStore } from './reducers/pages/types';
+import { UserStore } from './reducers/user/types';
+import { AuthenticationStore } from './reducers/authentication/types';
 
 type State = {
   cartStore: CartStore;
@@ -12,7 +14,13 @@ type State = {
   catalogStore: CatalogStore;
   regionStore: RegionsStore;
   pagesStore: PagesStore;
+  userStore: UserStore;
+  authenticationStore: AuthenticationStore;
 };
+
+type ErrorАuthenticationPayload<P = void> = {
+  isValidToken: boolean;
+} & P;
 
 type ErrorAction = {
   error: {
@@ -31,4 +39,10 @@ type StoreState = {
   error: StoreError | null;
 };
 
-export type { State, ErrorAction, StoreState, StoreError };
+export type {
+  State,
+  ErrorAction,
+  StoreState,
+  StoreError,
+  ErrorАuthenticationPayload,
+};
