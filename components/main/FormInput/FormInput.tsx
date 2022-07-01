@@ -13,6 +13,7 @@ const FormInput: React.FC<FormInputProps> = ({
   children,
   textarea,
   maxLength = 200,
+  hideValue,
 }) => (
   <TextField
     autoComplete={isAutocomplete ? 'on' : 'off'}
@@ -21,6 +22,7 @@ const FormInput: React.FC<FormInputProps> = ({
     error={isError}
     onChange={onChange}
     value={value}
+    type={hideValue ? 'password' : 'text'}
     fullWidth
     label={label}
     variant='outlined'

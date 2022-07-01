@@ -54,7 +54,6 @@ const FilterPopover: FC<FilterPopoverProps> = ({
 
   const handleTransportTypeButton = (slug: string) => () => {
     setActiveTransportType(slug);
-    setTransportType(slug);
   };
 
   useEffect(() => {
@@ -73,6 +72,10 @@ const FilterPopover: FC<FilterPopoverProps> = ({
   useEffect(() => {
     setIsLoadingOptionList(isLoading);
   }, [isLoading, setIsLoadingOptionList]);
+
+  useEffect(() => {
+    setTransportType(activeTransportType);
+  }, [activeTransportType, setTransportType]);
 
   useEffect(() => {
     if (isOpenPopover) {

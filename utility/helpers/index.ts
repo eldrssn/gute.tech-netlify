@@ -1,9 +1,11 @@
 import { GroupedItemsItem, ItemKeys } from 'components/base/home';
 import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
+import { TOKEN_CACHE_TTL, TOKEN_CACHE_TTL_DELETE } from 'constants/variables';
 import { RegionData } from 'store/reducers/regions/types';
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { CartItemData } from 'store/reducers/cart/types';
+import { CookieSameSite } from 'constants/types';
 
 const objByThree: GroupedItemsItem = {
   firstItem: null,
@@ -184,6 +186,37 @@ const addItemToLocaleStorage = ({ slug, title }: Record<string, string>) => {
   }
 };
 
+const getCookie = (name: string) => {
+  const value = '; ' + document.cookie;
+  const partsPop = value.split(`; ${name}=`).pop();
+
+  if (partsPop) {
+    return partsPop.split(';').shift();
+  }
+};
+
+const setCookie = (
+  name: string,
+  val: string,
+  sameSite: CookieSameSite = CookieSameSite.STRICT,
+) => {
+  const date = new Date();
+  const value = val;
+
+  date.setTime(date.getTime() + TOKEN_CACHE_TTL);
+
+  document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/; SameSite=${sameSite}`;
+};
+
+const deleteCookie = (name: string) => {
+  const date = new Date();
+
+  // Set it expire in -1 days
+  date.setTime(date.getTime() + TOKEN_CACHE_TTL_DELETE);
+
+  document.cookie = name + '=; expires=' + date.toUTCString() + '; path=/';
+};
+
 const scrollToTop = () => {
   if (window) {
     window.scrollTo({
@@ -208,4 +241,7 @@ export {
   getParentCategory,
   setBreakpointSize,
   formatPrice,
+  getCookie,
+  setCookie,
+  deleteCookie,
 };

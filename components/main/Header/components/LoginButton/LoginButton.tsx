@@ -1,44 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import CardMedia from '@mui/material/CardMedia';
 import MenuItem from '@mui/material/MenuItem';
-// import Popover from '@mui/material/Popover';
+import Popover from '@mui/material/Popover';
+
+import {
+  selectIsAuthorized,
+  selectLoadingAuthorized,
+} from 'store/reducers/authentication/selectors';
+import { ModalLogIn } from 'components/main/ModalLogIn';
 
 import styles from './loginButton.module.scss';
-// import { LoginPopover } from '../LoginPopover';
+import { LoginPopover } from '../LoginPopover';
 
 const LoginButton = () => {
-  // FIXME: закомментил логику, потом добавлю сюда корректно выпадающее меню
-  // чтобы не было никаких конфликтов
+  const [isOpenModalLogIn, setIsOpenModalLogIn] = useState(false);
 
-  // const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const isAuthorized = useSelector(selectIsAuthorized);
+  const loadingAuthorized = useSelector(selectLoadingAuthorized);
 
-  // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (loadingAuthorized) {
+      return null;
+    }
 
-  // const open = Boolean(anchorEl);
-  // const id = open ? 'simple-popover' : undefined;
+    if (!isAuthorized) {
+      setIsOpenModalLogIn(true);
+      return;
+    }
+
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   return (
     <>
-      <MenuItem
-        className={styles.button}
-        // onClick={handleClick}
-      >
+      <ModalLogIn isOpen={isOpenModalLogIn} setIsOpen={setIsOpenModalLogIn} />
+      <MenuItem className={styles.button} onClick={handleClick}>
         <CardMedia
           component={'img'}
           height='32'
-          image='/images/user-img2.jpg'
+          image={
+            isAuthorized ? '/images/user-img2.jpg' : '/images/user-img.jpeg'
+          }
           alt='Фото пользователя'
           className={styles.image}
         />
       </MenuItem>
 
-      {/* <Popover
+      <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -52,9 +70,8 @@ const LoginButton = () => {
           horizontal: 'right',
         }}
       >
-        <LoginPopover />
+        <LoginPopover closePopover={handleClose} />
       </Popover>
-      */}
     </>
   );
 };
