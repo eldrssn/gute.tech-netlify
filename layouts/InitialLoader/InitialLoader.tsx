@@ -1,26 +1,31 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 
-import { useRouterQuery } from 'hooks/useRouterQuery';
-import {
-  getSlugsCartItemsFromString,
-  getSlugsCartItemsFromCart,
-} from 'utility/helpers';
-import { useWindowSize } from 'hooks/useWindowSize';
-import { CookieKey } from 'constants/types';
 import { fetchRegions } from 'store/reducers/regions/actions';
-import { selectCart } from 'store/reducers/cart/selectors';
-import { selectTransportId } from 'store/reducers/transport/selectors';
-import {
-  fetchTransportInfo,
-  setTransportId,
-} from 'store/reducers/transport/actions';
 import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
 import { fetchCategoriesTreeList } from 'store/reducers/catalog/actions';
 import { fetchShowcase } from 'store/reducers/showcase/actions';
+import { fetchProfile } from 'store/reducers/user/actions';
+import {
+  fetchTransportInfo,
+  setTransportId,
+} from 'store/reducers/transport/actions';
+import { fetchAccessToken } from 'store/reducers/authentication/actions';
+import { selectCart } from 'store/reducers/cart/selectors';
+import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectTransportId } from 'store/reducers/transport/selectors';
+import { useRouterQuery } from 'hooks/useRouterQuery';
+import { useWindowSize } from 'hooks/useWindowSize';
+import {
+  getSlugsCartItemsFromString,
+  getSlugsCartItemsFromCart,
+  getCookie,
+} from 'utility/helpers';
 import { QueryUrl } from 'constants/variables';
+import { CookieKey } from 'constants/types';
 
 const InitialLoader: React.FC = ({ children }) => {
   const { windowWidth } = useWindowSize();
@@ -39,6 +44,7 @@ const InitialLoader: React.FC = ({ children }) => {
 
   const cart = useSelector(selectCart);
   const transportId = useSelector(selectTransportId);
+  const isAuthorized = useSelector(selectIsAuthorized);
 
   useEffect(() => {
     dispatch(fetchShowcase());
@@ -47,7 +53,9 @@ const InitialLoader: React.FC = ({ children }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchTransportReadCategories({ transportId }));
+    if (transportId) {
+      dispatch(fetchTransportReadCategories({ transportId }));
+    }
   }, [dispatch, transportId]);
 
   useEffect(() => {
@@ -64,7 +72,6 @@ const InitialLoader: React.FC = ({ children }) => {
         );
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cookiesCartItems]);
 
   useEffect(() => {
@@ -80,8 +87,20 @@ const InitialLoader: React.FC = ({ children }) => {
       dispatch(fetchTransportInfo({ transportId: transportIdSaved }));
       dispatch(setTransportId(transportIdSaved));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transportIdQuery]);
+
+  useEffect(() => {
+    const refresh = getCookie(CookieKey.REFRESH_TOKEN);
+    if (refresh) {
+      dispatch(fetchAccessToken({ refresh }));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isAuthorized) {
+      dispatch(fetchProfile());
+    }
+  }, [isAuthorized]);
 
   useEffect(() => {
     setCookieCartItems(CookieKey.CARTITEMS, getSlugsCartItemsFromCart(cart));
