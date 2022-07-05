@@ -5,11 +5,17 @@ type TFormData = {
   first_name?: string;
   patronymic?: string;
   phone_number?: string;
-  date_of_birthday?: Date;
+  date_of_birthday?: Date | null;
   email?: string;
   date_joined?: Date;
   transport?: string;
   sex?: string;
+  city?: string;
+  country?: string;
 };
 
-export type { TFormData };
+type TFormDataFields = keyof TFormData;
+
+type TDate = Date | null | undefined;
+
+export type { TFormData, TDate, TFormDataFields };

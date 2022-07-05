@@ -1,5 +1,4 @@
 import React from 'react';
-// import Link from 'next/link';
 import { Container, Typography, Box } from '@mui/material';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
@@ -11,11 +10,7 @@ import { TOuterProps } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const ModalSaveChanges: React.FC<TOuterProps> = ({
-  isOpen,
-  setIsOpen,
-  onReset,
-}) => {
+const ModalSaveChanges: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   const closeModal = () => setIsOpen(false);
 
   return (
@@ -28,7 +23,7 @@ const ModalSaveChanges: React.FC<TOuterProps> = ({
 
         <Box className={styles.buttonsContainer}>
           <CustomButton type='submit'>Сохранить</CustomButton>
-          <CustomButton onClick={onReset}>Сбросить</CustomButton>
+          <CustomButton onClick={closeModal}>Отмена</CustomButton>
         </Box>
       </Container>
     </ModalWrapper>

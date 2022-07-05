@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Container, Typography, Box, TextField } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { Typography, Box, TextField, FormHelperText } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { CustomButton } from 'components/ui/CustomButton';
+import {
+  inputCodeRule,
+  inputEmailRule,
+} from 'components/base/profile/UserForm/constants';
 
-import { validatePatterns } from 'constants/patterns';
-
-import { TOuterProps } from './types';
+import { TFormData, TOuterProps } from './types';
 import styles from './modalEditUserEmail.module.scss';
 
 const ModalEditUserEmail: React.FC<TOuterProps> = ({
@@ -16,27 +19,48 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
   setIsOpen,
   setValue,
 }) => {
-  const [email, setEmail] = useState('');
+  const {
+    register,
+    getValues,
+    trigger,
+    reset,
+    formState: { errors },
+  } = useForm<TFormData>({
+    mode: 'onTouched',
+    reValidateMode: 'onChange',
+    criteriaMode: 'firstError',
+    shouldFocusError: true,
+  });
+
   const [isNextStep, setNextStep] = useState(false);
+  const email = getValues('email');
 
   const handleClickGetCode = () => {
-    setNextStep(true);
+    trigger();
+    if (!errors.email && email) {
+      setNextStep(true);
+    }
   };
 
   const closeModal = () => {
     setIsOpen(false);
-    setEmail('');
     setNextStep(false);
   };
 
   const handleClickSubmitCode = () => {
-    setValue('email', email);
-    closeModal();
+    // FIXME: добавить сабмит при связке с апи
+    // проверить правильность работы reset()
+    if (!errors.code) {
+      setValue('email', email);
+      closeModal();
+
+      reset();
+    }
   };
 
   return (
     <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Container fixed className={styles.wrap}>
+      <form className={styles.wrap}>
         <Box className={styles.closeModal} onClick={closeModal}>
           <FontAwesomeIcon icon={faTimes} />
         </Box>
@@ -47,18 +71,19 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
             </Typography>
 
             <TextField
+              type='email'
+              {...register('email', inputEmailRule)}
               hiddenLabel
               className={styles.inputField}
               placeholder='new-email@email.com'
-              inputProps={{
-                inputMode: 'email',
-                pattern: validatePatterns.email.pattern,
-              }}
-              value={email}
-              autoFocus
-              focused
-              onChange={(event) => setEmail(event.target.value)}
+              error={Boolean(errors.email)}
+              required
             />
+            {errors.email && (
+              <FormHelperText error className={styles.inputField_error}>
+                {errors.email.message}
+              </FormHelperText>
+            )}
 
             <CustomButton onClick={handleClickGetCode}>
               Получить код
@@ -76,15 +101,20 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
               hiddenLabel
               className={styles.inputField}
               placeholder='Введите полученный код'
-              defaultValue=''
+              {...register('code', inputCodeRule)}
             />
+            {errors.code && (
+              <FormHelperText error className={styles.inputField_error}>
+                {errors.code.message}
+              </FormHelperText>
+            )}
 
             <CustomButton onClick={handleClickSubmitCode}>
               Подтвердить
             </CustomButton>
           </>
         )}
-      </Container>
+      </form>
     </ModalWrapper>
   );
 };
