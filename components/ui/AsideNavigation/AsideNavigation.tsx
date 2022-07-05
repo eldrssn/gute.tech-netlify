@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, CardMedia, Divider, MenuItem, Tab, Tabs } from '@mui/material';
+import { Box, CardMedia, Divider, MenuItem } from '@mui/material';
 import Link from 'next/link';
 import styles from './AsideNavigation.module.scss';
 import classnames from 'classnames/bind';

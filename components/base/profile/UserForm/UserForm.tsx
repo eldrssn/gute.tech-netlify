@@ -9,221 +9,294 @@ import {
 } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { ru } from 'date-fns/locale';
 
 import { CustomButton } from 'components/ui/CustomButton';
 import { ModalSaveChanges } from 'components/main/ModalSaveChanges';
 import { ModalEditUserEmail } from 'components/main/ModalEditUserEmail';
 
-import { inputRule, mockValues, selectSex } from './constants';
-import { TFormData } from './types';
+import {
+  correctRegister,
+  formatDate,
+  validateMaxAge,
+  validateMinAge,
+} from './helpers';
+import {
+  inputFullNameRule,
+  MAX_DATE,
+  MIN_DATE,
+  mockValues,
+  selectSex,
+  selectCity,
+  usernameRule,
+} from './constants';
+import { TDate, TFormData, TFormDataFields } from './types';
+
 import styles from './userForm.module.scss';
+import { FormTextfield } from 'components/ui/FormTextfield';
 
 const UserForm = () => {
   const [isFormChanging, setFormChanging] = useState(false);
-  const [isModalEmail, setIsModalEmail] = useState(false);
-  const [isModalSave, setIsModalSave] = useState(false);
-  const [sex, setSex] = React.useState<string | null>(null);
-  const [dateOfBirth, setDateOfBirth] = React.useState<Date | null>(new Date());
+  const [isOpenModalEmail, setIsOpenModalEmail] = useState(false);
+  const [isOpenModalSave, setIsOpenModalSave] = useState(false);
 
   const {
     handleSubmit,
     setValue,
     register,
-    reset,
     trigger,
-    formState: { errors, isValid },
+    getValues,
+    formState: { errors },
   } = useForm<TFormData>({
     mode: 'onTouched',
     reValidateMode: 'onChange',
-    criteriaMode: 'all',
+    criteriaMode: 'firstError',
     defaultValues: mockValues,
+    shouldFocusError: true,
   });
+
+  const defaultDateOfBirthday = getValues('date_of_birthday');
+  const [dateOfBirth, setDateOfBirth] = React.useState<TDate>(
+    defaultDateOfBirthday,
+  );
 
   const onSumbit = handleSubmit((data) => {
     // FIXME: подключить к апи и убрать консоль
     console.log(data);
     setFormChanging(false);
-    setIsModalSave(false);
+    setIsOpenModalSave(false);
   });
 
-  const onReset = () => {
-    reset();
-    setFormChanging(false);
-    setIsModalSave(false);
-  };
-
-  const openModalSave = () => {
-    trigger();
+  const openModalSave = async () => {
+    const isValid = await trigger();
 
     if (isValid) {
-      setIsModalSave(true);
+      setIsOpenModalSave(true);
     }
   };
 
-  const onChangeForm = () => setFormChanging(true);
+  const onChangeForm = async () => {
+    await trigger();
+    setFormChanging(true);
+  };
 
-  const handleChangeDateOfBirth = (newValue: Date | null) => {
+  const handleChangeDateOfBirth = (
+    value: Date | null,
+    keyboardInputValue?: string,
+  ) => {
     onChangeForm();
-    setDateOfBirth(newValue);
+
+    if (!keyboardInputValue) {
+      setValue('date_of_birthday', value);
+      setDateOfBirth(value);
+      return;
+    }
+
+    const formatedDate = formatDate(keyboardInputValue);
+    setValue('date_of_birthday', formatedDate);
+    setDateOfBirth(formatedDate);
+  };
+
+  const onBlurCorrectRegister = (
+    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
+    title: TFormDataFields,
+  ) => {
+    const correctedRegister = correctRegister(event);
+    setValue(title, correctedRegister);
+    trigger(title);
+  };
+
+  const handleChangeFormValue = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: TFormDataFields,
+  ) => {
+    onChangeForm();
+    setValue(field, event.target.value);
   };
 
   return (
-    <form onSubmit={onSumbit} className={styles.formContainer}>
-      <ModalSaveChanges
-        isOpen={isModalSave}
-        setIsOpen={setIsModalSave}
-        onReset={onReset}
-      />
-
+    <>
       <ModalEditUserEmail
-        isOpen={isModalEmail}
-        setIsOpen={setIsModalEmail}
+        isOpen={isOpenModalEmail}
+        setIsOpen={setIsOpenModalEmail}
         setValue={setValue}
       />
 
-      <Box
-        className={styles.formColumn}
-        sx={{ width: { xs: '100%', md: '50%' } }}
-      >
-        <FormLabel className={styles.formLabel}>Учетные данные</FormLabel>
-        <TextField
-          className={styles.inputField}
-          label='Телефон'
-          placeholder='Введите телефон'
-          {...register('phone_number')}
-          disabled
-        />
-        <TextField
-          className={styles.inputField}
-          label='Email'
-          {...register('email')}
-          placeholder='Введите Email'
-          onClick={() => setIsModalEmail(true)}
-          onChange={onChangeForm}
-          disabled={isModalEmail}
+      <form onSubmit={onSumbit} className={styles.formContainer}>
+        <ModalSaveChanges
+          isOpen={isOpenModalSave}
+          setIsOpen={setIsOpenModalSave}
         />
 
-        <TextField
-          className={styles.inputField}
-          label='Имя'
-          {...register('first_name', inputRule)}
-          placeholder='Введите имя'
-          error={Boolean(errors.first_name)}
-          onChange={onChangeForm}
-        />
-        {errors.first_name && (
-          <FormHelperText error className={styles.inputField_error}>
-            {errors.first_name.message}
-          </FormHelperText>
-        )}
-        <TextField
-          className={styles.inputField}
-          label='Фамилия'
-          {...register('last_name', inputRule)}
-          placeholder='Введите фамилию'
-          error={Boolean(errors.last_name)}
-          onChange={onChangeForm}
-        />
-        {errors.last_name && (
-          <FormHelperText error className={styles.inputField_error}>
-            {errors.last_name.message}
-          </FormHelperText>
-        )}
-
-        <TextField
-          className={styles.inputField}
-          label='Отчество'
-          {...register('patronymic', inputRule)}
-          placeholder='Введите отчество'
-          error={Boolean(errors.patronymic)}
-          onChange={onChangeForm}
-        />
-        {errors.patronymic && (
-          <FormHelperText error className={styles.inputField_error}>
-            {errors.patronymic.message}
-          </FormHelperText>
-        )}
-
-        <TextField
-          className={styles.inputField}
-          select
-          label='Пол'
-          value={sex}
-          placeholder='Введите пол'
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            onChangeForm();
-            setSex(event.target.value);
-          }}
+        <Box
+          className={styles.formColumn}
+          sx={{ width: { xs: '100%', md: '50%' } }}
         >
-          {selectSex.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+          <FormLabel className={styles.formLabel}>Учетные данные</FormLabel>
 
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DesktopDatePicker
-            inputFormat='dd/MM/yyyy'
-            value={dateOfBirth}
-            onChange={handleChangeDateOfBirth}
-            label='Дата рождения'
-            renderInput={(params) => (
-              <TextField
-                className={styles.inputField}
-                placeholder='Выберете дату рождения'
-                {...params}
-                {...register('date_of_birthday', {
-                  valueAsDate: true,
-                })}
-              />
-            )}
+          <FormTextfield
+            register={register}
+            label='Телефон'
+            name='phone_number'
+            placeholder='Введите телефон'
+            disabled
+            required
           />
-        </LocalizationProvider>
-      </Box>
-      <Box
-        className={styles.formColumn}
-        sx={{ width: { xs: '100%', md: '50%' } }}
-      >
-        <FormLabel className={styles.formLabel}>Публичные данные</FormLabel>
-        <TextField
-          className={styles.inputField}
-          label='Никнейм'
-          placeholder='Выберете никнейм'
-          {...register('username', inputRule)}
-          error={Boolean(errors.username)}
-          onChange={onChangeForm}
-        />
-        {errors.username && (
-          <FormHelperText error className={styles.inputField_error}>
-            {errors.username.message}
-          </FormHelperText>
-        )}
 
-        <TextField
-          className={styles.inputField}
-          label='Страна'
-          placeholder='Введите страну'
-          value='Россия'
-          onChange={onChangeForm}
-          disabled
-        />
-        <TextField
-          className={styles.inputField}
-          label='Город'
-          placeholder='Введите город'
-          value='Ульяновск'
-          onChange={onChangeForm}
-          disabled
-        />
-      </Box>
-      {isFormChanging && (
-        <Box className={styles.buttonsContainer}>
-          <CustomButton onClick={openModalSave}>Сохранить</CustomButton>
-          <CustomButton onClick={openModalSave}>Отмена</CustomButton>
+          <FormTextfield
+            register={register}
+            label='Email'
+            name='email'
+            placeholder='Введите Email'
+            onClick={() => setIsOpenModalEmail(true)}
+            onChange={onChangeForm}
+            disabled
+            required
+          />
+
+          <FormTextfield
+            register={register}
+            label='Имя'
+            name='first_name'
+            rule={inputFullNameRule}
+            error={Boolean(errors.first_name)}
+            errorMessage={errors.first_name?.message}
+            placeholder='Введите имя'
+            onChange={onChangeForm}
+            onBlur={(event) => onBlurCorrectRegister(event, 'first_name')}
+            required
+          />
+
+          <FormTextfield
+            register={register}
+            label='Фамилия'
+            name='last_name'
+            rule={inputFullNameRule}
+            error={Boolean(errors.last_name)}
+            errorMessage={errors.last_name?.message}
+            placeholder='Введите фамилию'
+            onChange={onChangeForm}
+            onBlur={(event) => onBlurCorrectRegister(event, 'last_name')}
+            required
+          />
+
+          <FormTextfield
+            register={register}
+            label='Отчество'
+            name='patronymic'
+            rule={inputFullNameRule}
+            error={Boolean(errors.patronymic)}
+            errorMessage={errors.patronymic?.message}
+            placeholder='Введите отчество'
+            onChange={onChangeForm}
+            onBlur={(event) => onBlurCorrectRegister(event, 'patronymic')}
+            required
+          />
+
+          <TextField
+            className={styles.inputField}
+            select
+            label='Пол'
+            value={getValues('sex')}
+            placeholder='Введите пол'
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              onChangeForm();
+              setValue('sex', event.target.value);
+            }}
+          >
+            {selectSex.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ru}>
+            <DesktopDatePicker
+              inputFormat='dd/MM/yyyy'
+              onChange={handleChangeDateOfBirth}
+              value={dateOfBirth}
+              label='Дата рождения'
+              disableFuture
+              mask='__/__/____'
+              maxDate={MAX_DATE}
+              minDate={MIN_DATE}
+              disableHighlightToday
+              renderInput={(params) => (
+                <TextField
+                  className={styles.inputField}
+                  placeholder='Выберете дату рождения'
+                  {...params}
+                  error={Boolean(errors.date_of_birthday)}
+                  {...register('date_of_birthday', {
+                    validate: {
+                      min: validateMinAge,
+                      max: validateMaxAge,
+                    },
+                  })}
+                />
+              )}
+            />
+          </LocalizationProvider>
+
+          {errors.date_of_birthday && (
+            <FormHelperText error className={styles.inputField_error}>
+              {errors.date_of_birthday?.message}
+            </FormHelperText>
+          )}
         </Box>
-      )}
-    </form>
+
+        <Box
+          className={styles.formColumn}
+          sx={{ width: { xs: '100%', md: '50%' } }}
+        >
+          <FormLabel className={styles.formLabel}>Публичные данные</FormLabel>
+
+          <FormTextfield
+            register={register}
+            label='Никнейм'
+            name='username'
+            rule={usernameRule}
+            error={Boolean(errors.username)}
+            errorMessage={errors.username?.message}
+            placeholder='Введите никнейм'
+            onChange={onChangeForm}
+            required
+          />
+
+          <FormTextfield
+            register={register}
+            label='Страна'
+            name='country'
+            placeholder='Введите страну'
+            onChange={onChangeForm}
+            disabled
+          />
+
+          <TextField
+            className={styles.inputField}
+            select
+            label='Город'
+            value={getValues('city')}
+            placeholder='Введите город'
+            onChange={(event) => handleChangeFormValue(event, 'city')}
+          >
+            {selectCity.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+
+        {isFormChanging && (
+          <Box className={styles.buttonsContainer}>
+            <CustomButton onClick={openModalSave}>Сохранить</CustomButton>
+            <CustomButton onClick={openModalSave}>Отмена</CustomButton>
+          </Box>
+        )}
+      </form>
+    </>
   );
 };
 
