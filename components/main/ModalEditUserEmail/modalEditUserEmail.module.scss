@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .wrap {
   position: relative;
@@ -7,9 +7,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 240px;
   width: 500px;
   background-color: white;
+  padding: 10px;
 }
 
 .title {
@@ -59,7 +60,11 @@
 }
 
 .inputField {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+}
+
+.inputField_error {
+  margin: 5px;
 }
 
 @media (max-width: $sMobile) {
