@@ -19,7 +19,7 @@ import {
   resetAllField,
   setActiveAuthorizationForm,
 } from './actions';
-import { AuthenticationStore } from './types';
+import { AuthenticationStore, RegisterPayloadData } from './types';
 
 const handlers = {
   [logOut.type]: (state: AuthenticationStore) => {
@@ -88,10 +88,9 @@ const handlers = {
     state.registrationForm.loadingRegistrationForm = true;
     state.registrationForm.errorRegistrationForm = null;
   },
-  //TODO: вынести
   [fetchRegister.fulfilled.type]: (
     state: AuthenticationStore,
-    { payload }: PayloadAction<{ phoneNumber: string; password: string }>,
+    { payload }: PayloadAction<RegisterPayloadData>,
   ) => {
     state.registrationForm.phoneNumber = payload.phoneNumber;
     state.registrationForm.password = payload.password;

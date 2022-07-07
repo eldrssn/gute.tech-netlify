@@ -1,11 +1,11 @@
-@import '~styles/colors.scss';
+@import "~styles/colors.scss";
 
 .navContainer {
   display: flex;
   flex-direction: column;
   width: 250px;
+  min-width: 250px;
   height: 400px;
-  
 
   background-color: $white2;
   border: 1px solid $transparentBlue1;
@@ -22,13 +22,12 @@
 
 .userImage {
   width: 200px;
-  margin:  10px auto;
+  margin: 10px auto;
 }
 
 .userName {
   display: block;
-  margin:  10px auto;
-
+  margin: 10px auto;
 }
 
 .divider {

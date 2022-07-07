@@ -1,4 +1,4 @@
-import { sendRequest } from '../utils';
+import { sendRequest, sendRequestАuthentication } from '../utils';
 
 import {
   PaymentMethodResponseData,
@@ -23,8 +23,17 @@ const getProductInfoFromSlug = ({ productSlug }: ProductRequestData) =>
     method: ApiMethods.GET,
   });
 
-const postOrdering = (data: OrderingRequestData) =>
+const postOrderingUnAuthorized = (data: OrderingRequestData) =>
   sendRequest<OrderingResponseData>({
+    url: `/payment/orders/`,
+    method: ApiMethods.POST,
+    config: {
+      data: data,
+    },
+  });
+
+const postOrderingAuthorized = (data: OrderingRequestData) =>
+  sendRequestАuthentication<OrderingResponseData>({
     url: `/payment/orders/`,
     method: ApiMethods.POST,
     config: {
@@ -43,4 +52,10 @@ const getStatus = ({ orderId }: StatusRequestData) =>
     },
   });
 
-export { getPaymentMethods, getProductInfoFromSlug, postOrdering, getStatus };
+export {
+  getPaymentMethods,
+  getProductInfoFromSlug,
+  postOrderingAuthorized,
+  postOrderingUnAuthorized,
+  getStatus,
+};

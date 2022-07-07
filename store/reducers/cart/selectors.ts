@@ -35,4 +35,15 @@ const selectStatus = createSelector(
   ({ paymentStatus }) => paymentStatus,
 );
 
-export { selectCart, selectOrderTotal, selectPaymentMethods, selectStatus };
+const selectCreateOrderingStatus = createSelector(
+  selectAppStore,
+  ({ createOrderingStatus }) => createOrderingStatus,
+);
+
+export {
+  selectCart,
+  selectOrderTotal,
+  selectPaymentMethods,
+  selectStatus,
+  selectCreateOrderingStatus,
+};

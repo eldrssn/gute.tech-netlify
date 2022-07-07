@@ -19,17 +19,3 @@ const fetchBranches = createAsyncAction<BranchesData[]>({
 });
 
 export { fetchRegions, fetchBranches, selectRegion };
-
-//TODO: удалить после теста со всех редьюсеров
-
-// const fetchRegions = createAsyncThunk('region/fetchRegions', async () => {
-//   const data = await getRegions();
-
-//   return data;
-// });
-
-// const fetchBranches = createAsyncThunk('region/fetchBranches', async () => {
-//   const data = await getBranches();
-
-//   return data;
-// });

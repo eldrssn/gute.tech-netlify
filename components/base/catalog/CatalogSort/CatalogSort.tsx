@@ -42,12 +42,12 @@ const CatalogSort: FC<CatalogSortProps> = ({
 
   const setDirectionByPopular = () => {
     const changedOrderType = changeOrderType(orderType, ORDER_TYPES.byPopular);
-    routerQuery.setQueryOption(ORDER_QUERY, changedOrderType);
+    routerQuery.setQueryOption({ [ORDER_QUERY]: changedOrderType });
   };
 
   const setDirectionByPrice = () => {
     const changedOrderType = changeOrderType(orderType, ORDER_TYPES.byPrice);
-    routerQuery.setQueryOption(ORDER_QUERY, changedOrderType);
+    routerQuery.setQueryOption({ [ORDER_QUERY]: changedOrderType });
   };
 
   if (!orderType) {

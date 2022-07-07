@@ -1,5 +1,6 @@
+import { ParsedUrlQueryInput } from 'querystring';
 interface RouterQuery {
-  setQueryOption: (name: string, param: string, scroll?: boolean) => void;
+  setQueryOption: (queries: ParsedUrlQueryInput, scroll?: boolean) => void;
   removeQuery: (
     name: string,
     param?: string | undefined,

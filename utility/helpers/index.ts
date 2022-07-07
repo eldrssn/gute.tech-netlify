@@ -211,7 +211,6 @@ const setCookie = (
 const deleteCookie = (name: string) => {
   const date = new Date();
 
-  // Set it expire in -1 days
   date.setTime(date.getTime() + TOKEN_CACHE_TTL_DELETE);
 
   document.cookie = name + '=; expires=' + date.toUTCString() + '; path=/';
@@ -226,9 +225,18 @@ const scrollToTop = () => {
   }
 };
 
+const getFullDate = (date: Date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  return `${year}-${month}-${day}`;
+};
+
 export default setBreakpointSize;
 
 export {
+  getFullDate,
   scrollToTop,
   addItemToLocaleStorage,
   groupItems,

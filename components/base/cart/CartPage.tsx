@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Box } from '@mui/material';
 
 import { selectCart, selectOrderTotal } from 'store/reducers/cart/selectors';
-import { fetchPaymentMethods } from 'store/reducers/cart/actions';
+import {
+  fetchPaymentMethods,
+  clearCreateOrdering,
+} from 'store/reducers/cart/actions';
 
 import { RemoveCheckedButton } from './components/RemoveCheckedButton';
 import { TableOrder } from './components/TableOrder';
@@ -21,7 +24,9 @@ const CartPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchPaymentMethods());
-  }, [dispatch]);
+    dispatch(clearCreateOrdering());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box component='div' className={styles.main}>
