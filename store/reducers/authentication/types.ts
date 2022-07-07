@@ -42,6 +42,8 @@ type RegistrationVerificationRetryState = {
 
 type ActiveAuthorizationFormState = ActiveAutorizationFormKey;
 
+type RegisterPayloadData = { phoneNumber: string; password: string };
+
 type AuthenticationStore = {
   [AuthenticationStoreBlocks.AUTHORIZED]: AuthorizedState;
   [AuthenticationStoreBlocks.REGISTRATION_FORM]: RegistrationFormState;
@@ -50,4 +52,4 @@ type AuthenticationStore = {
   [AuthenticationStoreBlocks.ACTIVE_AUTHORIZATION_FORM]: ActiveAuthorizationFormState;
 };
 
-export type { AuthenticationStore, ErrorAction };
+export type { AuthenticationStore, ErrorAction, RegisterPayloadData };

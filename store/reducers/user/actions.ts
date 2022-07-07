@@ -1,5 +1,11 @@
-import { getProfile } from 'api/routes/user';
-import { ProfileResponseData } from 'api/models/user';
+import { getProfile, getOrders, getOrder } from 'api/routes/user';
+import {
+  ProfileResponseData,
+  OrdersRequestData,
+  OrdersResponseData,
+  OrderRequestData,
+  OrderResponseData,
+} from 'api/models/user';
 import { createAsyncAction } from 'utility/helpers/store';
 
 const fetchProfile = createAsyncAction<ProfileResponseData>({
@@ -8,12 +14,14 @@ const fetchProfile = createAsyncAction<ProfileResponseData>({
   shouldHandleError: true,
 });
 
-export { fetchProfile };
+const fetchOrders = createAsyncAction<OrdersResponseData, OrdersRequestData>({
+  typeAction: 'user/fetchOrders',
+  request: getOrders,
+});
 
-//TODO: удалить после теста со всех редьюсеров
+const fetchOrder = createAsyncAction<OrderResponseData, OrderRequestData>({
+  typeAction: 'user/fetchOrder',
+  request: getOrder,
+});
 
-// const fetchProfile = createAsyncThunk('user/fetchProfile', async () => {
-//   const data = await getProfile();
-
-//   return data;
-// });
+export { fetchProfile, fetchOrders, fetchOrder };

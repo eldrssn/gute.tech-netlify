@@ -1,6 +1,10 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { PaymentMethodResponseData } from 'api/models/cart';
+import {
+  PaymentMethodResponseData,
+  OrderingResponseErrorData,
+  OrderingResponseData,
+} from 'api/models/cart';
 
 import {
   addItemQuantity,
@@ -13,6 +17,8 @@ import {
   fetchItemFromCart,
   resetOrdinalId,
   clearCart,
+  clearCreateOrdering,
+  createOrderingUnAuthorized,
 } from './actions';
 import { initialState } from './constants';
 
@@ -107,6 +113,12 @@ const handlers = {
     });
     state.cartItems.data = newCart;
   },
+  [clearCreateOrdering.type]: (state: CartStore) => {
+    state.createOrderingStatus.data = null;
+    state.createOrderingStatus.errorCreateOrdering = null;
+    state.createOrderingStatus.isCreateOrdering = false;
+    state.createOrderingStatus.loadingCreateOrdering = false;
+  },
 
   [fetchItemFromCart.fulfilled.type]: (
     state: CartStore,
@@ -169,6 +181,28 @@ const handlers = {
     const errorData = { name: error.name, message: error.message };
     state.paymentStatus.isLoading = false;
     state.paymentStatus.error = errorData;
+  },
+
+  [createOrderingUnAuthorized.pending.type]: (state: CartStore) => {
+    state.createOrderingStatus.loadingCreateOrdering = true;
+    state.createOrderingStatus.errorCreateOrdering = null;
+  },
+  [createOrderingUnAuthorized.fulfilled.type]: (
+    state: CartStore,
+    { payload }: PayloadAction<OrderingResponseData>,
+  ) => {
+    state.createOrderingStatus.data = payload;
+    state.createOrderingStatus.isCreateOrdering = true;
+    state.createOrderingStatus.loadingCreateOrdering = false;
+    state.createOrderingStatus.errorCreateOrdering = null;
+  },
+  [createOrderingUnAuthorized.rejected.type]: (
+    state: CartStore,
+    { payload }: PayloadAction<OrderingResponseErrorData>,
+  ) => {
+    state.createOrderingStatus.isCreateOrdering = false;
+    state.paymentStatus.isLoading = false;
+    state.createOrderingStatus.errorCreateOrdering = payload;
   },
 };
 

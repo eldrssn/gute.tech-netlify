@@ -1,0 +1,12 @@
+@import "~styles/breakpoints.scss";
+@import "~styles/colors.scss";
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainBox {
+  display: flex;
+  height: 100%;
+}

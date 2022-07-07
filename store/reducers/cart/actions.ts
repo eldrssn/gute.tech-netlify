@@ -4,6 +4,8 @@ import {
   getPaymentMethods,
   getProductInfoFromSlug,
   getStatus,
+  postOrderingUnAuthorized,
+  postOrderingAuthorized,
 } from 'api/routes/cart';
 import {
   ProductRequestData,
@@ -11,6 +13,8 @@ import {
   ProductResponseData,
   StatusResponseData,
   PaymentMethodResponseData,
+  OrderingRequestData,
+  OrderingResponseData,
 } from 'api/models/cart';
 import { createAsyncAction } from 'utility/helpers/store';
 
@@ -23,6 +27,7 @@ const setItemQuantity = createAction<CartItemQuantity>('setItemQuantity');
 const removeItemBySlug = createAction<CartItemSlug[]>('removeItemBySlug');
 const resetOrdinalId = createAction('resetOrdinalId');
 const clearCart = createAction('clearCart');
+const clearCreateOrdering = createAction('clearCreateOrdering');
 
 const fetchItemFromCart = createAsyncAction<
   ProductResponseData,
@@ -46,11 +51,32 @@ const fetchStatusPayment = createAsyncAction<
   request: getStatus,
 });
 
+const createOrderingUnAuthorized = createAsyncAction<
+  OrderingResponseData,
+  OrderingRequestData
+>({
+  typeAction: 'CartStore/postOrdering',
+  request: postOrderingUnAuthorized,
+  shouldHandleError: true,
+});
+
+const createOrderingAuthorized = createAsyncAction<
+  OrderingResponseData,
+  OrderingRequestData
+>({
+  typeAction: 'CartStore/postOrdering',
+  request: postOrderingAuthorized,
+  shouldHandleError: true,
+});
+
 export {
+  createOrderingUnAuthorized,
+  createOrderingAuthorized,
   fetchItemFromCart,
   fetchPaymentMethods,
   fetchStatusPayment,
   resetOrdinalId,
+  clearCreateOrdering,
   setItemQuantity,
   addItemQuantity,
   removeItemBySlug,
@@ -58,32 +84,3 @@ export {
   removeItemFromCart,
   clearCart,
 };
-
-//TODO: удалить после теста со всех редьюсеров
-
-// const fetchItemFromCart = createAsyncThunk(
-//   'CartStore/fetchItemFromCart',
-//   async ({ productSlug, count, ordinalId }: ProductRequestData) => {
-//     const data = await getProductInfoFromSlug({ productSlug });
-
-//     return { ...data, count, ordinalId };
-//   },
-// );
-
-// const fetchPaymentMethods = createAsyncThunk(
-//   'CartStore/fetchPaymentMethods',
-//   async () => {
-//     const data = await getPaymentMethods();
-
-//     return data;
-//   },
-// );
-
-// const fetchStatusPayment = createAsyncThunk(
-//   'CartStore/fetchStatusPayment',
-//   async ({ orderId }: StatusRequestData) => {
-//     const data = await getStatus({ orderId });
-
-//     return data;
-//   },
-// );

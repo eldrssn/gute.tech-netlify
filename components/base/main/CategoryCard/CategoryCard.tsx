@@ -28,7 +28,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
   const categorySlug = routerQuery.getQueryOption(QueryUrl.CATEGORY_QUERY);
 
   const setQuery = () =>
-    routerQuery.setQueryOption(QueryUrl.CATEGORY_QUERY, slug);
+    routerQuery.setQueryOption({ [QueryUrl.CATEGORY_QUERY]: slug });
 
   const isTransportSearch = transportId;
 

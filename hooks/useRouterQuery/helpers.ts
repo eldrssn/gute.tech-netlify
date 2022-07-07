@@ -5,7 +5,7 @@ const setQueryParam =
   (event: ChangeEvent) => {
     const { value } = event.target;
 
-    routerQuery.setQueryOption(type, value, scroll);
+    routerQuery.setQueryOption({ [type]: value }, scroll);
 
     if (!value) {
       routerQuery.removeQuery(type, undefined, scroll);

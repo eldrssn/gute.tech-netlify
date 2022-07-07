@@ -20,7 +20,7 @@ const CatalogPagination: FC<CatalogPaginationProps> = ({
     setPage(page);
 
     const stringifiedPage = page.toString();
-    setQueryOption(PAGE_QUERY, stringifiedPage);
+    setQueryOption({ [PAGE_QUERY]: stringifiedPage });
   };
 
   return (

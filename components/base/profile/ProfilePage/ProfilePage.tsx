@@ -13,16 +13,11 @@ import styles from './profilePage.module.scss';
 import { UserForm } from '../UserForm';
 import { UserActionButtons } from '../UserActionButtons';
 
-import { useDispatch } from 'react-redux';
-import { fetchProfile } from 'store/reducers/user/actions';
-
 const ProfilePage = () => {
   const router = useRouter();
 
   const isAuthorized = useSelector(selectIsAuthorized);
   const loadingAuthorized = useSelector(selectLoadingAuthorized);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isAuthorized || loadingAuthorized) {
@@ -38,7 +33,7 @@ const ProfilePage = () => {
 
   return (
     <Container className={styles.mainContainer}>
-      <Box onClick={() => dispatch(fetchProfile())}>
+      <Box>
         <h1>Профиль</h1>
 
         <AsideNavigation />
