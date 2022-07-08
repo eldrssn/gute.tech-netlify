@@ -1,5 +1,8 @@
-import { sendRequestАuthentication } from '../utils';
 import {
+  VerifyEmailResponseData,
+  VerifyEmailRequestData,
+  EditProfileResponseData,
+  EditProfileRequestData,
   ProfileResponseData,
   OrdersResponseData,
   OrdersRequestData,
@@ -9,10 +12,31 @@ import {
 import { ApiMethods } from 'constants/types';
 import { getLinkApiProfileOrder } from 'utility/helpers/linkmakers';
 
+import { sendRequestАuthentication } from '../utils';
+
 const getProfile = () =>
   sendRequestАuthentication<ProfileResponseData>({
     url: `/user/profile/`,
     method: ApiMethods.GET,
+  });
+
+const patchProfileChanges = (data: EditProfileRequestData) =>
+  sendRequestАuthentication<EditProfileResponseData>({
+    url: `/user/profile/`,
+    method: ApiMethods.PATCH,
+    config: { data },
+  });
+
+const postVerifyEmail = ({ code, email }: VerifyEmailRequestData) =>
+  sendRequestАuthentication<VerifyEmailResponseData>({
+    url: `/user/profile/verify_email/`,
+    method: ApiMethods.POST,
+    config: {
+      data: {
+        code,
+        email,
+      },
+    },
   });
 
 const getOrders = ({
@@ -39,4 +63,10 @@ const getOrder = ({ orderId }: OrderRequestData) =>
     method: ApiMethods.GET,
   });
 
-export { getProfile, getOrders, getOrder };
+export {
+  getProfile,
+  patchProfileChanges,
+  postVerifyEmail,
+  getOrders,
+  getOrder,
+};
