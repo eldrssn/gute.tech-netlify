@@ -9,7 +9,6 @@ import {
   Checkbox,
   Box,
 } from '@mui/material';
-// import cn from 'classnames';
 
 import { formatPrice } from 'utility/helpers';
 
@@ -95,12 +94,6 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
               <Typography className={styles.itemCost}>
                 Стоимость: {countItemsPrice}&#8381;
               </Typography>
-              {/* <Button
-                className={styles.btnDelete}
-                onClick={() => removeItem(item)}
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </Button> */}
               <DeleteItemButton item={item} removeItem={removeItem} />
             </TableCell>
           </TableRow>

@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { Typography, Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { selectCart } from 'store/reducers/cart/selectors';
-import { postOrdering } from 'api/routes/cart';
+import {
+  selectCart,
+  selectCreateOrderingStatus,
+} from 'store/reducers/cart/selectors';
+import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import {
+  createOrderingUnAuthorized,
+  createOrderingAuthorized,
+} from 'store/reducers/cart/actions';
 
 import { DeliveryAddress } from '../DeliveryAddress';
 import { ContactInformation } from '../ContactInformation';
 import { PaymentMethod } from '../PaymentMethod';
 import { TFormData } from '../../types';
-import { getCartOrder } from './helpers';
+import { getCartOrder, setOrderFormErrors } from './helpers';
 import styles from './FormOrdering.module.scss';
 
 const FormOrdering: React.FC = () => {
-  const [otherError, setOtherError] = useState(false);
+  const [otherError, setOtherError] = useState<string[]>([]);
   const { handleSubmit, control, setValue, setError } = useForm<TFormData>({
     defaultValues: {
       paymentMethod: 'CARD',
@@ -28,7 +36,15 @@ const FormOrdering: React.FC = () => {
     },
   });
 
+  const dispatch = useDispatch();
+
   const cart = useSelector(selectCart);
+  const isAuthorized = useSelector(selectIsAuthorized);
+  const createOrderStatus = useSelector(selectCreateOrderingStatus);
+
+  const paymentUrl = createOrderStatus.data?.payment_url;
+  const isCreateOrdering = createOrderStatus.isCreateOrdering;
+  const errors = createOrderStatus.errorCreateOrdering;
 
   const onSubmit = handleSubmit((data) => {
     const cartOrder = getCartOrder(cart);
@@ -41,38 +57,33 @@ const FormOrdering: React.FC = () => {
       cart: cartOrder,
       branch_office_id: data.branch ? data.branch.id : 0,
     };
-    setOtherError(false);
-    postOrdering(postData)
-      .then((data) => {
-        if (data.payment_url) {
-          window.location.href = data.payment_url;
-        }
-      })
-      .catch((e) => {
-        const { phone, email } = e.response.data;
-        if (phone) {
-          setError('phoneNumber', {
-            type: 'custom',
-            message: phone,
-          });
-        }
+    setOtherError([]);
 
-        if (email) {
-          setError('emailValue', {
-            type: 'custom',
-            message: email,
-          });
-        }
+    if (isAuthorized) {
+      dispatch(createOrderingAuthorized(postData));
+      return;
+    }
 
-        if (phone || email) {
-          return;
-        }
-
-        setOtherError(true);
-      });
+    dispatch(createOrderingUnAuthorized(postData));
   });
 
+  useEffect(() => {
+    if (paymentUrl) {
+      window.location.href = paymentUrl;
+    }
+  }, [isCreateOrdering, paymentUrl]);
+
+  useEffect(() => {
+    if (!errors) {
+      setOtherError([]);
+      return;
+    }
+
+    setOrderFormErrors({ setError, errors, setOtherError });
+  }, [errors, setError]);
+
   const isCartItem = cart.length > 0;
+  const isOtherError = otherError.length > 0;
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>
@@ -96,10 +107,15 @@ const FormOrdering: React.FC = () => {
       >
         Заказать
       </Button>
-      {otherError && (
-        <Typography className={styles.otherErrorMessage}>
-          Произошла ошибка, повторите попытку.
-        </Typography>
+      {isOtherError && (
+        <>
+          {otherError.map((error) => (
+            <Typography key={error} className={styles.otherErrorMessage}>
+              {error}
+            </Typography>
+          ))}
+          )
+        </>
       )}
       <Typography
         className={styles.policy}

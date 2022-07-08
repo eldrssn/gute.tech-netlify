@@ -12,4 +12,11 @@ const selectUserProfile = createSelector(
   ({ profile }) => profile,
 );
 
-export { selectUserProfile };
+const selectUserOrders = createSelector(
+  selectUserStore,
+  ({ orders }) => orders,
+);
+
+const selectUserOrder = createSelector(selectUserStore, ({ order }) => order);
+
+export { selectUserProfile, selectUserOrders, selectUserOrder };

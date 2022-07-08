@@ -57,10 +57,10 @@ const useRouterQuery = () => {
   );
 
   const setQueryOption = useCallback(
-    (name: string, param: string, scroll = true) => {
+    (queries: ParsedUrlQueryInput, scroll = true) => {
       const newQuery = {
         ...query,
-        [name]: param,
+        ...queries,
       };
 
       updateQuery(newQuery, scroll);

@@ -2,6 +2,7 @@ import { QueryUrl } from 'constants/variables';
 import { Slug, Slugs } from 'types';
 import { CATALOG_QUERY_DEFAULT } from 'utility/utils/constants';
 import { makeStringify } from '.';
+import { OrdersRequestData } from 'api/models/user';
 
 const getLinkToProductPage = ({
   categorySlug,
@@ -52,7 +53,17 @@ const getLinkToVidgetCategory = (categorySlug: string) => {
   return `/?${QueryUrl.CATEGORY_QUERY}=${categorySlug}`;
 };
 
+const getLinkApiProfileOrder = ({
+  order,
+  created_after,
+  created_before,
+}: Omit<OrdersRequestData, 'size' | 'page'>) =>
+  `/user/profile/orders/?ordering=${order}${
+    created_after ? `&created_after=${created_after}` : ``
+  }${created_before ? `&created_before=${created_before}` : ``}`;
+
 export {
+  getLinkApiProfileOrder,
   getLinkToProductPage,
   getLinkToTransportProductPage,
   getLinkToCategory,

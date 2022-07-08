@@ -26,6 +26,16 @@ type TFormData = {
   branch: BranchOfficeData | null;
 };
 
+enum FormKey {
+  NAME_VALUE = 'nameValue',
+  PHONE_NUMBER = 'phoneNumber',
+  EMAIL_VALUE = 'emailValue',
+  PAYMENT_METHODS = 'paymentMethod',
+  PAYMENT_GATEWAY = 'paymentGateway',
+  BRANCHES_DATA = 'branchesData',
+  BRANCH = 'BRANCH',
+}
+
 type TDeleteItemButtonProps = {
   removeItem: (item: CartItemData) => void;
   item: CartItemData;
@@ -68,6 +78,7 @@ type TFormCountData = {
   count: number | null;
 };
 
+export { FormKey };
 export type {
   TFormData,
   TStateProps,

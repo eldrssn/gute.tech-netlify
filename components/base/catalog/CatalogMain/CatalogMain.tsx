@@ -18,12 +18,12 @@ import { makeStringify, scrollToTop } from 'utility/helpers';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
+import { PaginationNav } from 'components/ui/PaginationNav';
 import { Sorting, FilterRequest } from 'types';
 
 import { CatalogFilter } from '../CatalogFilter';
 import { CatalogFilterDrawer } from '../CatalogFilterDrawer';
 import { CatalogGrid } from '../CatalogGrid';
-import { CatalogPagination } from '../CatalogPagination';
 import { CatalogSort } from '../CatalogSort';
 import { PAGE_QUERY } from '../constants';
 import { isNotEnoughtItems } from '../helpers';
@@ -154,7 +154,7 @@ const CatalogMain: FC = () => {
             >
               <CatalogSort setSorting={setSorting} />
 
-              <CatalogPagination
+              <PaginationNav
                 pageCount={pageCount}
                 currentPage={page}
                 setPage={setPage}
@@ -168,7 +168,7 @@ const CatalogMain: FC = () => {
 
       {isMobile && data && (
         <Box className={cn(styles.cardHeaderContainer, styles.pages)}>
-          <CatalogPagination
+          <PaginationNav
             pageCount={pageCount}
             currentPage={page}
             setPage={setPage}

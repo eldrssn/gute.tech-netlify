@@ -15,6 +15,7 @@ import { ActiveAutorizationFormKey } from 'constants/types';
 
 import { FormLogIn } from './components/FormLogIn';
 import { FormRegistration } from './components/FormRegistration';
+// TODO: дописать сброс пароля
 // import { FormResetPassword } from './components/FormResetPassword';
 import { FormRegistrationVerification } from './components/FormRegistrationVerification';
 import { OuterProps } from './types';

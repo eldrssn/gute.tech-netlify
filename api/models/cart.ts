@@ -71,6 +71,14 @@ type OrderingResponseData = {
   payment_type: string;
 };
 
+type OrderingResponseErrorData = {
+  name: string[];
+  email: string[];
+  phone: string[];
+  cart: string[];
+  detail: string;
+};
+
 type StatusRequestData = {
   orderId: string | string[] | undefined;
 };
@@ -82,6 +90,7 @@ type StatusResponseData = {
 export type {
   OrderingRequestData,
   PaymentMethodResponseData,
+  OrderingResponseErrorData,
   ProductResponseData,
   StatusResponseData,
   ProductRequestData,

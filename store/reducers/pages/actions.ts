@@ -13,20 +13,3 @@ const fetchPage = createAsyncAction<PageData, PageSlug>({
 });
 
 export { fetchPagesMenu, fetchPage };
-
-//TODO: удалить после теста со всех редьюсеров
-
-// const fetchPagesMenu = createAsyncThunk('pages/fetchPagesMenu', async () => {
-//   const data = await getPagesMenu();
-
-//   return data;
-// });
-
-// const fetchPage = createAsyncThunk(
-//   'pages/fetchPage',
-//   async ({ slug }: PageSlug) => {
-//     const data = await getPage({ slug });
-
-//     return data;
-//   },
-// );
