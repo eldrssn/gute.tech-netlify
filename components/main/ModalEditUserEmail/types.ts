@@ -1,12 +1,13 @@
 import { UseFormSetValue } from 'react-hook-form';
-import { TFormData as TFormDataUserForm } from 'components/base/profile/UserForm/types';
+import { ProfileResponseData } from 'api/models/user';
 
 type TOuterProps = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  setValue: UseFormSetValue<TFormDataUserForm>;
+  setValue: UseFormSetValue<ProfileResponseData>;
 };
 
 type TFormData = { email: string; code: string };
+type TFormDataKeys = keyof TFormData;
 
-export type { TOuterProps, TFormData };
+export type { TOuterProps, TFormData, TFormDataKeys };

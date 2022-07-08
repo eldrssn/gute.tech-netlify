@@ -1,3 +1,5 @@
+import { TFormDataFields } from './types';
+
 const MIN_LENGTH = 2;
 const MAX_LENGTH = 30;
 
@@ -10,6 +12,9 @@ const MAX_DATE = new Date(
 const MIN_DATE = new Date(
   new Date().setFullYear(new Date().getFullYear() - MAX_AGE),
 );
+
+const DATE_INPUT_MASK = '__/__/____';
+const DATE_INPUT_FORMAT = 'dd/MM/yyyy';
 
 const reqExpFullName = /^[а-яА-ЯёЁa-zA-Z-\s]+$/;
 const reqExpUsername = /^[а-яА-ЯёЁa-zA-Z0-9*_-\s]+$/;
@@ -47,10 +52,6 @@ const usernameRule = {
     value: MIN_LENGTH,
     message: `Поле должно содержать более ${MIN_LENGTH} символов`,
   },
-  required: {
-    value: true,
-    message: 'Поле обязательно',
-  },
 };
 
 const inputEmailRule = {
@@ -58,7 +59,6 @@ const inputEmailRule = {
     value: reqExpEmail,
     message: 'Введите корректный E-mail',
   },
-  maxLength: 40,
   required: { value: true, message: 'Поле обязательно' },
 };
 
@@ -69,6 +69,17 @@ const inputCodeRule = {
     value: 4,
     message: 'Код не должен быть более 4-х символов',
   },
+};
+
+const ProfileFields: Record<string, TFormDataFields> = {
+  LAST_NAME: 'last_name',
+  FIRST_NAME: 'first_name',
+  PATRONYMIC: 'patronymic',
+  PHONE_NUMBER: 'phone_number',
+  DATE_OF_BIRTHDAY: 'date_of_birthday',
+  EMAIL: 'email',
+  DATE_JOINED: 'date_joined',
+  TRANSPORT: 'transport',
 };
 
 const selectSex = [
@@ -97,33 +108,19 @@ const selectCity = [
   },
 ];
 
-const mockValues = {
-  username: 'canttouchmytralala',
-  password: '',
-  last_name: 'Петров',
-  first_name: 'Ипполит',
-  patronymic: 'Виссарионович',
-  phone_number: '+79991111111',
-  date_of_birthday: null,
-  email: 'example@email.com',
-  date_joined: new Date(),
-  transport: '',
-  sex: 'male',
-  city: '',
-  country: 'Россия',
-};
-
 export {
+  DATE_INPUT_MASK,
+  DATE_INPUT_FORMAT,
   inputFullNameRule,
   inputEmailRule,
   reqExpEmail,
   inputCodeRule,
   selectSex,
-  mockValues,
   MAX_DATE,
   MIN_DATE,
   MAX_AGE,
   MIN_AGE,
   selectCity,
   usernameRule,
+  ProfileFields,
 };

@@ -1,15 +1,48 @@
-export type ProfileResponseData = {
+type ProfileResponseData = {
   last_name: string;
   first_name: string;
   patronymic: string;
   phone_number: string;
-  date_of_birthday: string;
+  date_of_birthday: string | null;
   email: string;
   date_joined: string;
-  transport: string[];
+  transport: string;
 };
 
-export type OrdersRequestData = {
+type ProfileRequestData = {
+  status: string;
+  debug_code: string;
+};
+
+type EditProfileRequestData = {
+  last_name?: string;
+  first_name?: string;
+  patronymic?: string;
+  phone_number?: string;
+  date_of_birthday?: string | null;
+  email?: string;
+  date_joined?: string;
+  transport?: string;
+};
+
+type EditProfileResponseData = Record<string, string | string[]>;
+type EditProfileResponseErrorData = EditProfileResponseData;
+
+type VerifyEmailRequestData = {
+  code: string;
+  email: string;
+};
+
+type VerifyEmailResponseData = {
+  details: string;
+  status: string;
+};
+
+type VerifyEmailResponseErrorData = {
+  code: string[];
+};
+
+type OrdersRequestData = {
   order: string;
   created_after?: string;
   created_before?: string;
@@ -17,24 +50,24 @@ export type OrdersRequestData = {
   size?: number;
 };
 
-export type Order = {
+type Order = {
   id: string;
   created_at: string;
   total_price: string;
 };
 
-export type OrdersResponseData = {
+type OrdersResponseData = {
   current: number;
   pages: number;
   total: number;
   results: Order[];
 };
 
-export type OrderRequestData = {
+type OrderRequestData = {
   orderId: string;
 };
 
-export type Product = {
+type Product = {
   id: number;
   title: string;
   vendor_code: string;
@@ -43,12 +76,12 @@ export type Product = {
   is_service: boolean;
 };
 
-export enum Payment {
+enum Payment {
   CARD = 'CARD',
   CASH = 'CASH',
 }
 
-export type OrderResponseData = {
+type OrderResponseData = {
   id: number;
   showcase: string;
   payment_type: Payment;
@@ -58,4 +91,23 @@ export type OrderResponseData = {
   gateway_order_id: string;
   created_at: string;
   products: Product[];
+};
+
+export { Payment };
+
+export type {
+  Order,
+  OrderRequestData,
+  OrdersResponseData,
+  OrdersRequestData,
+  OrderResponseData,
+  Product,
+  ProfileResponseData,
+  ProfileRequestData,
+  EditProfileRequestData,
+  EditProfileResponseData,
+  EditProfileResponseErrorData,
+  VerifyEmailRequestData,
+  VerifyEmailResponseData,
+  VerifyEmailResponseErrorData,
 };

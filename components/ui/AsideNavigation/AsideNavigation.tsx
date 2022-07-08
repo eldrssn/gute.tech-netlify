@@ -1,9 +1,13 @@
 import React from 'react';
-import { Box, CardMedia, Divider, MenuItem } from '@mui/material';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import styles from './AsideNavigation.module.scss';
-import classnames from 'classnames/bind';
 import { useRouter } from 'next/router';
+import classnames from 'classnames/bind';
+import { Box, CardMedia, Divider, MenuItem } from '@mui/material';
+
+import { selectUserProfile } from 'store/reducers/user/selectors';
+
+import styles from './AsideNavigation.module.scss';
 
 const cn = classnames.bind(styles);
 
@@ -14,6 +18,9 @@ const tabTittles = [
 ];
 const AsideNavigation = () => {
   const router = useRouter();
+  const { data } = useSelector(selectUserProfile);
+
+  const fillName = data && `${data.first_name} ${data.last_name}`;
 
   return (
     <Box className={styles.navContainer}>
@@ -24,7 +31,7 @@ const AsideNavigation = () => {
         alt='Фото пользователя'
         className={styles.userImage}
       />
-      <p className={styles.userName}>Ипполит Виссарионович</p>
+      <p className={styles.userName}>{fillName}</p>
 
       <Divider className={styles.divider} />
       {tabTittles.map(({ title, href }) => (

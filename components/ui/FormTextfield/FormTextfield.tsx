@@ -17,12 +17,33 @@ const FormTextfield: FC<FormTextfieldProps> = ({
   disabled,
   onClick,
   errorMessage,
-}) => (
-  <>
+}) => {
+  const isMockField = name && register;
+
+  return isMockField ? (
+    <>
+      <TextField
+        className={styles.inputField}
+        label={label}
+        {...register(name, rule)}
+        placeholder={placeholder}
+        error={error}
+        onChange={onChange}
+        onBlur={onBlur}
+        required={required}
+        disabled={disabled}
+        onClick={onClick}
+      />
+      {error && (
+        <FormHelperText error className={styles.inputField_error}>
+          {errorMessage}
+        </FormHelperText>
+      )}
+    </>
+  ) : (
     <TextField
       className={styles.inputField}
       label={label}
-      {...register(name, rule)}
       placeholder={placeholder}
       error={error}
       onChange={onChange}
@@ -31,12 +52,7 @@ const FormTextfield: FC<FormTextfieldProps> = ({
       disabled={disabled}
       onClick={onClick}
     />
-    {error && (
-      <FormHelperText error className={styles.inputField_error}>
-        {errorMessage}
-      </FormHelperText>
-    )}
-  </>
-);
+  );
+};
 
 export { FormTextfield };

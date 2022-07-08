@@ -35,8 +35,8 @@
 
 .countCartItem {
   position: absolute;
-  top: 13%;
-  left: 18%;
+  top: 6px;
+  left: 10px;
   transform: translate(50%, -50%);
   display: flex;
   justify-content: center;
@@ -44,9 +44,14 @@
   color: $white;
   background-color: $red1;
   height: 17px;
-  width: 17px;
+  min-width: 17px;
   border-radius: 10px;
   font-size: 13px;
+}
+
+.countCartItem_number {
+  margin-top: 1px;
+  padding: 4px;
 }
 
 .orderTotalCard {
