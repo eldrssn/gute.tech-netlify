@@ -21,6 +21,7 @@ const OrdersSort: FC = () => {
 
   useEffect(() => {
     setDirectionByDate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const isUp = () => orderType === DIRECTIONS.UP;

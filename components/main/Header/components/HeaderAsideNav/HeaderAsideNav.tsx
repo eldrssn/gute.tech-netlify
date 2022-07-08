@@ -71,7 +71,9 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
               <Box className={styles.shoppingCartIcon}>
                 <Box className={styles.shoppingCart} />
                 <Box component='div' className={styles.countCartItem}>
-                  {amountCartItems}
+                  <span className={styles.countCartItem_number}>
+                    {amountCartItems}
+                  </span>
                 </Box>
                 <Typography className={styles.orderTotalCard}>
                   {formattedOrderTotal}
