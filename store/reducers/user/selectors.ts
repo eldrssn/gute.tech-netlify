@@ -12,6 +12,16 @@ const selectUserProfile = createSelector(
   ({ profile }) => profile,
 );
 
+const selectEditionUserProfile = createSelector(
+  selectUserStore,
+  ({ editProfile }) => editProfile,
+);
+
+const selectVerifyEmail = createSelector(
+  selectUserStore,
+  ({ verifyEmail }) => verifyEmail,
+);
+
 const selectUserOrders = createSelector(
   selectUserStore,
   ({ orders }) => orders,
@@ -19,4 +29,10 @@ const selectUserOrders = createSelector(
 
 const selectUserOrder = createSelector(selectUserStore, ({ order }) => order);
 
-export { selectUserProfile, selectUserOrders, selectUserOrder };
+export {
+  selectUserProfile,
+  selectUserOrders,
+  selectUserOrder,
+  selectEditionUserProfile,
+  selectVerifyEmail,
+};

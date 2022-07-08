@@ -6,6 +6,16 @@ const initialState: UserStore = {
     isLoading: false,
     error: null,
   },
+  editProfile: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
+  verifyEmail: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
   orders: {
     data: {
       results: [],

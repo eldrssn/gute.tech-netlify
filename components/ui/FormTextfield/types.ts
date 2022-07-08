@@ -1,16 +1,16 @@
 import { UseFormRegister } from 'react-hook-form';
 
-import {
-  TFormData,
-  TFormDataFields,
-} from 'components/base/profile/UserForm/types';
+import { TFormDataFields } from 'components/base/profile/UserForm/types';
+import { ProfileResponseData } from 'api/models/user';
 
 type FormTextfieldProps = {
-  register: UseFormRegister<TFormData>;
-  name: TFormDataFields;
+  register?: UseFormRegister<ProfileResponseData>;
+  name?: TFormDataFields;
   label: string;
   error?: boolean;
-  onChange?: () => Promise<void>;
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
   onBlur?: (
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
   ) => void;
