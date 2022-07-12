@@ -1,26 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import classnames from 'classnames/bind';
 import { Box, CardMedia, Divider, MenuItem } from '@mui/material';
 
+import { useWindowSize } from 'hooks/useWindowSize';
 import { selectUserProfile } from 'store/reducers/user/selectors';
+
+import { MenuItems } from './components/MenuItems';
+import { tabTittles } from './constants';
 
 import styles from './AsideNavigation.module.scss';
 
 const cn = classnames.bind(styles);
 
-const tabTittles = [
-  { title: 'Главная страница', href: '/' },
-  { title: 'Изменить профиль', href: '/profile' },
-  { title: 'История заказов', href: '/profile/orders' },
-];
 const AsideNavigation = () => {
-  const router = useRouter();
+  const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
+  const { isMobile } = useWindowSize();
   const { data } = useSelector(selectUserProfile);
 
   const fillName = data && `${data.first_name} ${data.last_name}`;
+
+  const handleToggleMobileMenu = () => {
+    setIsOpenMobileMenu((isOpen) => !isOpen);
+  };
 
   return (
     <Box className={styles.navContainer}>
@@ -34,19 +36,23 @@ const AsideNavigation = () => {
       <p className={styles.userName}>{fillName}</p>
 
       <Divider className={styles.divider} />
-      {tabTittles.map(({ title, href }) => (
-        <Link href={href} key={title}>
-          <a>
-            <MenuItem
-              className={cn(styles.navItem, {
-                [styles.navItem_active]: href === router.pathname,
-              })}
-            >
-              {title}
-            </MenuItem>
-          </a>
-        </Link>
-      ))}
+
+      {isMobile ? (
+        <>
+          <MenuItem
+            className={cn(styles.navItem, styles.navMobileMenu, {
+              [styles.up]: isOpenMobileMenu,
+            })}
+            onClick={handleToggleMobileMenu}
+          >
+            Меню
+          </MenuItem>
+
+          {isOpenMobileMenu && <MenuItems tabTittles={tabTittles} />}
+        </>
+      ) : (
+        <MenuItems tabTittles={tabTittles} />
+      )}
     </Box>
   );
 };

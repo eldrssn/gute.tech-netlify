@@ -1,11 +1,10 @@
-@import "~styles/colors.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .navContainer {
   display: flex;
   flex-direction: column;
-  width: 250px;
   min-width: 250px;
-  height: 400px;
 
   background-color: $white2;
   border: 1px solid $transparentBlue1;
@@ -23,6 +22,7 @@
 .userImage {
   width: 200px;
   margin: 10px auto;
+  border-radius: 50%;
 }
 
 .userName {
@@ -33,4 +33,73 @@
 .divider {
   width: 100px;
   margin: 5px auto;
+}
+
+@media (max-width: $mobile) {
+  .userImage {
+    width: auto;
+    height: 200px;
+    margin: 10px auto;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .navContainer {
+    width: auto;
+    height: auto;
+    min-width: auto;
+  }
+
+  .navItem {
+    display: block;
+    width: auto;
+    margin-left: 0;
+    text-align: center;
+    background-color: $blue7;
+    color: $white;
+    margin: 4px;
+    min-height: auto;
+
+    &:hover {
+      background-color: $blue1;
+      color: $white;
+    }
+  }
+
+  .navItem_active {
+    border-right: none;
+    background-color: $blue1;
+    color: $white;
+  }
+
+  .navMobileMenu {
+    &:hover {
+      background-color: $blue7;
+    }
+
+    &::after {
+      display: inline-block;
+      margin-left: 7px;
+      margin-bottom: 1px;
+      width: 0;
+      height: 0;
+      border-top: 6px solid $white;
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+      content: '';
+    }
+
+    &.up::after {
+      border-top-color: transparent;
+      border-bottom: 6px solid $white;
+    }
+  }
+}
+
+@media (max-width: $xxsMobile) {
+  .userImage {
+    width: 100%;
+    height: auto;
+    padding: 5px;
+  }
 }

@@ -19,10 +19,13 @@ import {
   verifyEmail,
   resetEditProfile,
 } from 'store/reducers/user/actions';
-import { selectVerifyEmail } from 'store/reducers/user/selectors';
+import {
+  selectEditionUserProfile,
+  selectVerifyEmail,
+} from 'store/reducers/user/selectors';
 
 import { modalFields } from './constants';
-import { checkForErrors } from './helpers';
+import { checkForErrors, checkSameEmail } from './helpers';
 import { TFormData, TFormDataKeys, TOuterProps } from './types';
 import styles from './modalEditUserEmail.module.scss';
 
@@ -30,6 +33,7 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
   isOpen,
   setIsOpen,
   setValue,
+  getValues,
 }) => {
   const {
     register,
@@ -37,6 +41,7 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
     trigger,
     handleSubmit,
     setError,
+    clearErrors,
     formState: { errors },
     setValue: setValueModal,
   } = useForm<TFormData>({
@@ -51,6 +56,8 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
   const { data: verifyEmailResponse, error: verifyEmailError } =
     useSelector(selectVerifyEmail);
 
+  const { error: editProfileError } = useSelector(selectEditionUserProfile);
+
   const isCorrectEmail = Boolean(!errors.email);
   const isCorrectCode = Boolean(!errors.code);
 
@@ -58,26 +65,39 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
     if (!isOpen) {
       setValueModal(modalFields.EMAIL, '');
       setValueModal(modalFields.CODE, '');
+      clearErrors(modalFields.EMAIL);
+      clearErrors(modalFields.CODE);
     }
-  }, [isOpen, setValueModal]);
+  }, [isOpen, setValueModal, clearErrors]);
 
   useEffect(() => {
     checkForErrors(verifyEmailError, setError);
-  }, [verifyEmailError, setError]);
+    checkForErrors(editProfileError, setError);
+  }, [verifyEmailError, editProfileError, setError]);
 
   const closeModal = () => {
     setIsOpen(false);
-    setNextStep(false);
-    dispatch(resetVerifyEmail());
-    dispatch(resetEditProfile());
+
+    setTimeout(() => {
+      setNextStep(false);
+      dispatch(resetVerifyEmail());
+      dispatch(resetEditProfile());
+    });
   };
 
-  const handleClickGetCode = () => {
-    trigger();
+  const handleClickGetCode = async () => {
+    await trigger();
 
-    const email = getValuesModal(modalFields.EMAIL);
-    if (isCorrectEmail && email) {
-      dispatch(editProfile({ email }));
+    const newEmail = getValuesModal(modalFields.EMAIL);
+    const oldEmail = getValues(ProfileFields.EMAIL);
+
+    if (newEmail === oldEmail) {
+      checkSameEmail(setError);
+      return;
+    }
+
+    if (isCorrectEmail && newEmail) {
+      dispatch(editProfile({ email: newEmail }));
       setNextStep(true);
     }
   };

@@ -1,3 +1,5 @@
+@import '~styles/breakpoints.scss';
+
 .mainContainer {
   display: flex;
   flex-direction: row;
@@ -6,4 +8,14 @@
 .userInfo {
   margin: 30px;
   flex-grow: 1;
+}
+
+@media (max-width: $mobile) {
+  .mainContainer {
+    flex-direction: column;
+  }
+
+  .userInfo {
+    margin: 20px 0;
+  }
 }
