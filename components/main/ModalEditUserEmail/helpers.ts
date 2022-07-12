@@ -1,25 +1,41 @@
 import { UseFormSetError } from 'react-hook-form';
 
-import { VerifyEmailResponseErrorData } from 'api/models/user';
+import { EditProfileResponseErrorData } from 'api/models/user';
 import { TFormData } from './types';
+import { CUSTOM_TYPE_ERROR, modalFields, NON_FIELD_ERRORS } from './constants';
 
 const checkForErrors = (
-  response: VerifyEmailResponseErrorData | null,
+  response: EditProfileResponseErrorData | null,
   setError: UseFormSetError<TFormData>,
 ) => {
   if (!response) {
     return;
   }
-  const fields = Object.keys(response);
+  const { errors } = response;
+  const fields = Object.keys(errors);
 
   fields.forEach((field) => {
-    if (field === 'code') {
-      setError('code', {
-        type: 'custom',
-        message: response[field][0],
+    if (field === modalFields.CODE) {
+      setError(modalFields.CODE, {
+        type: CUSTOM_TYPE_ERROR,
+        message: errors[field][0],
+      });
+    }
+
+    if (field === NON_FIELD_ERRORS) {
+      setError(modalFields.EMAIL, {
+        type: CUSTOM_TYPE_ERROR,
+        message: errors[field][0],
       });
     }
   });
 };
 
-export { checkForErrors };
+const checkSameEmail = (setError: UseFormSetError<TFormData>) => {
+  setError(modalFields.EMAIL, {
+    type: CUSTOM_TYPE_ERROR,
+    message: 'Новый email совпадает со старым',
+  });
+};
+
+export { checkForErrors, checkSameEmail };

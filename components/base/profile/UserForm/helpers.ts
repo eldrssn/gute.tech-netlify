@@ -22,30 +22,53 @@ const correctRegister = (
   return correctedRegister.join(' ');
 };
 
-const validateMinAge = (stringfiedDate: string | null) => {
-  if (stringfiedDate) {
-    const date = new Date(stringfiedDate);
+const getDate = (stringifiedDate: string | null) =>
+  stringifiedDate ? new Date(stringifiedDate) : null;
 
+const formatStringifiedDate = (date: string) =>
+  date.split('/').reverse().join('-');
+
+const formatDate = (date: string | null) => {
+  if (!date) {
+    return;
+  }
+  const formatedDate = formatStringifiedDate(date);
+  return new Date(formatedDate);
+};
+
+const checkCorrectDate = (date: string | null) => {
+  if (!date) {
+    return;
+  }
+  const timestamp = Date.parse(formatStringifiedDate(date));
+
+  return !isNaN(timestamp) || 'Некорректная дата';
+};
+
+const cutDate = (date: Date | null) => {
+  return date ? date.toISOString().substring(0, 10) : null;
+};
+
+const validateMinAge = (date: string | null) => {
+  const dateOfBirth = formatDate(date);
+
+  if (dateOfBirth) {
     return (
-      date > new Date(MIN_DATE) || `Дата не может быть больше ${MAX_AGE} лет`
+      dateOfBirth > new Date(MIN_DATE) ||
+      `Дата не может быть больше ${MAX_AGE} лет`
     );
   }
 };
 
-const validateMaxAge = (stringfiedDate: string | null) => {
-  if (stringfiedDate) {
-    const date = new Date(stringfiedDate);
+const validateMaxAge = (date: string | null) => {
+  const dateOfBirth = formatDate(date);
 
+  if (dateOfBirth) {
     return (
-      date < new Date(MAX_DATE) || `Дата не может быть меньше ${MIN_AGE} лет`
+      dateOfBirth < new Date(MAX_DATE) ||
+      `Дата не может быть меньше ${MIN_AGE} лет`
     );
   }
-};
-
-const formatDate = (keyboardInputValue: string) => {
-  const formatedDate = keyboardInputValue.split('/').reverse().join('-');
-
-  return new Date(formatedDate).toISOString().substring(0, 10) || '';
 };
 
 const filterDirtyFields = ({
@@ -71,19 +94,19 @@ const filterDirtyFields = ({
 
 const setCustomErrors = ({
   editProfileError,
-  data,
+  userProfile,
   setError,
 }: {
   editProfileError: EditProfileResponseErrorData | null;
-  data: ProfileResponseData;
+  userProfile: ProfileResponseData | null;
   setError: UseFormSetError<ProfileResponseData>;
 }) => {
-  if (!editProfileError) {
+  if (!editProfileError || !userProfile) {
     return;
   }
 
   Object.entries(editProfileError).forEach(([field, error]) => {
-    const profileResponseFields = Object.keys(data);
+    const profileResponseFields = Object.keys(userProfile);
 
     if (!profileResponseFields.includes(field)) {
       return;
@@ -105,4 +128,8 @@ export {
   formatDate,
   filterDirtyFields,
   setCustomErrors,
+  getDate,
+  cutDate,
+  checkCorrectDate,
+  formatStringifiedDate,
 };

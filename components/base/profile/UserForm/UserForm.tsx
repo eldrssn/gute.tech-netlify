@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Box } from '@mui/material';
@@ -48,24 +48,27 @@ const UserForm = () => {
     shouldFocusError: true,
   });
 
-  const onSumbit = handleSubmit((data) => {
-    const filteredDirtyFields = filterDirtyFields({ data, dirtyFields });
-    dispatch(editProfile(filteredDirtyFields));
-
+  useEffect(() => {
     const isSuccess = editProfileResponse?.status === 'success';
 
     if (isSuccess) {
-      setFormChanging(false);
-      setIsOpenModalSave(false);
-      dispatch(resetEditProfile());
       return;
     }
 
     setCustomErrors({
       editProfileError,
-      data,
+      userProfile,
       setError,
     });
+  }, [editProfileError, editProfileResponse, setError, userProfile]);
+
+  const onSumbit = handleSubmit((data) => {
+    const filteredDirtyFields = filterDirtyFields({ data, dirtyFields });
+    dispatch(editProfile(filteredDirtyFields));
+
+    setFormChanging(false);
+    setIsOpenModalSave(false);
+    dispatch(resetEditProfile());
   });
 
   const openModalSave = async () => {
@@ -97,6 +100,7 @@ const UserForm = () => {
         isOpen={isOpenModalEmail}
         setIsOpen={setIsOpenModalEmail}
         setValue={setValue}
+        getValues={getValues}
       />
 
       <form onSubmit={onSumbit} className={styles.formContainer}>

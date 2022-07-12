@@ -26,7 +26,8 @@ type EditProfileRequestData = {
 };
 
 type EditProfileResponseData = Record<string, string | string[]>;
-type EditProfileResponseErrorData = EditProfileResponseData;
+type EditProfileResponseErrorData = { errors: EditProfileResponseData };
+type VerifyEmailErrors = { code: string[] };
 
 type VerifyEmailRequestData = {
   code: string;
@@ -39,7 +40,7 @@ type VerifyEmailResponseData = {
 };
 
 type VerifyEmailResponseErrorData = {
-  code: string[];
+  errors: VerifyEmailErrors;
 };
 
 type OrdersRequestData = {

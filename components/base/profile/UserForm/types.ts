@@ -51,10 +51,20 @@ type AccountFieldsProps = PersonalFieldsProps & {
 
 type TDate = Date | null | undefined;
 
+type DatepickerProps = {
+  getValues: UseFormGetValues<ProfileResponseData>;
+  errors: TErrors;
+  register: UseFormRegister<ProfileResponseData>;
+  setValue: UseFormSetValue<ProfileResponseData>;
+  onChangeForm: () => Promise<void>;
+};
+
 export type {
   TDate,
+  TErrors,
   TFormDataFields,
   PersonalFieldsProps,
   AccountFieldsProps,
   TDirtyFields,
+  DatepickerProps,
 };
