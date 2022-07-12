@@ -48,6 +48,7 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
     mode: 'onTouched',
     reValidateMode: 'onChange',
     criteriaMode: 'firstError',
+
     shouldFocusError: true,
   });
   const dispatch = useDispatch();
@@ -99,32 +100,7 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
       dispatch(editProfile({ email: newEmail }));
       setNextStep(true);
     }
-  }, [isOpen, setValueModal]);
-
-  useEffect(() => {
-    checkForErrors(verifyEmailError, setError);
-  }, [verifyEmailError, setError]);
-
-  const handleChangeFormValue = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: TFormDataKeys,
-  ) => {
-    setValueModal(field, event.target.value);
   };
-
-  const handleClickSubmitCode = handleSubmit(() => {
-    const code = getValuesModal(modalFields.CODE);
-    const email = getValuesModal(modalFields.EMAIL);
-
-    if (isCorrectCode && code) {
-      dispatch(verifyEmail({ code, email }));
-    }
-
-    if (verifyEmailResponse?.status === 'Почта подтверждена') {
-      closeModal();
-      setValue(ProfileFields.EMAIL, email);
-    }
-  });
 
   const handleChangeFormValue = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
