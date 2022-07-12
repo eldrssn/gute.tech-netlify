@@ -48,7 +48,6 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
     mode: 'onTouched',
     reValidateMode: 'onChange',
     criteriaMode: 'firstError',
-
     shouldFocusError: true,
   });
   const dispatch = useDispatch();
