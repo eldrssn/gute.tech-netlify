@@ -10,6 +10,10 @@ import { OrdersFilter } from 'components/base/orders/OrdersFilter';
 import { AsideNavigation } from 'components/ui/AsideNavigation';
 import { PaginationNav } from 'components/ui/PaginationNav';
 import { selectUserOrders } from 'store/reducers/user/selectors';
+import {
+  selectIsAuthorized,
+  selectLoadingAuthorized,
+} from 'store/reducers/authentication/selectors';
 import { fetchOrders } from 'store/reducers/user/actions';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { makeStringify } from 'utility/helpers';
@@ -25,12 +29,23 @@ const OrdersPage = () => {
   const router = useRouter();
   const { getQueryOption } = useRouterQuery();
 
-  const { ordering, created_after, created_before } = router.query;
   const { data: userOrders } = useSelector(selectUserOrders);
+  const isAuthorized = useSelector(selectIsAuthorized);
+  const loadingAuthorized = useSelector(selectLoadingAuthorized);
+
+  const { ordering, created_after, created_before } = router.query;
   const { pages, total } = userOrders;
 
   const order = makeStringify(ordering);
   const pageCount = Number(pages);
+
+  useEffect(() => {
+    if (isAuthorized || loadingAuthorized) {
+      return;
+    }
+
+    router.push('/');
+  }, [isAuthorized, router, loadingAuthorized]);
 
   useEffect(() => {
     if (!router.isReady || !total) {

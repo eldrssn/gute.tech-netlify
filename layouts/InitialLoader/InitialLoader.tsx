@@ -35,9 +35,7 @@ const InitialLoader: React.FC = ({ children }) => {
   const [cookiesTransportId, setCookieTransportId] = useCookies([
     CookieKey.TRANSPORT_ID,
   ]);
-  const [cookiesCartItems, setCookieCartItems] = useCookies([
-    CookieKey.CARTITEMS,
-  ]);
+  const [cookiesCartItems, setCookieCartItems] = useCookies();
 
   const isLoadingApp = windowWidth;
   const transportIdQuery = getQueryOption(QueryUrl.TRANSPORT_ID);
@@ -72,7 +70,7 @@ const InitialLoader: React.FC = ({ children }) => {
         );
       });
     }
-  }, [cookiesCartItems]);
+  }, []);
 
   useEffect(() => {
     const transportIdSaved = cookiesTransportId.transportId;
@@ -103,7 +101,9 @@ const InitialLoader: React.FC = ({ children }) => {
   }, [isAuthorized]);
 
   useEffect(() => {
-    setCookieCartItems(CookieKey.CARTITEMS, getSlugsCartItemsFromCart(cart));
+    setCookieCartItems(CookieKey.CART_ITEMS, getSlugsCartItemsFromCart(cart), {
+      path: '/',
+    });
   }, [cart, setCookieCartItems]);
 
   useEffect(() => {

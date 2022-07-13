@@ -44,7 +44,7 @@ const FormOrdering: React.FC = () => {
 
   const paymentUrl = createOrderStatus.data?.payment_url;
   const isCreateOrdering = createOrderStatus.isCreateOrdering;
-  const errors = createOrderStatus.errorCreateOrdering;
+  const errors = createOrderStatus.errorCreateOrdering?.errors;
 
   const onSubmit = handleSubmit((data) => {
     const cartOrder = getCartOrder(cart);

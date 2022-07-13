@@ -29,10 +29,17 @@ const selectUserOrders = createSelector(
 
 const selectUserOrder = createSelector(selectUserStore, ({ order }) => order);
 
+const selectOrderTotal = createSelector(selectUserStore, ({ order }) =>
+  order.data?.products.reduce((total, item) => {
+    return Number(item.quantity * item.price) + total;
+  }, 0),
+);
+
 export {
   selectUserProfile,
   selectUserOrders,
   selectUserOrder,
   selectEditionUserProfile,
   selectVerifyEmail,
+  selectOrderTotal,
 };

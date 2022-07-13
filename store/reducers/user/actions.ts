@@ -49,11 +49,13 @@ const resetEditProfile = createAction('user/resetEditProfile');
 const fetchOrders = createAsyncAction<OrdersResponseData, OrdersRequestData>({
   typeAction: 'user/fetchOrders',
   request: getOrders,
+  shouldHandleError: true,
 });
 
 const fetchOrder = createAsyncAction<OrderResponseData, OrderRequestData>({
   typeAction: 'user/fetchOrder',
   request: getOrder,
+  shouldHandleError: true,
 });
 
 export {

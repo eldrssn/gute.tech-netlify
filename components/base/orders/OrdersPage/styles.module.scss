@@ -37,3 +37,17 @@
   left: 0;
   z-index: 1000;
 }
+
+@media (max-width: $mobile) {
+  .cardHeader {
+    top: 125px;
+  }
+
+  .mainContent {
+    margin-left: 0;
+  }
+
+  .mainBox {
+    flex-direction: column;
+  }
+}

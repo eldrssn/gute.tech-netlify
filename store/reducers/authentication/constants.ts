@@ -20,9 +20,24 @@ const initialState: AuthenticationStore = {
     errorRegistrationVerificationForm: null,
   },
   registrationVerificationRetry: {
-    isRegistrationVerificationRetry: false,
     loadingRegistrationVerificationRetry: false,
     errorRegistrationVerificationRetry: null,
+  },
+  resetPasswordForm: {
+    loadingResetPasswordForm: false,
+    errorResetPasswordForm: null,
+    phoneNumber: null,
+  },
+  resetPasswordVerificationForm: {
+    phoneNumber: null,
+    code: null,
+    errorResetPasswordVerificationForm: null,
+    loadingResetPasswordVerificationForm: false,
+  },
+  resetPasswordSetForm: {
+    isResetPassword: false,
+    loadingResetPasswordSetForm: false,
+    errorResetPasswordSetForm: null,
   },
   activeAuthorizationForm: ActiveAutorizationFormKey.AUTHORIZATION,
 };

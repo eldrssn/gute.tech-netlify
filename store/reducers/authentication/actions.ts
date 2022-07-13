@@ -6,6 +6,9 @@ import {
   postRegistration,
   postRegistrationVerify,
   postRegistrationVerifyRetry,
+  postResetPasswordRequest,
+  postResetPasswordVerify,
+  putResetPassword,
 } from 'api/routes/authentication';
 import {
   RefreshTokenRequestData,
@@ -17,6 +20,12 @@ import {
   RefreshTokenResponseData,
   RegisterResponseData,
   RegisterVerifyResponseData,
+  ResetPasswordRequestData,
+  ResetPasswordResponseData,
+  ResetPasswordVerifyRequestData,
+  ResetPasswordVerifyResponseData,
+  ResetPasswordSetRequestData,
+  ResetPasswordSetResponseData,
 } from 'api/models/authentication';
 import { createAsyncAction } from 'utility/helpers/store';
 import { ActiveAutorizationFormKey, CookieKey } from 'constants/types';
@@ -78,6 +87,35 @@ const fetchRegisterVerificationRetry = createAsyncAction<
   shouldHandleError: true,
 });
 
+const fetchResetPassword = createAsyncAction<
+  ResetPasswordResponseData,
+  ResetPasswordRequestData
+>({
+  typeAction: 'authentication/fetchResetPassword',
+  request: postResetPasswordRequest,
+  shouldHandleError: true,
+  shouldReturnRequestData: true,
+});
+
+const fetchResetPasswordVerification = createAsyncAction<
+  ResetPasswordVerifyResponseData,
+  ResetPasswordVerifyRequestData
+>({
+  typeAction: 'authentication/fetchResetPasswordVerification',
+  request: postResetPasswordVerify,
+  shouldHandleError: true,
+  shouldReturnRequestData: true,
+});
+
+const fetchResetPasswordSet = createAsyncAction<
+  ResetPasswordSetResponseData,
+  ResetPasswordSetRequestData
+>({
+  typeAction: 'authentication/fetchResetPasswordSet',
+  request: putResetPassword,
+  shouldHandleError: true,
+});
+
 export {
   fetchAccessToken,
   fetchTokens,
@@ -87,4 +125,7 @@ export {
   resetAllError,
   resetAllField,
   setActiveAuthorizationForm,
+  fetchResetPassword,
+  fetchResetPasswordVerification,
+  fetchResetPasswordSet,
 };

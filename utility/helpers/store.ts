@@ -37,7 +37,9 @@ const createAsyncAction = <ResponseData, RequestData = never>({
             const response = await refreshToken({ refresh });
             setCookie(CookieKey.ACCESS_TOKEN, response.access);
 
-            return apiАuthentication.request(originalRequest);
+            return apiАuthentication
+              .request(originalRequest)
+              .then<ResponseData>((response) => response.data);
           } catch {
             store.dispatch(logOut());
             throw error;
@@ -51,6 +53,8 @@ const createAsyncAction = <ResponseData, RequestData = never>({
         if (shouldHandleError) {
           return rejectWithValue(error.response.data);
         }
+
+        throw error;
       }
     },
   );

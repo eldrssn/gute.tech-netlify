@@ -1,7 +1,7 @@
 import { UseFormSetError } from 'react-hook-form';
 
 import { CartItemData } from 'store/reducers/cart/types';
-import { OrderingResponseErrorData } from 'api/models/cart';
+import { OrderingErrors } from 'api/models/cart';
 
 import { TFormData, FormKey } from '../../types';
 
@@ -18,7 +18,7 @@ const setOrderFormErrors = ({
   setError,
   setOtherError,
 }: {
-  errors: OrderingResponseErrorData;
+  errors: OrderingErrors;
   setError: UseFormSetError<TFormData>;
   setOtherError: (error: string[]) => void;
 }) => {
@@ -33,9 +33,9 @@ const setOrderFormErrors = ({
   }
 
   if (phone) {
-    phone.map((error) =>
-      setError(FormKey.PHONE_NUMBER, { type: 'custom', message: error }),
-    );
+    phone.map((error) => {
+      setError(FormKey.PHONE_NUMBER, { type: 'custom', message: error });
+    });
   }
 
   if (name) {

@@ -9,6 +9,12 @@ import {
   RegisterVerifyResponseData,
   RefreshTokenRequestData,
   RefreshTokenResponseData,
+  ResetPasswordRequestData,
+  ResetPasswordResponseData,
+  ResetPasswordVerifyRequestData,
+  ResetPasswordVerifyResponseData,
+  ResetPasswordSetRequestData,
+  ResetPasswordSetResponseData,
 } from 'api/models/authentication';
 import { ApiMethods } from 'constants/types';
 
@@ -80,10 +86,58 @@ const refreshToken = async ({ refresh }: RefreshTokenRequestData) =>
     },
   });
 
+const postResetPasswordRequest = ({ phone_number }: ResetPasswordRequestData) =>
+  sendRequest<ResetPasswordResponseData>({
+    url: `/user/reset_password_request/`,
+    method: ApiMethods.POST,
+    config: {
+      data: {
+        phone_number,
+      },
+    },
+  });
+
+const postResetPasswordVerify = ({
+  phone_number,
+  code,
+}: ResetPasswordVerifyRequestData) =>
+  sendRequest<ResetPasswordVerifyResponseData>({
+    url: `/user/reset_password_verify/`,
+    method: ApiMethods.POST,
+    config: {
+      data: {
+        phone_number,
+        code,
+      },
+    },
+  });
+
+const putResetPassword = ({
+  phone_number,
+  code,
+  password,
+  password2,
+}: ResetPasswordSetRequestData) =>
+  sendRequest<ResetPasswordSetResponseData>({
+    url: `/user/reset_password/`,
+    method: ApiMethods.PUT,
+    config: {
+      data: {
+        phone_number,
+        secret_key: code,
+        password,
+        password2,
+      },
+    },
+  });
+
 export {
+  putResetPassword,
   postLogin,
   refreshToken,
   postRegistration,
   postRegistrationVerify,
   postRegistrationVerifyRetry,
+  postResetPasswordRequest,
+  postResetPasswordVerify,
 };

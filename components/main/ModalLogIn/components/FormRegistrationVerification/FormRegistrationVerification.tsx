@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController } from 'react-hook-form';
+import { useTimer } from 'react-timer-hook';
 import { Box, Button, Typography, FormControl } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
 import cn from 'classnames';
@@ -18,7 +19,6 @@ import {
   selectRegistrationPhoneNumber,
   selectRegistrationPassword,
   selectIsRegistrationVerificationForm,
-  selectIsRegistrationVerificationRetry,
   selectRegistrationVerificationRetryError,
   selectLoadingRegistrationVerificationRetry,
   selectAuthorizationError,
@@ -28,7 +28,7 @@ import { getInputRules } from 'utility/helpers';
 import { ActiveAutorizationFormKey } from 'constants/types';
 import colors from 'styles/_export.module.scss';
 
-import { selectTitleRetryButton } from '../../helpers';
+import { setErrorRetryButton, getTimerTime } from '../../helpers';
 import { TFormData, FormKey, Props } from './types';
 import styles from '../../styles.module.scss';
 
@@ -36,8 +36,14 @@ const loaderSubmitButton = colors.white;
 const loaderRetryButton = colors.blue;
 
 const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
-  const [otherError, setOtherError] = useState('');
+  const [otherError, setOtherError] = useState<string[]>([]);
   const [titleRetryButton, setTitleRetryButton] = useState('');
+
+  const { seconds, minutes, isRunning, restart } = useTimer({
+    expiryTimestamp: getTimerTime(),
+    autoStart: false,
+  });
+
   const dispatch = useDispatch();
 
   const { handleSubmit, control } = useForm<TFormData>();
@@ -59,9 +65,6 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
   const isRegistrationVerificationForm = useSelector(
     selectIsRegistrationVerificationForm,
   );
-  const isRegistrationVerificationRetry = useSelector(
-    selectIsRegistrationVerificationRetry,
-  );
   const loadingRegistrationVerificationRetry = useSelector(
     selectLoadingRegistrationVerificationRetry,
   );
@@ -77,11 +80,12 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
   };
 
   const handleClickRetryCode = () => {
-    if (isRegistrationVerificationRetry || registrationVerificationErrorRetry) {
+    if (isRunning) {
       return;
     }
 
     dispatch(fetchRegisterVerificationRetry({ phoneNumber }));
+    restart(getTimerTime());
   };
 
   useEffect(() => {
@@ -97,27 +101,27 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
   }, [isRegistrationVerificationForm, authorizationError, closeModal]);
 
   useEffect(() => {
-    if (registrationVerificationErrorForm?.non_field_errors) {
-      setOtherError(registrationVerificationErrorForm.non_field_errors);
+    if (registrationVerificationErrorForm?.errors.non_field_errors) {
+      setOtherError(registrationVerificationErrorForm.errors.non_field_errors);
     }
   }, [registrationVerificationErrorForm]);
 
   useEffect(() => {
-    selectTitleRetryButton({
-      isRegistrationVerificationRetry,
+    setErrorRetryButton({
       registrationVerificationErrorRetry,
       setTitleRetryButton,
     });
-  }, [
-    isRegistrationVerificationRetry,
-    registrationVerificationErrorRetry,
-    setTitleRetryButton,
-  ]);
+  }, [registrationVerificationErrorRetry, setTitleRetryButton]);
 
   const onSubmit = handleSubmit((data) => {
     const { code } = data;
     dispatch(fetchRegisterVerification({ phoneNumber, code }));
   });
+
+  const getRetryButtonTitle = () =>
+    isRunning ? `${minutes}:${seconds}` : titleRetryButton;
+
+  const isOtherError = otherError.length > 0;
 
   return (
     <FormControl onSubmit={onSubmit}>
@@ -142,15 +146,19 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
           <Typography>Подтвердить</Typography>
         )}
       </Button>
-      {otherError && (
-        <Typography className={styles.otherErrorMessage}>
-          {otherError}
-        </Typography>
+      {isOtherError && (
+        <>
+          {otherError.map((error) => (
+            <Typography key={error} className={styles.otherErrorMessage}>
+              {error}
+            </Typography>
+          ))}
+        </>
       )}
       <Typography
         onClick={handleClickRetryCode}
         className={cn(styles.otherFormButton, {
-          [styles.retryButtonSuccess]: isRegistrationVerificationRetry,
+          [styles.retryButtonTimer]: isRunning,
           [styles.retryButtonLoading]: loadingRegistrationVerificationRetry,
           [styles.retryButtonError]: registrationVerificationErrorRetry,
         })}
@@ -158,7 +166,7 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
         {loadingRegistrationVerificationRetry ? (
           <TailSpin height={21} width={21} color={loaderRetryButton} />
         ) : (
-          titleRetryButton
+          getRetryButtonTitle()
         )}
       </Typography>
       <Typography

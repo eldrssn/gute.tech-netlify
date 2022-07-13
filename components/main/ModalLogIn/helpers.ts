@@ -8,38 +8,54 @@ import {
   TFormData as TFormRegistrationData,
   FormKey as FormRegistrationKey,
 } from './components/FormRegistration/types';
+import {
+  TFormData as TFormResetPasswordData,
+  FormKey as FormResetPasswordKey,
+} from './components/FormResetPassword/types';
+import {
+  TFormData as TFormResetPasswordVerificationData,
+  FormKey as FormResetPasswordVerificationKey,
+} from './components/FormResetPasswordVerification/types';
+import {
+  TFormData as TFormResetPasswordSetData,
+  FormKey as FormResetPasswordSetKey,
+} from './components/FormResetPasswordSet/types';
 import { RetryButtonTitle } from './components/FormRegistrationVerification/types';
 import {
-  LoginResponseErrorData,
-  RegisterResponseErrorData,
+  ResetPasswordVerifyErrors,
+  ResetPasswordErrors,
+  LoginErrors,
+  RegisterErrors,
   RegisterVerifyResponseErrorData,
+  ResetPasswordSetErrors,
 } from 'api/models/authentication';
+import { TIMER_DELAY } from 'constants/variables';
 
 const setLogInFormErrors = ({
   errors,
   setError,
   setOtherError,
 }: {
-  errors: LoginResponseErrorData;
+  errors: LoginErrors;
   setError: UseFormSetError<TFormLogInData>;
-  setOtherError: (error: string) => void;
+  setOtherError: (error: string[]) => void;
 }) => {
-  if (errors.detail) {
-    setOtherError(errors.detail);
+  const { detail, password, phone_number } = errors;
+
+  if (detail) {
+    setOtherError(detail);
   }
 
-  if (errors.password) {
-    setError(FormLogInKey.PASSWORD, {
-      type: 'custom',
-      message: errors.password,
-    });
+  if (password) {
+    password.map((error) =>
+      setError(FormLogInKey.PASSWORD, { type: 'custom', message: error }),
+    );
   }
 
-  if (errors.phone_number) {
-    setError(FormLogInKey.PHONE_NUMBER, {
-      type: 'custom',
-      message: errors.phone_number,
-    });
+  if (phone_number) {
+    phone_number.map((error) =>
+      setError(FormLogInKey.PHONE_NUMBER, { type: 'custom', message: error }),
+    );
   }
 };
 
@@ -48,65 +64,158 @@ const setRegistrationFormErrors = ({
   setError,
   setOtherError,
 }: {
-  errors: RegisterResponseErrorData;
+  errors: RegisterErrors;
   setError: UseFormSetError<TFormRegistrationData>;
-  setOtherError: (error: string) => void;
+  setOtherError: (error: string[]) => void;
 }) => {
-  if (errors.phone_number) {
-    setError(FormRegistrationKey.PHONE_NUMBER, {
-      type: 'custom',
-      message: errors.phone_number,
-    });
+  const { password, password2, phone_number, non_field_errors } = errors;
+
+  if (phone_number) {
+    phone_number.map((error) =>
+      setError(FormRegistrationKey.PHONE_NUMBER, {
+        type: 'custom',
+        message: error,
+      }),
+    );
   }
 
-  if (errors.password) {
-    setError(FormRegistrationKey.PASSWORD, {
-      type: 'custom',
-      message: errors.password,
-    });
+  if (password) {
+    password.map((error) =>
+      setError(FormRegistrationKey.PASSWORD, {
+        type: error,
+        message: error,
+      }),
+    );
   }
 
-  if (errors.password2) {
-    setError(FormRegistrationKey.PASSWORD_REPEAT, {
-      type: 'custom',
-      message: errors.password2,
-    });
+  if (password2) {
+    password2.map((error) =>
+      setError(FormRegistrationKey.PASSWORD_REPEAT, {
+        type: 'custom',
+        message: error,
+      }),
+    );
   }
 
-  if (errors.non_field_errors) {
-    setOtherError(errors.non_field_errors);
+  if (non_field_errors) {
+    setOtherError(non_field_errors);
   }
 };
 
-const selectTitleRetryButton = ({
-  isRegistrationVerificationRetry,
+const setResetPasswordFormErrors = ({
+  errors,
+  setError,
+}: {
+  errors: ResetPasswordErrors;
+  setError: UseFormSetError<TFormResetPasswordData>;
+}) => {
+  const { detail, phone_number } = errors;
+
+  if (detail) {
+    detail.map((error) =>
+      setError(FormResetPasswordKey.PHONE_NUMBER, {
+        type: 'custom',
+        message: error,
+      }),
+    );
+  }
+
+  if (phone_number) {
+    phone_number.map((error) =>
+      setError(FormResetPasswordKey.PHONE_NUMBER, {
+        type: 'custom',
+        message: error,
+      }),
+    );
+  }
+};
+
+const setResetPasswordVerificationFormErrors = ({
+  errors,
+  setError,
+}: {
+  errors: ResetPasswordVerifyErrors;
+  setError: UseFormSetError<TFormResetPasswordVerificationData>;
+}) => {
+  const { detail } = errors;
+
+  if (detail) {
+    detail.map((error) =>
+      setError(FormResetPasswordVerificationKey.CODE, {
+        type: 'custom',
+        message: error,
+      }),
+    );
+  }
+};
+
+const setResetPasswordSetFormErrors = ({
+  errors,
+  setError,
+}: {
+  errors: ResetPasswordSetErrors;
+  setError: UseFormSetError<TFormResetPasswordSetData>;
+}) => {
+  const { password, password2, non_field_errors } = errors;
+
+  if (password) {
+    password.map((error) =>
+      setError(FormResetPasswordSetKey.PASSWORD, {
+        type: 'custom',
+        message: error,
+      }),
+    );
+  }
+
+  if (non_field_errors) {
+    non_field_errors.map((error) =>
+      setError(FormResetPasswordSetKey.PASSWORD, {
+        type: 'custom',
+        message: error,
+      }),
+    );
+  }
+
+  if (password2) {
+    password2.map((error) =>
+      setError(FormResetPasswordSetKey.PASSWORD_REPEAT, {
+        type: 'custom',
+        message: error,
+      }),
+    );
+  }
+};
+
+const setErrorRetryButton = ({
   registrationVerificationErrorRetry,
   setTitleRetryButton,
 }: {
-  isRegistrationVerificationRetry: boolean;
   registrationVerificationErrorRetry: RegisterVerifyResponseErrorData | null;
   setTitleRetryButton: (title: string) => void;
 }) => {
-  if (!isRegistrationVerificationRetry) {
-    setTitleRetryButton(RetryButtonTitle.DEFAULT);
+  if (registrationVerificationErrorRetry?.errors.non_field_errors) {
+    setTitleRetryButton(
+      registrationVerificationErrorRetry.errors.non_field_errors[0],
+    );
     return;
   }
 
-  if (isRegistrationVerificationRetry) {
-    setTitleRetryButton(RetryButtonTitle.SUCCESS);
-    return;
-  }
+  setTitleRetryButton(RetryButtonTitle.DEFAULT);
+};
 
-  if (!registrationVerificationErrorRetry?.non_field_errors) {
-    setTitleRetryButton(RetryButtonTitle.FAILURE);
-    return;
-  }
+const getTimerTime = () => {
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + TIMER_DELAY); // 59 second timer
 
-  setTitleRetryButton(registrationVerificationErrorRetry.non_field_errors);
+  return time;
 };
 
 export {
   setLogInFormErrors,
   setRegistrationFormErrors,
-  selectTitleRetryButton,
+  setResetPasswordVerificationFormErrors,
+  setErrorRetryButton,
+  setResetPasswordFormErrors,
+  getTimerTime,
+  setResetPasswordSetFormErrors,
 };

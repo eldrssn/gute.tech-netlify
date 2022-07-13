@@ -4,6 +4,8 @@ import {
   LoginResponseErrorData,
   RegisterResponseErrorData,
   RegisterVerifyResponseErrorData,
+  ResetPasswordResponseErrorData,
+  ResetPasswordSetResponseErrorData,
 } from 'api/models/authentication';
 import { ActiveAutorizationFormKey } from 'constants/types';
 
@@ -18,8 +20,16 @@ import {
   resetAllError,
   resetAllField,
   setActiveAuthorizationForm,
+  fetchResetPassword,
+  fetchResetPasswordVerification,
+  fetchResetPasswordSet,
 } from './actions';
-import { AuthenticationStore, RegisterPayloadData } from './types';
+import {
+  AuthenticationStore,
+  RegisterPayloadData,
+  ResetPasswordPayloadData,
+  ResetPasswordVerificationPayloadData,
+} from './types';
 
 const handlers = {
   [logOut.type]: (state: AuthenticationStore) => {
@@ -41,11 +51,22 @@ const handlers = {
     state.registrationVerificationForm.loadingRegistrationVerificationForm =
       false;
     state.registrationVerificationForm.errorRegistrationVerificationForm = null;
-    state.registrationVerificationRetry.isRegistrationVerificationRetry = false;
     state.registrationVerificationRetry.loadingRegistrationVerificationRetry =
       false;
     state.registrationVerificationRetry.errorRegistrationVerificationRetry =
       null;
+    state.resetPasswordForm.phoneNumber = null;
+    state.resetPasswordForm.loadingResetPasswordForm = false;
+    state.resetPasswordForm.errorResetPasswordForm = null;
+    state.resetPasswordVerificationForm.code = null;
+    state.resetPasswordVerificationForm.phoneNumber = null;
+    state.resetPasswordVerificationForm.errorResetPasswordVerificationForm =
+      null;
+    state.resetPasswordVerificationForm.loadingResetPasswordVerificationForm =
+      false;
+    state.resetPasswordSetForm.isResetPassword = false;
+    state.resetPasswordSetForm.errorResetPasswordSetForm = null;
+    state.resetPasswordSetForm.loadingResetPasswordSetForm = false;
   },
   [setActiveAuthorizationForm.type]: (
     state: AuthenticationStore,
@@ -92,7 +113,7 @@ const handlers = {
     state: AuthenticationStore,
     { payload }: PayloadAction<RegisterPayloadData>,
   ) => {
-    state.registrationForm.phoneNumber = payload.phoneNumber;
+    state.registrationForm.phoneNumber = payload.phone_number;
     state.registrationForm.password = payload.password;
     state.registrationForm.loadingRegistrationForm = false;
     state.registrationForm.errorRegistrationForm = null;
@@ -140,7 +161,6 @@ const handlers = {
   [fetchRegisterVerificationRetry.fulfilled.type]: (
     state: AuthenticationStore,
   ) => {
-    state.registrationVerificationRetry.isRegistrationVerificationRetry = true;
     state.registrationVerificationRetry.loadingRegistrationVerificationRetry =
       false;
     state.registrationVerificationRetry.errorRegistrationVerificationRetry =
@@ -150,11 +170,83 @@ const handlers = {
     state: AuthenticationStore,
     { payload }: PayloadAction<RegisterVerifyResponseErrorData>,
   ) => {
-    state.registrationVerificationRetry.isRegistrationVerificationRetry = false;
     state.registrationVerificationRetry.errorRegistrationVerificationRetry =
       payload;
     state.registrationVerificationRetry.loadingRegistrationVerificationRetry =
       false;
+  },
+
+  [fetchResetPassword.pending.type]: (state: AuthenticationStore) => {
+    state.resetPasswordForm.loadingResetPasswordForm = true;
+    state.resetPasswordForm.errorResetPasswordForm = null;
+  },
+  [fetchResetPassword.fulfilled.type]: (
+    state: AuthenticationStore,
+    { payload }: PayloadAction<ResetPasswordPayloadData>,
+  ) => {
+    state.resetPasswordForm.phoneNumber = payload.phone_number;
+    state.resetPasswordForm.loadingResetPasswordForm = false;
+    state.resetPasswordForm.errorResetPasswordForm = null;
+    state.activeAuthorizationForm =
+      ActiveAutorizationFormKey.RESET_PASSWORD_VERIFY;
+  },
+  [fetchResetPassword.rejected.type]: (
+    state: AuthenticationStore,
+    { payload }: PayloadAction<ResetPasswordResponseErrorData>,
+  ) => {
+    state.resetPasswordForm.errorResetPasswordForm = payload;
+    state.resetPasswordForm.loadingResetPasswordForm = false;
+  },
+
+  [fetchResetPasswordVerification.pending.type]: (
+    state: AuthenticationStore,
+  ) => {
+    state.resetPasswordVerificationForm.loadingResetPasswordVerificationForm =
+      true;
+    state.resetPasswordVerificationForm.errorResetPasswordVerificationForm =
+      null;
+  },
+  [fetchResetPasswordVerification.fulfilled.type]: (
+    state: AuthenticationStore,
+    { payload }: PayloadAction<ResetPasswordVerificationPayloadData>,
+  ) => {
+    state.resetPasswordVerificationForm.phoneNumber = payload.phone_number;
+    state.resetPasswordVerificationForm.code = payload.secret_key;
+    state.resetPasswordVerificationForm.loadingResetPasswordVerificationForm =
+      false;
+    state.resetPasswordVerificationForm.errorResetPasswordVerificationForm =
+      null;
+    state.activeAuthorizationForm =
+      ActiveAutorizationFormKey.RESET_PASSWORD_SET;
+  },
+  [fetchResetPasswordVerification.rejected.type]: (
+    state: AuthenticationStore,
+    { payload }: PayloadAction<ResetPasswordResponseErrorData>,
+  ) => {
+    state.resetPasswordVerificationForm.errorResetPasswordVerificationForm =
+      payload;
+    state.resetPasswordVerificationForm.loadingResetPasswordVerificationForm =
+      false;
+  },
+
+  [fetchResetPasswordSet.pending.type]: (state: AuthenticationStore) => {
+    state.resetPasswordSetForm.loadingResetPasswordSetForm = true;
+    state.resetPasswordSetForm.errorResetPasswordSetForm = null;
+  },
+  [fetchResetPasswordSet.fulfilled.type]: (state: AuthenticationStore) => {
+    state.resetPasswordSetForm.loadingResetPasswordSetForm = false;
+    state.resetPasswordSetForm.errorResetPasswordSetForm = null;
+    state.resetPasswordSetForm.isResetPassword = true;
+    state.activeAuthorizationForm =
+      ActiveAutorizationFormKey.RESET_PASSWORD_SUCCESS;
+  },
+  [fetchResetPasswordSet.rejected.type]: (
+    state: AuthenticationStore,
+    { payload }: PayloadAction<ResetPasswordSetResponseErrorData>,
+  ) => {
+    state.resetPasswordSetForm.errorResetPasswordSetForm = payload;
+    state.resetPasswordSetForm.loadingResetPasswordSetForm = false;
+    state.resetPasswordSetForm.isResetPassword = false;
   },
 };
 

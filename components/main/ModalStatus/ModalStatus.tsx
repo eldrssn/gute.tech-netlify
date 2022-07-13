@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Box, Button } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
+import { useCookies } from 'react-cookie';
 
 import { fetchStatusPayment, clearCart } from 'store/reducers/cart/actions';
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { selectStatus } from 'store/reducers/cart/selectors';
 import colors from 'styles/_export.module.scss';
 import { CookieKey } from 'constants/types';
-import { cookieStorage } from 'utility/helpers';
 
 import styles from './styles.module.scss';
 
@@ -19,6 +19,8 @@ const ModalStatus: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isOpenModal, setIsOpenModal] = useState(true);
+
+  const [, , removeCookie] = useCookies();
 
   const { orderId } = router.query;
 
@@ -49,9 +51,11 @@ const ModalStatus: FC = () => {
       return;
     }
 
-    cookieStorage.setItem(CookieKey.CARTITEMS, '');
+    removeCookie(CookieKey.CART_ITEMS, {
+      path: '/',
+    });
     dispatch(clearCart());
-  }, [isData, dispatch]);
+  }, [isData, dispatch, removeCookie]);
 
   return (
     <ModalWrapper isOpen={isOpenModal} setIsOpen={setIsOpenModal}>

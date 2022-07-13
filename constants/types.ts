@@ -7,7 +7,7 @@ enum CookieKey {
   ACCESS_TOKEN = 'access',
   REFRESH_TOKEN = 'refresh',
   SELECTEDCITY = 'selectedCity',
-  CARTITEMS = 'cartItems',
+  CART_ITEMS = 'cartItems',
   TRANSPORT_ID = 'transportId',
 }
 
@@ -25,6 +25,10 @@ enum ActiveAutorizationFormKey {
   AUTHORIZATION = 'authorization',
   REGISTRATION = 'registration',
   REGISTRATION_VERIFICATION = 'registrationVerification',
+  RESET_PASSWORD = 'resetPassword',
+  RESET_PASSWORD_VERIFY = 'resetPasswodReset',
+  RESET_PASSWORD_SET = 'resetPasswordSet',
+  RESET_PASSWORD_SUCCESS = 'resetPasswordSuccess',
 }
 
 enum ApiMethods {
