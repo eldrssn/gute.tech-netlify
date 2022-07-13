@@ -6,35 +6,43 @@ import { TailSpin } from 'react-loader-spinner';
 import InputMask from 'react-input-mask';
 
 import {
-  fetchResetPassword,
+  fetchResetPasswordVerification,
   setActiveAuthorizationForm,
 } from 'store/reducers/authentication/actions';
 import {
-  selectLoadingResetPasswordForm,
-  selectErrorResetPasswordForm,
+  selectLoadingResetPasswordVerificationForm,
+  selectErrorResetPasswordVerificationForm,
+  selectResetPasswordPhone,
 } from 'store/reducers/authentication/selectors';
 import { getInputRules } from 'utility/helpers';
 import { inputMasks } from 'constants/patterns';
 import { EValidatePattern, ActiveAutorizationFormKey } from 'constants/types';
 import colors from 'styles/_export.module.scss';
 
-import { setResetPasswordFormErrors } from '../../helpers';
+import { setResetPasswordVerificationFormErrors } from '../../helpers';
 import { TFormData, FormKey } from './types';
 import styles from '../../styles.module.scss';
 
 const loaderColor = colors.white;
 
-const FormResetPassword: FC = () => {
+const FormResetPasswordVerification: FC = () => {
   const dispatch = useDispatch();
 
   const { handleSubmit, control, setError } = useForm<TFormData>();
 
-  const errors = useSelector(selectErrorResetPasswordForm);
-  const loading = useSelector(selectLoadingResetPasswordForm);
+  const errors = useSelector(selectErrorResetPasswordVerificationForm);
+  const loading = useSelector(selectLoadingResetPasswordVerificationForm);
+  const phoneNumber = useSelector(selectResetPasswordPhone);
 
   const onSubmit = handleSubmit((data) => {
-    const { phoneNumber } = data;
-    dispatch(fetchResetPassword({ phone_number: phoneNumber }));
+    if (!phoneNumber) {
+      return;
+    }
+
+    const { code } = data;
+    dispatch(
+      fetchResetPasswordVerification({ phone_number: phoneNumber, code }),
+    );
   });
 
   useEffect(() => {
@@ -42,7 +50,7 @@ const FormResetPassword: FC = () => {
       return;
     }
 
-    setResetPasswordFormErrors({ setError, errors });
+    setResetPasswordVerificationFormErrors({ setError, errors });
   }, [errors, setError]);
 
   return (
@@ -50,19 +58,18 @@ const FormResetPassword: FC = () => {
       <Typography className={styles.formTitle}>Сброс пароля</Typography>
       <Box className={styles.inputContainer}>
         <Controller
-          name={FormKey.PHONE_NUMBER}
+          name={FormKey.CODE}
           control={control}
-          rules={getInputRules(EValidatePattern.PHONE_NUMBER)}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <InputMask
-              mask={inputMasks.phoneMask}
+              mask={inputMasks.codeMask}
               value={value ? value : ''}
               onChange={onChange}
             >
               <TextField
                 error={Boolean(error)}
                 helperText={error?.message}
-                label='Телефон'
+                label='Введи 4 последний цифры с номер, который вам позвонит'
                 variant='outlined'
                 type='text'
                 fullWidth
@@ -79,7 +86,7 @@ const FormResetPassword: FC = () => {
         {loading ? (
           <TailSpin height={25} width={25} color={loaderColor} />
         ) : (
-          <Typography>Получить код</Typography>
+          <Typography>Сбросить пароль</Typography>
         )}
       </Button>
       <Typography
@@ -96,4 +103,4 @@ const FormResetPassword: FC = () => {
   );
 };
 
-export { FormResetPassword };
+export { FormResetPasswordVerification };

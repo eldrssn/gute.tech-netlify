@@ -29,7 +29,7 @@ import styles from '../../styles.module.scss';
 const loaderColor = colors.white;
 
 const FormRegistration: FC = () => {
-  const [otherError, setOtherError] = useState('');
+  const [otherError, setOtherError] = useState<string[]>([]);
   const dispatch = useDispatch();
 
   const { handleSubmit, control, setError } = useForm<TFormData>();
@@ -56,7 +56,7 @@ const FormRegistration: FC = () => {
 
   useEffect(() => {
     if (!errors) {
-      setOtherError('');
+      setOtherError([]);
       return;
     }
 
@@ -68,13 +68,15 @@ const FormRegistration: FC = () => {
   }, [errors, setError]);
 
   const onSubmit = handleSubmit((data) => {
-    setOtherError('');
+    setOtherError([]);
     const { phoneNumber, password, passwordRepeat } = data;
     dispatch(
       fetchRegister({ phoneNumber, password, password2: passwordRepeat }),
     );
     dispatch(resetAllError());
   });
+
+  const isOtherError = otherError.length > 0;
 
   return (
     <FormControl onSubmit={onSubmit}>
@@ -133,10 +135,14 @@ const FormRegistration: FC = () => {
           <Typography>Зарегистрироваться</Typography>
         )}
       </Button>
-      {otherError && (
-        <Typography className={styles.otherErrorMessage}>
-          {otherError}
-        </Typography>
+      {isOtherError && (
+        <>
+          {otherError.map((error) => (
+            <Typography key={error} className={styles.otherErrorMessage}>
+              {error}
+            </Typography>
+          ))}
+        </>
       )}
       <Typography
         onClick={handleClickBackToMain}

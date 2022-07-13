@@ -19,7 +19,7 @@ const selectLoadingAuthorized = createSelector(
 
 const selectAuthorizationError = createSelector(
   selectAuthenticationStore,
-  ({ authorized }) => authorized.errorAuthorized,
+  ({ authorized }) => authorized.errorAuthorized?.errors,
 );
 
 const selectLoadingRegistrationForm = createSelector(
@@ -29,7 +29,7 @@ const selectLoadingRegistrationForm = createSelector(
 
 const selectErrorRegistrationForm = createSelector(
   selectAuthenticationStore,
-  ({ registrationForm }) => registrationForm.errorRegistrationForm,
+  ({ registrationForm }) => registrationForm.errorRegistrationForm?.errors,
 );
 
 const selectRegistrationPhoneNumber = createSelector(
@@ -60,12 +60,6 @@ const selectRegistrationVerificationFormError = createSelector(
     registrationVerificationForm.errorRegistrationVerificationForm,
 );
 
-const selectIsRegistrationVerificationRetry = createSelector(
-  selectAuthenticationStore,
-  ({ registrationVerificationRetry }) =>
-    registrationVerificationRetry.isRegistrationVerificationRetry,
-);
-
 const selectLoadingRegistrationVerificationRetry = createSelector(
   selectAuthenticationStore,
   ({ registrationVerificationRetry }) =>
@@ -83,6 +77,61 @@ const selectactiveAuthorizationForm = createSelector(
   ({ activeAuthorizationForm }) => activeAuthorizationForm,
 );
 
+const selectLoadingResetPasswordForm = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordForm }) => resetPasswordForm.loadingResetPasswordForm,
+);
+
+const selectErrorResetPasswordForm = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordForm }) => resetPasswordForm.errorResetPasswordForm?.errors,
+);
+
+const selectResetPasswordPhone = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordForm }) => resetPasswordForm.phoneNumber,
+);
+
+const selectLoadingResetPasswordVerificationForm = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordVerificationForm }) =>
+    resetPasswordVerificationForm.loadingResetPasswordVerificationForm,
+);
+
+const selectErrorResetPasswordVerificationForm = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordVerificationForm }) =>
+    resetPasswordVerificationForm.errorResetPasswordVerificationForm?.errors,
+);
+
+const selectResetPasswordVerificationPhone = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordVerificationForm }) =>
+    resetPasswordVerificationForm.phoneNumber,
+);
+
+const selectResetPasswordVerificationCode = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordVerificationForm }) => resetPasswordVerificationForm.code,
+);
+
+const selectResetPasswordSetError = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordSetForm }) =>
+    resetPasswordSetForm.errorResetPasswordSetForm?.errors,
+);
+
+const selectLoadingResetPasswordSet = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordSetForm }) =>
+    resetPasswordSetForm.loadingResetPasswordSetForm,
+);
+
+const selectIsResetPasswordSet = createSelector(
+  selectAuthenticationStore,
+  ({ resetPasswordSetForm }) => resetPasswordSetForm.isResetPassword,
+);
+
 export {
   selectIsAuthorized,
   selectLoadingAuthorized,
@@ -93,9 +142,18 @@ export {
   selectRegistrationPassword,
   selectIsRegistrationVerificationForm,
   selectLoadingRegistrationVerificationForm,
+  selectResetPasswordPhone,
   selectRegistrationVerificationFormError,
-  selectIsRegistrationVerificationRetry,
   selectLoadingRegistrationVerificationRetry,
   selectRegistrationVerificationRetryError,
   selectactiveAuthorizationForm,
+  selectLoadingResetPasswordForm,
+  selectErrorResetPasswordForm,
+  selectLoadingResetPasswordVerificationForm,
+  selectErrorResetPasswordVerificationForm,
+  selectResetPasswordVerificationPhone,
+  selectResetPasswordVerificationCode,
+  selectResetPasswordSetError,
+  selectLoadingResetPasswordSet,
+  selectIsResetPasswordSet,
 };

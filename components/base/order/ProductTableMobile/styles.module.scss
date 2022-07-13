@@ -1,0 +1,31 @@
+@import "~styles/breakpoints.scss";
+@import "~styles/colors.scss";
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemTitle {
+  font-weight: normal;
+}
+
+.tableRow {
+  th {
+    border-bottom: 0;
+  }
+
+  td {
+    border-bottom: 0;
+  }
+
+  p {
+    margin-left: 0;
+  }
+}
+
+.service {
+  margin-left: 5px;
+  font-size: 12px;
+  color: $gray6;
+}

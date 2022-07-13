@@ -49,6 +49,12 @@
   width: 350px;
 }
 
+.formText {
+  width: 350px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .formButton {
   height: 56px;
   margin-bottom: 5px;
@@ -94,7 +100,7 @@
   }
 }
 
-.retryButtonSuccess {
+.retryButtonTimer {
   cursor: default;
   color: $black;
 
@@ -104,15 +110,31 @@
   }
 }
 
+@media (max-width: $mobile) {
+  .formTitle {
+    color: $black;
+  }
+}
+
 @media (max-width: $sMobile) {
   .closeModal {
     top: 10px;
-    right: 10px;
+    right: 20px !important;
     color: $black;
   }
 
   .container {
     width: 100%;
     padding: 40px;
+  }
+}
+
+@media (max-width: $xsMobile) {
+  .formWrap {
+    padding: 30px;
+  }
+
+  .inputContainer {
+    width: 250px;
   }
 }

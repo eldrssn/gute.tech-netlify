@@ -19,14 +19,6 @@
   align-items: center;
 }
 
-.dateRangeButton {
-  font-size: 14px;
-  line-height: 1.57;
-  margin-right: 14px;
-  align-items: center;
-  color: $blue1;
-}
-
 .sortItemType {
   cursor: pointer;
 }
@@ -55,32 +47,8 @@
   margin: 0 10px;
 }
 
-.dateRangePopover {
-  position: absolute;
-  box-shadow: 4px 4px 8px -3px rgba(34, 60, 80, 0.2);
-  visibility: hidden;
-  opacity: 0;
-  z-index: 1202;
-}
-
-.dateRangeOpenPopover {
-  visibility: visible;
-  opacity: 1;
-}
-
-.backgroundDateRangePopover {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  z-index: 1201;
-  width: 100%;
-  height: 100%;
-}
-
 @media (max-width: $mobile) {
   .sortContainer {
-    padding: 20px 0;
+    padding: 20px 18px;
   }
 }

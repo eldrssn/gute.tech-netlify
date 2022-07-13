@@ -10,10 +10,12 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import useScrollbarSize from 'react-scrollbar-size';
 
+import { useWindowSize } from 'hooks/useWindowSize';
 import { useRouterQuery } from 'hooks/useRouterQuery';
-
 import { getFullDate } from 'utility/helpers';
+
 import {
   CREATED_AFTER_QUERY,
   CREATED_BEFORE_QUERY,
@@ -25,6 +27,8 @@ const OrdersFilter: FC = () => {
   const [isOpenDatePicker, setIsOpenDatePicker] = useState(false);
   const [dateRange, setDateRange] = useState<Range[]>([DateRangeInitialState]);
 
+  const { width: widthScrollBar } = useScrollbarSize();
+  const { isMobile } = useWindowSize();
   const router = useRouter();
   const routerQuery = useRouterQuery();
 
@@ -47,9 +51,26 @@ const OrdersFilter: FC = () => {
     }
   }, [created_after, created_before]);
 
-  const handleCloseDateRangePopover = () => {
+  const handleCloseDateRangePopover = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     setIsOpenDatePicker(false);
   };
+
+  const handleOpenDateRangePopover = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    setIsOpenDatePicker(true);
+  };
+
+  useEffect(() => {
+    if (isMobile && isOpenDatePicker) {
+      document.body.style.marginRight = `${widthScrollBar}px`;
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+
+    document.body.style.overflow = 'auto';
+    document.body.style.marginRight = '0px';
+  }, [isMobile, isOpenDatePicker, widthScrollBar]);
 
   const handleClearDateRange = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -90,7 +111,7 @@ const OrdersFilter: FC = () => {
     <>
       <span
         className={styles.dateRangeButton}
-        onClick={() => setIsOpenDatePicker(true)}
+        onClick={handleOpenDateRangePopover}
       >
         {dateRangeButtonTitle}
         {isDateRange && (
@@ -103,6 +124,12 @@ const OrdersFilter: FC = () => {
             [styles.dateRangeOpenPopover]: isOpenDatePicker,
           })}
         >
+          <Box
+            className={styles.closeDateRangePopover}
+            onClick={handleCloseDateRangePopover}
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </Box>
           <DateRange
             className={styles.dateRangePicker}
             editableDateInputs={false}
@@ -114,11 +141,13 @@ const OrdersFilter: FC = () => {
         </Box>
       </span>
       {isOpenDatePicker && (
-        <Box
-          component='div'
-          className={styles.backgroundDateRangePopover}
-          onClick={handleCloseDateRangePopover}
-        />
+        <>
+          <Box
+            component='div'
+            className={styles.backgroundDateRangePopover}
+            onClick={handleCloseDateRangePopover}
+          />
+        </>
       )}
     </>
   );

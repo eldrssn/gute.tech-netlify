@@ -26,7 +26,7 @@ import styles from '../../styles.module.scss';
 const loaderColor = colors.white;
 
 const FormLogIn: FC<Props> = ({ isOpen }) => {
-  const [otherError, setOtherError] = useState('');
+  const [otherError, setOtherError] = useState<string[]>([]);
   const dispatch = useDispatch();
 
   const { handleSubmit, control, setError, resetField } = useForm<TFormData>();
@@ -40,7 +40,7 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
   const loading = useSelector(selectLoadingAuthorized);
 
   const onSubmit = handleSubmit((data) => {
-    setOtherError('');
+    setOtherError([]);
     const { phoneNumber, password } = data;
     dispatch(fetchTokens({ phoneNumber, password }));
   });
@@ -56,12 +56,14 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
 
   useEffect(() => {
     if (!errors) {
-      setOtherError('');
+      setOtherError([]);
       return;
     }
 
     setLogInFormErrors({ setError, errors, setOtherError });
   }, [errors, setError]);
+
+  const isOtherError = otherError.length > 0;
 
   return (
     <FormControl onSubmit={onSubmit}>
@@ -110,10 +112,14 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
           <Typography>Войти</Typography>
         )}
       </Button>
-      {otherError && (
-        <Typography className={styles.otherErrorMessage}>
-          {otherError}
-        </Typography>
+      {isOtherError && (
+        <>
+          {otherError.map((error) => (
+            <Typography key={error} className={styles.otherErrorMessage}>
+              {error}
+            </Typography>
+          ))}
+        </>
       )}
       <Typography
         onClick={() => {
@@ -125,7 +131,16 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
       >
         Регистрация
       </Typography>
-      <Typography className={styles.otherFormButton}>
+      <Typography
+        onClick={() => {
+          dispatch(
+            setActiveAuthorizationForm(
+              ActiveAutorizationFormKey.RESET_PASSWORD,
+            ),
+          );
+        }}
+        className={styles.otherFormButton}
+      >
         Напомнить пароль
       </Typography>
     </FormControl>

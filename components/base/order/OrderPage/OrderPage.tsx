@@ -1,12 +1,31 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import { Container, Box } from '@mui/material';
 
 import { AsideNavigation } from 'components/ui/AsideNavigation';
 import { OrderMain } from 'components/base/order/OrderMain';
+import {
+  selectIsAuthorized,
+  selectLoadingAuthorized,
+} from 'store/reducers/authentication/selectors';
 
 import styles from './styles.module.scss';
 
 const OrderPage: FC = () => {
+  const router = useRouter();
+
+  const isAuthorized = useSelector(selectIsAuthorized);
+  const loadingAuthorized = useSelector(selectLoadingAuthorized);
+
+  useEffect(() => {
+    if (isAuthorized || loadingAuthorized) {
+      return;
+    }
+
+    router.push('/');
+  }, [isAuthorized, router, loadingAuthorized]);
+
   return (
     <Container className={styles.mainContainer}>
       <Box>

@@ -40,6 +40,7 @@
     "react-redux": "^7.2.6",
     "react-scrollbar-size": "^5.0.0",
     "react-slick": "^0.28.1",
+    "react-timer-hook": "^3.0.5",
     "sass": "^1.49.9",
     "sharp": "^0.30.4",
     "slick-carousel": "^1.8.1",

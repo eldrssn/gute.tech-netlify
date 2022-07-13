@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Box } from '@mui/material';
@@ -15,9 +16,11 @@ import { ActiveAutorizationFormKey } from 'constants/types';
 
 import { FormLogIn } from './components/FormLogIn';
 import { FormRegistration } from './components/FormRegistration';
-// TODO: дописать сброс пароля
-// import { FormResetPassword } from './components/FormResetPassword';
+import { FormResetPassword } from './components/FormResetPassword';
 import { FormRegistrationVerification } from './components/FormRegistrationVerification';
+import { FormResetPasswordVerification } from './components/FormResetPasswordVerification';
+import { FormResetPasswordSet } from './components/FormResetPasswordSet';
+import { FormResetPasswordSuccess } from './components/FormResetPasswordSuccess';
 import { OuterProps } from './types';
 import styles from './styles.module.scss';
 
@@ -39,7 +42,6 @@ const ModalLogIn: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
     if (isAuthorized) {
       closeModal();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthorized]);
 
   const ActiveFormComponent = {
@@ -47,6 +49,14 @@ const ModalLogIn: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
     [ActiveAutorizationFormKey.REGISTRATION]: <FormRegistration />,
     [ActiveAutorizationFormKey.REGISTRATION_VERIFICATION]: (
       <FormRegistrationVerification closeModal={closeModal} />
+    ),
+    [ActiveAutorizationFormKey.RESET_PASSWORD]: <FormResetPassword />,
+    [ActiveAutorizationFormKey.RESET_PASSWORD_VERIFY]: (
+      <FormResetPasswordVerification />
+    ),
+    [ActiveAutorizationFormKey.RESET_PASSWORD_SET]: <FormResetPasswordSet />,
+    [ActiveAutorizationFormKey.RESET_PASSWORD_SUCCESS]: (
+      <FormResetPasswordSuccess />
     ),
   };
 
