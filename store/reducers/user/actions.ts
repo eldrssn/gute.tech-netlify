@@ -1,9 +1,12 @@
+import { createAction } from '@reduxjs/toolkit';
+
 import {
   getProfile,
   patchProfileChanges,
   postVerifyEmail,
   getOrders,
   getOrder,
+  putPassword,
 } from 'api/routes/user';
 import {
   EditProfileResponseData,
@@ -15,9 +18,19 @@ import {
   OrdersResponseData,
   OrderRequestData,
   OrderResponseData,
+  ChangePasswordResponseData,
+  ChangePasswordRequestData,
 } from 'api/models/user';
 import { createAsyncAction } from 'utility/helpers/store';
-import { createAction } from '@reduxjs/toolkit';
+
+const changePassword = createAsyncAction<
+  ChangePasswordResponseData,
+  ChangePasswordRequestData
+>({
+  typeAction: 'user/changePassword',
+  request: putPassword,
+  shouldHandleError: true,
+});
 
 const fetchProfile = createAsyncAction<ProfileResponseData>({
   typeAction: 'user/fetchProfile',
@@ -45,6 +58,7 @@ const verifyEmail = createAsyncAction<
 
 const resetVerifyEmail = createAction('user/resetVerifyEmail');
 const resetEditProfile = createAction('user/resetEditProfile');
+const resetChangePassword = createAction('user/resetChangePassword');
 
 const fetchOrders = createAsyncAction<OrdersResponseData, OrdersRequestData>({
   typeAction: 'user/fetchOrders',
@@ -59,6 +73,8 @@ const fetchOrder = createAsyncAction<OrderResponseData, OrderRequestData>({
 });
 
 export {
+  changePassword,
+  resetChangePassword,
   fetchProfile,
   editProfile,
   verifyEmail,

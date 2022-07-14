@@ -6,6 +6,8 @@ import {
   OrderResponseData,
   VerifyEmailResponseErrorData,
   EditProfileResponseErrorData,
+  ChangePasswordResponseData,
+  ChangePasswordResponseDataError,
 } from 'api/models/user';
 import { StoreState, StoreError, ErrorAction, State } from 'store/types';
 
@@ -15,6 +17,7 @@ enum UserStoreBlocks {
   VERIFY_EMAIL = 'verifyEmail',
   ORDERS = 'orders',
   ORDER = 'order',
+  CHANGE_PASSWORD = 'changePassword',
 }
 
 type ProfileState = {
@@ -33,6 +36,12 @@ type VerifyEmailState = {
   error: VerifyEmailResponseErrorData | null;
 };
 
+type ChangePasswordState = {
+  data: ChangePasswordResponseData | null;
+  isLoading: boolean;
+  error: ChangePasswordResponseDataError | null;
+};
+
 type OrdersState = {
   data: OrdersResponseData;
 } & StoreState;
@@ -47,6 +56,7 @@ type UserStore = {
   [UserStoreBlocks.VERIFY_EMAIL]: VerifyEmailState;
   [UserStoreBlocks.ORDERS]: OrdersState;
   [UserStoreBlocks.ORDER]: OrderState;
+  [UserStoreBlocks.CHANGE_PASSWORD]: ChangePasswordState;
 };
 
 export type { ErrorAction, StoreError, UserStore, State };

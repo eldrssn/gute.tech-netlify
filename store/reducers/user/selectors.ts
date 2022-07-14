@@ -27,6 +27,16 @@ const selectUserOrders = createSelector(
   ({ orders }) => orders,
 );
 
+const selectChangePasswordError = createSelector(
+  selectUserStore,
+  ({ changePassword }) => changePassword.error?.errors,
+);
+
+const selectChangePassword = createSelector(
+  selectUserStore,
+  ({ changePassword }) => changePassword.data?.status,
+);
+
 const selectUserOrder = createSelector(selectUserStore, ({ order }) => order);
 
 const selectOrderTotal = createSelector(selectUserStore, ({ order }) =>
@@ -41,5 +51,7 @@ export {
   selectUserOrder,
   selectEditionUserProfile,
   selectVerifyEmail,
+  selectChangePassword,
+  selectChangePasswordError,
   selectOrderTotal,
 };

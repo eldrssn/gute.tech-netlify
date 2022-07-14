@@ -47,6 +47,11 @@ const Datepicker: FC<DatepickerProps> = ({
   ) => {
     if (!errors[ProfileFields.DATE_OF_BIRTHDAY]) {
       const { value } = event.target;
+
+      if (!value) {
+        return;
+      }
+
       const inputDate = new Date(formatStringifiedDate(value));
       const transformDate = cutDate(inputDate);
 

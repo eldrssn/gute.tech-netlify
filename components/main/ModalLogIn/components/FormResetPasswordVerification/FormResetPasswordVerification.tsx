@@ -14,9 +14,12 @@ import {
   selectErrorResetPasswordVerificationForm,
   selectResetPasswordPhone,
 } from 'store/reducers/authentication/selectors';
-import { getInputRules } from 'utility/helpers';
+// import { getInputRules } from 'utility/helpers';
 import { inputMasks } from 'constants/patterns';
-import { EValidatePattern, ActiveAutorizationFormKey } from 'constants/types';
+import {
+  // EValidatePattern,
+  ActiveAutorizationFormKey,
+} from 'constants/types';
 import colors from 'styles/_export.module.scss';
 
 import { setResetPasswordVerificationFormErrors } from '../../helpers';

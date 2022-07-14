@@ -36,7 +36,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <Container className={styles.mainContainer}>
+    <Container disableGutters className={styles.mainContainer}>
       <Box>
         <h1>Профиль</h1>
 

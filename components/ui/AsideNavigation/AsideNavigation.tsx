@@ -16,9 +16,9 @@ const cn = classnames.bind(styles);
 const AsideNavigation = () => {
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const { isMobile } = useWindowSize();
-  const { data } = useSelector(selectUserProfile);
+  const { data: profile } = useSelector(selectUserProfile);
 
-  const fillName = data && `${data.first_name} ${data.last_name}`;
+  const fillName = profile && `${profile.first_name} ${profile.last_name}`;
 
   const handleToggleMobileMenu = () => {
     setIsOpenMobileMenu((isOpen) => !isOpen);

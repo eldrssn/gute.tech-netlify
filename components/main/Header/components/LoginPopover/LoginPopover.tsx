@@ -22,13 +22,17 @@ const LoginPopover: FC<Props> = ({ closePopover }) => {
     closePopover();
   };
 
+  const handleClickOrdersHistory = () => {
+    router.push('/profile/orders');
+    closePopover();
+  };
+
   return (
     <Container disableGutters sx={{ position: 'relative' }}>
       <MenuItem onClick={handleClickMyProfile}>Мой профиль</MenuItem>
-      <MenuItem>История заказов</MenuItem>
+      <MenuItem onClick={handleClickOrdersHistory}>История заказов</MenuItem>
       <MenuItem>Система лояльности</MenuItem>
       <MenuItem>Мой автомобиль</MenuItem>
-      <MenuItem>Изменить профиль</MenuItem>
       <MenuItem onClick={handleClickExit}>Выйти</MenuItem>
     </Container>
   );

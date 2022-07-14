@@ -8,6 +8,8 @@ import {
   OrderResponseData,
   VerifyEmailResponseErrorData,
   EditProfileResponseErrorData,
+  ChangePasswordResponseData,
+  ChangePasswordResponseDataError,
 } from 'api/models/user';
 
 import {
@@ -18,6 +20,8 @@ import {
   verifyEmail,
   fetchOrders,
   fetchOrder,
+  changePassword,
+  resetChangePassword,
 } from './actions';
 
 import { initialState } from './constants';
@@ -124,6 +128,32 @@ const handlers = {
     const errorData = { name: error.name, message: error.message };
     state.order.isLoading = false;
     state.order.error = errorData;
+  },
+
+  [changePassword.pending.type]: (state: UserStore) => {
+    state.changePassword.isLoading = true;
+  },
+  [changePassword.fulfilled.type]: (
+    state: UserStore,
+    { payload }: PayloadAction<ChangePasswordResponseData>,
+  ) => {
+    state.changePassword.data = payload;
+    state.changePassword.isLoading = false;
+    state.changePassword.error = null;
+  },
+  [changePassword.rejected.type]: (
+    state: UserStore,
+    { payload }: PayloadAction<ChangePasswordResponseDataError>,
+  ) => {
+    state.changePassword.isLoading = false;
+    state.changePassword.data = null;
+    state.changePassword.error = payload;
+  },
+
+  [resetChangePassword.type]: (state: UserStore) => {
+    state.changePassword.data = null;
+    state.changePassword.isLoading = false;
+    state.changePassword.error = null;
   },
 };
 
