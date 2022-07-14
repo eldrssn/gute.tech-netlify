@@ -8,6 +8,7 @@ type FormInputProps = {
   textarea?: boolean;
   maxLength?: number;
   hideValue?: boolean;
+  type?: string;
 };
 
 export type { FormInputProps };

@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
-import { Box, Button, Typography, FormControl, TextField } from '@mui/material';
+import { Box, Typography, FormControl, TextField } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
 import InputMask from 'react-input-mask';
 
@@ -45,8 +45,14 @@ const FormResetPassword: FC = () => {
     setResetPasswordFormErrors({ setError, errors });
   }, [errors, setError]);
 
+  const handleClickBackToMain = () => {
+    dispatch(
+      setActiveAuthorizationForm(ActiveAutorizationFormKey.AUTHORIZATION),
+    );
+  };
+
   return (
-    <FormControl onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <Typography className={styles.formTitle}>Сброс пароля</Typography>
       <Box className={styles.inputContainer}>
         <Controller
@@ -71,28 +77,22 @@ const FormResetPassword: FC = () => {
           )}
         />
       </Box>
-      <Button
-        onClick={onSubmit}
-        variant={'contained'}
-        className={styles.formButton}
-      >
+      <button className={styles.formButton} type='submit'>
         {loading ? (
           <TailSpin height={25} width={25} color={loaderColor} />
         ) : (
           <Typography>Получить код</Typography>
         )}
-      </Button>
-      <Typography
-        onClick={() => {
-          dispatch(
-            setActiveAuthorizationForm(ActiveAutorizationFormKey.AUTHORIZATION),
-          );
-        }}
-        className={styles.otherFormButton}
-      >
-        Вернуться на главный экран
-      </Typography>
-    </FormControl>
+      </button>
+      <FormControl className={styles.formControl}>
+        <Typography
+          onClick={handleClickBackToMain}
+          className={styles.otherFormButton}
+        >
+          Вернуться на главный экран
+        </Typography>
+      </FormControl>
+    </form>
   );
 };
 

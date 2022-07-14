@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController } from 'react-hook-form';
 import { useTimer } from 'react-timer-hook';
-import { Box, Button, Typography, FormControl } from '@mui/material';
+import { Box, Typography, FormControl } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
 import cn from 'classnames';
 
@@ -124,7 +124,7 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
   const isOtherError = otherError.length > 0;
 
   return (
-    <FormControl onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <Typography className={styles.formTitle}>Подтверждение</Typography>
       <Box className={styles.inputContainer}>
         <FormInput
@@ -135,17 +135,13 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
           isError={Boolean(codeInput.fieldState.error)}
         />
       </Box>
-      <Button
-        onClick={onSubmit}
-        variant={'contained'}
-        className={styles.formButton}
-      >
+      <button className={styles.formButton} type='submit'>
         {loadingRegistrationVerification ? (
           <TailSpin height={25} width={25} color={loaderSubmitButton} />
         ) : (
           <Typography>Подтвердить</Typography>
         )}
-      </Button>
+      </button>
       {isOtherError && (
         <>
           {otherError.map((error) => (
@@ -155,27 +151,29 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
           ))}
         </>
       )}
-      <Typography
-        onClick={handleClickRetryCode}
-        className={cn(styles.otherFormButton, {
-          [styles.retryButtonTimer]: isRunning,
-          [styles.retryButtonLoading]: loadingRegistrationVerificationRetry,
-          [styles.retryButtonError]: registrationVerificationErrorRetry,
-        })}
-      >
-        {loadingRegistrationVerificationRetry ? (
-          <TailSpin height={21} width={21} color={loaderRetryButton} />
-        ) : (
-          getRetryButtonTitle()
-        )}
-      </Typography>
-      <Typography
-        onClick={handleClickBackToMain}
-        className={styles.otherFormButton}
-      >
-        Вернуться на главный экран
-      </Typography>
-    </FormControl>
+      <FormControl className={styles.formControl}>
+        <Typography
+          onClick={handleClickRetryCode}
+          className={cn(styles.otherFormButton, {
+            [styles.retryButtonTimer]: isRunning,
+            [styles.retryButtonLoading]: loadingRegistrationVerificationRetry,
+            [styles.retryButtonError]: registrationVerificationErrorRetry,
+          })}
+        >
+          {loadingRegistrationVerificationRetry ? (
+            <TailSpin height={21} width={21} color={loaderRetryButton} />
+          ) : (
+            getRetryButtonTitle()
+          )}
+        </Typography>
+        <Typography
+          onClick={handleClickBackToMain}
+          className={styles.otherFormButton}
+        >
+          Вернуться на главный экран
+        </Typography>
+      </FormControl>
+    </form>
   );
 };
 

@@ -61,7 +61,7 @@ const ModalLogIn: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
+    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal} isCloseDisable>
       <Box className={styles.closeModal} onClick={closeModal}>
         <FontAwesomeIcon icon={faTimes} />
       </Box>
