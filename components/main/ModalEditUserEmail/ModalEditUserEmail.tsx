@@ -28,6 +28,7 @@ import { modalFields } from './constants';
 import { checkForErrors, checkSameEmail } from './helpers';
 import { TFormData, TFormDataKeys, TOuterProps } from './types';
 import styles from './modalEditUserEmail.module.scss';
+import { TIMEOUT_DELAY } from 'utility/utils/constants';
 
 const ModalEditUserEmail: React.FC<TOuterProps> = ({
   isOpen,
@@ -82,7 +83,7 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
       setNextStep(false);
       dispatch(resetVerifyEmail());
       dispatch(resetEditProfile());
-    });
+    }, TIMEOUT_DELAY);
   };
 
   const handleClickGetCode = async () => {

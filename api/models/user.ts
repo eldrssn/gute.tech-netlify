@@ -94,9 +94,27 @@ type OrderResponseData = {
   products: Product[];
 };
 
+type ChangePasswordRequestData = {
+  newPassword: string;
+  repeatNewPassword: string;
+  currentPassword: string;
+};
+
+type ChangePasswordResponseData = {
+  status: string;
+};
+
+type ChangePasswordErrors = Record<string, string[]>;
+
+type ChangePasswordResponseDataError = { errors: ChangePasswordErrors };
+
 export { Payment };
 
 export type {
+  ChangePasswordRequestData,
+  ChangePasswordResponseData,
+  ChangePasswordErrors,
+  ChangePasswordResponseDataError,
   Order,
   OrderRequestData,
   OrdersResponseData,

@@ -8,11 +8,30 @@ import {
   OrdersRequestData,
   OrderRequestData,
   OrderResponseData,
+  ChangePasswordRequestData,
+  ChangePasswordResponseData,
 } from 'api/models/user';
 import { ApiMethods } from 'constants/types';
 import { getLinkApiProfileOrder } from 'utility/helpers/linkmakers';
 
 import { sendRequestАuthentication } from '../utils';
+
+const putPassword = ({
+  newPassword,
+  repeatNewPassword,
+  currentPassword,
+}: ChangePasswordRequestData) =>
+  sendRequestАuthentication<ChangePasswordResponseData>({
+    url: `/user/profile/change-password/`,
+    method: ApiMethods.PUT,
+    config: {
+      data: {
+        password: newPassword,
+        password2: repeatNewPassword,
+        current_password: currentPassword,
+      },
+    },
+  });
 
 const getProfile = () =>
   sendRequestАuthentication<ProfileResponseData>({
@@ -64,6 +83,7 @@ const getOrder = ({ orderId }: OrderRequestData) =>
   });
 
 export {
+  putPassword,
   getProfile,
   patchProfileChanges,
   postVerifyEmail,

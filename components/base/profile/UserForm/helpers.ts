@@ -45,9 +45,8 @@ const checkCorrectDate = (date: string | null) => {
   return !isNaN(timestamp) || 'Некорректная дата';
 };
 
-const cutDate = (date: Date | null) => {
-  return date ? date.toISOString().substring(0, 10) : null;
-};
+const cutDate = (date: Date | null) =>
+  date ? date.toISOString().substring(0, 10) : null;
 
 const validateMinAge = (date: string | null) => {
   const dateOfBirth = formatDate(date);

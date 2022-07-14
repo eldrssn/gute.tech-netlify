@@ -31,6 +31,11 @@ const initialState: UserStore = {
     isLoading: false,
     error: null,
   },
+  changePassword: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
 };
 
 export { initialState };
