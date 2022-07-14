@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { Typography, FormControl, Button } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { setActiveAuthorizationForm } from 'store/reducers/authentication/actions';
 
@@ -11,24 +11,22 @@ import styles from '../../styles.module.scss';
 const FormResetPasswordSuccess: FC = () => {
   const dispatch = useDispatch();
 
+  const handleClickBackToMain = () => {
+    dispatch(
+      setActiveAuthorizationForm(ActiveAutorizationFormKey.AUTHORIZATION),
+    );
+  };
+
   return (
-    <FormControl>
+    <form>
       <Typography className={styles.formTitle}>Сброс пароля</Typography>
       <Typography className={styles.formText}>
         Пароль успешно изменен
       </Typography>
-      <Button
-        onClick={() => {
-          dispatch(
-            setActiveAuthorizationForm(ActiveAutorizationFormKey.AUTHORIZATION),
-          );
-        }}
-        variant={'contained'}
-        className={styles.formButton}
-      >
+      <button onClick={handleClickBackToMain} className={styles.formButton}>
         Вернуться к авторизации
-      </Button>
-    </FormControl>
+      </button>
+    </form>
   );
 };
 

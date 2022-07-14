@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useController, Controller } from 'react-hook-form';
-import { Box, Button, Typography, FormControl, TextField } from '@mui/material';
+import { Box, Typography, TextField, FormControl } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
 import InputMask from 'react-input-mask';
 
@@ -66,7 +66,7 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
   const isOtherError = otherError.length > 0;
 
   return (
-    <FormControl onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <Typography className={styles.formTitle}>авторизация</Typography>
       <Box className={styles.inputContainer}>
         <Controller
@@ -99,19 +99,16 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
           label='Введите ваш пароль'
           isError={Boolean(passwordInput.fieldState.error)}
           hideValue
+          type='submit'
         />
       </Box>
-      <Button
-        onClick={onSubmit}
-        variant={'contained'}
-        className={styles.formButton}
-      >
+      <button className={styles.formButton} type='submit'>
         {loading ? (
           <TailSpin height={25} width={25} color={loaderColor} />
         ) : (
           <Typography>Войти</Typography>
         )}
-      </Button>
+      </button>
       {isOtherError && (
         <>
           {otherError.map((error) => (
@@ -121,29 +118,33 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
           ))}
         </>
       )}
-      <Typography
-        onClick={() => {
-          dispatch(
-            setActiveAuthorizationForm(ActiveAutorizationFormKey.REGISTRATION),
-          );
-        }}
-        className={styles.otherFormButton}
-      >
-        Регистрация
-      </Typography>
-      <Typography
-        onClick={() => {
-          dispatch(
-            setActiveAuthorizationForm(
-              ActiveAutorizationFormKey.RESET_PASSWORD,
-            ),
-          );
-        }}
-        className={styles.otherFormButton}
-      >
-        Напомнить пароль
-      </Typography>
-    </FormControl>
+      <FormControl className={styles.formControl}>
+        <Typography
+          onClick={() => {
+            dispatch(
+              setActiveAuthorizationForm(
+                ActiveAutorizationFormKey.REGISTRATION,
+              ),
+            );
+          }}
+          className={styles.otherFormButton}
+        >
+          Регистрация
+        </Typography>
+        <Typography
+          onClick={() => {
+            dispatch(
+              setActiveAuthorizationForm(
+                ActiveAutorizationFormKey.RESET_PASSWORD,
+              ),
+            );
+          }}
+          className={styles.otherFormButton}
+        >
+          Напомнить пароль
+        </Typography>
+      </FormControl>
+    </form>
   );
 };
 

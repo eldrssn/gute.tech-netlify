@@ -65,7 +65,7 @@ type ResetPasswordSetFormState = {
 
 type ActiveAuthorizationFormState = ActiveAutorizationFormKey;
 
-type RegisterPayloadData = { phone_number: string; password: string };
+type RegisterPayloadData = { phoneNumber: string; password: string };
 
 type ResetPasswordPayloadData = { phone_number: string };
 

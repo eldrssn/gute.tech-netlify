@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
-import { Box, Button, Typography, FormControl, TextField } from '@mui/material';
+import { Box, Typography, FormControl, TextField } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
 import InputMask from 'react-input-mask';
 
@@ -14,12 +14,8 @@ import {
   selectErrorResetPasswordVerificationForm,
   selectResetPasswordPhone,
 } from 'store/reducers/authentication/selectors';
-// import { getInputRules } from 'utility/helpers';
 import { inputMasks } from 'constants/patterns';
-import {
-  // EValidatePattern,
-  ActiveAutorizationFormKey,
-} from 'constants/types';
+import { ActiveAutorizationFormKey } from 'constants/types';
 import colors from 'styles/_export.module.scss';
 
 import { setResetPasswordVerificationFormErrors } from '../../helpers';
@@ -56,8 +52,14 @@ const FormResetPasswordVerification: FC = () => {
     setResetPasswordVerificationFormErrors({ setError, errors });
   }, [errors, setError]);
 
+  const handleClickBackToMain = () => {
+    dispatch(
+      setActiveAuthorizationForm(ActiveAutorizationFormKey.AUTHORIZATION),
+    );
+  };
+
   return (
-    <FormControl onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <Typography className={styles.formTitle}>Сброс пароля</Typography>
       <Box className={styles.inputContainer}>
         <Controller
@@ -72,7 +74,7 @@ const FormResetPasswordVerification: FC = () => {
               <TextField
                 error={Boolean(error)}
                 helperText={error?.message}
-                label='Введи 4 последний цифры с номер, который вам позвонит'
+                label='последние 4 цифры номера с которого поступил звонок-сброс'
                 variant='outlined'
                 type='text'
                 fullWidth
@@ -81,28 +83,22 @@ const FormResetPasswordVerification: FC = () => {
           )}
         />
       </Box>
-      <Button
-        onClick={onSubmit}
-        variant={'contained'}
-        className={styles.formButton}
-      >
+      <button className={styles.formButton} type='submit'>
         {loading ? (
           <TailSpin height={25} width={25} color={loaderColor} />
         ) : (
           <Typography>Сбросить пароль</Typography>
         )}
-      </Button>
-      <Typography
-        onClick={() => {
-          dispatch(
-            setActiveAuthorizationForm(ActiveAutorizationFormKey.AUTHORIZATION),
-          );
-        }}
-        className={styles.otherFormButton}
-      >
-        Вернуться на главный экран
-      </Typography>
-    </FormControl>
+      </button>
+      <FormControl className={styles.formControl}>
+        <Typography
+          onClick={handleClickBackToMain}
+          className={styles.otherFormButton}
+        >
+          Вернуться на главный экран
+        </Typography>
+      </FormControl>
+    </form>
   );
 };
 

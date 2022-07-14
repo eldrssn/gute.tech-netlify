@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController, Controller } from 'react-hook-form';
-import { Box, Button, Typography, FormControl, TextField } from '@mui/material';
+import { Box, Typography, FormControl, TextField } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
 import InputMask from 'react-input-mask';
 
@@ -79,7 +79,7 @@ const FormRegistration: FC = () => {
   const isOtherError = otherError.length > 0;
 
   return (
-    <FormControl onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <Typography className={styles.formTitle}>Регистрация</Typography>
       <Box className={styles.inputContainer}>
         <Controller
@@ -124,17 +124,13 @@ const FormRegistration: FC = () => {
           hideValue
         />
       </Box>
-      <Button
-        onClick={onSubmit}
-        variant={'contained'}
-        className={styles.formButton}
-      >
+      <button className={styles.formButton} type='submit'>
         {loading ? (
           <TailSpin height={25} width={25} color={loaderColor} />
         ) : (
           <Typography>Зарегистрироваться</Typography>
         )}
-      </Button>
+      </button>
       {isOtherError && (
         <>
           {otherError.map((error) => (
@@ -144,13 +140,15 @@ const FormRegistration: FC = () => {
           ))}
         </>
       )}
-      <Typography
-        onClick={handleClickBackToMain}
-        className={styles.otherFormButton}
-      >
-        Вернуться на главный экран
-      </Typography>
-    </FormControl>
+      <FormControl className={styles.formControl}>
+        <Typography
+          onClick={handleClickBackToMain}
+          className={styles.otherFormButton}
+        >
+          Вернуться на главный экран
+        </Typography>
+      </FormControl>
+    </form>
   );
 };
 

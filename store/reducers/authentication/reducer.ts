@@ -113,7 +113,7 @@ const handlers = {
     state: AuthenticationStore,
     { payload }: PayloadAction<RegisterPayloadData>,
   ) => {
-    state.registrationForm.phoneNumber = payload.phone_number;
+    state.registrationForm.phoneNumber = payload.phoneNumber;
     state.registrationForm.password = payload.password;
     state.registrationForm.loadingRegistrationForm = false;
     state.registrationForm.errorRegistrationForm = null;
