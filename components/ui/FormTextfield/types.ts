@@ -1,6 +1,6 @@
 import { UseFormRegister } from 'react-hook-form';
 
-import { TFormDataFields } from 'components/base/profile/UserForm/types';
+import { TFormDataFields } from 'components/base/profile/components/UserForm/types';
 import { ProfileResponseData } from 'api/models/user';
 
 type FormTextfieldProps = {

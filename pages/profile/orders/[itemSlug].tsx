@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { OrderPage } from 'components/base/order/OrderPage';
+import { OrderPage } from 'components/base/order';
 
 const Item = () => {
   return <OrderPage />;

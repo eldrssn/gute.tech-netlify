@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
-import { Catalog } from 'components/base/catalog/Catalog';
+import { CatalogPage } from 'components/base/catalog';
 
-const CatalogPage: FC = () => (
+const Catalog: FC = () => (
   <>
     <NavigationBreadcrumbs />
-    <Catalog />
+    <CatalogPage />
   </>
 );
 
-export default CatalogPage;
+export default Catalog;

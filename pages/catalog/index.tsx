@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 
-import { Category } from 'components/base/catalog/Category';
+import { Category } from 'components/base/catalog/components/Category';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 
 const CatalogMain: FC = () => {

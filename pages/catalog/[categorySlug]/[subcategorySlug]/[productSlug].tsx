@@ -9,7 +9,7 @@ import {
 } from 'store/reducers/catalog/actions';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 
-import { ProductMain } from 'components/base/product/ProductMain';
+import { ProductPage } from 'components/base/product';
 import { makeStringify } from 'utility/helpers';
 
 const Product = () => {
@@ -53,7 +53,7 @@ const Product = () => {
     );
   }, [stringifiedCategorySlug, stringifiedProductSlug, transportId, dispatch]);
 
-  return <ProductMain />;
+  return <ProductPage />;
 };
 
 export default Product;
