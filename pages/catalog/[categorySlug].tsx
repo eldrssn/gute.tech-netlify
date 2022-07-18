@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useRouter } from 'next/router';
 
-import { Category } from 'components/base/catalog/Category';
+import { Category } from 'components/base/catalog/components/Category';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 
 const CatalogPage: FC = () => {

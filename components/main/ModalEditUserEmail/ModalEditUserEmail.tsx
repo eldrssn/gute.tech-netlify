@@ -11,7 +11,7 @@ import {
   inputCodeRule,
   inputEmailRule,
   ProfileFields,
-} from 'components/base/profile/UserForm/constants';
+} from 'components/base/profile/components/UserForm/constants';
 
 import {
   editProfile,

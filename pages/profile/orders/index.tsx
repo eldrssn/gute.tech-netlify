@@ -1,4 +1,4 @@
-import { OrdersPage } from 'components/base/orders/OrdersPage/OrdersPage';
+import { OrdersPage } from 'components/base/orders';
 import React from 'react';
 
 const Orders = () => <OrdersPage />;
