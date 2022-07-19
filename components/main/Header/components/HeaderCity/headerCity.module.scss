@@ -1,4 +1,5 @@
-@import "~styles/colors.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .cityWrapper {
   display: flex;
@@ -10,4 +11,11 @@
   color: $blue1;
   font-size: 14px;
   cursor: pointer;
+}
+
+@media (max-width: $mobile) {
+  .cityWrapper {
+    margin: auto;
+    justify-content: center;
+  }
 }

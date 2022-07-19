@@ -1,5 +1,5 @@
-type HeaderAsideNavProps = {
+type HeaderMobileNavProps = {
   setIsFocusSearchField: (isFocusSearchField: boolean) => void;
 };
 
-export type { HeaderAsideNavProps };
+export type { HeaderMobileNavProps };

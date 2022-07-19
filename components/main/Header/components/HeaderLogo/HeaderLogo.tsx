@@ -7,14 +7,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
-import { IsDrawerProps } from 'components/main/Header/types';
 
 import { HeaderContext } from '../HeaderContext';
 import styles from './headerLogo.module.scss';
 
 const cn = classnames.bind(styles);
 
-const HeaderLogo: FC<IsDrawerProps> = ({ isDrawer, closeMainDrawer }) => {
+const HeaderLogo: FC = () => {
   const { isFullHeader, isMobileView } = useContext(HeaderContext);
 
   const { logo, title } = useSelector(selectShowcaseData);
@@ -23,15 +22,14 @@ const HeaderLogo: FC<IsDrawerProps> = ({ isDrawer, closeMainDrawer }) => {
     <Box
       sx={{
         display: {
-          xs: isMobileView || isDrawer ? 'flex' : 'none',
+          xs: isMobileView ? 'flex' : 'none',
           sm: 'flex',
         },
-        flexDirection: isDrawer ? 'column' : 'row',
+        flexDirection: 'row',
       }}
     >
       <Link href={'/'} passHref>
         <a
-          onClick={closeMainDrawer}
           className={cn(styles.header_logo, {
             [styles.header_logo_mobile]: isMobileView,
           })}
@@ -45,21 +43,18 @@ const HeaderLogo: FC<IsDrawerProps> = ({ isDrawer, closeMainDrawer }) => {
         </a>
       </Link>
 
-      <Box
-        sx={{
-          display: isFullHeader || isDrawer ? 'flex' : 'none',
-          alignItems: 'center',
-        }}
-      >
-        <Typography
-          component='div'
-          className={cn(styles.headerTitle, {
-            [styles.headerTitle_mobile]: isDrawer,
-          })}
+      {!isMobileView && (
+        <Box
+          sx={{
+            display: isFullHeader ? 'flex' : 'none',
+            alignItems: 'center',
+          }}
         >
-          {title}
-        </Typography>
-      </Box>
+          <Typography component='div' className={cn(styles.headerTitle)}>
+            {title}
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 };

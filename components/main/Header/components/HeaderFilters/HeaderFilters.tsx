@@ -287,9 +287,7 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
             </>
           )}
 
-          {!isFullHeader && !isMobileView && (
-            <HeaderAsideNav setIsFocusSearchField={setIsFocusSearchField} />
-          )}
+          {!isFullHeader && !isMobileView && <HeaderAsideNav />}
         </Box>
       </Container>
 
