@@ -190,3 +190,26 @@
     min-width: 500px;
   }
 }
+
+@media (max-width: $mobile) {
+  .searchBoxSmallHeader {
+    height: 40px;
+  }
+
+  .searchMenuItemSmallHeader {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    right: 15px;
+    min-width: auto;
+    height: 45px;
+  }
+
+  .popupBox {
+    top: 36px;
+  }
+
+  .searchMenuItem {
+    margin: 0;
+  }
+}

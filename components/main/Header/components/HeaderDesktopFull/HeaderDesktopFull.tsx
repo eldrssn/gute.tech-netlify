@@ -40,7 +40,7 @@ const HeaderDesktopFull: FC<HeaderDesktopFullProps> = ({
         >
           <HeaderLogo />
           <SearchField setIsFocusSearchField={setIsFocusSearchField} />
-          <HeaderAsideNav setIsFocusSearchField={setIsFocusSearchField} />
+          <HeaderAsideNav />
         </Box>
       </Container>
       <Divider />

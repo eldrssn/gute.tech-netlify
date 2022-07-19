@@ -103,15 +103,12 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm, catalogSearchRead]);
 
-  if (!isFullHeader && isMobileView) {
-    return null;
-  }
-
   return (
     <MenuItem
       disableGutters
       className={cn(styles.searchMenuItem, {
         [styles.searchMenuItemSmallHeader]: !isFullHeader && isTabletView,
+        [styles.searchMenuItemSmallHeader]: isFocusSearchField && isMobileView,
       })}
     >
       {isFocusSearchField && (
@@ -124,7 +121,7 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
       <Box
         className={cn(styles.searchBox, {
           [styles.activeSearchBox]: isActivePopup,
-          [styles.searchBoxSmallHeader]: !isFullHeader,
+          [styles.searchBoxSmallHeader]: isMobileView,
         })}
       >
         <TextField

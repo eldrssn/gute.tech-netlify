@@ -1,10 +1,5 @@
 import { Control, UseFormSetValue } from 'react-hook-form';
 
-type IsDrawerProps = {
-  isDrawer?: boolean;
-  closeMainDrawer?: () => void;
-};
-
 type FormDataItem = {
   title: string;
   slug: string;
@@ -79,7 +74,6 @@ export { FilterInputNames, StepInputs };
 export type {
   INamesDefaultValueByStep,
   INamesSearchValueByStep,
-  IsDrawerProps,
   WatchFormData,
   FormDataItem,
   FormData,

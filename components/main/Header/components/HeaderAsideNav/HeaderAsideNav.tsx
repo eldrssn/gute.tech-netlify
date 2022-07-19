@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import classnames from 'classnames/bind';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
@@ -17,12 +17,11 @@ import { formatPrice } from 'utility/helpers';
 import { HeaderContext } from '../HeaderContext';
 import { LoginButton } from '../LoginButton';
 
-import { HeaderAsideNavProps } from './types';
 import styles from './headerAsideNav.module.scss';
 
 const cn = classnames.bind(styles);
 
-const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
+const HeaderAsideNav: FC = () => {
   const { isFullHeader, isMobileView, isFocusSearchField } =
     useContext(HeaderContext);
   const [isOpenModalAdvice, setIsOpenModalAdvice] = useState(false);
@@ -49,7 +48,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
         isOpen={isOpenModalAdvice}
         setIsOpen={setIsOpenModalAdvice}
       />
-      {(isFullHeader || isMobileView || isDrawer) && !hidePhone && (
+      {(isFullHeader || isMobileView) && !hidePhone && (
         <MenuItem disableGutters>
           <i className={styles.icon_phone} />
           <a
@@ -65,7 +64,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
         className={styles.menuItemsBox}
         sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
       >
-        {(!isMobileView || !isDrawer) && (
+        {!isMobileView && (
           <Link href={'/cart'} passHref>
             <MenuItem disableGutters>
               <Box className={styles.shoppingCartIcon}>
@@ -90,7 +89,7 @@ const HeaderAsideNav: React.FC<HeaderAsideNavProps> = ({ isDrawer }) => {
           onClick={() => setIsOpenModalAdvice(true)}
         >
           <Box className={styles.consiltIcon} />
-          {(isFullHeader || isDrawer) && (
+          {isFullHeader && (
             <Typography className={menuItemStyles}>Консультация</Typography>
           )}
         </MenuItem>

@@ -5,7 +5,7 @@ import Menu from '@mui/material/Menu';
 import { CustomButton } from 'components/ui/CustomButton';
 
 import { HeaderFilters } from '../HeaderFilters';
-import { HeaderMobileDrawer } from '../HeaderMobileDrawer';
+import { HeaderMobileNav } from '../HeaderMobileNav';
 
 import { HeaderMobileProps } from './types';
 import styles from './headerMobile.module.scss';
@@ -28,7 +28,7 @@ const HeaderMobile: FC<HeaderMobileProps> = ({
 
   return (
     <>
-      <HeaderMobileDrawer setIsFocusSearchField={setIsFocusSearchField} />
+      <HeaderMobileNav setIsFocusSearchField={setIsFocusSearchField} />
 
       <CustomButton
         aria-controls={open}
