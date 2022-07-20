@@ -28,7 +28,7 @@ const HeaderMobile: FC<HeaderMobileProps> = ({
 
   return (
     <>
-      <HeaderMobileNav setIsFocusSearchField={setIsFocusSearchField} />
+      <HeaderMobileNav />
 
       <CustomButton
         aria-controls={open}

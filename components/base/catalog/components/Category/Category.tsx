@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
@@ -61,9 +60,7 @@ const Category: FC<CategoriesProps> = ({ categorySlug }) => {
             <Box key={child.slug} className={styles.childrenListItem}>
               <Link href={linkToCatalog} key={child.slug}>
                 <a>
-                  <MenuItem className={styles.category_title}>
-                    {child.title}
-                  </MenuItem>
+                  <Box className={styles.category_title}>{child.title}</Box>
                 </a>
               </Link>
 

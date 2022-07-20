@@ -31,7 +31,7 @@ const HeaderCity: FC = () => {
       <Box component='div' onClick={() => setIsOpenModal(true)}>
         <Typography className={styles.cityName}>
           {selectedCity.length
-            ? 'Ваш город: ' + selectedCity
+            ? `Ваш город: ${selectedCity}`
             : 'Выберите город'}
         </Typography>
       </Box>
