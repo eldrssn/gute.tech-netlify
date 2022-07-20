@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   MenuItem,
@@ -29,10 +29,19 @@ import styles from './styles.module.scss';
 import { SearchFieldProps } from './types';
 
 const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
-  const { isFullHeader, isMobileView, isTabletView, isFocusSearchField } =
+  const { isFullHeader, isMobileView, isTabletView } =
     useContext(HeaderContext);
+
+  let { isFocusSearchField } = useContext(HeaderContext);
+
+  const [isFocusSearch, setIsFocusSearch] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  if (!setIsFocusSearchField) {
+    setIsFocusSearchField = setIsFocusSearch;
+    isFocusSearchField = isFocusSearch;
+  }
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -64,20 +73,29 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
     setSearchValue(searchValue);
   };
 
+  const setFieldIsFocus = useCallback(
+    (value: boolean) => {
+      if (setIsFocusSearchField) {
+        setIsFocusSearchField(value);
+      }
+    },
+    [setIsFocusSearchField],
+  );
+
   const handleClick = (link: string) => {
+    setFieldIsFocus(false);
     router.push(link);
-    setIsFocusSearchField(false);
     setSearchValue('');
     dispatch(clearTransportId());
   };
 
   const handleClosePopover = () => {
-    setIsFocusSearchField(false);
+    setFieldIsFocus(false);
     setSearchValue('');
   };
 
   const handleOpenPopover = () => {
-    setIsFocusSearchField(true);
+    setFieldIsFocus(true);
   };
 
   useEffect(() => {
@@ -89,8 +107,8 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
   }, [debouncedSearchTerm, dispatch]);
 
   useEffect(() => {
-    setIsFocusSearchField(false);
-  }, [isFullHeader, isMobileView, isTabletView, setIsFocusSearchField]);
+    setFieldIsFocus(false);
+  }, [isFullHeader, isMobileView, isTabletView, setFieldIsFocus]);
 
   useEffect(() => {
     const errorMessage = cn({

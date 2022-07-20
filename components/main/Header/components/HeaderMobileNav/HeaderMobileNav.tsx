@@ -5,20 +5,18 @@ import Divider from '@mui/material/Divider';
 
 import { HeaderLogo } from '../HeaderLogo';
 import { HeaderCity } from '../HeaderCity';
-import { SearchField } from '../SearchField';
-
-import { HeaderMobileNavProps } from './types';
 
 import styles from './headerMobileNav.module.scss';
+import { Box } from '@mui/material';
 
-const HeaderMobileNav: FC<HeaderMobileNavProps> = ({
-  setIsFocusSearchField,
-}) => (
+const HeaderMobileNav: FC = () => (
   <>
     <Container className={styles.headerMobileContainer}>
-      <HeaderLogo />
+      <Box className={styles.headerLogoContainer}>
+        <HeaderLogo />
+      </Box>
+
       <HeaderCity />
-      <SearchField setIsFocusSearchField={setIsFocusSearchField} />
     </Container>
     <Divider />
   </>

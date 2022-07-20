@@ -1,5 +1,5 @@
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
-import { faListUl } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,7 +19,7 @@ const menuLinks = [
   {
     title: MenuTittles.CATALOG,
     href: '/catalog',
-    icon: faListUl,
+    icon: faMagnifyingGlass,
   },
   {
     title: MenuTittles.CART,

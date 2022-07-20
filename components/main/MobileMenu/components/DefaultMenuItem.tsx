@@ -34,6 +34,7 @@ const DefaultMenuItem: FC<MenuItemProps> = ({ menuItem, router }) => {
         })}
       >
         <FontAwesomeIcon icon={icon} className={styles.menuItem_icon} />
+
         {isCartItem && (
           <span className={styles.menuItem_cartCounter}>{amountCartItems}</span>
         )}
