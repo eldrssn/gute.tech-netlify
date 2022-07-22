@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .wrap {
   position: relative;
@@ -48,7 +48,7 @@
 @media (max-width: $xsMobile) {
   .wrap {
     height: 200px;
-    width: 300px;
+    width: 90vw;
   }
 
   .title {

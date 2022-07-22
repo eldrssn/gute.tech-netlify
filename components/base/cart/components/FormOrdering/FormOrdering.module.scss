@@ -59,3 +59,9 @@
     width: 100%;
   }
 }
+
+@media (max-width: $xxsMobile) {
+  .formTitle {
+    margin-bottom: 30px;
+  }
+}

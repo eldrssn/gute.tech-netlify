@@ -128,7 +128,9 @@ const FormRegistration: FC = () => {
         {loading ? (
           <TailSpin height={25} width={25} color={loaderColor} />
         ) : (
-          <Typography>Зарегистрироваться</Typography>
+          <Typography className={styles.formButton_text}>
+            Зарегистрироваться
+          </Typography>
         )}
       </button>
       {isOtherError && (

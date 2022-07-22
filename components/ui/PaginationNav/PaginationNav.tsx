@@ -34,6 +34,7 @@ const PaginationNav: FC<CatalogPaginationProps> = ({
       size='small'
       sx={{
         padding: '13px 18px',
+        margin: { xs: 'auto', sm: 0 },
         '& .MuiPagination-ul': {
           display: 'flex',
           justifyContent: 'space-between',

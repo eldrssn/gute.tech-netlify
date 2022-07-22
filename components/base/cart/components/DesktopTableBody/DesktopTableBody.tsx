@@ -77,7 +77,7 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
                     <Image
                       height='100px'
                       width='100px'
-                      src='/germanika/deflectors.jpg'
+                      src={item.images[0]}
                       alt='item'
                     />
                   </Box>

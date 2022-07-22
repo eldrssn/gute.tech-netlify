@@ -155,7 +155,10 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
               </FormHelperText>
             )}
 
-            <CustomButton onClick={handleClickGetCode}>
+            <CustomButton
+              customStyles={styles.button}
+              onClick={handleClickGetCode}
+            >
               Получить код
             </CustomButton>
           </>
@@ -183,7 +186,9 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
               </FormHelperText>
             )}
 
-            <CustomButton type='submit'>Подтвердить</CustomButton>
+            <CustomButton customStyles={styles.button} type='submit'>
+              Подтвердить
+            </CustomButton>
           </>
         )}
       </form>

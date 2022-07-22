@@ -106,7 +106,7 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
         {loading ? (
           <TailSpin height={25} width={25} color={loaderColor} />
         ) : (
-          <Typography>Войти</Typography>
+          <Typography className={styles.formButton_text}>Войти</Typography>
         )}
       </button>
       {isOtherError && (

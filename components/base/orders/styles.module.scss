@@ -1,5 +1,5 @@
-@import "~styles/breakpoints.scss";
-@import "~styles/colors.scss";
+@import '~styles/breakpoints.scss';
+@import '~styles/colors.scss';
 
 .mainContainer {
   display: flex;
@@ -49,5 +49,9 @@
 
   .mainBox {
     flex-direction: column;
+  }
+
+  .cardHeaderContainer {
+    margin-top: 30px;
   }
 }

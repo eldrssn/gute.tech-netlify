@@ -10,11 +10,13 @@ import { MenuItems } from './components/MenuItems';
 import { tabTittles } from './constants';
 
 import styles from './AsideNavigation.module.scss';
+import { ModalLogOut } from 'components/main/ModalLogOut';
 
 const cn = classnames.bind(styles);
 
 const AsideNavigation = () => {
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
+  const [isOpenModalLogOut, setIsOpenModalLogOut] = useState(false);
   const { isMobile } = useWindowSize();
   const { data: profile } = useSelector(selectUserProfile);
 
@@ -24,36 +26,54 @@ const AsideNavigation = () => {
     setIsOpenMobileMenu((isOpen) => !isOpen);
   };
 
+  const handleOpenModalLogOut = () => {
+    setIsOpenModalLogOut(true);
+  };
+
   return (
-    <Box className={styles.navContainer}>
-      <CardMedia
-        component={'img'}
-        height='200'
-        image='/images/user-img2.jpg'
-        alt='Фото пользователя'
-        className={styles.userImage}
+    <>
+      <ModalLogOut
+        isOpen={isOpenModalLogOut}
+        setIsOpen={setIsOpenModalLogOut}
       />
-      <p className={styles.userName}>{fillName}</p>
+      <Box className={styles.navContainer}>
+        <CardMedia
+          component={'img'}
+          height='200'
+          image='/images/user-img2.jpg'
+          alt='Фото пользователя'
+          className={styles.userImage}
+        />
+        <p className={styles.userName}>{fillName}</p>
 
-      <Divider className={styles.divider} />
+        <Divider className={styles.divider} />
 
-      {isMobile ? (
-        <>
-          <MenuItem
-            className={cn(styles.navItem, styles.navMobileMenu, {
-              [styles.up]: isOpenMobileMenu,
-            })}
-            onClick={handleToggleMobileMenu}
-          >
-            Меню
-          </MenuItem>
+        {isMobile ? (
+          <>
+            <MenuItem
+              className={cn(styles.navItem, styles.navMobileMenu, {
+                [styles.up]: isOpenMobileMenu,
+              })}
+              onClick={handleToggleMobileMenu}
+            >
+              Меню
+            </MenuItem>
 
-          {isOpenMobileMenu && <MenuItems tabTittles={tabTittles} />}
-        </>
-      ) : (
-        <MenuItems tabTittles={tabTittles} />
-      )}
-    </Box>
+            {isOpenMobileMenu && (
+              <MenuItems
+                tabTittles={tabTittles}
+                handleOpenModalLogOut={handleOpenModalLogOut}
+              />
+            )}
+          </>
+        ) : (
+          <MenuItems
+            tabTittles={tabTittles}
+            handleOpenModalLogOut={handleOpenModalLogOut}
+          />
+        )}
+      </Box>
+    </>
   );
 };
 

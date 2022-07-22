@@ -80,7 +80,10 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
           >
             ОСТАВЬТЕ ВАШ НОМЕР ТЕЛЕФОНА
           </Typography>
-          <Typography id='modal-modal-description' sx={{ mb: 3 }}>
+          <Typography
+            className={styles.description}
+            id='modal-modal-description'
+          >
             Мы перезвоним в течение 17 минут и предложим лучший вариант!
           </Typography>
           <>

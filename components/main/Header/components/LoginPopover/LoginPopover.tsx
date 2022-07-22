@@ -1,15 +1,12 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
+
 import { useRouter } from 'next/router';
 import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 
-import { logOut } from 'store/reducers/authentication/exceptionAction';
-
 import { Props } from './types';
 
-const LoginPopover: FC<Props> = ({ closePopover }) => {
-  const dispatch = useDispatch();
+const LoginPopover: FC<Props> = ({ closePopover, setIsOpenModalLogOut }) => {
   const router = useRouter();
 
   const handleClickMyProfile = () => {
@@ -18,7 +15,7 @@ const LoginPopover: FC<Props> = ({ closePopover }) => {
   };
 
   const handleClickExit = () => {
-    dispatch(logOut());
+    setIsOpenModalLogOut(true);
     closePopover();
   };
 

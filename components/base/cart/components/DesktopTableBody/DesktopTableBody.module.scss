@@ -1,4 +1,4 @@
-@import "styles/colors.scss";
+@import 'styles/colors.scss';
 
 .tableBody {
   border-bottom: 1px solid rgba(224, 224, 224, 1);
@@ -17,6 +17,7 @@
   width: 100px;
   height: 100px;
   position: relative;
+  margin-left: 24px;
 }
 
 .checkbox {

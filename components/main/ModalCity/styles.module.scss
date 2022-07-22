@@ -84,6 +84,36 @@
   margin-top: 0px;
 }
 
+@media (max-width: $mobile) {
+  .title {
+    font-size: 16px;
+  }
+
+  .divider {
+    margin-bottom: 10px;
+  }
+
+  .regions {
+    margin-top: 20px;
+
+    > :first-child {
+      margin-top: 0px;
+    }
+  }
+
+  .region {
+    margin-top: 10px;
+
+    > :first-child {
+      margin-top: 0px;
+    }
+  }
+
+  .regionTitle {
+    margin-bottom: 5px;
+  }
+}
+
 @media (max-width: $sMobile) {
   .closeModal {
     top: 10px;
@@ -93,6 +123,7 @@
 
   .container {
     width: 100%;
-    padding: 40px;
+    padding: 25px;
+    min-height: fit-content;
   }
 }

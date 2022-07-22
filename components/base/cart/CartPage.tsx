@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Box } from '@mui/material';
+import { Typography, Container } from '@mui/material';
 
 import { selectCart, selectOrderTotal } from 'store/reducers/cart/selectors';
 import {
@@ -29,7 +29,7 @@ const CartPage: React.FC = () => {
   }, []);
 
   return (
-    <Box component='div' className={styles.main}>
+    <Container component='div' className={styles.main}>
       <Typography className={styles.mainTitle}>Корзина</Typography>
       <RemoveCheckedButton
         cart={cart}
@@ -43,7 +43,7 @@ const CartPage: React.FC = () => {
         setSlugsRemovedElements={setSlugsRemovedElements}
       />
       <FormOrdering />
-    </Box>
+    </Container>
   );
 };
 

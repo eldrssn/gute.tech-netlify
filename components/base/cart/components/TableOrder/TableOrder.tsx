@@ -18,6 +18,7 @@ import {
 } from 'store/reducers/cart/actions';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { ModalAdvice } from 'components/main/ModalAdvice';
+import { formatPrice } from 'utility/helpers';
 
 import { DesktopTableBody } from '../DesktopTableBody';
 import { MobileTableBody } from '../MobileTableBody';
@@ -102,7 +103,7 @@ const TableOrder: React.FC<TTableOrderProps> = ({
           </MenuItem>
         </Box>
         <Typography className={styles.orderTotal}>
-          Всего: {orderTotal}&#8381;
+          Всего: {formatPrice(orderTotal)}&#8381;
         </Typography>
       </Box>
     </>

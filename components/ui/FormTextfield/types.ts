@@ -20,6 +20,9 @@ type FormTextfieldProps = {
   disabled?: boolean;
   onClick?: () => void;
   errorMessage?: string;
+  inputProps?: {
+    readOnly: boolean;
+  };
 };
 
 export type { FormTextfieldProps };
