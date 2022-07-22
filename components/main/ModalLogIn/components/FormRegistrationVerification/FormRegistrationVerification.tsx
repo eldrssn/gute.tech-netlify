@@ -139,7 +139,9 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
         {loadingRegistrationVerification ? (
           <TailSpin height={25} width={25} color={loaderSubmitButton} />
         ) : (
-          <Typography>Подтвердить</Typography>
+          <Typography className={styles.formButton_text}>
+            Подтвердить
+          </Typography>
         )}
       </button>
       {isOtherError && (

@@ -51,7 +51,7 @@ const AccountFields: FC<AccountFieldsProps> = ({
           placeholder='Введите Email'
           onClick={handleOpenModalEmail}
           onChange={onChangeForm}
-          disabled
+          inputProps={{ readOnly: true }}
           required
         />
         <FormTextfield

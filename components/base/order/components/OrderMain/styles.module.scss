@@ -1,5 +1,5 @@
-@import "~styles/breakpoints.scss";
-@import "~styles/colors.scss";
+@import '~styles/breakpoints.scss';
+@import '~styles/colors.scss';
 
 .mainContent {
   flex-grow: 1;
@@ -30,7 +30,15 @@
 }
 
 @media (max-width: $mobile) {
+  .titleBox {
+    flex-direction: column;
+  }
+
+  .infoBox {
+    flex-direction: column;
+  }
   .mainContent {
     margin-left: 0;
+    margin-top: 30px;
   }
 }

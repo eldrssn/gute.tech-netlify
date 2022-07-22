@@ -74,13 +74,14 @@ const OrdersPage = () => {
   }, [created_after, created_before, dispatch, order, page]);
 
   return (
-    <Container className={styles.mainContainer}>
+    <Container disableGutters className={styles.mainContainer}>
       <Box>
         <h1>История заказов</h1>
       </Box>
 
       <Box className={styles.mainBox}>
         <AsideNavigation />
+
         <Box className={styles.mainContent}>
           <Box
             component='section'

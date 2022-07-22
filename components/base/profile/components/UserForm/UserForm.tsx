@@ -135,8 +135,12 @@ const UserForm = () => {
 
         {isFormChanging && (
           <Box className={styles.buttonsContainer}>
-            <CustomButton onClick={openModalSave}>Сохранить</CustomButton>
-            <CustomButton onClick={openModalSave}>Отмена</CustomButton>
+            <CustomButton customStyles={styles.button} onClick={openModalSave}>
+              Сохранить
+            </CustomButton>
+            <CustomButton customStyles={styles.button} onClick={openModalSave}>
+              Отмена
+            </CustomButton>
           </Box>
         )}
       </form>

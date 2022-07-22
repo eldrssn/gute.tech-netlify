@@ -81,7 +81,9 @@ const FormResetPassword: FC = () => {
         {loading ? (
           <TailSpin height={25} width={25} color={loaderColor} />
         ) : (
-          <Typography>Получить код</Typography>
+          <Typography className={styles.formButton_text}>
+            Получить код
+          </Typography>
         )}
       </button>
       <FormControl className={styles.formControl}>

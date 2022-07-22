@@ -39,16 +39,18 @@ const ProfilePage = () => {
     <Container disableGutters className={styles.mainContainer}>
       <Box>
         <h1>Профиль</h1>
-
-        <AsideNavigation />
       </Box>
 
-      {!isLoadingUserProfile && (
-        <Box className={styles.userInfo}>
-          <UserForm />
-          <UserActionButtons />
-        </Box>
-      )}
+      <Box className={styles.mainBox}>
+        <AsideNavigation />
+
+        {!isLoadingUserProfile && (
+          <Box className={styles.userInfo}>
+            <UserForm />
+            <UserActionButtons />
+          </Box>
+        )}
+      </Box>
     </Container>
   );
 };

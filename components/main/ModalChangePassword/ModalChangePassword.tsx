@@ -141,8 +141,12 @@ const ModalChangePassword: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
           )}
 
           <Box className={styles.buttonsContainer}>
-            <CustomButton type='submit'>Применить</CustomButton>
-            <CustomButton onClick={closeModal}>Отмена</CustomButton>
+            <CustomButton customStyles={styles.button} type='submit'>
+              Применить
+            </CustomButton>
+            <CustomButton customStyles={styles.button} onClick={closeModal}>
+              Отмена
+            </CustomButton>
           </Box>
         </form>
       )}

@@ -4,10 +4,13 @@
 .navContainer {
   display: flex;
   flex-direction: column;
+  width: 250px;
   min-width: 250px;
+  height: fit-content;
 
   background-color: $white2;
   border: 1px solid $transparentBlue1;
+  padding-bottom: 5px;
 }
 
 .navItem {

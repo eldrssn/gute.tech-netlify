@@ -38,7 +38,13 @@ const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
   return (
     <Breadcrumbs
       aria-label='breadcrumb'
-      sx={{ paddingTop: { xs: '15px', md: 0 } }}
+      sx={{
+        paddingTop: { xs: '15px', md: 0 },
+        '.MuiBreadcrumbs-separator': {
+          marginLeft: '4px',
+          marginRight: '4px',
+        },
+      }}
     >
       {!isLoading &&
         currentCrumbs.map((crumb, index) => <Crumb {...crumb} key={index} />)}

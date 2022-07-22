@@ -1,5 +1,5 @@
-@import "styles/colors.scss";
-@import "styles/breakpoints.scss";
+@import 'styles/colors.scss';
+@import 'styles/breakpoints.scss';
 
 .wrapper {
   opacity: 0;
@@ -137,5 +137,11 @@
     border-bottom: 0;
     border-left: 1px solid $blue1;
     margin-left: 10%;
+  }
+}
+
+@media (max-width: $xsMobile) {
+  .transportTypeButton {
+    font-size: 12px;
   }
 }

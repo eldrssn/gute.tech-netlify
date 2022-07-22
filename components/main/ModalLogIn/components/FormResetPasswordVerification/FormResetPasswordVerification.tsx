@@ -87,7 +87,9 @@ const FormResetPasswordVerification: FC = () => {
         {loading ? (
           <TailSpin height={25} width={25} color={loaderColor} />
         ) : (
-          <Typography>Сбросить пароль</Typography>
+          <Typography className={styles.formButton_text}>
+            Сбросить пароль
+          </Typography>
         )}
       </button>
       <FormControl className={styles.formControl}>

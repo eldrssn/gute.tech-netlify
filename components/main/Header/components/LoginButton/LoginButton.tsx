@@ -9,12 +9,14 @@ import {
   selectLoadingAuthorized,
 } from 'store/reducers/authentication/selectors';
 import { ModalLogIn } from 'components/main/ModalLogIn';
+import { ModalLogOut } from 'components/main/ModalLogOut';
 
-import styles from './loginButton.module.scss';
 import { LoginPopover } from '../LoginPopover';
+import styles from './loginButton.module.scss';
 
 const LoginButton = () => {
   const [isOpenModalLogIn, setIsOpenModalLogIn] = useState(false);
+  const [isOpenModalLogOut, setIsOpenModalLogOut] = useState(false);
 
   const isAuthorized = useSelector(selectIsAuthorized);
   const loadingAuthorized = useSelector(selectLoadingAuthorized);
@@ -43,6 +45,10 @@ const LoginButton = () => {
 
   return (
     <>
+      <ModalLogOut
+        isOpen={isOpenModalLogOut}
+        setIsOpen={setIsOpenModalLogOut}
+      />
       <ModalLogIn isOpen={isOpenModalLogIn} setIsOpen={setIsOpenModalLogIn} />
       <MenuItem className={styles.button} onClick={handleClick}>
         <CardMedia
@@ -70,7 +76,10 @@ const LoginButton = () => {
           horizontal: 'right',
         }}
       >
-        <LoginPopover closePopover={handleClose} />
+        <LoginPopover
+          closePopover={handleClose}
+          setIsOpenModalLogOut={setIsOpenModalLogOut}
+        />
       </Popover>
     </>
   );

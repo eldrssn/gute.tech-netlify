@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .container {
   font-size: 16px;
@@ -60,7 +60,7 @@
   align-items: center;
   justify-content: center;
   appearance: none;
-  border-radius: 4px;
+  border-radius: 0;
   text-transform: uppercase;
   border: none;
   color: $white;
@@ -133,8 +133,26 @@
 }
 
 @media (max-width: $mobile) {
+  .otherErrorMessage {
+    width: auto;
+    text-align: center;
+  }
+  .inputContainer {
+    width: auto;
+  }
+
   .formTitle {
+    font-size: 16px;
     color: $black;
+  }
+
+  .formWrap {
+    width: 90vw;
+    height: fit-content;
+  }
+
+  .formButton_text {
+    font-size: 14px;
   }
 }
 
@@ -154,9 +172,5 @@
 @media (max-width: $xsMobile) {
   .formWrap {
     padding: 30px;
-  }
-
-  .inputContainer {
-    width: 250px;
   }
 }

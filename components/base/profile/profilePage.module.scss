@@ -2,17 +2,21 @@
 
 .mainContainer {
   display: flex;
+  flex-direction: column;
+}
+
+.mainBox {
+  display: flex;
   flex-direction: row;
 }
 
 .userInfo {
   margin-left: 30px;
-  margin-top: 80px;
   flex-grow: 1;
 }
 
 @media (max-width: $mobile) {
-  .mainContainer {
+  .mainBox {
     flex-direction: column;
   }
 

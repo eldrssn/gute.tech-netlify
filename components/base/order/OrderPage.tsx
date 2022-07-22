@@ -27,10 +27,11 @@ const OrderPage: FC = () => {
   }, [isAuthorized, router, loadingAuthorized]);
 
   return (
-    <Container className={styles.mainContainer}>
+    <Container disableGutters className={styles.mainContainer}>
       <Box>
         <h1>Информация о заказе</h1>
       </Box>
+
       <Box className={styles.mainBox}>
         <AsideNavigation />
         <OrderMain />

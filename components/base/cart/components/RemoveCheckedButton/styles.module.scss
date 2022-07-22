@@ -5,9 +5,9 @@
   position: relative;
   display: flex;
   justify-content: flex-end;
-  width: 100%;
   height: 30px;
   margin-top: 10px;
+  margin-left: 24px;
 }
 
 .checkboxSelectAll {
@@ -88,7 +88,7 @@
     left: 49px;
 
     span {
-      font-size: 15px;
+      font-size: 14px;
     }
   }
 
@@ -98,5 +98,17 @@
 
   .confirmedBlock {
     width: 90%;
+  }
+}
+
+@media (max-width: $xsMobile) {
+  .checkboxContainer {
+    margin-left: 15px;
+  }
+}
+
+@media (max-width: $xxsMobile) {
+  .button {
+    width: 50px;
   }
 }
