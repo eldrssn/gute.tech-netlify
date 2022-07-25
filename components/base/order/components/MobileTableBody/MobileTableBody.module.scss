@@ -1,0 +1,111 @@
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
+
+.tableBody {
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  border-top: 1px solid rgba(224, 224, 224, 1);
+}
+
+.tableBody th {
+  display: flex;
+  align-items: center;
+}
+
+.tableBodyName {
+  height: 250px;
+}
+
+.imageBox {
+  width: 150px;
+  height: 150px;
+  position: relative;
+}
+
+.checkbox {
+  position: absolute;
+  top: 50%;
+  left: -18px;
+  transform: translate(-50%, -50%);
+}
+
+.itemTitle {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.itemPrice {
+  margin-bottom: 10px;
+}
+
+.itemCost {
+  font-weight: bold;
+}
+
+.itemCount {
+  margin-bottom: 10px;
+  user-select: none;
+}
+
+.btnCountInactive {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.itemInfo {
+  width: 50%;
+  position: relative;
+  padding: 0;
+  height: 250px;
+}
+
+.btnCount {
+  color: $white;
+  width: 35px;
+  height: 35px;
+  padding: 10px 0;
+  min-width: 0;
+  background-color: $blue4;
+
+  &:hover {
+    background-color: $blue2;
+  }
+}
+
+.btnCountAdd {
+  margin-left: 7px;
+}
+
+.btnCountRemove {
+  margin-right: 7px;
+}
+
+.btnDelete {
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  background-color: red;
+  color: $white;
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  min-width: 0;
+}
+
+@media (max-width: $xsMobile) {
+  .imageBox {
+    width: 100px;
+    height: 100px;
+  }
+
+  .itemTitle {
+    font-size: 14px;
+  }
+
+  .itemPrice {
+    font-size: 12px;
+  }
+
+  .itemCost {
+    font-size: 12px;
+  }
+}

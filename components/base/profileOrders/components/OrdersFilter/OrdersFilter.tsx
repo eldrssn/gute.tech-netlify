@@ -137,6 +137,7 @@ const OrdersFilter: FC = () => {
             moveRangeOnFirstSelection={false}
             ranges={dateRange}
             locale={ru}
+            showDateDisplay={false}
           />
         </Box>
       </span>

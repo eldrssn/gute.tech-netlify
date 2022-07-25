@@ -1,6 +1,6 @@
-import { OrdersPage } from 'components/base/orders';
+import { ProfileOrdersPage } from 'components/base/profileOrders';
 import React from 'react';
 
-const Orders = () => <OrdersPage />;
+const Orders = () => <ProfileOrdersPage />;
 
 export default Orders;
