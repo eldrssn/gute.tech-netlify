@@ -1,42 +1,43 @@
-import React, { FC, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { Typography, Box, Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import { Container, Box } from '@mui/material';
 
-import { AsideNavigation } from 'components/ui/AsideNavigation';
-import {
-  selectIsAuthorized,
-  selectLoadingAuthorized,
-} from 'store/reducers/authentication/selectors';
+import { selectOrder, selectOrderTotal } from 'store/reducers/order/selectors';
 
-import { OrderMain } from './components/OrderMain';
+import { TableOrder } from './components/TableOrder';
 import styles from './styles.module.scss';
 
-const OrderPage: FC = () => {
+const OrderPage: React.FC = () => {
   const router = useRouter();
 
-  const isAuthorized = useSelector(selectIsAuthorized);
-  const loadingAuthorized = useSelector(selectLoadingAuthorized);
+  const order = useSelector(selectOrder);
+  const orderTotal = useSelector(selectOrderTotal);
 
-  useEffect(() => {
-    if (isAuthorized || loadingAuthorized) {
-      return;
-    }
+  const onClickButton = () => {
+    router.push('/payment');
+  };
 
-    router.push('/');
-  }, [isAuthorized, router, loadingAuthorized]);
+  if (!order || !orderTotal) {
+    router.push('/cart');
+    return null;
+  }
 
   return (
-    <Container disableGutters className={styles.mainContainer}>
-      <Box>
-        <h1>Информация о заказе</h1>
+    <Box component='div' className={styles.main}>
+      <Box className={styles.totalBoxContainer}>
+        <Box className={styles.totalBox}>
+          <Typography className={styles.orderTotal}>
+            Всего: {orderTotal}&#8381;
+          </Typography>
+          <Button onClick={onClickButton} variant={'contained'}>
+            Заказать
+          </Button>
+        </Box>
       </Box>
-
-      <Box className={styles.mainBox}>
-        <AsideNavigation />
-        <OrderMain />
-      </Box>
-    </Container>
+      <Typography className={styles.mainTitle}>Заказ</Typography>
+      <TableOrder order={order} orderTotal={orderTotal} />
+    </Box>
   );
 };
 

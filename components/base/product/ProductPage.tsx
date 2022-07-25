@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 
 import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
+import { fetchItemFromOrder, clearOrder } from 'store/reducers/order/actions';
 import { formatPrice } from 'utility/helpers';
 
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
@@ -61,8 +62,9 @@ const ProductPage: FC = () => {
       return;
     }
 
-    dispatch(fetchItemFromCart({ productSlug: slug }));
-    router.push('/cart');
+    dispatch(clearOrder());
+    dispatch(fetchItemFromOrder({ productSlug: slug }));
+    router.push('/order');
   };
 
   const addItemToBasket = () => {

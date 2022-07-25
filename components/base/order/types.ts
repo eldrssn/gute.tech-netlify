@@ -1,7 +1,10 @@
-import { Product } from 'api/models/user';
+import { CartItemData, orderTotal } from 'store/reducers/cart/types';
 
-type TableBodyProps = {
-  products: Product[];
+type TStateProps = {
+  order: CartItemData[];
+  orderTotal: orderTotal;
 };
 
-export type { TableBodyProps };
+type TTableBodyProps = Pick<TStateProps, 'order'>;
+
+export type { TStateProps, CartItemData, TTableBodyProps };

@@ -38,6 +38,8 @@ const fetchItemFromCart = createAsyncAction<
   shouldReturnRequestData: true,
 });
 
+//TODO: вынести экшены в отдельный редъюсер, вместе с логикой оформления из корзины
+
 const fetchPaymentMethods = createAsyncAction<PaymentMethodResponseData[]>({
   typeAction: 'CartStore/fetchPaymentMethods',
   request: getPaymentMethods,

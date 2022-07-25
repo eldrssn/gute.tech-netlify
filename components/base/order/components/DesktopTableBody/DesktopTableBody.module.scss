@@ -1,0 +1,53 @@
+@import "styles/colors.scss";
+
+.tableBody {
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+
+.tableBody th {
+  display: flex;
+  align-items: center;
+}
+
+.tableBodyName {
+  min-width: 220px;
+}
+
+.imageBox {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.checkbox {
+  position: absolute;
+  top: 50%;
+  left: -18px;
+  transform: translate(-50%, -50%);
+}
+
+.itemTitleBox {
+  margin-left: 10px;
+}
+
+.itemTitle {
+  font-weight: bold;
+}
+
+.itemManufacturer {
+  font-weight: 100;
+  margin-top: 10px;
+}
+
+.warningMsg {
+  width: 100%;
+  text-align: center;
+  margin: 50px 0px 50px;
+  font-weight: 100;
+}
+
+@media (max-width: 900px) {
+  .itemTitleBox {
+    max-width: 240px;
+  }
+}

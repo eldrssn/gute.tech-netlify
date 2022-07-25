@@ -6,6 +6,7 @@ import { RegionsStore } from './reducers/regions/types';
 import { PagesStore } from './reducers/pages/types';
 import { UserStore } from './reducers/user/types';
 import { AuthenticationStore } from './reducers/authentication/types';
+import { OrderStore } from './reducers/order/types';
 
 type State = {
   cartStore: CartStore;
@@ -16,6 +17,7 @@ type State = {
   pagesStore: PagesStore;
   userStore: UserStore;
   authenticationStore: AuthenticationStore;
+  orderStore: OrderStore;
 };
 
 type ErrorАuthenticationPayload<P = void> = {

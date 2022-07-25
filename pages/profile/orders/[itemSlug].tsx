@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { OrderPage } from 'components/base/order';
+import { ProfileOrderPage } from 'components/base/profileOrder';
 
 const Item = () => {
-  return <OrderPage />;
+  return <ProfileOrderPage />;
 };
 
 export default Item;

@@ -22,7 +22,7 @@ import { isNotEnoughtItems } from './helpers';
 import { PAGE_QUERY } from './constants';
 import styles from './styles.module.scss';
 
-const OrdersPage = () => {
+const ProfileOrdersPage = () => {
   const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();
@@ -102,4 +102,4 @@ const OrdersPage = () => {
   );
 };
 
-export { OrdersPage };
+export { ProfileOrdersPage };

@@ -8,6 +8,7 @@ import { regionReducer } from './regions';
 import { pagesReducer } from './pages';
 import { userReducer } from './user';
 import { authenticationReducer } from './authentication';
+import { orderReducer } from './order';
 
 const reducers = combineReducers({
   cartStore: cartReducer,
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   pagesStore: pagesReducer,
   userStore: userReducer,
   authenticationStore: authenticationReducer,
+  orderStore: orderReducer,
 });
 
 export { reducers };
