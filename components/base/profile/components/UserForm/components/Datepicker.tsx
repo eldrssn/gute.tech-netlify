@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { ru } from 'date-fns/locale';
@@ -6,6 +6,7 @@ import { FormHelperText, TextField } from '@mui/material';
 
 import {
   checkCorrectDate,
+  checkValidDate,
   cutDate,
   formatStringifiedDate,
   getDate,
@@ -37,35 +38,41 @@ const Datepicker: FC<DatepickerProps> = ({
     getDate(defaultDateOfBirthday),
   );
 
-  const handleChangeDateOfBirth = (value: Date | null) => {
-    onChangeForm();
-    setDateOfBirth(value);
-  };
+  useEffect(() => {
+    const isValidDate = dateOfBirth && checkValidDate(dateOfBirth);
+
+    if (!isValidDate) {
+      return;
+    }
+
+    const transformDate = cutDate(dateOfBirth);
+    setValue(ProfileFields.DATE_OF_BIRTHDAY, transformDate, {
+      shouldDirty: true,
+    });
+  }, [dateOfBirth, setValue, register]);
 
   const handleTransformDate = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     if (!errors[ProfileFields.DATE_OF_BIRTHDAY]) {
       const { value } = event.target;
-
-      if (!value) {
-        return;
-      }
-
       const inputDate = new Date(formatStringifiedDate(value));
-      const transformDate = cutDate(inputDate);
-
-      setValue(ProfileFields.DATE_OF_BIRTHDAY, transformDate);
+      setDateOfBirth(inputDate);
     }
+  };
+
+  const handleChangeDateOfBirth = (value: Date | null) => {
+    onChangeForm();
+    setDateOfBirth(value);
   };
 
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ru}>
         <DatePicker
+          value={dateOfBirth}
           inputFormat={DATE_INPUT_FORMAT}
           onChange={handleChangeDateOfBirth}
-          value={dateOfBirth}
           label='Дата рождения'
           disableFuture
           mask={DATE_INPUT_MASK}

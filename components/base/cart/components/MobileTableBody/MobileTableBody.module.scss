@@ -16,8 +16,6 @@
 }
 
 .imageBox {
-  width: 150px;
-  height: 150px;
   position: relative;
 }
 
@@ -100,6 +98,10 @@
 @media (max-width: $xsMobile) {
   .imageBox {
     margin-left: 0;
+  }
+
+  .image {
+    object-fit: contain;
     width: 100px;
     height: 100px;
   }
@@ -118,5 +120,12 @@
 
   .checkbox {
     margin-left: 5px;
+  }
+}
+
+@media (max-width: $xxsMobile) {
+  .image {
+    width: 75px;
+    height: 75px;
   }
 }

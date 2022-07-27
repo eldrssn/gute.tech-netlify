@@ -36,17 +36,32 @@ const formatDate = (date: string | null) => {
   return new Date(formatedDate);
 };
 
-const checkCorrectDate = (date: string | null) => {
-  if (!date) {
-    return;
+const checkValidDate = (date: Date | string) => {
+  if (typeof date !== 'string') {
+    const timestamp = Date.parse(date.toString());
+    return !isNaN(timestamp);
   }
-  const timestamp = Date.parse(formatStringifiedDate(date));
 
-  return !isNaN(timestamp) || 'Некорректная дата';
+  const timestamp = Date.parse(formatStringifiedDate(date));
+  return !isNaN(timestamp);
 };
 
-const cutDate = (date: Date | null) =>
-  date ? date.toISOString().substring(0, 10) : null;
+const checkCorrectDate = (date: Date | string | null) => {
+  if (!date) {
+    return true;
+  }
+
+  return checkValidDate(date) || 'Некорректная дата';
+};
+
+const cutDate = (date: Date | null) => {
+  if (!date) {
+    return '';
+  }
+
+  const isValidDate = checkValidDate(date);
+  return isValidDate ? date.toISOString().substring(0, 10) : null;
+};
 
 const validateMinAge = (date: string | null) => {
   const dateOfBirth = formatDate(date);
@@ -131,4 +146,5 @@ export {
   cutDate,
   checkCorrectDate,
   formatStringifiedDate,
+  checkValidDate,
 };
