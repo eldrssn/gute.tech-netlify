@@ -99,6 +99,7 @@ const ModalChangePassword: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
             type='password'
             {...register(modalFields.CURRENT_PASSWORD, passwordRule)}
             error={Boolean(errors[modalFields.CURRENT_PASSWORD])}
+            autoComplete='none'
           />
           {errors[modalFields.CURRENT_PASSWORD] && (
             <FormHelperText error className={styles.inputField_error}>
@@ -112,6 +113,7 @@ const ModalChangePassword: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
             type='password'
             {...register(modalFields.NEW_PASSWORD, passwordRule)}
             error={Boolean(errors[modalFields.NEW_PASSWORD])}
+            autoComplete='none'
           />
           {errors[modalFields.NEW_PASSWORD] && (
             <FormHelperText error className={styles.inputField_error}>
@@ -133,6 +135,7 @@ const ModalChangePassword: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
               },
             })}
             error={Boolean(errors[modalFields.REPEAT_NEW_PASSWORD])}
+            autoComplete='none'
           />
           {errors[modalFields.REPEAT_NEW_PASSWORD] && (
             <FormHelperText error className={styles.inputField_error}>

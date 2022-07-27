@@ -137,6 +137,7 @@ const FilterStep: FC<FilterStepProps> = ({
           <TextField
             className={styles.stepField}
             autoComplete='off'
+            inputProps={{ type: 'text' }}
             name={name}
             value={valueTextField}
             onChange={onChangeTextField}

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import {
   TableBody,
   TableCell,
@@ -8,6 +7,7 @@ import {
   Box,
   FormControlLabel,
   Checkbox,
+  CardMedia,
 } from '@mui/material';
 
 import { formatPrice } from 'utility/helpers';
@@ -74,7 +74,8 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
                         />
                       }
                     />
-                    <Image
+                    <CardMedia
+                      component={'img'}
                       height='100px'
                       width='100px'
                       src={item.images[0]}

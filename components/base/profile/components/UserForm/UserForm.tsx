@@ -8,11 +8,7 @@ import { ModalSaveChanges } from 'components/main/ModalSaveChanges';
 import { ModalEditUserEmail } from 'components/main/ModalEditUserEmail';
 
 import { ProfileResponseData } from 'api/models/user';
-import {
-  editProfile,
-  fetchProfile,
-  resetEditProfile,
-} from 'store/reducers/user/actions';
+import { editProfile, resetEditProfile } from 'store/reducers/user/actions';
 import {
   selectEditionUserProfile,
   selectUserProfile,
@@ -66,14 +62,13 @@ const UserForm = () => {
     });
   }, [editProfileError, editProfileResponse, setError, userProfile]);
 
-  const onSumbit = handleSubmit((data) => {
+  const onSumbit = handleSubmit(async (data) => {
     const filteredDirtyFields = filterDirtyFields({ data, dirtyFields });
-    dispatch(editProfile(filteredDirtyFields));
 
+    dispatch(editProfile(filteredDirtyFields));
+    dispatch(resetEditProfile());
     setFormChanging(false);
     setIsOpenModalSave(false);
-    dispatch(resetEditProfile());
-    dispatch(fetchProfile());
   });
 
   const openModalSave = async () => {

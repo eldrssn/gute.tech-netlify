@@ -40,6 +40,7 @@ const MenuItems: FC<MenuItemsProps> = ({
             <MenuItem
               onClick={handleOpenModalLogOut}
               className={styles.navItem}
+              key={title}
             >
               {title}
             </MenuItem>

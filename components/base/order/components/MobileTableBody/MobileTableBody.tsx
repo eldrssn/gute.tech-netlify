@@ -1,6 +1,12 @@
 import React from 'react';
-import Image from 'next/image';
-import { TableBody, TableCell, TableRow, Typography, Box } from '@mui/material';
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+  Box,
+  CardMedia,
+} from '@mui/material';
 
 import { formatPrice, getStockBalance } from 'utility/helpers';
 
@@ -27,11 +33,12 @@ const MobileTableBody: React.FC<TableBodyProps> = ({ order }) => {
               className={styles.tableBodyName}
             >
               <Box className={styles.imageBox}>
-                <Image
+                <CardMedia
+                  component={'img'}
                   height='150px'
-                  width='150px'
-                  src='/germanika/deflectors.jpg'
+                  src={item.images[0]}
                   alt='item'
+                  className={styles.image}
                 />
               </Box>
             </TableCell>

@@ -144,7 +144,8 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
       >
         <TextField
           className={styles.textField}
-          onChange={(event) => handleChangeInput(event)}
+          inputProps={{ type: 'text' }}
+          onChange={handleChangeInput}
           onClick={handleOpenPopover}
           placeholder='Введите артикул, наименование или код запчасти'
           value={searchValue}

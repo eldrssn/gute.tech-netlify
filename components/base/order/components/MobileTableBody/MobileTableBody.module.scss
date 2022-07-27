@@ -16,8 +16,6 @@
 }
 
 .imageBox {
-  width: 150px;
-  height: 150px;
   position: relative;
 }
 
@@ -91,8 +89,19 @@
   min-width: 0;
 }
 
+@media (max-width: $mobile) {
+  .imageBox {
+    margin: auto;
+  }
+}
+
 @media (max-width: $xsMobile) {
   .imageBox {
+    margin-left: 0;
+  }
+
+  .image {
+    object-fit: contain;
     width: 100px;
     height: 100px;
   }
@@ -107,5 +116,12 @@
 
   .itemCost {
     font-size: 12px;
+  }
+}
+
+@media (max-width: $xxsMobile) {
+  .image {
+    width: 75px;
+    height: 75px;
   }
 }
