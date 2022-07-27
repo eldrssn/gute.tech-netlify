@@ -1,42 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Typography, Box, Button } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { useRouter } from 'next/router';
 
-import { selectOrder, selectOrderTotal } from 'store/reducers/order/selectors';
+import { Loader } from 'components/ui/Loader';
+import { TotalOrderBox } from 'components/main/TotalOrderBox';
+import {
+  selectOrder,
+  selectOrderLoading,
+} from 'store/reducers/order/selectors';
+import { TotalBoxRedirectUrls } from 'utility/utils/constants';
+import { useWindowSize } from 'hooks/useWindowSize';
 
 import { TableOrder } from './components/TableOrder';
 import styles from './styles.module.scss';
 
 const OrderPage: React.FC = () => {
   const router = useRouter();
+  const { isMobile } = useWindowSize();
 
   const order = useSelector(selectOrder);
-  const orderTotal = useSelector(selectOrderTotal);
+  const isLoadingOrder = useSelector(selectOrderLoading);
 
-  const onClickButton = () => {
-    router.push('/payment');
-  };
+  const isOrderList = order.length > 0;
 
-  if (!order || !orderTotal) {
-    router.push('/cart');
-    return null;
-  }
+  useEffect(() => {
+    if (!isOrderList && !isLoadingOrder) {
+      router.push('/cart');
+    }
+  }, [isOrderList, router, isLoadingOrder]);
+
+  useEffect(() => {
+    if (isMobile) {
+      document.body.style.paddingBottom = '50px';
+      return;
+    }
+    document.body.style.paddingBottom = '0px';
+
+    return () => {
+      document.body.style.paddingBottom = '0px';
+    };
+  }, [isMobile]);
 
   return (
     <Box component='div' className={styles.main}>
-      <Box className={styles.totalBoxContainer}>
-        <Box className={styles.totalBox}>
-          <Typography className={styles.orderTotal}>
-            Всего: {orderTotal}&#8381;
-          </Typography>
-          <Button onClick={onClickButton} variant={'contained'}>
-            Заказать
-          </Button>
-        </Box>
-      </Box>
+      <TotalOrderBox redirectUrl={TotalBoxRedirectUrls.PAYMENT} />
       <Typography className={styles.mainTitle}>Заказ</Typography>
-      <TableOrder order={order} orderTotal={orderTotal} />
+      {isLoadingOrder ? <Loader /> : <TableOrder order={order} />}
     </Box>
   );
 };

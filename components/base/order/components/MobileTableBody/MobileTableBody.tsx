@@ -2,15 +2,17 @@ import React from 'react';
 import Image from 'next/image';
 import { TableBody, TableCell, TableRow, Typography, Box } from '@mui/material';
 
-import { formatPrice } from 'utility/helpers';
+import { formatPrice, getStockBalance } from 'utility/helpers';
 
-import { TTableBodyProps } from '../../types';
+import { Counter } from '../Сounter';
+import { TableBodyProps } from '../../types';
 import styles from './MobileTableBody.module.scss';
 
-const MobileTableBody: React.FC<TTableBodyProps> = ({ order }) => {
+const MobileTableBody: React.FC<TableBodyProps> = ({ order }) => {
   return (
     <TableBody className={styles.tableBody}>
       {order.map((item) => {
+        const stockBalance = getStockBalance(item);
         const itemPrice = formatPrice(item.price);
         const countItemsPrice = formatPrice(item.count * item.price);
 
@@ -38,9 +40,7 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({ order }) => {
               <Typography className={styles.itemPrice}>
                 Цена: {itemPrice}&#8381;{' '}
               </Typography>
-              <Typography className={styles.itemCost}>
-                Количество: {item.count}&#8381;
-              </Typography>
+              <Counter item={item} stockBalance={stockBalance} />
               <Typography className={styles.itemCost}>
                 Стоимость: {countItemsPrice}&#8381;
               </Typography>

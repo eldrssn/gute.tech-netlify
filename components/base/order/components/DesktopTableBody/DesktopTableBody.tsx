@@ -2,16 +2,18 @@ import React from 'react';
 import Image from 'next/image';
 import { TableBody, TableCell, TableRow, Typography, Box } from '@mui/material';
 
-import { formatPrice } from 'utility/helpers';
+import { formatPrice, getStockBalance } from 'utility/helpers';
 
-import { TTableBodyProps } from '../../types';
+import { Counter } from '../Сounter';
+import { TableBodyProps } from '../../types';
 import styles from './DesktopTableBody.module.scss';
 
-const DesktopTableBody: React.FC<TTableBodyProps> = ({ order }) => {
+const DesktopTableBody: React.FC<TableBodyProps> = ({ order }) => {
   return (
     <>
       <TableBody className={styles.tableBody}>
         {order.map((item) => {
+          const stockBalance = getStockBalance(item);
           const itemPrice = formatPrice(item.price);
           const countItemsPrice = formatPrice(item.count * item.price);
 
@@ -43,7 +45,9 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({ order }) => {
                 </Typography>
               </TableCell>
               <TableCell align='right'>{itemPrice}&#8381;</TableCell>
-              <TableCell align='right'>{item.count}</TableCell>
+              <TableCell align='right'>
+                <Counter item={item} stockBalance={stockBalance} />
+              </TableCell>
               <TableCell sx={{ position: 'relative' }} align='right'>
                 {countItemsPrice}&#8381;
               </TableCell>

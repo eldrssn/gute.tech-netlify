@@ -233,10 +233,16 @@ const getFullDate = (date: Date) => {
   return `${year}-${month}-${day}`;
 };
 
+const getStockBalance = (item: CartItemData) =>
+  item.warehouses.reduce((accumulator, warehouse) => {
+    return accumulator + Number(warehouse.quantity);
+  }, 0);
+
 export default setBreakpointSize;
 
 export {
   getFullDate,
+  getStockBalance,
   scrollToTop,
   addItemToLocaleStorage,
   groupItems,

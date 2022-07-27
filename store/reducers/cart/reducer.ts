@@ -60,9 +60,6 @@ const handlers = {
     );
     state.cartItems.data[itemIndex].count = Number(payload.count);
   },
-  [clearCart.type]: (state: CartStore) => {
-    state.cartItems.data = [];
-  },
   [removeItemQuantity.type]: (
     state: CartStore,
     { payload }: { payload: CartItemSlug },
@@ -81,6 +78,9 @@ const handlers = {
       newItem,
       ...cart.slice(itemIndex + 1),
     ];
+  },
+  [clearCart.type]: (state: CartStore) => {
+    state.cartItems.data = [];
   },
   [removeItemFromCart.type]: (
     state: CartStore,

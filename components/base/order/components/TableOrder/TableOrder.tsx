@@ -5,10 +5,10 @@ import { useWindowSize } from 'hooks/useWindowSize';
 
 import { DesktopTableBody } from '../DesktopTableBody';
 import { MobileTableBody } from '../MobileTableBody';
-import { TStateProps } from '../../types';
+import { TableOrderProps } from '../../types';
 import styles from '../../styles.module.scss';
 
-const TableOrder: React.FC<TStateProps> = ({ order }) => {
+const TableOrder: React.FC<TableOrderProps> = ({ order }) => {
   const { isMobile } = useWindowSize();
 
   return (

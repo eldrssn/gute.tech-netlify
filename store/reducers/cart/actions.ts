@@ -20,11 +20,11 @@ import { createAsyncAction } from 'utility/helpers/store';
 
 import { CartItemQuantity, CartItemSlug } from './types';
 
-const addItemQuantity = createAction<CartItemSlug>('addItemQuantity');
-const removeItemQuantity = createAction<CartItemSlug>('removeItemQuantity');
-const removeItemFromCart = createAction<CartItemSlug>('removeItemFromCart');
-const setItemQuantity = createAction<CartItemQuantity>('setItemQuantity');
-const removeItemBySlug = createAction<CartItemSlug[]>('removeItemBySlug');
+const addItemQuantity = createAction<CartItemSlug>('addCartItemQuantity');
+const removeItemQuantity = createAction<CartItemSlug>('removeCartItemQuantity');
+const removeItemFromCart = createAction<CartItemSlug>('removeCartItemFromCart');
+const setItemQuantity = createAction<CartItemQuantity>('setCartItemQuantity');
+const removeItemBySlug = createAction<CartItemSlug[]>('removeCartItemBySlug');
 const resetOrdinalId = createAction('resetOrdinalId');
 const clearCart = createAction('clearCart');
 const clearCreateOrdering = createAction('clearCreateOrdering');

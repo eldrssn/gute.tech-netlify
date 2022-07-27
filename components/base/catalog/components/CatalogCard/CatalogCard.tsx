@@ -15,7 +15,7 @@ import { selectTransportId } from 'store/reducers/transport/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { ProductListData } from 'api/models/catalog';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
-import { fetchItemFromOrder, clearOrder } from 'store/reducers/order/actions';
+import { fetchItemFromOrder } from 'store/reducers/order/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
 
@@ -50,7 +50,6 @@ const CatalogCard: React.FC<ProductListData> = ({
   };
 
   const buyItNow = (event: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(clearOrder());
     dispatch(fetchItemFromOrder({ productSlug: slug }));
     router.push('/order');
     event.preventDefault();
