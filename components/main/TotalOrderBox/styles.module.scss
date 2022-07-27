@@ -1,0 +1,53 @@
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
+
+.totalBoxContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.totalBox {
+  background-color: $white;
+  height: 75px;
+  width: 100%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: calc(100vh - 76px);
+  border-top: 1px solid $gray4;
+  display: flex;
+  z-index: 1201;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: $mobile) {
+  .totalBox {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    top: calc(100vh - 125px);
+    border-top: none;
+    justify-content: space-between;
+    box-shadow: 0 -2px 8px rgb(0 0 0 / 15%);
+    padding: 0 15px;
+    height: 75px;
+    width: 100%;
+    z-index: 1100;
+  }
+}
+
+@media (max-width: $xxsMobile) {
+  .orderTotal {
+    font-size: 12px;
+  }
+
+  .button {
+    font-size: 12px;
+    height: 40px;
+    line-height: 14px;
+  }
+}

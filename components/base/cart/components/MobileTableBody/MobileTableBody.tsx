@@ -12,7 +12,7 @@ import {
 
 import { formatPrice } from 'utility/helpers';
 
-import { getStockBalance } from '../../helpers';
+import { getStockBalance } from 'utility/helpers';
 import { DeleteItemButton } from '../DeleteItemButton';
 import { Counter } from '../Сounter';
 import { TTableBodyProps } from '../../types';

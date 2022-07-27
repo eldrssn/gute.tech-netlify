@@ -7,7 +7,11 @@ import { Typography, Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { selectCreateOrderingStatus } from 'store/reducers/cart/selectors';
-import { selectOrder } from 'store/reducers/order/selectors';
+import {
+  selectOrder,
+  selectOrderLoading,
+} from 'store/reducers/order/selectors';
+import { clearOrder } from 'store/reducers/order/actions';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import {
   createOrderingUnAuthorized,
@@ -39,6 +43,7 @@ const PaymentPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const order = useSelector(selectOrder);
+  const isLoadingOrder = useSelector(selectOrderLoading);
   const isAuthorized = useSelector(selectIsAuthorized);
   const createOrderStatus = useSelector(selectCreateOrderingStatus);
 
@@ -59,6 +64,7 @@ const PaymentPage: React.FC = () => {
       branch_office_id: data.branch ? data.branch.id : 0,
     };
     setOtherError([]);
+    dispatch(clearOrder());
 
     if (isAuthorized) {
       dispatch(createOrderingAuthorized(postData));
@@ -69,10 +75,10 @@ const PaymentPage: React.FC = () => {
   });
 
   useEffect(() => {
-    if (!isOrderList) {
+    if (!isOrderList && !isLoadingOrder) {
       router.push('/cart');
     }
-  }, [router, isOrderList]);
+  }, [router, isOrderList, isLoadingOrder]);
 
   useEffect(() => {
     if (paymentUrl) {

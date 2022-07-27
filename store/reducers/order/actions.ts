@@ -1,11 +1,14 @@
 import { createAction } from '@reduxjs/toolkit';
 
-import { CartItemData } from 'components/base/cart/types';
 import { createAsyncAction } from 'utility/helpers/store';
 import { getProductInfoFromSlug } from 'api/routes/cart';
 import { ProductRequestData, ProductResponseData } from 'api/models/cart';
 
-const addItemsFromOrder = createAction<CartItemData[]>('addItemsFromOrder');
+import { OrderItemQuantity } from './types';
+
+const addItemQuantity = createAction<string>('addOrderItemQuantity');
+const setItemQuantity = createAction<OrderItemQuantity>('setOrderItemQuantity');
+const removeItemQuantity = createAction<string>('removeOrderItemQuantity');
 const clearOrder = createAction('clearOrder');
 
 const fetchItemFromOrder = createAsyncAction<
@@ -17,4 +20,10 @@ const fetchItemFromOrder = createAsyncAction<
   shouldReturnRequestData: true,
 });
 
-export { addItemsFromOrder, fetchItemFromOrder, clearOrder };
+export {
+  fetchItemFromOrder,
+  clearOrder,
+  addItemQuantity,
+  removeItemQuantity,
+  setItemQuantity,
+};

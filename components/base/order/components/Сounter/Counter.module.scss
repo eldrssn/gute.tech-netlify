@@ -1,0 +1,161 @@
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
+
+.countModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $white;
+  border-radius: 4px;
+  height: 120px;
+  width: 150px;
+  z-index: 1301;
+  box-shadow: 1px 0px 11px 0px rgba(34, 60, 80, 0.2);
+  visibility: hidden;
+  transition: 0.3s;
+  opacity: 0;
+}
+
+.modalBackground {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1300;
+}
+
+.countModalOpen {
+  visibility: visible;
+  opacity: 1;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleModal {
+  text-align: center;
+  font-size: 12px;
+}
+
+.input {
+  height: 25px;
+  width: 60%;
+  margin: 5px auto 10px;
+  input {
+    padding: 2px 2px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 6px;
+  }
+}
+
+.buttonContainer {
+  margin-top: 4px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.btnSolution {
+  font-size: 9px;
+  width: 40px;
+  margin: 0 5px;
+}
+
+.btnAccept {
+  background-color: $blue1;
+  color: $white;
+
+  &:hover {
+    background-color: $blue2;
+  }
+}
+
+.btnReject {
+  background-color: $red1;
+  color: $white;
+
+  &:hover {
+    background-color: $red2;
+  }
+}
+
+.countContainer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  max-width: 125px;
+  margin-left: auto;
+}
+
+.count {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  cursor: pointer;
+}
+
+.btnCount {
+  color: $white;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  min-width: 0;
+  background-color: $blue1;
+
+  &:hover {
+    background-color: $blue2;
+  }
+}
+
+.btnCountInactive {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.btnCountAdd {
+  margin-right: 0;
+}
+
+.btnCountRemove {
+  margin-left: 0;
+}
+
+.stockBalance {
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 160%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 100;
+}
+
+@media (max-width: $mobile) {
+  .countContainer {
+    width: 120px;
+    margin-bottom: 30px;
+    margin-right: auto;
+    margin-left: 0;
+  }
+
+  .stockBalance {
+    top: 150%;
+  }
+}

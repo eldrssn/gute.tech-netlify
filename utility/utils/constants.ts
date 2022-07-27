@@ -7,4 +7,15 @@ enum isFromWidgets {
   TRUE = '1',
 }
 
-export { CATALOG_QUERY_DEFAULT, IS_FROM_WIDGETS, TIMEOUT_DELAY, isFromWidgets };
+enum TotalBoxRedirectUrls {
+  ORDER = '/order',
+  PAYMENT = '/payment',
+}
+
+export {
+  CATALOG_QUERY_DEFAULT,
+  IS_FROM_WIDGETS,
+  TIMEOUT_DELAY,
+  isFromWidgets,
+  TotalBoxRedirectUrls,
+};
