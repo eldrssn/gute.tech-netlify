@@ -43,11 +43,13 @@ const OrderPage: React.FC = () => {
   }, [isMobile]);
 
   return (
-    <Box component='div' className={styles.main}>
+    <>
+      <Box component='div' className={styles.main}>
+        <Typography className={styles.mainTitle}>Заказ</Typography>
+        {isLoadingOrder ? <Loader /> : <TableOrder order={order} />}
+      </Box>
       <TotalOrderBox redirectUrl={TotalBoxRedirectUrls.PAYMENT} />
-      <Typography className={styles.mainTitle}>Заказ</Typography>
-      {isLoadingOrder ? <Loader /> : <TableOrder order={order} />}
-    </Box>
+    </>
   );
 };
 

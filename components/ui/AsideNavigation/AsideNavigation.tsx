@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 import { Box, CardMedia, Divider, MenuItem } from '@mui/material';
 
 import { useWindowSize } from 'hooks/useWindowSize';
-import {
-  selectEditionUserProfile,
-  selectUserProfile,
-} from 'store/reducers/user/selectors';
+import { selectUserProfile } from 'store/reducers/user/selectors';
 
 import { MenuItems } from './components/MenuItems';
 import { tabTittles } from './constants';
 
 import styles from './AsideNavigation.module.scss';
 import { ModalLogOut } from 'components/main/ModalLogOut';
-import { fetchProfile } from 'store/reducers/user/actions';
 
 const cn = classnames.bind(styles);
 
@@ -23,14 +19,6 @@ const AsideNavigation = () => {
   const [isOpenModalLogOut, setIsOpenModalLogOut] = useState(false);
   const { isMobile } = useWindowSize();
   const { data: profile } = useSelector(selectUserProfile);
-  const { data: editProfileResponse } = useSelector(selectEditionUserProfile);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (editProfileResponse) {
-      dispatch(fetchProfile());
-    }
-  }, [editProfileResponse, dispatch]);
 
   const fullName =
     profile && `${profile.first_name || ''} ${profile.last_name || ''}`;

@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
-import { Box, FormLabel, MenuItem, TextField } from '@mui/material';
+import { Box, FormLabel } from '@mui/material';
 
 import { FormTextfield } from 'components/ui/FormTextfield';
 
-import { selectCity, usernameRule } from '../constants';
+import { CitySelect } from './CitySelect';
+import { usernameRule } from '../constants';
 import { PersonalFieldsProps } from '../types';
 
 import styles from '../userForm.module.scss';
@@ -13,7 +14,8 @@ const PersonalFields: FC<PersonalFieldsProps> = ({
   onChangeForm,
   // register,
   // errors,
-  // getValues,
+  getValues,
+  setValue,
   // handleChangeFormValue,
 }) => (
   <Box className={styles.formColumn} sx={{ width: { xs: '100%', md: '50%' } }}>
@@ -40,23 +42,11 @@ const PersonalFields: FC<PersonalFieldsProps> = ({
       // name='country'
     />
 
-    <TextField
-      className={styles.inputField}
-      select
-      label='Город'
-      value=''
-      placeholder='Введите город'
-      disabled
-      // name='city'
-      // value={getValues('city')}
-      // onChange={(event) => handleChangeFormValue(event, 'city')}
-    >
-      {selectCity.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
-          {option.label}
-        </MenuItem>
-      ))}
-    </TextField>
+    <CitySelect
+      getValues={getValues}
+      onChangeForm={onChangeForm}
+      setValue={setValue}
+    />
   </Box>
 );
 

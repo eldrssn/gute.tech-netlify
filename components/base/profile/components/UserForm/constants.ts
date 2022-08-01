@@ -80,6 +80,7 @@ const ProfileFields: Record<string, TFormDataFields> = {
   EMAIL: 'email',
   DATE_JOINED: 'date_joined',
   TRANSPORT: 'transport',
+  CITY: 'city',
 };
 
 const selectSex = [
@@ -90,21 +91,6 @@ const selectSex = [
   {
     value: 'female',
     label: 'Женский',
-  },
-];
-
-const selectCity = [
-  {
-    value: 'ulianovsk',
-    label: 'Ульяновск',
-  },
-  {
-    value: 'moscow',
-    label: 'Москва',
-  },
-  {
-    value: 'samara',
-    label: 'Самара',
   },
 ];
 
@@ -120,7 +106,6 @@ export {
   MIN_DATE,
   MAX_AGE,
   MIN_AGE,
-  selectCity,
   usernameRule,
   ProfileFields,
 };

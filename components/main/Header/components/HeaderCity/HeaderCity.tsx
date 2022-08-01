@@ -11,11 +11,14 @@ import { selectCity } from 'store/reducers/regions/selectors';
 import { CookieKey } from 'constants/types';
 
 import styles from './headerCity.module.scss';
+import { selectUserProfile } from 'store/reducers/user/selectors';
 
 const HeaderCity: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const dispatch = useDispatch();
   const selectedCity = useSelector(selectCity);
+  const { data: userProfile } = useSelector(selectUserProfile);
+  const userProfileCity = userProfile?.city;
 
   useEffect(() => {
     const selectedCity = cookieStorage.getItem(CookieKey.SELECTEDCITY);
@@ -23,7 +26,11 @@ const HeaderCity: FC = () => {
     if (selectedCity) {
       dispatch(selectRegion(selectedCity));
     }
-  }, [dispatch]);
+
+    if (!selectedCity && userProfileCity) {
+      dispatch(selectRegion(userProfileCity.title));
+    }
+  }, [dispatch, userProfileCity]);
 
   return (
     <Container className={styles.cityWrapper} disableGutters>

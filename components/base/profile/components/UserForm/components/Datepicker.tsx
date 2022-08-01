@@ -34,9 +34,9 @@ const Datepicker: FC<DatepickerProps> = ({
 }) => {
   const defaultDateOfBirthday = getValues(ProfileFields.DATE_OF_BIRTHDAY);
 
-  const [dateOfBirth, setDateOfBirth] = React.useState<Date | null>(
-    getDate(defaultDateOfBirthday),
-  );
+  const dateValue = getDate(defaultDateOfBirthday);
+
+  const [dateOfBirth, setDateOfBirth] = React.useState<Date | null>(dateValue);
 
   useEffect(() => {
     const isValidDate = dateOfBirth && checkValidDate(dateOfBirth);
