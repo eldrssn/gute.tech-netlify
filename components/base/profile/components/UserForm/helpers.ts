@@ -1,9 +1,11 @@
 import { UseFormSetError } from 'react-hook-form';
 
 import {
+  CityRequestData,
   EditProfileResponseErrorData,
   ProfileResponseData,
 } from 'api/models/user';
+import { RegionData } from 'api/models/regions';
 
 import { MAX_DATE, MIN_DATE, MAX_AGE, MIN_AGE } from './constants';
 import { TDirtyFields } from './types';
@@ -22,8 +24,13 @@ const correctRegister = (
   return correctedRegister.join(' ');
 };
 
-const getDate = (stringifiedDate: string | null) =>
-  stringifiedDate ? new Date(stringifiedDate) : null;
+const getDate = (stringifiedDate: string | null | CityRequestData) => {
+  if (typeof stringifiedDate === 'string') {
+    return stringifiedDate ? new Date(stringifiedDate) : null;
+  }
+
+  return null;
+};
 
 const formatStringifiedDate = (date: string) =>
   date.split('/').reverse().join('-');
@@ -135,6 +142,17 @@ const setCustomErrors = ({
   });
 };
 
+const getCityOptions = (regions: RegionData[]) =>
+  regions.flatMap(({ cities }) => cities);
+
+const getCityTitle = (defaultCity: string | CityRequestData) =>
+  typeof defaultCity === 'string' ? defaultCity : defaultCity.title;
+
+const getCityOption = (defaultCity: string | CityRequestData) =>
+  typeof defaultCity === 'string'
+    ? { title: defaultCity, slug: defaultCity }
+    : defaultCity;
+
 export {
   correctRegister,
   validateMinAge,
@@ -147,4 +165,7 @@ export {
   checkCorrectDate,
   formatStringifiedDate,
   checkValidDate,
+  getCityTitle,
+  getCityOption,
+  getCityOptions,
 };

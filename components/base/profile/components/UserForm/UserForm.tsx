@@ -8,7 +8,11 @@ import { ModalSaveChanges } from 'components/main/ModalSaveChanges';
 import { ModalEditUserEmail } from 'components/main/ModalEditUserEmail';
 
 import { ProfileResponseData } from 'api/models/user';
-import { editProfile, resetEditProfile } from 'store/reducers/user/actions';
+import {
+  editProfile,
+  fetchProfile,
+  resetEditProfile,
+} from 'store/reducers/user/actions';
 import {
   selectEditionUserProfile,
   selectUserProfile,
@@ -69,6 +73,8 @@ const UserForm = () => {
     dispatch(resetEditProfile());
     setFormChanging(false);
     setIsOpenModalSave(false);
+
+    setTimeout(() => dispatch(fetchProfile()));
   });
 
   const openModalSave = async () => {
@@ -126,6 +132,7 @@ const UserForm = () => {
           errors={errors}
           getValues={getValues}
           handleChangeFormValue={handleChangeFormValue}
+          setValue={setValue}
         />
 
         {isFormChanging && (

@@ -1,3 +1,5 @@
+type CityRequestData = { title: string; slug: string };
+
 type ProfileResponseData = {
   last_name: string;
   first_name: string;
@@ -7,6 +9,7 @@ type ProfileResponseData = {
   email: string;
   date_joined: string;
   transport: string;
+  city: CityRequestData;
 };
 
 type ProfileRequestData = {
@@ -23,6 +26,7 @@ type EditProfileRequestData = {
   email?: string;
   date_joined?: string;
   transport?: string;
+  city?: CityRequestData;
 };
 
 type EditProfileResponseData = Record<string, string | string[]>;
@@ -129,4 +133,5 @@ export type {
   VerifyEmailRequestData,
   VerifyEmailResponseData,
   VerifyEmailResponseErrorData,
+  CityRequestData,
 };

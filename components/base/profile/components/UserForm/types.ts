@@ -17,10 +17,12 @@ type TDirtyFields = {
   email?: boolean | undefined;
   date_joined?: boolean | undefined;
   transport?: boolean | undefined;
+  city?: { title?: boolean | undefined; slug?: boolean | undefined };
 };
 
 type TFormDataFields = keyof ProfileResponseData;
 
+// !TODO: убрать мессадж
 type TErrors = {
   last_name?: FieldError | undefined;
   first_name?: FieldError | undefined;
@@ -30,6 +32,11 @@ type TErrors = {
   email?: FieldError | undefined;
   date_joined?: FieldError | undefined;
   transport?: FieldError | undefined;
+  city?: {
+    title?: FieldError | undefined;
+    slug?: FieldError | undefined;
+    message?: string;
+  };
 };
 
 type PersonalFieldsProps = {
@@ -41,6 +48,7 @@ type PersonalFieldsProps = {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: TFormDataFields,
   ) => void;
+  setValue: UseFormSetValue<ProfileResponseData>;
 };
 
 type AccountFieldsProps = PersonalFieldsProps & {
@@ -59,6 +67,12 @@ type DatepickerProps = {
   onChangeForm: () => Promise<void>;
 };
 
+type CitySelectProps = {
+  getValues: UseFormGetValues<ProfileResponseData>;
+  setValue: UseFormSetValue<ProfileResponseData>;
+  onChangeForm: () => Promise<void>;
+};
+
 export type {
   TDate,
   TErrors,
@@ -67,4 +81,5 @@ export type {
   AccountFieldsProps,
   TDirtyFields,
   DatepickerProps,
+  CitySelectProps,
 };
