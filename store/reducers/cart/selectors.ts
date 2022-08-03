@@ -15,7 +15,7 @@ const selectCart = createSelector(selectAppStore, ({ cartItems }) => {
   return sortedCart;
 });
 
-const selectOrderTotal = createSelector(selectAppStore, ({ cartItems }) =>
+const selectCartOrderTotal = createSelector(selectAppStore, ({ cartItems }) =>
   cartItems.data.reduce((total, item) => {
     if (item.is_service) {
       return total;
@@ -25,25 +25,4 @@ const selectOrderTotal = createSelector(selectAppStore, ({ cartItems }) =>
   }, 0),
 );
 
-const selectPaymentMethods = createSelector(
-  selectAppStore,
-  ({ paymentMethods }) => paymentMethods.data,
-);
-
-const selectStatus = createSelector(
-  selectAppStore,
-  ({ paymentStatus }) => paymentStatus,
-);
-
-const selectCreateOrderingStatus = createSelector(
-  selectAppStore,
-  ({ createOrderingStatus }) => createOrderingStatus,
-);
-
-export {
-  selectCart,
-  selectOrderTotal,
-  selectPaymentMethods,
-  selectStatus,
-  selectCreateOrderingStatus,
-};
+export { selectCart, selectCartOrderTotal };

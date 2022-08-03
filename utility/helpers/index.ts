@@ -6,6 +6,7 @@ import { RegionData } from 'store/reducers/regions/types';
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { CartItemData } from 'store/reducers/cart/types';
 import { CookieSameSite } from 'constants/types';
+import { productOptions } from 'api/models/cart';
 
 const objByThree: GroupedItemsItem = {
   firstItem: null,
@@ -127,7 +128,7 @@ const getSlugsCartItemsFromString = (slugsItem: string) =>
     const ordinalId = itemArray[2].split(':')[1];
 
     return {
-      slug: slug,
+      productSlug: slug,
       count: Number(count),
       ordinalId: Number(ordinalId),
     };
@@ -238,9 +239,13 @@ const getStockBalance = (item: CartItemData) =>
     return accumulator + Number(warehouse.quantity);
   }, 0);
 
+const getProductSlugList = (productsOptions: productOptions[]) =>
+  productsOptions.map((productOption) => productOption.productSlug);
+
 export default setBreakpointSize;
 
 export {
+  getProductSlugList,
   getFullDate,
   getStockBalance,
   scrollToTop,

@@ -8,14 +8,3 @@ const fetchShowcase = createAsyncAction<ShowcaseResponseData>({
 });
 
 export { fetchShowcase };
-
-//TODO: удалить после теста со всех редьюсеров
-
-// const fetchShowcase = createAsyncThunk(
-//   'showcaseStore/fetchShowcase',
-//   async () => {
-//     const data = await getShowcase();
-
-//     return data;
-//   },
-// );

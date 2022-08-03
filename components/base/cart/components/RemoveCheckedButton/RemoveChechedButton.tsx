@@ -92,6 +92,9 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
             />
           }
         />
+        <Typography className={styles.selectedTitle}>
+          Выбрано: {slugsRemovedElements.length}
+        </Typography>
         <Button
           disabled={isRemovedItem}
           onClick={openModal}

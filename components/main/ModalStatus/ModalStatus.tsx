@@ -3,13 +3,11 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Box, Button } from '@mui/material';
 import { TailSpin } from 'react-loader-spinner';
-import { useCookies } from 'react-cookie';
 
-import { fetchStatusPayment, clearCart } from 'store/reducers/cart/actions';
+import { fetchStatusPayment } from 'store/reducers/payment/actions';
 import { ModalWrapper } from 'components/main/ModalWrapper';
-import { selectStatus } from 'store/reducers/cart/selectors';
+import { selectStatus } from 'store/reducers/payment/selectors';
 import colors from 'styles/_export.module.scss';
-import { CookieKey } from 'constants/types';
 
 import styles from './styles.module.scss';
 
@@ -20,13 +18,10 @@ const ModalStatus: FC = () => {
   const dispatch = useDispatch();
   const [isOpenModal, setIsOpenModal] = useState(true);
 
-  const [, , removeCookie] = useCookies();
-
   const { orderId } = router.query;
 
   const { data, error, isLoading } = useSelector(selectStatus);
   const isError = Boolean(error);
-  const isData = Boolean(data);
 
   const onCloseModalSuccess = () => {
     setIsOpenModal(false);
@@ -45,17 +40,6 @@ const ModalStatus: FC = () => {
 
     dispatch(fetchStatusPayment({ orderId }));
   }, [dispatch, orderId]);
-
-  useEffect(() => {
-    if (!isData) {
-      return;
-    }
-
-    removeCookie(CookieKey.CART_ITEMS, {
-      path: '/',
-    });
-    dispatch(clearCart());
-  }, [isData, dispatch, removeCookie]);
 
   return (
     <ModalWrapper isOpen={isOpenModal} setIsOpen={setIsOpenModal}>

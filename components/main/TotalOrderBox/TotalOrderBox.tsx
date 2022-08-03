@@ -4,18 +4,29 @@ import { Typography, Box, Button } from '@mui/material';
 import { useRouter } from 'next/router';
 
 import { selectOrderTotal } from 'store/reducers/order/selectors';
+import { selectCart } from 'store/reducers/cart/selectors';
 
-import { TotalBoxRedirectUrls } from 'utility/utils/constants';
+import { getCartOrderTotal } from './helpers';
 import styles from './styles.module.scss';
+import { Props } from './types';
 
-const TotalOrderBox: React.FC<{
-  redirectUrl: TotalBoxRedirectUrls;
-}> = ({ redirectUrl }) => {
+const TotalOrderBox: React.FC<Props> = ({
+  redirectUrl,
+  onClick,
+  isCartPage,
+  slugsRemovedElements = [],
+}) => {
   const router = useRouter();
 
   const orderTotal = useSelector(selectOrderTotal);
+  const cart = useSelector(selectCart);
+
+  const cartOrderTotal = getCartOrderTotal(cart, slugsRemovedElements);
 
   const onClickButton = () => {
+    if (onClick) {
+      onClick();
+    }
     router.push(redirectUrl);
   };
 
@@ -23,7 +34,7 @@ const TotalOrderBox: React.FC<{
     <Box className={styles.totalBoxContainer}>
       <Box className={styles.totalBox}>
         <Typography className={styles.orderTotal}>
-          К оплате: {orderTotal}&#8381;
+          К оплате: {isCartPage ? cartOrderTotal : orderTotal}&#8381;
         </Typography>
         <Button
           className={styles.button}

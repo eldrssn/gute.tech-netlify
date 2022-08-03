@@ -1,19 +1,23 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { CartItemData } from 'components/base/cart/types';
 
 import {
   clearOrder,
-  fetchItemFromOrder,
   addItemQuantity,
+  setItemsFromOrder,
   removeItemQuantity,
   setItemQuantity,
+  fetchItemFromOrder,
+  setItemsSlugs,
+  clearItemsSlugs,
 } from './actions';
 import { initialState } from './constants';
 import {
   OrderStore,
-  ProductResponseData,
   ErrorAction,
-  OrderItemAdditionalData,
   OrderItemQuantity,
+  FetchItemPayloadData,
+  ItemsSlugs,
 } from './types';
 
 const handlers = {
@@ -66,19 +70,35 @@ const handlers = {
   [clearOrder.type]: (state: OrderStore) => {
     state.orderItems.data = [];
   },
+  [setItemsSlugs.type]: (
+    state: OrderStore,
+    { payload }: { payload: ItemsSlugs },
+  ) => {
+    state.orderItemsSlugs = payload;
+  },
+  [clearItemsSlugs.type]: (state: OrderStore) => {
+    state.orderItemsSlugs = [];
+  },
+
+  [setItemsFromOrder.type]: (
+    state: OrderStore,
+    { payload }: { payload: CartItemData[] },
+  ) => {
+    state.orderItems.data = payload;
+  },
 
   [fetchItemFromOrder.pending.type]: (state: OrderStore) => {
     state.orderItems.isLoading = true;
   },
   [fetchItemFromOrder.fulfilled.type]: (
     state: OrderStore,
-    { payload }: { payload: ProductResponseData & OrderItemAdditionalData },
+    { payload }: { payload: FetchItemPayloadData },
   ) => {
     const {
-      slug: slugAddedItem,
+      productSlug: slugAddedItem,
       ordinalId: ordinalIdAddedItem,
       count,
-    } = payload;
+    } = payload.requestData;
     const currentCount = Number(count) >= 0 ? count : 1;
     const order = state.orderItems.data;
     const itemIndex = order.findIndex(({ slug }) => slug === slugAddedItem);
@@ -89,7 +109,9 @@ const handlers = {
     if (itemIndex >= 0) {
       return;
     }
-    state.orderItems.data = [{ ...payload, ordinalId, count: currentCount }];
+    state.orderItems.data = [
+      { ...payload.data, ordinalId, count: currentCount ? currentCount : 1 },
+    ];
     state.orderItems.isLoading = false;
     state.orderItems.error = null;
   },

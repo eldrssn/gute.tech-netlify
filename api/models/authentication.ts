@@ -28,7 +28,7 @@ export type RegisterRequestData = {
 };
 
 export type RegisterResponseData = {
-  status: string;
+  data: { status: string };
 };
 
 export type RegisterErrors = {

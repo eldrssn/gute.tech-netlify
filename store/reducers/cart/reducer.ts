@@ -1,10 +1,4 @@
-import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-
-import {
-  PaymentMethodResponseData,
-  OrderingResponseErrorData,
-  OrderingResponseData,
-} from 'api/models/cart';
+import { createReducer } from '@reduxjs/toolkit';
 
 import {
   addItemQuantity,
@@ -12,24 +6,19 @@ import {
   removeItemQuantity,
   removeItemFromCart,
   removeItemBySlug,
-  fetchPaymentMethods,
-  fetchStatusPayment,
   fetchItemFromCart,
+  fetchItemsFromCart,
   resetOrdinalId,
   clearCart,
-  clearCreateOrdering,
-  createOrderingUnAuthorized,
 } from './actions';
 import { initialState } from './constants';
 
 import {
   CartStore,
   CartItemSlug,
-  CartItemAdditionalData,
-  ErrorAction,
   CartItemQuantity,
-  ProductResponseData,
-  StatusResponseData,
+  fetchItemsPayloadData,
+  fetchItemPayloadData,
 } from './types';
 
 const handlers = {
@@ -113,22 +102,16 @@ const handlers = {
     });
     state.cartItems.data = newCart;
   },
-  [clearCreateOrdering.type]: (state: CartStore) => {
-    state.createOrderingStatus.data = null;
-    state.createOrderingStatus.errorCreateOrdering = null;
-    state.createOrderingStatus.isCreateOrdering = false;
-    state.createOrderingStatus.loadingCreateOrdering = false;
-  },
 
   [fetchItemFromCart.fulfilled.type]: (
     state: CartStore,
-    { payload }: { payload: ProductResponseData & CartItemAdditionalData },
+    { payload }: { payload: fetchItemPayloadData },
   ) => {
     const {
-      slug: slugAddedItem,
+      productSlug: slugAddedItem,
       ordinalId: ordinalIdAddedItem,
       count,
-    } = payload;
+    } = payload.requestData;
     const currentCount = Number(count) >= 0 ? count : 1;
     const cart = state.cartItems.data;
     const itemIndex = cart.findIndex(({ slug }) => slug === slugAddedItem);
@@ -139,70 +122,30 @@ const handlers = {
     }
     state.cartItems.data = [
       ...cart,
-      { ...payload, ordinalId, count: currentCount },
+      { ...payload.data, ordinalId, count: currentCount ? currentCount : 1 },
     ];
   },
 
-  [fetchPaymentMethods.pending.type]: (state: CartStore) => {
-    state.paymentMethods.isLoading = true;
-  },
-  [fetchPaymentMethods.fulfilled.type]: (
+  [fetchItemsFromCart.fulfilled.type]: (
     state: CartStore,
-    { payload }: PayloadAction<PaymentMethodResponseData[]>,
+    { payload }: { payload: fetchItemsPayloadData },
   ) => {
-    state.paymentMethods.data = payload;
-    state.paymentMethods.isLoading = false;
-    state.paymentMethods.error = null;
-  },
-  [fetchPaymentMethods.rejected.type]: (
-    state: CartStore,
-    { error }: ErrorAction,
-  ) => {
-    const errorData = { name: error.name, message: error.message };
-    state.paymentMethods.isLoading = false;
-    state.paymentMethods.error = errorData;
-  },
+    const { productsOptions } = payload.requestData;
+    const newCartItems = payload.data.map((item) => {
+      const newItemslug = item.slug;
+      const productOptionsIndex = productsOptions.findIndex(
+        (productOption) => productOption.productSlug === newItemslug,
+      );
+      const productOption = productsOptions[productOptionsIndex];
 
-  [fetchStatusPayment.pending.type]: (state: CartStore) => {
-    state.paymentStatus.isLoading = true;
-  },
-  [fetchStatusPayment.fulfilled.type]: (
-    state: CartStore,
-    { payload }: PayloadAction<StatusResponseData>,
-  ) => {
-    state.paymentStatus.data = payload;
-    state.paymentStatus.isLoading = false;
-    state.paymentStatus.error = null;
-  },
-  [fetchStatusPayment.rejected.type]: (
-    state: CartStore,
-    { error }: ErrorAction,
-  ) => {
-    const errorData = { name: error.name, message: error.message };
-    state.paymentStatus.isLoading = false;
-    state.paymentStatus.error = errorData;
-  },
+      return {
+        ...item,
+        count: productOption.count,
+        ordinalId: productOption.ordinalId,
+      };
+    });
 
-  [createOrderingUnAuthorized.pending.type]: (state: CartStore) => {
-    state.createOrderingStatus.loadingCreateOrdering = true;
-    state.createOrderingStatus.errorCreateOrdering = null;
-  },
-  [createOrderingUnAuthorized.fulfilled.type]: (
-    state: CartStore,
-    { payload }: PayloadAction<OrderingResponseData>,
-  ) => {
-    state.createOrderingStatus.data = payload;
-    state.createOrderingStatus.isCreateOrdering = true;
-    state.createOrderingStatus.loadingCreateOrdering = false;
-    state.createOrderingStatus.errorCreateOrdering = null;
-  },
-  [createOrderingUnAuthorized.rejected.type]: (
-    state: CartStore,
-    { payload }: PayloadAction<OrderingResponseErrorData>,
-  ) => {
-    state.createOrderingStatus.isCreateOrdering = false;
-    state.paymentStatus.isLoading = false;
-    state.createOrderingStatus.errorCreateOrdering = payload;
+    state.cartItems.data = newCartItems;
   },
 };
 

@@ -6,6 +6,12 @@ import {
   ResetPasswordResponseErrorData,
   RegisterVerifyResponseErrorData,
   ResetPasswordSetResponseErrorData,
+  RegisterRequestData,
+  RegisterResponseData,
+  ResetPasswordRequestData,
+  ResetPasswordResponseData,
+  ResetPasswordVerifyRequestData,
+  ResetPasswordVerifyResponseData,
 } from 'api/models/authentication';
 import { ActiveAutorizationFormKey } from 'constants/types';
 
@@ -65,13 +71,19 @@ type ResetPasswordSetFormState = {
 
 type ActiveAuthorizationFormState = ActiveAutorizationFormKey;
 
-type RegisterPayloadData = { phoneNumber: string; password: string };
+type RegisterPayloadData = {
+  requestData: RegisterRequestData;
+  data: RegisterResponseData;
+};
 
-type ResetPasswordPayloadData = { phone_number: string };
+type ResetPasswordPayloadData = {
+  requestData: ResetPasswordRequestData;
+  data: ResetPasswordResponseData;
+};
 
 type ResetPasswordVerificationPayloadData = {
-  phone_number: string;
-  secret_key: string;
+  requestData: ResetPasswordVerifyRequestData;
+  data: ResetPasswordVerifyResponseData;
 };
 
 type AuthenticationStore = {

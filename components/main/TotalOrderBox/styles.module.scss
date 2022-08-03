@@ -1,9 +1,9 @@
-@import '~styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .totalBoxContainer {
   position: sticky;
-  bottom: 60px;
+  bottom: 20px;
   height: 100%;
   width: 100%;
   margin-bottom: 10px;
@@ -13,14 +13,20 @@
   background-color: $white;
   height: 75px;
   width: 100%;
-  border-top: 1px solid $gray4;
-  z-index: 1201;
+  box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 2px;
+  padding: 20px;
+  z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 @media (max-width: $mobile) {
+  .totalBoxContainer {
+    bottom: 60px;
+  }
+
   .totalBox {
     border-top: none;
     justify-content: space-between;

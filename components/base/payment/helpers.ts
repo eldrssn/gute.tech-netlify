@@ -1,7 +1,7 @@
 import { UseFormSetError } from 'react-hook-form';
 
 import { CartItemData } from 'store/reducers/cart/types';
-import { OrderingErrors } from 'api/models/cart';
+import { OrderingErrors } from 'api/models/payment';
 
 import { TFormData, FormKey } from './types';
 

@@ -6,6 +6,7 @@ const initialState: OrderStore = {
     isLoading: false,
     error: null,
   },
+  orderItemsSlugs: [],
 };
 
 export { initialState };
