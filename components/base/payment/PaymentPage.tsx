@@ -6,17 +6,23 @@ import Link from 'next/link';
 import { Typography, Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { selectCreateOrderingStatus } from 'store/reducers/cart/selectors';
+import {
+  fetchPaymentMethods,
+  clearCreateOrdering,
+} from 'store/reducers/payment/actions';
+import { removeItemBySlug } from 'store/reducers/cart/actions';
+import { clearItemsSlugs } from 'store/reducers/order/actions';
+import { selectCreateOrderingStatus } from 'store/reducers/payment/selectors';
 import {
   selectOrder,
   selectOrderLoading,
+  selectOrderItemsSlugs,
 } from 'store/reducers/order/selectors';
-import { clearOrder } from 'store/reducers/order/actions';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import {
   createOrderingUnAuthorized,
   createOrderingAuthorized,
-} from 'store/reducers/cart/actions';
+} from 'store/reducers/payment/actions';
 
 import { DeliveryAddress } from './components/DeliveryAddress';
 import { ContactInformation } from './components/ContactInformation';
@@ -46,6 +52,7 @@ const PaymentPage: React.FC = () => {
   const isLoadingOrder = useSelector(selectOrderLoading);
   const isAuthorized = useSelector(selectIsAuthorized);
   const createOrderStatus = useSelector(selectCreateOrderingStatus);
+  const orderItemsSlugs = useSelector(selectOrderItemsSlugs);
 
   const paymentUrl = createOrderStatus.data?.payment_url;
   const isCreateOrdering = createOrderStatus.isCreateOrdering;
@@ -64,7 +71,8 @@ const PaymentPage: React.FC = () => {
       branch_office_id: data.branch ? data.branch.id : 0,
     };
     setOtherError([]);
-    dispatch(clearOrder());
+    dispatch(clearItemsSlugs());
+    dispatch(removeItemBySlug(orderItemsSlugs));
 
     if (isAuthorized) {
       dispatch(createOrderingAuthorized(postData));
@@ -73,6 +81,12 @@ const PaymentPage: React.FC = () => {
 
     dispatch(createOrderingUnAuthorized(postData));
   });
+
+  useEffect(() => {
+    dispatch(fetchPaymentMethods());
+    dispatch(clearCreateOrdering());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!isOrderList && !isLoadingOrder) {
@@ -121,7 +135,6 @@ const PaymentPage: React.FC = () => {
               {error}
             </Typography>
           ))}
-          )
         </>
       )}
       <Typography

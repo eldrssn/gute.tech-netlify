@@ -1,14 +1,3 @@
-type PaymentMethodValue = {
-  title: string;
-  gateway: string;
-};
-
-type PaymentMethodResponseData = {
-  title: string;
-  payment_type: string;
-  values: PaymentMethodValue[];
-};
-
 type ProductFAQ = {
   question: string;
   answer: string;
@@ -50,56 +39,20 @@ type ProductRequestData = {
   ordinalId?: number;
 };
 
-type OrderingProductCartRequestData = {
-  slug: string;
-  quantity: number;
+type productOptions = {
+  productSlug: string;
+  count: number;
+  ordinalId: number;
 };
 
-type OrderingRequestData = {
-  name: string;
-  phone: string;
-  email: string;
-  payment_type: string;
-  gateway: string;
-  cart: OrderingProductCartRequestData[];
-  branch_office_id: number;
-};
-
-type OrderingResponseData = {
-  payment_url?: string;
-  id: number;
-  payment_type: string;
-};
-
-type OrderingErrors = {
-  name: string[];
-  email: string[];
-  phone: string[];
-  cart: string[];
-  detail: string;
-};
-
-type OrderingResponseErrorData = {
-  errors: OrderingErrors;
-};
-
-type StatusRequestData = {
-  orderId: string | string[] | undefined;
-};
-
-type StatusResponseData = {
-  detail: string;
+type ProductsRequestData = {
+  productsOptions: productOptions[];
 };
 
 export type {
-  OrderingRequestData,
-  PaymentMethodResponseData,
-  OrderingResponseErrorData,
   ProductResponseData,
-  StatusResponseData,
   ProductRequestData,
-  OrderingResponseData,
   ProductWarehouse,
-  StatusRequestData,
-  OrderingErrors,
+  ProductsRequestData,
+  productOptions,
 };

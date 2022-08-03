@@ -113,8 +113,8 @@ const handlers = {
     state: AuthenticationStore,
     { payload }: PayloadAction<RegisterPayloadData>,
   ) => {
-    state.registrationForm.phoneNumber = payload.phoneNumber;
-    state.registrationForm.password = payload.password;
+    state.registrationForm.phoneNumber = payload.requestData.phoneNumber;
+    state.registrationForm.password = payload.requestData.password;
     state.registrationForm.loadingRegistrationForm = false;
     state.registrationForm.errorRegistrationForm = null;
     state.activeAuthorizationForm =
@@ -184,7 +184,7 @@ const handlers = {
     state: AuthenticationStore,
     { payload }: PayloadAction<ResetPasswordPayloadData>,
   ) => {
-    state.resetPasswordForm.phoneNumber = payload.phone_number;
+    state.resetPasswordForm.phoneNumber = payload.requestData.phone_number;
     state.resetPasswordForm.loadingResetPasswordForm = false;
     state.resetPasswordForm.errorResetPasswordForm = null;
     state.activeAuthorizationForm =
@@ -210,8 +210,9 @@ const handlers = {
     state: AuthenticationStore,
     { payload }: PayloadAction<ResetPasswordVerificationPayloadData>,
   ) => {
-    state.resetPasswordVerificationForm.phoneNumber = payload.phone_number;
-    state.resetPasswordVerificationForm.code = payload.secret_key;
+    state.resetPasswordVerificationForm.phoneNumber =
+      payload.requestData.phone_number;
+    state.resetPasswordVerificationForm.code = payload.data.secret_key;
     state.resetPasswordVerificationForm.loadingResetPasswordVerificationForm =
       false;
     state.resetPasswordVerificationForm.errorResetPasswordVerificationForm =

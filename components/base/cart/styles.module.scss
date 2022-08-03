@@ -1,8 +1,11 @@
-@import '~styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .main {
   padding: 24px 0 88px;
+  height: 100%;
+  min-height: 100vh;
+  position: relative;
 }
 
 .mainTitle {

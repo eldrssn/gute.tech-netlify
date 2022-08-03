@@ -10,6 +10,7 @@ const HIDE_PHONE_WIDTH = 1000;
 const TOKEN_CACHE_TTL = 30 * 24 * 60 * 60 * 1000;
 const TOKEN_CACHE_TTL_DELETE = -1 * 24 * 60 * 60 * 1000;
 const TIMER_DELAY = 59;
+const COOKIE_TTL = 30 * 24 * 60 * 60 * 1000;
 
 const descriptionTypeName = [
   DescriptionTypes.properties,
@@ -45,6 +46,7 @@ enum Slugs {
 
 export {
   TIMER_DELAY,
+  COOKIE_TTL,
   MOBILE_WIDTH,
   TABLET_WIDTH,
   MOBILE_XS_WIDTH,

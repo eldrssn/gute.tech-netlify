@@ -8,14 +8,20 @@ const selectOrderStore = createSelector(
 );
 
 const selectOrder = createSelector(selectOrderStore, ({ orderItems }) => {
-  const sortedOrder = orderItems.data?.sort((prev, cur) => {
+  const arrayForSort = [...orderItems.data];
+  const sortedOrder = arrayForSort.sort((prev, cur) => {
     return prev.ordinalId - cur.ordinalId;
   });
   return sortedOrder;
 });
 
+const selectOrderItemsSlugs = createSelector(
+  selectOrderStore,
+  ({ orderItemsSlugs }) => orderItemsSlugs,
+);
+
 const selectOrderTotal = createSelector(selectOrderStore, ({ orderItems }) =>
-  orderItems.data?.reduce((total, item) => {
+  orderItems.data.reduce((total, item) => {
     if (item.is_service) {
       return total;
     }
@@ -29,4 +35,9 @@ const selectOrderLoading = createSelector(
   ({ orderItems }) => orderItems.isLoading,
 );
 
-export { selectOrderTotal, selectOrder, selectOrderLoading };
+export {
+  selectOrderTotal,
+  selectOrder,
+  selectOrderLoading,
+  selectOrderItemsSlugs,
+};

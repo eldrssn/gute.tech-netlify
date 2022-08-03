@@ -1,20 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
 
 import {
-  getPaymentMethods,
   getProductInfoFromSlug,
-  getStatus,
-  postOrderingUnAuthorized,
-  postOrderingAuthorized,
+  getProductsInfoFromSlugs,
 } from 'api/routes/cart';
 import {
   ProductRequestData,
-  StatusRequestData,
   ProductResponseData,
-  StatusResponseData,
-  PaymentMethodResponseData,
-  OrderingRequestData,
-  OrderingResponseData,
+  ProductsRequestData,
 } from 'api/models/cart';
 import { createAsyncAction } from 'utility/helpers/store';
 
@@ -27,7 +20,15 @@ const setItemQuantity = createAction<CartItemQuantity>('setCartItemQuantity');
 const removeItemBySlug = createAction<CartItemSlug[]>('removeCartItemBySlug');
 const resetOrdinalId = createAction('resetOrdinalId');
 const clearCart = createAction('clearCart');
-const clearCreateOrdering = createAction('clearCreateOrdering');
+
+const fetchItemsFromCart = createAsyncAction<
+  ProductResponseData[],
+  ProductsRequestData
+>({
+  typeAction: 'CartStore/fetchItemsFromCart',
+  request: getProductsInfoFromSlugs,
+  shouldReturnRequestData: true,
+});
 
 const fetchItemFromCart = createAsyncAction<
   ProductResponseData,
@@ -38,47 +39,10 @@ const fetchItemFromCart = createAsyncAction<
   shouldReturnRequestData: true,
 });
 
-//TODO: вынести экшены в отдельный редъюсер, вместе с логикой оформления из корзины
-
-const fetchPaymentMethods = createAsyncAction<PaymentMethodResponseData[]>({
-  typeAction: 'CartStore/fetchPaymentMethods',
-  request: getPaymentMethods,
-});
-
-const fetchStatusPayment = createAsyncAction<
-  StatusResponseData,
-  StatusRequestData
->({
-  typeAction: 'CartStore/fetchStatusPayment',
-  request: getStatus,
-});
-
-const createOrderingUnAuthorized = createAsyncAction<
-  OrderingResponseData,
-  OrderingRequestData
->({
-  typeAction: 'CartStore/postOrdering',
-  request: postOrderingUnAuthorized,
-  shouldHandleError: true,
-});
-
-const createOrderingAuthorized = createAsyncAction<
-  OrderingResponseData,
-  OrderingRequestData
->({
-  typeAction: 'CartStore/postOrdering',
-  request: postOrderingAuthorized,
-  shouldHandleError: true,
-});
-
 export {
-  createOrderingUnAuthorized,
-  createOrderingAuthorized,
+  fetchItemsFromCart,
   fetchItemFromCart,
-  fetchPaymentMethods,
-  fetchStatusPayment,
   resetOrdinalId,
-  clearCreateOrdering,
   setItemQuantity,
   addItemQuantity,
   removeItemBySlug,

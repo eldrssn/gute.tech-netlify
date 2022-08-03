@@ -1,35 +1,40 @@
 import { ErrorAction, StoreState, StoreError } from 'store/types';
 import { CartItemData } from 'components/base/cart/types';
-import { ProductResponseData } from 'api/models/cart';
-
-type OrderItemAdditionalData = {
-  count: number;
-  ordinalId: number;
-};
+import { ProductRequestData, ProductResponseData } from 'api/models/cart';
 
 type OrderItemQuantity = {
   count: number;
   slug: string;
 };
 
+type FetchItemPayloadData = {
+  requestData: ProductRequestData;
+  data: ProductResponseData;
+};
+
 type OrderItemsState = {
   data: CartItemData[];
 } & StoreState;
 
+type ItemsSlugs = string[];
+
 enum OrderStoreBlocks {
   ORDER_ITEMS = 'orderItems',
+  ORDER_ITEMS_SLUGS = 'orderItemsSlugs',
 }
 
 type OrderStore = {
   [OrderStoreBlocks.ORDER_ITEMS]: OrderItemsState;
+  [OrderStoreBlocks.ORDER_ITEMS_SLUGS]: ItemsSlugs;
 };
 
 export type {
+  ItemsSlugs,
+  FetchItemPayloadData,
   StoreError,
   ErrorAction,
   OrderStore,
   CartItemData,
   ProductResponseData,
-  OrderItemAdditionalData,
   OrderItemQuantity,
 };

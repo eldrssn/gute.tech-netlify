@@ -9,7 +9,10 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
-import { selectOrderTotal, selectCart } from 'store/reducers/cart/selectors';
+import {
+  selectCartOrderTotal,
+  selectCart,
+} from 'store/reducers/cart/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { HIDE_PHONE_WIDTH } from 'constants/variables';
 import { formatPrice } from 'utility/helpers';
@@ -28,7 +31,7 @@ const HeaderAsideNav: FC = () => {
   const { windowWidth } = useWindowSize();
 
   const { phone } = useSelector(selectShowcaseData);
-  const orderTotal = useSelector(selectOrderTotal);
+  const orderTotal = useSelector(selectCartOrderTotal);
   const cart = useSelector(selectCart);
 
   const amountCartItems = cart.length;

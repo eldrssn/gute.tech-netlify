@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 
 import { fetchRegions } from 'store/reducers/regions/actions';
 import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
-import { fetchItemFromCart } from 'store/reducers/cart/actions';
+import { fetchItemsFromCart } from 'store/reducers/cart/actions';
 import { fetchCategoriesTreeList } from 'store/reducers/catalog/actions';
 import { fetchShowcase } from 'store/reducers/showcase/actions';
 import { fetchProfile } from 'store/reducers/user/actions';
@@ -24,7 +24,7 @@ import {
   getSlugsCartItemsFromCart,
   getCookie,
 } from 'utility/helpers';
-import { QueryUrl } from 'constants/variables';
+import { QueryUrl, COOKIE_TTL } from 'constants/variables';
 import { CookieKey } from 'constants/types';
 
 const InitialLoader: React.FC = ({ children }) => {
@@ -58,15 +58,11 @@ const InitialLoader: React.FC = ({ children }) => {
     const cartSaved = cookiesCartItems.cartItems;
 
     if (cartSaved) {
-      getSlugsCartItemsFromString(cartSaved).forEach((cartItem) => {
-        dispatch(
-          fetchItemFromCart({
-            productSlug: cartItem.slug,
-            count: cartItem.count,
-            ordinalId: cartItem.ordinalId,
-          }),
-        );
-      });
+      dispatch(
+        fetchItemsFromCart({
+          productsOptions: getSlugsCartItemsFromString(cartSaved),
+        }),
+      );
     }
   }, []);
 
@@ -99,13 +95,23 @@ const InitialLoader: React.FC = ({ children }) => {
   }, [isAuthorized]);
 
   useEffect(() => {
+    const date = new Date();
+    date.setTime(date.getTime() + COOKIE_TTL);
+
     setCookieCartItems(CookieKey.CART_ITEMS, getSlugsCartItemsFromCart(cart), {
       path: '/',
+      expires: date,
     });
   }, [cart, setCookieCartItems]);
 
   useEffect(() => {
-    setCookieTransportId(CookieKey.TRANSPORT_ID, transportId, { path: '/' });
+    const date = new Date();
+    date.setTime(date.getTime() + COOKIE_TTL);
+
+    setCookieTransportId(CookieKey.TRANSPORT_ID, transportId, {
+      path: '/',
+      expires: date,
+    });
   }, [transportId, setCookieTransportId]);
 
   if (!isLoadingApp) {

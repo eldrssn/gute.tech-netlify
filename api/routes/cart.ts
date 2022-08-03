@@ -1,21 +1,12 @@
-import { sendRequest, sendRequestАuthentication } from '../utils';
+import { sendRequest } from '../utils';
 
 import {
-  PaymentMethodResponseData,
   ProductResponseData,
-  StatusResponseData,
   ProductRequestData,
-  OrderingRequestData,
-  OrderingResponseData,
-  StatusRequestData,
+  ProductsRequestData,
 } from '../models/cart';
 import { ApiMethods } from 'constants/types';
-
-const getPaymentMethods = () =>
-  sendRequest<PaymentMethodResponseData[]>({
-    url: `/payment/methods/`,
-    method: ApiMethods.GET,
-  });
+import { getProductSlugList } from 'utility/helpers/index';
 
 const getProductInfoFromSlug = ({ productSlug }: ProductRequestData) =>
   sendRequest<ProductResponseData>({
@@ -23,39 +14,13 @@ const getProductInfoFromSlug = ({ productSlug }: ProductRequestData) =>
     method: ApiMethods.GET,
   });
 
-const postOrderingUnAuthorized = (data: OrderingRequestData) =>
-  sendRequest<OrderingResponseData>({
-    url: `/payment/orders/`,
+const getProductsInfoFromSlugs = ({ productsOptions }: ProductsRequestData) =>
+  sendRequest<ProductResponseData[]>({
+    url: `/catalog/products/`,
     method: ApiMethods.POST,
     config: {
-      data: data,
+      data: getProductSlugList(productsOptions),
     },
   });
 
-const postOrderingAuthorized = (data: OrderingRequestData) =>
-  sendRequestАuthentication<OrderingResponseData>({
-    url: `/payment/orders/`,
-    method: ApiMethods.POST,
-    config: {
-      data: data,
-    },
-  });
-
-const getStatus = ({ orderId }: StatusRequestData) =>
-  sendRequest<StatusResponseData>({
-    url: `payment/status/`,
-    method: ApiMethods.GET,
-    config: {
-      params: {
-        orderId,
-      },
-    },
-  });
-
-export {
-  getPaymentMethods,
-  getProductInfoFromSlug,
-  postOrderingAuthorized,
-  postOrderingUnAuthorized,
-  getStatus,
-};
+export { getProductInfoFromSlug, getProductsInfoFromSlugs };

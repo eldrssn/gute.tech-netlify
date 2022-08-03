@@ -1,5 +1,5 @@
-@import '~styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .checkboxContainer {
   position: relative;
@@ -15,6 +15,14 @@
   top: 50%;
   left: 52px;
   transform: translate(-50%, -50%);
+}
+
+.selectedTitle {
+  position: absolute;
+  top: 50%;
+  left: 200px;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
 }
 
 .confirmedBlock {

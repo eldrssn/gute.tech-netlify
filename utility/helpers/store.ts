@@ -26,7 +26,9 @@ const createAsyncAction = <ResponseData, RequestData = never>({
           onFulfilled(data);
         }
 
-        return shouldReturnRequestData ? { ...requestData, ...data } : data;
+        return shouldReturnRequestData
+          ? { requestData: requestData, data: data }
+          : data;
       } catch (error) {
         const originalRequest = error.config;
         const refresh = getCookie(CookieKey.REFRESH_TOKEN);
