@@ -88,7 +88,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
       <CardMedia
         component='img'
         className={styles.categoryImage}
-        src={image || `/germanika/deflectors.jpg`}
+        src={image || '/images/no-image.jpeg'}
         alt={title || 'category name'}
       />
     </div>

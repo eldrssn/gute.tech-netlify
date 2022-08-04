@@ -6,10 +6,9 @@ import AppBar from '@mui/material/AppBar';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { selectTransportStore } from 'store/reducers/transport/selectors';
 
-import { HeaderFilters } from './components/HeaderFilters';
-import { HeaderDesktopFull } from './components/HeaderDesktopFull';
 import { HeaderContext } from './components/HeaderContext';
 import { HeaderMobile } from './components/HeaderMobile';
+import { HeaderDesktop } from './components/HeaderDesktop';
 
 import { getYearsInfo } from './helpers';
 import styles from './styles.module.scss';
@@ -19,13 +18,10 @@ const Header = () => {
   const [isFocusSearchField, setIsFocusSearchField] = useState(false);
   const [transportText, setTransportText] = useState<string>('');
 
-  const { isTablet, isMobile } = useWindowSize();
+  const { isTablet: isTabletView, isMobile: isMobileView } = useWindowSize();
 
   const transport = useSelector(selectTransportStore);
   const { transportInfo, transportId } = transport;
-
-  const isTabletView = isTablet;
-  const isMobileView = isMobile;
 
   useEffect(() => {
     const onScroll = () => {
@@ -74,13 +70,10 @@ const Header = () => {
             setIsFocusSearchField={setIsFocusSearchField}
           />
         ) : (
-          <>
-            <HeaderDesktopFull setIsFocusSearchField={setIsFocusSearchField} />
-            <HeaderFilters
-              transportText={transportText}
-              setIsFocusSearchField={setIsFocusSearchField}
-            />
-          </>
+          <HeaderDesktop
+            transportText={transportText}
+            setIsFocusSearchField={setIsFocusSearchField}
+          />
         )}
       </AppBar>
     </HeaderContext.Provider>

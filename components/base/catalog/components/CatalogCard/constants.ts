@@ -1,0 +1,3 @@
+const MAX_TITLE_LENGHT = 83;
+
+export { MAX_TITLE_LENGHT };
