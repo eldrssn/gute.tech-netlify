@@ -6,8 +6,6 @@ import Box from '@mui/material/Box';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 
-import { Loader } from 'components/ui/Loader';
-
 import { formatImages } from './helpers';
 import { ProductImageGalleryProps } from './types';
 import { IMG_CLASSNAME } from './constants';
@@ -22,11 +20,9 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
 
   const refImg = useRef<ReactImageGallery | null>(null);
 
-  if (!images) {
-    return <Loader />;
-  }
-
-  const formattedItems = formatImages(images);
+  const formattedItems = formatImages(
+    images?.length ? images : ['/images/no-image.jpeg'],
+  );
 
   const toggleFullscreen = () => setFullscreen((isFullscreen) => !isFullscreen);
 

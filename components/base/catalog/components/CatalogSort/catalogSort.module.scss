@@ -32,7 +32,7 @@
   content: '';
 }
 
-.sortItemType.active.up::after {
+.sortItemType.active.down::after {
   border-bottom: 1px solid transparent;
   border-top: 6px solid $blue1;
 }

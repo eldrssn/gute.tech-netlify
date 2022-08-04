@@ -3,6 +3,7 @@ import {
   filterStepsData,
   INamesDefaultValueByStep,
   INamesSearchValueByStep,
+  FormDataItem,
 } from './types';
 
 const menuItemNames = {
@@ -64,6 +65,12 @@ const widthButtonByStep = {
   [StepInputs.INACTIVE]: '0',
 };
 
+const defaultValue: FormDataItem = {
+  title: '',
+  slug: '',
+  searchValue: null,
+};
+
 export {
   menuItemNames,
   filterSteps,
@@ -71,4 +78,5 @@ export {
   nameSearchValueByStep,
   widthListByStep,
   widthButtonByStep,
+  defaultValue,
 };

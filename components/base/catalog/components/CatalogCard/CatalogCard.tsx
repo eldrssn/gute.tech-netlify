@@ -10,6 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
@@ -19,12 +20,14 @@ import { fetchItemFromOrder } from 'store/reducers/order/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
 
-import styles from './catalogCard.module.scss';
 import {
   getLinkToProductPage,
   getLinkToTransportProductPage,
 } from 'utility/helpers/linkmakers';
 import { formatPrice } from 'utility/helpers';
+
+import { formatTittle } from './helpers';
+import styles from './catalogCard.module.scss';
 
 const CatalogCard: React.FC<ProductListData> = ({
   image,
@@ -69,6 +72,7 @@ const CatalogCard: React.FC<ProductListData> = ({
       });
 
   const formattedPrice = formatPrice(price);
+  const formattedTitle = formatTittle(title);
 
   return (
     <>
@@ -83,7 +87,7 @@ const CatalogCard: React.FC<ProductListData> = ({
             <CardMedia
               component={'img'}
               height='250'
-              image={image}
+              src={image || '/images/no-image.jpeg'}
               alt={title}
               className={styles.cardImage}
             />
@@ -91,20 +95,22 @@ const CatalogCard: React.FC<ProductListData> = ({
             <CardContent className={styles.cardInfo}>
               <Divider className={styles.cardDivider} />
 
-              <Typography
-                className={styles.cardTitle}
-                gutterBottom
-                component='h3'
-              >
-                {title}
-              </Typography>
+              <Tooltip title={title} placement='top'>
+                <Typography
+                  className={styles.cardTitle}
+                  gutterBottom
+                  component='h3'
+                >
+                  {formattedTitle}
+                </Typography>
+              </Tooltip>
 
               <Box className={styles.cardBottom}>
                 <div className={styles.cardBottom_price}>
                   <Typography className={styles.cardPrice}>
                     {formattedPrice}
                   </Typography>
-                  <Typography className={styles.cardPrice} sx={{}}>
+                  <Typography className={styles.cardPrice}>
                     <i className={styles.icon_ruble} />
                   </Typography>
                 </div>

@@ -36,7 +36,7 @@ const MobileTableBody: React.FC<TableBodyProps> = ({ order }) => {
                 <CardMedia
                   component={'img'}
                   height='150px'
-                  src={item.images[0]}
+                  src={item.images[0] || '/images/no-image.jpeg'}
                   alt='item'
                   className={styles.image}
                 />

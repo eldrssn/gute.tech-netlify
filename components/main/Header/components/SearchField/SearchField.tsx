@@ -210,7 +210,7 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
                       <CardMedia
                         component={'img'}
                         className={styles.productImage}
-                        src={product.image}
+                        src={product.image || '/images/no-image.jpeg'}
                         height='70'
                         alt={product.title}
                       />

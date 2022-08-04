@@ -11,9 +11,11 @@
 .itemsContainer {
   flex-grow: 1;
   justify-content: space-between;
+  flex-direction: row;
 }
 
 .filterText {
+  display: block;
   width: 100%;
   color: $blue1;
   font-size: 16px;

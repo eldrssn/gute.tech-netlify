@@ -1,8 +1,5 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext } from 'react';
 import classnames from 'classnames/bind';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm, UseFormSetValue } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,37 +7,15 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 
-import { CustomButton } from 'components/ui/CustomButton';
-import {
-  fetchBrands,
-  fetchModels,
-  fetchYears,
-  fetchEngines,
-  resetOptionsDataInBrandStep,
-  resetOptionsDataInModelStep,
-  resetOptionsDataInYearStep,
-  resetOptionsDataInEngineStep,
-  setTransportId,
-  clearTransportId,
-} from 'store/reducers/transport/actions';
-import { selectTransportId } from 'store/reducers/transport/selectors';
-import { namesDefaultValueByStep } from 'components/main/Header/constants';
-import {
-  FormData,
-  WatchFormData,
-  FilterInputName,
-  StepInputs,
-} from 'components/main/Header/types';
-
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
 import { HeaderAsideNav } from '../HeaderAsideNav';
-import { FilterSteps } from '../FilterSteps';
+
 import { HeaderContext } from '../HeaderContext';
 import { SearchField } from '../SearchField';
+import { HeaderFiltersForm } from '../HeaderFiltersForm';
+import { HeaderFiltersText } from '../HeaderFiltersText';
 
-import { defaultValue } from './constants';
-import { getTransportParams } from './helpers';
 import { HeaderFiltersProps } from './types';
 
 import styles from './headerFilters.module.scss';
@@ -52,137 +27,12 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
   closePopupMobile,
   setIsFocusSearchField,
 }) => {
-  const router = useRouter();
-  const dispatch = useDispatch();
   const { isFullHeader, isMobileView, isTabletView, isFocusSearchField } =
     useContext(HeaderContext);
-  const { getValues, control, setValue, handleSubmit, reset, watch } =
-    useForm<FormData>({
-      defaultValues: {
-        brand: defaultValue,
-        model: defaultValue,
-        year: defaultValue,
-        engine: defaultValue,
-      },
-    });
-  const [openPopoverId, setOpenPopoverId] = useState(StepInputs.INACTIVE);
-  const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
-  const [transportType, setTransportType] = useState<string | undefined>();
-  const [currentTransportId, setCurrentTransportId] = useState<
-    string | undefined
-  >();
-  const [valueForm, setValueForm] = useState<WatchFormData>();
 
-  const brandSlugValue = getValues('brand.slug');
-  const modelSlugValue = getValues('model.slug');
-  const yearSlugValue = getValues('year.slug');
-  const engineSlug = getValues('engine.slug');
-
-  const transportId = useSelector(selectTransportId);
-
-  useEffect(() => {
-    const subscription = watch((value) => setValueForm(value));
-    return () => subscription.unsubscribe();
-  }, [watch]);
-
-  useEffect(() => {
-    const setDefaultValueByName = (
-      nameArray: FilterInputName[],
-      setValue: UseFormSetValue<FormData>,
-    ) => {
-      nameArray.forEach((name) => {
-        const searchValue = valueForm ? valueForm[name]?.searchValue : '';
-        setValue(name, {
-          title: '',
-          slug: '',
-          searchValue: searchValue ? searchValue : null,
-        });
-      });
-    };
-
-    const resetDataByStep = {
-      [StepInputs.BRAND]: () => {
-        dispatch(fetchBrands());
-        dispatch(resetOptionsDataInBrandStep());
-        const names = namesDefaultValueByStep[StepInputs.BRAND];
-        setDefaultValueByName(names, setValue);
-      },
-      [StepInputs.MODEL]: () => {
-        dispatch(fetchModels({ transportType, brandSlug: brandSlugValue }));
-        dispatch(resetOptionsDataInModelStep());
-        const names = namesDefaultValueByStep[StepInputs.MODEL];
-        setDefaultValueByName(names, setValue);
-      },
-      [StepInputs.YEAR]: () => {
-        dispatch(
-          fetchYears({
-            transportType,
-            brandSlug: brandSlugValue,
-            modelSlug: modelSlugValue,
-          }),
-        );
-        dispatch(resetOptionsDataInYearStep());
-        const names = namesDefaultValueByStep[StepInputs.YEAR];
-        setDefaultValueByName(names, setValue);
-      },
-      [StepInputs.ENGINE]: () => {
-        dispatch(
-          fetchEngines({
-            transportType,
-            brandSlug: brandSlugValue,
-            modelSlug: modelSlugValue,
-            yearSlug: yearSlugValue,
-          }),
-        );
-        dispatch(resetOptionsDataInEngineStep());
-        const names = namesDefaultValueByStep[StepInputs.ENGINE];
-        setDefaultValueByName(names, setValue);
-      },
-      [StepInputs.INACTIVE]: () => {
-        null;
-      },
-    };
-
-    resetDataByStep[currentStep]();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    dispatch,
-    currentStep,
-    getValues,
-    setValue,
-    brandSlugValue,
-    modelSlugValue,
-    yearSlugValue,
-  ]);
-
-  useEffect(() => {
-    if (transportId) {
-      return;
-    }
-
-    reset();
-    setCurrentStep(StepInputs.INACTIVE);
-  }, [transportId, reset]);
-
-  const onSubmit = handleSubmit(() => {
-    if (engineSlug === '' || !currentTransportId) {
-      return;
-    }
-
-    const params = getTransportParams(currentTransportId);
-    dispatch(setTransportId(currentTransportId));
-    router.push(params);
-
-    closePopupMobile && closePopupMobile();
-  });
-
-  const resetFilter = () => {
-    router.push('/');
-    dispatch(clearTransportId());
-  };
-
-  const isDisableButton = engineSlug === '';
-  const hiddenFilter = !isFullHeader && isFocusSearchField && !isTabletView;
+  const isHiddenFilter = !isFullHeader && isFocusSearchField && !isTabletView;
+  const isFullDesktopHeader = isFullHeader && !isMobileView;
+  const isShortDesktopHeader = !isFullHeader && !isMobileView;
 
   return (
     <>
@@ -191,22 +41,17 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
           className={styles.itemsContainer}
           sx={{
             display: isFullHeader ? 'block' : 'flex',
-            flexDirection: 'row',
             flexWrap: { xs: 'wrap', lg: 'nowrap' },
           }}
         >
-          <Typography
-            className={styles.filterText}
-            sx={{
-              display: isFullHeader && !isMobileView ? 'block' : 'none',
-            }}
-            component='p'
-          >
-            Воспользуйтесь фильтром и сайт автоматически подберёт подходящие
-            детали для вашего транспорта
-          </Typography>
+          {isFullDesktopHeader && (
+            <Typography className={styles.filterText} component='p'>
+              Воспользуйтесь фильтром и сайт автоматически подберёт подходящие
+              детали для вашего транспорта
+            </Typography>
+          )}
 
-          {!hiddenFilter && (
+          {!isHiddenFilter && (
             <Box
               className={styles.formAndCatalogContainer}
               sx={{
@@ -222,56 +67,17 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
                 })}
               >
                 {!transportText ? (
-                  <>
-                    <FilterSteps
-                      openPopoverId={openPopoverId}
-                      setOpenPopoverId={setOpenPopoverId}
-                      control={control}
-                      setValue={setValue}
-                      currentStep={currentStep}
-                      setCurrentStep={setCurrentStep}
-                      setTransportType={setTransportType}
-                      setCurrentTransportId={setCurrentTransportId}
-                    />
-                    <CustomButton
-                      onClick={onSubmit}
-                      customStyles={cn(styles.stepButtonSubmit, {
-                        [styles.stepButtonSubmitInactive]: isDisableButton,
-                      })}
-                      disabled={isDisableButton}
-                    >
-                      Подобрать детали
-                    </CustomButton>
-                  </>
+                  <HeaderFiltersForm closePopupMobile={closePopupMobile} />
                 ) : (
-                  <Box
-                    className={cn(styles.choosenTransport_container, {
-                      [styles.choosenTransport_container_mobile]: isMobileView,
-                    })}
-                  >
-                    <div className={styles.choosenTransport}>
-                      <p className={styles.choosenTransport_label}>
-                        Показаны товары для: &nbsp;
-                      </p>
-                      <p className={styles.choosenTransport_text}>
-                        {transportText}
-                      </p>
-                    </div>
-                    <CustomButton
-                      onClick={resetFilter}
-                      customStyles={styles.stepButtonSubmit}
-                    >
-                      Сбросить фильтр
-                    </CustomButton>
-                  </Box>
+                  <HeaderFiltersText transportText={transportText} />
                 )}
               </FormControl>
 
-              {isFullHeader && !isMobileView && <CatalogButton />}
+              {isFullDesktopHeader && <CatalogButton />}
             </Box>
           )}
 
-          {!isFullHeader && !isMobileView && (
+          {isShortDesktopHeader && (
             <>
               <Box
                 sx={{
@@ -287,11 +93,11 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
             </>
           )}
 
-          {!isFullHeader && !isMobileView && <HeaderAsideNav />}
+          {isShortDesktopHeader && <HeaderAsideNav />}
         </Box>
       </Container>
 
-      {!isFullHeader && !isMobileView && <Divider />}
+      {isShortDesktopHeader && <Divider />}
     </>
   );
 };

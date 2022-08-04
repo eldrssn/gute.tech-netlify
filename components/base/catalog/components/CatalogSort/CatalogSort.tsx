@@ -25,8 +25,8 @@ const CatalogSort: FC<CatalogSortProps> = ({
     const sortingTypes: Record<string, () => void> = {
       byPopularDown: () => setSorting({ sort: 'popular', order: 'asc' }),
       byPopularUp: () => setSorting({ sort: 'popular', order: 'desc' }),
-      byPriceDown: () => setSorting({ sort: 'price', order: 'asc' }),
       byPriceUp: () => setSorting({ sort: 'price', order: 'desc' }),
+      byPriceDown: () => setSorting({ sort: 'price', order: 'asc' }),
     };
 
     orderType && sortingTypes[orderType]();
@@ -55,7 +55,7 @@ const CatalogSort: FC<CatalogSortProps> = ({
   }
 
   const isActive = (start: string) => orderType.startsWith(start);
-  const isUp = (start: string) => orderType === `${start}${DIRECTIONS.UP}`;
+  const isDown = (start: string) => orderType === `${start}${DIRECTIONS.DOWN}`;
 
   return (
     <div className={styles.sortContainer}>
@@ -64,7 +64,7 @@ const CatalogSort: FC<CatalogSortProps> = ({
         <a
           className={cn(styles.sortItem, styles.sortItemType, {
             [styles.active]: isActive(ORDER_TYPES.byPopular),
-            [styles.up]: isUp(ORDER_TYPES.byPopular),
+            [styles.up]: isDown(ORDER_TYPES.byPopular),
           })}
           onClick={setDirectionByPopular}
         >
@@ -73,7 +73,7 @@ const CatalogSort: FC<CatalogSortProps> = ({
         <a
           className={cn(styles.sortItem, styles.sortItemType, {
             [styles.active]: isActive(ORDER_TYPES.byPrice),
-            [styles.up]: isUp(ORDER_TYPES.byPrice),
+            [styles.down]: isDown(ORDER_TYPES.byPrice),
           })}
           onClick={setDirectionByPrice}
         >

@@ -38,7 +38,7 @@ const DesktopTableBody: React.FC<TableBodyProps> = ({ order }) => {
                     component={'img'}
                     height='100px'
                     width='100px'
-                    src={item.images[0]}
+                    src={item.images[0] || '/images/no-image.jpeg'}
                     alt='item'
                   />
                 </Box>

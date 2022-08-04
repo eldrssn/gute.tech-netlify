@@ -16,6 +16,7 @@ import { getStockBalance } from 'utility/helpers';
 import { DeleteItemButton } from '../DeleteItemButton';
 import { Counter } from '../Сounter';
 import { TTableBodyProps } from '../../types';
+
 import styles from './DesktopTableBody.module.scss';
 
 const DesktopTableBody: React.FC<TTableBodyProps> = ({
@@ -78,7 +79,7 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
                       component={'img'}
                       height='100px'
                       width='100px'
-                      src={item.images[0]}
+                      src={item.images[0] || '/images/no-image.jpeg'}
                       alt='item'
                     />
                   </Box>
