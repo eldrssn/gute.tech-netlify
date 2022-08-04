@@ -1,5 +1,5 @@
-@import 'styles/colors.scss';
-@import 'styles/breakpoints.scss';
+@import "styles/colors.scss";
+@import "styles/breakpoints.scss";
 
 .wrapper {
   opacity: 0;
@@ -50,6 +50,15 @@
 .transportTypeContainer {
   width: 100%;
   margin-bottom: 10px;
+  max-height: 20vh;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.brandList {
+  max-height: 30vh;
 }
 
 .transportTypeButton {
@@ -88,7 +97,6 @@
 }
 
 .button {
-  background-color: $white;
   border-radius: 0;
   height: 40px;
   white-space: pre-line;
@@ -111,11 +119,13 @@
     flex-direction: row;
     max-height: 30vh;
     width: calc(100% - 20px);
+    box-shadow: 0px 10px 10px -6px rgba(34, 60, 80, 0.2) inset;
   }
 
   .list {
     max-height: 30vh;
     width: 100%;
+    box-shadow: 0px 10px 10px -6px rgba(34, 60, 80, 0.2) inset;
   }
 
   .brandList {
@@ -123,14 +133,17 @@
   }
 
   .transportTypeButton {
-    height: 30px;
     margin-top: 7px;
     margin-bottom: 7px;
+    text-align: start;
   }
 
   .transportTypeContainer {
+    max-height: 30vh;
     height: 100%;
     width: 40%;
+    box-shadow: 15px 0px 10px -6px rgba(34, 60, 80, 0.2);
+    z-index: 1001;
   }
 
   .transportTypeButtonActive {

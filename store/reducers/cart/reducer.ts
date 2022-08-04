@@ -11,7 +11,11 @@ import {
   resetOrdinalId,
   clearCart,
 } from './actions';
-import { initialState } from './constants';
+import {
+  initialState,
+  MIN_COUNT_ADD_ITEM_CART,
+  MIN_COUNT_CART_ITEM,
+} from './constants';
 
 import {
   CartStore,
@@ -112,7 +116,8 @@ const handlers = {
       ordinalId: ordinalIdAddedItem,
       count,
     } = payload.requestData;
-    const currentCount = Number(count) >= 0 ? count : 1;
+    const currentCount =
+      Number(count) >= MIN_COUNT_CART_ITEM ? count : MIN_COUNT_CART_ITEM;
     const cart = state.cartItems.data;
     const itemIndex = cart.findIndex(({ slug }) => slug === slugAddedItem);
     const ordinalId = ordinalIdAddedItem ? ordinalIdAddedItem : cart.length + 1;
@@ -122,7 +127,11 @@ const handlers = {
     }
     state.cartItems.data = [
       ...cart,
-      { ...payload.data, ordinalId, count: currentCount ? currentCount : 1 },
+      {
+        ...payload.data,
+        ordinalId,
+        count: currentCount ? currentCount : MIN_COUNT_ADD_ITEM_CART,
+      },
     ];
   },
 

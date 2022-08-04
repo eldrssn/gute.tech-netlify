@@ -12,6 +12,7 @@ import cn from 'classnames';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { removeItemBySlug, resetOrdinalId } from 'store/reducers/cart/actions';
+import { useWindowSize } from 'hooks/useWindowSize';
 
 import { TRemoveCheckedButtonProps } from '../../types';
 import styles from './styles.module.scss';
@@ -23,6 +24,7 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const dispatch = useDispatch();
+  const { isMobile } = useWindowSize();
 
   const isAllItemsSelect = cart.length === slugsRemovedElements.length;
   const isRemovedItem = slugsRemovedElements.length <= 0;
@@ -80,6 +82,11 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
           </Box>
         </Container>
       </ModalWrapper>
+      {isMobile && (
+        <Typography className={styles.selectedTitle}>
+          Выбрано: {slugsRemovedElements.length}
+        </Typography>
+      )}
       <Box className={styles.checkboxContainer}>
         <FormControlLabel
           className={styles.checkboxSelectAll}
@@ -92,9 +99,11 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
             />
           }
         />
-        <Typography className={styles.selectedTitle}>
-          Выбрано: {slugsRemovedElements.length}
-        </Typography>
+        {!isMobile && (
+          <Typography className={styles.selectedTitle}>
+            Выбрано: {slugsRemovedElements.length}
+          </Typography>
+        )}
         <Button
           disabled={isRemovedItem}
           onClick={openModal}
