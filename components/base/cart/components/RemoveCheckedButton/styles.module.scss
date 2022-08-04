@@ -87,6 +87,13 @@
 }
 
 @media (max-width: $mobile) {
+  .selectedTitle {
+    position: static;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+
   .button {
     font-size: 10px;
   }

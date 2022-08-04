@@ -1,5 +1,7 @@
 import { OrderStore } from './types';
 
+const MIN_COUNT_ORDER_ITEM = 1;
+
 const initialState: OrderStore = {
   orderItems: {
     data: [],
@@ -9,4 +11,4 @@ const initialState: OrderStore = {
   orderItemsSlugs: [],
 };
 
-export { initialState };
+export { initialState, MIN_COUNT_ORDER_ITEM };

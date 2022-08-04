@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+
 import { CartItemData } from 'components/base/cart/types';
 
 import {
@@ -11,7 +12,7 @@ import {
   setItemsSlugs,
   clearItemsSlugs,
 } from './actions';
-import { initialState } from './constants';
+import { initialState, MIN_COUNT_ORDER_ITEM } from './constants';
 import {
   OrderStore,
   ErrorAction,
@@ -84,7 +85,13 @@ const handlers = {
     state: OrderStore,
     { payload }: { payload: CartItemData[] },
   ) => {
-    state.orderItems.data = payload;
+    const newOrderItems = payload.map((orderItem) => {
+      const { count, ...otherOrderItemData } = orderItem;
+      const newCount =
+        count > MIN_COUNT_ORDER_ITEM ? count : MIN_COUNT_ORDER_ITEM;
+      return { ...otherOrderItemData, count: newCount };
+    });
+    state.orderItems.data = newOrderItems;
   },
 
   [fetchItemFromOrder.pending.type]: (state: OrderStore) => {
@@ -99,7 +106,8 @@ const handlers = {
       ordinalId: ordinalIdAddedItem,
       count,
     } = payload.requestData;
-    const currentCount = Number(count) >= 0 ? count : 1;
+    const currentCount =
+      Number(count) > MIN_COUNT_ORDER_ITEM ? count : MIN_COUNT_ORDER_ITEM;
     const order = state.orderItems.data;
     const itemIndex = order.findIndex(({ slug }) => slug === slugAddedItem);
     const ordinalId = ordinalIdAddedItem
@@ -110,7 +118,11 @@ const handlers = {
       return;
     }
     state.orderItems.data = [
-      { ...payload.data, ordinalId, count: currentCount ? currentCount : 1 },
+      {
+        ...payload.data,
+        ordinalId,
+        count: currentCount ? currentCount : MIN_COUNT_ORDER_ITEM,
+      },
     ];
     state.orderItems.isLoading = false;
     state.orderItems.error = null;

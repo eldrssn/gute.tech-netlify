@@ -22,26 +22,28 @@ const ProductTable: React.FC<TableBodyProps> = ({ products }) => {
   const totalCost = useSelector(selectOrderTotal);
 
   return (
-    <Table className={styles.table} aria-label='simple table'>
-      {isMobile ? null : (
-        <TableHead className={styles.tableHead}>
-          <TableRow>
-            <TableCell>Товар</TableCell>
-            <TableCell align='right'>Цена</TableCell>
-            <TableCell align='right'>Кол-во</TableCell>
-            <TableCell align='right'>Стоимость</TableCell>
-          </TableRow>
-        </TableHead>
-      )}
-      {isMobile ? (
-        <ProductTableMobile products={products} />
-      ) : (
-        <ProductTableDesktop products={products} />
-      )}
+    <>
+      <Table className={styles.table} aria-label='simple table'>
+        {!isMobile && (
+          <TableHead className={styles.tableHead}>
+            <TableRow>
+              <TableCell>Товар</TableCell>
+              <TableCell align='right'>Цена</TableCell>
+              <TableCell align='right'>Кол-во</TableCell>
+              <TableCell align='right'>Стоимость</TableCell>
+            </TableRow>
+          </TableHead>
+        )}
+        {isMobile ? (
+          <ProductTableMobile products={products} />
+        ) : (
+          <ProductTableDesktop products={products} />
+        )}
+      </Table>
       <Typography className={styles.totalCost}>
         Итого: {totalCost}&#8381;
       </Typography>
-    </Table>
+    </>
   );
 };
 
