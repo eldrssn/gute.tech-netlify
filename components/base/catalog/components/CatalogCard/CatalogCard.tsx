@@ -10,7 +10,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
@@ -26,7 +25,7 @@ import {
 } from 'utility/helpers/linkmakers';
 import { formatPrice } from 'utility/helpers';
 
-import { formatTittle } from './helpers';
+import { Title } from './components/TitleTooltip';
 import styles from './catalogCard.module.scss';
 
 const CatalogCard: React.FC<ProductListData> = ({
@@ -72,7 +71,6 @@ const CatalogCard: React.FC<ProductListData> = ({
       });
 
   const formattedPrice = formatPrice(price);
-  const formattedTitle = formatTittle(title);
 
   return (
     <>
@@ -95,15 +93,7 @@ const CatalogCard: React.FC<ProductListData> = ({
             <CardContent className={styles.cardInfo}>
               <Divider className={styles.cardDivider} />
 
-              <Tooltip title={title} placement='top'>
-                <Typography
-                  className={styles.cardTitle}
-                  gutterBottom
-                  component='h3'
-                >
-                  {formattedTitle}
-                </Typography>
-              </Tooltip>
+              <Title>{title}</Title>
 
               <Box className={styles.cardBottom}>
                 <div className={styles.cardBottom_price}>

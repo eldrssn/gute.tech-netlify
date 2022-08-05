@@ -1,6 +1,11 @@
-import { ProfileOrdersPage } from 'components/base/profileOrders';
 import React from 'react';
 
-const Orders = () => <ProfileOrdersPage />;
+import { WithAuthorize } from 'hoc/WithAuthorize';
+import { ProfileOrdersPage } from 'components/base/profileOrders';
+
+const Orders = () =>
+  WithAuthorize({
+    ComponentForAuthorized: <ProfileOrdersPage />,
+  });
 
 export default Orders;

@@ -64,7 +64,7 @@ const CatalogSort: FC<CatalogSortProps> = ({
         <a
           className={cn(styles.sortItem, styles.sortItemType, {
             [styles.active]: isActive(ORDER_TYPES.byPopular),
-            [styles.up]: isDown(ORDER_TYPES.byPopular),
+            [styles.down]: isDown(ORDER_TYPES.byPopular),
           })}
           onClick={setDirectionByPopular}
         >

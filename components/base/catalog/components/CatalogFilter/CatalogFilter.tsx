@@ -20,6 +20,7 @@ import { componentByType } from './constants';
 import { CatalogFilterProps } from './types';
 
 import styles from './catalogFilter.module.scss';
+import { CustomButton } from 'components/ui/CustomButton';
 
 const CatalogFilter: FC<CatalogFilterProps> = ({
   setFilterRequest,
@@ -51,9 +52,13 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
     setAnchorApplyButton(event.currentTarget);
   };
 
-  const handleResetClick = () => {
+  const handleRemoveAnchorClick = () => {
     setAnchorApplyButton(null);
     handleDrawerToggle && handleDrawerToggle();
+  };
+
+  const handleResetClick = () => {
+    handleRemoveAnchorClick();
     router.push(transportId ? linkToTransportCatalog : linkToCatalog);
   };
 
@@ -74,12 +79,19 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
         );
       })}
 
-      <Box
-        sx={{ marginBottom: { xs: '40px', md: 0 } }}
-        className={styles.resetButton}
-        onClick={handleResetClick}
-      >
-        Cбросить фильтры
+      <Box className={styles.buttonBox}>
+        <CustomButton
+          onClick={handleRemoveAnchorClick}
+          customStyles={styles.applyButton}
+        >
+          Применить
+        </CustomButton>
+        <CustomButton
+          customStyles={styles.resetButton}
+          onClick={handleResetClick}
+        >
+          Cбросить фильтры
+        </CustomButton>
       </Box>
 
       <CatalogFilterButton
