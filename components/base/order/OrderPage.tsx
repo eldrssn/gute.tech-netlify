@@ -4,12 +4,11 @@ import { Typography, Box } from '@mui/material';
 import { useRouter } from 'next/router';
 
 import { Loader } from 'components/ui/Loader';
-import { TotalOrderBox } from 'components/main/TotalOrderBox';
 import {
   selectOrder,
   selectOrderLoading,
+  selectOrderTotal,
 } from 'store/reducers/order/selectors';
-import { TotalBoxRedirectUrls } from 'utility/utils/constants';
 import { useWindowSize } from 'hooks/useWindowSize';
 
 import { TableOrder } from './components/TableOrder';
@@ -20,6 +19,7 @@ const OrderPage: React.FC = () => {
   const { isMobile } = useWindowSize();
 
   const order = useSelector(selectOrder);
+  const orderTotal = useSelector(selectOrderTotal);
   const isLoadingOrder = useSelector(selectOrderLoading);
 
   const isOrderList = order.length > 0;
@@ -46,9 +46,12 @@ const OrderPage: React.FC = () => {
     <>
       <Box component='div' className={styles.main}>
         <Typography className={styles.mainTitle}>Заказ</Typography>
-        {isLoadingOrder ? <Loader /> : <TableOrder order={order} />}
+        {isLoadingOrder ? (
+          <Loader />
+        ) : (
+          <TableOrder order={order} orderTotal={orderTotal} />
+        )}
       </Box>
-      <TotalOrderBox redirectUrl={TotalBoxRedirectUrls.PAYMENT} />
     </>
   );
 };

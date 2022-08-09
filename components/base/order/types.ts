@@ -18,6 +18,7 @@ type CounterProps = {
 
 type TableOrderProps = {
   order: CartItemData[];
+  orderTotal: orderTotal;
 };
 
 export type {

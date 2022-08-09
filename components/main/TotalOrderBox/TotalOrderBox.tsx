@@ -10,6 +10,8 @@ import { getCartOrderTotal } from './helpers';
 import styles from './styles.module.scss';
 import { Props } from './types';
 
+//TODO: обсудить компонент
+
 const TotalOrderBox: React.FC<Props> = ({
   redirectUrl,
   onClick,

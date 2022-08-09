@@ -17,3 +17,54 @@
   font-family: Roboto, sans-serif !important;
   font-weight: bold;
 }
+
+.bottomOrderBox {
+  width: 100%;
+  padding: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: end;
+}
+
+.orderBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
+
+.orderTotal {
+  text-align: right;
+  padding: 6px 16px;
+  height: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.orderButton {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 250px;
+}
+
+@media (max-width: $sMobile) {
+  .bottomOrderBox {
+    padding: 0px;
+    padding-top: 15px;
+    flex-direction: column;
+  }
+
+  .orderButton {
+    margin-top: 0px;
+  }
+
+  .orderBox {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: $xxsMobile) {
+  .bottomOrderBox {
+    display: flex;
+  }
+}

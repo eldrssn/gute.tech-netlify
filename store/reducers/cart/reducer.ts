@@ -9,7 +9,10 @@ import {
   fetchItemFromCart,
   fetchItemsFromCart,
   resetOrdinalId,
+  changeChecked,
   clearCart,
+  setAllChecked,
+  clearCheckedItems,
 } from './actions';
 import {
   initialState,
@@ -106,6 +109,44 @@ const handlers = {
     });
     state.cartItems.data = newCart;
   },
+  [changeChecked.type]: (
+    state: CartStore,
+    { payload }: { payload: string },
+  ) => {
+    const order = state.cartItems.data;
+    const itemIndex = order.findIndex(({ slug }) => slug === payload);
+    const { isChecked, ...otherItemData } = order[itemIndex];
+    const ChangedChecked = !isChecked;
+    const newItem = {
+      isChecked: ChangedChecked,
+      ...otherItemData,
+    };
+    state.cartItems.data = [
+      ...order.slice(0, itemIndex),
+      newItem,
+      ...order.slice(itemIndex + 1),
+    ];
+  },
+  [setAllChecked.type]: (state: CartStore) => {
+    const newCart = state.cartItems.data.map((cartItem) => {
+      const { isChecked, ...othedItemData } = cartItem;
+      return {
+        isChecked: true,
+        ...othedItemData,
+      };
+    });
+    state.cartItems.data = newCart;
+  },
+  [clearCheckedItems.type]: (state: CartStore) => {
+    const newCart = state.cartItems.data.map((cartItem) => {
+      const { isChecked, ...othedItemData } = cartItem;
+      return {
+        isChecked: false,
+        ...othedItemData,
+      };
+    });
+    state.cartItems.data = newCart;
+  },
 
   [fetchItemFromCart.fulfilled.type]: (
     state: CartStore,
@@ -131,6 +172,7 @@ const handlers = {
         ...payload.data,
         ordinalId,
         count: currentCount ? currentCount : MIN_COUNT_ADD_ITEM_CART,
+        isChecked: true,
       },
     ];
   },
@@ -151,6 +193,7 @@ const handlers = {
         ...item,
         count: productOption.count,
         ordinalId: productOption.ordinalId,
+        isChecked: productOption.isChecked,
       };
     });
 

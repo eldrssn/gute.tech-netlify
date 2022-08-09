@@ -126,18 +126,20 @@ const getSlugsCartItemsFromString = (slugsItem: string) =>
     const slug = itemArray[0].split(':')[1];
     const count = itemArray[1].split(':')[1];
     const ordinalId = itemArray[2].split(':')[1];
+    const isChecked = itemArray[3].split(':')[1] === 'true' ? true : false;
 
     return {
       productSlug: slug,
       count: Number(count),
       ordinalId: Number(ordinalId),
+      isChecked: isChecked,
     };
   });
 
 const getSlugsCartItemsFromCart = (cart: CartItemData[]) =>
   cart
     .map((item) => {
-      return `slug:${item.slug},count:${item.count},ordinalId:${item.ordinalId}`;
+      return `slug:${item.slug},count:${item.count},ordinalId:${item.ordinalId},isChecked:${item.isChecked}`;
     })
     .join('&');
 
@@ -242,9 +244,16 @@ const getStockBalance = (item: CartItemData) =>
 const getProductSlugList = (productsOptions: productOptions[]) =>
   productsOptions.map((productOption) => productOption.productSlug);
 
+const getLinkToProduct = (
+  parentCategorySlug: string | undefined,
+  categorySlug: string,
+  slug: string,
+) => `/catalog/${parentCategorySlug}/${categorySlug}/${slug}`;
+
 export default setBreakpointSize;
 
 export {
+  getLinkToProduct,
   getProductSlugList,
   getFullDate,
   getStockBalance,

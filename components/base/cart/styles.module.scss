@@ -21,21 +21,40 @@
   font-weight: bold;
 }
 
-.orderTotal {
+.cartTotal {
   width: 25%;
   text-align: right;
-  padding: 16px;
+  padding: 6px 16px;
+  // font-weight: bold;
+}
+
+.orderBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
+
+.orderTotal {
+  text-align: right;
+  padding: 6px 16px;
+  height: 50px;
+  text-align: center;
   font-weight: bold;
+}
+
+.orderButton {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 250px;
 }
 
 .bottomOrderBox {
   width: 100%;
-  text-align: right;
   padding: 16px;
   font-weight: bold;
   display: flex;
-  padding: 16px;
-  display: flex;
+  justify-content: space-between;
 }
 
 .menuItem {
@@ -43,6 +62,8 @@
 }
 
 .menuItemSpecialOffer {
+  height: 50px;
+
   &:hover {
     p {
       border-bottom: hidden;
@@ -55,6 +76,7 @@
 }
 
 .action {
+  margin-right: 10px;
   width: 75%;
   display: flex;
   flex-wrap: wrap;
@@ -66,13 +88,34 @@
   .bottomOrderBox {
     padding: 0px;
     padding-top: 15px;
+    flex-direction: column;
+  }
+
+  .orderButton {
+    margin-top: 0px;
+  }
+
+  .orderBox {
+    margin-top: 20px;
   }
 
   .menuItem {
     padding: 6px;
   }
 
-  .orderTotal {
+  .menuItemSpecialOffer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .action {
+    margin-right: 0px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cartTotal {
     margin-top: 10px;
     padding: 0px;
   }
@@ -80,6 +123,8 @@
 
 @media (max-width: $xsMobile) {
   .action {
+    width: 100%;
+
     p {
       font-size: 14px !important;
     }
@@ -94,15 +139,9 @@
 @media (max-width: $xxsMobile) {
   .bottomOrderBox {
     display: flex;
-    flex-direction: column-reverse;
   }
 
-  .action {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .orderTotal {
+  .cartTotal {
     width: 100%;
     margin-bottom: 15px;
   }

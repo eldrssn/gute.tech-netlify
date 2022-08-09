@@ -18,6 +18,9 @@ const removeItemQuantity = createAction<CartItemSlug>('removeCartItemQuantity');
 const removeItemFromCart = createAction<CartItemSlug>('removeCartItemFromCart');
 const setItemQuantity = createAction<CartItemQuantity>('setCartItemQuantity');
 const removeItemBySlug = createAction<CartItemSlug[]>('removeCartItemBySlug');
+const changeChecked = createAction<string>('changeChecked');
+const setAllChecked = createAction('setAllChecked');
+const clearCheckedItems = createAction('clearCheckedItems');
 const resetOrdinalId = createAction('resetOrdinalId');
 const clearCart = createAction('clearCart');
 
@@ -40,6 +43,9 @@ const fetchItemFromCart = createAsyncAction<
 });
 
 export {
+  setAllChecked,
+  clearCheckedItems,
+  changeChecked,
   fetchItemsFromCart,
   fetchItemFromCart,
   resetOrdinalId,

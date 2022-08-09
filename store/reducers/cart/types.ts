@@ -10,6 +10,8 @@ enum CartStoreBlocks {
   CART_ITEMS = 'cartItems',
 }
 
+type cartTotal = number;
+
 type orderTotal = number;
 
 type CartItemSlug = string;
@@ -29,7 +31,11 @@ type fetchItemPayloadData = {
   data: ProductResponseData;
 };
 
-type CartItemData = ProductResponseData & { count: number; ordinalId: number };
+type CartItemData = ProductResponseData & {
+  count: number;
+  ordinalId: number;
+  isChecked: boolean;
+};
 
 type CartItemsState = {
   data: CartItemData[];
@@ -40,13 +46,14 @@ type CartStore = {
 };
 
 export type {
+  orderTotal,
   fetchItemsPayloadData,
   fetchItemPayloadData,
   CartItemQuantity,
   ErrorAction,
   StoreError,
   CartStore,
-  orderTotal,
+  cartTotal,
   CartItemSlug,
   ProductResponseData,
   CartItemData,

@@ -31,6 +31,7 @@ type ProductResponseData = {
   is_service: boolean;
   warehouses: ProductWarehouse[];
   properties: ProductProperties[];
+  categories: string[];
 };
 
 type ProductRequestData = {
@@ -43,6 +44,7 @@ type productOptions = {
   productSlug: string;
   count: number;
   ordinalId: number;
+  isChecked: boolean;
 };
 
 type ProductsRequestData = {
