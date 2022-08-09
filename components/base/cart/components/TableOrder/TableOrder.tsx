@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 import {
   Table,
   TableCell,
@@ -7,8 +9,8 @@ import {
   Typography,
   MenuItem,
   Box,
+  Button,
 } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 
 import {
@@ -16,24 +18,30 @@ import {
   removeItemQuantity,
   removeItemFromCart,
 } from 'store/reducers/cart/actions';
+import { setItemsFromOrder, setItemsSlugs } from 'store/reducers/order/actions';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { ModalAdvice } from 'components/main/ModalAdvice';
-import { formatPrice } from 'utility/helpers';
+import { TotalBoxRedirectUrls } from 'utility/utils/constants';
 
 import { DesktopTableBody } from '../DesktopTableBody';
 import { MobileTableBody } from '../MobileTableBody';
+import { BUTTON_TITLE_ORDER, BUTTON_TITLE_PAYMENT } from '../../constants';
+import { getCheckedCartItemsSlug, getCheckedCartItems } from '../../helpers';
 import { TTableOrderProps, CartItemData } from '../../types';
 import styles from '../../styles.module.scss';
 
-const TableOrder: React.FC<TTableOrderProps> = ({
-  cart,
-  orderTotal,
-  setSlugsRemovedElements,
-  slugsRemovedElements,
-}) => {
+const TableOrder: React.FC<TTableOrderProps> = ({ cart, orderTotal }) => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState(false);
   const { isMobile } = useWindowSize();
+
+  const router = useRouter();
   const dispatch = useDispatch();
+
+  const checkedCartItems = getCheckedCartItems(cart);
+  const checkedCartItemsSlug = getCheckedCartItemsSlug(checkedCartItems);
+
+  const isAllItemsSelect = cart.length === checkedCartItems.length;
+
   const addCount = (item: CartItemData) => {
     dispatch(addItemQuantity(item.slug));
   };
@@ -43,10 +51,23 @@ const TableOrder: React.FC<TTableOrderProps> = ({
   const removeItem = (item: CartItemData) => {
     dispatch(removeItemFromCart(item.slug));
   };
-
   const openModalAdvice = () => {
     setModalAdviceOpen(true);
   };
+
+  const SumbitOrder = () => {
+    dispatch(setItemsSlugs(checkedCartItemsSlug));
+    dispatch(setItemsFromOrder(checkedCartItems));
+    router.push(
+      isAllItemsSelect
+        ? TotalBoxRedirectUrls.PAYMENT
+        : TotalBoxRedirectUrls.ORDER,
+    );
+  };
+
+  const submitButtonTitle = isAllItemsSelect
+    ? BUTTON_TITLE_PAYMENT
+    : BUTTON_TITLE_ORDER;
 
   return (
     <>
@@ -69,8 +90,6 @@ const TableOrder: React.FC<TTableOrderProps> = ({
             addCount={addCount}
             removeCount={removeCount}
             removeItem={removeItem}
-            setSlugsRemovedElements={setSlugsRemovedElements}
-            slugsRemovedElements={slugsRemovedElements}
           />
         ) : (
           <DesktopTableBody
@@ -78,8 +97,6 @@ const TableOrder: React.FC<TTableOrderProps> = ({
             addCount={addCount}
             removeCount={removeCount}
             removeItem={removeItem}
-            setSlugsRemovedElements={setSlugsRemovedElements}
-            slugsRemovedElements={slugsRemovedElements}
           />
         )}
       </Table>
@@ -102,9 +119,18 @@ const TableOrder: React.FC<TTableOrderProps> = ({
             </Typography>
           </MenuItem>
         </Box>
-        <Typography className={styles.orderTotal}>
-          Всего: {formatPrice(orderTotal)}&#8381;
-        </Typography>
+        <Box className={styles.orderBox}>
+          <Typography className={styles.orderTotal}>
+            Сумма заказа: {orderTotal}&#8381;
+          </Typography>
+          <Button
+            className={styles.orderButton}
+            onClick={SumbitOrder}
+            variant={'contained'}
+          >
+            {submitButtonTitle}
+          </Button>
+        </Box>
       </Box>
     </>
   );

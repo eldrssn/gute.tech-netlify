@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import {
   TableBody,
   TableCell,
@@ -10,9 +12,15 @@ import {
   CardMedia,
 } from '@mui/material';
 
+import { changeChecked } from 'store/reducers/cart/actions';
+import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import { formatPrice } from 'utility/helpers';
+import {
+  getStockBalance,
+  getLinkToProduct,
+  getParentCategory,
+} from 'utility/helpers';
 
-import { getStockBalance } from 'utility/helpers';
 import { DeleteItemButton } from '../DeleteItemButton';
 import { Counter } from '../Сounter';
 import { TTableBodyProps } from '../../types';
@@ -20,26 +28,22 @@ import styles from './MobileTableBody.module.scss';
 
 const MobileTableBody: React.FC<TTableBodyProps> = ({
   cart,
-  slugsRemovedElements,
-  setSlugsRemovedElements,
   addCount,
   removeCount,
   removeItem,
 }) => {
-  const handleChangeCheckBox = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    slug: string,
-  ) => {
-    const isChecked = event.target.checked;
-    if (isChecked) {
-      setSlugsRemovedElements([...slugsRemovedElements, slug]);
-      return;
-    }
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-    const newIdsRemovedElements = slugsRemovedElements.filter(
-      (removedElement) => removedElement !== slug,
-    );
-    setSlugsRemovedElements(newIdsRemovedElements);
+  const { data: categoriesTreeListData } = useSelector(
+    selectCategoriesTreeList,
+  );
+
+  const handleChangeCheckBox = (slug: string) => {
+    dispatch(changeChecked(slug));
+  };
+  const handleClickTitle = (link: string) => {
+    router.push(link);
   };
 
   return (
@@ -48,6 +52,13 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
         const stockBalance = getStockBalance(item);
         const itemPrice = formatPrice(item.price);
         const countItemsPrice = formatPrice(item.count * item.price);
+        const slug = item.slug;
+        const categorySlug = item.categories[0];
+        const parentCategorySlug = getParentCategory({
+          categoriesTreeListData,
+          childrenCategorySlug: categorySlug,
+        });
+        const link = getLinkToProduct(parentCategorySlug, categorySlug, slug);
 
         return (
           <TableRow
@@ -65,10 +76,8 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
                   label=''
                   control={
                     <Checkbox
-                      checked={slugsRemovedElements.includes(item.slug)}
-                      onChange={(event) =>
-                        handleChangeCheckBox(event, item.slug)
-                      }
+                      checked={item.isChecked}
+                      onChange={() => handleChangeCheckBox(item.slug)}
                     />
                   }
                 />
@@ -82,7 +91,12 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
               </Box>
             </TableCell>
             <TableCell className={styles.itemInfo}>
-              <Typography className={styles.itemTitle}>{item.title}</Typography>
+              <Typography
+                className={styles.itemTitle}
+                onClick={() => handleClickTitle(link)}
+              >
+                {item.title}
+              </Typography>
               <Typography className={styles.itemPrice}>
                 Цена: {itemPrice}&#8381;{' '}
               </Typography>

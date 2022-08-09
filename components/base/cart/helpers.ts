@@ -1,11 +1,15 @@
 import { CartItemData } from 'store/reducers/cart/types';
 
-const getSelectedCartItems = (
-  cart: CartItemData[],
-  slugsRemovedElements: string[],
-) =>
-  cart.filter((item) =>
-    slugsRemovedElements.some((slug) => slug === item.slug),
-  );
+const getCheckedCartItems = (cart: CartItemData[]) =>
+  cart.filter((item) => item.isChecked === true);
 
-export { getSelectedCartItems };
+const getCheckedCartItemsSlug = (checkedCartItems: CartItemData[]) =>
+  checkedCartItems.map((item) => item.slug);
+
+const getLinkToProduct = (
+  parentCategorySlug: string,
+  categorySlug: string,
+  slug: string,
+) => `/catalog/${parentCategorySlug}/${categorySlug}/${slug}`;
+
+export { getCheckedCartItems, getCheckedCartItemsSlug };

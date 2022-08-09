@@ -1,19 +1,16 @@
 import { Control, UseFormSetValue } from 'react-hook-form';
 
-import { CartItemData, orderTotal } from 'store/reducers/cart/types';
+import { CartItemData, cartTotal, orderTotal } from 'store/reducers/cart/types';
 import { BranchOfficeData, BranchesData } from 'api/models/regions';
 
 type TStateProps = {
   cart: CartItemData[];
-  orderTotal: orderTotal;
 };
 
 type TTableBodyProps = {
   removeItem: (item: CartItemData) => void;
   addCount: (item: CartItemData) => void;
   removeCount: (item: CartItemData) => void;
-  slugsRemovedElements: string[];
-  setSlugsRemovedElements: (idsArray: string[]) => void;
 } & Pick<TStateProps, 'cart'>;
 
 type TFormData = {
@@ -50,8 +47,6 @@ type TContactInformationProps = {
 };
 
 type TTableOrderProps = {
-  slugsRemovedElements: string[];
-  setSlugsRemovedElements: (idsArray: string[]) => void;
   cart: CartItemData[];
   orderTotal: orderTotal;
 };
@@ -70,8 +65,6 @@ type TCounterProps = {
 
 type TRemoveCheckedButtonProps = {
   cart: CartItemData[];
-  slugsRemovedElements: string[];
-  setSlugsRemovedElements: (idsArray: string[]) => void;
 };
 
 type TFormCountData = {

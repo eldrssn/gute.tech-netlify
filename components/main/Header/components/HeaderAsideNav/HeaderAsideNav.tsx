@@ -9,10 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
-import {
-  selectCartOrderTotal,
-  selectCart,
-} from 'store/reducers/cart/selectors';
+import { selectCartTotal, selectCart } from 'store/reducers/cart/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { HIDE_PHONE_WIDTH } from 'constants/variables';
 import { formatPrice } from 'utility/helpers';
@@ -31,7 +28,7 @@ const HeaderAsideNav: FC = () => {
   const { windowWidth } = useWindowSize();
 
   const { phone } = useSelector(selectShowcaseData);
-  const orderTotal = useSelector(selectCartOrderTotal);
+  const cartTotal = useSelector(selectCartTotal);
   const cart = useSelector(selectCart);
 
   const amountCartItems = cart.length;
@@ -43,7 +40,7 @@ const HeaderAsideNav: FC = () => {
   const windowSize = windowWidth ? windowWidth : 0;
   const hidePhone = isFocusSearchField && windowSize < HIDE_PHONE_WIDTH;
 
-  const formattedOrderTotal = formatPrice(orderTotal);
+  const formattedCartTotal = formatPrice(cartTotal);
 
   return (
     <>
@@ -78,7 +75,7 @@ const HeaderAsideNav: FC = () => {
                   </span>
                 </Box>
                 <Typography className={styles.orderTotalCard}>
-                  {formattedOrderTotal}
+                  {formattedCartTotal}
                   <i className={styles.icon_ruble} />
                 </Typography>
               </Box>

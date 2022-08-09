@@ -1,4 +1,4 @@
-@import 'styles/colors.scss';
+@import "styles/colors.scss";
 
 .tableBody {
   border-bottom: 1px solid rgba(224, 224, 224, 1);
@@ -33,6 +33,11 @@
 
 .itemTitle {
   font-weight: bold;
+
+  &:hover {
+    cursor: pointer;
+    color: $blue1;
+  }
 }
 
 .itemManufacturer {

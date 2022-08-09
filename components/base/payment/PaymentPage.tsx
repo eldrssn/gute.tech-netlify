@@ -19,6 +19,7 @@ import {
   selectOrderItemsSlugs,
 } from 'store/reducers/order/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectUserProfile } from 'store/reducers/user/selectors';
 import {
   createOrderingUnAuthorized,
   createOrderingAuthorized,
@@ -28,21 +29,18 @@ import { DeliveryAddress } from './components/DeliveryAddress';
 import { ContactInformation } from './components/ContactInformation';
 import { PaymentMethod } from './components/PaymentMethod';
 import { TFormData } from './types';
-import { getOrderList, setPaymentFormErrors } from './helpers';
+import {
+  getOrderList,
+  setPaymentFormErrors,
+  getDefaultValues,
+} from './helpers';
 import styles from './styles.module.scss';
 
 const PaymentPage: React.FC = () => {
   const [otherError, setOtherError] = useState<string[]>([]);
+  const userProfile = useSelector(selectUserProfile);
   const { handleSubmit, control, setValue, setError } = useForm<TFormData>({
-    defaultValues: {
-      paymentMethod: 'CARD',
-      paymentGateway: 'SBERBANK',
-      phoneNumber: '',
-      nameValue: '',
-      emailValue: '',
-      branch: null,
-      branchesData: null,
-    },
+    defaultValues: getDefaultValues(userProfile.data),
   });
 
   const router = useRouter();

@@ -1,5 +1,6 @@
 import { UseFormSetError } from 'react-hook-form';
 
+import { ProfileResponseData } from 'api/models/user';
 import { CartItemData } from 'store/reducers/cart/types';
 import { OrderingErrors } from 'api/models/payment';
 
@@ -51,4 +52,16 @@ const setPaymentFormErrors = ({
   }
 };
 
-export { getOrderList, setPaymentFormErrors };
+const getDefaultValues = (profile: ProfileResponseData | null) => {
+  return {
+    paymentMethod: 'CARD',
+    paymentGateway: 'SBERBANK',
+    phoneNumber: profile?.phone_number ? profile?.phone_number : '',
+    nameValue: profile?.first_name ? profile.first_name : '',
+    emailValue: profile?.email ? profile?.email : '',
+    branch: null,
+    branchesData: null,
+  };
+};
+
+export { getOrderList, setPaymentFormErrors, getDefaultValues };

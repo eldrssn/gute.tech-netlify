@@ -122,6 +122,7 @@ const handlers = {
         ...payload.data,
         ordinalId,
         count: currentCount ? currentCount : MIN_COUNT_ORDER_ITEM,
+        isChecked: true,
       },
     ];
     state.orderItems.isLoading = false;
