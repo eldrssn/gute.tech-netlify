@@ -1,4 +1,5 @@
-@import '~styles/colors.scss';
+@import "~styles/colors.scss";
+@import "~styles/constants.scss";
 
 .closeButton {
   position: absolute;
@@ -9,11 +10,11 @@
   opacity: 1;
   cursor: pointer;
   transition: opacity ease 0.5s;
-  z-index: 1501;
+  z-index: $z-index24;
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 10px;
     display: block;
@@ -41,7 +42,7 @@
 }
 
 .closeArea {
-  z-index: 1500;
+  z-index: $z-index23;
   position: absolute;
 
   &_up {
@@ -67,7 +68,7 @@
   left: 50%;
   transform: translateX(-50%);
   position: absolute;
-  z-index: 1306;
+  z-index: $z-index22;
   background: rgba(0, 0, 0, 0.4);
   padding: 10px;
   width: fit-content;

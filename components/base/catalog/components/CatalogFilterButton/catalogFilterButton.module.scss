@@ -1,5 +1,6 @@
-@import '~styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
+@import "~styles/constants.scss";
 
 .button {
   background-color: $red1;
@@ -21,7 +22,7 @@
 }
 
 .button::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -40px;
   top: 0;
@@ -45,7 +46,7 @@
     padding: 5px 0;
     transition: none;
     margin-left: calc(100vw - 185px);
-    z-index: 1300 !important;
+    z-index: $z-index16 !important;
     border-bottom: 1px dashed $blue1;
 
     &:hover {
@@ -57,7 +58,7 @@
     content: none;
   }
   .popper {
-    z-index: 1101;
+    z-index: $z-index10;
   }
 
   .button_ranger {
