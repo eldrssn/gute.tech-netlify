@@ -7,6 +7,7 @@ import {
   CategoriesProductListResponseData,
   CategoriesProductReadResponseData,
   CatalogSearchReadResponseData,
+  RecommendedProductsListResponseData,
 } from 'api/models/catalog';
 
 import {
@@ -24,6 +25,8 @@ import {
   fetchTransportFilterList,
   setIsLoadingCatalogSearchRead,
   clearCatalog,
+  fetchRecommendedProductsList,
+  clearRecommendedProductsList,
 } from './actions';
 
 import { CatalogStore, ErrorAction } from './types';
@@ -263,6 +266,29 @@ const handlers = {
     state.transportFilterList.data = [];
     state.categoriesFilterList.data = [];
     state.categoriesProductList.data = initProductList;
+  },
+
+  [fetchRecommendedProductsList.pending.type]: (state: CatalogStore) => {
+    state.recommendedProductsList.isLoading = true;
+  },
+  [fetchRecommendedProductsList.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<RecommendedProductsListResponseData>,
+  ) => {
+    state.recommendedProductsList.data = payload;
+    state.recommendedProductsList.isLoading = false;
+    state.recommendedProductsList.error = null;
+  },
+  [fetchRecommendedProductsList.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.recommendedProductsList.isLoading = false;
+    state.recommendedProductsList.error = errorData;
+  },
+  [clearRecommendedProductsList.type]: (state: CatalogStore) => {
+    state.recommendedProductsList.data = null;
   },
 };
 

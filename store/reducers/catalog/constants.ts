@@ -63,6 +63,11 @@ const initialState: CatalogStore = {
     isLoading: false,
     error: null,
   },
+  recommendedProductsList: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
 };
 
 export { initProductList, initialState };

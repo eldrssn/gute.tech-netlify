@@ -1,14 +1,15 @@
-@import "~styles/colors.scss";
+@import '~styles/colors.scss';
 
 .catalogContainer {
   display: flex;
-  width: calc(100vw - 64px);
 }
 
 .mainCategories {
-  min-width: 200px;
+  width: 30%;
+  overflow: visible;
   background-color: $white;
-  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%),
+    0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
 }
 
 .childrenCategories {
@@ -17,15 +18,13 @@
   flex-wrap: wrap;
 
   border-radius: 0;
-  width: 100%;
+  width: 70%;
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: $white;
 }
 
 .childrenList {
-  width: 60vw;
-  max-width: 820px;
   display: inline-block;
   flex-direction: column;
   flex-wrap: wrap;

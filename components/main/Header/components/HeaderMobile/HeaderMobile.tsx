@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 
 import Menu from '@mui/material/Menu';
 
@@ -6,14 +6,12 @@ import { CustomButton } from 'components/ui/CustomButton';
 
 import { HeaderFilters } from '../HeaderFilters';
 import { HeaderMobileNav } from '../HeaderMobileNav';
+import { HeaderContext } from '../HeaderContext';
 
-import { HeaderMobileProps } from './types';
 import styles from './headerMobile.module.scss';
 
-const HeaderMobile: FC<HeaderMobileProps> = ({
-  transportText,
-  setIsFocusSearchField,
-}) => {
+const HeaderMobile: FC = () => {
+  const { transportText } = useContext(HeaderContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -88,11 +86,7 @@ const HeaderMobile: FC<HeaderMobileProps> = ({
           },
         }}
       >
-        <HeaderFilters
-          transportText={transportText}
-          closePopupMobile={handleClose}
-          setIsFocusSearchField={setIsFocusSearchField}
-        />
+        <HeaderFilters closePopupMobile={handleClose} />
       </Menu>
     </>
   );

@@ -15,8 +15,7 @@ import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
 
-//  !TODO: добавить, когда появятся рекоммендованные товары на бэке
-// import { RecommendedProducts } from 'components/base/product/RecommendedProducts';
+import { RecommendedProducts } from './components/RecommendedProducts';
 import { ProductPrice } from './components/ProductPrice';
 import { ProductQuantity } from './components/ProductQuantity';
 import { ProductSpecial } from './components/ProductSpecial';
@@ -154,8 +153,7 @@ const ProductPage: FC = () => {
 
           <ProductTabsDescription {...productInfo} />
 
-          {/* !TODO: добавить, когда появятся рекоммендованные товары на бэке */}
-          {/* <RecommendedProducts /> */}
+          <RecommendedProducts />
         </Box>
       </Box>
     </>

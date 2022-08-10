@@ -12,6 +12,7 @@ import {
   getTransportFilterList,
   getTransportCategoriesRead,
   getCategoriesSubcategoriesRead,
+  getRecommendedProductsList,
 } from 'api/routes/catalog';
 import {
   TransportSearchRequestData,
@@ -28,6 +29,8 @@ import {
   FiltersCategoryResponseData,
   CategoriesProductReadResponseData,
   CatalogSearchReadResponseData,
+  RecommendedProductsListResponseData,
+  RecommendedProductsListRequestData,
 } from 'api/models/catalog';
 import { createAsyncAction } from 'utility/helpers/store';
 
@@ -36,6 +39,9 @@ const setIsLoadingCatalogSearchRead = createAction(
   'setIsLoadingCatalogSearchRead',
 );
 const clearCatalog = createAction('CatalogStore/clearCatalog');
+const clearRecommendedProductsList = createAction(
+  'CatalogStore/clearRecommendedProductsList',
+);
 
 const fetchTransportFilterList = createAsyncAction<
   CategoryResponseData[],
@@ -119,6 +125,14 @@ const fetchCategoriesSubcategoriesRead = createAsyncAction<
   request: getCategoriesSubcategoriesRead,
 });
 
+const fetchRecommendedProductsList = createAsyncAction<
+  RecommendedProductsListResponseData,
+  RecommendedProductsListRequestData
+>({
+  typeAction: 'CatalogStore/fetchRecommendedProductsList',
+  request: getRecommendedProductsList,
+});
+
 export {
   clearCatalog,
   fetchTransportReadCategories,
@@ -134,4 +148,6 @@ export {
   fetchCategoriesSubcategoriesRead,
   fetchTransportProductList,
   fetchTransportFilterList,
+  fetchRecommendedProductsList,
+  clearRecommendedProductsList,
 };

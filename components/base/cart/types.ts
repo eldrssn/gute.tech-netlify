@@ -1,6 +1,6 @@
 import { Control, UseFormSetValue } from 'react-hook-form';
 
-import { CartItemData, cartTotal, orderTotal } from 'store/reducers/cart/types';
+import { CartItemData, orderTotal } from 'store/reducers/cart/types';
 import { BranchOfficeData, BranchesData } from 'api/models/regions';
 
 type TStateProps = {

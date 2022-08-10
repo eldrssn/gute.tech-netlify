@@ -4,14 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+
 import { ModalCity } from 'components/main/ModalCity';
 import { cookieStorage } from 'utility/helpers';
 import { selectRegion } from 'store/reducers/regions/actions';
 import { selectCity } from 'store/reducers/regions/selectors';
+import { selectUserProfile } from 'store/reducers/user/selectors';
 import { CookieKey } from 'constants/types';
 
 import styles from './headerCity.module.scss';
-import { selectUserProfile } from 'store/reducers/user/selectors';
 
 const HeaderCity: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);

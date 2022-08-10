@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import { TailSpin } from 'react-loader-spinner';
 import { useSelector } from 'react-redux';
 
+import { useWindowSize } from 'hooks/useWindowSize';
 import { selectEngines } from 'store/reducers/transport/selectors';
 import colors from 'styles/_export.module.scss';
 
@@ -42,7 +43,8 @@ const FilterStep: FC<FilterStepProps> = ({
     control,
     rules: { required: true },
   });
-  const { isFullHeader, isTabletView } = useContext(HeaderContext);
+  const { isFullHeader } = useContext(HeaderContext);
+  const { isTablet } = useWindowSize();
   const [isOpenPopover, setIsOpenPopover] = useState(false);
   const [isLoadingoptionList, setIsLoadingOptionList] = useState(false);
 
@@ -115,7 +117,7 @@ const FilterStep: FC<FilterStepProps> = ({
         <div className={styles.stepWrap}>
           <Box
             className={cn(styles.stepNumber, {
-              [styles.stepNumber_shortHeader]: !isFullHeader || isTabletView,
+              [styles.stepNumber_shortHeader]: !isFullHeader || isTablet,
               [styles.stepNumberDisable]: isDisable,
               [styles.stepNumberLoading]: isLoadingoptionList,
             })}

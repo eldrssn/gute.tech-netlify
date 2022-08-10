@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
+import { useWindowSize } from 'hooks/useWindowSize';
 
 import { HeaderContext } from '../HeaderContext';
 import styles from './headerLogo.module.scss';
@@ -14,7 +15,8 @@ import styles from './headerLogo.module.scss';
 const cn = classnames.bind(styles);
 
 const HeaderLogo: FC = () => {
-  const { isFullHeader, isMobileView } = useContext(HeaderContext);
+  const { isFullHeader } = useContext(HeaderContext);
+  const { isMobile } = useWindowSize();
 
   const { logo, title } = useSelector(selectShowcaseData);
 
@@ -22,7 +24,7 @@ const HeaderLogo: FC = () => {
     <Box
       sx={{
         display: {
-          xs: isMobileView ? 'flex' : 'none',
+          xs: isMobile ? 'flex' : 'none',
           sm: 'flex',
         },
         flexDirection: 'row',
@@ -31,7 +33,7 @@ const HeaderLogo: FC = () => {
       <Link href={'/'} passHref>
         <a
           className={cn(styles.header_logo, {
-            [styles.header_logo_mobile]: isMobileView,
+            [styles.header_logo_mobile]: isMobile,
           })}
         >
           <Image
@@ -43,7 +45,7 @@ const HeaderLogo: FC = () => {
         </a>
       </Link>
 
-      {!isMobileView && (
+      {!isMobile && (
         <Box
           sx={{
             display: isFullHeader ? 'flex' : 'none',

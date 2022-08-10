@@ -1,17 +1,20 @@
 import React, { FC, useContext, useState } from 'react';
 import classnames from 'classnames/bind';
-
 import Popover from '@mui/material/Popover';
+
+import { useWindowSize } from 'hooks/useWindowSize';
 import { CustomButton } from 'components/ui/CustomButton';
 
 import { HeaderContext } from '../HeaderContext';
 import { CatalogMenu } from '../CatalogMenu';
+
 import styles from './catalogButton.module.scss';
 
 const cn = classnames.bind(styles);
 
 const CatalogButton: FC = () => {
-  const { isFullHeader, isTabletView } = useContext(HeaderContext);
+  const { isFullHeader } = useContext(HeaderContext);
+  const { isTablet } = useWindowSize();
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -35,7 +38,7 @@ const CatalogButton: FC = () => {
         onClick={handleClick}
         customStyles={cn(styles.catalogButton, {
           [styles.catalogButton_hidden]: !isFullHeader,
-          [styles.catalogButton_tablet]: isTabletView && isFullHeader,
+          [styles.catalogButton_tablet]: isTablet && isFullHeader,
           [styles.catalogButton_full]: isFullHeader,
         })}
       >
@@ -61,12 +64,18 @@ const CatalogButton: FC = () => {
           vertical: 'top',
           horizontal: popoverLocation,
         }}
+        PaperProps={{
+          style: {
+            borderRadius: 0,
+            width: '100%',
+            marginLeft: !isFullHeader ? (isTablet ? '-8px' : 0) : 0,
+            maxWidth: isTablet ? 'calc(100% - 48px)' : 'calc(100% - 32px)',
+          },
+        }}
         sx={{
           backgroundColor: '#00000031',
 
           '&	.MuiPopover-paper': {
-            overflowY: 'inherit',
-            overflowX: 'inherit',
             backgroundColor: 'transparent',
             boxShadow: 'none',
           },

@@ -3,15 +3,15 @@ import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
-import { Description } from 'components/base/main/Description';
+import { Description } from './components/Description';
 import {
   FirstRow,
   SecondRow,
   FirstRowReversed,
   SecondRowReversed,
-} from 'components/base/main/rows';
+} from './components/rows';
 import { Loader } from 'components/ui/Loader';
-import { Items } from 'components/base/main/rows/types';
+import { Items } from './components/rows/types';
 import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { addItemToLocaleStorage, groupItems } from 'utility/helpers';

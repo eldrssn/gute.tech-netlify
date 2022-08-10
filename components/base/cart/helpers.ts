@@ -12,4 +12,4 @@ const getLinkToProduct = (
   slug: string,
 ) => `/catalog/${parentCategorySlug}/${categorySlug}/${slug}`;
 
-export { getCheckedCartItems, getCheckedCartItemsSlug };
+export { getCheckedCartItems, getCheckedCartItemsSlug, getLinkToProduct };
