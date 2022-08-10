@@ -15,8 +15,11 @@ import {
   CatalogSearchReadRequestData,
   CatalogSearchReadResponseData,
   CategoriesSubcategoriesReadRequestData,
+  RecommendedProductsListRequestData,
+  RecommendedProductsListResponseData,
 } from 'api/models/catalog';
 import { ApiMethods } from 'constants/types';
+import { makeStringify } from 'utility/helpers';
 
 const getCategoriesList = () =>
   sendRequest<CategoryResponseData[]>({
@@ -122,6 +125,28 @@ const getCatalogSearchRead = ({ searchValue }: CatalogSearchReadRequestData) =>
     },
   });
 
+const getRecommendedProductsList = ({
+  productSlug,
+  categorySlug,
+  transportId,
+}: RecommendedProductsListRequestData) => {
+  const category = makeStringify(categorySlug);
+  const product = makeStringify(productSlug);
+  const transport = transportId ? transportId : undefined;
+
+  return sendRequest<RecommendedProductsListResponseData>({
+    url: `/catalog/recommendations/`,
+    method: ApiMethods.POST,
+    config: {
+      data: {
+        product,
+        category,
+        transport,
+      },
+    },
+  });
+};
+
 export {
   getCategoriesList,
   getCatalogSearchRead,
@@ -134,4 +159,5 @@ export {
   getTransportProductListRead,
   getTransportFilterList,
   getCategoriesSubcategoriesRead,
+  getRecommendedProductsList,
 };

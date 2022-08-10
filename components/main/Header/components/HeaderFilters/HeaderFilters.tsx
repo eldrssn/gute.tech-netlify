@@ -7,6 +7,8 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 
+import { useWindowSize } from 'hooks/useWindowSize';
+
 import { CatalogButton } from '../CatalogButton';
 import { HeaderLogo } from '../HeaderLogo';
 import { HeaderAsideNav } from '../HeaderAsideNav';
@@ -22,17 +24,14 @@ import styles from './headerFilters.module.scss';
 
 const cn = classnames.bind(styles);
 
-const HeaderFilters: FC<HeaderFiltersProps> = ({
-  transportText,
-  closePopupMobile,
-  setIsFocusSearchField,
-}) => {
-  const { isFullHeader, isMobileView, isTabletView, isFocusSearchField } =
+const HeaderFilters: FC<HeaderFiltersProps> = ({ closePopupMobile }) => {
+  const { isMobile, isTablet } = useWindowSize();
+  const { isFullHeader, isFocusSearchField, transportText } =
     useContext(HeaderContext);
 
-  const isHiddenFilter = !isFullHeader && isFocusSearchField && !isTabletView;
-  const isFullDesktopHeader = isFullHeader && !isMobileView;
-  const isShortDesktopHeader = !isFullHeader && !isMobileView;
+  const isHiddenFilter = !isFullHeader && isFocusSearchField && !isTablet;
+  const isFullDesktopHeader = isFullHeader && !isMobile;
+  const isShortDesktopHeader = !isFullHeader && !isMobile;
 
   return (
     <>
@@ -62,8 +61,8 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
               <FormControl
                 className={cn(styles.filterStepsForm, {
                   [styles.filterStepsForm_shortHeader]:
-                    !isFullHeader || isTabletView,
-                  [styles.filterStepsForm_mobileView]: isMobileView,
+                    !isFullHeader || isTablet,
+                  [styles.filterStepsForm_mobileView]: isMobile,
                 })}
               >
                 {!transportText ? (
@@ -85,11 +84,11 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({
                   display: 'flex',
                 }}
               >
-                {!isMobileView && <HeaderLogo />}
+                {!isMobile && <HeaderLogo />}
 
                 <CatalogButton />
               </Box>
-              <SearchField setIsFocusSearchField={setIsFocusSearchField} />
+              <SearchField />
             </>
           )}
 

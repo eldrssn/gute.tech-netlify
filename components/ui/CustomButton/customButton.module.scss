@@ -15,10 +15,6 @@
   min-width: 0;
 }
 
-.button:hover,
-.button:focus {
+.button:hover {
   background-color: $blue7;
-}
-.button:focus {
-  border: 2px solid $blue1;
 }

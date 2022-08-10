@@ -1,14 +1,14 @@
-import { FilterRequest } from 'types';
+import { FilterRequest, Slug } from 'types';
 import { ProductWarehouse } from './cart';
 
-export type ProductListData = {
+type ProductListData = {
   title: string;
   slug: string;
   image?: string;
   price?: string;
 };
 
-export type CategoriesProductsListRequestData = {
+type CategoriesProductsListRequestData = {
   subcategorySlug: string;
   page?: number;
   sort?: string;
@@ -16,14 +16,14 @@ export type CategoriesProductsListRequestData = {
   filter?: FilterRequest;
 };
 
-export type TransportSearchRequestData = {
+type TransportSearchRequestData = {
   transportId: string;
 };
 
-export type TransportProductListRead = CategoriesProductsListRequestData &
+type TransportProductListRead = CategoriesProductsListRequestData &
   TransportSearchRequestData;
 
-export type CategoriesFiltersListRequestData = {
+type CategoriesFiltersListRequestData = {
   subcategorySlug: string;
   page?: number;
   sort?: string;
@@ -31,21 +31,21 @@ export type CategoriesFiltersListRequestData = {
   filter?: FilterRequest;
 };
 
-export type CategoriesProductsReadRequestData = {
+type CategoriesProductsReadRequestData = {
   categorySlug: string;
   productSlug: string;
 };
 
-export type CategoriesSubcategoriesListRequestData = {
+type CategoriesSubcategoriesListRequestData = {
   categorySlug: string;
 };
 
-export type CategoriesSubcategoriesReadRequestData = {
+type CategoriesSubcategoriesReadRequestData = {
   categorySlug: string;
   transportId: string;
 };
 
-export type CategoryResponseData = {
+type CategoryResponseData = {
   title: string;
   slug: string;
   image: string;
@@ -53,7 +53,7 @@ export type CategoryResponseData = {
   found: number;
 };
 
-export type TreeCategoryResponseData = {
+type TreeCategoryResponseData = {
   title: string;
   slug: string;
   image?: string;
@@ -62,18 +62,18 @@ export type TreeCategoryResponseData = {
   children?: TreeCategoryResponseData[];
 };
 
-export type CheckboxValue = {
+type CheckboxValue = {
   title: string;
   value: string;
 };
 
-export enum FilterTypes {
+enum FilterTypes {
   CHECKBOX = 'CHECKBOX',
   RANGE = 'RANGE',
   RADIO = 'RADIO',
 }
 
-export type FiltersCategoryResponseData = {
+type FiltersCategoryResponseData = {
   title: string;
   slug: string;
   type: FilterTypes;
@@ -82,14 +82,14 @@ export type FiltersCategoryResponseData = {
   values?: CheckboxValue[];
 };
 
-export type CategoriesProductListResponseData = {
+type CategoriesProductListResponseData = {
   current: string;
   total: string;
   pages: string;
   results: ProductListData[];
 };
 
-export type CategoriesProductReadResponseData = {
+type CategoriesProductReadResponseData = {
   title: string;
   slug: string;
   manufacturer?: string;
@@ -104,11 +104,11 @@ export type CategoriesProductReadResponseData = {
   installation: string;
 };
 
-export type CatalogSearchReadRequestData = {
+type CatalogSearchReadRequestData = {
   searchValue: string;
 };
 
-export type CatalogSearchReadProductData = {
+type CatalogSearchReadProductData = {
   title: string;
   slug: string;
   image: string;
@@ -117,13 +117,44 @@ export type CatalogSearchReadProductData = {
   categories: string[];
 };
 
-export type CatalogSearchReadCategoryData = {
+type CatalogSearchReadCategoryData = {
   title: string;
   slug: string;
   image: string;
 };
 
-export type CatalogSearchReadResponseData = {
+type CatalogSearchReadResponseData = {
   categories: CatalogSearchReadCategoryData[];
   products: CatalogSearchReadProductData[];
+};
+
+type RecommendedProductsListRequestData = TransportSearchRequestData & {
+  productSlug: Slug;
+  categorySlug: Slug;
+};
+
+type RecommendedProductsListResponseData = CategoriesProductListResponseData;
+
+export { FilterTypes };
+export type {
+  CatalogSearchReadResponseData,
+  CatalogSearchReadCategoryData,
+  CatalogSearchReadProductData,
+  CatalogSearchReadRequestData,
+  CategoriesProductReadResponseData,
+  CategoriesProductListResponseData,
+  FiltersCategoryResponseData,
+  CheckboxValue,
+  TreeCategoryResponseData,
+  CategoryResponseData,
+  CategoriesSubcategoriesReadRequestData,
+  CategoriesSubcategoriesListRequestData,
+  CategoriesProductsReadRequestData,
+  CategoriesFiltersListRequestData,
+  TransportProductListRead,
+  TransportSearchRequestData,
+  CategoriesProductsListRequestData,
+  ProductListData,
+  RecommendedProductsListRequestData,
+  RecommendedProductsListResponseData,
 };

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Grid from '@mui/material/Grid';
 
-import { CatalogCard } from '../CatalogCard';
+import { CatalogCard } from 'components/main/CatalogCard';
 
 import { CatalogGridProps } from './types';
 import styles from './catalogGrid.module.scss';

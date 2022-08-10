@@ -22,29 +22,30 @@ import {
   selectCategoriesTreeList,
 } from 'store/reducers/catalog/selectors';
 import { useDebounce } from 'hooks/useDebounce';
+import { useWindowSize } from 'hooks/useWindowSize';
 import { getParentCategory } from 'utility/helpers';
 
 import { HeaderContext } from '../HeaderContext';
+
 import styles from './styles.module.scss';
-import { SearchFieldProps } from './types';
 
-const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
-  const { isFullHeader, isMobileView, isTabletView } =
-    useContext(HeaderContext);
+const SearchField: FC = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-  let { isFocusSearchField } = useContext(HeaderContext);
+  const { isMobile, isTablet } = useWindowSize();
+  const { isFullHeader } = useContext(HeaderContext);
+  let { isFocusSearchField, setIsFocusSearchField } = useContext(HeaderContext);
 
   const [isFocusSearch, setIsFocusSearch] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  if (!setIsFocusSearchField) {
+  if (isMobile) {
     setIsFocusSearchField = setIsFocusSearch;
     isFocusSearchField = isFocusSearch;
   }
 
-  const router = useRouter();
-  const dispatch = useDispatch();
   const catalogSearchRead = useSelector(selectCatalogSearchRead);
   const { data: categoriesTreeListData } = useSelector(
     selectCategoriesTreeList,
@@ -108,7 +109,8 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
 
   useEffect(() => {
     setFieldIsFocus(false);
-  }, [isFullHeader, isMobileView, isTabletView, setFieldIsFocus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFullHeader, isMobile, isTablet, setFieldIsFocus]);
 
   useEffect(() => {
     const errorMessage = cn({
@@ -122,13 +124,7 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
   }, [debouncedSearchTerm, catalogSearchRead]);
 
   return (
-    <MenuItem
-      disableGutters
-      className={cn(styles.searchMenuItem, {
-        [styles.searchMenuItemSmallHeader]: !isFullHeader && isTabletView,
-        [styles.searchMenuItemSmallHeader]: isFocusSearchField && isMobileView,
-      })}
-    >
+    <MenuItem disableGutters className={styles.searchMenuItem}>
       {isFocusSearchField && (
         <Box
           component='div'
@@ -139,7 +135,7 @@ const SearchField: FC<SearchFieldProps> = ({ setIsFocusSearchField }) => {
       <Box
         className={cn(styles.searchBox, {
           [styles.activeSearchBox]: isActivePopup,
-          [styles.searchBoxSmallHeader]: isMobileView,
+          [styles.searchBoxSmallHeader]: isMobile,
         })}
       >
         <TextField

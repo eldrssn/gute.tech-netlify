@@ -3,6 +3,8 @@
 .item {
   padding: 10px;
   cursor: pointer;
+  word-break: break-word;
+  width: auto;
 
   &:hover {
     background-color: $gray5;

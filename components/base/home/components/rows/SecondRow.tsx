@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { Grid } from '@mui/material';
 
-import { CategoryCard } from 'components/base/main/CategoryCard';
+import { CategoryCard } from '../CategoryCard';
 
 import { Items } from './types';
 

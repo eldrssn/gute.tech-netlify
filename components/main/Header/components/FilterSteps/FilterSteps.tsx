@@ -1,11 +1,11 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import classnames from 'classnames/bind';
 import Stepper from '@mui/material/Stepper';
 import { Box } from '@mui/system';
 
+import { useWindowSize } from 'hooks/useWindowSize';
 import { filterSteps } from 'components/main/Header/constants';
 
-import { HeaderContext } from '../HeaderContext';
 import { FilterStep } from '../FilterStep';
 
 import { FilterStepsProps } from './types';
@@ -20,14 +20,14 @@ const FilterSteps: FC<FilterStepsProps> = ({
   setCurrentTransportId,
   ...restProps
 }) => {
-  const { isMobileView } = useContext(HeaderContext);
+  const { isMobile } = useWindowSize();
 
   return (
     <Stepper
       activeStep={openPopoverId}
       className={cn({
-        [styles.stepper_mobileView]: isMobileView,
-        [styles.stepper_notMobileView]: !isMobileView,
+        [styles.stepper_mobileView]: isMobile,
+        [styles.stepper_notMobileView]: !isMobile,
       })}
     >
       <Box className={styles.stepperBox}>

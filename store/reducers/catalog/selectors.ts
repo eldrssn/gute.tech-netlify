@@ -83,6 +83,11 @@ const selectCatalogSearchRead = createSelector(
   ({ catalogSearchRead }) => catalogSearchRead,
 );
 
+const selectRecommendedProductsList = createSelector(
+  selectCatalogStore,
+  ({ recommendedProductsList }) => recommendedProductsList,
+);
+
 export {
   selectCategoriesProductRead,
   selectCategoriesTreeList,
@@ -94,4 +99,5 @@ export {
   selectCategoriesProductList,
   selectCategoriesFilterList,
   selectTransportFilterList,
+  selectRecommendedProductsList,
 };

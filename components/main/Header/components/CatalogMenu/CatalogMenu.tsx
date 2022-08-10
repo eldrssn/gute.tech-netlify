@@ -1,7 +1,7 @@
 import React, { FC, useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { MenuItem } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 import MenuList from '@mui/material/MenuList';
 import Divider from '@mui/material/Divider';
@@ -13,6 +13,7 @@ import {
 } from 'store/reducers/catalog/selectors';
 import { selectTransportStore } from 'store/reducers/transport/selectors';
 import { TreeCategoryResponseData } from 'api/models/catalog';
+import { useWindowSize } from 'hooks/useWindowSize';
 
 import { HeaderContext } from '../HeaderContext';
 
@@ -23,7 +24,9 @@ import { CatalogMenuProps } from './types';
 import styles from './catalogMenu.module.scss';
 
 const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
-  const { isFullHeader, isTabletView } = useContext(HeaderContext);
+  const { isFullHeader } = useContext(HeaderContext);
+  const { isTablet } = useWindowSize();
+
   const [choosenCategory, setChoosenCategory] =
     useState<null | TreeCategoryResponseData>(null);
 
@@ -45,18 +48,15 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
     handleClose();
   };
 
-  const isTabletShortView = !isFullHeader && !isTabletView;
   const childrenBox = choosenCategory?.children
     ? choosenCategory.children
     : null;
 
   return (
     <Container
-      disableGutters
+      disableGutters={isTablet}
       className={styles.catalogContainer}
       sx={{
-        marginTop: isFullHeader ? 0 : '8px',
-        marginLeft: isTabletShortView ? '-120px' : 0,
         flexDirection: isFullHeader ? 'row-reverse' : 'row',
       }}
     >
@@ -80,16 +80,13 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
       </MenuList>
 
       {childrenBox && (
-        <Container
-          disableGutters
+        <Box
           className={styles.childrenCategories}
           sx={{
             boxShadow: BOX_SHADOW,
-            marginLeft: isFullHeader ? '48px' : 0,
           }}
         >
-          <Container
-            disableGutters
+          <Box
             className={styles.childrenList}
             sx={{ columnCount: { md: 2, lg: 3 } }}
           >
@@ -104,8 +101,8 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
                 <Divider />
               </Box>
             ))}
-          </Container>
-        </Container>
+          </Box>
+        </Box>
       )}
     </Container>
   );

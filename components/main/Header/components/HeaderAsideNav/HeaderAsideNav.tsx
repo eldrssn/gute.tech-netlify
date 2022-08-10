@@ -22,10 +22,9 @@ import styles from './headerAsideNav.module.scss';
 const cn = classnames.bind(styles);
 
 const HeaderAsideNav: FC = () => {
-  const { isFullHeader, isMobileView, isFocusSearchField } =
-    useContext(HeaderContext);
+  const { isFullHeader, isFocusSearchField } = useContext(HeaderContext);
   const [isOpenModalAdvice, setIsOpenModalAdvice] = useState(false);
-  const { windowWidth } = useWindowSize();
+  const { windowWidth, isMobile } = useWindowSize();
 
   const { phone } = useSelector(selectShowcaseData);
   const cartTotal = useSelector(selectCartTotal);
@@ -34,7 +33,7 @@ const HeaderAsideNav: FC = () => {
   const amountCartItems = cart.length;
 
   const menuItemStyles = cn(styles.menuItem, {
-    [styles.menuItem_mobile]: isMobileView,
+    [styles.menuItem_mobile]: isMobile,
   });
 
   const windowSize = windowWidth ? windowWidth : 0;
@@ -48,7 +47,7 @@ const HeaderAsideNav: FC = () => {
         isOpen={isOpenModalAdvice}
         setIsOpen={setIsOpenModalAdvice}
       />
-      {(isFullHeader || isMobileView) && !hidePhone && (
+      {(isFullHeader || isMobile) && !hidePhone && (
         <MenuItem disableGutters>
           <i className={styles.icon_phone} />
           <a
@@ -64,7 +63,7 @@ const HeaderAsideNav: FC = () => {
         className={styles.menuItemsBox}
         sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
       >
-        {!isMobileView && (
+        {!isMobile && (
           <Link href={'/cart'} passHref>
             <MenuItem disableGutters>
               <Box className={styles.shoppingCartIcon}>

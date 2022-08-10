@@ -1,11 +1,18 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import Slider from 'react-slick';
 
 import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
+import { CatalogCard } from 'components/main/CatalogCard';
 
-// TODO: CatalogCard должна уехать из components/base в components/main
-import { CatalogCard } from 'components/base/catalog/components/CatalogCard';
+import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectRecommendedProductsList } from 'store/reducers/catalog/selectors';
+import {
+  clearRecommendedProductsList,
+  fetchRecommendedProductsList,
+} from 'store/reducers/catalog/actions';
 
 import styles from './recommendedProducts.module.scss';
 
@@ -13,11 +20,11 @@ const sliderSettings = {
   className: styles.slider,
   dots: false,
   infinite: true,
-  speed: 500,
+  speed: 1000,
   slidesToShow: 4,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 2000,
+  autoplaySpeed: 5000,
   arrows: true,
   pauseOnHover: true,
   focusOnSelect: true,
@@ -50,17 +57,54 @@ const sliderSettings = {
   ],
 };
 
-const RecommendedProducts: FC = () => (
-  <Box>
-    <h2>Вам обязательно понадобятся</h2>
-    <Slider {...sliderSettings}>
-      <CatalogCard title='1' price='10' image='' slug='aa' />
-      <CatalogCard title='2' price='20' image='' slug='bb' />
-      <CatalogCard title='3' price='30' image='' slug='cc' />
-      <CatalogCard title='4' price='40' image='' slug='dd' />
-      <CatalogCard title='5' price='50' image='' slug='ee' />
-    </Slider>
-  </Box>
-);
+const RecommendedProducts: FC = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const transportId = useSelector(selectTransportId);
+  const { categorySlug, productSlug } = router.query;
+
+  useEffect(() => {
+    dispatch(
+      fetchRecommendedProductsList({
+        transportId,
+        categorySlug,
+        productSlug,
+      }),
+    );
+
+    return () => {
+      dispatch(clearRecommendedProductsList());
+    };
+  }, [dispatch, transportId, categorySlug, productSlug]);
+
+  const { data: recommendedProductsResponse } = useSelector(
+    selectRecommendedProductsList,
+  );
+
+  if (!recommendedProductsResponse?.results) {
+    return null;
+  }
+
+  const { results: recommendedProducts } = recommendedProductsResponse;
+
+  return (
+    <Box>
+      <h2>Вам обязательно понадобятся</h2>
+      <Slider {...sliderSettings}>
+        {recommendedProducts.map(({ title, slug, price, image }) => (
+          <CatalogCard
+            key={slug}
+            title={title}
+            price={price}
+            image={image || '/images/no-image.jpeg'}
+            slug={slug}
+            isSlider
+          />
+        ))}
+      </Slider>
+    </Box>
+  );
+};
 
 export { RecommendedProducts };
