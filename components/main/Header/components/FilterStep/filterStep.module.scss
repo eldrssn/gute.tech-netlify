@@ -1,4 +1,5 @@
-@import 'styles/colors.scss';
+@import "styles/colors.scss";
+@import "~styles/constants.scss";
 
 .stepWrap {
   position: relative;
@@ -19,7 +20,7 @@
   transform: translateY(-50%);
   border-radius: 50%;
   background-color: $blue1;
-  z-index: 1302;
+  z-index: $z-index18;
 }
 
 .stepNumber_number {
@@ -53,7 +54,7 @@
 
 .stepField input {
   cursor: pointer;
-  z-index: 1301;
+  z-index: $z-index17;
   border-right: 1px solid $transparentBlue4;
 }
 
@@ -74,7 +75,7 @@
   top: 50%;
   right: 15px;
   margin-top: -2px;
-  content: '';
+  content: "";
 }
 
 .stepper_mobileView {

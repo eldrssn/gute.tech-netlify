@@ -11,6 +11,11 @@
 
 .itemTitle {
   font-weight: normal;
+
+  &:hover {
+    cursor: pointer;
+    color: $blue1;
+  }
 }
 
 .tableRow {

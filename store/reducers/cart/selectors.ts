@@ -35,4 +35,9 @@ const selectCartOrderTotal = createSelector(selectAppStore, ({ cartItems }) =>
   }, 0),
 );
 
-export { selectCart, selectCartOrderTotal, selectCartTotal };
+const selectCartLoading = createSelector(
+  selectAppStore,
+  ({ cartItems }) => cartItems.isLoading,
+);
+
+export { selectCart, selectCartOrderTotal, selectCartLoading, selectCartTotal };

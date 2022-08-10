@@ -1,5 +1,6 @@
-@import '~styles/breakpoints.scss';
-@import '~styles/colors.scss';
+@import "~styles/breakpoints.scss";
+@import "~styles/colors.scss";
+@import "~styles/constants.scss";
 
 .mainContainer {
   display: flex;
@@ -35,7 +36,7 @@
   top: 60px;
 
   left: 0;
-  z-index: 1000;
+  z-index: $z-index8;
 }
 
 @media (max-width: $mobile) {

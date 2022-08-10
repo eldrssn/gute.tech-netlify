@@ -14,7 +14,7 @@ import {
   setTransportId,
 } from 'store/reducers/transport/actions';
 import { fetchAccessToken } from 'store/reducers/authentication/actions';
-import { selectCart } from 'store/reducers/cart/selectors';
+import { selectCart, selectCartLoading } from 'store/reducers/cart/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { useRouterQuery } from 'hooks/useRouterQuery';
@@ -38,6 +38,7 @@ const InitialLoader: React.FC = ({ children }) => {
   const isLoadingApp = windowWidth;
   const transportIdQuery = getQueryOption(QueryUrl.TRANSPORT_ID);
 
+  const cartLoading = useSelector(selectCartLoading);
   const cart = useSelector(selectCart);
   const transportId = useSelector(selectTransportId);
   const isAuthorized = useSelector(selectIsAuthorized);
@@ -97,6 +98,10 @@ const InitialLoader: React.FC = ({ children }) => {
   useEffect(() => {
     const date = new Date();
     date.setTime(date.getTime() + COOKIE_TTL);
+
+    if (cartLoading) {
+      return;
+    }
 
     setCookieCartItems(CookieKey.CART_ITEMS, getSlugsCartItemsFromCart(cart), {
       path: '/',

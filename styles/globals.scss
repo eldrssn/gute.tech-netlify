@@ -1,19 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap");
 
-@import './product-image-gallety.module.scss';
-@import '~styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "./product-image-gallety.module.scss";
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
+@import "~styles/constants.scss";
 
 @font-face {
-  font-family: 'fontawesome';
-  src: url('../assets/fonts/fontawesome-webfont.woff2');
+  font-family: "fontawesome";
+  src: url("../assets/fonts/fontawesome-webfont.woff2");
   font-weight: normal;
   font-display: block;
 }
 
 @font-face {
-  font-family: 'icons';
-  src: url('../assets/fonts/icons.ttf') format('truetype');
+  font-family: "icons";
+  src: url("../assets/fonts/icons.ttf") format("truetype");
   font-weight: normal;
   font-display: block;
 }
@@ -22,8 +23,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
 }
 
 a {
@@ -46,7 +47,7 @@ a {
 }
 
 .MuiStepButton-root.Mui-disabled {
-  z-index: 1;
+  z-index: $z-index2;
   color: $transparentBlue4;
 }
 

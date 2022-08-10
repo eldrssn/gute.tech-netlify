@@ -1,5 +1,6 @@
-@import '~styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
+@import "~styles/constants.scss";
 
 .dateRangeButton {
   display: flex;
@@ -55,7 +56,7 @@
   box-shadow: 4px 4px 8px -3px rgba(34, 60, 80, 0.2);
   visibility: hidden;
   opacity: 0;
-  z-index: 1202;
+  z-index: $z-index15;
   border: 1px solid $gray4;
 }
 
@@ -70,7 +71,7 @@
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 1201;
+  z-index: $z-index14;
   width: 100%;
   height: 100%;
 }

@@ -1,5 +1,6 @@
-@import 'styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "styles/colors.scss";
+@import "~styles/breakpoints.scss";
+@import "~styles/constants.scss";
 
 .searchMenuItem {
   flex: 1 auto;
@@ -25,7 +26,7 @@
 
 .searchBox {
   position: relative;
-  z-index: 1201;
+  z-index: $z-index14;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -74,7 +75,7 @@
   transition: 0.1s;
   background-color: $white;
   width: 80vh;
-  z-index: 1305;
+  z-index: $z-index21;
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -196,12 +197,12 @@
   }
 
   .searchBox {
-    z-index: 0;
+    z-index: $z-index1;
   }
 
   .popupBox {
     top: 36px;
-    z-index: 99;
+    z-index: $z-index6;
   }
 
   .searchMenuItem {

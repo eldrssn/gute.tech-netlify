@@ -27,7 +27,7 @@ const ProfileOrderPage: FC = () => {
   }, [isAuthorized, router, loadingAuthorized]);
 
   return (
-    <Container className={styles.mainContainer}>
+    <Container className={styles.mainContainer} disableGutters>
       <Box>
         <h1>Информация о заказе</h1>
       </Box>

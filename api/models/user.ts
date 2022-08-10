@@ -72,6 +72,11 @@ type OrderRequestData = {
   orderId: string;
 };
 
+type productData = {
+  slug: string;
+  categories: string[];
+};
+
 type Product = {
   id: number;
   title: string;
@@ -79,6 +84,7 @@ type Product = {
   price: number;
   quantity: number;
   is_service: boolean;
+  product: productData;
 };
 
 enum Payment {
@@ -115,6 +121,7 @@ type ChangePasswordResponseDataError = { errors: ChangePasswordErrors };
 export { Payment };
 
 export type {
+  productData,
   ChangePasswordRequestData,
   ChangePasswordResponseData,
   ChangePasswordErrors,
