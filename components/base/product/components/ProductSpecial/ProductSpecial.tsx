@@ -50,7 +50,12 @@ const ProductSpecial: FC = () => {
         </Link>
       </Box>
 
-      <ModalAdvice isOpen={isModalAdviceOpen} setIsOpen={setModalAdviceOpen} />
+      {isModalAdviceOpen && (
+        <ModalAdvice
+          isOpen={isModalAdviceOpen}
+          setIsOpen={setModalAdviceOpen}
+        />
+      )}
     </>
   );
 };

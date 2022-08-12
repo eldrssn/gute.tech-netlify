@@ -102,18 +102,22 @@ const UserForm = () => {
 
   return (
     <>
-      <ModalEditUserEmail
-        isOpen={isOpenModalEmail}
-        setIsOpen={setIsOpenModalEmail}
-        setValue={setValue}
-        getValues={getValues}
-      />
+      {isOpenModalEmail && (
+        <ModalEditUserEmail
+          isOpen={isOpenModalEmail}
+          setIsOpen={setIsOpenModalEmail}
+          setValue={setValue}
+          getValues={getValues}
+        />
+      )}
 
       <form onSubmit={onSumbit} className={styles.formContainer}>
-        <ModalSaveChanges
-          isOpen={isOpenModalSave}
-          setIsOpen={setIsOpenModalSave}
-        />
+        {isOpenModalSave && (
+          <ModalSaveChanges
+            isOpen={isOpenModalSave}
+            setIsOpen={setIsOpenModalSave}
+          />
+        )}
 
         <AccountFields
           register={register}

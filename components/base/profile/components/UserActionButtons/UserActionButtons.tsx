@@ -10,13 +10,15 @@ const UserActionButtons = () => {
 
   const handleOpenModalChangePassword = () =>
     setIsOpenModalChangePassword(true);
-  
+
   return (
     <>
-      <ModalChangePassword
-        isOpen={isOpenModalChangePassword}
-        setIsOpen={setIsOpenModalChangePassword}
-      />
+      {isOpenModalChangePassword && (
+        <ModalChangePassword
+          isOpen={isOpenModalChangePassword}
+          setIsOpen={setIsOpenModalChangePassword}
+        />
+      )}
       <Box className={styles.container}>
         <Box
           className={styles.actionButton}

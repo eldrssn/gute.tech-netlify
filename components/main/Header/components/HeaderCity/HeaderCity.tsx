@@ -35,7 +35,9 @@ const HeaderCity: FC = () => {
 
   return (
     <Container className={styles.cityWrapper} disableGutters>
-      <ModalCity isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
+      {isOpenModal && (
+        <ModalCity isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
+      )}
       <Box component='div' onClick={() => setIsOpenModal(true)}>
         <Typography className={styles.cityName}>
           {selectedCity.length

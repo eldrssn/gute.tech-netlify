@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 
 import Box from '@mui/material/Box';
@@ -18,6 +18,7 @@ const Ranger: React.FC<Filter> = ({
   handleAnchorClick,
 }) => {
   const routerQuery = useRouterQuery();
+  const [isCorrectValue, setIsCorrectValue] = useState(true);
 
   const { title, slug, min, max } = filter;
 
@@ -37,7 +38,22 @@ const Ranger: React.FC<Filter> = ({
   const minValue = getQueryParams(routerQuery, minValueQuery);
   const maxValue = getQueryParams(routerQuery, maxValueQuery);
 
+  const validateValues = useCallback(() => {
+    const isValid = Number(minValue || min) <= Number(maxValue || max);
+    setIsCorrectValue(isValid);
+  }, [minValue, maxValue, min, max]);
+
   useEffect(() => {
+    validateValues();
+
+    if (!isCorrectValue) {
+      setFilterRequest((filterRequest) => ({
+        ...filterRequest,
+        [slug]: [],
+      }));
+      return;
+    }
+
     if (minValue || maxValue) {
       setFilterRequest((filterRequest) => ({
         ...filterRequest,
@@ -46,14 +62,17 @@ const Ranger: React.FC<Filter> = ({
           Number(maxValue || max || '99999999'),
         ],
       }));
-      return;
     }
-
-    setFilterRequest((filterRequest) => ({
-      ...filterRequest,
-      [slug]: [],
-    }));
-  }, [slug, minValue, maxValue, setFilterRequest, min, max]);
+  }, [
+    slug,
+    minValue,
+    maxValue,
+    setFilterRequest,
+    min,
+    max,
+    isCorrectValue,
+    validateValues,
+  ]);
 
   const checkValue = (max?: null | string) => (max ? max : undefined);
 
@@ -62,46 +81,53 @@ const Ranger: React.FC<Filter> = ({
       <FormLabel id={slug} className={styles.title}>
         {title}
       </FormLabel>
-
       <Box
         className={styles.price_range_wrapper}
         component='div'
         onClick={handleAnchorClick}
       >
-        <TextField
-          onChange={setMinValue}
-          type='number'
-          variant='outlined'
-          defaultValue={minValue || checkValue(min)}
-          placeholder='От'
-          sx={{
-            flexGrow: 1,
-            '& input': {
-              height: '20px',
-              width: '100%',
-              padding: '5px 12px',
+        <Box className={styles.price_ranges}>
+          <TextField
+            onChange={setMinValue}
+            type='number'
+            variant='outlined'
+            defaultValue={minValue || checkValue(min)}
+            placeholder='От'
+            sx={{
               flexGrow: 1,
-            },
-          }}
-        />
+              '& input': {
+                height: '20px',
+                width: '100%',
+                padding: '5px 12px',
+                border: isCorrectValue ? 'inherit' : '1px solid red',
+                flexGrow: 1,
+              },
+            }}
+          />
 
-        <span className={styles.range_separator} />
+          <span className={styles.range_separator} />
 
-        <TextField
-          onChange={setMaxValue}
-          type='number'
-          variant='outlined'
-          placeholder='До'
-          defaultValue={maxValue || checkValue(max)}
-          sx={{
-            flexGrow: 1,
-            '& input': {
-              height: '20px',
-              width: '100%',
-              padding: '5px 12px',
-            },
-          }}
-        />
+          <TextField
+            onChange={setMaxValue}
+            type='number'
+            variant='outlined'
+            placeholder='До'
+            defaultValue={maxValue || checkValue(max)}
+            sx={{
+              flexGrow: 1,
+              '& input': {
+                height: '20px',
+                width: '100%',
+                padding: '5px 12px',
+                border: isCorrectValue ? 'inherit' : '1px solid red',
+              },
+            }}
+          />
+        </Box>
+
+        {!isCorrectValue && (
+          <span className={styles.warningMessage}>Неверный диапазон</span>
+        )}
       </Box>
     </>
   );

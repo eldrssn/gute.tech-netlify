@@ -43,10 +43,12 @@ const HeaderAsideNav: FC = () => {
 
   return (
     <>
-      <ModalAdvice
-        isOpen={isOpenModalAdvice}
-        setIsOpen={setIsOpenModalAdvice}
-      />
+      {isOpenModalAdvice && (
+        <ModalAdvice
+          isOpen={isOpenModalAdvice}
+          setIsOpen={setIsOpenModalAdvice}
+        />
+      )}
       {(isFullHeader || isMobile) && !hidePhone && (
         <MenuItem disableGutters>
           <i className={styles.icon_phone} />
