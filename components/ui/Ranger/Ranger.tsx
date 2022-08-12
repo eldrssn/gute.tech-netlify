@@ -10,6 +10,7 @@ import { getQueryParams, setQueryParam } from 'hooks/useRouterQuery/helpers';
 import { DELAY } from 'constants/variables';
 import { Filter } from 'types';
 
+import { checkValueExists, checkValuesCorrect } from './helpers';
 import styles from './ranger.module.scss';
 
 const Ranger: React.FC<Filter> = ({
@@ -39,7 +40,11 @@ const Ranger: React.FC<Filter> = ({
   const maxValue = getQueryParams(routerQuery, maxValueQuery);
 
   const validateValues = useCallback(() => {
-    const isValid = Number(minValue || min) <= Number(maxValue || max);
+    const isValid = checkValuesCorrect({
+      min: minValue || min,
+      max: maxValue || max,
+    });
+
     setIsCorrectValue(isValid);
   }, [minValue, maxValue, min, max]);
 
@@ -74,8 +79,6 @@ const Ranger: React.FC<Filter> = ({
     validateValues,
   ]);
 
-  const checkValue = (max?: null | string) => (max ? max : undefined);
-
   return (
     <>
       <FormLabel id={slug} className={styles.title}>
@@ -91,7 +94,7 @@ const Ranger: React.FC<Filter> = ({
             onChange={setMinValue}
             type='number'
             variant='outlined'
-            defaultValue={minValue || checkValue(min)}
+            defaultValue={minValue || checkValueExists(min)}
             placeholder='От'
             sx={{
               flexGrow: 1,
@@ -112,7 +115,7 @@ const Ranger: React.FC<Filter> = ({
             type='number'
             variant='outlined'
             placeholder='До'
-            defaultValue={maxValue || checkValue(max)}
+            defaultValue={maxValue || checkValueExists(max)}
             sx={{
               flexGrow: 1,
               '& input': {

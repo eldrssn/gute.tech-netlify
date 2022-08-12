@@ -9,10 +9,21 @@ import { TOuterProps } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import styles from './modalSaveChanges.module.scss';
+import styles from './modalCancelChanges.module.scss';
 
-const ModalSaveChanges: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
-  const closeModal = () => setIsOpen(false);
+const ModalCancelChanges: React.FC<TOuterProps> = ({
+  isOpen,
+  setIsOpen,
+  resetForm,
+}) => {
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const resetFormHandler = () => {
+    resetForm();
+    closeModal();
+  };
 
   return (
     <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -20,14 +31,14 @@ const ModalSaveChanges: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
         <Box className={styles.closeModal} onClick={closeModal}>
           <FontAwesomeIcon icon={faTimes} />
         </Box>
-        <Typography className={styles.title}>Сохранить изменения?</Typography>
+        <Typography className={styles.title}>Отменить изменения?</Typography>
 
         <Box className={styles.buttonsContainer}>
-          <CustomButton customStyles={styles.button} type='submit'>
-            Сохранить
+          <CustomButton customStyles={styles.button} onClick={resetFormHandler}>
+            Да
           </CustomButton>
           <CustomButton customStyles={styles.button} onClick={closeModal}>
-            Отмена
+            Нет
           </CustomButton>
         </Box>
       </Container>
@@ -35,4 +46,4 @@ const ModalSaveChanges: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   );
 };
 
-export { ModalSaveChanges };
+export { ModalCancelChanges };

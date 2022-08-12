@@ -3,7 +3,7 @@ import { Box, FormLabel, MenuItem, TextField } from '@mui/material';
 
 import { FormTextfield } from 'components/ui/FormTextfield';
 
-import Datepicker from './Datepicker';
+import { Datepicker } from './Datepicker';
 import { inputFullNameRule, selectSex, ProfileFields } from '../constants';
 import { correctRegister } from '../helpers';
 import { AccountFieldsProps, TFormDataFields } from '../types';

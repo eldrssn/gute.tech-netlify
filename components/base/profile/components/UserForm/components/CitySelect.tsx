@@ -1,14 +1,15 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Autocomplete, TextField } from '@mui/material';
 
+import { CityRequestData } from 'api/models/user';
 import { selectRegions } from 'store/reducers/regions/selectors';
 
-import styles from '../userForm.module.scss';
-import { CitySelectProps } from '../types';
 import { ProfileFields } from '../constants';
-import { CityRequestData } from 'api/models/user';
 import { getCityOption, getCityOptions, getCityTitle } from '../helpers';
+import { CitySelectProps } from '../types';
+
+import styles from '../userForm.module.scss';
 
 const CitySelect: FC<CitySelectProps> = ({
   getValues,
@@ -20,13 +21,15 @@ const CitySelect: FC<CitySelectProps> = ({
   const defaultCity = getValues(ProfileFields.CITY) || '';
 
   const cityOptions = getCityOptions(regions);
-  const cityOption = getCityOption(defaultCity);
   const cityTitle = getCityTitle(defaultCity);
 
-  const [selectValue, setSelectValue] = useState<CityRequestData | null>(
-    cityOption,
-  );
+  const [selectValue, setSelectValue] = useState<CityRequestData | null>(null);
   const [inputValue, setInputValue] = useState<string>(cityTitle);
+
+  useEffect(() => {
+    const cityOption = getCityOption(defaultCity, cityOptions);
+    setSelectValue(cityOption);
+  }, [defaultCity, cityOptions]);
 
   const handleSelectChange = (
     event: unknown,

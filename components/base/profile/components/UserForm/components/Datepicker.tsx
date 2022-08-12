@@ -107,4 +107,4 @@ const Datepicker: FC<DatepickerProps> = ({
   );
 };
 
-export default Datepicker;
+export { Datepicker };
