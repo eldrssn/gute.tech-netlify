@@ -7,7 +7,7 @@ import { fetchOrder } from 'store/reducers/user/actions';
 import { selectUserOrder } from 'store/reducers/user/selectors';
 import { Loader } from 'components/ui/Loader';
 import { paymentType, PAID_CONFIRM, PAID_DISPROVE } from './constants';
-import { getFullDate } from 'utility/helpers';
+import { formatDate } from 'utility/helpers';
 
 import { OrderError } from '../OrderError';
 import { ProductTable } from '../ProductTable';
@@ -35,7 +35,7 @@ const OrderMain: FC = () => {
     return <OrderError />;
   }
 
-  const dateOrder = getFullDate(new Date(data.created_at));
+  const dateOrder = formatDate(new Date(data.created_at));
 
   return (
     <Box className={styles.mainContent}>

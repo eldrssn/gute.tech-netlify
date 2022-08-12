@@ -233,7 +233,20 @@ const getFullDate = (date: Date) => {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
-  return `${year}-${month}-${day}`;
+  return `${year}-${month}-${day}${year}`;
+};
+
+const cutDate = (date: Date) => {
+  return date.toISOString().substring(0, 10);
+};
+
+const formatStringifiedDate = (date: string) =>
+  date.split('-').reverse().join('.');
+
+const formatDate = (date: Date) => {
+  const cuttedDate = cutDate(date);
+  const formattedDate = formatStringifiedDate(cuttedDate);
+  return formattedDate;
 };
 
 const getStockBalance = (item: CartItemData) =>
@@ -272,4 +285,5 @@ export {
   getCookie,
   setCookie,
   deleteCookie,
+  formatDate,
 };

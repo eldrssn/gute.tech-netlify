@@ -6,13 +6,13 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import { getLinkToOrderPage } from '../../helpers';
-import { getFullDate } from 'utility/helpers';
+import { formatDate } from 'utility/helpers';
 
 import { Props } from './types';
 import styles from './styles.module.scss';
 
 const OrderCard: FC<Props> = ({ order }) => {
-  const fullDate = getFullDate(new Date(order.created_at));
+  const fullDate = formatDate(new Date(order.created_at));
 
   const linkToOrderPage = getLinkToOrderPage(order);
 

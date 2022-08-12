@@ -71,7 +71,12 @@ const TableOrder: React.FC<TTableOrderProps> = ({ cart, orderTotal }) => {
 
   return (
     <>
-      <ModalAdvice isOpen={isModalAdviceOpen} setIsOpen={setModalAdviceOpen} />
+      {isModalAdviceOpen && (
+        <ModalAdvice
+          isOpen={isModalAdviceOpen}
+          setIsOpen={setModalAdviceOpen}
+        />
+      )}
       <Table className={styles.table} aria-label='simple table'>
         {isMobile ? null : (
           <TableHead className={styles.tableHead}>
