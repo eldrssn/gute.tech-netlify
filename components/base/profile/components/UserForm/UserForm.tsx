@@ -23,12 +23,14 @@ import { PersonalFields } from './components/PersonalFields';
 import { filterDirtyFields, setCustomErrors } from './helpers';
 import { TFormDataFields } from './types';
 import styles from './userForm.module.scss';
+import { ModalCancelChanges } from 'components/main/ModalCancelChanges';
 
 const UserForm = () => {
   const dispatch = useDispatch();
 
   const [isFormChanging, setFormChanging] = useState(false);
   const [isOpenModalSave, setIsOpenModalSave] = useState(false);
+  const [isOpenModalCancel, setIsOpenModalCancel] = useState(false);
   const [isOpenModalEmail, setIsOpenModalEmail] = useState(false);
 
   const { data: userProfile } = useSelector(selectUserProfile);
@@ -43,6 +45,7 @@ const UserForm = () => {
     trigger,
     getValues,
     setError,
+    reset,
     formState: { errors, dirtyFields },
   } = useForm<ProfileResponseData>({
     mode: 'onTouched',
@@ -85,6 +88,10 @@ const UserForm = () => {
     }
   };
 
+  const openModalCancel = () => {
+    setIsOpenModalCancel(true);
+  };
+
   const onChangeForm = async () => {
     await trigger();
     setFormChanging(true);
@@ -100,6 +107,11 @@ const UserForm = () => {
 
   const handleOpenModalEmail = () => setIsOpenModalEmail(true);
 
+  const resetForm = () => {
+    reset();
+    setFormChanging(false);
+  };
+
   return (
     <>
       {isOpenModalEmail && (
@@ -108,6 +120,14 @@ const UserForm = () => {
           setIsOpen={setIsOpenModalEmail}
           setValue={setValue}
           getValues={getValues}
+        />
+      )}
+
+      {isOpenModalCancel && (
+        <ModalCancelChanges
+          isOpen={isOpenModalCancel}
+          setIsOpen={setIsOpenModalCancel}
+          resetForm={resetForm}
         />
       )}
 
@@ -144,7 +164,10 @@ const UserForm = () => {
             <CustomButton customStyles={styles.button} onClick={openModalSave}>
               Сохранить
             </CustomButton>
-            <CustomButton customStyles={styles.button} onClick={openModalSave}>
+            <CustomButton
+              customStyles={styles.button}
+              onClick={openModalCancel}
+            >
               Отмена
             </CustomButton>
           </Box>

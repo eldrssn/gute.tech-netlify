@@ -24,6 +24,9 @@ const correctRegister = (
   return correctedRegister.join(' ');
 };
 
+const formatStringifiedDate = (date: string) =>
+  date.split('/').reverse().join('-');
+
 const getDate = (stringifiedDate: string | null | CityRequestData) => {
   if (typeof stringifiedDate === 'string') {
     return stringifiedDate ? new Date(stringifiedDate) : null;
@@ -31,9 +34,6 @@ const getDate = (stringifiedDate: string | null | CityRequestData) => {
 
   return null;
 };
-
-const formatStringifiedDate = (date: string) =>
-  date.split('/').reverse().join('-');
 
 const formatDate = (date: string | null) => {
   if (!date) {
@@ -148,10 +148,20 @@ const getCityOptions = (regions: RegionData[]) =>
 const getCityTitle = (defaultCity: string | CityRequestData) =>
   typeof defaultCity === 'string' ? defaultCity : defaultCity.title;
 
-const getCityOption = (defaultCity: string | CityRequestData) =>
-  typeof defaultCity === 'string'
-    ? { title: defaultCity, slug: defaultCity }
-    : defaultCity;
+const findCityOption = (defaultCity: string, cityOptions: CityRequestData[]) =>
+  cityOptions.find((option) => option.slug === defaultCity);
+
+const getCityOption = (
+  defaultCity: string | CityRequestData,
+  cityOptions: CityRequestData[],
+) => {
+  if (typeof defaultCity === 'string') {
+    const cityOption = findCityOption(defaultCity, cityOptions);
+    return cityOption || { title: defaultCity, slug: defaultCity };
+  }
+
+  return defaultCity;
+};
 
 export {
   correctRegister,

@@ -1,11 +1,8 @@
-type CitieData = {
-  title: string;
-  slug: string;
-};
+import { CityRequestData } from './user';
 
 type RegionData = {
   title: string;
-  cities: CitieData[];
+  cities: CityRequestData[];
 };
 
 type BranchOfficeData = {

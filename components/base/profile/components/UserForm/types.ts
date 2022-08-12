@@ -22,7 +22,6 @@ type TDirtyFields = {
 
 type TFormDataFields = keyof ProfileResponseData;
 
-// !TODO: убрать мессадж
 type TErrors = {
   last_name?: FieldError | undefined;
   first_name?: FieldError | undefined;
