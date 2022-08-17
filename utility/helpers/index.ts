@@ -2,7 +2,7 @@ import { GroupedItemsItem, ItemKeys } from 'components/base/home';
 import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
 import { TOKEN_CACHE_TTL, TOKEN_CACHE_TTL_DELETE } from 'constants/variables';
-import { RegionData } from 'store/reducers/regions/types';
+import { BranchesData } from 'store/reducers/regions/types';
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { CartItemData } from 'store/reducers/cart/types';
 import { CookieSameSite } from 'constants/types';
@@ -73,30 +73,17 @@ const getInputRules = (patternCategory?: EValidatePattern) => {
 };
 
 const filterRegionsOption = (
-  RegionOption: RegionData[],
+  BranchesOption: BranchesData[],
   desiredСity: string,
 ) => {
-  const searchedRegionOptions = RegionOption.filter((region) =>
-    region.cities.some(({ title }) => {
-      const lowerCaseTitle = title?.toLocaleLowerCase();
-      const lowerCaseDesiredCity = desiredСity?.toLocaleLowerCase();
+  const searcheBranchesOptions = BranchesOption.filter((branch) => {
+    const lowerCaseTitle = branch.title?.toLocaleLowerCase();
+    const lowerCaseDesiredCity = desiredСity?.toLocaleLowerCase();
 
-      return lowerCaseTitle.indexOf(lowerCaseDesiredCity || '') >= 0;
-    }),
-  );
-
-  const searchedCityOption = searchedRegionOptions.map((region) => {
-    const filteredCity = region.cities.filter(({ title }) => {
-      const lowerCaseTitle = title?.toLocaleLowerCase();
-      const lowerCaseDesiredCity = desiredСity?.toLocaleLowerCase();
-
-      return lowerCaseTitle.indexOf(lowerCaseDesiredCity || '') >= 0;
-    });
-
-    return { ...region, cities: filteredCity };
+    return lowerCaseTitle.indexOf(lowerCaseDesiredCity || '') >= 0;
   });
 
-  return searchedCityOption;
+  return searcheBranchesOptions;
 };
 
 const cookieStorage = {

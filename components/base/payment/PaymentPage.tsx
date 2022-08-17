@@ -18,6 +18,10 @@ import {
   selectOrderLoading,
   selectOrderItemsSlugs,
 } from 'store/reducers/order/selectors';
+import {
+  selectSelectedCitySlug,
+  selectBranches,
+} from 'store/reducers/regions/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectUserProfile } from 'store/reducers/user/selectors';
 import {
@@ -33,14 +37,21 @@ import {
   getOrderList,
   setPaymentFormErrors,
   getDefaultValues,
+  getBranch,
 } from './helpers';
 import styles from './styles.module.scss';
 
 const PaymentPage: React.FC = () => {
   const [otherError, setOtherError] = useState<string[]>([]);
+
   const userProfile = useSelector(selectUserProfile);
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const { data: branches } = useSelector(selectBranches);
+
+  const selectBranch = getBranch(branches, selectedCitySlug);
+
   const { handleSubmit, control, setValue, setError } = useForm<TFormData>({
-    defaultValues: getDefaultValues(userProfile.data),
+    defaultValues: getDefaultValues(userProfile.data, selectBranch),
   });
 
   const router = useRouter();
@@ -53,6 +64,7 @@ const PaymentPage: React.FC = () => {
   const orderItemsSlugs = useSelector(selectOrderItemsSlugs);
 
   const paymentUrl = createOrderStatus.data?.payment_url;
+  const createOrderLoading = createOrderStatus.loadingCreateOrdering;
   const isCreateOrdering = createOrderStatus.isCreateOrdering;
   const errors = createOrderStatus.errorCreateOrdering?.errors;
   const isOrderList = order.length > 0;
@@ -71,6 +83,10 @@ const PaymentPage: React.FC = () => {
     setOtherError([]);
     dispatch(clearItemsSlugs());
     dispatch(removeItemBySlug(orderItemsSlugs));
+
+    if (createOrderLoading) {
+      return;
+    }
 
     if (isAuthorized) {
       dispatch(createOrderingAuthorized(postData));

@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from 'react';
 import { Grid } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { Description } from './components/Description';
@@ -15,7 +15,6 @@ import { Items } from './components/rows/types';
 import { QueryUrl } from 'constants/variables';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { addItemToLocaleStorage, groupItems } from 'utility/helpers';
-import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
 import {
   selectCategoriesSearchRead,
   selectCategoriesTreeList,
@@ -34,7 +33,6 @@ const rowHashMap: Record<Index, FC<Items>> = {
 };
 
 const Home: FC = () => {
-  const dispatch = useDispatch();
   const { getQueryOption } = useRouterQuery();
 
   const { transportId } = useSelector(selectTransportStore);
@@ -45,12 +43,6 @@ const Home: FC = () => {
 
   const { isLoading, data: categories } = useSelector(currentSelector);
   const categoryQuery = getQueryOption(QueryUrl.CATEGORY_QUERY);
-
-  useEffect(() => {
-    if (transportId) {
-      dispatch(fetchTransportReadCategories({ transportId }));
-    }
-  }, [transportId, dispatch]);
 
   useEffect(() => {
     categoryQuery

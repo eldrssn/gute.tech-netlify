@@ -4,7 +4,7 @@ import { RegionData, BranchesData } from 'api/models/regions';
 enum RegionsStoreBlocks {
   REGIONS = 'regions',
   BRANCHES = 'branches',
-  SELECTED_CITY = 'selectedCity',
+  SELECTED_CITY_SLUG = 'selectedCitySlug',
 }
 
 type BranchesState = {
@@ -15,12 +15,12 @@ type RegionsState = {
   data: RegionData[];
 } & StoreState;
 
-type SelectedCity = string;
+type SelectedCitySlug = string;
 
 type RegionsStore = {
   [RegionsStoreBlocks.REGIONS]: RegionsState;
   [RegionsStoreBlocks.BRANCHES]: BranchesState;
-  [RegionsStoreBlocks.SELECTED_CITY]: SelectedCity;
+  [RegionsStoreBlocks.SELECTED_CITY_SLUG]: SelectedCitySlug;
 };
 
 export type {
@@ -28,6 +28,6 @@ export type {
   StoreError,
   RegionsStore,
   RegionData,
-  SelectedCity,
+  SelectedCitySlug,
   BranchesData,
 };

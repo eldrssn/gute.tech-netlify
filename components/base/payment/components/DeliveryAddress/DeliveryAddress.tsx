@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { TextField, Autocomplete, Box, Typography } from '@mui/material';
 import { Controller } from 'react-hook-form';
 
-import { fetchBranches } from 'store/reducers/regions/actions';
-import { selectBranches } from 'store/reducers/regions/selectors';
+import {
+  selectBranches,
+  selectSelectedCitySlug,
+} from 'store/reducers/regions/selectors';
 import { BranchesData, BranchOfficeData } from 'api/models/regions';
 import { getInputRules } from 'utility/helpers';
 
+import { getBranchOffice } from '../../helpers';
 import { TDeliveryAddressProps } from '../../types';
 import styles from './DeliveryAddress.module.scss';
 
@@ -15,18 +18,21 @@ const DeliveryAddress: React.FC<TDeliveryAddressProps> = ({
   control,
   setValue,
 }) => {
-  const dispatch = useDispatch();
   const [selectCitySlug, setSelectCitySlug] = useState<string | undefined>();
 
   const { data: branchesCity } = useSelector(selectBranches);
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
 
-  const branches =
-    branchesCity.find((branch) => branch.slug === selectCitySlug)?.branches ||
-    [];
+  const branchOffices = getBranchOffice(branchesCity, selectCitySlug);
 
   useEffect(() => {
-    dispatch(fetchBranches());
-  }, [dispatch]);
+    if (selectedCitySlug.length === 0) {
+      return;
+    }
+
+    setSelectCitySlug(selectedCitySlug);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -71,8 +77,8 @@ const DeliveryAddress: React.FC<TDeliveryAddressProps> = ({
           render={({ field, fieldState }) => (
             <Autocomplete
               {...field}
-              disabled={Boolean(!branches.length)}
-              options={branches}
+              disabled={branchOffices.length === 0}
+              options={branchOffices}
               noOptionsText='Нет совпадений'
               getOptionLabel={(option: BranchOfficeData) => option.street}
               onChange={(_, data) => field.onChange(data)}
@@ -82,7 +88,7 @@ const DeliveryAddress: React.FC<TDeliveryAddressProps> = ({
                   className={styles.input}
                   label='Выберите филиал'
                   variant='outlined'
-                  error={Boolean(fieldState.error) && Boolean(branches.length)}
+                  error={Boolean(fieldState.error) && branchOffices.length > 0}
                   helperText={fieldState.error?.message}
                 />
               )}

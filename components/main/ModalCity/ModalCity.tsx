@@ -17,11 +17,9 @@ import { TailSpin } from 'react-loader-spinner';
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { FormInput } from 'components/main/FormInput';
 import { filterRegionsOption } from 'utility/helpers';
-import { selectRegions } from 'store/reducers/regions/selectors';
-import { selectRegion } from 'store/reducers/regions/actions';
+import { selectBranches } from 'store/reducers/regions/selectors';
+import { setCitySlug } from 'store/reducers/regions/actions';
 import colors from 'styles/_export.module.scss';
-import { cookieStorage } from 'utility/helpers';
-import { CookieKey } from 'constants/types';
 
 import { TFormData, OuterProps } from './types';
 import styles from './styles.module.scss';
@@ -39,7 +37,7 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
       required: 'Обязательное поле',
     },
   });
-  const { data, isLoading } = useSelector(selectRegions);
+  const { data, isLoading } = useSelector(selectBranches);
 
   const searchedRegionsOption = filterRegionsOption(data, desiredСity);
 
@@ -52,9 +50,8 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
     reset({ cityName: '' });
   };
 
-  const selectCity = (title: string) => {
-    dispatch(selectRegion(title));
-    cookieStorage.setItem(CookieKey.SELECTEDCITY, title);
+  const selectCity = (slug: string) => {
+    dispatch(setCitySlug(slug));
     reset({ cityName: '' });
   };
 
@@ -98,28 +95,21 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
               <TailSpin height={60} width={60} color={loaderColor} />
             ) : (
               searchedRegionsOption.map((region) => (
-                <Box
+                <List
                   component='div'
                   className={styles.region}
                   key={region.title}
                 >
-                  <Typography className={styles.regionTitle}>
+                  <ListItemButton
+                    className={styles.regionTitle}
+                    onClick={() => {
+                      selectCity(region.slug);
+                      closeModal();
+                    }}
+                  >
                     {region.title}
-                  </Typography>
-                  <List>
-                    {region.cities.map((city) => (
-                      <ListItemButton
-                        key={city.slug}
-                        onClick={() => {
-                          selectCity(city.title);
-                          closeModal();
-                        }}
-                      >
-                        {city.title}
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </Box>
+                  </ListItemButton>
+                </List>
               ))
             )}
           </Box>

@@ -50,7 +50,7 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
   return (
     <>
       <TableBody className={styles.tableBody}>
-        {cart.length ? (
+        {cart.length > 0 ? (
           cart.map((item) => {
             const stockBalance = getStockBalance(item);
             const itemPrice = formatPrice(item.price);

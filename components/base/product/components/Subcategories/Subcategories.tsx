@@ -40,7 +40,7 @@ const Subcategories = () => {
         <Loader />
       ) : (
         <>
-          {subcategories.length ? (
+          {subcategories.length > 0 ? (
             subcategories.map(({ title, slug: subcategorySlug }) => {
               const linkToCatalog = getLinkToCatalog({
                 categorySlug,

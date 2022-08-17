@@ -1,13 +1,13 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchRegions, selectRegion, fetchBranches } from './actions';
+import { fetchRegions, setCitySlug, fetchBranches } from './actions';
 import { initialState } from './constants';
 
 import {
   RegionsStore,
   ErrorAction,
   RegionData,
-  SelectedCity,
+  SelectedCitySlug,
   BranchesData,
 } from './types';
 
@@ -52,11 +52,11 @@ const handlers = {
     state.branches.error = errorData;
   },
 
-  [selectRegion.type]: (
+  [setCitySlug.type]: (
     state: RegionsStore,
-    { payload }: PayloadAction<SelectedCity>,
+    { payload }: PayloadAction<SelectedCitySlug>,
   ) => {
-    state.selectedCity = payload;
+    state.selectedCitySlug = payload;
   },
 };
 
