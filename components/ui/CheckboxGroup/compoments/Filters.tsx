@@ -19,7 +19,7 @@ const Filters: FC<FiltersProps> = ({
     ? filterFilters(searchValue, filters)
     : filters;
 
-  if (!filtredFilters?.length) {
+  if (filtredFilters?.length === 0) {
     return <p className={styles.noFoundLabel}>Ничего не найдено</p>;
   }
   return (

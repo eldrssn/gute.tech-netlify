@@ -14,7 +14,6 @@ import {
   resetOptionsDataInEngineStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
-  setTransportId,
 } from 'store/reducers/transport/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
@@ -157,7 +156,6 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
     }
 
     const params = getTransportParams(currentTransportId);
-    dispatch(setTransportId(currentTransportId));
     router.push(params);
 
     closePopupMobile && closePopupMobile();

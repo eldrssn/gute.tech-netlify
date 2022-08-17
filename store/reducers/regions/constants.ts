@@ -11,7 +11,7 @@ const initialState: RegionsStore = {
     isLoading: false,
     error: null,
   },
-  selectedCity: '',
+  selectedCitySlug: '',
 };
 
 export { initialState };

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 
-import { fetchRegions } from 'store/reducers/regions/actions';
+import { fetchRegions, fetchBranches } from 'store/reducers/regions/actions';
 import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
 import { fetchItemsFromCart } from 'store/reducers/cart/actions';
 import { fetchCategoriesTreeList } from 'store/reducers/catalog/actions';
@@ -13,10 +13,12 @@ import {
   fetchTransportInfo,
   setTransportId,
 } from 'store/reducers/transport/actions';
+import { setCitySlug } from 'store/reducers/regions/actions';
 import { fetchAccessToken } from 'store/reducers/authentication/actions';
 import { selectCart, selectCartLoading } from 'store/reducers/cart/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { useWindowSize } from 'hooks/useWindowSize';
 import {
@@ -34,6 +36,7 @@ const InitialLoader: React.FC = ({ children }) => {
 
   const [cookiesTransportId, setCookieTransportId] = useCookies();
   const [cookiesCartItems, setCookieCartItems] = useCookies();
+  const [cookiesCity, setCookiesCity] = useCookies();
 
   const isLoadingApp = windowWidth;
   const transportIdQuery = getQueryOption(QueryUrl.TRANSPORT_ID);
@@ -42,11 +45,13 @@ const InitialLoader: React.FC = ({ children }) => {
   const cart = useSelector(selectCart);
   const transportId = useSelector(selectTransportId);
   const isAuthorized = useSelector(selectIsAuthorized);
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
 
   useEffect(() => {
     dispatch(fetchShowcase());
     dispatch(fetchCategoriesTreeList());
     dispatch(fetchRegions());
+    dispatch(fetchBranches());
   }, [dispatch]);
 
   useEffect(() => {
@@ -68,12 +73,21 @@ const InitialLoader: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    const savedCity = cookiesCity.selectedCity;
+
+    if (savedCity) {
+      dispatch(setCitySlug(savedCity));
+    }
+  }, []);
+
+  useEffect(() => {
     const transportIdSaved = cookiesTransportId.transportId;
     const isTransportIdQuery =
       transportIdQuery && !Array.isArray(transportIdQuery);
     if (isTransportIdQuery) {
       dispatch(fetchTransportInfo({ transportId: transportIdQuery }));
       dispatch(setTransportId(transportIdQuery));
+      return;
     }
 
     if (transportIdSaved) {
@@ -108,6 +122,16 @@ const InitialLoader: React.FC = ({ children }) => {
       expires: date,
     });
   }, [cart, setCookieCartItems]);
+
+  useEffect(() => {
+    const date = new Date();
+    date.setTime(date.getTime() + COOKIE_TTL);
+
+    setCookiesCity(CookieKey.SELECTED_CITY, selectedCitySlug, {
+      path: '/',
+      expires: date,
+    });
+  }, [selectedCitySlug]);
 
   useEffect(() => {
     const date = new Date();

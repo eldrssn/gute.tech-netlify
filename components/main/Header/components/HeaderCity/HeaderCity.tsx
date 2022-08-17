@@ -1,37 +1,26 @@
-import React, { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import {
+  selectSelectedCitySlug,
+  selectBranches,
+} from 'store/reducers/regions/selectors';
 import { ModalCity } from 'components/main/ModalCity';
-import { cookieStorage } from 'utility/helpers';
-import { selectRegion } from 'store/reducers/regions/actions';
-import { selectCity } from 'store/reducers/regions/selectors';
-import { selectUserProfile } from 'store/reducers/user/selectors';
-import { CookieKey } from 'constants/types';
 
+import { getCityTitle } from '../../helpers';
 import styles from './headerCity.module.scss';
 
 const HeaderCity: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const dispatch = useDispatch();
-  const selectedCity = useSelector(selectCity);
-  const { data: userProfile } = useSelector(selectUserProfile);
-  const userProfileCity = userProfile?.city;
 
-  useEffect(() => {
-    const selectedCity = cookieStorage.getItem(CookieKey.SELECTEDCITY);
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const { data: branches } = useSelector(selectBranches);
 
-    if (selectedCity) {
-      dispatch(selectRegion(selectedCity));
-    }
-
-    if (!selectedCity && userProfileCity) {
-      dispatch(selectRegion(userProfileCity.title));
-    }
-  }, [dispatch, userProfileCity]);
+  const selectCityTitle = getCityTitle(branches, selectedCitySlug);
 
   return (
     <Container className={styles.cityWrapper} disableGutters>
@@ -40,9 +29,7 @@ const HeaderCity: FC = () => {
       )}
       <Box component='div' onClick={() => setIsOpenModal(true)}>
         <Typography className={styles.cityName}>
-          {selectedCity.length
-            ? `Ваш город: ${selectedCity}`
-            : 'Выберите город'}
+          {selectCityTitle ? `Ваш город: ${selectCityTitle}` : 'Выберите город'}
         </Typography>
       </Box>
     </Container>

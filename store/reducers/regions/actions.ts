@@ -4,9 +4,9 @@ import { getRegions, getBranches } from 'api/routes/regions';
 import { RegionData, BranchesData } from 'api/models/regions';
 import { createAsyncAction } from 'utility/helpers/store';
 
-import { SelectedCity } from './types';
+import { SelectedCitySlug } from './types';
 
-const selectRegion = createAction<SelectedCity>('selectRegion');
+const setCitySlug = createAction<SelectedCitySlug>('setCitySlug');
 
 const fetchRegions = createAsyncAction<RegionData[]>({
   typeAction: 'region/fetchRegions',
@@ -18,4 +18,4 @@ const fetchBranches = createAsyncAction<BranchesData[]>({
   request: getBranches,
 });
 
-export { fetchRegions, fetchBranches, selectRegion };
+export { fetchRegions, fetchBranches, setCitySlug };

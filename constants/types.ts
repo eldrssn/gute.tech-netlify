@@ -9,6 +9,7 @@ enum CookieKey {
   SELECTEDCITY = 'selectedCity',
   CART_ITEMS = 'cartItems',
   TRANSPORT_ID = 'transportId',
+  SELECTED_CITY = 'selectedCity',
 }
 
 enum LocalStorageKey {

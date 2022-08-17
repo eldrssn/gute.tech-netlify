@@ -6,7 +6,7 @@ import { Content, Property, TabProps } from 'types/product';
 import styles from './tabDetails.module.scss';
 
 const TabDetails: FC<TabProps> = ({ content }) => {
-  if (!content?.length) {
+  if (content?.length === 0) {
     return <p>Нет данных</p>;
   }
 

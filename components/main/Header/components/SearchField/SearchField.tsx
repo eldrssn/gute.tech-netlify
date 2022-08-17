@@ -61,10 +61,8 @@ const SearchField: FC = () => {
   const debouncedSearchTermValid = debouncedSearchTerm.length >= 3;
   const isLoading = catalogSearchRead.isLoading;
   const isActivePopup = isFocusSearchField && debouncedSearchTermValid;
-  const isCategorySearch = categorySearch
-    ? Boolean(categorySearch.length)
-    : false;
-  const isProductSeacrh = productSeacrh ? Boolean(productSeacrh.length) : false;
+  const isCategorySearch = categorySearch ? categorySearch.length > 0 : false;
+  const isProductSeacrh = productSeacrh ? productSeacrh.length > 0 : false;
   const isCatalogSearchRead = isCategorySearch || isProductSeacrh;
 
   const handleChangeInput = (
