@@ -20,7 +20,7 @@ const CartPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(setAllChecked());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

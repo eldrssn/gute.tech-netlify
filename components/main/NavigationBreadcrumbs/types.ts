@@ -1,3 +1,3 @@
-type Query = { isQuery?: boolean; lastTitle?: string };
+type Query = { lastTitle?: string };
 
 export type { Query };

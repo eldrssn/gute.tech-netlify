@@ -39,6 +39,12 @@
   z-index: $z-index8;
 }
 
+@media (max-width: $tablet) {
+  .cardHeader {
+    top: 105px;
+  }
+}
+
 @media (max-width: $mobile) {
   .cardHeader {
     top: 125px;

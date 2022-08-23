@@ -36,24 +36,24 @@ const getTransportCategoriesRead = ({
   });
 
 const getTransportFilterList = ({
-  subcategorySlug,
+  categorySlug,
   transportId,
 }: TransportProductListRead) =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/${subcategorySlug}/filters/${transportId}/`,
+    url: `/catalog/${categorySlug}/filters/${transportId}/`,
     method: ApiMethods.GET,
   });
 
 const getTransportProductListRead = ({
   transportId,
-  subcategorySlug,
+  categorySlug,
   page,
   sort = 'popular',
   order = 'asc',
   filter = {},
 }: TransportProductListRead) =>
   sendRequest<CategoriesProductListResponseData>({
-    url: `/catalog/${subcategorySlug}/products/${transportId}/?page=${page}&size=12&sort=${sort}&order=${order}`,
+    url: `/catalog/${categorySlug}/products/${transportId}/?page=${page}&size=12&sort=${sort}&order=${order}`,
     method: ApiMethods.POST,
     config: {
       data: { page, sort, order, filter },
@@ -75,14 +75,14 @@ const getCategoriesFiltersList = ({
   });
 
 const getCategoriesProductsList = ({
-  subcategorySlug,
+  categorySlug,
   page,
   sort,
   order,
   filter,
 }: CategoriesProductsListRequestData) =>
   sendRequest<CategoriesProductListResponseData>({
-    url: `/catalog/${subcategorySlug}/products/?page=${page}&size=12&sort=${sort}&order=${order}`,
+    url: `/catalog/${categorySlug}/products/?page=${page}&size=12&sort=${sort}&order=${order}`,
     method: ApiMethods.POST,
     config: {
       data: { page, sort, order, filter },

@@ -9,7 +9,7 @@ type ProductListData = {
 };
 
 type CategoriesProductsListRequestData = {
-  subcategorySlug: string;
+  categorySlug: string;
   page?: number;
   sort?: string;
   order?: string;
@@ -51,6 +51,8 @@ type CategoryResponseData = {
   image: string;
   total: number;
   found: number;
+  category_found: number;
+  category_total: number;
 };
 
 type TreeCategoryResponseData = {
@@ -60,6 +62,8 @@ type TreeCategoryResponseData = {
   found: number;
   total: number;
   children?: TreeCategoryResponseData[];
+  category_total: number;
+  category_found: number;
 };
 
 type CheckboxValue = {

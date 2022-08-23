@@ -5,12 +5,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 
-import { QueryUrl } from 'constants/variables';
 import { selectTransportStore } from 'store/reducers/transport/selectors';
-import { useRouterQuery } from 'hooks/useRouterQuery';
 import {
   getLinkToCatalog,
   getLinkToTransportCatalog,
+  getLinkToParentCategory,
 } from 'utility/helpers/linkmakers';
 
 import { CategoryCardProps } from './types';
@@ -21,14 +20,9 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
 
   const { title, image, slug, found, total } = item;
 
-  const routerQuery = useRouterQuery();
-
   const { transportId } = useSelector(selectTransportStore);
 
-  const categorySlug = routerQuery.getQueryOption(QueryUrl.CATEGORY_QUERY);
-
-  const setQuery = () =>
-    routerQuery.setQueryOption({ [QueryUrl.CATEGORY_QUERY]: slug });
+  const { categorySlug } = router.query;
 
   const isTransportSearch = transportId;
 
@@ -43,12 +37,15 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
     subcategorySlug: slug,
   });
 
+  const linkToParentCategory = getLinkToParentCategory(slug);
+
   const handleClick = () => {
     if (categorySlug) {
       router.push(isTransportSearch ? linkToTransportCatalog : linkToCatalog);
       return;
     }
-    setQuery();
+
+    router.push(linkToParentCategory);
   };
 
   return (

@@ -12,7 +12,7 @@ import { Crumb } from './components/Crumb';
 import { Query } from './types';
 import { checkLoadingCrumbs } from './helpers';
 
-const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
+const NavigationBreadcrumbs: FC<Query> = ({ lastTitle }) => {
   const router = useRouter();
   const { data: categories } = useSelector(selectCategoriesTreeList);
   const transportId = useSelector(selectTransportId);
@@ -24,16 +24,7 @@ const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
     transportId,
   });
 
-  const breadcrumbsQuery = useBreadcrumbs({
-    router,
-    data: categories,
-    isQuery,
-    transportId,
-  });
-
-  const currentCrumbs = isQuery ? breadcrumbsQuery : breadcrumbs;
-
-  const isLoading = checkLoadingCrumbs(currentCrumbs);
+  const isLoading = checkLoadingCrumbs(breadcrumbs);
 
   return (
     <Breadcrumbs
@@ -47,7 +38,7 @@ const NavigationBreadcrumbs: FC<Query> = ({ isQuery = false, lastTitle }) => {
       }}
     >
       {!isLoading &&
-        currentCrumbs.map((crumb, index) => <Crumb {...crumb} key={index} />)}
+        breadcrumbs.map((crumb, index) => <Crumb {...crumb} key={index} />)}
     </Breadcrumbs>
   );
 };

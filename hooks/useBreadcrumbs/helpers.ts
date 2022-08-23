@@ -1,14 +1,7 @@
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { PAGE_QUERY } from 'components/base/catalog/constants';
-import { QueryUrl } from 'constants/variables';
-import {
-  getLinkToVidgetCategory,
-  getTransportSlugs,
-} from 'utility/helpers/linkmakers';
-import {
-  CATALOG_QUERY_DEFAULT,
-  IS_FROM_WIDGETS,
-} from 'utility/utils/constants';
+import { getTransportSlugs } from 'utility/helpers/linkmakers';
+import { CATALOG_QUERY_DEFAULT } from 'utility/utils/constants';
 
 import { defaultPaths, MAIN_TITLE } from './constants';
 import { GetCrumbs } from './types';
@@ -33,60 +26,6 @@ const getCrumbs = (
   }, {});
 };
 
-const getCrumblistFromQuery: GetCrumbs = (router, paths, transportId) => {
-  const { category } = router.query;
-
-  if (transportId) {
-    const currentPath = router.asPath;
-
-    const parsedPaths = currentPath.split('category=');
-
-    return parsedPaths.map((path, index) => {
-      const href = parsedPaths.slice(0, index + 1).join('');
-
-      const isCategory =
-        typeof category === 'string' && href.includes(category);
-
-      return isCategory
-        ? {
-            text: paths[category],
-            href: currentPath,
-          }
-        : {
-            text: MAIN_TITLE,
-            href,
-          };
-    });
-  }
-
-  const queryEntries = Object.entries(router.query);
-
-  const queryEntriesFormated = queryEntries.map(([key, subpath]) => {
-    const subpathFormatted = Array.isArray(subpath)
-      ? `${subpath.map((path) => [key, path].join('=')).join('&')}`
-      : [key, subpath].join('=');
-
-    return subpathFormatted;
-  });
-
-  const crumblist = queryEntries.map(([, subpath], index) => {
-    const href = '?' + queryEntriesFormated.slice(0, index + 1).join('&');
-
-    let text =
-      typeof subpath === 'string'
-        ? paths[subpath]
-        : subpath?.map((path) => paths[path]).join(' ');
-
-    if (href?.startsWith('?transport') && !href?.includes('category')) {
-      text = MAIN_TITLE;
-    }
-
-    return { href, text };
-  });
-
-  return [...defaultPaths, ...crumblist];
-};
-
 const getCrumblistFromURL: GetCrumbs = (
   router,
   paths,
@@ -94,6 +33,7 @@ const getCrumblistFromURL: GetCrumbs = (
   transportId,
 ) => {
   const [asPathWithoutQuery] = router.asPath.split('?');
+
   const asPathNestedRoutes = asPathWithoutQuery
     .split('/')
     .filter((slug) => slug.length > 0);
@@ -108,7 +48,7 @@ const getCrumblistFromURL: GetCrumbs = (
     const transportCrumblist = asPathNestedRoutes.map((subpath, index) => {
       if (index === 1) {
         const text = paths[subpath];
-        const href = `/?${transportDetails}&${QueryUrl.CATEGORY_QUERY}=${category}`;
+        const href = `/catalog/${category}`;
         return { text, href };
       }
 
@@ -135,13 +75,8 @@ const getCrumblistFromURL: GetCrumbs = (
     return [homeCrumb, ...transportCrumblist.slice(1)];
   }
 
-  const isFromVidgets = Number(localStorage[IS_FROM_WIDGETS]);
-  const isPathToVidgets = (index: number) => index === 1 && isFromVidgets;
-
   const crumblist = asPathNestedRoutes.map((subpath, index) => {
-    const href = isPathToVidgets(index)
-      ? getLinkToVidgetCategory(subpath)
-      : '/' + asPathNestedRoutes.slice(0, index + 1).join('/');
+    const href = '/' + asPathNestedRoutes.slice(0, index + 1).join('/');
 
     const text = paths[subpath] || lastTitle;
 
@@ -155,4 +90,4 @@ const getCrumblistFromURL: GetCrumbs = (
   return [...defaultPaths, ...crumblist.slice(1)];
 };
 
-export { getCrumbs, getCrumblistFromQuery, getCrumblistFromURL };
+export { getCrumbs, getCrumblistFromURL };

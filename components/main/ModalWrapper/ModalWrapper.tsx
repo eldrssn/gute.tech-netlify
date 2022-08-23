@@ -42,6 +42,13 @@ const ModalWrapper: React.FC<TOuterProps> = ({
     document.body.style.marginRight = '0px';
   }, [isOpen, widthScrollBar]);
 
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto';
+      document.body.style.marginRight = '0px';
+    };
+  }, []);
+
   return (
     <div className={modalBackgroundClassName} onClick={closeModal}>
       <div className={styles.modal}>

@@ -1,5 +1,5 @@
-@import '~styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .wrap {
   position: relative;
@@ -7,7 +7,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 100%;
+  padding: 30px 0;
   width: 500px;
   background-color: white;
 }
@@ -37,6 +38,7 @@
 .title {
   font-weight: bold;
   text-align: center;
+  margin: 0 45px;
 }
 
 @media (max-width: $sMobile) {
@@ -47,7 +49,6 @@
 
 @media (max-width: $xsMobile) {
   .wrap {
-    height: 200px;
     width: 90vw;
   }
 

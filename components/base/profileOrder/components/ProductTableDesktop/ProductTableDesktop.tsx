@@ -4,9 +4,8 @@ import { useRouter } from 'next/router';
 import { TableBody, TableCell, TableRow, Typography } from '@mui/material';
 
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
-import { formatPrice } from 'utility/helpers';
+import { formatPrice, getLinkToProduct } from 'utility/helpers';
 
-import { getLink } from '../../helpers';
 import { TableBodyProps } from '../../types';
 import styles from './styles.module.scss';
 
@@ -27,16 +26,21 @@ const ProductTableDesktop: React.FC<TableBodyProps> = ({ products }) => {
 
   return (
     <TableBody className={styles.tableBody}>
-      {products.map((product) => {
-        const itemPrice = formatPrice(product.price);
-        const countItemsPrice = formatPrice(product.quantity * product.price);
+      {products.map((item) => {
+        const itemPrice = formatPrice(item.price);
+        const countItemsPrice = formatPrice(item.quantity * item.price);
         const link =
-          product.product && getLink(product.product, categoriesTreeListData);
+          item.product &&
+          getLinkToProduct(
+            item.product.slug,
+            item.product.categories,
+            categoriesTreeListData,
+          );
 
         return (
           <TableRow
             className={styles.tableRow}
-            key={product.vendor_code}
+            key={item.vendor_code}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell
@@ -49,15 +53,15 @@ const ProductTableDesktop: React.FC<TableBodyProps> = ({ products }) => {
                   className={styles.itemTitle}
                   onClick={() => handleClickTitle(link)}
                 >
-                  {product.title}
+                  {item.title}
                 </Typography>
-                {product.is_service && (
+                {item.is_service && (
                   <Typography className={styles.service}>*услуга</Typography>
                 )}
               </Typography>
             </TableCell>
             <TableCell align='right'>{itemPrice}&#8381;</TableCell>
-            <TableCell align='right'>{product.quantity}</TableCell>
+            <TableCell align='right'>{item.quantity}</TableCell>
             <TableCell sx={{ position: 'relative' }} align='right'>
               {countItemsPrice}&#8381;
             </TableCell>

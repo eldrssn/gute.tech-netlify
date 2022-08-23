@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
 import Container from '@mui/material/Container';
@@ -7,19 +7,15 @@ import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
-import { clearTransportId } from 'store/reducers/transport/actions';
 import {
   getLinkToCatalog,
   getLinkToCategory,
 } from 'utility/helpers/linkmakers';
-import { addItemToLocaleStorage } from 'utility/helpers';
-import { isFromWidgets, IS_FROM_WIDGETS } from 'utility/utils/constants';
 
 import { CategoriesProps } from './types';
 import styles from './category.module.scss';
 
 const Category: FC<CategoriesProps> = ({ categorySlug }) => {
-  const dispatch = useDispatch();
   const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
   const category = categoriesTree.find((item) => item.slug === categorySlug);
 
@@ -27,15 +23,6 @@ const Category: FC<CategoriesProps> = ({ categorySlug }) => {
   const title = category?.title;
 
   const linkToCategory = getLinkToCategory(categorySlug);
-
-  useEffect(() => {
-    addItemToLocaleStorage({
-      slug: IS_FROM_WIDGETS,
-      title: isFromWidgets.FALSE,
-    });
-
-    dispatch(clearTransportId());
-  }, [dispatch]);
 
   return (
     <Container disableGutters>
