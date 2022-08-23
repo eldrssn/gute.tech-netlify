@@ -10,10 +10,12 @@ import { fetchItemFromCart } from 'store/reducers/cart/actions';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 import { formatPrice } from 'utility/helpers';
 
+import { PageNotFound } from 'components/main/PageNotFound';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
+import { SubcategoriesList } from 'components/main/SubcategoriesList';
 
 import { RecommendedProducts } from './components/RecommendedProducts';
 import { ProductPrice } from './components/ProductPrice';
@@ -21,7 +23,6 @@ import { ProductQuantity } from './components/ProductQuantity';
 import { ProductSpecial } from './components/ProductSpecial';
 import { ProductImageGallery } from './components/ProductImageGallery';
 import { ProductTabsDescription } from './components/ProductTabsDescription';
-import { Subcategories } from './components/Subcategories';
 
 import styles from './productPage.module.scss';
 
@@ -31,8 +32,12 @@ const ProductPage: FC = () => {
   const dispatch = useDispatch();
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
 
-  if (!product || isLoading) {
+  if (isLoading) {
     return <Loader />;
+  }
+
+  if (!product) {
+    return <PageNotFound />;
   }
 
   const {
@@ -84,11 +89,11 @@ const ProductPage: FC = () => {
         title={title}
       />
       <Box className={styles.mainContainer}>
-        <Subcategories />
+        <SubcategoriesList />
 
         <Box
           sx={{
-            maxWidth: { xs: '100%', md: '75%', lg: '80%' },
+            width: { xs: '100%', md: '75%', lg: '80%' },
           }}
         >
           <NavigationBreadcrumbs lastTitle={title || 'Имя отсутствует'} />

@@ -12,21 +12,18 @@ import { selectTransportId } from 'store/reducers/transport/selectors';
 
 import { CatalogTitle } from './components/CatalogTitle';
 import { CatalogMain } from './components/CatalogMain';
+import { Props } from './types';
 
-const CatalogPage: FC = () => {
+const CatalogPage: FC<Props> = ({ isParentCategory }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const transportId = useSelector(selectTransportId);
 
-  const { subcategorySlug } = router.query;
+  const { subcategorySlug, categorySlug } = router.query;
 
   useEffect(() => {
-    if (!subcategorySlug) {
-      return;
-    }
-
-    const getSearchTransportFilterList = (subcategorySlug: string) => {
+    const getSearchTransportFilterList = (categorySlug: string) => {
       if (!transportId) {
         return;
       }
@@ -34,12 +31,14 @@ const CatalogPage: FC = () => {
       dispatch(
         fetchTransportFilterList({
           transportId,
-          subcategorySlug,
+          categorySlug,
         }),
       );
     };
 
-    const stringifySlug = makeStringify(subcategorySlug);
+    const stringifySlug = makeStringify(
+      isParentCategory ? categorySlug : subcategorySlug,
+    );
 
     transportId
       ? getSearchTransportFilterList(stringifySlug)
@@ -50,12 +49,12 @@ const CatalogPage: FC = () => {
     return () => {
       dispatch(clearCatalog());
     };
-  }, [subcategorySlug, dispatch, transportId]);
+  }, [subcategorySlug, dispatch, transportId, categorySlug, isParentCategory]);
 
   return (
     <>
       <CatalogTitle />
-      <CatalogMain />
+      <CatalogMain isParentCategory={isParentCategory} />
     </>
   );
 };

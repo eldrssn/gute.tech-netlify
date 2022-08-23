@@ -13,6 +13,9 @@ const getLinkToProductPage = ({
     subcategorySlug,
   )}/${makeStringify(productSlug)}`;
 
+const getLinkToParentCategory = (categorySlug: Slug) =>
+  `catalog/${categorySlug}`;
+
 const getLinkToCategory = (categorySlug: Slug) =>
   `/catalog/${makeStringify(categorySlug)}`;
 
@@ -49,10 +52,6 @@ const getLinkToTransportProductPage = ({
   )}/${makeStringify(productSlug)}?${transportSlugs}`;
 };
 
-const getLinkToVidgetCategory = (categorySlug: string) => {
-  return `/?${QueryUrl.CATEGORY_QUERY}=${categorySlug}`;
-};
-
 const getLinkApiProfileOrder = ({
   order,
   created_after,
@@ -67,8 +66,8 @@ export {
   getLinkToProductPage,
   getLinkToTransportProductPage,
   getLinkToCategory,
+  getLinkToParentCategory,
   getLinkToCatalog,
   getLinkToTransportCatalog,
   getTransportSlugs,
-  getLinkToVidgetCategory,
 };

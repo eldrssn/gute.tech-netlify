@@ -1,6 +1,7 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { Description } from './components/Description';
@@ -12,18 +13,15 @@ import {
 } from './components/rows';
 import { Loader } from 'components/ui/Loader';
 import { Items } from './components/rows/types';
-import { QueryUrl } from 'constants/variables';
-import { useRouterQuery } from 'hooks/useRouterQuery';
-import { addItemToLocaleStorage, groupItems } from 'utility/helpers';
+import { groupItems } from 'utility/helpers';
 import {
   selectCategoriesSearchRead,
   selectCategoriesTreeList,
 } from 'store/reducers/catalog/selectors';
 import { selectTransportStore } from 'store/reducers/transport/selectors';
-import { IS_FROM_WIDGETS, isFromWidgets } from 'utility/utils/constants';
 
 import { getGroupedChildren } from './helpers';
-import { Index } from './types';
+import { Index, Props } from './types';
 
 const rowHashMap: Record<Index, FC<Items>> = {
   1: FirstRow,
@@ -32,8 +30,8 @@ const rowHashMap: Record<Index, FC<Items>> = {
   4: SecondRowReversed,
 };
 
-const Home: FC = () => {
-  const { getQueryOption } = useRouterQuery();
+const Home: FC<Props> = ({ isParentCategory }) => {
+  const router = useRouter();
 
   const { transportId } = useSelector(selectTransportStore);
 
@@ -42,33 +40,23 @@ const Home: FC = () => {
     : selectCategoriesTreeList;
 
   const { isLoading, data: categories } = useSelector(currentSelector);
-  const categoryQuery = getQueryOption(QueryUrl.CATEGORY_QUERY);
-
-  useEffect(() => {
-    categoryQuery
-      ? addItemToLocaleStorage({
-          slug: IS_FROM_WIDGETS,
-          title: isFromWidgets.TRUE,
-        })
-      : addItemToLocaleStorage({
-          slug: IS_FROM_WIDGETS,
-          title: isFromWidgets.FALSE,
-        });
-  }, [categoryQuery]);
+  const { categorySlug } = router.query;
 
   const groupedItems = useMemo(
     () =>
-      categoryQuery
-        ? getGroupedChildren(categoryQuery, categories)
+      categorySlug
+        ? getGroupedChildren(categorySlug, categories)
         : groupItems(categories),
-    [categoryQuery, categories],
+    [categorySlug, categories],
   );
 
   const isCategories = categories.length > 0;
 
   return (
     <>
-      {(categoryQuery || transportId) && <NavigationBreadcrumbs isQuery />}
+      {(categorySlug || transportId) && !isParentCategory && (
+        <NavigationBreadcrumbs />
+      )}
 
       <Grid
         container

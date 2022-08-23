@@ -15,11 +15,7 @@ import {
 import { changeChecked } from 'store/reducers/cart/actions';
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import { formatPrice } from 'utility/helpers';
-import {
-  getStockBalance,
-  getLinkToProduct,
-  getParentCategory,
-} from 'utility/helpers';
+import { getStockBalance, getLinkToProduct } from 'utility/helpers';
 
 import { DeleteItemButton } from '../DeleteItemButton';
 import { Counter } from '../Сounter';
@@ -53,12 +49,11 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
         const itemPrice = formatPrice(item.price);
         const countItemsPrice = formatPrice(item.count * item.price);
         const slug = item.slug;
-        const categorySlug = item.categories[0];
-        const parentCategorySlug = getParentCategory({
+        const link = getLinkToProduct(
+          slug,
+          item.categories,
           categoriesTreeListData,
-          childrenCategorySlug: categorySlug,
-        });
-        const link = getLinkToProduct(parentCategorySlug, categorySlug, slug);
+        );
 
         return (
           <TableRow

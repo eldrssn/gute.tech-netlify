@@ -29,6 +29,9 @@ const ModalAddedItem: React.FC<TOuterProps> = ({
         <Link href='/cart' passHref>
           <Button className={styles.button}>Перейти в Корзину</Button>
         </Link>
+        <Button onClick={closeModal} className={styles.button}>
+          Продолжить покупки
+        </Button>
       </Container>
     </ModalWrapper>
   );

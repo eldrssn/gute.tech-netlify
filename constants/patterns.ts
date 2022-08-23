@@ -17,6 +17,7 @@ const inputMasks = {
   countMask: '999',
   phoneMask: '+79999999999',
   nameMask: Array(20).fill(/^([а-яё\s]+|[a-z\s]+)$/iu),
+  numberOrderMask: '999999999',
 };
 
 export { validatePatterns, inputMasks };

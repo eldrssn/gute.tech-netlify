@@ -7,6 +7,7 @@ import { TreeCategoryResponseData } from 'api/models/catalog';
 import { CartItemData } from 'store/reducers/cart/types';
 import { CookieSameSite } from 'constants/types';
 import { productOptions } from 'api/models/cart';
+import { productData } from 'api/models/user';
 
 const objByThree: GroupedItemsItem = {
   firstItem: null,
@@ -133,6 +134,25 @@ const getSlugsCartItemsFromCart = (cart: CartItemData[]) =>
 const makeStringify = (value?: string[] | string) =>
   typeof value === 'string' ? value : value?.toString() || '';
 
+const getFindCategory = ({
+  categories,
+  categoriesTreeListData,
+}: {
+  categories: string[];
+  categoriesTreeListData: TreeCategoryResponseData[];
+}) =>
+  categories.find((category) =>
+    categoriesTreeListData.some((parentCategory) => {
+      if (!parentCategory.children) {
+        return false;
+      }
+
+      return parentCategory.children.some(
+        (parentChildren) => parentChildren.slug === category,
+      );
+    }),
+  );
+
 const getParentCategory = ({
   categoriesTreeListData,
   childrenCategorySlug,
@@ -220,7 +240,7 @@ const getFullDate = (date: Date) => {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
-  return `${year}-${month}-${day}${year}`;
+  return `${year}-${month}-${day}`;
 };
 
 const cutDate = (date: Date) => {
@@ -245,10 +265,23 @@ const getProductSlugList = (productsOptions: productOptions[]) =>
   productsOptions.map((productOption) => productOption.productSlug);
 
 const getLinkToProduct = (
-  parentCategorySlug: string | undefined,
-  categorySlug: string,
   slug: string,
-) => `/catalog/${parentCategorySlug}/${categorySlug}/${slug}`;
+  categories: string[],
+  categoriesTreeListData: TreeCategoryResponseData[],
+) => {
+  const categorySlug = getFindCategory({ categories, categoriesTreeListData });
+
+  if (!categorySlug) {
+    return '/404';
+  }
+
+  const parentCategorySlug = getParentCategory({
+    categoriesTreeListData,
+    childrenCategorySlug: categorySlug,
+  });
+
+  return `/catalog/${parentCategorySlug}/${categorySlug}/${slug}`;
+};
 
 export default setBreakpointSize;
 
@@ -267,6 +300,7 @@ export {
   cookieStorage,
   makeStringify,
   getParentCategory,
+  getFindCategory,
   setBreakpointSize,
   formatPrice,
   getCookie,

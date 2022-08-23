@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
 import Box from '@mui/material/Box';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
@@ -15,9 +16,10 @@ import {
   getLinkToTransportCatalog,
 } from 'utility/helpers/linkmakers';
 
-import styles from './subcategories.module.scss';
+import { Props } from './types';
+import styles from './styles.module.scss';
 
-const Subcategories = () => {
+const SubcategoriesList: FC<Props> = ({ isParentCategory }) => {
   const router = useRouter();
   const transportId = useSelector(selectTransportId);
 
@@ -33,8 +35,10 @@ const Subcategories = () => {
 
   return (
     <Box
-      className={styles.mainContainer}
-      sx={{ display: { xs: 'none', md: 'block' } }}
+      className={cn(styles.mainContainer, {
+        [styles.mainContainerParentCategory]: isParentCategory,
+      })}
+      sx={{ display: { xs: isParentCategory ? 'block' : 'none', md: 'block' } }}
     >
       {isLoading ? (
         <Loader />
@@ -74,4 +78,4 @@ const Subcategories = () => {
   );
 };
 
-export { Subcategories };
+export { SubcategoriesList };

@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import {
   fetchCategoriesProductsList,
   fetchTransportProductList,
+  fetchCategoriesSubcategoriesList,
+  fetchCategoriesSubcategoriesRead,
 } from 'store/reducers/catalog/actions';
 import {
   selectCategoriesProductList,
@@ -19,6 +21,7 @@ import { selectTransportId } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
 import { PaginationNav } from 'components/ui/PaginationNav';
+import { SubcategoriesList } from 'components/main/SubcategoriesList';
 import { Sorting, FilterRequest } from 'types';
 
 import { CatalogFilter } from '../CatalogFilter';
@@ -28,10 +31,11 @@ import { CatalogSort } from '../CatalogSort';
 import { PAGE_QUERY } from '../../constants';
 import { isNotEnoughtItems } from '../../helpers';
 import styles from './catalogMain.module.scss';
+import { Props } from './types';
 
 const cn = classnames.bind(styles);
 
-const CatalogMain: FC = () => {
+const CatalogMain: FC<Props> = ({ isParentCategory }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isMobile } = useWindowSize();
@@ -46,8 +50,10 @@ const CatalogMain: FC = () => {
   const [anchorApplyButton, setAnchorApplyButton] =
     useState<HTMLElement | null>(null);
 
-  const { subcategorySlug } = router.query;
+  const { subcategorySlug, categorySlug } = router.query;
   const transportId = useSelector(selectTransportId);
+
+  const stringifiedCategorySlug = makeStringify(categorySlug);
 
   const currentSelector = transportId
     ? selectSearchProductList
@@ -72,7 +78,9 @@ const CatalogMain: FC = () => {
     }
   }, [router.isReady, getQueryOption, total]);
 
-  const stringifySlug = makeStringify(subcategorySlug);
+  const stringifySlug = makeStringify(
+    isParentCategory ? categorySlug : subcategorySlug,
+  );
 
   const fetchTransportList = useCallback(() => {
     if (Array.isArray(transportId) || !transportId || !filterRequest) {
@@ -83,7 +91,7 @@ const CatalogMain: FC = () => {
       fetchTransportProductList({
         transportId,
         page,
-        subcategorySlug: stringifySlug,
+        categorySlug: stringifySlug,
         filter: filterRequest,
         ...sorting,
       }),
@@ -101,7 +109,7 @@ const CatalogMain: FC = () => {
         : dispatch(
             fetchCategoriesProductsList({
               page,
-              subcategorySlug: stringifySlug,
+              categorySlug: stringifySlug,
               filter: filterRequest,
               ...sorting,
             }),
@@ -120,6 +128,29 @@ const CatalogMain: FC = () => {
     transportId,
   ]);
 
+  useEffect(() => {
+    if (!stringifiedCategorySlug) {
+      return;
+    }
+
+    if (transportId) {
+      dispatch(
+        fetchCategoriesSubcategoriesRead({
+          transportId,
+          categorySlug: stringifiedCategorySlug,
+        }),
+      );
+    }
+
+    if (!transportId) {
+      dispatch(
+        fetchCategoriesSubcategoriesList({
+          categorySlug: stringifiedCategorySlug,
+        }),
+      );
+    }
+  }, [stringifiedCategorySlug, transportId, dispatch]);
+
   const handleDrawerToggle = () => {
     setOpenDrawer((openDrawer) => !openDrawer);
     setAnchorApplyButton(null);
@@ -129,12 +160,17 @@ const CatalogMain: FC = () => {
     <Box sx={{ position: 'relative' }}>
       <Box className={styles.catalogMainBox}>
         {!isMobile && !!data && (
-          <Box className={styles.catalogFilter_desktop}>
-            <CatalogFilter
-              setFilterRequest={setFilterRequest}
-              anchorApplyButton={anchorApplyButton}
-              setAnchorApplyButton={setAnchorApplyButton}
-            />
+          <Box className={styles.sideMenu}>
+            {isParentCategory && (
+              <SubcategoriesList isParentCategory={isParentCategory} />
+            )}
+            <Box className={styles.catalogFilter_desktop}>
+              <CatalogFilter
+                setFilterRequest={setFilterRequest}
+                anchorApplyButton={anchorApplyButton}
+                setAnchorApplyButton={setAnchorApplyButton}
+              />
+            </Box>
           </Box>
         )}
         <Box className={styles.catalogMainContent}>
@@ -160,6 +196,9 @@ const CatalogMain: FC = () => {
                 setPage={setPage}
               />
             </Box>
+          )}
+          {isMobile && (
+            <SubcategoriesList isParentCategory={isParentCategory} />
           )}
 
           {!data ? <Loader /> : <CatalogGrid items={results || []} />}

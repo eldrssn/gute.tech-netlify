@@ -1,0 +1,50 @@
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
+@import "~styles/constants.scss";
+
+.searchBox {
+  margin: 5px;
+  position: relative;
+  z-index: $z-index14;
+  width: 25%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $gray4;
+  border-radius: 2px;
+  padding: 0;
+  background-color: $white !important;
+}
+
+.icon {
+  width: 40px;
+  height: 24px;
+  margin: 0 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.textField {
+  flex: 1 auto;
+  width: 1px;
+
+  input {
+    height: 30px;
+    padding: 5px 20px;
+    border: none;
+  }
+
+  fieldset {
+    border: 0;
+  }
+}
+
+@media (max-width: $tablet) {
+  .searchBox {
+    width: 100%;
+  }
+}

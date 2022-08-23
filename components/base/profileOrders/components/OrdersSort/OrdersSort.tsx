@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect } from 'react';
 import cn from 'classnames';
 import Box from '@mui/material/Box';
@@ -21,7 +22,6 @@ const OrdersSort: FC = () => {
 
   useEffect(() => {
     setDirectionByDate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const isUp = () => orderType === DIRECTIONS.UP;

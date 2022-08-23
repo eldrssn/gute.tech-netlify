@@ -6,10 +6,4 @@ const getCheckedCartItems = (cart: CartItemData[]) =>
 const getCheckedCartItemsSlug = (checkedCartItems: CartItemData[]) =>
   checkedCartItems.map((item) => item.slug);
 
-const getLinkToProduct = (
-  parentCategorySlug: string,
-  categorySlug: string,
-  slug: string,
-) => `/catalog/${parentCategorySlug}/${categorySlug}/${slug}`;
-
-export { getCheckedCartItems, getCheckedCartItemsSlug, getLinkToProduct };
+export { getCheckedCartItems, getCheckedCartItemsSlug };

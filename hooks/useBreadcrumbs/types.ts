@@ -16,7 +16,6 @@ type GetCrumbs = (
 type UseBreadcrumbs = {
   router: NextRouter;
   data?: TreeCategoryResponseData[];
-  isQuery?: boolean;
   lastTitle?: string;
   transportId?: string;
 };

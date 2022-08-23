@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box } from '@mui/system';
 
+import { CustomButton } from 'components/ui/CustomButton';
 import { ModalChangePassword } from 'components/main/ModalChangePassword';
 import styles from './userActionButtons.module.scss';
 
@@ -20,12 +21,12 @@ const UserActionButtons = () => {
         />
       )}
       <Box className={styles.container}>
-        <Box
-          className={styles.actionButton}
+        <CustomButton
+          customStyles={styles.button}
           onClick={handleOpenModalChangePassword}
         >
           Изменить пароль
-        </Box>
+        </CustomButton>
         {/* <Box className={styles.actionButton}>Удалить аккаунт</Box> */}
       </Box>
     </>
