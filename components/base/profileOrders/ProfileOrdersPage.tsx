@@ -67,13 +67,10 @@ const ProfileOrdersPage = () => {
   }, [router.isReady, getQueryOption, total]);
 
   useEffect(() => {
-    if (
-      Array.isArray(created_after) ||
-      Array.isArray(created_before) ||
-      !order
-    ) {
+    if (Array.isArray(created_after) || Array.isArray(created_before)) {
       return;
     }
+
     dispatch(fetchOrders({ order, created_after, created_before, page }));
   }, [created_after, created_before, dispatch, order, page]);
 

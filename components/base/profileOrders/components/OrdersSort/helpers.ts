@@ -1,6 +1,8 @@
 import { DIRECTIONS } from '../../constants';
 
 const changeOrderType = (orderType: string) =>
-  orderType === `${DIRECTIONS.UP}` ? `${DIRECTIONS.DOWN}` : `${DIRECTIONS.UP}`;
+  orderType === `${DIRECTIONS.DOWN}`
+    ? `${DIRECTIONS.UP}`
+    : `${DIRECTIONS.DOWN}`;
 
 export { changeOrderType };

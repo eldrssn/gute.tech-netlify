@@ -266,6 +266,7 @@ const handlers = {
     state.transportFilterList.data = [];
     state.categoriesFilterList.data = [];
     state.categoriesProductList.data = initProductList;
+    state.categoriesProductList.isLoading = true;
   },
 
   [fetchRecommendedProductsList.pending.type]: (state: CatalogStore) => {
