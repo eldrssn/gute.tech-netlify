@@ -68,8 +68,8 @@ const CatalogButton: FC = () => {
           style: {
             borderRadius: 0,
             width: '100%',
-            marginLeft: !isFullHeader ? (isTablet ? '-8px' : 0) : 0,
-            maxWidth: isTablet ? 'calc(100% - 48px)' : 'calc(100% - 32px)',
+            marginLeft: isFullHeader ? 0 : isTablet ? '-8px' : 0,
+            maxWidth: isTablet ? 'calc(100% - 48px)' : '1200px',
           },
         }}
         sx={{

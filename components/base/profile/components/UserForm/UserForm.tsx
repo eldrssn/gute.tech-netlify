@@ -108,6 +108,7 @@ const UserForm = () => {
   const handleOpenModalEmail = () => setIsOpenModalEmail(true);
 
   const resetForm = () => {
+    dispatch(fetchProfile());
     reset();
     setFormChanging(false);
   };

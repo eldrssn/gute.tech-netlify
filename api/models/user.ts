@@ -48,7 +48,7 @@ type VerifyEmailResponseErrorData = {
 };
 
 type OrdersRequestData = {
-  order: string;
+  order?: string;
   created_after?: string;
   created_before?: string;
   page: number;

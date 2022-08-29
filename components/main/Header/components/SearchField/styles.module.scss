@@ -1,6 +1,6 @@
-@import "styles/colors.scss";
-@import "~styles/breakpoints.scss";
-@import "~styles/constants.scss";
+@import 'styles/colors.scss';
+@import '~styles/breakpoints.scss';
+@import '~styles/constants.scss';
 
 .searchMenuItem {
   flex: 1 auto;
@@ -135,7 +135,7 @@
   min-height: 70px;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
 

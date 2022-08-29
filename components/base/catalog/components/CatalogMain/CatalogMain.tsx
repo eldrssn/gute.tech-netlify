@@ -59,7 +59,7 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
     ? selectSearchProductList
     : selectCategoriesProductList;
 
-  const { data } = useSelector(currentSelector);
+  const { data, isLoading } = useSelector(currentSelector);
   const { pages, results, total } = data || {};
   const pageCount = Number(pages);
 
@@ -201,7 +201,7 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
             <SubcategoriesList isParentCategory={isParentCategory} />
           )}
 
-          {!data ? <Loader /> : <CatalogGrid items={results || []} />}
+          {isLoading ? <Loader /> : <CatalogGrid items={results || []} />}
         </Box>
       </Box>
 

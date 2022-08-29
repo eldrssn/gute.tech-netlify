@@ -54,10 +54,11 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
 
   return (
     <Container
-      disableGutters={isTablet}
+      disableGutters
       className={styles.catalogContainer}
       sx={{
         flexDirection: isFullHeader ? 'row-reverse' : 'row',
+        paddingLeft: isTablet ? 0 : isFullHeader ? '46px' : 0,
       }}
     >
       <MenuList className={styles.mainCategories}>
