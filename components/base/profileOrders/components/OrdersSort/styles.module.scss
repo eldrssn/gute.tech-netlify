@@ -2,9 +2,11 @@
 @import '~styles/breakpoints.scss';
 
 .sortContainer {
-  padding: 13px 18px;
+  padding: 13px 5px;
   display: flex;
   flex-wrap: wrap;
+  flex-basis: 50%;
+  justify-content: center;
 }
 
 .sortButton {
@@ -49,12 +51,13 @@
 
 @media (max-width: $mobile) {
   .sortContainer {
-    padding: 15px 18px;
+    padding: 5px 18px;
+    flex-basis: 100%;
   }
 }
 
 @media (max-width: $xsMobile) {
   .sortContainer {
-    padding: 10px 10px;
+    padding: 5px 10px;
   }
 }

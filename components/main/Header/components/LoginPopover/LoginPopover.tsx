@@ -26,11 +26,17 @@ const LoginPopover: FC<Props> = ({ closePopover, setIsOpenModalLogOut }) => {
 
   return (
     <Container disableGutters sx={{ position: 'relative' }}>
-      <MenuItem onClick={handleClickMyProfile}>Мой профиль</MenuItem>
-      <MenuItem onClick={handleClickOrdersHistory}>История заказов</MenuItem>
-      <MenuItem>Система лояльности</MenuItem>
-      <MenuItem>Мой автомобиль</MenuItem>
-      <MenuItem onClick={handleClickExit}>Выйти</MenuItem>
+      <MenuItem onClick={handleClickMyProfile} tabIndex={0}>
+        Мой профиль
+      </MenuItem>
+      <MenuItem onClick={handleClickOrdersHistory} tabIndex={0}>
+        История заказов
+      </MenuItem>
+      <MenuItem tabIndex={0}>Система лояльности</MenuItem>
+      <MenuItem tabIndex={0}>Мой автомобиль</MenuItem>
+      <MenuItem tabIndex={0} onClick={handleClickExit}>
+        Выйти
+      </MenuItem>
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController } from 'react-hook-form';
 import { useTimer } from 'react-timer-hook';
@@ -25,6 +25,7 @@ import {
 } from 'store/reducers/authentication/selectors';
 import { FormInput } from 'components/main/FormInput';
 import { getInputRules } from 'utility/helpers';
+import { handleEnterPress } from 'utility/utils';
 import { ActiveAutorizationFormKey } from 'constants/types';
 import colors from 'styles/_export.module.scss';
 
@@ -171,8 +172,12 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
         <Typography
           onClick={handleClickBackToMain}
           className={styles.otherFormButton}
+          tabIndex={0}
+          onKeyPress={(event: KeyboardEvent) =>
+            handleEnterPress(event, handleClickBackToMain)
+          }
         >
-          Вернуться на главный экран
+          Авторизация
         </Typography>
       </FormControl>
     </form>

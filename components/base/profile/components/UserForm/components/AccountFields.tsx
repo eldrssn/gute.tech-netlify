@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, KeyboardEvent, useState } from 'react';
 import { Box, FormLabel, MenuItem, TextField } from '@mui/material';
 
+import { ModalEditUserEmail } from 'components/main/ModalEditUserEmail';
 import { FormTextfield } from 'components/ui/FormTextfield';
 
 import { Datepicker } from './Datepicker';
@@ -9,6 +10,7 @@ import { correctRegister } from '../helpers';
 import { AccountFieldsProps, TFormDataFields } from '../types';
 
 import styles from '../userForm.module.scss';
+import { handleEnterPress } from 'utility/utils';
 
 const AccountFields: FC<AccountFieldsProps> = ({
   register,
@@ -18,8 +20,11 @@ const AccountFields: FC<AccountFieldsProps> = ({
   trigger,
   getValues,
   handleChangeFormValue,
-  handleOpenModalEmail,
 }) => {
+  const [isOpenModalEmail, setIsOpenModalEmail] = useState(false);
+
+  const handleOpenModalEmail = () => setIsOpenModalEmail(true);
+
   const onBlurCorrectRegister = (
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
     title: TFormDataFields,
@@ -51,9 +56,22 @@ const AccountFields: FC<AccountFieldsProps> = ({
           placeholder='Введите Email'
           onClick={handleOpenModalEmail}
           onChange={onChangeForm}
+          onKeyPress={(event: KeyboardEvent) =>
+            handleEnterPress(event, handleOpenModalEmail)
+          }
           inputProps={{ readOnly: true }}
           required
         />
+
+        {isOpenModalEmail && (
+          <ModalEditUserEmail
+            isOpen={isOpenModalEmail}
+            setIsOpen={setIsOpenModalEmail}
+            setValue={setValue}
+            getValues={getValues}
+          />
+        )}
+
         <FormTextfield
           register={register}
           label='Имя'

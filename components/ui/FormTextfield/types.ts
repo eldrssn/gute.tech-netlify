@@ -1,3 +1,4 @@
+import { KeyboardEvent } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 
 import { TFormDataFields } from 'components/base/profile/components/UserForm/types';
@@ -23,6 +24,7 @@ type FormTextfieldProps = {
   inputProps?: {
     readOnly: boolean;
   };
+  onKeyPress?: (event: KeyboardEvent) => void;
 };
 
 export type { FormTextfieldProps };

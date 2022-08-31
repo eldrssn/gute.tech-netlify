@@ -45,6 +45,8 @@ const CatalogMenuItem: FC<CatalogMenuItemProps> = ({
       key={item.slug}
       onClick={handleClickMenuItem}
       onMouseEnter={onMouseEnter}
+      onFocus={onMouseEnter}
+      tabIndex={0}
     >
       {item.title}
     </Box>

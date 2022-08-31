@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, KeyboardEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { Box, Typography, FormControl, TextField } from '@mui/material';
@@ -14,6 +14,7 @@ import {
   selectErrorResetPasswordForm,
 } from 'store/reducers/authentication/selectors';
 import { getInputRules } from 'utility/helpers';
+import { handleEnterPress } from 'utility/utils';
 import { inputMasks } from 'constants/patterns';
 import { EValidatePattern, ActiveAutorizationFormKey } from 'constants/types';
 import colors from 'styles/_export.module.scss';
@@ -90,8 +91,12 @@ const FormResetPassword: FC = () => {
         <Typography
           onClick={handleClickBackToMain}
           className={styles.otherFormButton}
+          tabIndex={0}
+          onKeyPress={(event: KeyboardEvent) =>
+            handleEnterPress(event, handleClickBackToMain)
+          }
         >
-          Вернуться на главный экран
+          Авторизация
         </Typography>
       </FormControl>
     </form>

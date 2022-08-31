@@ -30,6 +30,7 @@ const FormInput: React.FC<FormInputProps> = ({
     multiline={textarea}
     rows={textarea ? 4 : undefined}
     inputProps={{ maxLength: maxLength }}
+    tabIndex={0}
   >
     {children}
   </TextField>

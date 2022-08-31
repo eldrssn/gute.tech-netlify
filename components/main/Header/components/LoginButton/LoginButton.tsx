@@ -45,12 +45,7 @@ const LoginButton = () => {
 
   return (
     <>
-      <ModalLogOut
-        isOpen={isOpenModalLogOut}
-        setIsOpen={setIsOpenModalLogOut}
-      />
-      <ModalLogIn isOpen={isOpenModalLogIn} setIsOpen={setIsOpenModalLogIn} />
-      <MenuItem className={styles.button} onClick={handleClick}>
+      <MenuItem className={styles.button} onClick={handleClick} tabIndex={0}>
         <CardMedia
           component={'img'}
           height='32'
@@ -81,6 +76,12 @@ const LoginButton = () => {
           setIsOpenModalLogOut={setIsOpenModalLogOut}
         />
       </Popover>
+
+      <ModalLogOut
+        isOpen={isOpenModalLogOut}
+        setIsOpen={setIsOpenModalLogOut}
+      />
+      <ModalLogIn isOpen={isOpenModalLogIn} setIsOpen={setIsOpenModalLogIn} />
     </>
   );
 };
