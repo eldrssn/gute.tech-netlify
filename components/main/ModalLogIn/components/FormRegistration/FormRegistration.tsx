@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController, Controller } from 'react-hook-form';
 import { Box, Typography, FormControl, TextField } from '@mui/material';
@@ -17,6 +17,7 @@ import {
 } from 'store/reducers/authentication/selectors';
 import { FormInput } from 'components/main/FormInput';
 import { getInputRules } from 'utility/helpers';
+import { handleEnterPress } from 'utility/utils';
 import { inputMasks } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
 import { ActiveAutorizationFormKey } from 'constants/types';
@@ -146,8 +147,12 @@ const FormRegistration: FC = () => {
         <Typography
           onClick={handleClickBackToMain}
           className={styles.otherFormButton}
+          tabIndex={0}
+          onKeyPress={(event: KeyboardEvent) =>
+            handleEnterPress(event, handleClickBackToMain)
+          }
         >
-          Вернуться на главный экран
+          Авторизация
         </Typography>
       </FormControl>
     </form>

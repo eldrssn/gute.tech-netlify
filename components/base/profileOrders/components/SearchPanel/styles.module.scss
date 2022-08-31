@@ -1,12 +1,12 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
-@import "~styles/constants.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
+@import '~styles/constants.scss';
 
 .searchBox {
   margin: 5px;
   position: relative;
   z-index: $z-index14;
-  width: 25%;
+  width: 100%;
   height: 40px;
   display: flex;
   flex-direction: row;
@@ -16,6 +16,7 @@
   border-radius: 2px;
   padding: 0;
   background-color: $white !important;
+  flex-basis: 50%;
 }
 
 .icon {
@@ -34,7 +35,8 @@
 
   input {
     height: 30px;
-    padding: 5px 20px;
+    padding: 5px 10px;
+    padding-right: 0;
     border: none;
   }
 
@@ -43,8 +45,8 @@
   }
 }
 
-@media (max-width: $tablet) {
+@media (max-width: $mobile) {
   .searchBox {
-    width: 100%;
+    flex-basis: 100%;
   }
 }

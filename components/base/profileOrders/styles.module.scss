@@ -1,6 +1,6 @@
-@import "~styles/breakpoints.scss";
-@import "~styles/colors.scss";
-@import "~styles/constants.scss";
+@import '~styles/breakpoints.scss';
+@import '~styles/colors.scss';
+@import '~styles/constants.scss';
 
 .mainContainer {
   display: flex;
@@ -60,5 +60,11 @@
 
   .cardHeaderContainer {
     margin-top: 30px;
+  }
+
+  .paginationContainer {
+    margin-left: auto;
+    margin-right: auto;
+    order: 1;
   }
 }

@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 
 import { CustomButton } from 'components/ui/CustomButton';
 import { ModalSaveChanges } from 'components/main/ModalSaveChanges';
-import { ModalEditUserEmail } from 'components/main/ModalEditUserEmail';
+import { ModalCancelChanges } from 'components/main/ModalCancelChanges';
 
 import { ProfileResponseData } from 'api/models/user';
 import {
@@ -23,7 +23,6 @@ import { PersonalFields } from './components/PersonalFields';
 import { filterDirtyFields, setCustomErrors } from './helpers';
 import { TFormDataFields } from './types';
 import styles from './userForm.module.scss';
-import { ModalCancelChanges } from 'components/main/ModalCancelChanges';
 
 const UserForm = () => {
   const dispatch = useDispatch();
@@ -31,7 +30,6 @@ const UserForm = () => {
   const [isFormChanging, setFormChanging] = useState(false);
   const [isOpenModalSave, setIsOpenModalSave] = useState(false);
   const [isOpenModalCancel, setIsOpenModalCancel] = useState(false);
-  const [isOpenModalEmail, setIsOpenModalEmail] = useState(false);
 
   const { data: userProfile } = useSelector(selectUserProfile);
   const { data: editProfileResponse, error: editProfileError } = useSelector(
@@ -105,8 +103,6 @@ const UserForm = () => {
     setValue(field, event.target.value, { shouldDirty: true });
   };
 
-  const handleOpenModalEmail = () => setIsOpenModalEmail(true);
-
   const resetForm = () => {
     dispatch(fetchProfile());
     reset();
@@ -115,31 +111,7 @@ const UserForm = () => {
 
   return (
     <>
-      {isOpenModalEmail && (
-        <ModalEditUserEmail
-          isOpen={isOpenModalEmail}
-          setIsOpen={setIsOpenModalEmail}
-          setValue={setValue}
-          getValues={getValues}
-        />
-      )}
-
-      {isOpenModalCancel && (
-        <ModalCancelChanges
-          isOpen={isOpenModalCancel}
-          setIsOpen={setIsOpenModalCancel}
-          resetForm={resetForm}
-        />
-      )}
-
       <form onSubmit={onSumbit} className={styles.formContainer}>
-        {isOpenModalSave && (
-          <ModalSaveChanges
-            isOpen={isOpenModalSave}
-            setIsOpen={setIsOpenModalSave}
-          />
-        )}
-
         <AccountFields
           register={register}
           onChangeForm={onChangeForm}
@@ -148,7 +120,6 @@ const UserForm = () => {
           trigger={trigger}
           getValues={getValues}
           handleChangeFormValue={handleChangeFormValue}
-          handleOpenModalEmail={handleOpenModalEmail}
         />
 
         <PersonalFields
@@ -165,12 +136,28 @@ const UserForm = () => {
             <CustomButton customStyles={styles.button} onClick={openModalSave}>
               Сохранить
             </CustomButton>
+
+            {isOpenModalSave && (
+              <ModalSaveChanges
+                isOpen={isOpenModalSave}
+                setIsOpen={setIsOpenModalSave}
+              />
+            )}
+
             <CustomButton
               customStyles={styles.button}
               onClick={openModalCancel}
             >
               Отмена
             </CustomButton>
+
+            {isOpenModalCancel && (
+              <ModalCancelChanges
+                isOpen={isOpenModalCancel}
+                setIsOpen={setIsOpenModalCancel}
+                resetForm={resetForm}
+              />
+            )}
           </Box>
         )}
       </form>

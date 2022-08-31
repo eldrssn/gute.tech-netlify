@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, KeyboardEvent, useContext, useState } from 'react';
 import classnames from 'classnames/bind';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
@@ -18,6 +18,7 @@ import { HeaderContext } from '../HeaderContext';
 import { LoginButton } from '../LoginButton';
 
 import styles from './headerAsideNav.module.scss';
+import { handleEnterPress } from 'utility/utils';
 
 const cn = classnames.bind(styles);
 
@@ -40,6 +41,10 @@ const HeaderAsideNav: FC = () => {
   const hidePhone = isFocusSearchField && windowSize < HIDE_PHONE_WIDTH;
 
   const formattedCartTotal = formatPrice(cartTotal);
+
+  const handleClickCallback = () => setIsOpenModalAdvice(true);
+  const handlePressCallback = (event: KeyboardEvent) =>
+    handleEnterPress(event, handleClickCallback);
 
   return (
     <>
@@ -67,27 +72,31 @@ const HeaderAsideNav: FC = () => {
       >
         {!isMobile && (
           <Link href={'/cart'} passHref>
-            <MenuItem disableGutters>
-              <Box className={styles.shoppingCartIcon}>
-                <Box className={styles.shoppingCart} />
-                <Box component='div' className={styles.countCartItem}>
-                  <span className={styles.countCartItem_number}>
-                    {amountCartItems}
-                  </span>
+            <a className={styles.focusKeyboard}>
+              <MenuItem disableGutters>
+                <Box className={styles.shoppingCartIcon}>
+                  <Box className={styles.shoppingCart} />
+                  <Box component='div' className={styles.countCartItem}>
+                    <span className={styles.countCartItem_number}>
+                      {amountCartItems}
+                    </span>
+                  </Box>
+                  <Typography className={styles.orderTotalCard}>
+                    {formattedCartTotal}
+                    <i className={styles.icon_ruble} />
+                  </Typography>
                 </Box>
-                <Typography className={styles.orderTotalCard}>
-                  {formattedCartTotal}
-                  <i className={styles.icon_ruble} />
-                </Typography>
-              </Box>
-            </MenuItem>
+              </MenuItem>
+            </a>
           </Link>
         )}
 
         <MenuItem
           className={styles.menuItem_callback}
           disableGutters={!isFullHeader}
-          onClick={() => setIsOpenModalAdvice(true)}
+          onClick={handleClickCallback}
+          onKeyDown={handlePressCallback}
+          tabIndex={0}
         >
           <Box className={styles.consiltIcon} />
           {isFullHeader && (

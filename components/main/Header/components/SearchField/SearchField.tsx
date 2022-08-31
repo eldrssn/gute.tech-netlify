@@ -143,6 +143,10 @@ const SearchField: FC = () => {
           onClick={handleOpenPopover}
           placeholder='Введите артикул, наименование или код запчасти'
           value={searchValue}
+          onFocusCapture={handleOpenPopover}
+          onBlur={handleClosePopover}
+          type='text'
+          autoComplete='off'
         />
         <SearchIcon className={styles.searchIcon} onClick={handleOpenPopover} />
         {isFocusSearchField && (
@@ -177,6 +181,7 @@ const SearchField: FC = () => {
                       onClick={() => handleClick(link)}
                       key={category.slug}
                       className={styles.categoryListItem}
+                      tabIndex={0}
                     >
                       {category.title}
                     </Typography>
@@ -200,6 +205,7 @@ const SearchField: FC = () => {
                       className={styles.productItem}
                       key={product.slug}
                       onClick={() => handleClick(link)}
+                      tabIndex={0}
                     >
                       <CardMedia
                         component={'img'}

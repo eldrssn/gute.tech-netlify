@@ -90,6 +90,9 @@
   position: relative;
   padding: 5px;
 }
+.focusKeyboard:focus-visible {
+  background-color: $gray5;
+}
 
 .shoppingCart {
   width: 24px;
