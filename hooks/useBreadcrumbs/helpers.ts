@@ -1,9 +1,9 @@
 import { TreeCategoryResponseData } from 'api/models/catalog';
-import { PAGE_QUERY } from 'components/base/catalog/constants';
 import { getTransportSlugs } from 'utility/helpers/linkmakers';
 import { CATALOG_QUERY_DEFAULT } from 'utility/utils/constants';
+import { getIsProductInCategorySlug } from 'utility/helpers';
 
-import { defaultPaths, MAIN_TITLE } from './constants';
+import { defaultPaths } from './constants';
 import { GetCrumbs } from './types';
 
 const getCrumbs = (
@@ -32,56 +32,22 @@ const getCrumblistFromURL: GetCrumbs = (
   lastTitle,
   transportId,
 ) => {
-  const [asPathWithoutQuery] = router.asPath.split('?');
+  const asPath = router.asPath.split('?')[0].split('/').splice(1);
 
-  const asPathNestedRoutes = asPathWithoutQuery
-    .split('/')
-    .filter((slug) => slug.length > 0);
-
-  const [, category, subcategory] = asPathNestedRoutes;
-
-  if (transportId) {
-    const transportDetails = getTransportSlugs({
-      transportId,
-    });
-
-    const transportCrumblist = asPathNestedRoutes.map((subpath, index) => {
-      if (index === 1) {
-        const text = paths[subpath];
-        const href = `/catalog/${category}`;
-        return { text, href };
-      }
-
-      if (index === 2) {
-        const text = paths[subpath];
-        const href = `/catalog/${category}/${subcategory}?${transportDetails}&${PAGE_QUERY}`;
-        return { text, href };
-      }
-
-      if (index === 3) {
-        const text = lastTitle;
-        const href = router.asPath;
-        return { text, href };
-      }
-
-      return { text: paths[subpath], href: subpath };
-    });
-
-    const homeCrumb = {
-      text: MAIN_TITLE,
-      href: `/?${transportDetails}`,
-    };
-
-    return [homeCrumb, ...transportCrumblist.slice(1)];
-  }
-
-  const crumblist = asPathNestedRoutes.map((subpath, index) => {
-    const href = '/' + asPathNestedRoutes.slice(0, index + 1).join('/');
+  const crumblist = asPath.map((subpath, index) => {
+    const href = '/' + asPath.slice(0, index + 1).join('/');
 
     const text = paths[subpath] || lastTitle;
 
-    if (index === 2) {
-      return { href: `${href}?${CATALOG_QUERY_DEFAULT}`, text };
+    const isProductInCategorySlug = getIsProductInCategorySlug(subpath);
+
+    if (index > 0 && !isProductInCategorySlug) {
+      return {
+        href: `${href}?${CATALOG_QUERY_DEFAULT}${
+          transportId && getTransportSlugs({ transportId })
+        }`,
+        text,
+      };
     }
 
     return { href, text };

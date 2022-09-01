@@ -5,10 +5,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 
-import { selectTransportStore } from 'store/reducers/transport/selectors';
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import {
   getLinkToCatalog,
-  getLinkToTransportCatalog,
   getLinkToParentCategory,
 } from 'utility/helpers/linkmakers';
 
@@ -20,28 +19,23 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
 
   const { title, image, slug, found, total } = item;
 
-  const { transportId } = useSelector(selectTransportStore);
+  const transportId = useSelector(selectTransportId);
 
-  const { categorySlug } = router.query;
+  const { query, asPath } = router;
+  const { categorySlug } = query;
 
   const isTransportSearch = transportId;
 
-  const linkToTransportCatalog = getLinkToTransportCatalog({
-    categorySlug,
-    subcategorySlug: slug,
+  const linkToParentCategory = getLinkToParentCategory({
+    categorySlug: slug,
     transportId,
   });
 
-  const linkToCatalog = getLinkToCatalog({
-    categorySlug,
-    subcategorySlug: slug,
-  });
-
-  const linkToParentCategory = getLinkToParentCategory(slug);
-
   const handleClick = () => {
     if (categorySlug) {
-      router.push(isTransportSearch ? linkToTransportCatalog : linkToCatalog);
+      router.push(
+        getLinkToCatalog({ asPath, categorySlug: slug, transportId }),
+      );
       return;
     }
 

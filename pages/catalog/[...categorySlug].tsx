@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { Loader } from 'components/ui/Loader';
 
 import { useWindowSize } from 'hooks/useWindowSize';
 
@@ -15,27 +14,38 @@ import { PageNotFound } from 'components/main/PageNotFound';
 import HomePage from 'components/base/home';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { SearchField } from 'components/main/Header/components/SearchField';
+import {
+  makeAnArray,
+  getIsProductInCategorySlug,
+  getCategory,
+} from 'utility/helpers';
+import { ProductPage } from 'components/base/product';
 
 const Catalog: FC = () => {
   const router = useRouter();
 
-  const { categorySlug } = router.query;
-
   const { isMobile } = useWindowSize();
   const transportId = useSelector(selectTransportId);
+
+  const { categorySlug } = router.query;
+  const categorySlugAnArray = makeAnArray(categorySlug);
+  const lastCategorySlug = categorySlugAnArray[categorySlugAnArray.length - 1];
 
   const categoryTreeListSelector = transportId
     ? selectTransportReadCategories
     : selectCategoriesTreeList;
   const categoriesTreeList = useSelector(categoryTreeListSelector);
+  const { data: categoriesTreeListData } = categoriesTreeList;
 
-  const { data: categoriesTreeListData, isLoading } = categoriesTreeList;
-  const category = categoriesTreeListData.find(
-    (category) => category.slug === categorySlug,
-  );
+  const category = getCategory({
+    categoryTree: categoriesTreeListData,
+    query: categorySlugAnArray,
+  });
 
-  if (isLoading) {
-    return <Loader />;
+  const isProductInCategorySlug = getIsProductInCategorySlug(lastCategorySlug);
+
+  if (isProductInCategorySlug) {
+    return <ProductPage />;
   }
 
   if (!category) {
@@ -50,11 +60,7 @@ const Catalog: FC = () => {
     <>
       {isMobile && <SearchField />}
       <NavigationBreadcrumbs />
-      {isProductFoundInCategory ? (
-        <CatalogPage isParentCategory />
-      ) : (
-        <HomePage isParentCategory />
-      )}
+      {isProductFoundInCategory ? <CatalogPage /> : <HomePage isCatalog />}
     </>
   );
 };

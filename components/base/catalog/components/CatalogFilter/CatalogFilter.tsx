@@ -9,10 +9,7 @@ import {
   selectTransportFilterList,
 } from 'store/reducers/catalog/selectors';
 import { Loader } from 'components/ui/Loader';
-import {
-  getLinkToCatalog,
-  getLinkToTransportCatalog,
-} from 'utility/helpers/linkmakers';
+import { getLinkResetFilters } from 'utility/helpers/linkmakers';
 
 import { CatalogFilterButton } from '../CatalogFilterButton';
 
@@ -30,7 +27,7 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
 }) => {
   const router = useRouter();
 
-  const { categorySlug, subcategorySlug } = router.query;
+  const { asPath } = router;
 
   const transportId = useSelector(selectTransportId);
 
@@ -39,14 +36,6 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
     : selectCategoriesFilterList;
 
   const { isLoading, data: filters } = useSelector(currentSelector);
-
-  const linkToTransportCatalog = getLinkToTransportCatalog({
-    categorySlug,
-    subcategorySlug,
-    transportId,
-  });
-
-  const linkToCatalog = getLinkToCatalog({ categorySlug, subcategorySlug });
 
   const handleAnchorClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorApplyButton(event.currentTarget);
@@ -59,7 +48,12 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
 
   const handleResetClick = () => {
     handleRemoveAnchorClick();
-    router.push(transportId ? linkToTransportCatalog : linkToCatalog);
+    router.push(
+      getLinkResetFilters({
+        asPath,
+        transportId,
+      }),
+    );
   };
 
   return isLoading ? (

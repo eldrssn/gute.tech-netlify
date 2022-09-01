@@ -1,7 +1,7 @@
 import { TreeCategoryResponseData } from 'api/models/catalog';
 
 type Props = {
-  isParentCategory?: boolean;
+  isCatalog?: boolean;
 };
 
 enum ItemKeysEnum {

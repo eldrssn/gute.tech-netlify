@@ -1,56 +1,72 @@
 import { QueryUrl } from 'constants/variables';
-import { Slug, Slugs } from 'types';
+import { Slugs } from 'types';
 import { CATALOG_QUERY_DEFAULT } from 'utility/utils/constants';
 import { makeStringify } from '.';
 import { OrdersRequestData } from 'api/models/user';
 
-const getLinkToProductPage = ({
-  categorySlug,
-  subcategorySlug,
-  productSlug,
-}: Slugs) =>
-  `/catalog/${makeStringify(categorySlug)}/${makeStringify(
-    subcategorySlug,
-  )}/${makeStringify(productSlug)}`;
-
-const getLinkToParentCategory = (categorySlug: Slug) =>
-  `catalog/${categorySlug}`;
-
-const getLinkToCategory = (categorySlug: Slug) =>
-  `/catalog/${makeStringify(categorySlug)}`;
-
-const getLinkToCatalog = ({ categorySlug, subcategorySlug }: Slugs) =>
-  `/catalog/${makeStringify(categorySlug)}/${makeStringify(
-    subcategorySlug,
-  )}?${CATALOG_QUERY_DEFAULT}`;
-
 const getTransportSlugs = ({ transportId }: Slugs) =>
   `&${QueryUrl.TRANSPORT_ID}=${makeStringify(transportId)}`;
 
-const getLinkToTransportCatalog = ({
-  categorySlug,
-  subcategorySlug,
-  transportId,
-}: Slugs) => {
-  const transportSlugs = getTransportSlugs({ transportId });
-
-  return `/catalog/${makeStringify(categorySlug)}/${makeStringify(
-    subcategorySlug,
-  )}?${transportSlugs}&${CATALOG_QUERY_DEFAULT}`;
-};
-
-const getLinkToTransportProductPage = ({
-  categorySlug,
-  subcategorySlug,
+const getLinkToProductPage = ({
+  asPath,
   productSlug,
   transportId,
-}: Slugs) => {
-  const transportSlugs = getTransportSlugs({ transportId });
+}: {
+  asPath: string;
+  productSlug: string;
+  transportId: string;
+}) =>
+  `${asPath.split('?')[0]}/product_${productSlug}${
+    transportId && getTransportSlugs({ transportId })
+  }`;
 
-  return `/catalog/${makeStringify(categorySlug)}/${makeStringify(
-    subcategorySlug,
-  )}/${makeStringify(productSlug)}?${transportSlugs}`;
-};
+const getLinkToParentCategory = ({
+  categorySlug,
+  transportId,
+}: {
+  categorySlug: string;
+  transportId: string;
+}) =>
+  `/catalog/${categorySlug}?${CATALOG_QUERY_DEFAULT}${
+    transportId && getTransportSlugs({ transportId })
+  }`;
+
+const getLinkToCategoryFromCatalog = ({
+  categorySlug,
+  subCategorySlug,
+  transportId,
+}: {
+  categorySlug: string;
+  subCategorySlug: string;
+  transportId: string;
+}) =>
+  `/catalog/${categorySlug}/${subCategorySlug}?${CATALOG_QUERY_DEFAULT}${
+    transportId && getTransportSlugs({ transportId })
+  }`;
+
+const getLinkToCatalog = ({
+  asPath,
+  categorySlug,
+  transportId,
+}: {
+  asPath: string;
+  categorySlug: string;
+  transportId: string;
+}) =>
+  `${asPath.split('?')[0]}/${categorySlug}?${CATALOG_QUERY_DEFAULT}${
+    transportId && getTransportSlugs({ transportId })
+  }`;
+
+const getLinkResetFilters = ({
+  asPath,
+  transportId,
+}: {
+  asPath: string;
+  transportId: string;
+}) =>
+  `${asPath.split('?')[0]}?${CATALOG_QUERY_DEFAULT}${
+    transportId && getTransportSlugs({ transportId })
+  }`;
 
 const getLinkApiProfileOrder = ({
   order,
@@ -62,12 +78,11 @@ const getLinkApiProfileOrder = ({
   }${created_before ? `&created_before=${created_before}` : ``}`;
 
 export {
+  getLinkResetFilters,
   getLinkApiProfileOrder,
   getLinkToProductPage,
-  getLinkToTransportProductPage,
-  getLinkToCategory,
   getLinkToParentCategory,
   getLinkToCatalog,
-  getLinkToTransportCatalog,
+  getLinkToCategoryFromCatalog,
   getTransportSlugs,
 };

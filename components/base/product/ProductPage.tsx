@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
@@ -8,8 +8,9 @@ import Container from '@mui/material/Container';
 import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
 import { fetchItemFromCart } from 'store/reducers/cart/actions';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
-import { formatPrice } from 'utility/helpers';
+import { formatPrice, makeAnArray } from 'utility/helpers';
 
+import { fetchCategoriesProductsRead } from 'store/reducers/catalog/actions';
 import { PageNotFound } from 'components/main/PageNotFound';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
@@ -23,6 +24,9 @@ import { ProductQuantity } from './components/ProductQuantity';
 import { ProductSpecial } from './components/ProductSpecial';
 import { ProductImageGallery } from './components/ProductImageGallery';
 import { ProductTabsDescription } from './components/ProductTabsDescription';
+import { getProductSlug } from './helpers';
+
+import { selectTransportId } from 'store/reducers/transport/selectors';
 
 import styles from './productPage.module.scss';
 
@@ -30,7 +34,27 @@ const ProductPage: FC = () => {
   const router = useRouter();
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
   const dispatch = useDispatch();
+
+  const transportId = useSelector(selectTransportId);
+
+  const { categorySlug } = router.query;
+  const categorySlugAnArray = makeAnArray(categorySlug);
+  const сategorySlug = categorySlugAnArray[categorySlugAnArray.length - 2];
+  const productSlug = getProductSlug(
+    categorySlugAnArray[categorySlugAnArray.length - 1],
+  );
+
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
+
+  //TODO: добавить проверку на юрл после обновления метода на беке
+
+  useEffect(() => {
+    dispatch(
+      fetchCategoriesProductsRead({
+        productSlug: productSlug,
+      }),
+    );
+  }, [сategorySlug, productSlug, transportId, dispatch]);
 
   if (isLoading) {
     return <Loader />;

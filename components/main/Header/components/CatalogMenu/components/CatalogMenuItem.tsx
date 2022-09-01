@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import classnames from 'classnames/bind';
 
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import {
-  getLinkToCatalog,
-  getLinkToCategory,
+  getLinkToCategoryFromCatalog,
+  getLinkToParentCategory,
 } from 'utility/helpers/linkmakers';
 
 import { CatalogMenuItemProps } from '../types';
@@ -23,20 +25,25 @@ const CatalogMenuItem: FC<CatalogMenuItemProps> = ({
 }) => {
   const router = useRouter();
 
+  const transportId = useSelector(selectTransportId);
+
   const handleClickMenuItem = () => {
     handleClick();
 
-    if (!isCategory) {
+    if (!isCategory && parentSlug) {
       router.push(
-        getLinkToCatalog({
+        getLinkToCategoryFromCatalog({
           categorySlug: parentSlug,
-          subcategorySlug: item.slug,
+          subCategorySlug: item.slug,
+          transportId,
         }),
       );
       return;
     }
 
-    router.push(getLinkToCategory(item.slug));
+    router.push(
+      getLinkToParentCategory({ categorySlug: item.slug, transportId }),
+    );
   };
 
   return (

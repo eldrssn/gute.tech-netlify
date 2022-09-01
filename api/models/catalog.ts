@@ -24,7 +24,7 @@ type TransportProductListRead = CategoriesProductsListRequestData &
   TransportSearchRequestData;
 
 type CategoriesFiltersListRequestData = {
-  subcategorySlug: string;
+  categorySlug: string;
   page?: number;
   sort?: string;
   order?: string;
@@ -32,7 +32,6 @@ type CategoriesFiltersListRequestData = {
 };
 
 type CategoriesProductsReadRequestData = {
-  categorySlug: string;
   productSlug: string;
 };
 

@@ -1,41 +1,28 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+
 import { TableBody, TableCell, TableRow, Typography } from '@mui/material';
 
-import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
-import { formatPrice, getLinkToProduct } from 'utility/helpers';
+import { formatPrice } from 'utility/helpers';
 
 import { TableBodyProps } from '../../types';
 import styles from './styles.module.scss';
 
 const ProductTableDesktop: React.FC<TableBodyProps> = ({ products }) => {
-  const router = useRouter();
+  //TODO: доделать ссылку на товар
+  // const handleClickTitle = (link: string) => {
+  //   if (!link) {
+  //     return;
+  //   }
 
-  const { data: categoriesTreeListData } = useSelector(
-    selectCategoriesTreeList,
-  );
-
-  const handleClickTitle = (link: string) => {
-    if (!link) {
-      return;
-    }
-
-    router.push(link);
-  };
+  //   return;
+  //   // router.push(link);
+  // };
 
   return (
     <TableBody className={styles.tableBody}>
       {products.map((item) => {
         const itemPrice = formatPrice(item.price);
         const countItemsPrice = formatPrice(item.quantity * item.price);
-        const link =
-          item.product &&
-          getLinkToProduct(
-            item.product.slug,
-            item.product.categories,
-            categoriesTreeListData,
-          );
 
         return (
           <TableRow
@@ -51,7 +38,7 @@ const ProductTableDesktop: React.FC<TableBodyProps> = ({ products }) => {
               <Typography className={styles.itemTitleBox}>
                 <Typography
                   className={styles.itemTitle}
-                  onClick={() => handleClickTitle(link)}
+                  // onClick={() => handleClickTitle(link)}
                 >
                   {item.title}
                 </Typography>

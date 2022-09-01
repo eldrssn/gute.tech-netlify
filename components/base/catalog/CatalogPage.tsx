@@ -7,27 +7,24 @@ import {
   fetchCategoriesFiltersList,
   fetchTransportFilterList,
 } from 'store/reducers/catalog/actions';
-import { makeStringify } from 'utility/helpers';
+import { makeAnArray } from 'utility/helpers';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 
 import { CatalogTitle } from './components/CatalogTitle';
 import { CatalogMain } from './components/CatalogMain';
-import { Props } from './types';
 
-const CatalogPage: FC<Props> = ({ isParentCategory }) => {
+const CatalogPage: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const transportId = useSelector(selectTransportId);
 
-  const { subcategorySlug, categorySlug } = router.query;
+  const { categorySlug } = router.query;
+  const categorySlugAnArray = makeAnArray(categorySlug);
+  const lastCategorySlug = categorySlugAnArray[categorySlugAnArray.length - 1];
 
   useEffect(() => {
     const getSearchTransportFilterList = (categorySlug: string) => {
-      if (!transportId) {
-        return;
-      }
-
       dispatch(
         fetchTransportFilterList({
           transportId,
@@ -36,25 +33,21 @@ const CatalogPage: FC<Props> = ({ isParentCategory }) => {
       );
     };
 
-    const stringifySlug = makeStringify(
-      isParentCategory ? categorySlug : subcategorySlug,
-    );
-
     transportId
-      ? getSearchTransportFilterList(stringifySlug)
+      ? getSearchTransportFilterList(lastCategorySlug)
       : dispatch(
-          fetchCategoriesFiltersList({ subcategorySlug: stringifySlug }),
+          fetchCategoriesFiltersList({ categorySlug: lastCategorySlug }),
         );
 
     return () => {
       dispatch(clearCatalog());
     };
-  }, [subcategorySlug, dispatch, transportId, categorySlug, isParentCategory]);
+  }, [dispatch, transportId, categorySlug, lastCategorySlug]);
 
   return (
     <>
       <CatalogTitle />
-      <CatalogMain isParentCategory={isParentCategory} />
+      <CatalogMain />
     </>
   );
 };

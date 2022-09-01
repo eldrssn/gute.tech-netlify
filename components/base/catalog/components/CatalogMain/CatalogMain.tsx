@@ -16,7 +16,7 @@ import {
 } from 'store/reducers/catalog/selectors';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { makeStringify, scrollToTop } from 'utility/helpers';
+import { makeAnArray, scrollToTop } from 'utility/helpers';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
@@ -31,11 +31,10 @@ import { CatalogSort } from '../CatalogSort';
 import { PAGE_QUERY } from '../../constants';
 import { isNotEnoughtItems } from '../../helpers';
 import styles from './catalogMain.module.scss';
-import { Props } from './types';
 
 const cn = classnames.bind(styles);
 
-const CatalogMain: FC<Props> = ({ isParentCategory }) => {
+const CatalogMain: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isMobile } = useWindowSize();
@@ -50,10 +49,11 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
   const [anchorApplyButton, setAnchorApplyButton] =
     useState<HTMLElement | null>(null);
 
-  const { subcategorySlug, categorySlug } = router.query;
-  const transportId = useSelector(selectTransportId);
+  const { categorySlug } = router.query;
+  const categorySlugAnArray = makeAnArray(categorySlug);
+  const lastCategorySlug = categorySlugAnArray[categorySlugAnArray.length - 1];
 
-  const stringifiedCategorySlug = makeStringify(categorySlug);
+  const transportId = useSelector(selectTransportId);
 
   const currentSelector = transportId
     ? selectSearchProductList
@@ -78,10 +78,6 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
     }
   }, [router.isReady, getQueryOption, total]);
 
-  const stringifySlug = makeStringify(
-    isParentCategory ? categorySlug : subcategorySlug,
-  );
-
   const fetchTransportList = useCallback(() => {
     if (Array.isArray(transportId) || !transportId || !filterRequest) {
       return;
@@ -91,15 +87,15 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
       fetchTransportProductList({
         transportId,
         page,
-        categorySlug: stringifySlug,
+        categorySlug: lastCategorySlug,
         filter: filterRequest,
         ...sorting,
       }),
     );
-  }, [transportId, filterRequest, dispatch, page, sorting, stringifySlug]);
+  }, [transportId, filterRequest, dispatch, page, sorting, lastCategorySlug]);
 
   useEffect(() => {
-    if (!stringifySlug || !sorting || !router.isReady || !filterRequest) {
+    if (!lastCategorySlug || !sorting || !router.isReady || !filterRequest) {
       return;
     }
 
@@ -109,7 +105,7 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
         : dispatch(
             fetchCategoriesProductsList({
               page,
-              categorySlug: stringifySlug,
+              categorySlug: lastCategorySlug,
               filter: filterRequest,
               ...sorting,
             }),
@@ -119,7 +115,7 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
   }, [
     anchorApplyButton,
     router.isReady,
-    stringifySlug,
+    lastCategorySlug,
     dispatch,
     fetchTransportList,
     page,
@@ -129,7 +125,7 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
   ]);
 
   useEffect(() => {
-    if (!stringifiedCategorySlug) {
+    if (!lastCategorySlug) {
       return;
     }
 
@@ -137,7 +133,7 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
       dispatch(
         fetchCategoriesSubcategoriesRead({
           transportId,
-          categorySlug: stringifiedCategorySlug,
+          categorySlug: lastCategorySlug,
         }),
       );
     }
@@ -145,11 +141,11 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
     if (!transportId) {
       dispatch(
         fetchCategoriesSubcategoriesList({
-          categorySlug: stringifiedCategorySlug,
+          categorySlug: lastCategorySlug,
         }),
       );
     }
-  }, [stringifiedCategorySlug, transportId, dispatch]);
+  }, [lastCategorySlug, transportId, dispatch]);
 
   const handleDrawerToggle = () => {
     setOpenDrawer((openDrawer) => !openDrawer);
@@ -161,9 +157,7 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
       <Box className={styles.catalogMainBox}>
         {!isMobile && !!data && (
           <Box className={styles.sideMenu}>
-            {isParentCategory && (
-              <SubcategoriesList isParentCategory={isParentCategory} />
-            )}
+            <SubcategoriesList isCatalog />
             <Box className={styles.catalogFilter_desktop}>
               <CatalogFilter
                 setFilterRequest={setFilterRequest}
@@ -197,9 +191,7 @@ const CatalogMain: FC<Props> = ({ isParentCategory }) => {
               />
             </Box>
           )}
-          {isMobile && (
-            <SubcategoriesList isParentCategory={isParentCategory} />
-          )}
+          {isMobile && <SubcategoriesList isCatalog />}
 
           {!data ? <Loader /> : <CatalogGrid items={results || []} />}
         </Box>

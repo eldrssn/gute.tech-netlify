@@ -1,6 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 import {
   TableBody,
   TableCell,
@@ -13,9 +12,8 @@ import {
 } from '@mui/material';
 
 import { changeChecked } from 'store/reducers/cart/actions';
-import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import { formatPrice } from 'utility/helpers';
-import { getStockBalance, getLinkToProduct } from 'utility/helpers';
+import { getStockBalance } from 'utility/helpers';
 
 import { DeleteItemButton } from '../DeleteItemButton';
 import { Counter } from '../Сounter';
@@ -30,18 +28,16 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
   removeItem,
 }) => {
   const dispatch = useDispatch();
-  const router = useRouter();
-
-  const { data: categoriesTreeListData } = useSelector(
-    selectCategoriesTreeList,
-  );
 
   const handleChangeCheckBox = (slug: string) => {
     dispatch(changeChecked(slug));
   };
-  const handleClickTitle = (link: string) => {
-    router.push(link);
-  };
+
+  //TODO: доделать ссылку на товар
+  // const handleClickTitle = (link: string) => {
+  //   return;
+  //   // router.push(link);
+  // };
 
   return (
     <>
@@ -51,12 +47,6 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
             const stockBalance = getStockBalance(item);
             const itemPrice = formatPrice(item.price);
             const countItemsPrice = formatPrice(item.count * item.price);
-            const slug = item.slug;
-            const link = getLinkToProduct(
-              slug,
-              item.categories,
-              categoriesTreeListData,
-            );
 
             return (
               <TableRow
@@ -90,7 +80,7 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
                   <Typography className={styles.itemTitleBox}>
                     <Typography
                       className={styles.itemTitle}
-                      onClick={() => handleClickTitle(link)}
+                      // onClick={() => handleClickTitle(link)}
                     >
                       {item.title}
                     </Typography>
