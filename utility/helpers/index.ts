@@ -113,7 +113,7 @@ const getSlugsCartItemsFromString = (slugsItem: string) =>
     const slug = itemArray[0].split(':')[1];
     const count = itemArray[1].split(':')[1];
     const ordinalId = itemArray[2].split(':')[1];
-    const isChecked = itemArray[3].split(':')[1] === 'true' ? true : false;
+    const isChecked = itemArray[3]?.split(':')[1] === 'true' ? true : false;
 
     return {
       productSlug: slug,

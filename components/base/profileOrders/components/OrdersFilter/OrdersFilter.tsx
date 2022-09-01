@@ -14,7 +14,7 @@ import useScrollbarSize from 'react-scrollbar-size';
 
 import { useWindowSize } from 'hooks/useWindowSize';
 import { useRouterQuery } from 'hooks/useRouterQuery';
-import { getFullDate } from 'utility/helpers';
+import { formatDate, getFullDate } from 'utility/helpers';
 
 import {
   CREATED_AFTER_QUERY,
@@ -22,9 +22,12 @@ import {
   DateRangeInitialState,
 } from '../../constants';
 import styles from './styles.module.scss';
+import { OrdersFilterProps } from '../../types';
 
-const OrdersFilter: FC = () => {
-  const [isOpenDatePicker, setIsOpenDatePicker] = useState(false);
+const OrdersFilter: FC<OrdersFilterProps> = ({
+  isOpenDatePicker,
+  setIsOpenDatePicker,
+}) => {
   const [dateRange, setDateRange] = useState<Range[]>([DateRangeInitialState]);
 
   const { width: widthScrollBar } = useScrollbarSize();
@@ -101,10 +104,16 @@ const OrdersFilter: FC = () => {
     });
   };
 
-  const isDateRange = created_after && created_before;
+  const isDateRange =
+    created_after &&
+    created_before &&
+    !Array.isArray(created_after) &&
+    !Array.isArray(created_before);
 
   const dateRangeButtonTitle = isDateRange
-    ? `Выбран период: ${created_after} - ${created_before}`
+    ? `Выбранный период: ${formatDate(new Date(created_after))} - ${formatDate(
+        new Date(created_before),
+      )}`
     : `Выбрать период`;
 
   return (
@@ -119,6 +128,7 @@ const OrdersFilter: FC = () => {
             <FontAwesomeIcon icon={faTimes} />
           </Box>
         )}
+
         <Box
           className={cn(styles.dateRangePopover, {
             [styles.dateRangeOpenPopover]: isOpenDatePicker,

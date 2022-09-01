@@ -23,7 +23,7 @@ const initialState: UserStore = {
       pages: 0,
       total: 0,
     },
-    isLoading: false,
+    isLoading: true,
     error: null,
   },
   order: {

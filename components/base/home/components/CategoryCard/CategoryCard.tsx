@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import { useSelector } from 'react-redux';
 import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
@@ -10,6 +10,7 @@ import {
   getLinkToCatalog,
   getLinkToParentCategory,
 } from 'utility/helpers/linkmakers';
+import { handleEnterPress } from 'utility/utils';
 
 import { CategoryCardProps } from './types';
 import styles from './CategoryCard.module.scss';
@@ -42,8 +43,16 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
     router.push(linkToParentCategory);
   };
 
+  const handleKeyDown = (event: KeyboardEvent) =>
+    handleEnterPress(event, handleClick);
+
   return (
-    <div className={styles.categoryCard} onClick={handleClick}>
+    <div
+      className={styles.categoryCard}
+      onClick={handleClick}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+    >
       <Box
         className={styles.categoryQuantity_container}
         sx={{

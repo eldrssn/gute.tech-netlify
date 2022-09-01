@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, KeyboardEvent, useEffect } from 'react';
 import classnames from 'classnames/bind';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
@@ -10,6 +10,7 @@ import { DIRECTIONS, ORDER_TYPES } from './constants';
 
 import { CatalogSortProps } from './types';
 import styles from './catalogSort.module.scss';
+import { handleEnterPress } from 'utility/utils';
 
 const cn = classnames.bind(styles);
 
@@ -57,6 +58,12 @@ const CatalogSort: FC<CatalogSortProps> = ({
   const isActive = (start: string) => orderType.startsWith(start);
   const isDown = (start: string) => orderType === `${start}${DIRECTIONS.DOWN}`;
 
+  const handlePressDirectionByPopular = (event: KeyboardEvent) =>
+    handleEnterPress(event, setDirectionByPopular);
+
+  const handlePressDirectionByPrice = (event: KeyboardEvent) =>
+    handleEnterPress(event, setDirectionByPrice);
+
   return (
     <div className={styles.sortContainer}>
       <span className={styles.sortItem}>Сортировать по:</span>
@@ -66,7 +73,9 @@ const CatalogSort: FC<CatalogSortProps> = ({
             [styles.active]: isActive(ORDER_TYPES.byPopular),
             [styles.down]: isDown(ORDER_TYPES.byPopular),
           })}
+          tabIndex={0}
           onClick={setDirectionByPopular}
+          onKeyDown={handlePressDirectionByPopular}
         >
           популярности
         </a>
@@ -75,7 +84,9 @@ const CatalogSort: FC<CatalogSortProps> = ({
             [styles.active]: isActive(ORDER_TYPES.byPrice),
             [styles.down]: isDown(ORDER_TYPES.byPrice),
           })}
+          tabIndex={0}
           onClick={setDirectionByPrice}
+          onKeyDown={handlePressDirectionByPrice}
         >
           цене
         </a>

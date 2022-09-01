@@ -28,16 +28,12 @@ const formatStringifiedDate = (date: string) =>
   date.split('/').reverse().join('-');
 
 const getDate = (stringifiedDate: string | null | CityRequestData) => {
-  if (typeof stringifiedDate === 'string') {
-    return stringifiedDate ? new Date(stringifiedDate) : null;
-  }
-
-  return null;
+  return typeof stringifiedDate === 'string' ? new Date(stringifiedDate) : null;
 };
 
 const formatDate = (date: string | null) => {
   if (!date) {
-    return;
+    return null;
   }
   const formatedDate = formatStringifiedDate(date);
   return new Date(formatedDate);

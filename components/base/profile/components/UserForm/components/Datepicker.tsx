@@ -8,7 +8,7 @@ import {
   checkCorrectDate,
   checkValidDate,
   cutDate,
-  formatStringifiedDate,
+  formatDate,
   getDate,
   validateMaxAge,
   validateMinAge,
@@ -56,7 +56,7 @@ const Datepicker: FC<DatepickerProps> = ({
   ) => {
     if (!errors[ProfileFields.DATE_OF_BIRTHDAY]) {
       const { value } = event.target;
-      const inputDate = new Date(formatStringifiedDate(value));
+      const inputDate = formatDate(value);
       setDateOfBirth(inputDate);
     }
   };

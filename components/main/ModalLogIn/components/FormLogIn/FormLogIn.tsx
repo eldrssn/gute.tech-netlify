@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useController, Controller } from 'react-hook-form';
 import { Box, Typography, TextField, FormControl } from '@mui/material';
@@ -15,6 +15,7 @@ import {
 } from 'store/reducers/authentication/selectors';
 import { FormInput } from 'components/main/FormInput';
 import { getInputRules } from 'utility/helpers';
+import { handleEnterPress } from 'utility/utils';
 import { inputMasks } from 'constants/patterns';
 import { EValidatePattern, ActiveAutorizationFormKey } from 'constants/types';
 import colors from 'styles/_export.module.scss';
@@ -65,6 +66,18 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
 
   const isOtherError = otherError.length > 0;
 
+  const handleClickRegistration = () => {
+    dispatch(
+      setActiveAuthorizationForm(ActiveAutorizationFormKey.REGISTRATION),
+    );
+  };
+
+  const handleClickResetPassword = () => {
+    dispatch(
+      setActiveAuthorizationForm(ActiveAutorizationFormKey.RESET_PASSWORD),
+    );
+  };
+
   return (
     <form onSubmit={onSubmit}>
       <Typography className={styles.formTitle}>авторизация</Typography>
@@ -86,6 +99,7 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
                 variant='outlined'
                 type='text'
                 fullWidth
+                tabIndex={0}
               />
             </InputMask>
           )}
@@ -120,26 +134,22 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
       )}
       <FormControl className={styles.formControl}>
         <Typography
-          onClick={() => {
-            dispatch(
-              setActiveAuthorizationForm(
-                ActiveAutorizationFormKey.REGISTRATION,
-              ),
-            );
-          }}
+          onClick={handleClickRegistration}
+          tabIndex={0}
           className={styles.otherFormButton}
+          onKeyPress={(event: KeyboardEvent) =>
+            handleEnterPress(event, handleClickRegistration)
+          }
         >
           Регистрация
         </Typography>
         <Typography
-          onClick={() => {
-            dispatch(
-              setActiveAuthorizationForm(
-                ActiveAutorizationFormKey.RESET_PASSWORD,
-              ),
-            );
-          }}
+          onClick={handleClickResetPassword}
           className={styles.otherFormButton}
+          tabIndex={0}
+          onKeyPress={(event: KeyboardEvent) =>
+            handleEnterPress(event, handleClickResetPassword)
+          }
         >
           Напомнить пароль
         </Typography>

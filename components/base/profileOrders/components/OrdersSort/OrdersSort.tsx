@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import cn from 'classnames';
 import Box from '@mui/material/Box';
 
@@ -20,11 +20,7 @@ const OrdersSort: FC = () => {
     routerQuery.setQueryOption({ [ORDERING_QUERY]: changedOrderType });
   };
 
-  useEffect(() => {
-    setDirectionByDate();
-  }, []);
-
-  const isUp = () => orderType === DIRECTIONS.UP;
+  const isDown = () => orderType === DIRECTIONS.DOWN;
 
   return (
     <div className={styles.sortContainer}>
@@ -32,7 +28,7 @@ const OrdersSort: FC = () => {
       <Box className={styles.sortButton}>
         <a
           className={cn(styles.sortItem, styles.sortItemType, styles.active, {
-            [styles.up]: isUp(),
+            [styles.down]: isDown(),
           })}
           onClick={setDirectionByDate}
         >

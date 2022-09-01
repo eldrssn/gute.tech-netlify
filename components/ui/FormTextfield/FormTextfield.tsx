@@ -18,6 +18,7 @@ const FormTextfield: FC<FormTextfieldProps> = ({
   onClick,
   errorMessage,
   inputProps,
+  onKeyPress,
 }) => {
   const isMockField = name && register;
 
@@ -35,6 +36,7 @@ const FormTextfield: FC<FormTextfieldProps> = ({
         disabled={disabled}
         onClick={onClick}
         inputProps={inputProps}
+        onKeyPress={onKeyPress}
       />
       {error && (
         <FormHelperText error className={styles.inputField_error}>

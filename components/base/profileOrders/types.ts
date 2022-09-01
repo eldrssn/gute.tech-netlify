@@ -4,4 +4,9 @@ type dateRange = {
   key: string;
 }[];
 
-export type { dateRange };
+type OrdersFilterProps = {
+  isOpenDatePicker: boolean;
+  setIsOpenDatePicker: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export type { dateRange, OrdersFilterProps };

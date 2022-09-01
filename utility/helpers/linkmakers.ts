@@ -73,7 +73,7 @@ const getLinkApiProfileOrder = ({
   created_after,
   created_before,
 }: Omit<OrdersRequestData, 'size' | 'page'>) =>
-  `/user/profile/orders/?ordering=${order}${
+  `/user/profile/orders/?${order ? `ordering=${order}` : ``}${
     created_after ? `&created_after=${created_after}` : ``
   }${created_before ? `&created_before=${created_before}` : ``}`;
 

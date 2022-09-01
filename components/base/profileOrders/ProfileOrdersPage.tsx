@@ -26,6 +26,7 @@ import styles from './styles.module.scss';
 const ProfileOrdersPage = () => {
   const [page, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState('');
+  const [isOpenDatePicker, setIsOpenDatePicker] = useState(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -70,12 +71,13 @@ const ProfileOrdersPage = () => {
     if (
       Array.isArray(created_after) ||
       Array.isArray(created_before) ||
-      !order
+      isOpenDatePicker
     ) {
       return;
     }
+
     dispatch(fetchOrders({ order, created_after, created_before, page }));
-  }, [created_after, created_before, dispatch, order, page]);
+  }, [created_after, created_before, dispatch, order, page, isOpenDatePicker]);
 
   return (
     <Container disableGutters className={styles.mainContainer}>
@@ -95,12 +97,19 @@ const ProfileOrdersPage = () => {
               searchValue={searchValue}
               setSearchValue={setSearchValue}
             />
+            <Box className={styles.paginationContainer}>
+              <PaginationNav
+                pageCount={pageCount}
+                currentPage={page}
+                setPage={setPage}
+              />
+            </Box>
+
             <OrdersSort />
-            <OrdersFilter />
-            <PaginationNav
-              pageCount={pageCount}
-              currentPage={page}
-              setPage={setPage}
+
+            <OrdersFilter
+              isOpenDatePicker={isOpenDatePicker}
+              setIsOpenDatePicker={setIsOpenDatePicker}
             />
           </Box>
           <OrderGrid searchValue={searchValue} />

@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { KeyboardEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Box } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import FocusTrap from 'focus-trap-react';
 
 import { setActiveAuthorizationForm } from 'store/reducers/authentication/actions';
 import {
@@ -13,6 +14,7 @@ import {
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { resetAllField } from 'store/reducers/authentication/actions';
 import { ActiveAutorizationFormKey } from 'constants/types';
+import { handleEnterPress } from 'utility/utils';
 
 import { FormLogIn } from './components/FormLogIn';
 import { FormRegistration } from './components/FormRegistration';
@@ -38,6 +40,9 @@ const ModalLogIn: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
     dispatch(resetAllField());
   };
 
+  const handlePress = (event: KeyboardEvent) =>
+    handleEnterPress(event, closeModal);
+
   useEffect(() => {
     if (isAuthorized) {
       closeModal();
@@ -61,16 +66,23 @@ const ModalLogIn: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal} isCloseDisable>
-      <Box className={styles.closeModal} onClick={closeModal}>
-        <FontAwesomeIcon icon={faTimes} />
-      </Box>
-      <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Box className={styles.formWrap}>
-          {ActiveFormComponent[activeAuthorizationForm]}
+    <FocusTrap>
+      <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
+        <Box
+          className={styles.closeModal}
+          onClick={closeModal}
+          onKeyPress={handlePress}
+          tabIndex={0}
+        >
+          <FontAwesomeIcon icon={faTimes} />
         </Box>
-      </Container>
-    </ModalWrapper>
+        <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box className={styles.formWrap}>
+            {ActiveFormComponent[activeAuthorizationForm]}
+          </Box>
+        </Container>
+      </ModalWrapper>
+    </FocusTrap>
   );
 };
 

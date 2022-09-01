@@ -11,6 +11,7 @@ const ModalWrapper: React.FC<TOuterProps> = ({
   isOpen,
   setIsOpen,
   isCloseDisable,
+  closeByEsc = true,
 }) => {
   const { width: widthScrollBar } = useScrollbarSize();
 
@@ -20,6 +21,12 @@ const ModalWrapper: React.FC<TOuterProps> = ({
     }
 
     return setIsOpen(false);
+  };
+
+  const handlePressEscClose = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      closeModal();
+    }
   };
 
   const onClickContent = (event: MouseEvent<HTMLElement>) => {
@@ -48,6 +55,17 @@ const ModalWrapper: React.FC<TOuterProps> = ({
       document.body.style.marginRight = '0px';
     };
   }, []);
+
+  useEffect(() => {
+    if (!closeByEsc) {
+      return;
+    }
+
+    document.body.addEventListener('keydown', handlePressEscClose);
+
+    return () =>
+      document.body.removeEventListener('keydown', handlePressEscClose);
+  });
 
   return (
     <div className={modalBackgroundClassName} onClick={closeModal}>

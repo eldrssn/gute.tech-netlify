@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import FocusTrap from 'focus-trap-react';
 import { Typography, Box, TextField, FormHelperText } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -24,11 +25,14 @@ import {
   selectVerifyEmail,
 } from 'store/reducers/user/selectors';
 
+import { TIMEOUT_DELAY } from 'utility/utils/constants';
+import { handleEnterPress } from 'utility/utils';
+
 import { modalFields } from './constants';
 import { checkForErrors, checkSameEmail } from './helpers';
 import { TFormData, TFormDataKeys, TOuterProps } from './types';
+
 import styles from './modalEditUserEmail.module.scss';
-import { TIMEOUT_DELAY } from 'utility/utils/constants';
 
 const ModalEditUserEmail: React.FC<TOuterProps> = ({
   isOpen,
@@ -125,74 +129,83 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
   });
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
-      <form className={styles.wrap} onSubmit={handleClickSubmitCode}>
-        <Box className={styles.closeModal} onClick={closeModal}>
-          <FontAwesomeIcon icon={faTimes} />
-        </Box>
-        {!isNextStep && (
-          <>
-            <Typography className={styles.title}>
-              Введите новый email
-            </Typography>
+    <FocusTrap>
+      <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+        <form className={styles.wrap} onSubmit={handleClickSubmitCode}>
+          <Box
+            className={styles.closeModal}
+            onClick={closeModal}
+            tabIndex={0}
+            onKeyPress={(event: KeyboardEvent) =>
+              handleEnterPress(event, closeModal)
+            }
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </Box>
+          {!isNextStep && (
+            <>
+              <Typography className={styles.title}>
+                Введите новый email
+              </Typography>
 
-            <TextField
-              type='email'
-              {...register(modalFields.EMAIL, inputEmailRule)}
-              hiddenLabel
-              className={styles.inputField}
-              placeholder='new-email@email.com'
-              error={Boolean(errors.email)}
-              autoComplete='email'
-              onChange={(event) =>
-                handleChangeFormValue(event, modalFields.EMAIL)
-              }
-              required
-            />
-            {errors.email && (
-              <FormHelperText error className={styles.inputField_error}>
-                {errors.email.message}
-              </FormHelperText>
-            )}
+              <TextField
+                type='email'
+                {...register(modalFields.EMAIL, inputEmailRule)}
+                hiddenLabel
+                className={styles.inputField}
+                placeholder='new-email@email.com'
+                error={Boolean(errors.email)}
+                autoComplete='email'
+                onChange={(event) =>
+                  handleChangeFormValue(event, modalFields.EMAIL)
+                }
+                required
+              />
+              {errors.email && (
+                <FormHelperText error className={styles.inputField_error}>
+                  {errors.email.message}
+                </FormHelperText>
+              )}
 
-            <CustomButton
-              customStyles={styles.button}
-              onClick={handleClickGetCode}
-            >
-              Получить код
-            </CustomButton>
-          </>
-        )}
+              <CustomButton
+                customStyles={styles.button}
+                onClick={handleClickGetCode}
+              >
+                Получить код
+              </CustomButton>
+            </>
+          )}
 
-        {isNextStep && (
-          <>
-            <Typography className={styles.title}>
-              На вашу почту {getValuesModal(modalFields.EMAIL)} был отправлен
-              код для подверждения
-            </Typography>
+          {isNextStep && (
+            <>
+              <Typography className={styles.title}>
+                На вашу почту {getValuesModal(modalFields.EMAIL)} был отправлен
+                код для подверждения
+              </Typography>
 
-            <TextField
-              hiddenLabel
-              className={styles.inputField}
-              placeholder='Введите полученный код'
-              {...register(modalFields.CODE, inputCodeRule)}
-              onChange={(event) =>
-                handleChangeFormValue(event, modalFields.CODE)
-              }
-            />
-            {errors.code && (
-              <FormHelperText error className={styles.inputField_error}>
-                {errors.code.message}
-              </FormHelperText>
-            )}
+              <TextField
+                hiddenLabel
+                className={styles.inputField}
+                placeholder='Введите полученный код'
+                {...register(modalFields.CODE, inputCodeRule)}
+                onChange={(event) =>
+                  handleChangeFormValue(event, modalFields.CODE)
+                }
+              />
+              {errors.code && (
+                <FormHelperText error className={styles.inputField_error}>
+                  {errors.code.message}
+                </FormHelperText>
+              )}
 
-            <CustomButton customStyles={styles.button} type='submit'>
-              Подтвердить
-            </CustomButton>
-          </>
-        )}
-      </form>
-    </ModalWrapper>
+              <CustomButton customStyles={styles.button} type='submit'>
+                Подтвердить
+              </CustomButton>
+            </>
+          )}
+        </form>
+      </ModalWrapper>
+    </FocusTrap>
   );
 };
 

@@ -53,7 +53,6 @@ type PersonalFieldsProps = {
 type AccountFieldsProps = PersonalFieldsProps & {
   setValue: UseFormSetValue<ProfileResponseData>;
   trigger: UseFormTrigger<ProfileResponseData>;
-  handleOpenModalEmail: () => void;
 };
 
 type TDate = Date | null | undefined;
