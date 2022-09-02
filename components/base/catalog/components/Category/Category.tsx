@@ -1,36 +1,41 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import {
-  getLinkToCatalog,
-  getLinkToCategory,
+  getLinkToCategoryFromCatalog,
+  getLinkToParentCategory,
 } from 'utility/helpers/linkmakers';
 
 import { CategoriesProps } from './types';
 import styles from './category.module.scss';
 
 const Category: FC<CategoriesProps> = ({ categorySlug }) => {
+  const router = useRouter();
   const { data: categoriesTree } = useSelector(selectCategoriesTreeList);
-  const category = categoriesTree.find((item) => item.slug === categorySlug);
+  const transportId = useSelector(selectTransportId);
 
+  const category = categoriesTree.find((item) => item.slug === categorySlug);
   const children = category?.children;
   const title = category?.title;
 
-  const linkToCategory = getLinkToCategory(categorySlug);
+  const linkToCategory = getLinkToParentCategory({ categorySlug, transportId });
+
+  const handleClick = (link: string) => {
+    router.push(link);
+  };
 
   return (
     <Container disableGutters>
-      <Link href={linkToCategory}>
-        <a>
-          <h2 className={styles.header}>{title}</h2>
-        </a>
-      </Link>
+      <a onClick={() => handleClick(linkToCategory)}>
+        <h2 className={styles.header}>{title}</h2>
+      </a>
 
       <Container
         disableGutters
@@ -38,18 +43,17 @@ const Category: FC<CategoriesProps> = ({ categorySlug }) => {
         className={styles.childrenList}
       >
         {children?.map((child) => {
-          const linkToCatalog = getLinkToCatalog({
+          const linkToCatalog = getLinkToCategoryFromCatalog({
             categorySlug,
-            subcategorySlug: child.slug,
+            subCategorySlug: child.slug,
+            transportId,
           });
 
           return (
             <Box key={child.slug} className={styles.childrenListItem}>
-              <Link href={linkToCatalog} key={child.slug}>
-                <a>
-                  <Box className={styles.category_title}>{child.title}</Box>
-                </a>
-              </Link>
+              <a onClick={() => handleClick(linkToCatalog)}>
+                <Box className={styles.category_title}>{child.title}</Box>
+              </a>
 
               <Divider light={true} />
             </Box>

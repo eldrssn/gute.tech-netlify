@@ -9,28 +9,21 @@ import {
   CardMedia,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import cn from 'classnames';
 
-import { clearTransportId } from 'store/reducers/transport/actions';
 import {
   fetchCatalogSearchRead,
   clearCatalogSearchRead,
 } from 'store/reducers/catalog/actions';
-import {
-  selectCatalogSearchRead,
-  selectCategoriesTreeList,
-} from 'store/reducers/catalog/selectors';
+import { selectCatalogSearchRead } from 'store/reducers/catalog/selectors';
 import { useDebounce } from 'hooks/useDebounce';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { getParentCategory } from 'utility/helpers';
 
 import { HeaderContext } from '../HeaderContext';
 
 import styles from './styles.module.scss';
 
 const SearchField: FC = () => {
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const { isMobile, isTablet } = useWindowSize();
@@ -47,9 +40,7 @@ const SearchField: FC = () => {
   }
 
   const catalogSearchRead = useSelector(selectCatalogSearchRead);
-  const { data: categoriesTreeListData } = useSelector(
-    selectCategoriesTreeList,
-  );
+
   const debouncedSearchTerm = useDebounce(
     searchValue,
     searchValue.length >= 3 ? 500 : 1,
@@ -81,12 +72,13 @@ const SearchField: FC = () => {
     [setIsFocusSearchField],
   );
 
-  const handleClick = (link: string) => {
-    setFieldIsFocus(false);
-    router.push(link);
-    setSearchValue('');
-    dispatch(clearTransportId());
-  };
+  //TODO: доделать ссылку на товар
+  // const handleClick = (link: string) => {
+  //   setFieldIsFocus(false);
+  //   router.push(link);
+  //   setSearchValue('');
+  //   dispatch(clearTransportId());
+  // };
 
   const handleClosePopover = () => {
     setFieldIsFocus(false);
@@ -170,15 +162,11 @@ const SearchField: FC = () => {
               <Box className={styles.categoryList}>
                 <Typography className={styles.listTitle}>Категории</Typography>
                 {categorySearch?.map((category) => {
-                  const parentCategory = getParentCategory({
-                    categoriesTreeListData,
-                    childrenCategorySlug: category.slug,
-                  });
-                  const link = `/catalog/${parentCategory}/${category.slug}`;
+                  //TODO: доделать ссылку на товар
 
                   return (
                     <Typography
-                      onClick={() => handleClick(link)}
+                      // onClick={() => handleClick(link)}
                       key={category.slug}
                       className={styles.categoryListItem}
                       tabIndex={0}
@@ -193,19 +181,14 @@ const SearchField: FC = () => {
               <Box className={styles.productsList}>
                 <Typography className={styles.listTitle}>Товары</Typography>
                 {productSeacrh?.map((product) => {
-                  const parentCategory = getParentCategory({
-                    categoriesTreeListData,
-                    childrenCategorySlug: product.categories[0],
-                  });
-
-                  const link = `/catalog/${parentCategory}/${product.categories[0]}/${product.slug}`;
+                  //TODO: доделать ссылку на товар
 
                   return (
                     <Box
                       className={styles.productItem}
                       key={product.slug}
-                      onClick={() => handleClick(link)}
                       tabIndex={0}
+                      // onClick={() => handleClick(link)}
                     >
                       <CardMedia
                         component={'img'}

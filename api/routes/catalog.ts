@@ -67,10 +67,10 @@ const getCategoriesTreeList = () =>
   });
 
 const getCategoriesFiltersList = ({
-  subcategorySlug,
+  categorySlug,
 }: CategoriesFiltersListRequestData) =>
   sendRequest<FiltersCategoryResponseData[]>({
-    url: `/catalog/${subcategorySlug}/filters/`,
+    url: `/catalog/${categorySlug}/filters/`,
     method: ApiMethods.GET,
   });
 

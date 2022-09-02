@@ -1,5 +1,5 @@
 type CategoriesProps = {
-  categorySlug?: string | string[];
+  categorySlug: string;
 };
 
 export type { CategoriesProps };

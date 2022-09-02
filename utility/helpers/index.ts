@@ -133,44 +133,8 @@ const getSlugsCartItemsFromCart = (cart: CartItemData[]) =>
 const makeStringify = (value?: string[] | string) =>
   typeof value === 'string' ? value : value?.toString() || '';
 
-const getFindCategory = ({
-  categories,
-  categoriesTreeListData,
-}: {
-  categories: string[];
-  categoriesTreeListData: TreeCategoryResponseData[];
-}) =>
-  categories.find((category) =>
-    categoriesTreeListData.some((parentCategory) => {
-      if (!parentCategory.children) {
-        return false;
-      }
-
-      return parentCategory.children.some(
-        (parentChildren) => parentChildren.slug === category,
-      );
-    }),
-  );
-
-const getParentCategory = ({
-  categoriesTreeListData,
-  childrenCategorySlug,
-}: {
-  categoriesTreeListData: TreeCategoryResponseData[];
-  childrenCategorySlug: string;
-}) => {
-  const categorySearch = categoriesTreeListData.find((category) => {
-    if (!category.children) {
-      return false;
-    }
-
-    return category.children.some(
-      (childrenCategory) => childrenCategory.slug === childrenCategorySlug,
-    );
-  });
-
-  return categorySearch?.slug;
-};
+const makeAnArray = (value?: string[] | string) =>
+  typeof value === 'object' ? value : [];
 
 const setBreakpointSize = (breakpoint: string) =>
   Number(breakpoint.slice(0, -2));
@@ -263,29 +227,48 @@ const getStockBalance = (item: CartItemData) =>
 const getProductSlugList = (productsOptions: productOptions[]) =>
   productsOptions.map((productOption) => productOption.productSlug);
 
-const getLinkToProduct = (
-  slug: string,
-  categories: string[],
-  categoriesTreeListData: TreeCategoryResponseData[],
-) => {
-  const categorySlug = getFindCategory({ categories, categoriesTreeListData });
+const getIsProductInCategorySlug = (categorySlug: string) =>
+  categorySlug ? categorySlug.split('_')[0] === 'product' : false;
 
-  if (!categorySlug) {
-    return '/404';
+const getCategory = ({
+  categoryTree,
+  iteration = 0,
+  query,
+}: {
+  categoryTree: TreeCategoryResponseData[];
+  iteration?: number;
+  query: string[];
+}): TreeCategoryResponseData | null => {
+  const findCategory = categoryTree.find(
+    (category) => category.slug === query[iteration],
+  );
+
+  if (!findCategory) {
+    return null;
   }
 
-  const parentCategorySlug = getParentCategory({
-    categoriesTreeListData,
-    childrenCategorySlug: categorySlug,
-  });
+  if (iteration === query.length - 1) {
+    return findCategory;
+  }
 
-  return `/catalog/${parentCategorySlug}/${categorySlug}/${slug}`;
+  if (!findCategory) {
+    return null;
+  }
+
+  if (!findCategory.children) {
+    return null;
+  }
+
+  return getCategory({
+    categoryTree: findCategory.children,
+    iteration: iteration + 1,
+    query,
+  });
 };
 
 export default setBreakpointSize;
 
 export {
-  getLinkToProduct,
   getProductSlugList,
   getFullDate,
   getStockBalance,
@@ -298,12 +281,13 @@ export {
   filterRegionsOption,
   cookieStorage,
   makeStringify,
-  getParentCategory,
-  getFindCategory,
+  makeAnArray,
   setBreakpointSize,
   formatPrice,
   getCookie,
   setCookie,
   deleteCookie,
   formatDate,
+  getCategory,
+  getIsProductInCategorySlug,
 };

@@ -1,5 +1,5 @@
 type Props = {
-  isParentCategory?: boolean;
+  isCatalog?: boolean;
 };
 
 export type { Props };

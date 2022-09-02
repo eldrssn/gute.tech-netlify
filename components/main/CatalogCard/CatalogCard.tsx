@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import classnames from 'classnames/bind';
 
@@ -19,10 +18,7 @@ import { fetchItemFromOrder } from 'store/reducers/order/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
 
-import {
-  getLinkToProductPage,
-  getLinkToTransportProductPage,
-} from 'utility/helpers/linkmakers';
+import { getLinkToProductPage } from 'utility/helpers/linkmakers';
 import { formatPrice } from 'utility/helpers';
 
 import { Title } from './components/TitleTooltip';
@@ -43,7 +39,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { categorySlug, subcategorySlug } = router.query;
+  const { asPath } = router;
   const transportId = useSelector(selectTransportId);
 
   const addItemToBasket = () => {
@@ -62,18 +58,11 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
     event.preventDefault();
   };
 
-  const linkToProductPage = transportId
-    ? getLinkToTransportProductPage({
-        categorySlug,
-        subcategorySlug,
-        productSlug: slug,
-        transportId,
-      })
-    : getLinkToProductPage({
-        categorySlug,
-        subcategorySlug,
-        productSlug: slug,
-      });
+  const handleClick = () => {
+    router.push(
+      getLinkToProductPage({ asPath, productSlug: slug, transportId }),
+    );
+  };
 
   const formattedPrice = formatPrice(price);
 
@@ -91,52 +80,50 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
           [styles.cardContainer_slider]: isSlider,
         })}
       >
-        <Link href={linkToProductPage}>
-          <a className={styles.cardLinkContainer}>
-            <CardMedia
-              component={'img'}
-              height='250'
-              src={image || '/images/no-image.jpeg'}
-              alt={title}
-              className={styles.cardImage}
-            />
+        <a className={styles.cardLinkContainer} onClick={handleClick}>
+          <CardMedia
+            component={'img'}
+            height='250'
+            src={image || '/images/no-image.jpeg'}
+            alt={title}
+            className={styles.cardImage}
+          />
 
-            <CardContent className={styles.cardInfo}>
-              <Divider className={styles.cardDivider} />
+          <CardContent className={styles.cardInfo}>
+            <Divider className={styles.cardDivider} />
 
-              <Title>{title}</Title>
+            <Title>{title}</Title>
 
-              <Box className={styles.cardBottom}>
-                <div className={styles.cardBottom_price}>
-                  <Typography className={styles.cardPrice}>
-                    {formattedPrice}
-                  </Typography>
-                  <Typography className={styles.cardPrice}>
-                    <i className={styles.icon_ruble} />
-                  </Typography>
-                </div>
+            <Box className={styles.cardBottom}>
+              <div className={styles.cardBottom_price}>
+                <Typography className={styles.cardPrice}>
+                  {formattedPrice}
+                </Typography>
+                <Typography className={styles.cardPrice}>
+                  <i className={styles.icon_ruble} />
+                </Typography>
+              </div>
 
-                <CardActions className={styles.cardActions}>
-                  {!isSlider && (
-                    <CustomButton
-                      customStyles={styles.cardBuyButton}
-                      onClick={buyItNow}
-                    >
-                      Купить
-                    </CustomButton>
-                  )}
-
+              <CardActions className={styles.cardActions}>
+                {!isSlider && (
                   <CustomButton
-                    customStyles={styles.cardAddToShoppingButton}
-                    onClick={handleClickToBasket}
+                    customStyles={styles.cardBuyButton}
+                    onClick={buyItNow}
                   >
-                    <i className={styles.shoppingIcon} />
+                    Купить
                   </CustomButton>
-                </CardActions>
-              </Box>
-            </CardContent>
-          </a>
-        </Link>
+                )}
+
+                <CustomButton
+                  customStyles={styles.cardAddToShoppingButton}
+                  onClick={handleClickToBasket}
+                >
+                  <i className={styles.shoppingIcon} />
+                </CustomButton>
+              </CardActions>
+            </Box>
+          </CardContent>
+        </a>
       </Card>
     </>
   );

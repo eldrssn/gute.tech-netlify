@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -15,12 +15,12 @@ import { Loader } from 'components/ui/Loader';
 import { Items } from './components/rows/types';
 import { groupItems } from 'utility/helpers';
 import {
-  selectCategoriesSearchRead,
+  selectTransportReadCategories,
   selectCategoriesTreeList,
 } from 'store/reducers/catalog/selectors';
 import { selectTransportStore } from 'store/reducers/transport/selectors';
+import { getCategory, makeAnArray } from 'utility/helpers';
 
-import { getGroupedChildren } from './helpers';
 import { Index, Props } from './types';
 
 const rowHashMap: Record<Index, FC<Items>> = {
@@ -30,33 +30,44 @@ const rowHashMap: Record<Index, FC<Items>> = {
   4: SecondRowReversed,
 };
 
-const Home: FC<Props> = ({ isParentCategory }) => {
+const Home: FC<Props> = ({ isCatalog }) => {
   const router = useRouter();
+
+  const { categorySlug } = router.query;
+  const categorySlugAnArray = makeAnArray(categorySlug);
 
   const { transportId } = useSelector(selectTransportStore);
 
-  const currentSelector = transportId
-    ? selectCategoriesSearchRead
+  const categoryTreeListSelector = transportId
+    ? selectTransportReadCategories
     : selectCategoriesTreeList;
+  const categoriesTreeList = useSelector(categoryTreeListSelector);
+  const { data: categoriesTreeListData, isLoading } = categoriesTreeList;
 
-  const { isLoading, data: categories } = useSelector(currentSelector);
-  const { categorySlug } = router.query;
+  const catalogCategory = getCategory({
+    categoryTree: categoriesTreeListData,
+    query: categorySlugAnArray,
+  });
 
-  const groupedItems = useMemo(
-    () =>
-      categorySlug
-        ? getGroupedChildren(categorySlug, categories)
-        : groupItems(categories),
-    [categorySlug, categories],
-  );
+  const category = isCatalog
+    ? catalogCategory?.children
+    : categoriesTreeListData;
 
-  const isCategories = categories.length > 0;
+  if (!category) {
+    return null;
+  }
+
+  const groupedItems = groupItems(category);
+
+  const isCategories = groupedItems && groupedItems.length > 0;
+
+  if (!groupedItems) {
+    return null;
+  }
 
   return (
     <>
-      {(categorySlug || transportId) && !isParentCategory && (
-        <NavigationBreadcrumbs />
-      )}
+      {(categorySlug || transportId) && !isCatalog && <NavigationBreadcrumbs />}
 
       <Grid
         container
@@ -71,7 +82,7 @@ const Home: FC<Props> = ({ isParentCategory }) => {
         ) : (
           <>
             {isCategories ? (
-              groupedItems?.map((items, index) => {
+              groupedItems.map((items, index) => {
                 const type: Index = ((index % 4) + 1) as Index;
 
                 const Component = rowHashMap[type];
