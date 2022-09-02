@@ -14,7 +14,7 @@ import useScrollbarSize from 'react-scrollbar-size';
 
 import { useWindowSize } from 'hooks/useWindowSize';
 import { useRouterQuery } from 'hooks/useRouterQuery';
-import { formatDate, getFullDate } from 'utility/helpers';
+import { formatStringifiedDate, getFullDate } from 'utility/helpers';
 
 import {
   CREATED_AFTER_QUERY,
@@ -111,9 +111,9 @@ const OrdersFilter: FC<OrdersFilterProps> = ({
     !Array.isArray(created_before);
 
   const dateRangeButtonTitle = isDateRange
-    ? `Выбранный период: ${formatDate(new Date(created_after))} - ${formatDate(
-        new Date(created_before),
-      )}`
+    ? `Выбранный период: ${formatStringifiedDate(
+        created_after,
+      )} - ${formatStringifiedDate(created_before)}`
     : `Выбрать период`;
 
   return (

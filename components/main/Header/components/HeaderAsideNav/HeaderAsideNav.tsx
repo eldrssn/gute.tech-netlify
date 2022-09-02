@@ -58,7 +58,7 @@ const HeaderAsideNav: FC = () => {
         <MenuItem disableGutters>
           <i className={styles.icon_phone} />
           <a
-            href='tel:+74992832026'
+            href={`tel:${phone}`}
             className={cn(menuItemStyles, styles.menuItem_phone)}
           >
             {phone}

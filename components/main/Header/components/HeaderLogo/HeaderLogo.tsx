@@ -1,10 +1,10 @@
 import React, { FC, useContext } from 'react';
 import classnames from 'classnames/bind';
 import { useSelector } from 'react-redux';
-import Image from 'next/image';
 import Link from 'next/link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
 
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
@@ -36,11 +36,11 @@ const HeaderLogo: FC = () => {
             [styles.header_logo_mobile]: isMobile,
           })}
         >
-          <Image
+          <CardMedia
+            component='img'
             className={styles.header_img}
             src={logo ? logo : '/logo-example.jpeg'}
             alt='header logo'
-            layout='fill'
           />
         </a>
       </Link>
