@@ -1,3 +1,5 @@
+@import '~styles/breakpoints.scss';
+
 .header_logo {
   position: relative;
   float: left;
@@ -17,7 +19,6 @@
 }
 
 .header_logo_mobile {
-  width: 40px;
   height: 40px;
 }
 
@@ -25,4 +26,11 @@
   font-size: 18px;
   margin: 22px 0;
   line-height: 1.57;
+}
+
+@media (max-width: $xsMobile) {
+  .header_logo_mobile {
+    height: 40px;
+    max-width: 80px;
+  }
 }
