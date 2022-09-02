@@ -290,4 +290,5 @@ export {
   formatDate,
   getCategory,
   getIsProductInCategorySlug,
+  formatStringifiedDate,
 };

@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
+import Head from 'next/head';
 
 import { fetchRegions, fetchBranches } from 'store/reducers/regions/actions';
 import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
@@ -28,6 +29,7 @@ import {
 } from 'utility/helpers';
 import { QueryUrl, COOKIE_TTL } from 'constants/variables';
 import { CookieKey } from 'constants/types';
+import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 
 const InitialLoader: React.FC = ({ children }) => {
   const { windowWidth } = useWindowSize();
@@ -46,6 +48,7 @@ const InitialLoader: React.FC = ({ children }) => {
   const transportId = useSelector(selectTransportId);
   const isAuthorized = useSelector(selectIsAuthorized);
   const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const { favicon } = useSelector(selectShowcaseData);
 
   useEffect(() => {
     dispatch(fetchShowcase());
@@ -147,7 +150,14 @@ const InitialLoader: React.FC = ({ children }) => {
     return null;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <Head>
+        <link rel='shortcut icon' href={favicon}></link>
+      </Head>
+      {children}
+    </>
+  );
 };
 
 export { InitialLoader };
