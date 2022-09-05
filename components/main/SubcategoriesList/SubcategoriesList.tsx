@@ -77,7 +77,13 @@ const SubcategoriesList: FC<Props> = ({ isCatalog }) => {
     if (isProductInCategorySlug) {
       const pathWithoutProductSlug = getPathWithoutProductSlug(asPath);
 
-      return router.push(`${pathWithoutProductSlug}/${categorySlug}`);
+      return router.push(
+        getLinkToCatalog({
+          asPath: pathWithoutProductSlug,
+          categorySlug,
+          transportId,
+        }),
+      );
     }
 
     return router.push(getLinkToCatalog({ asPath, categorySlug, transportId }));

@@ -134,6 +134,7 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
     currentStep,
     getValues,
     setValue,
+    transportType,
     brandSlugValue,
     modelSlugValue,
     yearSlugValue,

@@ -7,8 +7,6 @@ import Box from '@mui/material/Box';
 import {
   fetchCategoriesProductsList,
   fetchTransportProductList,
-  fetchCategoriesSubcategoriesList,
-  fetchCategoriesSubcategoriesRead,
 } from 'store/reducers/catalog/actions';
 import {
   selectCategoriesProductList,
@@ -123,29 +121,6 @@ const CatalogMain: FC = () => {
     filterRequest,
     transportId,
   ]);
-
-  useEffect(() => {
-    if (!lastCategorySlug) {
-      return;
-    }
-
-    if (transportId) {
-      dispatch(
-        fetchCategoriesSubcategoriesRead({
-          transportId,
-          categorySlug: lastCategorySlug,
-        }),
-      );
-    }
-
-    if (!transportId) {
-      dispatch(
-        fetchCategoriesSubcategoriesList({
-          categorySlug: lastCategorySlug,
-        }),
-      );
-    }
-  }, [lastCategorySlug, transportId, dispatch]);
 
   const handleDrawerToggle = () => {
     setOpenDrawer((openDrawer) => !openDrawer);
