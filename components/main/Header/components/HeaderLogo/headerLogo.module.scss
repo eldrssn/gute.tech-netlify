@@ -30,8 +30,17 @@
 }
 
 @media (max-width: $xsMobile) {
-  .header_logo_mobile {
-    height: 40px;
+  .header_img {
+    height: 44px;
+    object-fit: contain;
+    max-width: 100px;
+  }
+}
+
+@media (max-width: $xxsMobile) {
+  .header_img {
+    height: 44px;
+    object-fit: contain;
     max-width: 80px;
   }
 }

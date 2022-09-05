@@ -40,13 +40,12 @@ const SubcategoriesList: FC<Props> = ({ isCatalog }) => {
 
   const isTransportSearch = Boolean(transportId);
   const isProductInCategorySlug = getIsProductInCategorySlug(lastCategorySlug);
+  const categorySlugOnProductPage =
+    categorySlugAnArray[categorySlugAnArray.length - 2];
 
   useEffect(() => {
-    const getCategorySlugOnProductPage = () =>
-      categorySlugAnArray[categorySlugAnArray.length - 2];
-
     const сategorySlug = isProductInCategorySlug
-      ? getCategorySlugOnProductPage()
+      ? categorySlugOnProductPage
       : lastCategorySlug;
 
     if (isTransportSearch) {
@@ -67,7 +66,7 @@ const SubcategoriesList: FC<Props> = ({ isCatalog }) => {
   }, [
     isTransportSearch,
     transportId,
-    categorySlugAnArray,
+    categorySlugOnProductPage,
     dispatch,
     isProductInCategorySlug,
     lastCategorySlug,

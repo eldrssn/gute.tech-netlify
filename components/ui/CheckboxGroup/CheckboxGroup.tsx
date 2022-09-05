@@ -7,11 +7,12 @@ import { useRouterQuery } from 'hooks/useRouterQuery';
 import { CheckboxValue } from 'api/models/catalog';
 import { Filter } from 'types';
 
-import styles from './checkboxGroup.module.scss';
 import { checkFilterListLarge, sliceFilters } from './helpers';
 import { Button } from './compoments/Button';
 import { Filters } from './compoments/Filters';
 import { ExpandedFilters } from './compoments/ExpandedFilters';
+
+import styles from './checkboxGroup.module.scss';
 
 const CheckboxGroup: React.FC<Filter> = ({
   filter,
