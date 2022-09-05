@@ -13,6 +13,7 @@ const MainLayout: React.FC = ({ children }) => {
     <>
       <Header />
       <Container
+        component='main'
         maxWidth={'lg'}
         sx={{
           minHeight: '100vh',

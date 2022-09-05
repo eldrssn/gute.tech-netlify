@@ -42,7 +42,7 @@ const CatalogPage: FC = () => {
     return () => {
       dispatch(clearCatalog());
     };
-  }, [dispatch, transportId, categorySlug, lastCategorySlug]);
+  }, [dispatch, transportId, lastCategorySlug]);
 
   return (
     <>

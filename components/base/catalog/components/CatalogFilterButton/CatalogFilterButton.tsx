@@ -42,7 +42,6 @@ const CatalogFilterButton: FC<CatalogFilterButtonProps> = ({
         placement: 'right',
         strategy: 'absolute',
       }}
-      keepMounted={true}
       className={styles.popper}
     >
       <CustomButton

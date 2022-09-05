@@ -148,6 +148,7 @@ const OrdersFilter: FC<OrdersFilterProps> = ({
             ranges={dateRange}
             locale={ru}
             showDateDisplay={false}
+            weekdayDisplayFormat='eeeeee'
           />
         </Box>
       </span>

@@ -62,7 +62,7 @@ const CatalogMain: FC = () => {
   const pageCount = Number(pages);
 
   useEffect(() => {
-    if (!router.isReady || !total) {
+    if (!router.isReady) {
       return;
     }
     const pageFromQuery = Number(getQueryOption(PAGE_QUERY));
