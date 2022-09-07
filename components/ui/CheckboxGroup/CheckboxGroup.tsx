@@ -8,7 +8,7 @@ import { CheckboxValue } from 'api/models/catalog';
 import { Filter } from 'types';
 
 import { checkFilterListLarge, sliceFilters } from './helpers';
-import { Button } from './compoments/Button';
+import { FiltersButton } from '../FiltersButton';
 import { Filters } from './compoments/Filters';
 import { ExpandedFilters } from './compoments/ExpandedFilters';
 
@@ -110,9 +110,9 @@ const CheckboxGroup: React.FC<Filter> = ({
       )}
 
       {isFilterListLarge && (
-        <Button onClick={toggleHiddenFilters}>
+        <FiltersButton onClick={toggleHiddenFilters}>
           {isHiddenFilters ? 'Показать все' : 'Свернуть'}
-        </Button>
+        </FiltersButton>
       )}
     </FormControl>
   );

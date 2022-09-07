@@ -37,7 +37,7 @@ const CatalogMain: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isMobile } = useWindowSize();
-  const { getQueryOption, setQueryOption } = useRouterQuery();
+  const { getQueryOption } = useRouterQuery();
 
   const [page, setPage] = useState(1);
   const [openDrawer, setOpenDrawer] = useState(false);

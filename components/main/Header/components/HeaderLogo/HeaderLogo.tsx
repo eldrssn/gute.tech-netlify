@@ -1,24 +1,21 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import classnames from 'classnames/bind';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
 
-import { HeaderContext } from '../HeaderContext';
 import styles from './headerLogo.module.scss';
 
 const cn = classnames.bind(styles);
 
 const HeaderLogo: FC = () => {
-  const { isFullHeader } = useContext(HeaderContext);
   const { isMobile } = useWindowSize();
 
-  const { logo, title } = useSelector(selectShowcaseData);
+  const { logo } = useSelector(selectShowcaseData);
 
   return (
     <Box
@@ -44,19 +41,6 @@ const HeaderLogo: FC = () => {
           />
         </a>
       </Link>
-
-      {!isMobile && (
-        <Box
-          sx={{
-            display: isFullHeader ? 'flex' : 'none',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component='div' className={cn(styles.headerTitle)}>
-            {title}
-          </Typography>
-        </Box>
-      )}
     </Box>
   );
 };

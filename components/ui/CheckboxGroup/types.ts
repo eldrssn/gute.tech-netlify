@@ -1,13 +1,7 @@
 import { CheckboxValue } from 'api/models/catalog';
+import { AnchorClick } from 'types';
 
 type GetQueryOptions = (name: string) => string | string[] | undefined;
-
-type AnchorClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-
-type ButtonProps = {
-  onClick: AnchorClick;
-  className?: string;
-};
 
 type FiltersProps = {
   filters?: CheckboxValue[];
@@ -21,4 +15,4 @@ type ExpandedFilterProps = FiltersProps & {
   slug: string;
 };
 
-export type { GetQueryOptions, ButtonProps, FiltersProps, ExpandedFilterProps };
+export type { GetQueryOptions, FiltersProps, ExpandedFilterProps };

@@ -1,6 +1,6 @@
-@import "~styles/breakpoints.scss";
-@import "~styles/colors.scss";
-@import "~styles/constants.scss";
+@import '~styles/breakpoints.scss';
+@import '~styles/colors.scss';
+@import '~styles/constants.scss';
 
 .catalogMainBox {
   display: flex;
@@ -76,6 +76,13 @@
 @media (max-width: $tablet) {
   .cardHeader {
     top: 105px;
+  }
+}
+
+@media (max-width: $xsMobile) {
+  .filterButton_mobile {
+    padding-left: 6px;
+    padding-right: 6px;
   }
 }
 @media (max-width: $xxsMobile) {

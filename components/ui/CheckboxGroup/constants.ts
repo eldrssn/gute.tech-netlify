@@ -1,3 +1,3 @@
-const MIN_FILTERS_COUNT = 6;
+const MIN_FILTERS_COUNT = 5;
 
 export { MIN_FILTERS_COUNT };

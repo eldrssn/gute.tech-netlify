@@ -1,8 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
-
-import Radio from '@mui/material/Radio';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import RadioGroup from '@mui/material/RadioGroup';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
@@ -10,7 +6,12 @@ import { useRouterQuery } from 'hooks/useRouterQuery';
 import { setQueryParam } from 'hooks/useRouterQuery/helpers';
 import { Filter } from 'types';
 
-import styles from './radioGroup.module.scss';
+import { checkFilterListLarge, sliceFilters } from '../CheckboxGroup/helpers';
+import { FiltersButton } from '../FiltersButton';
+import { ExpandedFilters } from './components/ExpandedFilters';
+import { Filters } from './components/Filters';
+
+import styles from './radioBox.module.scss';
 
 const RadioBox: React.FC<Filter> = ({
   filter,
@@ -19,11 +20,26 @@ const RadioBox: React.FC<Filter> = ({
 }) => {
   const routerQuery = useRouterQuery();
 
+  const [isHiddenFilters, setHiddenFilters] = useState(true);
+
   const { title, slug, values } = filter;
 
   const queryOption = routerQuery.getQueryOption(slug);
 
-  const onChange = setQueryParam(routerQuery, slug, false);
+  const setOnChange = setQueryParam(routerQuery, slug, false);
+
+  const isFilterListLarge = checkFilterListLarge(values);
+
+  const toggleHiddenFilters = () =>
+    setHiddenFilters((isHiddenFilters) => !isHiddenFilters);
+
+  const filters = useMemo(() => {
+    if (isHiddenFilters) {
+      return isFilterListLarge ? sliceFilters(values) : values;
+    }
+
+    return values;
+  }, [values, isFilterListLarge, isHiddenFilters]);
 
   useEffect(() => {
     if (queryOption) {
@@ -64,36 +80,29 @@ const RadioBox: React.FC<Filter> = ({
       <FormLabel focused={false} id='radio' className={styles.title}>
         {title}
       </FormLabel>
-      <RadioGroup>
-        {values?.map(({ title, value }) => (
-          <FormControlLabel
-            sx={{
-              '& Mui-FormLabel-root.Mui-focused': { color: 'black' },
-              '& .MuiFormControlLabel-label': {
-                fontWeight: 700,
-                fontSize: '14px',
-                lineHeight: 1.57,
-                color: 'black',
-                fontFamily: 'inherit',
-              },
-              '& .MuiRadio-root': {
-                padding: '5px',
-                paddingLeft: '8px',
-              },
-            }}
-            key={value}
-            control={
-              <Radio
-                onChange={onChange}
-                checked={getIsChecked(value)}
-                onClick={handleAnchorClick}
-              />
-            }
-            label={title}
-            value={value}
-          />
-        ))}
-      </RadioGroup>
+
+      {isHiddenFilters ? (
+        <Filters
+          filters={filters}
+          setOnChange={setOnChange}
+          getIsChecked={getIsChecked}
+          handleAnchorClick={handleAnchorClick}
+        />
+      ) : (
+        <ExpandedFilters
+          slug={slug}
+          filters={filters}
+          setOnChange={setOnChange}
+          getIsChecked={getIsChecked}
+          handleAnchorClick={handleAnchorClick}
+        />
+      )}
+
+      {isFilterListLarge && (
+        <FiltersButton onClick={toggleHiddenFilters}>
+          {isHiddenFilters ? 'Показать все' : 'Свернуть'}
+        </FiltersButton>
+      )}
     </FormControl>
   );
 };

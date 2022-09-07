@@ -1,17 +1,21 @@
 import React, { FC, useMemo, useState } from 'react';
-import { Box, TextField } from '@mui/material';
 import { useRouter } from 'next/router';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
+import { FiltersSmallButton } from 'components/ui/FiltersSmallButton/FiltersSmallButton';
+import {
+  checkIsAllFiltersChoosen,
+  chooseAllFilters,
+} from 'components/ui/CheckboxGroup/helpers';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 
 import { Filters } from './Filters';
-import { FiltersSmallButton } from '../../FiltersSmallButton';
+import { ExpandedFiltersProps } from '../types';
 
-import { checkIsAllFiltersChoosen, chooseAllFilters } from '../helpers';
-import { ExpandedFilterProps } from '../types';
-import styles from '../checkboxGroup.module.scss';
+import styles from '../radioBox.module.scss';
 
-const ExpandedFilters: FC<ExpandedFilterProps> = ({
+const ExpandedFilters: FC<ExpandedFiltersProps> = ({
   slug,
   filters,
   setOnChange,
@@ -56,7 +60,6 @@ const ExpandedFilters: FC<ExpandedFilterProps> = ({
         onChange={(event) => handleChangeInput(event)}
         value={searchValue}
       />
-
       {isAllFiltersChoosen ? (
         <FiltersSmallButton onClick={handleClickReset}>
           Снять все
@@ -66,7 +69,6 @@ const ExpandedFilters: FC<ExpandedFilterProps> = ({
           Выбрать все
         </FiltersSmallButton>
       )}
-
       <Box className={styles.expandFilterList}>
         <Filters
           filters={filters}
