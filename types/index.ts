@@ -23,6 +23,8 @@ type Filter = {
 type Slug = string | string[] | undefined;
 type Slugs = Record<string, Slug>;
 
+type AnchorClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+
 export type {
   ComponentWithPageLayout,
   Sorting,
@@ -30,4 +32,5 @@ export type {
   Filter,
   Slug,
   Slugs,
+  AnchorClick,
 };
