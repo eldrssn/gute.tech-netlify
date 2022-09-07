@@ -8,13 +8,19 @@ import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
 import { CatalogCard } from 'components/main/CatalogCard';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
-import { selectRecommendedProductsList } from 'store/reducers/catalog/selectors';
 import {
-  clearRecommendedProductsList,
-  fetchRecommendedProductsList,
+  selectCategoriesProductList,
+  // selectRecommendedProductsList,
+} from 'store/reducers/catalog/selectors';
+import {
+  // clearRecommendedProductsList,
+  fetchCategoriesProductsList,
+  // fetchRecommendedProductsList,
 } from 'store/reducers/catalog/actions';
 
 import styles from './recommendedProducts.module.scss';
+import { getSlugs } from './helpers';
+import { makeAnArray } from 'utility/helpers';
 
 const sliderSettings = {
   className: styles.slider,
@@ -62,24 +68,45 @@ const RecommendedProducts: FC = () => {
   const dispatch = useDispatch();
 
   const transportId = useSelector(selectTransportId);
-  const { categorySlug, productSlug } = router.query;
+  const { categorySlug } = router.query;
+  const allSlugs = makeAnArray(categorySlug);
+  const [category, product] = getSlugs(allSlugs);
+
+  // TODO: Убрать после тестирования
+  const lastCategorySlug = allSlugs[allSlugs.length - 2];
 
   useEffect(() => {
+    // TODO: Расскоменитировать после тестированния
+    // dispatch(
+    //   fetchRecommendedProductsList({
+    //     transportId,
+    //     categorySlug: category,
+    //     productSlug: product,
+    //   }),
+    // );
+
+    // TODO: Убрать после тестирования
     dispatch(
-      fetchRecommendedProductsList({
-        transportId,
-        categorySlug,
-        productSlug,
+      fetchCategoriesProductsList({
+        categorySlug: lastCategorySlug,
+        page: 1,
       }),
     );
 
-    return () => {
-      dispatch(clearRecommendedProductsList());
-    };
-  }, [dispatch, transportId, categorySlug, productSlug]);
+    // TODO: Расскоменитировать после тестированния
+    // return () => {
+    //   dispatch(clearRecommendedProductsList());
+    // };
+  }, [dispatch, transportId, category, product, lastCategorySlug]);
 
+  // TODO: Расскоменитировать после тестированния
+  // const { data: recommendedProductsResponse } = useSelector(
+  //   selectRecommendedProductsList,
+  // );
+
+  // TODO: Убрать после тестирования
   const { data: recommendedProductsResponse } = useSelector(
-    selectRecommendedProductsList,
+    selectCategoriesProductList,
   );
 
   if (!recommendedProductsResponse?.results) {
@@ -92,16 +119,19 @@ const RecommendedProducts: FC = () => {
     <Box>
       <h2>Вам обязательно понадобятся</h2>
       <Slider {...sliderSettings}>
-        {recommendedProducts.map(({ title, slug, price, image }) => (
-          <CatalogCard
-            key={slug}
-            title={title}
-            price={price}
-            image={image || '/images/no-image.jpeg'}
-            slug={slug}
-            isSlider
-          />
-        ))}
+        {recommendedProducts.map(
+          ({ title, slug, price, image, categories }) => (
+            <CatalogCard
+              key={slug}
+              title={title}
+              price={price}
+              image={image || '/images/no-image.jpeg'}
+              slug={slug}
+              categories={categories}
+              isSlider
+            />
+          ),
+        )}
       </Slider>
     </Box>
   );

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import {
-  fetchBrands,
   fetchEngines,
   fetchModels,
   fetchYears,
@@ -86,7 +85,6 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
 
     const resetDataByStep = {
       [StepInputs.BRAND]: () => {
-        dispatch(fetchBrands());
         dispatch(resetOptionsDataInBrandStep());
         const names = namesDefaultValueByStep[StepInputs.BRAND];
         setDefaultValueByName(names, setValue);

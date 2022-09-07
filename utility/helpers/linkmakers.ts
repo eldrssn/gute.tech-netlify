@@ -1,6 +1,6 @@
 import { QueryUrl } from 'constants/variables';
 import { Slugs } from 'types';
-import { CATALOG_QUERY_DEFAULT } from 'utility/utils/constants';
+import { CATALOG_QUERY_DEFAULT, PRODUCT_MARKER } from 'utility/utils/constants';
 import { makeStringify } from '.';
 import { OrdersRequestData } from 'api/models/user';
 
@@ -16,9 +16,29 @@ const getLinkToProductPage = ({
   productSlug: string;
   transportId: string;
 }) =>
-  `${asPath.split('?')[0]}/product_${productSlug}${
+  `${asPath.split('?')[0]}/${PRODUCT_MARKER}${productSlug}${
     transportId && getTransportSlugs({ transportId })
   }`;
+
+const getLinkToProductPageFromSlider = ({
+  asPath,
+  productSlug,
+  transportId,
+  categorySlug,
+}: {
+  asPath: string;
+  productSlug: string;
+  transportId: string;
+  categorySlug: string;
+}) => {
+  const path = asPath.split('?')[0];
+  const [catalog, mainCategory] = path.split('/');
+  console.log(catalog, categorySlug);
+
+  return `/${catalog}/${mainCategory}/${categorySlug}/${PRODUCT_MARKER}${productSlug}${
+    transportId && getTransportSlugs({ transportId })
+  }`;
+};
 
 const getLinkToParentCategory = ({
   categorySlug,
@@ -81,6 +101,7 @@ export {
   getLinkResetFilters,
   getLinkApiProfileOrder,
   getLinkToProductPage,
+  getLinkToProductPageFromSlider,
   getLinkToParentCategory,
   getLinkToCatalog,
   getLinkToCategoryFromCatalog,

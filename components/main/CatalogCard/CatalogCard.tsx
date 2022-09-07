@@ -18,7 +18,10 @@ import { fetchItemFromOrder } from 'store/reducers/order/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
 
-import { getLinkToProductPage } from 'utility/helpers/linkmakers';
+import {
+  getLinkToProductPage,
+  getLinkToProductPageFromSlider,
+} from 'utility/helpers/linkmakers';
 import { formatPrice } from 'utility/helpers';
 
 import { Title } from './components/TitleTooltip';
@@ -33,6 +36,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   price,
   slug,
   title,
+  categories,
   isSlider,
 }) => {
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
@@ -58,9 +62,17 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
     event.preventDefault();
   };
 
+  // TODO: поменять работу линков, как исправят метод по категориям
   const handleClick = () => {
     router.push(
-      getLinkToProductPage({ asPath, productSlug: slug, transportId }),
+      isSlider
+        ? getLinkToProductPageFromSlider({
+            asPath,
+            categorySlug: categories[0],
+            productSlug: slug,
+            transportId,
+          })
+        : getLinkToProductPage({ asPath, productSlug: slug, transportId }),
     );
   };
 
