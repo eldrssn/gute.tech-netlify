@@ -113,10 +113,6 @@ const CatalogMain: FC = () => {
           );
       scrollToTop();
     }
-
-    return () => {
-      dispatch(clearCatalog());
-    };
   }, [
     anchorApplyButton,
     router.isReady,
