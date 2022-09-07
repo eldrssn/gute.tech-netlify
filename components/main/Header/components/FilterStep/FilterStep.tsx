@@ -7,10 +7,14 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { TailSpin } from 'react-loader-spinner';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useWindowSize } from 'hooks/useWindowSize';
-import { selectEngines } from 'store/reducers/transport/selectors';
+import {
+  selectBrands,
+  selectEngines,
+} from 'store/reducers/transport/selectors';
+import { fetchBrands } from 'store/reducers/transport/actions';
 import colors from 'styles/_export.module.scss';
 
 import { FilterPopover } from '../FilterPopover';
@@ -38,6 +42,8 @@ const FilterStep: FC<FilterStepProps> = ({
   setCurrentTransportId,
   ...restProps
 }) => {
+  const dispatch = useDispatch();
+
   const input = useController({
     name: name,
     control,
@@ -57,6 +63,7 @@ const FilterStep: FC<FilterStepProps> = ({
     typeof searchValue === 'string' && isOpenPopover ? searchValue : title;
 
   const { data: engines } = useSelector(selectEngines);
+  const { data: brands } = useSelector(selectBrands);
 
   useEffect(() => {
     setIsOpenPopover(openPopoverId === inputStepId);
@@ -98,6 +105,14 @@ const FilterStep: FC<FilterStepProps> = ({
     setValue(name, { title, slug, searchValue: event.target.value });
   };
 
+  const handleLoadBrands = () => {
+    if (brands.length > 0) {
+      return;
+    }
+
+    dispatch(fetchBrands());
+  };
+
   return (
     <>
       <FilterPopover
@@ -113,7 +128,7 @@ const FilterStep: FC<FilterStepProps> = ({
         setTransportType={setTransportType}
         {...restProps}
       />
-      <Step key={name} sx={{ width: '100%' }}>
+      <Step key={name} sx={{ width: '100%' }} onFocus={handleLoadBrands}>
         <div className={styles.stepWrap}>
           <Box
             className={cn(styles.stepNumber, {

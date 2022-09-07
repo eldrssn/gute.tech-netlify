@@ -32,17 +32,19 @@ const ProfileOrdersPage = () => {
   const router = useRouter();
   const { getQueryOption } = useRouterQuery();
 
-  const { data: userOrders } = useSelector(selectUserOrders);
+  const { data: userOrders, error } = useSelector(selectUserOrders);
   const isAuthorized = useSelector(selectIsAuthorized);
   const loadingAuthorized = useSelector(selectLoadingAuthorized);
 
   const { ordering, created_after, created_before } = router.query;
-  const { pages, total } = userOrders;
+  const { pages, total, current } = userOrders;
 
   const order = makeStringify(ordering);
   const pageCount = Number(
     searchValue.length > 0 ? NUM_PAGES_IN_SEARCH : pages,
   );
+
+  const isCorrectPage = Number(current) <= Number(pages);
 
   useEffect(() => {
     if (isAuthorized || loadingAuthorized) {
@@ -78,6 +80,12 @@ const ProfileOrdersPage = () => {
 
     dispatch(fetchOrders({ order, created_after, created_before, page }));
   }, [created_after, created_before, dispatch, order, page, isOpenDatePicker]);
+
+  useEffect(() => {
+    if (!isCorrectPage || error?.message) {
+      setPage(1);
+    }
+  }, [isCorrectPage, error?.message]);
 
   return (
     <Container disableGutters className={styles.mainContainer}>

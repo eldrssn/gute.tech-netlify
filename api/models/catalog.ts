@@ -6,6 +6,7 @@ type ProductListData = {
   slug: string;
   image?: string;
   price?: string;
+  categories: string[];
 };
 
 type CategoriesProductsListRequestData = {

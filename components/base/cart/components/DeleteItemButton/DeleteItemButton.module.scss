@@ -1,9 +1,9 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .confirmedBlock {
-  height: 200px;
-  width: 400px;
+  height: 250px;
+  width: 500px;
   background-color: white;
   display: flex;
   flex-direction: column;

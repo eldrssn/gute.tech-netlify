@@ -89,7 +89,11 @@ const FilterPopover: FC<FilterPopoverProps> = ({
   }, [isOpenPopover, widthScrollBar]);
 
   useEffect(() => {
-    if (openPopoverId !== StepInputs.BRAND || activeTransportType) {
+    if (
+      openPopoverId !== StepInputs.BRAND ||
+      activeTransportType ||
+      brands.data.length === 0
+    ) {
       return;
     }
 

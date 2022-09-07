@@ -36,7 +36,7 @@ const CatalogMain: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isMobile } = useWindowSize();
-  const { getQueryOption } = useRouterQuery();
+  const { getQueryOption, setQueryOption } = useRouterQuery();
 
   const [page, setPage] = useState(1);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -58,23 +58,39 @@ const CatalogMain: FC = () => {
     : selectCategoriesProductList;
 
   const { data, isLoading } = useSelector(currentSelector);
-  const { pages, results, total } = data || {};
+  const { pages, results, total, current } = data || {};
   const pageCount = Number(pages);
+
+  const moveToFirstPage = useCallback(() => {
+    setQueryOption({ [PAGE_QUERY]: '1' });
+    setPage(1);
+  }, [setQueryOption]);
+
+  const isCorrectPage = useCallback(() => {
+    if (!current || !pages) {
+      return false;
+    }
+
+    return current <= pages;
+  }, [current, pages]);
 
   useEffect(() => {
     if (!router.isReady) {
       return;
     }
+
+    if (!isCorrectPage() || isNotEnoughtItems(total)) {
+      moveToFirstPage();
+      return;
+    }
+
     const pageFromQuery = Number(getQueryOption(PAGE_QUERY));
 
     if (pageFromQuery) {
       setPage(pageFromQuery);
+      return;
     }
-
-    if (isNotEnoughtItems(total)) {
-      setPage(1);
-    }
-  }, [router.isReady, getQueryOption, total]);
+  }, [router.isReady, getQueryOption, total, isCorrectPage, moveToFirstPage]);
 
   const fetchTransportList = useCallback(() => {
     if (Array.isArray(transportId) || !transportId || !filterRequest) {
