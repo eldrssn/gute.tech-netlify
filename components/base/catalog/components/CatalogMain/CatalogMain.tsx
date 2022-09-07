@@ -5,6 +5,7 @@ import classnames from 'classnames/bind';
 import Box from '@mui/material/Box';
 
 import {
+  clearCatalog,
   fetchCategoriesProductsList,
   fetchTransportProductList,
 } from 'store/reducers/catalog/actions';
@@ -58,29 +59,11 @@ const CatalogMain: FC = () => {
     : selectCategoriesProductList;
 
   const { data, isLoading } = useSelector(currentSelector);
-  const { pages, results, total, current } = data || {};
+  const { pages, results, total } = data || {};
   const pageCount = Number(pages);
-
-  const moveToFirstPage = useCallback(() => {
-    setQueryOption({ [PAGE_QUERY]: '1' });
-    setPage(1);
-  }, [setQueryOption]);
-
-  const isCorrectPage = useCallback(() => {
-    if (!current || !pages) {
-      return false;
-    }
-
-    return current <= pages;
-  }, [current, pages]);
 
   useEffect(() => {
     if (!router.isReady) {
-      return;
-    }
-
-    if (!isCorrectPage() || isNotEnoughtItems(total)) {
-      moveToFirstPage();
       return;
     }
 
@@ -90,7 +73,11 @@ const CatalogMain: FC = () => {
       setPage(pageFromQuery);
       return;
     }
-  }, [router.isReady, getQueryOption, total, isCorrectPage, moveToFirstPage]);
+
+    if (isNotEnoughtItems(total)) {
+      setPage(1);
+    }
+  }, [router.isReady, getQueryOption, total]);
 
   const fetchTransportList = useCallback(() => {
     if (Array.isArray(transportId) || !transportId || !filterRequest) {
@@ -126,6 +113,10 @@ const CatalogMain: FC = () => {
           );
       scrollToTop();
     }
+
+    return () => {
+      dispatch(clearCatalog());
+    };
   }, [
     anchorApplyButton,
     router.isReady,
