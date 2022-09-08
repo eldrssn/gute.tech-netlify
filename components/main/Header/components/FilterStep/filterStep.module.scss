@@ -20,7 +20,7 @@
   transform: translateY(-50%);
   border-radius: 50%;
   background-color: $blue1;
-  z-index: $z-index18;
+  // z-index: $z-index18;
 }
 
 .stepNumber_number {
@@ -64,21 +64,28 @@
   -webkit-text-fill-color: $white;
 }
 
-.stepField::after {
-  width: 0;
-  height: 0;
-  border-top: 6px solid $black;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  margin-top: -2px;
-  content: "";
-}
-
 .stepper_mobileView {
   display: flex;
   flex-direction: column;
+}
+
+.caret {
+  cursor: pointer;
+  z-index: 1302;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translate(0, -50%);
+
+  path {
+    transform-origin: center;
+    transition: 0.3s;
+  }
+}
+
+.caretActive {
+  path {
+    transition: 0.3s;
+    transform: rotate(180deg);
+  }
 }

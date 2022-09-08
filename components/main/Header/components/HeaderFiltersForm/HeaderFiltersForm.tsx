@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import classnames from 'classnames/bind';
@@ -126,17 +127,12 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
     };
 
     resetDataByStep[currentStep]();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    dispatch,
-    currentStep,
-    getValues,
-    setValue,
-    transportType,
-    brandSlugValue,
-    modelSlugValue,
-    yearSlugValue,
-  ]);
+  }, [dispatch, currentStep, brandSlugValue, modelSlugValue, yearSlugValue]);
+
+  useEffect(() => {
+    reset();
+    setCurrentStep(StepInputs.BRAND);
+  }, [transportType]);
 
   useEffect(() => {
     if (transportId) {

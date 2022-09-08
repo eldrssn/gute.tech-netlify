@@ -26,6 +26,11 @@ enum CategoryStoreBlocks {
   RECOMMENDED_PRODUCTS_LIST = 'recommendedProductsList',
 }
 
+interface Property {
+  title: string;
+  value: string;
+}
+
 type CategoriesProductsReadData = {
   title: string;
   slug: string;
@@ -34,7 +39,7 @@ type CategoriesProductsReadData = {
   description?: string | undefined;
   price?: string | undefined;
   images?: string[] | undefined;
-  properties?: string | undefined;
+  properties?: Property[] | undefined;
   warehouses?: ProductWarehouse[];
   faq: Record<string, string>[];
   installation: string;

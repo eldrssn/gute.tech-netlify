@@ -3,7 +3,7 @@ import classnames from 'classnames/bind';
 import { useController } from 'react-hook-form';
 import Step from '@mui/material/Step';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { TailSpin } from 'react-loader-spinner';
@@ -87,10 +87,10 @@ const FilterStep: FC<FilterStepProps> = ({
       setCurrentTransportId(currentEngine?.transport_id);
     }
 
-    setOpenPopoverId(openPopoverId + 1);
     setCurrentStep(
-      inputStepId === StepInputs.ENGINE ? StepInputs.ENGINE : inputStepId + 1,
+      inputStepId === StepInputs.ENGINE ? inputStepId : inputStepId + 1,
     );
+    setOpenPopoverId(openPopoverId + 1);
   };
 
   const handleClosePopover = () => {
@@ -112,6 +112,17 @@ const FilterStep: FC<FilterStepProps> = ({
 
     dispatch(fetchBrands());
   };
+
+  const handleClickCaret = () => {
+    if (isActiveStep) {
+      handleClosePopover();
+      return;
+    }
+
+    onClickStep(inputStepId);
+  };
+
+  const isActiveStep = inputStepId === openPopoverId;
 
   return (
     <>
@@ -162,6 +173,15 @@ const FilterStep: FC<FilterStepProps> = ({
             onClick={() => onClickStep(inputStepId)}
             disabled={isDisable}
           />
+          {!isDisable && (
+            <FontAwesomeIcon
+              onClick={handleClickCaret}
+              className={cn(styles.caret, {
+                [styles.caretActive]: isActiveStep,
+              })}
+              icon={faCaretDown}
+            />
+          )}
         </div>
       </Step>
     </>

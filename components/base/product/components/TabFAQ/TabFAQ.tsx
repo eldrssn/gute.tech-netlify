@@ -30,7 +30,11 @@ const TabFAQ: FC<TabProps> = ({ content }) => {
     return true;
   };
 
-  if (!content) {
+  const isProperty = (value: Property[] | Content): value is Property[] => {
+    return true;
+  };
+
+  if (!content || isProperty(content)) {
     return <p>Нет данных</p>;
   }
 

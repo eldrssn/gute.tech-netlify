@@ -25,6 +25,8 @@ import { ProductSpecial } from './components/ProductSpecial';
 import { ProductImageGallery } from './components/ProductImageGallery';
 import { ProductTabsDescription } from './components/ProductTabsDescription';
 import { getProductSlug } from './helpers';
+import { PropertyNameByType } from './constants';
+import { Properties } from './types';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
 
@@ -69,11 +71,13 @@ const ProductPage: FC = () => {
     price,
     images,
     description,
-    properties,
+    properties = [],
     slug,
     warehouses,
     faq,
     installation,
+    manufacturer = '',
+    vendor_code = '',
   } = product;
 
   const quantity =
@@ -83,7 +87,18 @@ const ProductPage: FC = () => {
       0,
     );
 
-  const productInfo = { faq, installation, description, properties };
+  const newProperties = [
+    { title: PropertyNameByType[Properties.manufacturer], value: manufacturer },
+    { title: PropertyNameByType[Properties.vendor_code], value: vendor_code },
+    ...properties,
+  ];
+
+  const productInfo = {
+    faq,
+    installation,
+    description,
+    properties: newProperties,
+  };
 
   const buyItNow = () => {
     if (!product) {

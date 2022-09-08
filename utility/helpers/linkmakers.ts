@@ -33,7 +33,6 @@ const getLinkToProductPageFromSlider = ({
 }) => {
   const path = asPath.split('?')[0];
   const [catalog, mainCategory] = path.split('/');
-  console.log(catalog, categorySlug);
 
   return `/${catalog}/${mainCategory}/${categorySlug}/${PRODUCT_MARKER}${productSlug}${
     transportId && getTransportSlugs({ transportId })

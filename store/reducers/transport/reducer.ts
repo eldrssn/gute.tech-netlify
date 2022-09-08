@@ -158,7 +158,6 @@ const handlers = {
   },
 
   [resetOptionsDataInBrandStep.type]: (state: TransportStore) => {
-    state.brands.data = [];
     state.models.data = [];
     state.years.data = [];
     state.engines.data = [];

@@ -5,7 +5,6 @@ import classnames from 'classnames/bind';
 import Box from '@mui/material/Box';
 
 import {
-  clearCatalog,
   fetchCategoriesProductsList,
   fetchTransportProductList,
 } from 'store/reducers/catalog/actions';

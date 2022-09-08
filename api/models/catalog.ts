@@ -93,6 +93,11 @@ type CategoriesProductListResponseData = {
   results: ProductListData[];
 };
 
+interface Property {
+  title: string;
+  value: string;
+}
+
 type CategoriesProductReadResponseData = {
   title: string;
   slug: string;
@@ -101,7 +106,7 @@ type CategoriesProductReadResponseData = {
   description?: string;
   price?: string;
   images?: string[];
-  properties?: string;
+  properties?: Property[];
   is_service: boolean;
   warehouses?: ProductWarehouse[];
   faq: Record<string, string>[];
