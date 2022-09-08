@@ -1,8 +1,13 @@
-type Content = string | string[][] | undefined | Record<string, string>[];
+type Content =
+  | string
+  | string[][]
+  | undefined
+  | Record<string, string>[]
+  | Property[];
 
 interface Property {
   title: string;
-  value: string;
+  value: string | undefined;
 }
 
 type TabProps = {
