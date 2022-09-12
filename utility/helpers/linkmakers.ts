@@ -96,7 +96,24 @@ const getLinkApiProfileOrder = ({
     created_after ? `&created_after=${created_after}` : ``
   }${created_before ? `&created_before=${created_before}` : ``}`;
 
+const getLinkToProduct = ({
+  categories,
+  productSlug,
+}: {
+  categories: string[];
+  productSlug: string;
+}) =>
+  `/catalog/${categories.reduce(
+    (previousValue, currentValue) => `${previousValue}/${currentValue}`,
+  )}/product_${productSlug}`;
+
+const getLinkToCategory = ({ categories }: { categories: string[] }) =>
+  `/catalog/${categories.reduce(
+    (previousValue, currentValue) => `${previousValue}/${currentValue}`,
+  )}`;
+
 export {
+  getLinkToProduct,
   getLinkResetFilters,
   getLinkApiProfileOrder,
   getLinkToProductPage,
@@ -105,4 +122,5 @@ export {
   getLinkToCatalog,
   getLinkToCategoryFromCatalog,
   getTransportSlugs,
+  getLinkToCategory,
 };

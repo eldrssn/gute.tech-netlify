@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import {
   TableBody,
@@ -14,6 +15,7 @@ import {
 import { changeChecked } from 'store/reducers/cart/actions';
 import { formatPrice } from 'utility/helpers';
 import { getStockBalance } from 'utility/helpers';
+import { getLinkToProduct } from 'utility/helpers/linkmakers';
 
 import { DeleteItemButton } from '../DeleteItemButton';
 import { Counter } from '../Сounter';
@@ -27,17 +29,16 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
   removeCount,
   removeItem,
 }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const handleChangeCheckBox = (slug: string) => {
     dispatch(changeChecked(slug));
   };
 
-  //TODO: доделать ссылку на товар
-  // const handleClickTitle = (link: string) => {
-  //   return;
-  //   // router.push(link);
-  // };
+  const handleClickTitle = (link: string) => {
+    router.push(link);
+  };
 
   return (
     <>
@@ -47,6 +48,11 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
             const stockBalance = getStockBalance(item);
             const itemPrice = formatPrice(item.price);
             const countItemsPrice = formatPrice(item.count * item.price);
+            const categories = item.categories[0];
+            const link = getLinkToProduct({
+              categories: categories,
+              productSlug: item.slug,
+            });
 
             return (
               <TableRow
@@ -80,7 +86,7 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({
                   <Typography className={styles.itemTitleBox}>
                     <Typography
                       className={styles.itemTitle}
-                      // onClick={() => handleClickTitle(link)}
+                      onClick={() => handleClickTitle(link)}
                     >
                       {item.title}
                     </Typography>
