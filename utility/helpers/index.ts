@@ -107,29 +107,6 @@ const cookieStorage = {
   },
 };
 
-const getSlugsCartItemsFromString = (slugsItem: string) =>
-  slugsItem.split('&').map((item) => {
-    const itemArray = item.split(',');
-    const slug = itemArray[0].split(':')[1];
-    const count = itemArray[1].split(':')[1];
-    const ordinalId = itemArray[2].split(':')[1];
-    const isChecked = itemArray[3]?.split(':')[1] === 'true' ? true : false;
-
-    return {
-      productSlug: slug,
-      count: Number(count),
-      ordinalId: Number(ordinalId),
-      isChecked: isChecked,
-    };
-  });
-
-const getSlugsCartItemsFromCart = (cart: CartItemData[]) =>
-  cart
-    .map((item) => {
-      return `slug:${item.slug},count:${item.count},ordinalId:${item.ordinalId},isChecked:${item.isChecked}`;
-    })
-    .join('&');
-
 const makeStringify = (value?: string[] | string) =>
   typeof value === 'string' ? value : value?.toString() || '';
 
@@ -276,8 +253,6 @@ export {
   addItemToLocaleStorage,
   groupItems,
   getInputRules,
-  getSlugsCartItemsFromString,
-  getSlugsCartItemsFromCart,
   filterRegionsOption,
   cookieStorage,
   makeStringify,

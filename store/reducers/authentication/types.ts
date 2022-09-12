@@ -1,4 +1,4 @@
-import { ErrorAction } from 'store/types';
+import { ErrorAction, StoreState } from 'store/types';
 
 import {
   LoginResponseErrorData,
@@ -24,6 +24,7 @@ enum AuthenticationStoreBlocks {
   RESET_PASSWORD_FORM = 'resetPasswordForm',
   RESET_PASSWORD_VERIFICATION_FORM = 'resetPasswordVerificationForm',
   RESET_PASSWORD_SET_FORM = 'resetPasswordSetForm',
+  NOT_AUTHORIZED_TOKEN = 'notAuthorizedToken',
 }
 
 type AuthorizedState = {
@@ -86,6 +87,10 @@ type ResetPasswordVerificationPayloadData = {
   data: ResetPasswordVerifyResponseData;
 };
 
+type NotAuthorizedTokenState = {
+  token: string;
+} & StoreState;
+
 type AuthenticationStore = {
   [AuthenticationStoreBlocks.AUTHORIZED]: AuthorizedState;
   [AuthenticationStoreBlocks.REGISTRATION_FORM]: RegistrationFormState;
@@ -95,6 +100,7 @@ type AuthenticationStore = {
   [AuthenticationStoreBlocks.RESET_PASSWORD_FORM]: ResetPasswordFormState;
   [AuthenticationStoreBlocks.RESET_PASSWORD_VERIFICATION_FORM]: ResetPasswordVerificationFormState;
   [AuthenticationStoreBlocks.RESET_PASSWORD_SET_FORM]: ResetPasswordSetFormState;
+  [AuthenticationStoreBlocks.NOT_AUTHORIZED_TOKEN]: NotAuthorizedTokenState;
 };
 
 export type {

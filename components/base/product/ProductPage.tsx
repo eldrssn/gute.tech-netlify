@@ -5,18 +5,21 @@ import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
-import { fetchItemFromCart } from 'store/reducers/cart/actions';
-import { fetchItemFromOrder } from 'store/reducers/order/actions';
-import { formatPrice, makeAnArray } from 'utility/helpers';
-
-import { fetchCategoriesProductsRead } from 'store/reducers/catalog/actions';
 import { PageNotFound } from 'components/main/PageNotFound';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
 import { SubcategoriesList } from 'components/main/SubcategoriesList';
+import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { fetchCategoriesProductsRead } from 'store/reducers/catalog/actions';
+import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
+import {
+  addProductToCartAuthorized,
+  addProductToCartUnAuthorized,
+} from 'store/reducers/cart/actions';
+import { fetchItemFromOrder } from 'store/reducers/order/actions';
+import { formatPrice, makeAnArray } from 'utility/helpers';
 
 import { RecommendedProducts } from './components/RecommendedProducts';
 import { ProductPrice } from './components/ProductPrice';
@@ -33,8 +36,9 @@ import { selectTransportId } from 'store/reducers/transport/selectors';
 import styles from './productPage.module.scss';
 
 const ProductPage: FC = () => {
-  const router = useRouter();
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
+
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const transportId = useSelector(selectTransportId);
@@ -47,6 +51,7 @@ const ProductPage: FC = () => {
   );
 
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
+  const isAuthorized = useSelector(selectIsAuthorized);
 
   //TODO: добавить проверку на юрл после обновления метода на беке
 
@@ -114,8 +119,15 @@ const ProductPage: FC = () => {
       return;
     }
 
+    if (isAuthorized) {
+      dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 }));
+    }
+
+    if (!isAuthorized) {
+      dispatch(addProductToCartUnAuthorized({ product: slug, quantity: 1 }));
+    }
+
     setIsOpenModalAddedItem(true);
-    dispatch(fetchItemFromCart({ productSlug: slug }));
   };
 
   const formattedPrice = formatPrice(price);

@@ -23,8 +23,8 @@ const Counter: React.FC<CounterProps> = ({ item, stockBalance }) => {
 
   const [isOpenCountModal, setIsOpenCountModal] = useState(false);
 
-  const isItemCountZero = item.count <= 1;
-  const isItemCountMax = item.count >= stockBalance;
+  const isItemCountZero = item.quantity <= 1;
+  const isItemCountMax = item.quantity >= stockBalance;
 
   const onSubmit = handleSubmit((data) => {
     if (data.count) {
@@ -125,7 +125,7 @@ const Counter: React.FC<CounterProps> = ({ item, stockBalance }) => {
         -
       </Button>
       <Box onClick={openModal} component='div' className={styles.count}>
-        {item.count}
+        {item.quantity}
       </Box>
       <Box component='div' className={styles.stockBalance}>
         На складе: {stockBalance}

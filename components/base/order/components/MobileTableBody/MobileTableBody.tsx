@@ -20,7 +20,7 @@ const MobileTableBody: React.FC<TableBodyProps> = ({ order }) => {
       {order.map((item) => {
         const stockBalance = getStockBalance(item);
         const itemPrice = formatPrice(item.price);
-        const countItemsPrice = formatPrice(item.count * item.price);
+        const countItemsPrice = formatPrice(item.quantity * item.price);
 
         return (
           <TableRow

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   Checkbox,
@@ -11,12 +11,12 @@ import {
 import cn from 'classnames';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
+import { setAllChecked, clearCheckedItems } from 'store/reducers/cart/actions';
 import {
-  removeItemBySlug,
-  resetOrdinalId,
-  setAllChecked,
-  clearCheckedItems,
+  updateCartItemUnAuthorized,
+  updateCartItemAuthorized,
 } from 'store/reducers/cart/actions';
+import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
 
 import {
@@ -27,7 +27,10 @@ import { getCheckedCartItems, getCheckedCartItemsSlug } from '../../helpers';
 import { TRemoveCheckedButtonProps } from '../../types';
 import styles from './styles.module.scss';
 
-const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({ cart }) => {
+const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
+  cart,
+  isLoading,
+}) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { isMobile } = useWindowSize();
   const dispatch = useDispatch();
@@ -39,6 +42,8 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({ cart }) => {
   const isRemovedItemsEmpty =
     checkedCartItems.length <= MIN_NUMBER_SELECTED_ITEMS;
   const isCartEmpty = cart.length <= MIN_NUMBER_ITEMS_IN_CART;
+
+  const isAuthorized = useSelector(selectIsAuthorized);
 
   const handleChangeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
@@ -52,8 +57,15 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({ cart }) => {
   };
 
   const confirmedSolution = () => {
-    dispatch(removeItemBySlug(checkedCartItemsSlug));
-    dispatch(resetOrdinalId());
+    const deleteArray = checkedCartItemsSlug.map((item) => {
+      return { product: item, quantity: 0 };
+    });
+
+    if (isAuthorized) dispatch(updateCartItemAuthorized(deleteArray));
+
+    if (!isAuthorized) {
+      dispatch(updateCartItemUnAuthorized(deleteArray));
+    }
     setIsOpenModal(false);
   };
 
@@ -99,6 +111,7 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({ cart }) => {
         <FormControlLabel
           className={styles.checkboxSelectAll}
           label='Выделить все'
+          disabled={isLoading}
           control={
             <Checkbox
               onChange={(event) => handleChangeCheckBox(event)}
@@ -115,7 +128,7 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({ cart }) => {
         <Button
           disabled={isRemovedItemsEmpty}
           onClick={openModal}
-          className={styles.button}
+          className={cn(styles.button, { [styles.buttonDisabled]: isLoading })}
         >
           {isAllItemsSelect ? 'Очистить корзину' : 'Очистить выбранное'}
         </Button>

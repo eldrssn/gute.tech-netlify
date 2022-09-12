@@ -13,24 +13,25 @@ import {
 } from '@mui/material';
 import cn from 'classnames';
 
-import {
-  addItemQuantity,
-  removeItemQuantity,
-  removeItemFromCart,
-} from 'store/reducers/cart/actions';
 import { setItemsFromOrder, setItemsSlugs } from 'store/reducers/order/actions';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { TotalBoxRedirectUrls } from 'utility/utils/constants';
 
+import { Error } from '../Error';
 import { DesktopTableBody } from '../DesktopTableBody';
 import { MobileTableBody } from '../MobileTableBody';
 import { BUTTON_TITLE_ORDER, BUTTON_TITLE_PAYMENT } from '../../constants';
 import { getCheckedCartItemsSlug, getCheckedCartItems } from '../../helpers';
-import { TTableOrderProps, CartItemData } from '../../types';
+import { TTableOrderProps } from '../../types';
 import styles from '../../styles.module.scss';
 
-const TableOrder: React.FC<TTableOrderProps> = ({ cart, orderTotal }) => {
+const TableOrder: React.FC<TTableOrderProps> = ({
+  cart,
+  orderTotal,
+  isError,
+  isLoading,
+}) => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState(false);
   const { isMobile } = useWindowSize();
 
@@ -42,15 +43,6 @@ const TableOrder: React.FC<TTableOrderProps> = ({ cart, orderTotal }) => {
 
   const isAllItemsSelect = cart.length === checkedCartItems.length;
 
-  const addCount = (item: CartItemData) => {
-    dispatch(addItemQuantity(item.slug));
-  };
-  const removeCount = (item: CartItemData) => {
-    dispatch(removeItemQuantity(item.slug));
-  };
-  const removeItem = (item: CartItemData) => {
-    dispatch(removeItemFromCart(item.slug));
-  };
   const openModalAdvice = () => {
     setModalAdviceOpen(true);
   };
@@ -69,7 +61,9 @@ const TableOrder: React.FC<TTableOrderProps> = ({ cart, orderTotal }) => {
     ? BUTTON_TITLE_PAYMENT
     : BUTTON_TITLE_ORDER;
 
-  return (
+  return isError ? (
+    <Error />
+  ) : (
     <>
       {isModalAdviceOpen && (
         <ModalAdvice
@@ -90,19 +84,9 @@ const TableOrder: React.FC<TTableOrderProps> = ({ cart, orderTotal }) => {
           </TableHead>
         )}
         {isMobile ? (
-          <MobileTableBody
-            cart={cart}
-            addCount={addCount}
-            removeCount={removeCount}
-            removeItem={removeItem}
-          />
+          <MobileTableBody cart={cart} isLoading={isLoading} />
         ) : (
-          <DesktopTableBody
-            cart={cart}
-            addCount={addCount}
-            removeCount={removeCount}
-            removeItem={removeItem}
-          />
+          <DesktopTableBody cart={cart} isLoading={isLoading} />
         )}
       </Table>
       <Box className={styles.bottomOrderBox} component='div'>

@@ -9,8 +9,6 @@ import {
   removeItemQuantity,
   setItemQuantity,
   fetchItemFromOrder,
-  setItemsSlugs,
-  clearItemsSlugs,
 } from './actions';
 import { initialState, MIN_COUNT_ORDER_ITEM } from './constants';
 import {
@@ -18,7 +16,6 @@ import {
   ErrorAction,
   OrderItemQuantity,
   FetchItemPayloadData,
-  ItemsSlugs,
 } from './types';
 
 const handlers = {
@@ -28,10 +25,10 @@ const handlers = {
   ) => {
     const order = state.orderItems.data;
     const itemIndex = order.findIndex(({ slug }) => slug === payload);
-    const { count, ...otherItemData } = order[itemIndex];
-    const newCount = count + 1;
+    const { quantity, ...otherItemData } = order[itemIndex];
+    const newCount = quantity + 1;
     const newItem = {
-      count: newCount,
+      quantity: newCount,
       ...otherItemData,
     };
     state.orderItems.data = [
@@ -47,7 +44,7 @@ const handlers = {
     const itemIndex = state.orderItems.data.findIndex(
       ({ slug }) => slug === payload.slug,
     );
-    state.orderItems.data[itemIndex].count = Number(payload.count);
+    state.orderItems.data[itemIndex].quantity = Number(payload.count);
   },
   [removeItemQuantity.type]: (
     state: OrderStore,
@@ -55,10 +52,10 @@ const handlers = {
   ) => {
     const order = state.orderItems.data;
     const itemIndex = order.findIndex(({ slug }) => slug === payload);
-    const { count, ...otherItemData } = order[itemIndex];
-    const newCount = count - 1;
+    const { quantity, ...otherItemData } = order[itemIndex];
+    const newCount = quantity - 1;
     const newItem = {
-      count: newCount,
+      quantity: newCount,
       ...otherItemData,
     };
 
@@ -71,25 +68,16 @@ const handlers = {
   [clearOrder.type]: (state: OrderStore) => {
     state.orderItems.data = [];
   },
-  [setItemsSlugs.type]: (
-    state: OrderStore,
-    { payload }: { payload: ItemsSlugs },
-  ) => {
-    state.orderItemsSlugs = payload;
-  },
-  [clearItemsSlugs.type]: (state: OrderStore) => {
-    state.orderItemsSlugs = [];
-  },
 
   [setItemsFromOrder.type]: (
     state: OrderStore,
     { payload }: { payload: CartItemData[] },
   ) => {
     const newOrderItems = payload.map((orderItem) => {
-      const { count, ...otherOrderItemData } = orderItem;
+      const { quantity, ...otherOrderItemData } = orderItem;
       const newCount =
-        count > MIN_COUNT_ORDER_ITEM ? count : MIN_COUNT_ORDER_ITEM;
-      return { ...otherOrderItemData, count: newCount };
+        quantity > MIN_COUNT_ORDER_ITEM ? quantity : MIN_COUNT_ORDER_ITEM;
+      return { ...otherOrderItemData, quantity: newCount };
     });
     state.orderItems.data = newOrderItems;
   },
@@ -101,18 +89,11 @@ const handlers = {
     state: OrderStore,
     { payload }: { payload: FetchItemPayloadData },
   ) => {
-    const {
-      productSlug: slugAddedItem,
-      ordinalId: ordinalIdAddedItem,
-      count,
-    } = payload.requestData;
-    const currentCount =
-      Number(count) > MIN_COUNT_ORDER_ITEM ? count : MIN_COUNT_ORDER_ITEM;
+    const { productSlug: slugAddedItem, quantity } = payload.requestData;
+    const currentQuantity =
+      Number(quantity) > MIN_COUNT_ORDER_ITEM ? quantity : MIN_COUNT_ORDER_ITEM;
     const order = state.orderItems.data;
     const itemIndex = order.findIndex(({ slug }) => slug === slugAddedItem);
-    const ordinalId = ordinalIdAddedItem
-      ? ordinalIdAddedItem
-      : order.length + 1;
 
     if (itemIndex >= 0) {
       return;
@@ -120,8 +101,7 @@ const handlers = {
     state.orderItems.data = [
       {
         ...payload.data,
-        ordinalId,
-        count: currentCount ? currentCount : MIN_COUNT_ORDER_ITEM,
+        quantity: currentQuantity ? currentQuantity : MIN_COUNT_ORDER_ITEM,
         isChecked: true,
       },
     ];

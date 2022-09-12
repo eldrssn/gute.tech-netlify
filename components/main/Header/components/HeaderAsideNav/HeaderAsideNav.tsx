@@ -9,7 +9,10 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
-import { selectCartTotal, selectCart } from 'store/reducers/cart/selectors';
+import {
+  selectCartTotal,
+  selectCartProductTotal,
+} from 'store/reducers/cart/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { HIDE_PHONE_WIDTH } from 'constants/variables';
 import { formatPrice } from 'utility/helpers';
@@ -29,9 +32,7 @@ const HeaderAsideNav: FC = () => {
 
   const { phone } = useSelector(selectShowcaseData);
   const cartTotal = useSelector(selectCartTotal);
-  const cart = useSelector(selectCart);
-
-  const amountCartItems = cart.length;
+  const cartProductTotal = useSelector(selectCartProductTotal);
 
   const menuItemStyles = cn(styles.menuItem, {
     [styles.menuItem_mobile]: isMobile,
@@ -78,7 +79,7 @@ const HeaderAsideNav: FC = () => {
                   <Box className={styles.shoppingCart} />
                   <Box component='div' className={styles.countCartItem}>
                     <span className={styles.countCartItem_number}>
-                      {amountCartItems}
+                      {cartProductTotal}
                     </span>
                   </Box>
                   <Typography className={styles.orderTotalCard}>

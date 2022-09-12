@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { selectCart } from 'store/reducers/cart/selectors';
+import { selectCartProductTotal } from 'store/reducers/cart/selectors';
 
 import { MenuTittles } from '../constants';
 import { MenuItemProps } from '../types';
@@ -14,13 +14,12 @@ import styles from '../mobileMenu.module.scss';
 const cn = classnames.bind(styles);
 
 const DefaultMenuItem: FC<MenuItemProps> = ({ menuItem, router }) => {
-  const cart = useSelector(selectCart);
-  const amountCartItems = cart.length;
+  const cartProductTotal = useSelector(selectCartProductTotal);
 
   const { title, href, icon } = menuItem;
 
   const isHomeItem = title === MenuTittles.HOME;
-  const isCartItem = title === MenuTittles.CART && Boolean(amountCartItems);
+  const isCartItem = title === MenuTittles.CART && Boolean(cartProductTotal);
 
   const isActive = isHomeItem
     ? router.pathname === href
@@ -36,7 +35,9 @@ const DefaultMenuItem: FC<MenuItemProps> = ({ menuItem, router }) => {
         <FontAwesomeIcon icon={icon} className={styles.menuItem_icon} />
 
         {isCartItem && (
-          <span className={styles.menuItem_cartCounter}>{amountCartItems}</span>
+          <span className={styles.menuItem_cartCounter}>
+            {cartProductTotal}
+          </span>
         )}
         <span className={styles.menuItem_title}>{title}</span>
       </a>

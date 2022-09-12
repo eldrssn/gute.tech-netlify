@@ -22,12 +22,7 @@ import { Counter } from '../Сounter';
 import { TTableBodyProps } from '../../types';
 import styles from './MobileTableBody.module.scss';
 
-const MobileTableBody: React.FC<TTableBodyProps> = ({
-  cart,
-  addCount,
-  removeCount,
-  removeItem,
-}) => {
+const MobileTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -44,7 +39,7 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
       {cart.map((item) => {
         const stockBalance = getStockBalance(item);
         const itemPrice = formatPrice(item.price);
-        const countItemsPrice = formatPrice(item.count * item.price);
+        const countItemsPrice = formatPrice(item.quantity * item.price);
         const categories = item.categories[0];
         const link = getLinkToProduct({
           categories: categories,
@@ -65,6 +60,7 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
                 <FormControlLabel
                   className={styles.checkbox}
                   label=''
+                  disabled={isLoading}
                   control={
                     <Checkbox
                       checked={item.isChecked}
@@ -93,14 +89,13 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
               </Typography>
               <Counter
                 item={item}
-                addCount={addCount}
-                removeCount={removeCount}
                 stockBalance={stockBalance}
+                isLoading={isLoading}
               />
               <Typography className={styles.itemCost}>
                 Стоимость: {countItemsPrice}&#8381;
               </Typography>
-              <DeleteItemButton item={item} removeItem={removeItem} />
+              <DeleteItemButton item={item} isLoading={isLoading} />
             </TableCell>
           </TableRow>
         );

@@ -6,6 +6,7 @@ import {
   RegisterVerifyResponseErrorData,
   ResetPasswordResponseErrorData,
   ResetPasswordSetResponseErrorData,
+  UnauthorizationTokenResponseData,
 } from 'api/models/authentication';
 import { ActiveAutorizationFormKey } from 'constants/types';
 
@@ -17,18 +18,21 @@ import {
   fetchRegister,
   fetchRegisterVerification,
   fetchRegisterVerificationRetry,
-  resetAllError,
-  resetAllField,
-  setActiveAuthorizationForm,
   fetchResetPassword,
   fetchResetPasswordVerification,
   fetchResetPasswordSet,
+  fetchUnauthorizationToken,
+  resetAllError,
+  resetAllField,
+  setActiveAuthorizationForm,
+  setNotAuthorizationToken,
 } from './actions';
 import {
   AuthenticationStore,
   RegisterPayloadData,
   ResetPasswordPayloadData,
   ResetPasswordVerificationPayloadData,
+  ErrorAction,
 } from './types';
 
 const handlers = {
@@ -73,6 +77,31 @@ const handlers = {
     { payload }: PayloadAction<ActiveAutorizationFormKey>,
   ) => {
     state.activeAuthorizationForm = payload;
+  },
+  [setNotAuthorizationToken.type]: (
+    state: AuthenticationStore,
+    { payload }: PayloadAction<string>,
+  ) => {
+    state.notAuthorizedToken.token = payload;
+  },
+
+  [fetchUnauthorizationToken.pending.type]: (state: AuthenticationStore) => {
+    state.notAuthorizedToken.isLoading = true;
+    state.notAuthorizedToken.error = null;
+  },
+  [fetchUnauthorizationToken.fulfilled.type]: (
+    state: AuthenticationStore,
+    { payload }: PayloadAction<UnauthorizationTokenResponseData>,
+  ) => {
+    state.notAuthorizedToken.token = payload.token;
+    state.notAuthorizedToken.isLoading = false;
+  },
+  [fetchUnauthorizationToken.rejected.type]: (
+    state: AuthenticationStore,
+    { error }: ErrorAction,
+  ) => {
+    state.notAuthorizedToken.isLoading = false;
+    state.notAuthorizedToken.error = error;
   },
 
   [fetchAccessToken.pending.type]: (state: AuthenticationStore) => {

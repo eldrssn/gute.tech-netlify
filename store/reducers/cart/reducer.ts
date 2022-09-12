@@ -1,114 +1,24 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
+import { CartResponseData, CartAddItemResponseData } from 'api/models/cart';
 import {
-  addItemQuantity,
-  setItemQuantity,
-  removeItemQuantity,
-  removeItemFromCart,
-  removeItemBySlug,
-  fetchItemFromCart,
-  fetchItemsFromCart,
-  resetOrdinalId,
+  clearCartItems,
   changeChecked,
-  clearCart,
   setAllChecked,
   clearCheckedItems,
+  fetchItemsFromCart,
+  fetchCartAuthorized,
+  fetchCartUnAuthorized,
+  addProductToCartAuthorized,
+  addProductToCartUnAuthorized,
+  updateCartItemAuthorized,
+  updateCartItemUnAuthorized,
 } from './actions';
-import {
-  initialState,
-  MIN_COUNT_ADD_ITEM_CART,
-  MIN_COUNT_CART_ITEM,
-} from './constants';
+import { initialState } from './constants';
 
-import {
-  CartStore,
-  CartItemSlug,
-  CartItemQuantity,
-  fetchItemsPayloadData,
-  fetchItemPayloadData,
-} from './types';
+import { CartStore, fetchItemsPayloadData, ErrorAction } from './types';
 
 const handlers = {
-  [addItemQuantity.type]: (
-    state: CartStore,
-    { payload }: { payload: CartItemSlug },
-  ) => {
-    const cart = state.cartItems.data;
-    const itemIndex = cart.findIndex(({ slug }) => slug === payload);
-    const { count, ...otherItemData } = cart[itemIndex];
-    const newCount = count + 1;
-    const newItem = {
-      count: newCount,
-      ...otherItemData,
-    };
-    state.cartItems.data = [
-      ...cart.slice(0, itemIndex),
-      newItem,
-      ...cart.slice(itemIndex + 1),
-    ];
-  },
-  [setItemQuantity.type]: (
-    state: CartStore,
-    { payload }: { payload: CartItemQuantity },
-  ) => {
-    const itemIndex = state.cartItems.data.findIndex(
-      ({ slug }) => slug === payload.slug,
-    );
-    state.cartItems.data[itemIndex].count = Number(payload.count);
-  },
-  [removeItemQuantity.type]: (
-    state: CartStore,
-    { payload }: { payload: CartItemSlug },
-  ) => {
-    const cart = state.cartItems.data;
-    const itemIndex = cart.findIndex(({ slug }) => slug === payload);
-    const { count, ...otherItemData } = cart[itemIndex];
-    const newCount = count - 1;
-    const newItem = {
-      count: newCount,
-      ...otherItemData,
-    };
-
-    state.cartItems.data = [
-      ...cart.slice(0, itemIndex),
-      newItem,
-      ...cart.slice(itemIndex + 1),
-    ];
-  },
-  [clearCart.type]: (state: CartStore) => {
-    state.cartItems.data = [];
-  },
-  [removeItemFromCart.type]: (
-    state: CartStore,
-    { payload }: { payload: CartItemSlug },
-  ) => {
-    const cart = state.cartItems.data;
-    const itemIndex = cart.findIndex(({ slug }) => slug === payload);
-    state.cartItems.data = [
-      ...cart.slice(0, itemIndex),
-      ...cart.slice(itemIndex + 1),
-    ];
-  },
-  [removeItemBySlug.type]: (
-    state: CartStore,
-    { payload }: { payload: CartItemSlug[] },
-  ) => {
-    const cart = state.cartItems.data;
-    const newCart = cart.filter(
-      (cartItem) => payload.findIndex((slug) => slug === cartItem.slug) < 0,
-    );
-    state.cartItems.data = newCart;
-  },
-  [resetOrdinalId.type]: (state: CartStore) => {
-    const newCart = state.cartItems.data.map((cartItem, index) => {
-      const { ordinalId, ...othedItemData } = cartItem;
-      return {
-        ordinalId: index + 1,
-        ...othedItemData,
-      };
-    });
-    state.cartItems.data = newCart;
-  },
   [changeChecked.type]: (
     state: CartStore,
     { payload }: { payload: string },
@@ -127,6 +37,7 @@ const handlers = {
       ...order.slice(itemIndex + 1),
     ];
   },
+
   [setAllChecked.type]: (state: CartStore) => {
     const newCart = state.cartItems.data.map((cartItem) => {
       const { isChecked, ...othedItemData } = cartItem;
@@ -137,6 +48,7 @@ const handlers = {
     });
     state.cartItems.data = newCart;
   },
+
   [clearCheckedItems.type]: (state: CartStore) => {
     const newCart = state.cartItems.data.map((cartItem) => {
       const { isChecked, ...othedItemData } = cartItem;
@@ -148,39 +60,23 @@ const handlers = {
     state.cartItems.data = newCart;
   },
 
-  [fetchItemFromCart.fulfilled.type]: (
-    state: CartStore,
-    { payload }: { payload: fetchItemPayloadData },
-  ) => {
-    const {
-      productSlug: slugAddedItem,
-      ordinalId: ordinalIdAddedItem,
-      count,
-    } = payload.requestData;
-    const currentCount =
-      Number(count) >= MIN_COUNT_CART_ITEM ? count : MIN_COUNT_CART_ITEM;
-    const cart = state.cartItems.data;
-    const itemIndex = cart.findIndex(({ slug }) => slug === slugAddedItem);
-    const ordinalId = ordinalIdAddedItem ? ordinalIdAddedItem : cart.length + 1;
-
-    if (itemIndex >= 0) {
-      return;
-    }
-    state.cartItems.data = [
-      ...cart,
-      {
-        ...payload.data,
-        ordinalId,
-        count: currentCount ? currentCount : MIN_COUNT_ADD_ITEM_CART,
-        isChecked: true,
-      },
-    ];
+  [clearCartItems.type]: (state: CartStore) => {
+    state.cartItems.data = [];
+    state.cartItems.isLoading = false;
   },
 
+  [fetchItemsFromCart.pending.type]: (state: CartStore) => {
+    state.cartItems.error = null;
+    state.cartItems.isLoading = true;
+  },
   [fetchItemsFromCart.fulfilled.type]: (
     state: CartStore,
-    { payload }: { payload: fetchItemsPayloadData },
+    { payload }: PayloadAction<fetchItemsPayloadData>,
   ) => {
+    if (payload.data.length === 0) {
+      state.cartItems.data = [];
+      return;
+    }
     const { productsOptions } = payload.requestData;
     const newCartItems = payload.data.map((item) => {
       const newItemslug = item.slug;
@@ -191,13 +87,124 @@ const handlers = {
 
       return {
         ...item,
-        count: productOption.count,
-        ordinalId: productOption.ordinalId,
-        isChecked: productOption.isChecked,
+        quantity: productOption.quantity,
+        isChecked: true,
       };
     });
 
+    state.cartItems.isLoading = false;
     state.cartItems.data = newCartItems;
+  },
+  [fetchItemsFromCart.rejected.type]: (
+    state: CartStore,
+    { error }: ErrorAction,
+  ) => {
+    state.cartItems.error = error;
+    state.cartItems.isLoading = false;
+  },
+
+  [fetchCartAuthorized.pending.type]: (state: CartStore) => {
+    state.cartSavedItems.isLoading = true;
+    state.cartSavedItems.error = null;
+  },
+  [fetchCartAuthorized.fulfilled.type]: (
+    state: CartStore,
+    { payload }: PayloadAction<CartResponseData>,
+  ) => {
+    state.cartSavedItems.isLoading = false;
+    state.cartSavedItems.data = payload.results;
+    state.cartProductCount = payload.total;
+    state.cartTotal = payload.total_price;
+  },
+  [fetchCartAuthorized.rejected.type]: (
+    state: CartStore,
+    { error }: ErrorAction,
+  ) => {
+    state.cartSavedItems.error = error;
+    state.cartSavedItems.isLoading = false;
+  },
+
+  [fetchCartUnAuthorized.pending.type]: (state: CartStore) => {
+    state.cartSavedItems.isLoading = true;
+    state.cartSavedItems.error = null;
+  },
+  [fetchCartUnAuthorized.fulfilled.type]: (
+    state: CartStore,
+    { payload }: PayloadAction<CartResponseData>,
+  ) => {
+    state.cartSavedItems.isLoading = false;
+    state.cartSavedItems.data = payload.results;
+    state.cartProductCount = payload.total;
+    state.cartTotal = payload.total_price;
+  },
+  [fetchCartUnAuthorized.rejected.type]: (
+    state: CartStore,
+    { error }: ErrorAction,
+  ) => {
+    state.cartSavedItems.error = error;
+    state.cartSavedItems.isLoading = false;
+  },
+
+  [addProductToCartAuthorized.pending.type]: (state: CartStore) => {
+    state.cartUpdated = true;
+    state.cartError = false;
+  },
+  [addProductToCartAuthorized.fulfilled.type]: (
+    state: CartStore,
+    { payload }: PayloadAction<CartAddItemResponseData>,
+  ) => {
+    state.cartError = false;
+    state.cartUpdated = false;
+    state.cartTotal = payload.total_price;
+    state.cartProductCount = payload.total;
+  },
+  [addProductToCartAuthorized.rejected.type]: (state: CartStore) => {
+    state.cartError = true;
+    state.cartUpdated = false;
+  },
+
+  [addProductToCartUnAuthorized.pending.type]: (state: CartStore) => {
+    state.cartUpdated = true;
+    state.cartError = false;
+  },
+  [addProductToCartUnAuthorized.fulfilled.type]: (
+    state: CartStore,
+    { payload }: PayloadAction<CartAddItemResponseData>,
+  ) => {
+    state.cartError = false;
+    state.cartUpdated = false;
+    state.cartTotal = payload.total_price;
+    state.cartProductCount = payload.total;
+  },
+  [addProductToCartUnAuthorized.rejected.type]: (state: CartStore) => {
+    state.cartError = true;
+    state.cartUpdated = false;
+  },
+
+  [updateCartItemAuthorized.pending.type]: (state: CartStore) => {
+    state.cartUpdated = true;
+    state.cartError = false;
+  },
+  [updateCartItemAuthorized.fulfilled.type]: (state: CartStore) => {
+    state.cartError = false;
+    state.cartUpdated = false;
+  },
+  [updateCartItemAuthorized.rejected.type]: (state: CartStore) => {
+    state.cartError = true;
+    state.cartUpdated = false;
+  },
+
+  [updateCartItemUnAuthorized.pending.type]: (state: CartStore) => {
+    state.cartUpdated = true;
+    state.cartError = false;
+  },
+  [updateCartItemUnAuthorized.fulfilled.type]: (state: CartStore) => {
+    state.cartError = false;
+    state.cartUpdated = false;
+  },
+  [updateCartItemUnAuthorized.rejected.type]: (state: CartStore) => {
+    state.cartError = true;
+    state.cartUpdated = false;
   },
 };
 

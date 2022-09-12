@@ -2,42 +2,64 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import storeSelector from 'store/storeSelector';
 
-const selectAppStore = createSelector(
+const selectCartStore = createSelector(
   storeSelector,
   ({ cartStore }) => cartStore,
 );
 
-const selectCart = createSelector(selectAppStore, ({ cartItems }) => {
-  const cartForSort = [...cartItems.data];
-  const sortedCart = cartForSort.sort((prev, cur) => {
-    return prev.ordinalId - cur.ordinalId;
-  });
-  return sortedCart;
-});
-
-const selectCartTotal = createSelector(selectAppStore, ({ cartItems }) =>
-  cartItems.data.reduce((total, item) => {
-    if (item.is_service) {
-      return total;
-    }
-
-    return item.count * item.price + total;
-  }, 0),
+const selectCart = createSelector(
+  selectCartStore,
+  ({ cartItems }) => cartItems.data,
 );
 
-const selectCartOrderTotal = createSelector(selectAppStore, ({ cartItems }) =>
-  cartItems.data.reduce((total, item) => {
-    if (item.is_service || !item.isChecked) {
-      return total;
-    }
+const selectCartSavedItems = createSelector(
+  selectCartStore,
+  ({ cartSavedItems }) => cartSavedItems.data,
+);
 
-    return item.count * item.price + total;
-  }, 0),
+const selectCartTotal = createSelector(
+  selectCartStore,
+  ({ cartTotal }) => cartTotal,
+);
+
+const selectCartProductTotal = createSelector(
+  selectCartStore,
+  ({ cartProductCount }) => cartProductCount,
 );
 
 const selectCartLoading = createSelector(
-  selectAppStore,
+  selectCartStore,
   ({ cartItems }) => cartItems.isLoading,
 );
 
-export { selectCart, selectCartOrderTotal, selectCartLoading, selectCartTotal };
+const selectCartSavedLoading = createSelector(
+  selectCartStore,
+  ({ cartSavedItems }) => cartSavedItems.isLoading,
+);
+
+const selectCartUpdated = createSelector(
+  selectCartStore,
+  ({ cartUpdated }) => cartUpdated,
+);
+
+const selectCartError = createSelector(
+  selectCartStore,
+  ({ cartItems }) => cartItems.error,
+);
+
+const selectCartSavedError = createSelector(
+  selectCartStore,
+  ({ cartSavedItems }) => cartSavedItems.error,
+);
+
+export {
+  selectCartSavedItems,
+  selectCartProductTotal,
+  selectCartLoading,
+  selectCartSavedLoading,
+  selectCartUpdated,
+  selectCartTotal,
+  selectCart,
+  selectCartError,
+  selectCartSavedError,
+};

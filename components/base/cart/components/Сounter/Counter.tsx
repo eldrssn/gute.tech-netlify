@@ -1,43 +1,105 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import { Button, Box, TextField, Typography } from '@mui/material';
 import InputMask from 'react-input-mask';
 
-import { getInputRules } from 'utility/helpers';
-import { setItemQuantity } from 'store/reducers/cart/actions';
+import {
+  updateCartItemUnAuthorized,
+  updateCartItemAuthorized,
+} from 'store/reducers/cart/actions';
+import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { TCounterProps, TFormCountData } from 'components/base/cart/types';
+import { getInputRules } from 'utility/helpers';
 import { inputMasks } from 'constants/patterns';
 
 import styles from './Counter.module.scss';
 
 const Counter: React.FC<TCounterProps> = ({
   item,
-  removeCount,
-  addCount,
   stockBalance,
+  isLoading,
 }) => {
   const { handleSubmit, control, reset } = useForm<TFormCountData>();
-  const dispatch = useDispatch();
-
   const [isOpenCountModal, setIsOpenCountModal] = useState(false);
 
-  const isItemCountZero = item.count === 0;
-  const isItemCountMax = item.count >= stockBalance;
+  const dispatch = useDispatch();
 
-  const onSubmit = handleSubmit((data) => {
-    if (data.count) {
-      dispatch(
-        setItemQuantity({
-          slug: item.slug,
-          count: data.count,
-        }),
-      );
+  const isAuthorized = useSelector(selectIsAuthorized);
+
+  const isItemCountMin = item.quantity <= 1;
+  const isItemCountMax = item.quantity >= stockBalance;
+
+  const setQuantity = handleSubmit((data) => {
+    if (isLoading) {
+      return;
     }
+
+    const quantity = data.count;
+
     reset({ count: null });
     setIsOpenCountModal(false);
+
+    if (!quantity) {
+      return;
+    }
+
+    if (isAuthorized)
+      dispatch(
+        updateCartItemAuthorized([{ product: item.slug, quantity: quantity }]),
+      );
+
+    if (!isAuthorized) {
+      dispatch(
+        updateCartItemUnAuthorized([
+          { product: item.slug, quantity: quantity },
+        ]),
+      );
+    }
   });
+
+  const onIncrement = () => {
+    if (isItemCountMax || isLoading) {
+      return;
+    }
+
+    if (isAuthorized)
+      dispatch(
+        updateCartItemAuthorized([
+          { product: item.slug, quantity: item.quantity + 1 },
+        ]),
+      );
+
+    if (!isAuthorized) {
+      dispatch(
+        updateCartItemUnAuthorized([
+          { product: item.slug, quantity: item.quantity + 1 },
+        ]),
+      );
+    }
+  };
+
+  const onDecrement = () => {
+    if (isItemCountMin || isLoading) {
+      return;
+    }
+
+    if (isAuthorized)
+      dispatch(
+        updateCartItemAuthorized([
+          { product: item.slug, quantity: item.quantity - 1 },
+        ]),
+      );
+
+    if (!isAuthorized) {
+      dispatch(
+        updateCartItemUnAuthorized([
+          { product: item.slug, quantity: item.quantity - 1 },
+        ]),
+      );
+    }
+  };
 
   const openModal = () => {
     setIsOpenCountModal(true);
@@ -61,14 +123,14 @@ const Counter: React.FC<TCounterProps> = ({
           [styles.countModalOpen]: isOpenCountModal,
         })}
       >
-        <form onSubmit={onSubmit} className={styles.form}>
+        <form onSubmit={setQuantity} className={styles.form}>
           <Typography className={styles.titleModal}>
             Введите количество
           </Typography>
           <Controller
             name='count'
             control={control}
-            rules={{ ...getInputRules(), max: stockBalance }}
+            rules={{ ...getInputRules(), max: stockBalance, min: 1 }}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <InputMask
                 mask={inputMasks.countMask}
@@ -89,7 +151,7 @@ const Counter: React.FC<TCounterProps> = ({
           <Box className={styles.buttonContainer}>
             <Button
               className={cn(styles.btnSolution, styles.btnAccept)}
-              onClick={onSubmit}
+              onClick={setQuantity}
             >
               Применить
             </Button>
@@ -105,27 +167,23 @@ const Counter: React.FC<TCounterProps> = ({
 
       <Button
         className={cn(styles.btnCount, styles.btnCountRemove, {
-          [styles.btnCountInactive]: isItemCountZero,
+          [styles.btnCountInactive]: isItemCountMin || isLoading,
         })}
-        onClick={() => {
-          removeCount(item);
-        }}
+        onClick={onDecrement}
       >
         -
       </Button>
       <Box onClick={openModal} component='div' className={styles.count}>
-        {item.count}
+        {item.quantity}
       </Box>
       <Box component='div' className={styles.stockBalance}>
         На складе: {stockBalance}
       </Box>
       <Button
         className={cn(styles.btnCount, styles.btnCountAdd, {
-          [styles.btnCountInactive]: isItemCountMax,
+          [styles.btnCountInactive]: isItemCountMax || isLoading,
         })}
-        onClick={() => {
-          addCount(item);
-        }}
+        onClick={onIncrement}
       >
         +
       </Button>

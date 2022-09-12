@@ -9,9 +9,9 @@ import { TFormData, FormKey } from './types';
 
 const getOrderList = (cart: CartItemData[]) =>
   cart
-    .filter((item) => item.count > 0)
+    .filter((item) => item.quantity > 0)
     .map((item) => ({
-      quantity: Number(item.count),
+      quantity: Number(item.quantity),
       slug: item.slug,
     }));
 

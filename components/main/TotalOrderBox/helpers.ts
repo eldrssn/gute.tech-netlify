@@ -13,7 +13,7 @@ const getCartOrderTotal = (
       return total;
     }
 
-    return item.count * item.price + total;
+    return item.quantity * item.price + total;
   }, 0);
 
 export { getCartOrderTotal };

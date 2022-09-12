@@ -9,6 +9,7 @@ import {
   postResetPasswordRequest,
   postResetPasswordVerify,
   putResetPassword,
+  getUnauthorizationToken,
 } from 'api/routes/authentication';
 import {
   RefreshTokenRequestData,
@@ -26,6 +27,7 @@ import {
   ResetPasswordVerifyResponseData,
   ResetPasswordSetRequestData,
   ResetPasswordSetResponseData,
+  UnauthorizationTokenResponseData,
 } from 'api/models/authentication';
 import { createAsyncAction } from 'utility/helpers/store';
 import { ActiveAutorizationFormKey, CookieKey } from 'constants/types';
@@ -36,6 +38,9 @@ const resetAllError = createAction('authentication/resetAllError');
 const resetAllField = createAction('authentication/resetAllField');
 const setActiveAuthorizationForm = createAction<ActiveAutorizationFormKey>(
   'authentication/setActiveAuthorizationForm',
+);
+const setNotAuthorizationToken = createAction<string>(
+  'authentication/setNotAuthorizationToken',
 );
 
 const fetchAccessToken = createAsyncAction<
@@ -48,6 +53,12 @@ const fetchAccessToken = createAsyncAction<
     setCookie(CookieKey.ACCESS_TOKEN, data.access);
   },
 });
+
+const fetchUnauthorizationToken =
+  createAsyncAction<UnauthorizationTokenResponseData>({
+    typeAction: 'authentication/fetchUnauthorizationToken',
+    request: getUnauthorizationToken,
+  });
 
 const fetchTokens = createAsyncAction<LoginResponseData, LoginRequestData>({
   typeAction: 'authentication/fetchTokens',
@@ -117,15 +128,17 @@ const fetchResetPasswordSet = createAsyncAction<
 });
 
 export {
+  fetchUnauthorizationToken,
   fetchAccessToken,
   fetchTokens,
   fetchRegister,
   fetchRegisterVerification,
   fetchRegisterVerificationRetry,
-  resetAllError,
-  resetAllField,
-  setActiveAuthorizationForm,
   fetchResetPassword,
   fetchResetPasswordVerification,
   fetchResetPasswordSet,
+  resetAllError,
+  resetAllField,
+  setActiveAuthorizationForm,
+  setNotAuthorizationToken,
 };

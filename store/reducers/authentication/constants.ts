@@ -39,6 +39,11 @@ const initialState: AuthenticationStore = {
     loadingResetPasswordSetForm: false,
     errorResetPasswordSetForm: null,
   },
+  notAuthorizedToken: {
+    token: '',
+    isLoading: false,
+    error: null,
+  },
   activeAuthorizationForm: ActiveAutorizationFormKey.AUTHORIZATION,
 };
 

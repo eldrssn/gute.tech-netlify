@@ -1,17 +1,13 @@
 import { Control, UseFormSetValue } from 'react-hook-form';
 
-import { CartItemData, orderTotal } from 'store/reducers/cart/types';
+import { CartItemData } from 'store/reducers/cart/types';
 import { BranchOfficeData, BranchesData } from 'api/models/regions';
 
 type TStateProps = {
   cart: CartItemData[];
 };
 
-type TTableBodyProps = {
-  removeItem: (item: CartItemData) => void;
-  addCount: (item: CartItemData) => void;
-  removeCount: (item: CartItemData) => void;
-} & Pick<TStateProps, 'cart'>;
+type TTableBodyProps = { isLoading: boolean } & Pick<TStateProps, 'cart'>;
 
 type TFormData = {
   nameValue: string;
@@ -34,8 +30,8 @@ enum FormKey {
 }
 
 type TDeleteItemButtonProps = {
-  removeItem: (item: CartItemData) => void;
   item: CartItemData;
+  isLoading: boolean;
 };
 
 type TPaymentMethodProps = {
@@ -48,7 +44,9 @@ type TContactInformationProps = {
 
 type TTableOrderProps = {
   cart: CartItemData[];
-  orderTotal: orderTotal;
+  orderTotal: number;
+  isLoading: boolean;
+  isError: boolean;
 };
 
 type TDeliveryAddressProps = {
@@ -58,13 +56,13 @@ type TDeliveryAddressProps = {
 
 type TCounterProps = {
   item: CartItemData;
-  addCount: (item: CartItemData) => void;
-  removeCount: (item: CartItemData) => void;
   stockBalance: number;
+  isLoading: boolean;
 };
 
 type TRemoveCheckedButtonProps = {
   cart: CartItemData[];
+  isLoading: boolean;
 };
 
 type TFormCountData = {
