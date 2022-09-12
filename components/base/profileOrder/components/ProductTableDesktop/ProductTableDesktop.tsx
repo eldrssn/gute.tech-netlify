@@ -1,28 +1,36 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
 import { TableBody, TableCell, TableRow, Typography } from '@mui/material';
 
 import { formatPrice } from 'utility/helpers';
+import { getLinkToProduct } from 'utility/helpers/linkmakers';
 
 import { TableBodyProps } from '../../types';
 import styles from './styles.module.scss';
 
 const ProductTableDesktop: React.FC<TableBodyProps> = ({ products }) => {
-  //TODO: доделать ссылку на товар
-  // const handleClickTitle = (link: string) => {
-  //   if (!link) {
-  //     return;
-  //   }
+  const router = useRouter();
 
-  //   return;
-  //   // router.push(link);
-  // };
+  const handleClickTitle = (link: string) => {
+    if (!link) {
+      return;
+    }
+
+    router.push(link);
+  };
 
   return (
     <TableBody className={styles.tableBody}>
       {products.map((item) => {
         const itemPrice = formatPrice(item.price);
         const countItemsPrice = formatPrice(item.quantity * item.price);
+        const categories = item.product.categories[0];
+        const productSlug = item.product.slug;
+        const link = getLinkToProduct({
+          categories: categories,
+          productSlug: productSlug,
+        });
 
         return (
           <TableRow
@@ -38,7 +46,7 @@ const ProductTableDesktop: React.FC<TableBodyProps> = ({ products }) => {
               <Typography className={styles.itemTitleBox}>
                 <Typography
                   className={styles.itemTitle}
-                  // onClick={() => handleClickTitle(link)}
+                  onClick={() => handleClickTitle(link)}
                 >
                   {item.title}
                 </Typography>

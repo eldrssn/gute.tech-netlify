@@ -31,7 +31,7 @@ type ProductResponseData = {
   is_service: boolean;
   warehouses: ProductWarehouse[];
   properties: ProductProperties[];
-  categories: string[];
+  categories: string[][];
 };
 
 type ProductRequestData = {

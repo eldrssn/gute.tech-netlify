@@ -123,13 +123,14 @@ type CatalogSearchReadProductData = {
   image: string;
   price: number;
   is_service: boolean;
-  categories: string[];
+  categories: string[][];
 };
 
 type CatalogSearchReadCategoryData = {
   title: string;
   slug: string;
   image: string;
+  categories: string[];
 };
 
 type CatalogSearchReadResponseData = {

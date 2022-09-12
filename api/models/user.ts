@@ -74,7 +74,7 @@ type OrderRequestData = {
 
 type productData = {
   slug: string;
-  categories: string[];
+  categories: string[][];
 };
 
 type Product = {

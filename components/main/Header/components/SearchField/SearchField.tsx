@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   MenuItem,
@@ -11,11 +13,16 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
+import { clearTransportId } from 'store/reducers/transport/actions';
 import {
   fetchCatalogSearchRead,
   clearCatalogSearchRead,
 } from 'store/reducers/catalog/actions';
 import { selectCatalogSearchRead } from 'store/reducers/catalog/selectors';
+import {
+  getLinkToProduct,
+  getLinkToCategory,
+} from 'utility/helpers/linkmakers';
 import { useDebounce } from 'hooks/useDebounce';
 import { useWindowSize } from 'hooks/useWindowSize';
 
@@ -25,6 +32,7 @@ import styles from './styles.module.scss';
 
 const SearchField: FC = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { isMobile, isTablet } = useWindowSize();
   const { isFullHeader } = useContext(HeaderContext);
@@ -72,13 +80,12 @@ const SearchField: FC = () => {
     [setIsFocusSearchField],
   );
 
-  //TODO: доделать ссылку на товар
-  // const handleClick = (link: string) => {
-  //   setFieldIsFocus(false);
-  //   router.push(link);
-  //   setSearchValue('');
-  //   dispatch(clearTransportId());
-  // };
+  const handleClick = (link: string) => {
+    router.push(link);
+    setFieldIsFocus(false);
+    setSearchValue('');
+    dispatch(clearTransportId());
+  };
 
   const handleClosePopover = () => {
     setFieldIsFocus(false);
@@ -99,7 +106,6 @@ const SearchField: FC = () => {
 
   useEffect(() => {
     setFieldIsFocus(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFullHeader, isMobile, isTablet, setFieldIsFocus]);
 
   useEffect(() => {
@@ -110,7 +116,6 @@ const SearchField: FC = () => {
       ['Загрузка...']: isLoading,
     });
     setErrorMessage(errorMessage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm, catalogSearchRead]);
 
   return (
@@ -136,7 +141,6 @@ const SearchField: FC = () => {
           placeholder='Введите артикул, наименование или код запчасти'
           value={searchValue}
           onFocusCapture={handleOpenPopover}
-          onBlur={handleClosePopover}
           type='text'
           autoComplete='off'
         />
@@ -162,11 +166,14 @@ const SearchField: FC = () => {
               <Box className={styles.categoryList}>
                 <Typography className={styles.listTitle}>Категории</Typography>
                 {categorySearch?.map((category) => {
-                  //TODO: доделать ссылку на товар
+                  const categories = category.categories;
+                  const link = getLinkToCategory({
+                    categories: categories,
+                  });
 
                   return (
                     <Typography
-                      // onClick={() => handleClick(link)}
+                      onClick={() => handleClick(link)}
                       key={category.slug}
                       className={styles.categoryListItem}
                       tabIndex={0}
@@ -181,14 +188,19 @@ const SearchField: FC = () => {
               <Box className={styles.productsList}>
                 <Typography className={styles.listTitle}>Товары</Typography>
                 {productSeacrh?.map((product) => {
-                  //TODO: доделать ссылку на товар
+                  const categories = product.categories[0];
+                  const productSlug = product.slug;
+                  const link = getLinkToProduct({
+                    categories: categories,
+                    productSlug: productSlug,
+                  });
 
                   return (
                     <Box
                       className={styles.productItem}
                       key={product.slug}
                       tabIndex={0}
-                      // onClick={() => handleClick(link)}
+                      onClick={() => handleClick(link)}
                     >
                       <CardMedia
                         component={'img'}

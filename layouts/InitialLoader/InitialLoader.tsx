@@ -31,6 +31,8 @@ import { QueryUrl, COOKIE_TTL } from 'constants/variables';
 import { CookieKey } from 'constants/types';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 
+import { getLinkToProduct } from 'utility/helpers/linkmakers';
+
 const InitialLoader: React.FC = ({ children }) => {
   const { windowWidth } = useWindowSize();
   const { getQueryOption } = useRouterQuery();

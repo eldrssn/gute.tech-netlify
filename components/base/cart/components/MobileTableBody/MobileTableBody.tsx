@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import {
   TableBody,
   TableCell,
@@ -14,6 +15,7 @@ import {
 import { changeChecked } from 'store/reducers/cart/actions';
 import { formatPrice } from 'utility/helpers';
 import { getStockBalance } from 'utility/helpers';
+import { getLinkToProduct } from 'utility/helpers/linkmakers';
 
 import { DeleteItemButton } from '../DeleteItemButton';
 import { Counter } from '../Сounter';
@@ -26,17 +28,16 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
   removeCount,
   removeItem,
 }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const handleChangeCheckBox = (slug: string) => {
     dispatch(changeChecked(slug));
   };
 
-  //TODO: доделать ссылку на товар
-  // const handleClickTitle = (link: string) => {
-  //   return;
-  //   // router.push(link);
-  // };
+  const handleClickTitle = (link: string) => {
+    router.push(link);
+  };
 
   return (
     <TableBody className={styles.tableBody}>
@@ -44,6 +45,11 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
         const stockBalance = getStockBalance(item);
         const itemPrice = formatPrice(item.price);
         const countItemsPrice = formatPrice(item.count * item.price);
+        const categories = item.categories[0];
+        const link = getLinkToProduct({
+          categories: categories,
+          productSlug: item.slug,
+        });
 
         return (
           <TableRow
@@ -78,7 +84,7 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({
             <TableCell className={styles.itemInfo}>
               <Typography
                 className={styles.itemTitle}
-                // onClick={() => handleClickTitle(link)}
+                onClick={() => handleClickTitle(link)}
               >
                 {item.title}
               </Typography>
