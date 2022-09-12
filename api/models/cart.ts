@@ -36,25 +36,75 @@ type ProductResponseData = {
 
 type ProductRequestData = {
   productSlug: string;
-  count?: number;
-  ordinalId?: number;
+  quantity?: number;
 };
 
 type productOptions = {
   productSlug: string;
-  count: number;
-  ordinalId: number;
-  isChecked: boolean;
+  quantity: number;
 };
 
 type ProductsRequestData = {
   productsOptions: productOptions[];
 };
 
+//TODO: метод получения корзины
+
+type Product = {
+  id: number;
+  slug: string;
+  price: string;
+  warehouse_stock: string;
+};
+
+type CartItemResponseData = {
+  id: number;
+  product: Product;
+  quantity: number;
+};
+
+type CartResponseData = {
+  total_price: number;
+  total: number;
+  results: CartItemResponseData[];
+};
+
+//TODO: метод добавления товара
+
+type CartAddItemRequestData = {
+  product: string;
+  quantity: number;
+};
+
+type CartAddItemResponseData = {
+  total_price: number;
+  total: number;
+};
+
+//TODO: метод изменения количества товара
+
+type CartUpdateItemRequestData = {
+  quantity: number;
+  product: string;
+};
+
+type CartUpdateItemResponeData = {
+  total_price: number;
+  total: number;
+};
+
+//TODO: изменить под реализованную модель
+
 export type {
+  CartItemResponseData,
   ProductResponseData,
   ProductRequestData,
   ProductWarehouse,
   ProductsRequestData,
   productOptions,
+  CartResponseData,
+  CartAddItemRequestData,
+  CartAddItemResponseData,
+  CartUpdateItemRequestData,
+  CartUpdateItemResponeData,
 };

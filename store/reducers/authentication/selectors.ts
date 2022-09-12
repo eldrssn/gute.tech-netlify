@@ -132,7 +132,13 @@ const selectIsResetPasswordSet = createSelector(
   ({ resetPasswordSetForm }) => resetPasswordSetForm.isResetPassword,
 );
 
+const selectNotAuthorizedToken = createSelector(
+  selectAuthenticationStore,
+  ({ notAuthorizedToken }) => notAuthorizedToken.token,
+);
+
 export {
+  selectNotAuthorizedToken,
   selectIsAuthorized,
   selectLoadingAuthorized,
   selectAuthorizationError,

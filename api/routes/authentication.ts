@@ -15,6 +15,7 @@ import {
   ResetPasswordVerifyResponseData,
   ResetPasswordSetRequestData,
   ResetPasswordSetResponseData,
+  UnauthorizationTokenResponseData,
 } from 'api/models/authentication';
 import { ApiMethods } from 'constants/types';
 
@@ -131,6 +132,12 @@ const putResetPassword = ({
     },
   });
 
+const getUnauthorizationToken = () =>
+  sendRequest<UnauthorizationTokenResponseData>({
+    url: `/user/token/unauthorized_user/`,
+    method: ApiMethods.POST,
+  });
+
 export {
   putResetPassword,
   postLogin,
@@ -140,4 +147,5 @@ export {
   postRegistrationVerifyRetry,
   postResetPasswordRequest,
   postResetPasswordVerify,
+  getUnauthorizationToken,
 };

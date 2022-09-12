@@ -1,8 +1,7 @@
-import { CartItemData, orderTotal } from 'store/reducers/cart/types';
+import { CartItemData } from 'store/reducers/cart/types';
 
 type StateProps = {
   order: CartItemData[];
-  orderTotal: orderTotal;
 };
 
 type TableBodyProps = Pick<StateProps, 'order'>;
@@ -18,7 +17,7 @@ type CounterProps = {
 
 type TableOrderProps = {
   order: CartItemData[];
-  orderTotal: orderTotal;
+  orderTotal: number;
 };
 
 export type {

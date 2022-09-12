@@ -11,9 +11,13 @@ import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
+import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
-import { fetchItemFromCart } from 'store/reducers/cart/actions';
+import {
+  addProductToCartAuthorized,
+  addProductToCartUnAuthorized,
+} from 'store/reducers/cart/actions';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
@@ -43,11 +47,20 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { asPath } = router;
+  const isAuthorized = useSelector(selectIsAuthorized);
   const transportId = useSelector(selectTransportId);
 
+  const { asPath } = router;
+
   const addItemToBasket = () => {
-    dispatch(fetchItemFromCart({ productSlug: slug }));
+    if (isAuthorized) {
+      dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 })); //TODO: запрос
+    }
+
+    if (!isAuthorized) {
+      dispatch(addProductToCartUnAuthorized({ product: slug, quantity: 1 }));
+    }
+
     setIsOpenModalAddedItem(true);
   };
 

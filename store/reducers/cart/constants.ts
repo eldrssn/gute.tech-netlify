@@ -1,14 +1,20 @@
 import { CartStore } from './types';
 
-const MIN_COUNT_ADD_ITEM_CART = 1;
-const MIN_COUNT_CART_ITEM = 0;
-
 const initialState: CartStore = {
   cartItems: {
+    data: [],
+    isLoading: true,
+    error: null,
+  },
+  cartSavedItems: {
     data: [],
     isLoading: false,
     error: null,
   },
+  cartTotal: 0,
+  cartProductCount: 0,
+  cartError: false,
+  cartUpdated: false,
 };
 
-export { initialState, MIN_COUNT_ADD_ITEM_CART, MIN_COUNT_CART_ITEM };
+export { initialState };

@@ -1,28 +1,92 @@
 import { createAction } from '@reduxjs/toolkit';
 
 import {
-  getProductInfoFromSlug,
   getProductsInfoFromSlugs,
+  getCartAuthorized,
+  getCartUnAuthorized,
+  postCartItemAuthorized,
+  postCartItemUnAuthorized,
+  postCartClearAuthorized,
+  postCartClearUnAuthorized,
+  putCartItemUpdateAuthorized,
+  putCartItemUpdateUnAuthorized,
 } from 'api/routes/cart';
 import {
-  ProductRequestData,
   ProductResponseData,
   ProductsRequestData,
+  CartResponseData,
+  CartAddItemRequestData,
+  CartAddItemResponseData,
+  CartUpdateItemRequestData,
+  CartUpdateItemResponeData,
 } from 'api/models/cart';
 import { createAsyncAction } from 'utility/helpers/store';
 
-import { CartItemQuantity, CartItemSlug } from './types';
-
-const addItemQuantity = createAction<CartItemSlug>('addCartItemQuantity');
-const removeItemQuantity = createAction<CartItemSlug>('removeCartItemQuantity');
-const removeItemFromCart = createAction<CartItemSlug>('removeCartItemFromCart');
-const setItemQuantity = createAction<CartItemQuantity>('setCartItemQuantity');
-const removeItemBySlug = createAction<CartItemSlug[]>('removeCartItemBySlug');
 const changeChecked = createAction<string>('changeChecked');
 const setAllChecked = createAction('setAllChecked');
 const clearCheckedItems = createAction('clearCheckedItems');
-const resetOrdinalId = createAction('resetOrdinalId');
-const clearCart = createAction('clearCart');
+const setCurrentPage = createAction<number>('setCurrentPage');
+const clearCartItems = createAction('clearCartItems');
+
+//TODO: получение корзины
+
+const fetchCartAuthorized = createAsyncAction<CartResponseData[]>({
+  typeAction: 'cartStore/fetchCartAuthorized',
+  request: getCartAuthorized,
+});
+
+const fetchCartUnAuthorized = createAsyncAction<CartResponseData[]>({
+  typeAction: 'cartStore/fetchCartUnAuthorized',
+  request: getCartUnAuthorized,
+});
+
+//TODO: добавление товара в корзину
+
+const addProductToCartAuthorized = createAsyncAction<
+  CartAddItemResponseData,
+  CartAddItemRequestData
+>({
+  typeAction: 'cartStore/addProductToCartAuthorized',
+  request: postCartItemAuthorized,
+});
+
+const addProductToCartUnAuthorized = createAsyncAction<
+  CartAddItemResponseData,
+  CartAddItemRequestData
+>({
+  typeAction: 'cartStore/addProductToCartUnAuthorized',
+  request: postCartItemUnAuthorized,
+});
+
+//TODO: очищение корзины
+
+const clearCartAuthorized = createAsyncAction({
+  typeAction: 'cartStore/clearCartAuthorized',
+  request: postCartClearAuthorized,
+});
+
+const clearCartUnAuthorized = createAsyncAction({
+  typeAction: 'cartStore/clearCartUnAuthorized',
+  request: postCartClearUnAuthorized,
+});
+
+//TODO: изменение количества продукта в корзине
+
+const updateCartItemAuthorized = createAsyncAction<
+  CartUpdateItemResponeData,
+  CartUpdateItemRequestData[]
+>({
+  typeAction: 'cartStore/updateCartItemAuthorized',
+  request: putCartItemUpdateAuthorized,
+});
+
+const updateCartItemUnAuthorized = createAsyncAction<
+  CartUpdateItemResponeData,
+  CartUpdateItemRequestData[]
+>({
+  typeAction: 'cartStore/updateCartItemUnAuthorized',
+  request: putCartItemUpdateUnAuthorized,
+});
 
 const fetchItemsFromCart = createAsyncAction<
   ProductResponseData[],
@@ -33,26 +97,17 @@ const fetchItemsFromCart = createAsyncAction<
   shouldReturnRequestData: true,
 });
 
-const fetchItemFromCart = createAsyncAction<
-  ProductResponseData,
-  ProductRequestData
->({
-  typeAction: 'CartStore/fetchItemFromCart',
-  request: getProductInfoFromSlug,
-  shouldReturnRequestData: true,
-});
-
 export {
-  setAllChecked,
+  clearCartItems,
+  setCurrentPage,
   clearCheckedItems,
+  setAllChecked,
   changeChecked,
+  addProductToCartAuthorized,
+  addProductToCartUnAuthorized,
+  fetchCartUnAuthorized,
+  fetchCartAuthorized,
   fetchItemsFromCart,
-  fetchItemFromCart,
-  resetOrdinalId,
-  setItemQuantity,
-  addItemQuantity,
-  removeItemBySlug,
-  removeItemQuantity,
-  removeItemFromCart,
-  clearCart,
+  updateCartItemAuthorized,
+  updateCartItemUnAuthorized,
 };

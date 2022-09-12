@@ -20,12 +20,10 @@ type ItemsSlugs = string[];
 
 enum OrderStoreBlocks {
   ORDER_ITEMS = 'orderItems',
-  ORDER_ITEMS_SLUGS = 'orderItemsSlugs',
 }
 
 type OrderStore = {
   [OrderStoreBlocks.ORDER_ITEMS]: OrderItemsState;
-  [OrderStoreBlocks.ORDER_ITEMS_SLUGS]: ItemsSlugs;
 };
 
 export type {

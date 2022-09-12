@@ -32,6 +32,11 @@
   }
 }
 
+.btnDeleteInactive {
+  transition: none;
+  background-color: $red2;
+}
+
 .buttonContainer {
   margin-top: 40px;
   display: flex;

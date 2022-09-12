@@ -1,5 +1,5 @@
-@import '~styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .main {
   padding: 24px 0 88px;
@@ -81,6 +81,24 @@
   flex-wrap: wrap;
   flex-direction: row;
   white-space: pre-line;
+}
+
+.errorBox {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.errorTitle {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.errorText {
+  margin-top: 10px;
+  font-size: 15px;
 }
 
 @media (max-width: $sMobile) {

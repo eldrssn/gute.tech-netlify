@@ -8,7 +8,6 @@ const initialState: OrderStore = {
     isLoading: false,
     error: null,
   },
-  orderItemsSlugs: [],
 };
 
 export { initialState, MIN_COUNT_ORDER_ITEM };

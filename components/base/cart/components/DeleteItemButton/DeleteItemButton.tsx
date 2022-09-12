@@ -1,29 +1,50 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
-import { resetOrdinalId } from 'store/reducers/cart/actions';
+import {
+  updateCartItemAuthorized,
+  updateCartItemUnAuthorized,
+} from 'store/reducers/cart/actions';
+import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 
 import { TDeleteItemButtonProps } from '../../types';
 import styles from './DeleteItemButton.module.scss';
 
 const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
   item,
-  removeItem,
+  isLoading,
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const dispatch = useDispatch();
 
+  const isAuthorized = useSelector(selectIsAuthorized);
+
+  const handleClick = () => {
+    if (isLoading) {
+      return;
+    }
+
+    setIsOpenModal(true);
+  };
+
   const confirmedSolution = () => {
-    removeItem(item);
-    window.document.body.style.overflow = 'auto';
-    document.body.style.marginRight = '0px';
-    dispatch(resetOrdinalId());
+    if (isAuthorized) {
+      dispatch(updateCartItemAuthorized([{ product: item.slug, quantity: 0 }]));
+    }
+
+    if (!isAuthorized) {
+      dispatch(
+        updateCartItemUnAuthorized([{ product: item.slug, quantity: 0 }]),
+      );
+    }
+
+    setIsOpenModal(false);
   };
 
   return (
@@ -59,7 +80,12 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
           </Box>
         </Container>
       </ModalWrapper>
-      <Button className={styles.btnDelete} onClick={() => setIsOpenModal(true)}>
+      <Button
+        className={cn(styles.btnDelete, {
+          [styles.btnDeleteInactive]: isLoading,
+        })}
+        onClick={handleClick}
+      >
         <FontAwesomeIcon icon={faTimes} />
       </Button>
     </>

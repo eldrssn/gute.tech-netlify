@@ -126,3 +126,7 @@ export type ResetPasswordSetErrors = {
 export type ResetPasswordSetResponseErrorData = {
   errors: ResetPasswordSetErrors;
 };
+
+export type UnauthorizationTokenResponseData = {
+  token: string;
+};

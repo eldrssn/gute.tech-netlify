@@ -42,6 +42,44 @@ const sendRequestАuthentication = <ResponseType>({
     .then<ResponseType>((response) => response.data);
 };
 
+const apiNotAuthorized = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    'content-type': 'application/json',
+    'X-Client-Host':
+      process.env.NODE_ENV === 'production' && typeof window !== 'undefined'
+        ? window.location.hostname
+        : DEV_HOST,
+  },
+});
+
+apiNotAuthorized.interceptors.request.use((config) => {
+  if (config.headers === undefined) {
+    config.headers = {};
+  }
+  const notAuthorizedToken = getCookie(CookieKey.NOT_AUTHORIZED_TOKEN);
+  config.headers.Authorization = `${notAuthorizedToken}`;
+  return config;
+});
+
+const sendRequestNotAuthorized = <ResponseType>({
+  url,
+  method,
+  config,
+}: {
+  url: string;
+  method: ApiMethods;
+  config?: AxiosRequestConfig;
+}) => {
+  return apiNotAuthorized
+    .request({
+      method,
+      url,
+      ...config,
+    })
+    .then<ResponseType>((response) => response.data);
+};
+
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
@@ -71,4 +109,9 @@ const sendRequest = <ResponseType>({
     .then<ResponseType>((response) => response.data);
 };
 
-export { sendRequest, sendRequestАuthentication, apiАuthentication };
+export {
+  sendRequest,
+  sendRequestАuthentication,
+  apiАuthentication,
+  sendRequestNotAuthorized,
+};

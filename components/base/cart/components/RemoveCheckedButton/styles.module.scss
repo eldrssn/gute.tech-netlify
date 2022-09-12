@@ -86,6 +86,10 @@
   }
 }
 
+.buttonDisabled {
+  color: $gray3;
+}
+
 @media (max-width: $mobile) {
   .selectedTitle {
     position: static;

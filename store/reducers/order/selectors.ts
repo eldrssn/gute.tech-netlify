@@ -7,17 +7,9 @@ const selectOrderStore = createSelector(
   ({ orderStore }) => orderStore,
 );
 
-const selectOrder = createSelector(selectOrderStore, ({ orderItems }) => {
-  const arrayForSort = [...orderItems.data];
-  const sortedOrder = arrayForSort.sort((prev, cur) => {
-    return prev.ordinalId - cur.ordinalId;
-  });
-  return sortedOrder;
-});
-
-const selectOrderItemsSlugs = createSelector(
+const selectOrder = createSelector(
   selectOrderStore,
-  ({ orderItemsSlugs }) => orderItemsSlugs,
+  ({ orderItems }) => orderItems.data,
 );
 
 const selectOrderTotal = createSelector(selectOrderStore, ({ orderItems }) =>
@@ -26,7 +18,7 @@ const selectOrderTotal = createSelector(selectOrderStore, ({ orderItems }) =>
       return total;
     }
 
-    return item.count * item.price + total;
+    return item.quantity * item.price + total;
   }, 0),
 );
 
@@ -35,9 +27,4 @@ const selectOrderLoading = createSelector(
   ({ orderItems }) => orderItems.isLoading,
 );
 
-export {
-  selectOrderTotal,
-  selectOrder,
-  selectOrderLoading,
-  selectOrderItemsSlugs,
-};
+export { selectOrderTotal, selectOrder, selectOrderLoading };

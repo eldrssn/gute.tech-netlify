@@ -1,4 +1,8 @@
-import { sendRequest, sendRequestАuthentication } from '../utils';
+import {
+  sendRequest,
+  sendRequestАuthentication,
+  sendRequestNotAuthorized,
+} from '../utils';
 
 import {
   PaymentMethodResponseData,
@@ -16,7 +20,7 @@ const getPaymentMethods = () =>
   });
 
 const postOrderingUnAuthorized = (data: OrderingRequestData) =>
-  sendRequest<OrderingResponseData>({
+  sendRequestNotAuthorized<OrderingResponseData>({
     url: `/payment/orders/`,
     method: ApiMethods.POST,
     config: {

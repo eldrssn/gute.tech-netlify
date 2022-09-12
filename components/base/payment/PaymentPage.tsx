@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -10,13 +11,10 @@ import {
   fetchPaymentMethods,
   clearCreateOrdering,
 } from 'store/reducers/payment/actions';
-import { removeItemBySlug } from 'store/reducers/cart/actions';
-import { clearItemsSlugs } from 'store/reducers/order/actions';
 import { selectCreateOrderingStatus } from 'store/reducers/payment/selectors';
 import {
   selectOrder,
   selectOrderLoading,
-  selectOrderItemsSlugs,
 } from 'store/reducers/order/selectors';
 import {
   selectSelectedCitySlug,
@@ -61,7 +59,6 @@ const PaymentPage: React.FC = () => {
   const isLoadingOrder = useSelector(selectOrderLoading);
   const isAuthorized = useSelector(selectIsAuthorized);
   const createOrderStatus = useSelector(selectCreateOrderingStatus);
-  const orderItemsSlugs = useSelector(selectOrderItemsSlugs);
 
   const paymentUrl = createOrderStatus.data?.payment_url;
   const createOrderLoading = createOrderStatus.loadingCreateOrdering;
@@ -81,8 +78,6 @@ const PaymentPage: React.FC = () => {
       branch_office_id: data.branch ? data.branch.id : 0,
     };
     setOtherError([]);
-    dispatch(clearItemsSlugs());
-    dispatch(removeItemBySlug(orderItemsSlugs));
 
     if (createOrderLoading) {
       return;
@@ -99,7 +94,6 @@ const PaymentPage: React.FC = () => {
   useEffect(() => {
     dispatch(fetchPaymentMethods());
     dispatch(clearCreateOrdering());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

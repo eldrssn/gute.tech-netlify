@@ -13,7 +13,6 @@ const addItemQuantity = createAction<string>('addOrderItemQuantity');
 const setItemQuantity = createAction<OrderItemQuantity>('setOrderItemQuantity');
 const removeItemQuantity = createAction<string>('removeOrderItemQuantity');
 const clearOrder = createAction('clearOrder');
-const clearItemsSlugs = createAction('clearItemsSlugs');
 
 const fetchItemFromOrder = createAsyncAction<
   ProductResponseData,
@@ -25,7 +24,6 @@ const fetchItemFromOrder = createAsyncAction<
 });
 
 export {
-  clearItemsSlugs,
   setItemsSlugs,
   setItemsFromOrder,
   fetchItemFromOrder,

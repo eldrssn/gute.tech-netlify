@@ -6,6 +6,7 @@ enum EValidatePattern {
 enum CookieKey {
   ACCESS_TOKEN = 'access',
   REFRESH_TOKEN = 'refresh',
+  NOT_AUTHORIZED_TOKEN = 'notAuthorizedToken',
   SELECTEDCITY = 'selectedCity',
   CART_ITEMS = 'cartItems',
   TRANSPORT_ID = 'transportId',
