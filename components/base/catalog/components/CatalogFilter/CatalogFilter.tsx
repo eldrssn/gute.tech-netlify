@@ -20,6 +20,7 @@ import styles from './catalogFilter.module.scss';
 import { CustomButton } from 'components/ui/CustomButton';
 
 const CatalogFilter: FC<CatalogFilterProps> = ({
+  filterRequest,
   setFilterRequest,
   anchorApplyButton,
   setAnchorApplyButton,
@@ -67,6 +68,7 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
           <Component
             key={filter.slug}
             filter={filter}
+            filterRequest={filterRequest}
             setFilterRequest={setFilterRequest}
             handleAnchorClick={handleAnchorClick}
           />

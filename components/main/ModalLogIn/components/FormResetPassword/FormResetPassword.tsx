@@ -2,7 +2,6 @@ import { FC, KeyboardEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { Box, Typography, FormControl, TextField } from '@mui/material';
-import { TailSpin } from 'react-loader-spinner';
 import InputMask from 'react-input-mask';
 
 import {
@@ -16,6 +15,7 @@ import {
 import { getInputRules } from 'utility/helpers';
 import { handleEnterPress } from 'utility/utils';
 import { inputMasks } from 'constants/patterns';
+import { Loader } from 'components/ui/Loader';
 import { EValidatePattern, ActiveAutorizationFormKey } from 'constants/types';
 import colors from 'styles/_export.module.scss';
 
@@ -80,7 +80,7 @@ const FormResetPassword: FC = () => {
       </Box>
       <button className={styles.formButton} type='submit'>
         {loading ? (
-          <TailSpin height={25} width={25} color={loaderColor} />
+          <Loader size={25} color={loaderColor} />
         ) : (
           <Typography className={styles.formButton_text}>
             Получить код

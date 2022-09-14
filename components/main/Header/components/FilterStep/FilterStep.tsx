@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { TailSpin } from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useWindowSize } from 'hooks/useWindowSize';
@@ -15,7 +14,7 @@ import {
   selectEngines,
 } from 'store/reducers/transport/selectors';
 import { fetchBrands } from 'store/reducers/transport/actions';
-import colors from 'styles/_export.module.scss';
+import { Loader } from 'components/ui/Loader';
 
 import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
@@ -23,8 +22,6 @@ import { FilterStepProps } from './types';
 import { HandleClickProps, StepInputs } from '../../types';
 
 import styles from './filterStep.module.scss';
-
-const loaderColor = colors.blue;
 
 const cn = classnames.bind(styles);
 
@@ -149,7 +146,7 @@ const FilterStep: FC<FilterStepProps> = ({
             })}
           >
             {isLoadingoptionList ? (
-              <TailSpin height={25} width={25} color={loaderColor} />
+              <Loader size={25} />
             ) : isValue ? (
               <FontAwesomeIcon icon={faCheck} />
             ) : (

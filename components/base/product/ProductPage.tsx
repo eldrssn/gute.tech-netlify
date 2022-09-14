@@ -21,12 +21,12 @@ import {
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 import { formatPrice, makeAnArray } from 'utility/helpers';
 
-import { RecommendedProducts } from './components/RecommendedProducts';
 import { ProductPrice } from './components/ProductPrice';
 import { ProductQuantity } from './components/ProductQuantity';
 import { ProductSpecial } from './components/ProductSpecial';
 import { ProductImageGallery } from './components/ProductImageGallery';
 import { ProductTabsDescription } from './components/ProductTabsDescription';
+import { RecommendedProducts } from './components/RecommendedProducts';
 import { getProductSlug } from './helpers';
 import { PropertyNameByType } from './constants';
 import { Properties } from './types';
@@ -134,11 +134,14 @@ const ProductPage: FC = () => {
 
   return (
     <>
-      <ModalAddedItem
-        isOpen={isOpenModalAddedItem}
-        setIsOpen={setIsOpenModalAddedItem}
-        title={title}
-      />
+      {isOpenModalAddedItem && (
+        <ModalAddedItem
+          isOpen={isOpenModalAddedItem}
+          setIsOpen={setIsOpenModalAddedItem}
+          title={title}
+        />
+      )}
+
       <Box className={styles.mainContainer}>
         <SubcategoriesList />
 

@@ -28,6 +28,7 @@ const initialState: CatalogStore = {
     isLoading: false,
     error: null,
   },
+
   categoriesTreeList: {
     data: [],
     isLoading: false,
@@ -40,7 +41,7 @@ const initialState: CatalogStore = {
   },
   categoriesProductList: {
     data: null,
-    isLoading: false,
+    isLoading: true,
     error: null,
   },
   categoriesProductRead: {

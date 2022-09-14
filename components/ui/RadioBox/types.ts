@@ -9,8 +9,4 @@ type FiltersProps = {
   handleAnchorClick: AnchorClick;
 };
 
-type ExpandedFiltersProps = FiltersProps & {
-  slug: string;
-};
-
-export type { FiltersProps, ExpandedFiltersProps };
+export type { FiltersProps };

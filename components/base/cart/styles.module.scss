@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .main {
   padding: 24px 0 88px;
@@ -19,6 +19,7 @@
 
 .tableHead th {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .cartTotal {
@@ -31,7 +32,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .orderTotal {

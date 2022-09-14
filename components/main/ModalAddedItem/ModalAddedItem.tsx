@@ -8,6 +8,7 @@ import { ModalWrapper } from 'components/main/ModalWrapper';
 
 import styles from './styles.module.scss';
 import { TOuterProps } from './types';
+import { ModalPortal } from '../ModalPortal';
 
 const ModalAddedItem: React.FC<TOuterProps> = ({
   isOpen,
@@ -19,21 +20,23 @@ const ModalAddedItem: React.FC<TOuterProps> = ({
   };
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Container fixed className={styles.wrap}>
-        <Box className={styles.closeModal} onClick={closeModal}>
-          <FontAwesomeIcon icon={faTimes} />
-        </Box>
-        <Typography className={styles.title}>&quot;{title}&quot;</Typography>
-        <Typography className={styles.action}>добавлен в корзину</Typography>
-        <Link href='/cart' passHref>
-          <Button className={styles.button}>Перейти в Корзину</Button>
-        </Link>
-        <Button onClick={closeModal} className={styles.button}>
-          Продолжить покупки
-        </Button>
-      </Container>
-    </ModalWrapper>
+    <ModalPortal>
+      <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+        <Container fixed className={styles.wrap}>
+          <Box className={styles.closeModal} onClick={closeModal}>
+            <FontAwesomeIcon icon={faTimes} />
+          </Box>
+          <Typography className={styles.title}>&quot;{title}&quot;</Typography>
+          <Typography className={styles.action}>добавлен в корзину</Typography>
+          <Link href='/cart' passHref>
+            <Button className={styles.button}>Перейти в Корзину</Button>
+          </Link>
+          <Button onClick={closeModal} className={styles.button}>
+            Продолжить покупки
+          </Button>
+        </Container>
+      </ModalWrapper>
+    </ModalPortal>
   );
 };
 

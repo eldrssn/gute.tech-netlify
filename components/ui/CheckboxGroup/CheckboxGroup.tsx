@@ -15,12 +15,13 @@ import { ExpandedFilters } from './compoments/ExpandedFilters';
 import styles from './checkboxGroup.module.scss';
 
 const CheckboxGroup: React.FC<Filter> = ({
+  filterRequest,
   filter,
   setFilterRequest,
   handleAnchorClick,
 }) => {
   const [isHiddenFilters, setHiddenFilters] = useState(true);
-  const { updateQueryOption, getQueryOption, removeQuery } = useRouterQuery();
+  const { getQueryOption } = useRouterQuery();
 
   const { title, slug, values } = filter;
 
@@ -39,6 +40,8 @@ const CheckboxGroup: React.FC<Filter> = ({
     return values;
   }, [values, isFilterListLarge, isHiddenFilters]);
 
+  const filterGroup = filterRequest?.[slug];
+
   useEffect(() => {
     if (queryOption) {
       const options = Array.isArray(queryOption) ? queryOption : [queryOption];
@@ -56,13 +59,24 @@ const CheckboxGroup: React.FC<Filter> = ({
 
   const setOnChange = useCallback(
     (checked: boolean, { value }: CheckboxValue) => {
-      if (!checked) {
-        removeQuery(slug, value, false);
+      if (!filterGroup) {
         return;
       }
-      updateQueryOption(slug, value, false);
+
+      if (!checked) {
+        setFilterRequest((filterRequest) => ({
+          ...filterRequest,
+          [slug]: filterGroup.filter((filter) => filter !== value),
+        }));
+        return;
+      }
+
+      setFilterRequest((filterRequest) => ({
+        ...filterRequest,
+        [slug]: [...filterGroup, value],
+      }));
     },
-    [removeQuery, slug, updateQueryOption],
+    [slug, setFilterRequest, filterGroup],
   );
 
   const getIsChecked = useCallback(
@@ -71,19 +85,13 @@ const CheckboxGroup: React.FC<Filter> = ({
         return;
       }
 
-      if (!Array.isArray(queryOption)) {
-        const isChecked = queryOption === name;
-
-        return isChecked;
-      }
-
       const isChecked = Boolean(
-        queryOption.find((element) => element === name),
+        filterGroup?.find((element) => element === name),
       );
 
       return isChecked;
     },
-    [queryOption],
+    [filterGroup],
   );
 
   return (

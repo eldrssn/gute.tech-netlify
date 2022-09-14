@@ -2,7 +2,6 @@ import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController, Controller } from 'react-hook-form';
 import { Box, Typography, FormControl, TextField } from '@mui/material';
-import { TailSpin } from 'react-loader-spinner';
 import InputMask from 'react-input-mask';
 
 import {
@@ -16,18 +15,16 @@ import {
   selectLoadingRegistrationForm,
 } from 'store/reducers/authentication/selectors';
 import { FormInput } from 'components/main/FormInput';
+import { Loader } from 'components/ui/Loader';
 import { getInputRules } from 'utility/helpers';
 import { handleEnterPress } from 'utility/utils';
 import { inputMasks } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
 import { ActiveAutorizationFormKey } from 'constants/types';
-import colors from 'styles/_export.module.scss';
 
 import { setRegistrationFormErrors } from '../../helpers';
 import { TFormData, FormKey } from './types';
 import styles from '../../styles.module.scss';
-
-const loaderColor = colors.white;
 
 const FormRegistration: FC = () => {
   const [otherError, setOtherError] = useState<string[]>([]);
@@ -127,7 +124,7 @@ const FormRegistration: FC = () => {
       </Box>
       <button className={styles.formButton} type='submit'>
         {loading ? (
-          <TailSpin height={25} width={25} color={loaderColor} />
+          <Loader size={25} />
         ) : (
           <Typography className={styles.formButton_text}>
             Зарегистрироваться

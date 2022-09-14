@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import {
   TableBody,
   TableCell,
@@ -23,15 +23,10 @@ import { TTableBodyProps } from '../../types';
 import styles from './MobileTableBody.module.scss';
 
 const MobileTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const handleChangeCheckBox = (slug: string) => {
     dispatch(changeChecked(slug));
-  };
-
-  const handleClickTitle = (link: string) => {
-    router.push(link);
   };
 
   return (
@@ -68,22 +63,27 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
                     />
                   }
                 />
-                <CardMedia
-                  component={'img'}
-                  height='150px'
-                  src={item.images[0] || '/images/no-image.jpeg'}
-                  alt='item'
-                  className={styles.image}
-                />
+                <Link href={link}>
+                  <a>
+                    <CardMedia
+                      component={'img'}
+                      height='150px'
+                      src={item.images[0] || '/images/no-image.jpeg'}
+                      alt='item'
+                      className={styles.image}
+                    />
+                  </a>
+                </Link>
               </Box>
             </TableCell>
             <TableCell className={styles.itemInfo}>
-              <Typography
-                className={styles.itemTitle}
-                onClick={() => handleClickTitle(link)}
-              >
-                {item.title}
-              </Typography>
+              <Link href={link}>
+                <a>
+                  <Typography className={styles.itemTitle}>
+                    {item.title}
+                  </Typography>
+                </a>
+              </Link>
               <Typography className={styles.itemPrice}>
                 Цена: {itemPrice}&#8381;{' '}
               </Typography>

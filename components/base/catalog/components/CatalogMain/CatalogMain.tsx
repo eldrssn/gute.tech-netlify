@@ -137,6 +137,7 @@ const CatalogMain: FC = () => {
             <SubcategoriesList isCatalog />
             <Box className={styles.catalogFilter_desktop}>
               <CatalogFilter
+                filterRequest={filterRequest}
                 setFilterRequest={setFilterRequest}
                 anchorApplyButton={anchorApplyButton}
                 setAnchorApplyButton={setAnchorApplyButton}
@@ -184,7 +185,9 @@ const CatalogMain: FC = () => {
         </Box>
       )}
 
+      {/* TODO: вынести фильтры в отдельный компонент видимо */}
       <CatalogFilterDrawer
+        filterRequest={filterRequest}
         openDrawer={openDrawer}
         handleDrawerToggle={handleDrawerToggle}
         setFilterRequest={setFilterRequest}

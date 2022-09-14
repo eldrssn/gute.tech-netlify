@@ -1,6 +1,5 @@
 type LoaderProps = {
-  width?: number;
-  height?: number;
+  size?: number;
   color?: string;
 };
 

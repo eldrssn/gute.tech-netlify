@@ -3,7 +3,6 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
-import { setQueryParam } from 'hooks/useRouterQuery/helpers';
 import { Filter } from 'types';
 
 import { checkFilterListLarge, sliceFilters } from '../CheckboxGroup/helpers';
@@ -14,6 +13,7 @@ import { Filters } from './components/Filters';
 import styles from './radioBox.module.scss';
 
 const RadioBox: React.FC<Filter> = ({
+  filterRequest,
   filter,
   setFilterRequest,
   handleAnchorClick,
@@ -26,12 +26,21 @@ const RadioBox: React.FC<Filter> = ({
 
   const queryOption = routerQuery.getQueryOption(slug);
 
-  const setOnChange = setQueryParam(routerQuery, slug, false);
+  const setOnChange = (event: ChangeEvent) => {
+    const { value } = event.target;
+
+    setFilterRequest((filterRequest) => ({
+      ...filterRequest,
+      [slug]: [value],
+    }));
+  };
 
   const isFilterListLarge = checkFilterListLarge(values);
 
   const toggleHiddenFilters = () =>
     setHiddenFilters((isHiddenFilters) => !isHiddenFilters);
+
+  const filterGroup = filterRequest?.[slug];
 
   const filters = useMemo(() => {
     if (isHiddenFilters) {
@@ -60,19 +69,13 @@ const RadioBox: React.FC<Filter> = ({
 
   const getIsChecked = useCallback(
     (name: string) => {
-      if (!Array.isArray(queryOption)) {
-        const isChecked = queryOption === name;
-
-        return isChecked;
-      }
-
       const isChecked = Boolean(
-        queryOption.find((element) => element === name),
+        filterGroup?.find((element) => element === name),
       );
 
       return isChecked;
     },
-    [queryOption],
+    [filterGroup],
   );
 
   return (
@@ -90,7 +93,6 @@ const RadioBox: React.FC<Filter> = ({
         />
       ) : (
         <ExpandedFilters
-          slug={slug}
           filters={filters}
           setOnChange={setOnChange}
           getIsChecked={getIsChecked}
