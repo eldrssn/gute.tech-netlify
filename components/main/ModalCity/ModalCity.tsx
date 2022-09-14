@@ -12,19 +12,16 @@ import {
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { TailSpin } from 'react-loader-spinner';
 
+import { Loader } from 'components/ui/Loader';
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { FormInput } from 'components/main/FormInput';
 import { filterRegionsOption } from 'utility/helpers';
 import { selectBranches } from 'store/reducers/regions/selectors';
 import { setCitySlug } from 'store/reducers/regions/actions';
-import colors from 'styles/_export.module.scss';
 
 import { TFormData, OuterProps } from './types';
 import styles from './styles.module.scss';
-
-const loaderColor = colors.blue;
 
 const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
   const { control, reset } = useForm<TFormData>();
@@ -92,7 +89,7 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
           </Box>
           <Box component='div' className={regionsClassName}>
             {isLoading ? (
-              <TailSpin height={60} width={60} color={loaderColor} />
+              <Loader size={60} />
             ) : (
               searchedRegionsOption.map((region) => (
                 <List

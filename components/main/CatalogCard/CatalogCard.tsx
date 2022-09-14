@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import classnames from 'classnames/bind';
+import Link from 'next/link';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -23,8 +24,8 @@ import { fetchItemFromOrder } from 'store/reducers/order/actions';
 import { CustomButton } from 'components/ui/CustomButton';
 
 import {
+  getLinkToProduct,
   getLinkToProductPage,
-  getLinkToProductPageFromSlider,
 } from 'utility/helpers/linkmakers';
 import { formatPrice } from 'utility/helpers';
 
@@ -76,80 +77,76 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   };
 
   // TODO: поменять работу линков, как исправят метод по категориям
-  const handleClick = () => {
-    router.push(
-      isSlider
-        ? getLinkToProductPageFromSlider({
-            asPath,
-            categorySlug: categories[0],
-            productSlug: slug,
-            transportId,
-          })
-        : getLinkToProductPage({ asPath, productSlug: slug, transportId }),
-    );
-  };
+  const getLink = () =>
+    isSlider
+      ? getLinkToProduct({ categories: categories[0], productSlug: slug })
+      : getLinkToProductPage({ asPath, productSlug: slug, transportId });
 
   const formattedPrice = formatPrice(price);
 
   return (
     <>
-      <ModalAddedItem
-        isOpen={isOpenModalAddedItem}
-        setIsOpen={setIsOpenModalAddedItem}
-        title={title}
-      />
-
       <Card
         component='article'
         className={cn(styles.cardContainer, {
           [styles.cardContainer_slider]: isSlider,
         })}
       >
-        <a className={styles.cardLinkContainer} onClick={handleClick}>
-          <CardMedia
-            component={'img'}
-            height='250'
-            src={image || '/images/no-image.jpeg'}
-            alt={title}
-            className={styles.cardImage}
-          />
+        <Link href={getLink()}>
+          <a className={styles.cardLinkContainer}>
+            <CardMedia
+              component={'img'}
+              height='250'
+              src={image || '/images/no-image.jpeg'}
+              alt={title}
+              className={styles.cardImage}
+            />
 
-          <CardContent className={styles.cardInfo}>
-            <Divider className={styles.cardDivider} />
+            <CardContent className={styles.cardInfo}>
+              <Divider className={styles.cardDivider} />
 
-            <Title>{title}</Title>
+              <Title>{title}</Title>
 
-            <Box className={styles.cardBottom}>
-              <div className={styles.cardBottom_price}>
-                <Typography className={styles.cardPrice}>
-                  {formattedPrice}
-                </Typography>
-                <Typography className={styles.cardPrice}>
-                  <i className={styles.icon_ruble} />
-                </Typography>
-              </div>
+              <Box className={styles.cardBottom}>
+                <div className={styles.cardBottom_price}>
+                  <Typography className={styles.cardPrice}>
+                    {formattedPrice}
+                  </Typography>
+                  <Typography className={styles.cardPrice}>
+                    <i className={styles.icon_ruble} />
+                  </Typography>
+                </div>
 
-              <CardActions className={styles.cardActions}>
-                {!isSlider && (
+                <CardActions className={styles.cardActions}>
+                  {!isSlider && (
+                    <CustomButton
+                      customStyles={styles.cardBuyButton}
+                      onClick={buyItNow}
+                    >
+                      Купить
+                    </CustomButton>
+                  )}
+
                   <CustomButton
-                    customStyles={styles.cardBuyButton}
-                    onClick={buyItNow}
+                    customStyles={styles.cardAddToShoppingButton}
+                    onClick={handleClickToBasket}
                   >
-                    Купить
+                    <i className={styles.shoppingIcon} />
                   </CustomButton>
-                )}
-
-                <CustomButton
-                  customStyles={styles.cardAddToShoppingButton}
-                  onClick={handleClickToBasket}
-                >
-                  <i className={styles.shoppingIcon} />
-                </CustomButton>
-              </CardActions>
-            </Box>
-          </CardContent>
-        </a>
+                </CardActions>
+              </Box>
+            </CardContent>
+          </a>
+        </Link>
       </Card>
+
+      {isOpenModalAddedItem && (
+        <ModalAddedItem
+          isOpen={isOpenModalAddedItem}
+          setIsOpen={setIsOpenModalAddedItem}
+          title={title}
+        />
+      )}
     </>
   );
 };

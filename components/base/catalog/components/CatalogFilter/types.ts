@@ -7,6 +7,7 @@ type CatalogFilterProps = {
     React.SetStateAction<HTMLElement | null>
   >;
   handleDrawerToggle?: () => void;
+  filterRequest: FilterRequest | null;
 };
 
 export type { CatalogFilterProps };

@@ -20,25 +20,6 @@ const getLinkToProductPage = ({
     transportId && getTransportSlugs({ transportId })
   }`;
 
-const getLinkToProductPageFromSlider = ({
-  asPath,
-  productSlug,
-  transportId,
-  categorySlug,
-}: {
-  asPath: string;
-  productSlug: string;
-  transportId: string;
-  categorySlug: string;
-}) => {
-  const path = asPath.split('?')[0];
-  const [catalog, mainCategory] = path.split('/');
-
-  return `/${catalog}/${mainCategory}/${categorySlug}/${PRODUCT_MARKER}${productSlug}${
-    transportId && getTransportSlugs({ transportId })
-  }`;
-};
-
 const getLinkToParentCategory = ({
   categorySlug,
   transportId,
@@ -117,7 +98,6 @@ export {
   getLinkResetFilters,
   getLinkApiProfileOrder,
   getLinkToProductPage,
-  getLinkToProductPageFromSlider,
   getLinkToParentCategory,
   getLinkToCatalog,
   getLinkToCategoryFromCatalog,

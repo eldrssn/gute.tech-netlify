@@ -6,7 +6,7 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
-import { getQueryParams, setQueryParam } from 'hooks/useRouterQuery/helpers';
+import { getQueryParams } from 'hooks/useRouterQuery/helpers';
 import { DELAY } from 'constants/variables';
 import { Filter } from 'types';
 
@@ -14,6 +14,7 @@ import { checkValueExists, checkValuesCorrect } from './helpers';
 import styles from './ranger.module.scss';
 
 const Ranger: React.FC<Filter> = ({
+  filterRequest,
   filter,
   setFilterRequest,
   handleAnchorClick,
@@ -26,15 +27,23 @@ const Ranger: React.FC<Filter> = ({
   const minValueQuery = `min${slug}`;
   const maxValueQuery = `max${slug}`;
 
-  const setMinValue = debounce(
-    setQueryParam(routerQuery, minValueQuery, false),
-    DELAY,
-  );
+  const setMinValue = debounce((event: ChangeEvent) => {
+    const { value } = event.target;
 
-  const setMaxValue = debounce(
-    setQueryParam(routerQuery, maxValueQuery, false),
-    DELAY,
-  );
+    setFilterRequest((filterRequest) => ({
+      ...filterRequest,
+      [slug]: [value, Number(maxValue || max || '99999999')],
+    }));
+  }, DELAY);
+
+  const setMaxValue = debounce((event: ChangeEvent) => {
+    const { value } = event.target;
+
+    setFilterRequest((filterRequest) => ({
+      ...filterRequest,
+      [slug]: [Number(minValue || min || '0'), value],
+    }));
+  }, DELAY);
 
   const minValue = getQueryParams(routerQuery, minValueQuery);
   const maxValue = getQueryParams(routerQuery, maxValueQuery);

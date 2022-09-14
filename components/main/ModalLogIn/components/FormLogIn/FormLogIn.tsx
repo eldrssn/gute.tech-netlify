@@ -2,7 +2,6 @@ import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useController, Controller } from 'react-hook-form';
 import { Box, Typography, TextField, FormControl } from '@mui/material';
-import { TailSpin } from 'react-loader-spinner';
 import InputMask from 'react-input-mask';
 
 import {
@@ -14,17 +13,15 @@ import {
   selectLoadingAuthorized,
 } from 'store/reducers/authentication/selectors';
 import { FormInput } from 'components/main/FormInput';
+import { Loader } from 'components/ui/Loader';
 import { getInputRules } from 'utility/helpers';
 import { handleEnterPress } from 'utility/utils';
 import { inputMasks } from 'constants/patterns';
 import { EValidatePattern, ActiveAutorizationFormKey } from 'constants/types';
-import colors from 'styles/_export.module.scss';
 
 import { setLogInFormErrors } from '../../helpers';
 import { TFormData, Props, FormKey } from './types';
 import styles from '../../styles.module.scss';
-
-const loaderColor = colors.white;
 
 const FormLogIn: FC<Props> = ({ isOpen }) => {
   const [otherError, setOtherError] = useState<string[]>([]);
@@ -118,7 +115,7 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
       </Box>
       <button className={styles.formButton} type='submit'>
         {loading ? (
-          <TailSpin height={25} width={25} color={loaderColor} />
+          <Loader size={25} />
         ) : (
           <Typography className={styles.formButton_text}>Войти</Typography>
         )}

@@ -5,7 +5,6 @@ import { Container, Box, Typography, Button, TextField } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import FocusTrap from 'focus-trap-react';
 import InputMask from 'react-input-mask';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
@@ -70,128 +69,126 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
     handleEnterPress(event, closeModal);
   };
   return (
-    <FocusTrap>
-      <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
-        <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Box
-            className={styles.closeModal}
-            onClick={closeModal}
-            tabIndex={0}
-            onKeyPress={handlePressEnterCloseModal}
+    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
+      <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box
+          className={styles.closeModal}
+          onClick={closeModal}
+          tabIndex={0}
+          onKeyPress={handlePressEnterCloseModal}
+        >
+          <FontAwesomeIcon icon={faTimes} />
+        </Box>
+        <form onSubmit={onSubmit} className={styles.container}>
+          <Typography
+            className={styles.title}
+            id='modal-modal-title'
+            variant='h6'
+            component='h2'
+            mb={1}
           >
-            <FontAwesomeIcon icon={faTimes} />
-          </Box>
-          <form onSubmit={onSubmit} className={styles.container}>
-            <Typography
-              className={styles.title}
-              id='modal-modal-title'
-              variant='h6'
-              component='h2'
-              mb={1}
-            >
-              ОСТАВЬТЕ ВАШ НОМЕР ТЕЛЕФОНА
-            </Typography>
-            <Typography
-              className={styles.description}
-              id='modal-modal-description'
-            >
-              Мы перезвоним в течение 17 минут и предложим лучший вариант!
-            </Typography>
-            <>
-              <Box component='div' className={styles.inputBox}>
-                <Box
-                  className={cn(styles.inputContainer, {
-                    [styles.inputIsError]: Boolean(nameInput.fieldState.error),
-                  })}
-                >
-                  <InputMask
-                    mask={inputMasks.nameMask}
-                    value={nameInput.field.value ? nameInput.field.value : ''}
-                    onChange={nameInput.field.onChange}
-                    maskPlaceholder=''
-                  >
-                    <FormInput
-                      helperText={nameInput.fieldState.error?.message}
-                      onChange={nameInput.field.onChange}
-                      value={nameInput.field.value ? nameInput.field.value : ''}
-                      label='Ваше имя'
-                      isError={Boolean(nameInput.fieldState.error)}
-                    />
-                  </InputMask>
-                </Box>
-                <Box
-                  className={cn(styles.inputContainer, {
-                    [styles.inputIsError]: phoneInputIsError,
-                  })}
-                >
-                  <Controller
-                    name='phoneNumber'
-                    control={control}
-                    rules={getInputRules(EValidatePattern.PHONE_NUMBER)}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { error },
-                    }) => (
-                      <InputMask
-                        mask={inputMasks.phoneMask}
-                        value={value ? value : ''}
-                        onChange={onChange}
-                      >
-                        <TextField
-                          error={Boolean(error)}
-                          helperText={error?.message}
-                          label='Телефон'
-                          variant='outlined'
-                          type='text'
-                          fullWidth
-                        />
-                      </InputMask>
-                    )}
-                  />
-                </Box>
-              </Box>
+            ОСТАВЬТЕ ВАШ НОМЕР ТЕЛЕФОНА
+          </Typography>
+          <Typography
+            className={styles.description}
+            id='modal-modal-description'
+          >
+            Мы перезвоним в течение 17 минут и предложим лучший вариант!
+          </Typography>
+          <>
+            <Box component='div' className={styles.inputBox}>
               <Box
-                className={cn(styles.textAreaContainer, {
-                  [styles.inputIsError]: Boolean(message.fieldState.error),
+                className={cn(styles.inputContainer, {
+                  [styles.inputIsError]: Boolean(nameInput.fieldState.error),
                 })}
               >
-                <FormInput
-                  helperText={message.fieldState.error?.message}
-                  onChange={message.field.onChange}
-                  value={message.field.value ? message.field.value : ''}
-                  label='Введите ваше сообщение'
-                  isError={Boolean(message.fieldState.error)}
-                  textarea
-                  maxLength={1000}
-                />
-                <Typography
-                  className={cn(styles.footnote, {
-                    [styles.footnoteErrorActive]: Boolean(
-                      message.fieldState.error,
-                    ),
-                  })}
+                <InputMask
+                  mask={inputMasks.nameMask}
+                  value={nameInput.field.value ? nameInput.field.value : ''}
+                  onChange={nameInput.field.onChange}
+                  maskPlaceholder=''
                 >
-                  максимальное количество символов 1000
-                </Typography>
+                  <FormInput
+                    helperText={nameInput.fieldState.error?.message}
+                    onChange={nameInput.field.onChange}
+                    value={nameInput.field.value ? nameInput.field.value : ''}
+                    label='Ваше имя'
+                    isError={Boolean(nameInput.fieldState.error)}
+                  />
+                </InputMask>
               </Box>
-            </>
-            <Button onClick={onSubmit} variant={'contained'}>
-              Отправить
-            </Button>
-            <Typography
-              className={styles.policy}
-              id='modal-modal-title'
-              component='p'
-              mb={1}
+              <Box
+                className={cn(styles.inputContainer, {
+                  [styles.inputIsError]: phoneInputIsError,
+                })}
+              >
+                <Controller
+                  name='phoneNumber'
+                  control={control}
+                  rules={getInputRules(EValidatePattern.PHONE_NUMBER)}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <InputMask
+                      mask={inputMasks.phoneMask}
+                      value={value ? value : ''}
+                      onChange={onChange}
+                    >
+                      <TextField
+                        error={Boolean(error)}
+                        helperText={error?.message}
+                        label='Телефон'
+                        variant='outlined'
+                        type='text'
+                        fullWidth
+                      />
+                    </InputMask>
+                  )}
+                />
+              </Box>
+            </Box>
+            <Box
+              className={cn(styles.textAreaContainer, {
+                [styles.inputIsError]: Boolean(message.fieldState.error),
+              })}
             >
-              Нажимая на кнопку «Отправить», вы даете согласие на обработку
-              даных и соглашаетесь с{' '}
-              <Link href='/policy'>политикой конфиденциальности.</Link>
-            </Typography>
-          </form>
-        </Container>
-      </ModalWrapper>
-    </FocusTrap>
+              <FormInput
+                helperText={message.fieldState.error?.message}
+                onChange={message.field.onChange}
+                value={message.field.value ? message.field.value : ''}
+                label='Введите ваше сообщение'
+                isError={Boolean(message.fieldState.error)}
+                textarea
+                maxLength={1000}
+              />
+              <Typography
+                className={cn(styles.footnote, {
+                  [styles.footnoteErrorActive]: Boolean(
+                    message.fieldState.error,
+                  ),
+                })}
+              >
+                максимальное количество символов 1000
+              </Typography>
+            </Box>
+          </>
+          <Button onClick={onSubmit} variant={'contained'}>
+            Отправить
+          </Button>
+          <Typography
+            className={styles.policy}
+            id='modal-modal-title'
+            component='p'
+            mb={1}
+          >
+            Нажимая на кнопку «Отправить», вы даете согласие на обработку даных
+            и соглашаетесь с{' '}
+            <Link href='/policy'>политикой конфиденциальности.</Link>
+          </Typography>
+        </form>
+      </Container>
+    </ModalWrapper>
   );
 };
 

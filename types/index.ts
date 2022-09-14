@@ -18,6 +18,7 @@ type Filter = {
   filter: FiltersCategoryResponseData;
   setFilterRequest: React.Dispatch<React.SetStateAction<FilterRequest | null>>;
   handleAnchorClick: (event: React.MouseEvent<HTMLElement>) => void;
+  filterRequest: FilterRequest | null;
 };
 
 type Slug = string | string[] | undefined;

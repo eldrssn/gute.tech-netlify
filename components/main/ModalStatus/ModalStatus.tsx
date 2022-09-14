@@ -2,16 +2,13 @@ import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Box, Button } from '@mui/material';
-import { TailSpin } from 'react-loader-spinner';
 
+import { Loader } from 'components/ui/Loader';
 import { fetchStatusPayment } from 'store/reducers/payment/actions';
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { selectStatus } from 'store/reducers/payment/selectors';
-import colors from 'styles/_export.module.scss';
 
 import styles from './styles.module.scss';
-
-const loaderColor = colors.blue;
 
 const ModalStatus: FC = () => {
   const router = useRouter();
@@ -47,12 +44,7 @@ const ModalStatus: FC = () => {
         <Box component='div' className={styles.box}>
           <Typography className={styles.title}>Статус Заказа:</Typography>
           {isLoading ? (
-            <TailSpin
-              wrapperClass={styles.loader}
-              height={60}
-              width={60}
-              color={loaderColor}
-            />
+            <Loader size={60} />
           ) : (
             <Typography className={styles.detail}>Произошла ошибка</Typography>
           )}
@@ -64,12 +56,7 @@ const ModalStatus: FC = () => {
         <Box component='div' className={styles.box}>
           <Typography className={styles.title}>Статус Заказа:</Typography>
           {isLoading ? (
-            <TailSpin
-              wrapperClass={styles.loader}
-              height={60}
-              width={60}
-              color={loaderColor}
-            />
+            <Loader size={60} />
           ) : (
             <Typography className={styles.detail}>{data?.detail}</Typography>
           )}

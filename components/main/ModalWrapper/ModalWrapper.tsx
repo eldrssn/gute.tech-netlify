@@ -63,8 +63,9 @@ const ModalWrapper: React.FC<TOuterProps> = ({
 
     document.body.addEventListener('keydown', handlePressEscClose);
 
-    return () =>
+    return () => {
       document.body.removeEventListener('keydown', handlePressEscClose);
+    };
   });
 
   return (

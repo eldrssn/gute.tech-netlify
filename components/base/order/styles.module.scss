@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .main {
   padding: 24px 0 0;
@@ -23,14 +23,14 @@
   padding: 16px;
   font-weight: bold;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .orderBox {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .orderTotal {

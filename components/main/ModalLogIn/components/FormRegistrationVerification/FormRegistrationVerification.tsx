@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController } from 'react-hook-form';
 import { useTimer } from 'react-timer-hook';
 import { Box, Typography, FormControl } from '@mui/material';
-import { TailSpin } from 'react-loader-spinner';
 import cn from 'classnames';
 
 import {
@@ -27,6 +26,7 @@ import { FormInput } from 'components/main/FormInput';
 import { getInputRules } from 'utility/helpers';
 import { handleEnterPress } from 'utility/utils';
 import { ActiveAutorizationFormKey } from 'constants/types';
+import { Loader } from 'components/ui/Loader';
 import colors from 'styles/_export.module.scss';
 
 import { setErrorRetryButton, getTimerTime } from '../../helpers';
@@ -34,7 +34,6 @@ import { TFormData, FormKey, Props } from './types';
 import styles from '../../styles.module.scss';
 
 const loaderSubmitButton = colors.white;
-const loaderRetryButton = colors.blue;
 
 const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
   const [otherError, setOtherError] = useState<string[]>([]);
@@ -138,7 +137,7 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
       </Box>
       <button className={styles.formButton} type='submit'>
         {loadingRegistrationVerification ? (
-          <TailSpin height={25} width={25} color={loaderSubmitButton} />
+          <Loader size={25} color={loaderSubmitButton} />
         ) : (
           <Typography className={styles.formButton_text}>
             Подтвердить
@@ -164,7 +163,7 @@ const FormRegistrationVerification: FC<Props> = ({ closeModal }) => {
           })}
         >
           {loadingRegistrationVerificationRetry ? (
-            <TailSpin height={21} width={21} color={loaderRetryButton} />
+            <Loader size={21} />
           ) : (
             getRetryButtonTitle()
           )}

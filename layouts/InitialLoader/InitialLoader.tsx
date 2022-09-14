@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import Head from 'next/head';
 
 import { fetchRegions, fetchBranches } from 'store/reducers/regions/actions';
-import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
+import {
+  fetchTransportReadCategories,
+  fetchCategoriesList,
+} from 'store/reducers/catalog/actions';
 import {
   fetchCartAuthorized,
   fetchCartUnAuthorized,
@@ -36,13 +38,11 @@ import { getCookie } from 'utility/helpers';
 import { QueryUrl, COOKIE_TTL } from 'constants/variables';
 import { CookieKey } from 'constants/types';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
-
-import { getLinkToProduct } from 'utility/helpers/linkmakers';
+import { fetchProfile } from 'store/reducers/user/actions';
 
 const InitialLoader: React.FC = ({ children }) => {
   const { windowWidth } = useWindowSize();
   const { getQueryOption } = useRouterQuery();
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const [cookiesNotAuthorizedToken, setCookiesNotAuthorizedToken] =
@@ -62,9 +62,11 @@ const InitialLoader: React.FC = ({ children }) => {
 
   useEffect(() => {
     dispatch(fetchShowcase());
+    dispatch(fetchCategoriesList());
     dispatch(fetchCategoriesTreeList());
     dispatch(fetchRegions());
     dispatch(fetchBranches());
+    dispatch(fetchProfile());
   }, [dispatch]);
 
   useEffect(() => {
@@ -183,6 +185,7 @@ const InitialLoader: React.FC = ({ children }) => {
         <link rel='shortcut icon' href={favicon}></link>
       </Head>
       {children}
+      <div id='modal-root'></div>
     </>
   );
 };

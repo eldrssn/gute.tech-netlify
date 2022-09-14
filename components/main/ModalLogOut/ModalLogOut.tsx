@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { Box, Container, Typography } from '@mui/material';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import FocusTrap from 'focus-trap-react';
 
 import { logOut } from 'store/reducers/authentication/exceptionAction';
 import { CustomButton } from 'components/ui/CustomButton';
@@ -32,35 +31,28 @@ const ModalLogOut: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <FocusTrap>
-      <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
-        <Container fixed className={styles.wrap}>
-          <Box
-            className={styles.closeModal}
-            onClick={closeModal}
-            tabIndex={0}
-            onKeyPress={handleKeyClose}
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </Box>
-          <Typography className={styles.title}>
-            Вы точно хотите выйти?
-          </Typography>
+    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+      <Container fixed className={styles.wrap}>
+        <Box
+          className={styles.closeModal}
+          onClick={closeModal}
+          tabIndex={0}
+          onKeyPress={handleKeyClose}
+        >
+          <FontAwesomeIcon icon={faTimes} />
+        </Box>
+        <Typography className={styles.title}>Вы точно хотите выйти?</Typography>
 
-          <Box className={styles.buttonsContainer}>
-            <CustomButton
-              customStyles={styles.button}
-              onClick={handleClickExit}
-            >
-              Да
-            </CustomButton>
-            <CustomButton customStyles={styles.button} onClick={closeModal}>
-              Нет
-            </CustomButton>
-          </Box>
-        </Container>
-      </ModalWrapper>
-    </FocusTrap>
+        <Box className={styles.buttonsContainer}>
+          <CustomButton customStyles={styles.button} onClick={handleClickExit}>
+            Да
+          </CustomButton>
+          <CustomButton customStyles={styles.button} onClick={closeModal}>
+            Нет
+          </CustomButton>
+        </Box>
+      </Container>
+    </ModalWrapper>
   );
 };
 

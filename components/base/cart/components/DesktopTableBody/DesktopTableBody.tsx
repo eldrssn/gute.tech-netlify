@@ -1,6 +1,6 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import Link from 'next/link';
 import {
   TableBody,
   TableCell,
@@ -24,7 +24,6 @@ import { TTableBodyProps } from '../../types';
 import styles from './DesktopTableBody.module.scss';
 
 const DesktopTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const handleChangeCheckBox = (slug: string) => {
@@ -33,10 +32,6 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
     }
 
     dispatch(changeChecked(slug));
-  };
-
-  const handleClickTitle = (link: string) => {
-    router.push(link);
   };
 
   return (
@@ -75,21 +70,26 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
                         />
                       }
                     />
-                    <CardMedia
-                      component={'img'}
-                      height='100px'
-                      width='100px'
-                      src={item.images[0] || '/images/no-image.jpeg'}
-                      alt='item'
-                    />
+                    <Link href={link}>
+                      <a>
+                        <CardMedia
+                          component={'img'}
+                          height='100px'
+                          width='100px'
+                          src={item.images[0] || '/images/no-image.jpeg'}
+                          alt='item'
+                        />
+                      </a>
+                    </Link>
                   </Box>
                   <Typography className={styles.itemTitleBox}>
-                    <Typography
-                      className={styles.itemTitle}
-                      onClick={() => handleClickTitle(link)}
-                    >
-                      {item.title}
-                    </Typography>
+                    <Link href={link}>
+                      <a>
+                        <Typography className={styles.itemTitle}>
+                          {item.title}
+                        </Typography>
+                      </a>
+                    </Link>
                     <Typography className={styles.itemManufacturer}>
                       {item.manufacturer}
                     </Typography>

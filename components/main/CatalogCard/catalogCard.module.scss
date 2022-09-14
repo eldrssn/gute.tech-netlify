@@ -1,4 +1,5 @@
 @import 'styles/colors.scss';
+@import 'styles/constants.scss';
 
 .cardContainer {
   border-radius: 0;
@@ -111,6 +112,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: $z-index2;
 
   &:not(:first-of-type) {
     margin-left: 5px;
@@ -123,6 +125,7 @@
   font-size: 16px;
   text-transform: none;
   margin: 0;
+  z-index: $z-index2;
 }
 
 .cardPrice {

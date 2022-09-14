@@ -72,12 +72,19 @@ const TableOrder: React.FC<TTableOrderProps> = ({
         />
       )}
       <Table className={styles.table} aria-label='simple table'>
-        {isMobile ? null : (
+        {!isMobile && (
           <TableHead className={styles.tableHead}>
             <TableRow>
               <TableCell>Товар</TableCell>
               <TableCell align='right'>Цена</TableCell>
-              <TableCell align='right'>Кол-во и остаток</TableCell>
+              <TableCell
+                align='right'
+                sx={{
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Кол-во и остаток
+              </TableCell>
               <TableCell align='right'>Стоимость</TableCell>
               <TableCell align='right'></TableCell>
             </TableRow>

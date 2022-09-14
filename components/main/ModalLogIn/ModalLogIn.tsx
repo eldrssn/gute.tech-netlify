@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Container, Box } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import FocusTrap from 'focus-trap-react';
 
 import { setActiveAuthorizationForm } from 'store/reducers/authentication/actions';
 import {
@@ -66,23 +65,21 @@ const ModalLogIn: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <FocusTrap>
-      <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
-        <Box
-          className={styles.closeModal}
-          onClick={closeModal}
-          onKeyPress={handlePress}
-          tabIndex={0}
-        >
-          <FontAwesomeIcon icon={faTimes} />
+    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
+      <Box
+        className={styles.closeModal}
+        onClick={closeModal}
+        onKeyPress={handlePress}
+        tabIndex={0}
+      >
+        <FontAwesomeIcon icon={faTimes} />
+      </Box>
+      <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box className={styles.formWrap}>
+          {ActiveFormComponent[activeAuthorizationForm]}
         </Box>
-        <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Box className={styles.formWrap}>
-            {ActiveFormComponent[activeAuthorizationForm]}
-          </Box>
-        </Container>
-      </ModalWrapper>
-    </FocusTrap>
+      </Container>
+    </ModalWrapper>
   );
 };
 

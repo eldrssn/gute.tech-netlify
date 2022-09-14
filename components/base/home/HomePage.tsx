@@ -15,6 +15,7 @@ import { Loader } from 'components/ui/Loader';
 import { Items } from './components/rows/types';
 import { groupItems } from 'utility/helpers';
 import {
+  selectCategoriesList,
   selectTransportReadCategories,
   selectCategoriesTreeList,
 } from 'store/reducers/catalog/selectors';
@@ -38,9 +39,14 @@ const Home: FC<Props> = ({ isCatalog }) => {
 
   const { transportId } = useSelector(selectTransportStore);
 
+  const treeSelector = categorySlug
+    ? selectCategoriesTreeList
+    : selectCategoriesList;
+
   const categoryTreeListSelector = transportId
     ? selectTransportReadCategories
-    : selectCategoriesTreeList;
+    : treeSelector;
+
   const categoriesTreeList = useSelector(categoryTreeListSelector);
   const { data: categoriesTreeListData, isLoading } = categoriesTreeList;
 

@@ -1,22 +1,26 @@
 import React, { FC } from 'react';
-import { TailSpin } from 'react-loader-spinner';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 import colors from 'styles/_export.module.scss';
 
 import { LoaderProps } from './types';
 import styles from './loader.module.scss';
 
-const Loader: FC<LoaderProps> = ({
-  width = 50,
-  height = 50,
-  color = 'blue',
-}) => (
-  <TailSpin
-    wrapperClass={styles.loader}
-    height={height}
-    width={width}
-    color={colors[color]}
-  />
+const loaderDefaultColor = colors.blue;
+
+const Loader: FC<LoaderProps> = ({ size = 50, color = loaderDefaultColor }) => (
+  <Box className={styles.loader}>
+    <CircularProgress
+      size={size}
+      color={'inherit'}
+      sx={{
+        '& .MuiCircularProgress-svg': {
+          color,
+        },
+      }}
+    />
+  </Box>
 );
 
 export { Loader };

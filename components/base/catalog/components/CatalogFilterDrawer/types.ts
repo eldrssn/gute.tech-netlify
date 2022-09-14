@@ -9,6 +9,7 @@ type CatalogFilterDrawerProps = {
     React.SetStateAction<HTMLElement | null>
   >;
   setSorting: React.Dispatch<React.SetStateAction<Sorting | null>>;
+  filterRequest: FilterRequest | null;
 };
 
 export type { CatalogFilterDrawerProps };
