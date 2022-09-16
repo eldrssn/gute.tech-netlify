@@ -8,17 +8,20 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useWindowSize } from 'hooks/useWindowSize';
-import {
-  selectBrands,
-  selectEngines,
-} from 'store/reducers/transport/selectors';
-import { fetchBrands } from 'store/reducers/transport/actions';
 import { Loader } from 'components/ui/Loader';
+import {
+  resetOptionsDataInBrandStep,
+  resetOptionsDataInModelStep,
+  resetOptionsDataInYearStep,
+} from 'store/reducers/transport/actions';
+import { useWindowSize } from 'hooks/useWindowSize';
+import { selectEngines } from 'store/reducers/transport/selectors';
 
+import { setDefaultValueByName } from './helpers';
+import { FilterStepProps } from './types';
 import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
-import { FilterStepProps } from './types';
+import { namesDefaultValueByStep } from '../../constants';
 import { HandleClickProps, StepInputs } from '../../types';
 
 import styles from './filterStep.module.scss';
@@ -35,21 +38,25 @@ const FilterStep: FC<FilterStepProps> = ({
   setOpenPopoverId,
   setValue,
   setCurrentStep,
+  transportType,
   setTransportType,
   setCurrentTransportId,
+  valueForm,
+  getValues,
   ...restProps
 }) => {
   const dispatch = useDispatch();
+
+  const { isFullHeader } = useContext(HeaderContext);
+  const { isTablet } = useWindowSize();
+  const [isOpenPopover, setIsOpenPopover] = useState(false);
+  const [isLoadingoptionList, setIsLoadingOptionList] = useState(false);
 
   const input = useController({
     name: name,
     control,
     rules: { required: true },
   });
-  const { isFullHeader } = useContext(HeaderContext);
-  const { isTablet } = useWindowSize();
-  const [isOpenPopover, setIsOpenPopover] = useState(false);
-  const [isLoadingoptionList, setIsLoadingOptionList] = useState(false);
 
   const { searchValue, title, slug } = input.field.value;
   const inputNumber = inputStepId + 1;
@@ -60,7 +67,31 @@ const FilterStep: FC<FilterStepProps> = ({
     typeof searchValue === 'string' && isOpenPopover ? searchValue : title;
 
   const { data: engines } = useSelector(selectEngines);
-  const { data: brands } = useSelector(selectBrands);
+
+  const resetDataByStep = {
+    [StepInputs.BRAND]: () => {
+      dispatch(resetOptionsDataInBrandStep());
+      const names = namesDefaultValueByStep[StepInputs.BRAND];
+      setDefaultValueByName(names, setValue, valueForm);
+    },
+    [StepInputs.MODEL]: () => {
+      dispatch(resetOptionsDataInModelStep());
+      const names = namesDefaultValueByStep[StepInputs.MODEL];
+      setDefaultValueByName(names, setValue, valueForm);
+    },
+    [StepInputs.YEAR]: () => {
+      dispatch(resetOptionsDataInYearStep());
+      const names = namesDefaultValueByStep[StepInputs.YEAR];
+      setDefaultValueByName(names, setValue, valueForm);
+    },
+    [StepInputs.ENGINE]: () => {
+      const names = namesDefaultValueByStep[StepInputs.ENGINE];
+      setDefaultValueByName(names, setValue, valueForm);
+    },
+    [StepInputs.INACTIVE]: () => {
+      null;
+    },
+  };
 
   useEffect(() => {
     setIsOpenPopover(openPopoverId === inputStepId);
@@ -78,6 +109,7 @@ const FilterStep: FC<FilterStepProps> = ({
     inputStepId,
   }: HandleClickProps) => {
     setValue(name, { title, slug, searchValue: null });
+    resetDataByStep[inputStepId]();
 
     if (inputStepId === StepInputs.ENGINE) {
       const currentEngine = engines.find((engine) => engine.slug === slug);
@@ -102,14 +134,6 @@ const FilterStep: FC<FilterStepProps> = ({
     setValue(name, { title, slug, searchValue: event.target.value });
   };
 
-  const handleLoadBrands = () => {
-    if (brands.length > 0) {
-      return;
-    }
-
-    dispatch(fetchBrands());
-  };
-
   const handleClickCaret = () => {
     if (isActiveStep) {
       handleClosePopover();
@@ -123,20 +147,24 @@ const FilterStep: FC<FilterStepProps> = ({
 
   return (
     <>
-      <FilterPopover
-        setIsLoadingOptionList={setIsLoadingOptionList}
-        setOpenPopoverId={setOpenPopoverId}
-        openPopoverId={openPopoverId}
-        setIsOpenPopover={setIsOpenPopover}
-        isOpenPopover={isOpenPopover}
-        inputStepId={inputStepId}
-        handleClick={handleClickButton}
-        searchValue={searchValue}
-        handleClosePopover={handleClosePopover}
-        setTransportType={setTransportType}
-        {...restProps}
-      />
-      <Step key={name} sx={{ width: '100%' }} onFocus={handleLoadBrands}>
+      {isActiveStep && (
+        <FilterPopover
+          setIsLoadingOptionList={setIsLoadingOptionList}
+          openPopoverId={openPopoverId}
+          setOpenPopoverId={setOpenPopoverId}
+          setIsOpenPopover={setIsOpenPopover}
+          isOpenPopover={isOpenPopover}
+          inputStepId={inputStepId}
+          handleClick={handleClickButton}
+          searchValue={searchValue}
+          handleClosePopover={handleClosePopover}
+          transportType={transportType}
+          setTransportType={setTransportType}
+          getValues={getValues}
+          {...restProps}
+        />
+      )}
+      <Step key={name} sx={{ width: '100%' }}>
         <div className={styles.stepWrap}>
           <Box
             className={cn(styles.stepNumber, {

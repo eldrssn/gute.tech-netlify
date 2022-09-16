@@ -28,8 +28,6 @@ const clearCheckedItems = createAction('clearCheckedItems');
 const setCurrentPage = createAction<number>('setCurrentPage');
 const clearCartItems = createAction('clearCartItems');
 
-//TODO: получение корзины
-
 const fetchCartAuthorized = createAsyncAction<CartResponseData[]>({
   typeAction: 'cartStore/fetchCartAuthorized',
   request: getCartAuthorized,
@@ -39,8 +37,6 @@ const fetchCartUnAuthorized = createAsyncAction<CartResponseData[]>({
   typeAction: 'cartStore/fetchCartUnAuthorized',
   request: getCartUnAuthorized,
 });
-
-//TODO: добавление товара в корзину
 
 const addProductToCartAuthorized = createAsyncAction<
   CartAddItemResponseData,
@@ -58,8 +54,6 @@ const addProductToCartUnAuthorized = createAsyncAction<
   request: postCartItemUnAuthorized,
 });
 
-//TODO: очищение корзины
-
 const clearCartAuthorized = createAsyncAction({
   typeAction: 'cartStore/clearCartAuthorized',
   request: postCartClearAuthorized,
@@ -69,8 +63,6 @@ const clearCartUnAuthorized = createAsyncAction({
   typeAction: 'cartStore/clearCartUnAuthorized',
   request: postCartClearUnAuthorized,
 });
-
-//TODO: изменение количества продукта в корзине
 
 const updateCartItemAuthorized = createAsyncAction<
   CartUpdateItemResponeData,
@@ -108,6 +100,8 @@ export {
   fetchCartUnAuthorized,
   fetchCartAuthorized,
   fetchItemsFromCart,
+  clearCartAuthorized,
+  clearCartUnAuthorized,
   updateCartItemAuthorized,
   updateCartItemUnAuthorized,
 };

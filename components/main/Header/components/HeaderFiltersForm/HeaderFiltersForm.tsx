@@ -1,34 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import classnames from 'classnames/bind';
-import { useForm, UseFormSetValue } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 
-import { selectTransportId } from 'store/reducers/transport/selectors';
-import {
-  fetchEngines,
-  fetchModels,
-  fetchYears,
-  resetOptionsDataInBrandStep,
-  resetOptionsDataInEngineStep,
-  resetOptionsDataInModelStep,
-  resetOptionsDataInYearStep,
-} from 'store/reducers/transport/actions';
+import { setTransportId } from 'store/reducers/transport/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
+import { defaultValue } from 'components/main/Header/constants';
 import {
-  namesDefaultValueByStep,
-  defaultValue,
-} from 'components/main/Header/constants';
-import {
-  FilterInputName,
   FormData,
   StepInputs,
   WatchFormData,
 } from 'components/main/Header/types';
+import { selectBrands } from 'store/reducers/transport/selectors';
 
+import { HeaderContext } from '../HeaderContext';
 import { FilterSteps } from '../FilterSteps';
+import { HeaderFiltersText } from '../HeaderFiltersText';
 import { getTransportParams } from './helpers';
 import { HeaderFiltersFormProps, TransportType } from './types';
 
@@ -40,7 +30,8 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
   closePopupMobile,
 }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
+
+  const { transportText, setTransportText } = useContext(HeaderContext);
 
   const { getValues, control, setValue, handleSubmit, reset, watch } =
     useForm<FormData>({
@@ -53,7 +44,7 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
     });
   const [openPopoverId, setOpenPopoverId] = useState(StepInputs.INACTIVE);
   const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
-  const [transportType, setTransportType] = useState<TransportType>();
+  const [transportType, setTransportType] = useState<string>('');
   const [currentTransportId, setCurrentTransportId] = useState<TransportType>();
   const [valueForm, setValueForm] = useState<WatchFormData>();
 
@@ -62,7 +53,7 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
   const yearSlugValue = getValues('year.slug');
   const engineSlug = getValues('engine.slug');
 
-  const transportId = useSelector(selectTransportId);
+  const brand = useSelector(selectBrands);
 
   useEffect(() => {
     const subscription = watch((value) => setValueForm(value));
@@ -70,80 +61,17 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
   }, [watch]);
 
   useEffect(() => {
-    const setDefaultValueByName = (
-      nameArray: FilterInputName[],
-      setValue: UseFormSetValue<FormData>,
-    ) => {
-      nameArray.forEach((name) => {
-        const searchValue = valueForm ? valueForm[name]?.searchValue : '';
-        setValue(name, {
-          title: '',
-          slug: '',
-          searchValue: searchValue ? searchValue : null,
-        });
-      });
-    };
-
-    const resetDataByStep = {
-      [StepInputs.BRAND]: () => {
-        dispatch(resetOptionsDataInBrandStep());
-        const names = namesDefaultValueByStep[StepInputs.BRAND];
-        setDefaultValueByName(names, setValue);
-      },
-      [StepInputs.MODEL]: () => {
-        dispatch(fetchModels({ transportType, brandSlug: brandSlugValue }));
-        dispatch(resetOptionsDataInModelStep());
-        const names = namesDefaultValueByStep[StepInputs.MODEL];
-        setDefaultValueByName(names, setValue);
-      },
-      [StepInputs.YEAR]: () => {
-        dispatch(
-          fetchYears({
-            transportType,
-            brandSlug: brandSlugValue,
-            modelSlug: modelSlugValue,
-          }),
-        );
-        dispatch(resetOptionsDataInYearStep());
-        const names = namesDefaultValueByStep[StepInputs.YEAR];
-        setDefaultValueByName(names, setValue);
-      },
-      [StepInputs.ENGINE]: () => {
-        dispatch(
-          fetchEngines({
-            transportType,
-            brandSlug: brandSlugValue,
-            modelSlug: modelSlugValue,
-            yearSlug: yearSlugValue,
-          }),
-        );
-        dispatch(resetOptionsDataInEngineStep());
-        const names = namesDefaultValueByStep[StepInputs.ENGINE];
-        setDefaultValueByName(names, setValue);
-      },
-      [StepInputs.INACTIVE]: () => {
-        null;
-      },
-    };
-
-    resetDataByStep[currentStep]();
-  }, [dispatch, currentStep, brandSlugValue, modelSlugValue, yearSlugValue]);
-
-  useEffect(() => {
-    reset();
-    setCurrentStep(StepInputs.BRAND);
-  }, [transportType]);
-
-  useEffect(() => {
-    if (transportId) {
+    if (brand.data.length <= 0) {
       return;
     }
 
-    reset();
-    setCurrentStep(StepInputs.INACTIVE);
-  }, [transportId, reset]);
+    setTransportType(brand.data[0].slug);
+  }, [brand]);
 
-  const isDisableButton = engineSlug === '';
+  const resetFilterForm = () => {
+    reset();
+    setCurrentStep(StepInputs.BRAND);
+  };
 
   const onSubmit = handleSubmit(() => {
     if (isDisableButton || !currentTransportId) {
@@ -151,20 +79,38 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
     }
 
     const params = getTransportParams(currentTransportId);
+    setTransportId(currentTransportId);
+    setTransportText(
+      `${brandSlugValue} ${modelSlugValue} ${yearSlugValue} ${engineSlug}`,
+    );
     router.push(params);
 
     closePopupMobile && closePopupMobile();
   });
 
-  return (
+  const isDisableButton = engineSlug === '';
+
+  return transportText ? (
+    <HeaderFiltersText
+      control={control}
+      reset={reset}
+      setValue={setValue}
+      setCurrentStep={setCurrentStep}
+      setTransportType={setTransportType}
+    />
+  ) : (
     <>
       <FilterSteps
-        openPopoverId={openPopoverId}
-        setOpenPopoverId={setOpenPopoverId}
+        resetFilterForm={resetFilterForm}
+        getValues={getValues}
         control={control}
         setValue={setValue}
+        valueForm={valueForm}
+        openPopoverId={openPopoverId}
+        setOpenPopoverId={setOpenPopoverId}
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
+        transportType={transportType}
         setTransportType={setTransportType}
         setCurrentTransportId={setCurrentTransportId}
       />

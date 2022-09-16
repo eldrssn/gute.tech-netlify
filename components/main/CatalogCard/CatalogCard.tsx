@@ -55,7 +55,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
 
   const addItemToBasket = () => {
     if (isAuthorized) {
-      dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 })); //TODO: запрос
+      dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 }));
     }
 
     if (!isAuthorized) {

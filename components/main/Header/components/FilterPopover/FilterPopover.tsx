@@ -1,4 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import useScrollbarSize from 'react-scrollbar-size';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
@@ -6,6 +8,13 @@ import { Box } from '@mui/system';
 import { Divider } from '@mui/material';
 import cn from 'classnames';
 
+import {
+  fetchBrands,
+  fetchModels,
+  fetchYears,
+  fetchEngines,
+  resetTransportInfo,
+} from 'store/reducers/transport/actions';
 import {
   selectBrands,
   selectModels,
@@ -18,64 +27,77 @@ import { checkBrandsList } from './helpers';
 import { filterData } from './helpers';
 import { widthListByStep, widthButtonByStep } from '../../constants';
 import { FilterPopoverProps } from './types';
-import { ListOptionsItem } from 'api/models/transport';
 import { StepInputs } from '../../types';
-
 import styles from './styles.module.scss';
 
 const FilterPopover: FC<FilterPopoverProps> = ({
+  resetFilterForm,
   isOpenPopover,
+  getValues,
   handleClosePopover,
   inputStepId,
   handleClick,
   setIsLoadingOptionList,
-  openPopoverId,
   searchValue,
+  transportType,
   setTransportType,
 }) => {
+  const dispatch = useDispatch();
+
   const { isMobile } = useWindowSize();
   const { width: widthScrollBar } = useScrollbarSize();
-  const [activeOptionList, setActiveOptionsList] = useState<ListOptionsItem>({
-    data: [],
-    isLoading: false,
-    error: {
-      name: '',
-      message: '',
-    },
-  });
-  const [activeTransportType, setActiveTransportType] = useState<string>('');
+  const isBrand = inputStepId === StepInputs.BRAND;
 
-  const { isLoading, data } = activeOptionList;
+  const selectorsByStepId = {
+    [StepInputs.BRAND]: selectBrands,
+    [StepInputs.MODEL]: selectModels,
+    [StepInputs.YEAR]: selectYears,
+    [StepInputs.ENGINE]: selectEngines,
+  };
 
-  const brands = useSelector(selectBrands);
-  const models = useSelector(selectModels);
-  const years = useSelector(selectYears);
-  const engines = useSelector(selectEngines);
+  const { isLoading, data } = useSelector(selectorsByStepId[inputStepId]);
 
-  const handleTransportTypeButton = (slug: string) => () => {
-    setActiveTransportType(slug);
+  const brandSlugValue = getValues('brand.slug');
+  const modelSlugValue = getValues('model.slug');
+  const yearSlugValue = getValues('year.slug');
+
+  const fetchDataByStepId = {
+    [StepInputs.BRAND]: () => dispatch(fetchBrands()),
+    [StepInputs.MODEL]: () =>
+      dispatch(
+        fetchModels({
+          brandSlug: brandSlugValue,
+          transportType,
+        }),
+      ),
+    [StepInputs.YEAR]: () =>
+      dispatch(
+        fetchYears({
+          brandSlug: brandSlugValue,
+          modelSlug: modelSlugValue,
+          transportType,
+        }),
+      ),
+    [StepInputs.ENGINE]: () =>
+      dispatch(
+        fetchEngines({
+          brandSlug: brandSlugValue,
+          modelSlug: modelSlugValue,
+          yearSlug: yearSlugValue,
+          transportType,
+        }),
+      ),
   };
 
   useEffect(() => {
-    const dataByStepId = {
-      [StepInputs.BRAND]: brands,
-      [StepInputs.MODEL]: models,
-      [StepInputs.YEAR]: years,
-      [StepInputs.ENGINE]: engines,
-    };
-
-    const data: ListOptionsItem = dataByStepId[inputStepId];
-
-    setActiveOptionsList(data);
-  }, [inputStepId, brands, models, years, engines]);
+    if (data.length <= 0) {
+      fetchDataByStepId[inputStepId]();
+    }
+  }, [inputStepId]);
 
   useEffect(() => {
     setIsLoadingOptionList(isLoading);
   }, [isLoading, setIsLoadingOptionList]);
-
-  useEffect(() => {
-    setTransportType(activeTransportType);
-  }, [activeTransportType, setTransportType]);
 
   useEffect(() => {
     if (isOpenPopover) {
@@ -88,32 +110,23 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     document.body.style.marginRight = '0px';
   }, [isOpenPopover, widthScrollBar]);
 
-  useEffect(() => {
-    if (
-      openPopoverId !== StepInputs.BRAND ||
-      activeTransportType ||
-      brands.data.length === 0
-    ) {
-      return;
-    }
+  const handleTransportTypeButton = (slug: string) => () => {
+    setTransportType(slug);
+    resetFilterForm();
+    dispatch(resetTransportInfo());
+  };
 
-    setActiveTransportType(brands.data[0].slug);
-  }, [openPopoverId, brands.data, activeTransportType]);
+  const filteredData = searchValue
+    ? filterData(searchValue, checkBrandsList(data, transportType))
+    : checkBrandsList(data, transportType);
+
+  const widthList = widthListByStep[inputStepId];
+  const widthButton = widthButtonByStep[inputStepId];
 
   const wrapperClassName = cn(
     { [styles.isOpen]: isOpenPopover },
     styles.wrapper,
   );
-
-  const widthList = widthListByStep[openPopoverId];
-  const widthButton = widthButtonByStep[openPopoverId];
-  const transportTypes = brands.data;
-
-  const isBrand = inputStepId === StepInputs.BRAND;
-
-  const filteredData = searchValue
-    ? filterData(searchValue, checkBrandsList(data, activeTransportType))
-    : checkBrandsList(data, activeTransportType);
 
   return (
     <Box component='div' className={wrapperClassName}>
@@ -135,17 +148,19 @@ const FilterPopover: FC<FilterPopoverProps> = ({
             {isBrand && (
               <>
                 <Box className={styles.transportTypeContainer}>
-                  {transportTypes.map((transportType) => (
+                  {data.map((transportTypeData) => (
                     <Button
                       className={cn(styles.transportTypeButton, {
                         [styles.transportTypeButtonActive]:
-                          activeTransportType === transportType.slug,
+                          transportType === transportTypeData.slug,
                         [styles.transportTypeButtonMobile]: isMobile,
                       })}
-                      key={transportType.slug}
-                      onClick={handleTransportTypeButton(transportType.slug)}
+                      key={transportTypeData.slug}
+                      onClick={handleTransportTypeButton(
+                        transportTypeData.slug,
+                      )}
                     >
-                      {transportType.title}
+                      {transportTypeData.title}
                     </Button>
                   ))}
                 </Box>

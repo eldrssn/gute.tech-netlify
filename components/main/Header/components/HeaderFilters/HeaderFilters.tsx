@@ -16,7 +16,6 @@ import { HeaderAsideNav } from '../HeaderAsideNav';
 import { HeaderContext } from '../HeaderContext';
 import { SearchField } from '../SearchField';
 import { HeaderFiltersForm } from '../HeaderFiltersForm';
-import { HeaderFiltersText } from '../HeaderFiltersText';
 
 import { HeaderFiltersProps } from './types';
 
@@ -26,8 +25,7 @@ const cn = classnames.bind(styles);
 
 const HeaderFilters: FC<HeaderFiltersProps> = ({ closePopupMobile }) => {
   const { isMobile, isTablet } = useWindowSize();
-  const { isFullHeader, isFocusSearchField, transportText } =
-    useContext(HeaderContext);
+  const { isFullHeader, isFocusSearchField } = useContext(HeaderContext);
 
   const isHiddenFilter = !isFullHeader && isFocusSearchField && !isTablet;
   const isFullDesktopHeader = isFullHeader && !isMobile;
@@ -65,11 +63,7 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({ closePopupMobile }) => {
                   [styles.filterStepsForm_mobileView]: isMobile,
                 })}
               >
-                {!transportText ? (
-                  <HeaderFiltersForm closePopupMobile={closePopupMobile} />
-                ) : (
-                  <HeaderFiltersText transportText={transportText} />
-                )}
+                <HeaderFiltersForm closePopupMobile={closePopupMobile} />
               </FormControl>
 
               {isFullDesktopHeader && <CatalogButton />}

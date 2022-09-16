@@ -10,6 +10,7 @@ const HeaderContext = React.createContext<HeaderContentType>({
   isFullHeader: true,
   isFocusSearchField: false,
   setIsFocusSearchField: () => false,
+  setTransportText: () => '',
   transportText: '',
 });
 
@@ -57,9 +58,16 @@ const HeaderContextProvider: React.FC = ({ children }) => {
       isFocusSearchField,
       isFullHeader,
       setIsFocusSearchField,
+      setTransportText,
       transportText,
     }),
-    [isFullHeader, isFocusSearchField, setIsFocusSearchField, transportText],
+    [
+      isFullHeader,
+      isFocusSearchField,
+      setIsFocusSearchField,
+      transportText,
+      setTransportText,
+    ],
   );
 
   return (

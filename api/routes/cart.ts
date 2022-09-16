@@ -23,8 +23,6 @@ const getProductInfoFromSlug = ({ productSlug }: ProductRequestData) =>
     method: ApiMethods.GET,
   });
 
-//TODO: верхний удалить?/
-
 const getProductsInfoFromSlugs = ({ productsOptions }: ProductsRequestData) =>
   sendRequest<ProductResponseData[]>({
     url: `/catalog/products/`,
@@ -33,8 +31,6 @@ const getProductsInfoFromSlugs = ({ productsOptions }: ProductsRequestData) =>
       data: getProductSlugList(productsOptions),
     },
   });
-
-//TODO: получение корзины
 
 const getCartAuthorized = () =>
   sendRequestАuthentication<CartResponseData[]>({
@@ -47,8 +43,6 @@ const getCartUnAuthorized = () =>
     url: `/payment/cart/`,
     method: ApiMethods.GET,
   });
-
-//TODO: добавление товара в корзину
 
 const postCartItemAuthorized = ({
   product,
@@ -80,8 +74,6 @@ const postCartItemUnAuthorized = ({
     },
   });
 
-//TODO: очищение корзины
-
 const postCartClearAuthorized = () =>
   sendRequestАuthentication({
     url: `/payment/cart/clear/`,
@@ -94,8 +86,6 @@ const postCartClearUnAuthorized = () =>
     method: ApiMethods.POST,
     config: {},
   });
-
-//TODO: изменение количества продукта в корзине
 
 const putCartItemUpdateAuthorized = (cartItems: CartUpdateItemRequestData[]) =>
   sendRequestАuthentication<CartUpdateItemResponeData>({

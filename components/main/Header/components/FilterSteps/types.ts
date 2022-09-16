@@ -1,14 +1,26 @@
-import { FormProps, FilterInputName, StepInputs } from '../../types';
+import { UseFormGetValues } from 'react-hook-form';
+
+import {
+  FormProps,
+  FilterInputName,
+  StepInputs,
+  WatchFormData,
+  FormData,
+} from '../../types';
 
 type FilterStepsProps = {
+  resetFilterForm: () => void;
   openPopoverId: StepInputs;
   setOpenPopoverId: React.Dispatch<React.SetStateAction<number>>;
-  currentStep: number;
+  currentStep: StepInputs;
   setCurrentStep: (currentStep: number) => void;
-  setTransportType: React.Dispatch<React.SetStateAction<string | undefined>>;
+  transportType: string;
+  setTransportType: React.Dispatch<React.SetStateAction<string>>;
   setCurrentTransportId: React.Dispatch<
     React.SetStateAction<string | undefined>
   >;
+  valueForm: WatchFormData | undefined;
+  getValues: UseFormGetValues<FormData>;
 } & FormProps;
 
 type filterStepsData = {
