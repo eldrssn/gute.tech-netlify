@@ -48,8 +48,6 @@ type ProductsRequestData = {
   productsOptions: productOptions[];
 };
 
-//TODO: метод получения корзины
-
 type Product = {
   id: number;
   slug: string;
@@ -69,8 +67,6 @@ type CartResponseData = {
   results: CartItemResponseData[];
 };
 
-//TODO: метод добавления товара
-
 type CartAddItemRequestData = {
   product: string;
   quantity: number;
@@ -81,8 +77,6 @@ type CartAddItemResponseData = {
   total: number;
 };
 
-//TODO: метод изменения количества товара
-
 type CartUpdateItemRequestData = {
   quantity: number;
   product: string;
@@ -92,8 +86,6 @@ type CartUpdateItemResponeData = {
   total_price: number;
   total: number;
 };
-
-//TODO: изменить под реализованную модель
 
 export type {
   CartItemResponseData,

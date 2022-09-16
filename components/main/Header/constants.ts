@@ -36,10 +36,10 @@ const filterSteps: filterStepsData[] = [
 ];
 
 const namesDefaultValueByStep: INamesDefaultValueByStep = {
-  [StepInputs.BRAND]: ['brand', 'engine', 'model', 'year'],
-  [StepInputs.MODEL]: ['model', 'engine', 'year'],
-  [StepInputs.YEAR]: ['engine', 'year'],
-  [StepInputs.ENGINE]: ['engine'],
+  [StepInputs.BRAND]: ['engine', 'model', 'year'],
+  [StepInputs.MODEL]: ['engine', 'year'],
+  [StepInputs.YEAR]: ['engine'],
+  [StepInputs.ENGINE]: [],
 };
 
 const nameSearchValueByStep: INamesSearchValueByStep = {
@@ -54,7 +54,6 @@ const widthListByStep = {
   [StepInputs.MODEL]: '75%',
   [StepInputs.YEAR]: '50%',
   [StepInputs.ENGINE]: '25%',
-  [StepInputs.INACTIVE]: '0',
 };
 
 const widthButtonByStep = {
@@ -62,7 +61,6 @@ const widthButtonByStep = {
   [StepInputs.MODEL]: '33.333333%',
   [StepInputs.YEAR]: '50%',
   [StepInputs.ENGINE]: '100%',
-  [StepInputs.INACTIVE]: '0',
 };
 
 const defaultValue: FormDataItem = {

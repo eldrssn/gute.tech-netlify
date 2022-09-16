@@ -14,12 +14,7 @@ import styles from './filterSteps.module.scss';
 
 const cn = classnames.bind(styles);
 
-const FilterSteps: FC<FilterStepsProps> = ({
-  openPopoverId,
-  setTransportType,
-  setCurrentTransportId,
-  ...restProps
-}) => {
+const FilterSteps: FC<FilterStepsProps> = ({ openPopoverId, ...restProps }) => {
   const { isMobile } = useWindowSize();
 
   return (
@@ -38,8 +33,6 @@ const FilterSteps: FC<FilterStepsProps> = ({
             key={name}
             openPopoverId={openPopoverId}
             inputStepId={inputStepId}
-            setTransportType={setTransportType}
-            setCurrentTransportId={setCurrentTransportId}
             {...restProps}
           />
         ))}

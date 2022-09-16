@@ -47,6 +47,8 @@ const fetchTransportInfo = createAsyncAction<
   request: getTransportInfo,
 });
 
+const resetTransportInfo = createAction('resetTransportInfo');
+
 const resetBrands = createAction('resetBrands');
 const resetModels = createAction('resetModels');
 const resetYears = createAction('resetYears');
@@ -55,9 +57,6 @@ const resetEngines = createAction('resetEngines');
 const resetOptionsDataInBrandStep = createAction('resetOptionsDataInBrandStep');
 const resetOptionsDataInModelStep = createAction('resetOptionsDataInModelStep');
 const resetOptionsDataInYearStep = createAction('resetOptionsDataInYearStep');
-const resetOptionsDataInEngineStep = createAction(
-  'resetOptionsDataInEngineStep',
-);
 
 const setTransportId = createAction<TransportIdData>('setTransportSlugs');
 const clearTransportId = createAction('clearTransportId');
@@ -68,6 +67,7 @@ export {
   fetchYears,
   fetchEngines,
   fetchTransportInfo,
+  resetTransportInfo,
   resetBrands,
   resetModels,
   resetYears,
@@ -75,7 +75,6 @@ export {
   resetOptionsDataInBrandStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
-  resetOptionsDataInEngineStep,
   setTransportId,
   clearTransportId,
 };

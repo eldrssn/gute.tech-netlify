@@ -12,12 +12,12 @@ import {
   fetchYears,
   fetchEngines,
   fetchTransportInfo,
+  resetTransportInfo,
   resetEngines,
   resetBrands,
   resetModels,
   resetYears,
   resetOptionsDataInBrandStep,
-  resetOptionsDataInEngineStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
   setTransportId,
@@ -144,6 +144,10 @@ const handlers = {
     state.engines.error = errorData;
   },
 
+  [resetTransportInfo.type]: (state: TransportStore) => {
+    state.transportInfo.data = null;
+  },
+
   [resetBrands.type]: (state: TransportStore) => {
     state.brands.data = [];
   },
@@ -163,15 +167,10 @@ const handlers = {
     state.engines.data = [];
   },
   [resetOptionsDataInModelStep.type]: (state: TransportStore) => {
-    state.models.data = [];
     state.years.data = [];
     state.engines.data = [];
   },
   [resetOptionsDataInYearStep.type]: (state: TransportStore) => {
-    state.years.data = [];
-    state.engines.data = [];
-  },
-  [resetOptionsDataInEngineStep.type]: (state: TransportStore) => {
     state.engines.data = [];
   },
 };

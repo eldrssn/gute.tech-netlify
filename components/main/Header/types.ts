@@ -33,7 +33,7 @@ type FormProps = {
 };
 
 type HandleClickProps = {
-  inputStepId: number;
+  inputStepId: StepInputs;
 } & FormDataItem;
 
 enum FilterInputNames {

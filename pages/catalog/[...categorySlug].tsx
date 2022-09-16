@@ -37,19 +37,21 @@ const Catalog: FC = () => {
   const categoriesTreeList = useSelector(categoryTreeListSelector);
   const { data: categoriesTreeListData } = categoriesTreeList;
 
-  const category = getCategory({
-    categoryTree: categoriesTreeListData,
-    query: categorySlugAnArray,
-  });
-
   const isProductInCategorySlug = getIsProductInCategorySlug(lastCategorySlug);
 
-  if (isProductInCategorySlug) {
-    return <ProductPage />;
-  }
+  const category = getCategory({
+    categoryTree: categoriesTreeListData,
+    query: isProductInCategorySlug
+      ? categorySlugAnArray.slice(0, -1)
+      : categorySlugAnArray,
+  });
 
   if (!category) {
     return <PageNotFound />;
+  }
+
+  if (isProductInCategorySlug) {
+    return <ProductPage />;
   }
 
   const isProductFoundInCategory = transportId

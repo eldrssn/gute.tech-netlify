@@ -66,8 +66,11 @@ const InitialLoader: React.FC = ({ children }) => {
     dispatch(fetchCategoriesTreeList());
     dispatch(fetchRegions());
     dispatch(fetchBranches());
-    dispatch(fetchProfile());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, [isAuthorized]);
 
   useEffect(() => {
     if (transportId) {

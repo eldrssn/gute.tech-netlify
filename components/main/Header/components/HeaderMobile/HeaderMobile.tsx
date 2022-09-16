@@ -68,7 +68,7 @@ const HeaderMobile: FC = () => {
           },
           '& .MuiMenu-list': {
             display: 'block',
-            height: transportText ? '170px' : '350px',
+            height: transportText ? '250px' : '350px',
             overflow: 'visible',
             maxHeight: '350px',
             width: '100vw',

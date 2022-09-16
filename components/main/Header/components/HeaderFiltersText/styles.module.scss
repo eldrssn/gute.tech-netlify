@@ -1,0 +1,78 @@
+@import "~styles/colors.scss";
+@import "~styles/breakpoints.scss";
+
+.choosenTransport_container {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.choosenTransport {
+  font-size: 16px;
+  margin: 0;
+  margin-right: 10px;
+  margin-left: 5px;
+  color: $blue1;
+  display: flex;
+}
+
+.choosenTransport_text {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.choosenTransport_container_mobile {
+  flex-direction: column;
+  width: 100%;
+}
+
+.stepButtonSubmit {
+  margin: 0;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 14px;
+  background-color: $red1;
+  flex-grow: 1;
+  padding: 16.5px 20px;
+  border: 2px solid $red1;
+}
+
+.stepButtonSubmitInactive {
+  color: $white !important;
+}
+
+.stepButtonSubmit:hover {
+  background-color: $red1;
+}
+
+.editButton {
+  margin-left: 10px;
+}
+
+@media (max-width: $mobile) {
+  .stepButtonSubmit {
+    width: 100%;
+    margin: 10px;
+  }
+
+  .editButton {
+    margin-left: none;
+  }
+
+  .choosenTransport {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+
+  .choosenTransport_text {
+    margin: 0;
+    text-align: center;
+  }
+
+  .choosenTransport_label {
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+}
