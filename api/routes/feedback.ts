@@ -6,7 +6,7 @@ import { FeedbackRequestData } from '../models/feedback';
 
 const postFeedback = ({ name, phone, message }: FeedbackRequestData) =>
   sendRequest({
-    url: `/feedback/`,
+    url: `/v1/feedback/`,
     method: ApiMethods.POST,
     config: {
       data: {

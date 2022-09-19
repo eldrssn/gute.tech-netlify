@@ -21,7 +21,7 @@ import { ApiMethods } from 'constants/types';
 
 const postLogin = ({ phoneNumber, password }: LoginRequestData) =>
   sendRequest<LoginResponseData>({
-    url: `/user/login/`,
+    url: `/v1/user/login/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -37,7 +37,7 @@ const postRegistration = ({
   password,
 }: RegisterRequestData) =>
   sendRequest<RegisterResponseData>({
-    url: `/user/register/`,
+    url: `/v1/user/register/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -53,7 +53,7 @@ const postRegistrationVerify = ({
   code,
 }: RegisterVerifyRequestData) =>
   sendRequest<RegisterVerifyResponseData>({
-    url: `/user/register/verify/`,
+    url: `/v1/user/register/verify/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -67,7 +67,7 @@ const postRegistrationVerifyRetry = ({
   phoneNumber,
 }: RegisterVerifyRetryRequestData) =>
   sendRequest<RegisterVerifyResponseData>({
-    url: `/user/register/verify/retry/`,
+    url: `/v1/user/register/verify/retry/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -78,7 +78,7 @@ const postRegistrationVerifyRetry = ({
 
 const refreshToken = async ({ refresh }: RefreshTokenRequestData) =>
   sendRequest<RefreshTokenResponseData>({
-    url: `/user/token/refresh/`,
+    url: `/v1/user/token/refresh/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -89,7 +89,7 @@ const refreshToken = async ({ refresh }: RefreshTokenRequestData) =>
 
 const postResetPasswordRequest = ({ phone_number }: ResetPasswordRequestData) =>
   sendRequest<ResetPasswordResponseData>({
-    url: `/user/reset_password_request/`,
+    url: `/v1/user/reset_password_request/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -103,7 +103,7 @@ const postResetPasswordVerify = ({
   code,
 }: ResetPasswordVerifyRequestData) =>
   sendRequest<ResetPasswordVerifyResponseData>({
-    url: `/user/reset_password_verify/`,
+    url: `/v1/user/reset_password_verify/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -120,7 +120,7 @@ const putResetPassword = ({
   password2,
 }: ResetPasswordSetRequestData) =>
   sendRequest<ResetPasswordSetResponseData>({
-    url: `/user/reset_password/`,
+    url: `/v1/user/reset_password/`,
     method: ApiMethods.PUT,
     config: {
       data: {
@@ -134,7 +134,7 @@ const putResetPassword = ({
 
 const getUnauthorizationToken = () =>
   sendRequest<UnauthorizationTokenResponseData>({
-    url: `/user/token/unauthorized_user/`,
+    url: `/v1/user/token/unauthorized_user/`,
     method: ApiMethods.POST,
   });
 

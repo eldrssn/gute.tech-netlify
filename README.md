@@ -6,7 +6,7 @@
 >
 > Файл `docker-compose.yml` используется для деплоя на прод!
 > Для работы, в корне проекта нужно создать локальный файл .env.local
-> вписать туда: NEXT_PUBLIC_API_URL=https://api-stage.gute.tech/api/v1
+> вписать туда: NEXT_PUBLIC_API_URL=https://api-stage.gute.tech/api
 
 ---
 

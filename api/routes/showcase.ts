@@ -6,7 +6,7 @@ import { ShowcaseResponseData } from 'api/models/showcase';
 
 const getShowcase = () =>
   sendRequest<ShowcaseResponseData>({
-    url: `/showcase/`,
+    url: `/v1/showcase/`,
     method: ApiMethods.GET,
   });
 

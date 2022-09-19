@@ -19,13 +19,13 @@ import { getProductSlugList } from 'utility/helpers/index';
 
 const getProductInfoFromSlug = ({ productSlug }: ProductRequestData) =>
   sendRequest<ProductResponseData>({
-    url: `/catalog/products/${productSlug}/`,
+    url: `/v1/catalog/products/${productSlug}/`,
     method: ApiMethods.GET,
   });
 
 const getProductsInfoFromSlugs = ({ productsOptions }: ProductsRequestData) =>
   sendRequest<ProductResponseData[]>({
-    url: `/catalog/products/`,
+    url: `/v1/catalog/products/`,
     method: ApiMethods.POST,
     config: {
       data: getProductSlugList(productsOptions),
@@ -34,13 +34,13 @@ const getProductsInfoFromSlugs = ({ productsOptions }: ProductsRequestData) =>
 
 const getCartAuthorized = () =>
   sendRequestАuthentication<CartResponseData[]>({
-    url: `/payment/cart/`,
+    url: `/v1/payment/cart/`,
     method: ApiMethods.GET,
   });
 
 const getCartUnAuthorized = () =>
   sendRequestNotAuthorized<CartResponseData[]>({
-    url: `/payment/cart/`,
+    url: `/v1/payment/cart/`,
     method: ApiMethods.GET,
   });
 
@@ -49,7 +49,7 @@ const postCartItemAuthorized = ({
   quantity,
 }: CartAddItemRequestData) =>
   sendRequestАuthentication<CartAddItemResponseData>({
-    url: `/payment/cart/add-item/`,
+    url: `/v1/payment/cart/add-item/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -64,7 +64,7 @@ const postCartItemUnAuthorized = ({
   quantity,
 }: CartAddItemRequestData) =>
   sendRequestNotAuthorized<CartAddItemResponseData>({
-    url: `/payment/cart/add-item/`,
+    url: `/v1/payment/cart/add-item/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -76,20 +76,20 @@ const postCartItemUnAuthorized = ({
 
 const postCartClearAuthorized = () =>
   sendRequestАuthentication({
-    url: `/payment/cart/clear/`,
+    url: `/v1/payment/cart/clear/`,
     method: ApiMethods.POST,
   });
 
 const postCartClearUnAuthorized = () =>
   sendRequestNotAuthorized({
-    url: `/payment/cart/clear/`,
+    url: `/v1/payment/cart/clear/`,
     method: ApiMethods.POST,
     config: {},
   });
 
 const putCartItemUpdateAuthorized = (cartItems: CartUpdateItemRequestData[]) =>
   sendRequestАuthentication<CartUpdateItemResponeData>({
-    url: `/payment/cart/update-item/`,
+    url: `/v1/payment/cart/update-item/`,
     method: ApiMethods.PUT,
     config: {
       data: {
@@ -102,7 +102,7 @@ const putCartItemUpdateUnAuthorized = (
   cartItems: CartUpdateItemRequestData[],
 ) =>
   sendRequestNotAuthorized<CartUpdateItemResponeData>({
-    url: `/payment/cart/update-item/`,
+    url: `/v1/payment/cart/update-item/`,
     method: ApiMethods.PUT,
     config: {
       data: {

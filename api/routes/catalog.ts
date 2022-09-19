@@ -23,7 +23,7 @@ import { makeStringify } from 'utility/helpers';
 
 const getCategoriesList = () =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/categories/`,
+    url: `/v1/catalog/categories/`,
     method: ApiMethods.GET,
   });
 
@@ -31,7 +31,7 @@ const getTransportCategoriesRead = ({
   transportId,
 }: TransportSearchRequestData) =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/categories/tree/${transportId}/`,
+    url: `/v1/catalog/categories/tree/${transportId}/`,
     method: ApiMethods.GET,
   });
 
@@ -40,7 +40,7 @@ const getTransportFilterList = ({
   transportId,
 }: TransportProductListRead) =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/${categorySlug}/filters/${transportId}/`,
+    url: `/v1/catalog/${categorySlug}/filters/${transportId}/`,
     method: ApiMethods.GET,
   });
 
@@ -53,7 +53,7 @@ const getTransportProductListRead = ({
   filter = {},
 }: TransportProductListRead) =>
   sendRequest<CategoriesProductListResponseData>({
-    url: `/catalog/${categorySlug}/products/${transportId}/?page=${page}&size=12&sort=${sort}&order=${order}`,
+    url: `/v1/catalog/${categorySlug}/products/${transportId}/?page=${page}&size=12&sort=${sort}&order=${order}`,
     method: ApiMethods.POST,
     config: {
       data: { page, sort, order, filter },
@@ -62,7 +62,7 @@ const getTransportProductListRead = ({
 
 const getCategoriesTreeList = () =>
   sendRequest<TreeCategoryResponseData[]>({
-    url: `/catalog/categories/tree/`,
+    url: `/v1/catalog/categories/tree/`,
     method: ApiMethods.GET,
   });
 
@@ -70,7 +70,7 @@ const getCategoriesFiltersList = ({
   categorySlug,
 }: CategoriesFiltersListRequestData) =>
   sendRequest<FiltersCategoryResponseData[]>({
-    url: `/catalog/${categorySlug}/filters/`,
+    url: `/v1/catalog/${categorySlug}/filters/`,
     method: ApiMethods.GET,
   });
 
@@ -82,7 +82,7 @@ const getCategoriesProductsList = ({
   filter,
 }: CategoriesProductsListRequestData) =>
   sendRequest<CategoriesProductListResponseData>({
-    url: `/catalog/${categorySlug}/products/?page=${page}&size=12&sort=${sort}&order=${order}`,
+    url: `/v1/catalog/${categorySlug}/products/?page=${page}&size=12&sort=${sort}&order=${order}`,
     method: ApiMethods.POST,
     config: {
       data: { page, sort, order, filter },
@@ -93,7 +93,7 @@ const getCategoriesProductsRead = ({
   productSlug,
 }: CategoriesProductsReadRequestData) =>
   sendRequest<CategoriesProductReadResponseData>({
-    url: `/catalog/products/${productSlug}/`,
+    url: `/v1/catalog/products/${productSlug}/`,
     method: ApiMethods.GET,
   });
 
@@ -101,7 +101,7 @@ const getCategoriesSubcategoriesList = ({
   categorySlug,
 }: CategoriesSubcategoriesListRequestData) =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/${categorySlug}/categories/`,
+    url: `/v1/catalog/${categorySlug}/categories/`,
     method: ApiMethods.GET,
   });
 
@@ -110,13 +110,13 @@ const getCategoriesSubcategoriesRead = ({
   transportId,
 }: CategoriesSubcategoriesReadRequestData) =>
   sendRequest<CategoryResponseData[]>({
-    url: `/catalog/${categorySlug}/categories/${transportId}/`,
+    url: `/v1/catalog/${categorySlug}/categories/${transportId}/`,
     method: ApiMethods.GET,
   });
 
 const getCatalogSearchRead = ({ searchValue }: CatalogSearchReadRequestData) =>
   sendRequest<CatalogSearchReadResponseData>({
-    url: '/catalog/search/',
+    url: '/v1/catalog/search/',
     method: ApiMethods.GET,
     config: {
       params: {
@@ -135,7 +135,7 @@ const getRecommendedProductsList = ({
   const transport = transportId ? transportId : undefined;
 
   return sendRequest<RecommendedProductsListResponseData>({
-    url: `/catalog/recommendations/`,
+    url: `/v1/catalog/recommendations/`,
     method: ApiMethods.POST,
     config: {
       data: {
