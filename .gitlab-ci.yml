@@ -5,9 +5,9 @@ services:
 
 variables:
   STAGE_IMAGE_FRONTEND_TAG: registry.gitlab.com/g4687/gute.tech-frontend/frontend:stage
-  STAGE_API_URL: https://api-stage.gute.tech/api/v1
+  STAGE_API_URL: https://api-stage.gute.tech/api
   PROD_IMAGE_FRONTEND_TAG: registry.gitlab.com/g4687/gute.tech-frontend/frontend:prod
-  PROD_API_URL: https://api.gute.tech/api/v1
+  PROD_API_URL: https://api.gute.tech/api
 
 stages:
   - build
