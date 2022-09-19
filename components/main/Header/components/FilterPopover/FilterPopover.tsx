@@ -31,7 +31,7 @@ import { StepInputs } from '../../types';
 import styles from './styles.module.scss';
 
 const FilterPopover: FC<FilterPopoverProps> = ({
-  resetFilterForm,
+  resetFilterFormFromBrand,
   isOpenPopover,
   getValues,
   handleClosePopover,
@@ -57,34 +57,29 @@ const FilterPopover: FC<FilterPopoverProps> = ({
 
   const { isLoading, data } = useSelector(selectorsByStepId[inputStepId]);
 
-  const brandSlugValue = getValues('brand.slug');
-  const modelSlugValue = getValues('model.slug');
-  const yearSlugValue = getValues('year.slug');
+  const brandSlug = getValues('brand.slug');
+  const modelSlug = getValues('model.slug');
+  const yearSlug = getValues('year.slug');
+  const transportTypeSlug = transportType;
 
   const fetchDataByStepId = {
-    [StepInputs.BRAND]: () => dispatch(fetchBrands()),
+    [StepInputs.YEAR]: () => dispatch(fetchYears()),
+    [StepInputs.BRAND]: () => dispatch(fetchBrands({ yearSlug })),
     [StepInputs.MODEL]: () =>
       dispatch(
         fetchModels({
-          brandSlug: brandSlugValue,
-          transportType,
-        }),
-      ),
-    [StepInputs.YEAR]: () =>
-      dispatch(
-        fetchYears({
-          brandSlug: brandSlugValue,
-          modelSlug: modelSlugValue,
-          transportType,
+          brandSlug,
+          yearSlug,
+          transportTypeSlug,
         }),
       ),
     [StepInputs.ENGINE]: () =>
       dispatch(
         fetchEngines({
-          brandSlug: brandSlugValue,
-          modelSlug: modelSlugValue,
-          yearSlug: yearSlugValue,
-          transportType,
+          brandSlug,
+          modelSlug,
+          yearSlug,
+          transportTypeSlug,
         }),
       ),
   };
@@ -112,7 +107,7 @@ const FilterPopover: FC<FilterPopoverProps> = ({
 
   const handleTransportTypeButton = (slug: string) => () => {
     setTransportType(slug);
-    resetFilterForm();
+    resetFilterFormFromBrand();
     dispatch(resetTransportInfo());
   };
 

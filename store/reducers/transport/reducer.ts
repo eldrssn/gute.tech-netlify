@@ -163,14 +163,14 @@ const handlers = {
 
   [resetOptionsDataInBrandStep.type]: (state: TransportStore) => {
     state.models.data = [];
-    state.years.data = [];
     state.engines.data = [];
   },
   [resetOptionsDataInModelStep.type]: (state: TransportStore) => {
-    state.years.data = [];
     state.engines.data = [];
   },
   [resetOptionsDataInYearStep.type]: (state: TransportStore) => {
+    state.brands.data = [];
+    state.models.data = [];
     state.engines.data = [];
   },
 };

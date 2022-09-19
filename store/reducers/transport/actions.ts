@@ -9,8 +9,8 @@ import {
 } from 'api/routes/transport';
 
 import {
-  BrandSlug,
-  YearsSlugs,
+  BrandsSlug,
+  ModelsSlug,
   EnginesSlugs,
   ListOptionsItemData,
   TransportInfoRequestData,
@@ -19,17 +19,17 @@ import {
 import { createAsyncAction } from 'utility/helpers/store';
 import { TransportIdData } from './types';
 
-const fetchBrands = createAsyncAction<ListOptionsItemData[]>({
+const fetchBrands = createAsyncAction<ListOptionsItemData[], BrandsSlug>({
   typeAction: 'transport/fetchBrands',
   request: getBrands,
 });
 
-const fetchModels = createAsyncAction<ListOptionsItemData[], BrandSlug>({
+const fetchModels = createAsyncAction<ListOptionsItemData[], ModelsSlug>({
   typeAction: 'transport/fetchModel',
   request: getModel,
 });
 
-const fetchYears = createAsyncAction<string[], YearsSlugs>({
+const fetchYears = createAsyncAction<string[]>({
   typeAction: 'transport/fetchYears',
   request: getYears,
 });

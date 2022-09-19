@@ -10,7 +10,7 @@ import {
 } from '../../types';
 
 type FilterStepProps = {
-  resetFilterForm: () => void;
+  resetFilterFormFromBrand: () => void;
   openPopoverId: StepInputs;
   setOpenPopoverId: React.Dispatch<React.SetStateAction<number>>;
   name: FilterInputName;

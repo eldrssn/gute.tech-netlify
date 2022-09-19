@@ -46,9 +46,9 @@ enum FilterInputNames {
 type FilterInputName = keyof typeof FilterInputNames;
 
 enum StepInputs {
-  BRAND = 0,
-  MODEL = 1,
-  YEAR = 2,
+  YEAR = 0,
+  BRAND = 1,
+  MODEL = 2,
   ENGINE = 3,
   INACTIVE = -1,
 }

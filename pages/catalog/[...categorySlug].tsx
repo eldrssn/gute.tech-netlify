@@ -20,6 +20,7 @@ import {
   getCategory,
 } from 'utility/helpers';
 import { ProductPage } from 'components/base/product';
+import { Loader } from 'components/ui/Loader';
 
 const Catalog: FC = () => {
   const router = useRouter();
@@ -35,7 +36,7 @@ const Catalog: FC = () => {
     ? selectTransportReadCategories
     : selectCategoriesTreeList;
   const categoriesTreeList = useSelector(categoryTreeListSelector);
-  const { data: categoriesTreeListData } = categoriesTreeList;
+  const { data: categoriesTreeListData, isLoading } = categoriesTreeList;
 
   const isProductInCategorySlug = getIsProductInCategorySlug(lastCategorySlug);
 
@@ -45,6 +46,10 @@ const Catalog: FC = () => {
       ? categorySlugAnArray.slice(0, -1)
       : categorySlugAnArray,
   });
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   if (!category) {
     return <PageNotFound />;
