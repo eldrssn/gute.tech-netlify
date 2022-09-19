@@ -1,21 +1,20 @@
 import { StoreState } from 'store/types';
 
-type BrandSlug = {
-  brandSlug: string;
-  transportType?: string;
+type BrandsSlug = {
+  yearSlug: string;
 };
 
-type YearsSlugs = {
+type ModelsSlug = {
+  yearSlug: string;
   brandSlug: string;
-  modelSlug: string;
-  transportType?: string;
+  transportTypeSlug: string;
 };
 
 type EnginesSlugs = {
   brandSlug: string;
   modelSlug: string;
   yearSlug: string;
-  transportType?: string;
+  transportTypeSlug: string;
 };
 
 type ListOptionsItemData = {
@@ -49,8 +48,8 @@ type TransportInfoRequestData = {
 };
 
 export type {
-  BrandSlug,
-  YearsSlugs,
+  BrandsSlug,
+  ModelsSlug,
   EnginesSlugs,
   TransportInfoResponseData,
   TransportInfoRequestData,

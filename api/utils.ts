@@ -80,7 +80,7 @@ const sendRequestNotAuthorized = <ResponseType>({
     .then<ResponseType>((response) => response.data);
 };
 
-const api = axios.create({
+const apiV1 = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'content-type': 'application/json',
@@ -100,7 +100,36 @@ const sendRequest = <ResponseType>({
   method: ApiMethods;
   config?: AxiosRequestConfig;
 }) => {
-  return api
+  return apiV1
+    .request({
+      method,
+      url,
+      ...config,
+    })
+    .then<ResponseType>((response) => response.data);
+};
+
+const apiV2 = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_V2_URL,
+  headers: {
+    'content-type': 'application/json',
+    'X-Client-Host':
+      process.env.NODE_ENV === 'production' && typeof window !== 'undefined'
+        ? window.location.hostname
+        : DEV_HOST,
+  },
+});
+
+const sendRequestV2 = <ResponseType>({
+  url,
+  method,
+  config,
+}: {
+  url: string;
+  method: ApiMethods;
+  config?: AxiosRequestConfig;
+}) => {
+  return apiV2
     .request({
       method,
       url,
@@ -110,6 +139,7 @@ const sendRequest = <ResponseType>({
 };
 
 export {
+  sendRequestV2,
   sendRequest,
   sendRequestАuthentication,
   apiАuthentication,

@@ -14,6 +14,11 @@ const menuItemNames = {
 
 const filterSteps: filterStepsData[] = [
   {
+    name: 'year',
+    inputStepId: StepInputs.YEAR,
+    placeholder: 'Год выпуска',
+  },
+  {
     name: 'brand',
     inputStepId: StepInputs.BRAND,
     placeholder: 'Марка',
@@ -24,11 +29,6 @@ const filterSteps: filterStepsData[] = [
     placeholder: 'Модель',
   },
   {
-    name: 'year',
-    inputStepId: StepInputs.YEAR,
-    placeholder: 'Год выпуска',
-  },
-  {
     name: 'engine',
     inputStepId: StepInputs.ENGINE,
     placeholder: 'Двигатель',
@@ -36,9 +36,9 @@ const filterSteps: filterStepsData[] = [
 ];
 
 const namesDefaultValueByStep: INamesDefaultValueByStep = {
-  [StepInputs.BRAND]: ['engine', 'model', 'year'],
-  [StepInputs.MODEL]: ['engine', 'year'],
-  [StepInputs.YEAR]: ['engine'],
+  [StepInputs.YEAR]: ['engine', 'model', 'brand'],
+  [StepInputs.BRAND]: ['engine', 'model'],
+  [StepInputs.MODEL]: ['engine'],
   [StepInputs.ENGINE]: [],
 };
 
@@ -50,16 +50,16 @@ const nameSearchValueByStep: INamesSearchValueByStep = {
 };
 
 const widthListByStep = {
-  [StepInputs.BRAND]: '100%',
-  [StepInputs.MODEL]: '75%',
-  [StepInputs.YEAR]: '50%',
+  [StepInputs.YEAR]: '100%',
+  [StepInputs.BRAND]: '75%',
+  [StepInputs.MODEL]: '50%',
   [StepInputs.ENGINE]: '25%',
 };
 
 const widthButtonByStep = {
-  [StepInputs.BRAND]: '25%',
-  [StepInputs.MODEL]: '33.333333%',
-  [StepInputs.YEAR]: '50%',
+  [StepInputs.YEAR]: '25%',
+  [StepInputs.BRAND]: '33.333333%',
+  [StepInputs.MODEL]: '50%',
   [StepInputs.ENGINE]: '100%',
 };
 

@@ -53,8 +53,6 @@ const ProductPage: FC = () => {
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
   const isAuthorized = useSelector(selectIsAuthorized);
 
-  //TODO: добавить проверку на юрл после обновления метода на беке
-
   useEffect(() => {
     dispatch(
       fetchCategoriesProductsRead({

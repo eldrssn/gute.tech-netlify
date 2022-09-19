@@ -17,10 +17,10 @@ import {
 import { useWindowSize } from 'hooks/useWindowSize';
 import { selectEngines } from 'store/reducers/transport/selectors';
 
-import { setDefaultValueByName } from './helpers';
 import { FilterStepProps } from './types';
 import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
+import { setDefaultValueByName } from '../../helpers';
 import { namesDefaultValueByStep } from '../../constants';
 import { HandleClickProps, StepInputs } from '../../types';
 
@@ -61,8 +61,7 @@ const FilterStep: FC<FilterStepProps> = ({
   const { searchValue, title, slug } = input.field.value;
   const inputNumber = inputStepId + 1;
   const isValue = Boolean(title !== '');
-  const isDisable =
-    !isValue && currentStep < inputStepId && inputStepId !== StepInputs.BRAND;
+  const isDisable = !isValue && currentStep < inputStepId;
   const valueTextField =
     typeof searchValue === 'string' && isOpenPopover ? searchValue : title;
 

@@ -3,13 +3,14 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mui/system';
 import classnames from 'classnames/bind';
+import { Tooltip, Typography } from '@mui/material';
 
-import { HeaderContext } from '../HeaderContext';
 import { clearTransportId } from 'store/reducers/transport/actions';
 import { selectTransportInfo } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { useWindowSize } from 'hooks/useWindowSize';
 
+import { HeaderContext } from '../HeaderContext';
 import styles from './styles.module.scss';
 import { HeaderFiltersTextProps } from './types';
 import { StepInputs } from '../../types';
@@ -26,7 +27,7 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
   const dispatch = useDispatch();
   const { isMobile } = useWindowSize();
 
-  const { transportText } = useContext(HeaderContext);
+  const { transportText, isFullHeader } = useContext(HeaderContext);
 
   const { data: TransportInfo } = useSelector(selectTransportInfo);
 
@@ -34,6 +35,7 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
     router.push('/');
     reset();
     dispatch(clearTransportId());
+    setCurrentStep(StepInputs.YEAR);
   };
 
   const editFilter = () => {
@@ -75,25 +77,43 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
         [styles.choosenTransport_container_mobile]: isMobile,
       })}
     >
-      <div className={styles.choosenTransport}>
-        <p className={styles.choosenTransport_label}>
-          Показаны товары для: &nbsp;
-        </p>
-        <p className={styles.choosenTransport_text}>{transportText}</p>
+      <div
+        className={cn(styles.choosenTransport, {
+          [styles.choosenTransportShortHeader]: !isFullHeader,
+        })}
+      >
+        <Typography className={styles.choosenTransport_label} component='h3'>
+          Показаны товары для:
+        </Typography>
+        <Tooltip title={transportText} placement='top'>
+          <Typography
+            className={cn(styles.choosenTransport_text, {
+              [styles.choosenTransportTextShortHeader]: !isFullHeader,
+            })}
+            gutterBottom
+            component='h3'
+          >
+            {transportText}
+          </Typography>
+        </Tooltip>
       </div>
 
       <CustomButton
         onClick={resetFilter}
-        customStyles={styles.stepButtonSubmit}
+        customStyles={cn(styles.stepButtonSubmit, {
+          [styles.stepButtonSubmitShortHeader]: !isFullHeader,
+        })}
       >
         Сбросить фильтр
       </CustomButton>
 
       <CustomButton
         onClick={editFilter}
-        customStyles={cn(styles.stepButtonSubmit, styles.editButton)}
+        customStyles={cn(styles.stepButtonSubmit, styles.editButton, {
+          [styles.stepButtonSubmitShortHeader]: !isFullHeader,
+        })}
       >
-        редактировать фильтр
+        Редактировать фильтр
       </CustomButton>
     </Box>
   );

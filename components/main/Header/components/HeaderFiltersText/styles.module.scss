@@ -2,23 +2,44 @@
 @import "~styles/breakpoints.scss";
 
 .choosenTransport_container {
+  height: 100%;
   display: flex;
   align-items: center;
   margin: 5px 0;
 }
 
 .choosenTransport {
+  width: calc(100% - 410px);
   font-size: 16px;
   margin: 0;
-  margin-right: 10px;
+  margin-right: 20px;
   margin-left: 5px;
   color: $blue1;
   display: flex;
+  align-items: center;
+}
+
+.choosenTransportShortHeader {
+  width: fit-content;
 }
 
 .choosenTransport_text {
   font-weight: bold;
-  margin-right: 10px;
+  width: 80%;
+  margin-left: 20px;
+  margin-bottom: 0px;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.choosenTransport_label {
+  vertical-align: middle;
+  min-width: 100px;
 }
 
 .choosenTransport_container_mobile {
@@ -27,18 +48,26 @@
 }
 
 .stepButtonSubmit {
+  height: 52px;
+  width: 200px;
   margin: 0;
   font-weight: 400;
   text-transform: none;
   font-size: 14px;
   background-color: $red1;
   flex-grow: 1;
-  padding: 16.5px 20px;
+  padding: 10px 30px;
   border: 2px solid $red1;
 }
 
 .stepButtonSubmitInactive {
   color: $white !important;
+}
+
+.stepButtonSubmitShortHeader {
+  padding: 0;
+  height: 40px;
+  width: 175px;
 }
 
 .stepButtonSubmit:hover {
@@ -49,10 +78,33 @@
   margin-left: 10px;
 }
 
+@media (max-width: $tablet) {
+  .choosenTransport_container {
+    width: 100%;
+  }
+
+  .choosenTransportTextShortHeader {
+    width: fit-content;
+  }
+
+  .stepButtonSubmit {
+    padding: 0 10px;
+    height: 36px;
+    width: 125px;
+  }
+
+  .choosenTransport {
+    width: calc(100% - 260px);
+  }
+}
+
 @media (max-width: $mobile) {
   .stepButtonSubmit {
+    padding: 0;
     width: 100%;
+    padding: 20px 20px;
     margin: 10px;
+    height: 60px;
   }
 
   .editButton {
@@ -60,6 +112,7 @@
   }
 
   .choosenTransport {
+    width: 100%;
     flex-direction: column;
     margin: 0;
     padding: 0;
@@ -72,7 +125,6 @@
 
   .choosenTransport_label {
     margin: 0;
-    margin-bottom: 10px;
     text-align: center;
   }
 }

@@ -20,8 +20,9 @@ import { HeaderContext } from '../HeaderContext';
 import { FilterSteps } from '../FilterSteps';
 import { HeaderFiltersText } from '../HeaderFiltersText';
 import { getTransportParams } from './helpers';
+import { setDefaultValueByName } from '../../helpers';
+import { namesDefaultValueByStep } from '../../constants';
 import { HeaderFiltersFormProps, TransportType } from './types';
-
 import styles from '../HeaderFilters/headerFilters.module.scss';
 
 const cn = classnames.bind(styles);
@@ -43,7 +44,7 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
       },
     });
   const [openPopoverId, setOpenPopoverId] = useState(StepInputs.INACTIVE);
-  const [currentStep, setCurrentStep] = useState(StepInputs.BRAND);
+  const [currentStep, setCurrentStep] = useState(StepInputs.YEAR);
   const [transportType, setTransportType] = useState<string>('');
   const [currentTransportId, setCurrentTransportId] = useState<TransportType>();
   const [valueForm, setValueForm] = useState<WatchFormData>();
@@ -68,8 +69,9 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
     setTransportType(brand.data[0].slug);
   }, [brand]);
 
-  const resetFilterForm = () => {
-    reset();
+  const resetFilterFormFromBrand = () => {
+    const brands = namesDefaultValueByStep[StepInputs.BRAND];
+    setDefaultValueByName(brands, setValue, valueForm);
     setCurrentStep(StepInputs.BRAND);
   };
 
@@ -101,7 +103,7 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
   ) : (
     <>
       <FilterSteps
-        resetFilterForm={resetFilterForm}
+        resetFilterFormFromBrand={resetFilterFormFromBrand}
         getValues={getValues}
         control={control}
         setValue={setValue}
