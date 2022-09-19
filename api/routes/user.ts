@@ -22,7 +22,7 @@ const putPassword = ({
   currentPassword,
 }: ChangePasswordRequestData) =>
   sendRequestАuthentication<ChangePasswordResponseData>({
-    url: `/user/profile/change-password/`,
+    url: `/v1/user/profile/change-password/`,
     method: ApiMethods.PUT,
     config: {
       data: {
@@ -35,20 +35,20 @@ const putPassword = ({
 
 const getProfile = () =>
   sendRequestАuthentication<ProfileResponseData>({
-    url: `/user/profile/`,
+    url: `/v1/user/profile/`,
     method: ApiMethods.GET,
   });
 
 const patchProfileChanges = (data: EditProfileRequestData) =>
   sendRequestАuthentication<EditProfileResponseData>({
-    url: `/user/profile/`,
+    url: `/v1/user/profile/`,
     method: ApiMethods.PATCH,
     config: { data },
   });
 
 const postVerifyEmail = ({ code, email }: VerifyEmailRequestData) =>
   sendRequestАuthentication<VerifyEmailResponseData>({
-    url: `/user/profile/verify_email/`,
+    url: `/v1/user/profile/verify_email/`,
     method: ApiMethods.POST,
     config: {
       data: {
@@ -78,7 +78,7 @@ const getOrders = ({
 
 const getOrder = ({ orderId }: OrderRequestData) =>
   sendRequestАuthentication<OrderResponseData>({
-    url: `/user/profile/orders/${orderId}/`,
+    url: `/v1/user/profile/orders/${orderId}/`,
     method: ApiMethods.GET,
   });
 

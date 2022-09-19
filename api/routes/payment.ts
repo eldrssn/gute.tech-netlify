@@ -15,13 +15,13 @@ import { ApiMethods } from 'constants/types';
 
 const getPaymentMethods = () =>
   sendRequest<PaymentMethodResponseData[]>({
-    url: `/payment/methods/`,
+    url: `/v1/payment/methods/`,
     method: ApiMethods.GET,
   });
 
 const postOrderingUnAuthorized = (data: OrderingRequestData) =>
   sendRequestNotAuthorized<OrderingResponseData>({
-    url: `/payment/orders/`,
+    url: `/v1/payment/orders/`,
     method: ApiMethods.POST,
     config: {
       data: data,
@@ -30,7 +30,7 @@ const postOrderingUnAuthorized = (data: OrderingRequestData) =>
 
 const postOrderingAuthorized = (data: OrderingRequestData) =>
   sendRequestАuthentication<OrderingResponseData>({
-    url: `/payment/orders/`,
+    url: `/v1/payment/orders/`,
     method: ApiMethods.POST,
     config: {
       data: data,
@@ -39,7 +39,7 @@ const postOrderingAuthorized = (data: OrderingRequestData) =>
 
 const getStatus = ({ orderId }: StatusRequestData) =>
   sendRequest<StatusResponseData>({
-    url: `payment/status/`,
+    url: `/v1/payment/status/`,
     method: ApiMethods.GET,
     config: {
       params: {

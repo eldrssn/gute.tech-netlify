@@ -6,13 +6,13 @@ import { RegionData, BranchesData } from '../models/regions';
 
 const getRegions = () =>
   sendRequest<RegionData[]>({
-    url: `/branches/regions/`,
+    url: `/v1/branches/regions/`,
     method: ApiMethods.GET,
   });
 
 const getBranches = () =>
   sendRequest<BranchesData[]>({
-    url: `/branches/`,
+    url: `/v1/branches/`,
     method: ApiMethods.GET,
   });
 

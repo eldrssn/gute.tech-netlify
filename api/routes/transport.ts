@@ -1,4 +1,4 @@
-import { sendRequest, sendRequestV2 } from '../utils';
+import { sendRequest } from '../utils';
 
 import { ApiMethods } from 'constants/types';
 
@@ -44,20 +44,20 @@ import {
 //   });
 
 const getBrands = ({ yearSlug }: BrandsSlug) =>
-  sendRequestV2<ListOptionsItemData[]>({
-    url: `/transport/${yearSlug}/brands/`,
+  sendRequest<ListOptionsItemData[]>({
+    url: `/v2/transport/${yearSlug}/brands/`,
     method: ApiMethods.GET,
   });
 
 const getModel = ({ transportTypeSlug, brandSlug, yearSlug }: ModelsSlug) =>
-  sendRequestV2<ListOptionsItemData[]>({
-    url: `/transport/${yearSlug}/${transportTypeSlug}/${brandSlug}/models/`,
+  sendRequest<ListOptionsItemData[]>({
+    url: `/v2/transport/${yearSlug}/${transportTypeSlug}/${brandSlug}/models/`,
     method: ApiMethods.GET,
   });
 
 const getYears = () =>
-  sendRequestV2<ListOptionsYearData[]>({
-    url: `/transport/years/`,
+  sendRequest<ListOptionsYearData[]>({
+    url: `/v2/transport/years/`,
     method: ApiMethods.GET,
   });
 
@@ -67,14 +67,14 @@ const getEngines = ({
   modelSlug,
   yearSlug,
 }: EnginesSlugs) =>
-  sendRequestV2<ListOptionsItemData[]>({
-    url: `/transport/${yearSlug}/${transportTypeSlug}/${brandSlug}/${modelSlug}/engines/`,
+  sendRequest<ListOptionsItemData[]>({
+    url: `/v2/transport/${yearSlug}/${transportTypeSlug}/${brandSlug}/${modelSlug}/engines/`,
     method: ApiMethods.GET,
   });
 
 const getTransportInfo = ({ transportId }: TransportInfoRequestData) =>
   sendRequest<TransportInfoResponseData>({
-    url: `/transport/${transportId}/`,
+    url: `/v1/transport/${transportId}/`,
     method: ApiMethods.GET,
   });
 
