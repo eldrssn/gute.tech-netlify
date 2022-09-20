@@ -10,20 +10,6 @@ import { RegionData } from 'api/models/regions';
 import { MAX_DATE, MIN_DATE, MAX_AGE, MIN_AGE } from './constants';
 import { TDirtyFields } from './types';
 
-const correctRegister = (
-  event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
-) => {
-  const words = event.target.value.split(' ');
-
-  const correctedRegister = words.map((word) => {
-    const capital = word.slice(0, 1).toUpperCase();
-    const other = word.slice(1).toLowerCase();
-    return `${capital}${other}`;
-  });
-
-  return correctedRegister.join(' ');
-};
-
 const formatStringifiedDate = (date: string) =>
   date.split('/').reverse().join('-');
 
@@ -160,7 +146,6 @@ const getCityOption = (
 };
 
 export {
-  correctRegister,
   validateMinAge,
   validateMaxAge,
   formatDate,

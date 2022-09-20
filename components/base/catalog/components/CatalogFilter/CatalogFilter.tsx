@@ -9,19 +9,20 @@ import {
   selectTransportFilterList,
 } from 'store/reducers/catalog/selectors';
 import { Loader } from 'components/ui/Loader';
+import { CustomButton } from 'components/ui/CustomButton';
 import { getLinkResetFilters } from 'utility/helpers/linkmakers';
 
 import { CatalogFilterButton } from '../CatalogFilterButton';
 
 import { componentByType } from './constants';
 import { CatalogFilterProps } from './types';
+import { setEmptyFilters } from '../../helpers';
 
 import styles from './catalogFilter.module.scss';
-import { CustomButton } from 'components/ui/CustomButton';
 
 const CatalogFilter: FC<CatalogFilterProps> = ({
-  filterRequest,
-  setFilterRequest,
+  filtersRequest,
+  setFiltersRequest,
   anchorApplyButton,
   setAnchorApplyButton,
   handleDrawerToggle,
@@ -49,6 +50,10 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
 
   const handleResetClick = () => {
     handleRemoveAnchorClick();
+
+    const emptyFilters = setEmptyFilters(filtersRequest);
+    setFiltersRequest(emptyFilters);
+
     router.push(
       getLinkResetFilters({
         asPath,
@@ -68,8 +73,8 @@ const CatalogFilter: FC<CatalogFilterProps> = ({
           <Component
             key={filter.slug}
             filter={filter}
-            filterRequest={filterRequest}
-            setFilterRequest={setFilterRequest}
+            filtersRequest={filtersRequest}
+            setFiltersRequest={setFiltersRequest}
             handleAnchorClick={handleAnchorClick}
           />
         );

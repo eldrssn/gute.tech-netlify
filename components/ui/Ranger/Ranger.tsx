@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 
 import Box from '@mui/material/Box';
@@ -14,9 +14,8 @@ import { checkValueExists, checkValuesCorrect } from './helpers';
 import styles from './ranger.module.scss';
 
 const Ranger: React.FC<Filter> = ({
-  filterRequest,
   filter,
-  setFilterRequest,
+  setFiltersRequest,
   handleAnchorClick,
 }) => {
   const routerQuery = useRouterQuery();
@@ -27,26 +26,29 @@ const Ranger: React.FC<Filter> = ({
   const minValueQuery = `min${slug}`;
   const maxValueQuery = `max${slug}`;
 
+  const minValue = getQueryParams(routerQuery, minValueQuery);
+  const maxValue = getQueryParams(routerQuery, maxValueQuery);
+
+  const minRefInput = useRef<HTMLInputElement>();
+  const maxRefInput = useRef<HTMLInputElement>();
+
   const setMinValue = debounce((event: ChangeEvent) => {
     const { value } = event.target;
 
-    setFilterRequest((filterRequest) => ({
-      ...filterRequest,
-      [slug]: [value, Number(maxValue || max || '99999999')],
+    setFiltersRequest((filtersRequest) => ({
+      ...filtersRequest,
+      [slug]: [Number(value), Number(maxValue || max || '99999999')],
     }));
   }, DELAY);
 
   const setMaxValue = debounce((event: ChangeEvent) => {
     const { value } = event.target;
 
-    setFilterRequest((filterRequest) => ({
-      ...filterRequest,
-      [slug]: [Number(minValue || min || '0'), value],
+    setFiltersRequest((filtersRequest) => ({
+      ...filtersRequest,
+      [slug]: [Number(minValue || min || '0'), Number(value)],
     }));
   }, DELAY);
-
-  const minValue = getQueryParams(routerQuery, minValueQuery);
-  const maxValue = getQueryParams(routerQuery, maxValueQuery);
 
   const validateValues = useCallback(() => {
     const isValid = checkValuesCorrect({
@@ -60,17 +62,26 @@ const Ranger: React.FC<Filter> = ({
   useEffect(() => {
     validateValues();
 
+    if (!minRefInput.current || !maxRefInput.current) {
+      return;
+    }
+
     if (!isCorrectValue) {
-      setFilterRequest((filterRequest) => ({
-        ...filterRequest,
+      setFiltersRequest((filtersRequest) => ({
+        ...filtersRequest,
         [slug]: [],
       }));
       return;
     }
 
+    if (!minValue || !maxValue) {
+      minRefInput.current.value = String(min);
+      maxRefInput.current.value = String(max);
+    }
+
     if (minValue || maxValue) {
-      setFilterRequest((filterRequest) => ({
-        ...filterRequest,
+      setFiltersRequest((filtersRequest) => ({
+        ...filtersRequest,
         [slug]: [
           Number(minValue || min || '0'),
           Number(maxValue || max || '99999999'),
@@ -81,7 +92,7 @@ const Ranger: React.FC<Filter> = ({
     slug,
     minValue,
     maxValue,
-    setFilterRequest,
+    setFiltersRequest,
     min,
     max,
     isCorrectValue,
@@ -100,6 +111,7 @@ const Ranger: React.FC<Filter> = ({
       >
         <Box className={styles.price_ranges}>
           <TextField
+            inputRef={minRefInput}
             onChange={setMinValue}
             type='number'
             variant='outlined'
@@ -120,6 +132,7 @@ const Ranger: React.FC<Filter> = ({
           <span className={styles.range_separator} />
 
           <TextField
+            inputRef={maxRefInput}
             onChange={setMaxValue}
             type='number'
             variant='outlined'

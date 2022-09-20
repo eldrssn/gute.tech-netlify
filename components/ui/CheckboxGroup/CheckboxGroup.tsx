@@ -15,17 +15,15 @@ import { ExpandedFilters } from './compoments/ExpandedFilters';
 import styles from './checkboxGroup.module.scss';
 
 const CheckboxGroup: React.FC<Filter> = ({
-  filterRequest,
+  filtersRequest,
   filter,
-  setFilterRequest,
+  setFiltersRequest,
   handleAnchorClick,
 }) => {
   const [isHiddenFilters, setHiddenFilters] = useState(true);
   const { getQueryOption } = useRouterQuery();
 
   const { title, slug, values } = filter;
-
-  const queryOption = getQueryOption(slug);
 
   const isFilterListLarge = checkFilterListLarge(values);
 
@@ -40,22 +38,25 @@ const CheckboxGroup: React.FC<Filter> = ({
     return values;
   }, [values, isFilterListLarge, isHiddenFilters]);
 
-  const filterGroup = filterRequest?.[slug];
+  const filterGroup = filtersRequest?.[slug];
 
   useEffect(() => {
+    const queryOption = getQueryOption(slug);
+
     if (queryOption) {
       const options = Array.isArray(queryOption) ? queryOption : [queryOption];
-      setFilterRequest((filterRequest) => ({
-        ...filterRequest,
+      setFiltersRequest((filtersRequest) => ({
+        ...filtersRequest,
         [slug]: options,
       }));
       return;
     }
-    setFilterRequest((filterRequest) => ({
-      ...filterRequest,
+    setFiltersRequest((filtersRequest) => ({
+      ...filtersRequest,
       [slug]: [],
     }));
-  }, [setFilterRequest, queryOption, slug]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setOnChange = useCallback(
     (checked: boolean, { value }: CheckboxValue) => {
@@ -64,19 +65,19 @@ const CheckboxGroup: React.FC<Filter> = ({
       }
 
       if (!checked) {
-        setFilterRequest((filterRequest) => ({
-          ...filterRequest,
+        setFiltersRequest((filtersRequest) => ({
+          ...filtersRequest,
           [slug]: filterGroup.filter((filter) => filter !== value),
         }));
         return;
       }
 
-      setFilterRequest((filterRequest) => ({
-        ...filterRequest,
+      setFiltersRequest((filtersRequest) => ({
+        ...filtersRequest,
         [slug]: [...filterGroup, value],
       }));
     },
-    [slug, setFilterRequest, filterGroup],
+    [slug, setFiltersRequest, filterGroup],
   );
 
   const getIsChecked = useCallback(

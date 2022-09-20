@@ -54,8 +54,9 @@ const Datepicker: FC<DatepickerProps> = ({
   const handleTransformDate = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    const { value } = event.target;
+
     if (!errors[ProfileFields.DATE_OF_BIRTHDAY]) {
-      const { value } = event.target;
       const inputDate = formatDate(value);
       setDateOfBirth(inputDate);
     }
