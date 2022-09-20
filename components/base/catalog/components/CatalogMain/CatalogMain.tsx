@@ -9,25 +9,27 @@ import {
   fetchTransportProductList,
 } from 'store/reducers/catalog/actions';
 import {
+  selectCategoriesFilterList,
   selectCategoriesProductList,
   selectSearchProductList,
+  selectTransportFilterList,
 } from 'store/reducers/catalog/selectors';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { makeAnArray, scrollToTop } from 'utility/helpers';
+import { makeAnArray } from 'utility/helpers';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
 import { PaginationNav } from 'components/ui/PaginationNav';
 import { SubcategoriesList } from 'components/main/SubcategoriesList';
-import { Sorting, FilterRequest } from 'types';
+import { Sorting, filtersRequest } from 'types';
 
 import { CatalogFilter } from '../CatalogFilter';
 import { CatalogFilterDrawer } from '../CatalogFilterDrawer';
 import { CatalogGrid } from '../CatalogGrid';
 import { CatalogSort } from '../CatalogSort';
 import { PAGE_QUERY } from '../../constants';
-import { isNotEnoughtItems } from '../../helpers';
+import { isNotEnoughtItems, makeFiltersQueryObject } from '../../helpers';
 import styles from './catalogMain.module.scss';
 
 const cn = classnames.bind(styles);
@@ -36,12 +38,12 @@ const CatalogMain: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isMobile } = useWindowSize();
-  const { getQueryOption } = useRouterQuery();
+  const { getQueryOption, setQueryOption } = useRouterQuery();
 
   const [page, setPage] = useState(1);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [sorting, setSorting] = useState<Sorting | null>(null);
-  const [filterRequest, setFilterRequest] = useState<FilterRequest | null>(
+  const [filtersRequest, setFiltersRequest] = useState<filtersRequest | null>(
     null,
   );
   const [anchorApplyButton, setAnchorApplyButton] =
@@ -53,11 +55,17 @@ const CatalogMain: FC = () => {
 
   const transportId = useSelector(selectTransportId);
 
-  const currentSelector = transportId
+  const productListSelector = transportId
     ? selectSearchProductList
     : selectCategoriesProductList;
 
-  const { data, isLoading } = useSelector(currentSelector);
+  const filtersSelector = transportId
+    ? selectTransportFilterList
+    : selectCategoriesFilterList;
+
+  const { data: filters } = useSelector(filtersSelector);
+  const { data, isLoading } = useSelector(productListSelector);
+
   const { pages, results, total } = data || {};
   const pageCount = Number(pages);
 
@@ -79,7 +87,7 @@ const CatalogMain: FC = () => {
   }, [router.isReady, getQueryOption, total]);
 
   const fetchTransportList = useCallback(() => {
-    if (Array.isArray(transportId) || !transportId || !filterRequest) {
+    if (Array.isArray(transportId) || !transportId || !filtersRequest) {
       return;
     }
 
@@ -88,14 +96,28 @@ const CatalogMain: FC = () => {
         transportId,
         page,
         categorySlug: lastCategorySlug,
-        filter: filterRequest,
+        filter: filtersRequest,
         ...sorting,
       }),
     );
-  }, [transportId, filterRequest, dispatch, page, sorting, lastCategorySlug]);
+  }, [transportId, filtersRequest, dispatch, page, sorting, lastCategorySlug]);
+
+  const getFiltersQueryObject = useCallback(
+    () =>
+      filtersRequest ? makeFiltersQueryObject({ filtersRequest, filters }) : {},
+    [filtersRequest, filters],
+  );
 
   useEffect(() => {
-    if (!lastCategorySlug || !sorting || !router.isReady || !filterRequest) {
+    if (!anchorApplyButton) {
+      const queryParams = getFiltersQueryObject();
+      setQueryOption({ ...queryParams, page: 1 }, true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anchorApplyButton]);
+
+  useEffect(() => {
+    if (!lastCategorySlug || !sorting || !router.isReady || !filtersRequest) {
       return;
     }
 
@@ -106,11 +128,10 @@ const CatalogMain: FC = () => {
             fetchCategoriesProductsList({
               page,
               categorySlug: lastCategorySlug,
-              filter: filterRequest,
+              filter: filtersRequest,
               ...sorting,
             }),
           );
-      scrollToTop();
     }
   }, [
     anchorApplyButton,
@@ -120,7 +141,7 @@ const CatalogMain: FC = () => {
     fetchTransportList,
     page,
     sorting,
-    filterRequest,
+    filtersRequest,
     transportId,
   ]);
 
@@ -132,13 +153,13 @@ const CatalogMain: FC = () => {
   return (
     <Box sx={{ position: 'relative' }}>
       <Box className={styles.catalogMainBox}>
-        {!isMobile && !!data && (
+        {!isMobile && (
           <Box className={styles.sideMenu}>
             <SubcategoriesList isCatalog />
             <Box className={styles.catalogFilter_desktop}>
               <CatalogFilter
-                filterRequest={filterRequest}
-                setFilterRequest={setFilterRequest}
+                filtersRequest={filtersRequest}
+                setFiltersRequest={setFiltersRequest}
                 anchorApplyButton={anchorApplyButton}
                 setAnchorApplyButton={setAnchorApplyButton}
               />
@@ -155,7 +176,7 @@ const CatalogMain: FC = () => {
             </CustomButton>
           )}
 
-          {!isMobile && !!data && (
+          {!isMobile && (
             <Box
               component='section'
               className={cn(styles.cardHeader, styles.cardHeaderContainer)}
@@ -175,7 +196,7 @@ const CatalogMain: FC = () => {
         </Box>
       </Box>
 
-      {isMobile && data && (
+      {isMobile && (
         <Box className={cn(styles.cardHeaderContainer, styles.pages)}>
           <PaginationNav
             pageCount={pageCount}
@@ -185,16 +206,17 @@ const CatalogMain: FC = () => {
         </Box>
       )}
 
-      {/* TODO: вынести фильтры в отдельный компонент видимо */}
-      <CatalogFilterDrawer
-        filterRequest={filterRequest}
-        openDrawer={openDrawer}
-        handleDrawerToggle={handleDrawerToggle}
-        setFilterRequest={setFilterRequest}
-        anchorApplyButton={anchorApplyButton}
-        setAnchorApplyButton={setAnchorApplyButton}
-        setSorting={setSorting}
-      />
+      {isMobile && (
+        <CatalogFilterDrawer
+          filtersRequest={filtersRequest}
+          openDrawer={openDrawer}
+          handleDrawerToggle={handleDrawerToggle}
+          setFiltersRequest={setFiltersRequest}
+          anchorApplyButton={anchorApplyButton}
+          setAnchorApplyButton={setAnchorApplyButton}
+          setSorting={setSorting}
+        />
+      )}
     </Box>
   );
 };

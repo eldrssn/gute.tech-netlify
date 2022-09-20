@@ -6,8 +6,7 @@ import { FormTextfield } from 'components/ui/FormTextfield';
 
 import { Datepicker } from './Datepicker';
 import { inputFullNameRule, selectSex, ProfileFields } from '../constants';
-import { correctRegister } from '../helpers';
-import { AccountFieldsProps, TFormDataFields } from '../types';
+import { AccountFieldsProps } from '../types';
 
 import styles from '../userForm.module.scss';
 import { handleEnterPress } from 'utility/utils';
@@ -17,22 +16,12 @@ const AccountFields: FC<AccountFieldsProps> = ({
   onChangeForm,
   setValue,
   errors,
-  trigger,
   getValues,
   handleChangeFormValue,
 }) => {
   const [isOpenModalEmail, setIsOpenModalEmail] = useState(false);
 
   const handleOpenModalEmail = () => setIsOpenModalEmail(true);
-
-  const onBlurCorrectRegister = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
-    title: TFormDataFields,
-  ) => {
-    const correctedRegister = correctRegister(event);
-    setValue(title, correctedRegister);
-    trigger(title);
-  };
 
   return (
     <>
@@ -83,9 +72,6 @@ const AccountFields: FC<AccountFieldsProps> = ({
           onChange={(event) =>
             handleChangeFormValue(event, ProfileFields.FIRST_NAME)
           }
-          onBlur={(event) =>
-            onBlurCorrectRegister(event, ProfileFields.FIRST_NAME)
-          }
           required
         />
         <FormTextfield
@@ -99,9 +85,6 @@ const AccountFields: FC<AccountFieldsProps> = ({
           onChange={(event) =>
             handleChangeFormValue(event, ProfileFields.LAST_NAME)
           }
-          onBlur={(event) =>
-            onBlurCorrectRegister(event, ProfileFields.LAST_NAME)
-          }
           required
         />
         <FormTextfield
@@ -114,9 +97,6 @@ const AccountFields: FC<AccountFieldsProps> = ({
           placeholder='Введите отчество'
           onChange={(event) =>
             handleChangeFormValue(event, ProfileFields.PATRONYMIC)
-          }
-          onBlur={(event) =>
-            onBlurCorrectRegister(event, ProfileFields.PATRONYMIC)
           }
           required
         />

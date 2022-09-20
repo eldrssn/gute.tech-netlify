@@ -52,6 +52,7 @@ type OrdersRequestData = {
   created_after?: string;
   created_before?: string;
   page: number;
+  search?: string;
   size?: number;
 };
 

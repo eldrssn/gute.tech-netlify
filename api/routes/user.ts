@@ -63,15 +63,22 @@ const getOrders = ({
   created_after,
   created_before,
   page,
+  search,
   size = 12,
 }: OrdersRequestData) =>
   sendRequestАuthentication<OrdersResponseData>({
-    url: getLinkApiProfileOrder({ order, created_after, created_before }),
+    url: getLinkApiProfileOrder({
+      order,
+      created_after,
+      created_before,
+      search,
+    }),
     method: ApiMethods.GET,
     config: {
       params: {
         page,
         size,
+        search,
       },
     },
   });

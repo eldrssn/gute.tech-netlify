@@ -3,7 +3,6 @@ import {
   UseFormGetValues,
   UseFormRegister,
   UseFormSetValue,
-  UseFormTrigger,
 } from 'react-hook-form';
 
 import { ProfileResponseData } from 'api/models/user';
@@ -52,7 +51,6 @@ type PersonalFieldsProps = {
 
 type AccountFieldsProps = PersonalFieldsProps & {
   setValue: UseFormSetValue<ProfileResponseData>;
-  trigger: UseFormTrigger<ProfileResponseData>;
 };
 
 type TDate = Date | null | undefined;

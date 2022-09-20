@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, KeyboardEvent } from 'react';
 import { useForm, useController } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
@@ -17,6 +17,7 @@ import { Loader } from 'components/ui/Loader';
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { FormInput } from 'components/main/FormInput';
 import { filterRegionsOption } from 'utility/helpers';
+import { handleEnterPress } from 'utility/utils';
 import { selectBranches } from 'store/reducers/regions/selectors';
 import { setCitySlug } from 'store/reducers/regions/actions';
 
@@ -56,13 +57,21 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
     setDesiredСity(cityInput.field.value);
   }, [cityInput.field.value]);
 
+  const handlePress = (event: KeyboardEvent) =>
+    handleEnterPress(event, closeModal);
+
   const regionsClassName = cn({ [styles.loader]: isLoading }, styles.regions);
 
   return (
     <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
       <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box component='div' className={styles.container}>
-          <Box className={styles.closeModal} onClick={closeModal}>
+          <Box
+            className={styles.closeModal}
+            onClick={closeModal}
+            onKeyPress={handlePress}
+            tabIndex={0}
+          >
             <FontAwesomeIcon icon={faTimes} />
           </Box>
           <Typography

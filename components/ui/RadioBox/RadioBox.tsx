@@ -13,24 +13,22 @@ import { Filters } from './components/Filters';
 import styles from './radioBox.module.scss';
 
 const RadioBox: React.FC<Filter> = ({
-  filterRequest,
+  filtersRequest,
   filter,
-  setFilterRequest,
+  setFiltersRequest,
   handleAnchorClick,
 }) => {
-  const routerQuery = useRouterQuery();
+  const { getQueryOption } = useRouterQuery();
 
   const [isHiddenFilters, setHiddenFilters] = useState(true);
 
   const { title, slug, values } = filter;
 
-  const queryOption = routerQuery.getQueryOption(slug);
-
   const setOnChange = (event: ChangeEvent) => {
     const { value } = event.target;
 
-    setFilterRequest((filterRequest) => ({
-      ...filterRequest,
+    setFiltersRequest((filtersRequest) => ({
+      ...filtersRequest,
       [slug]: [value],
     }));
   };
@@ -40,7 +38,7 @@ const RadioBox: React.FC<Filter> = ({
   const toggleHiddenFilters = () =>
     setHiddenFilters((isHiddenFilters) => !isHiddenFilters);
 
-  const filterGroup = filterRequest?.[slug];
+  const filterGroup = filtersRequest?.[slug];
 
   const filters = useMemo(() => {
     if (isHiddenFilters) {
@@ -51,21 +49,24 @@ const RadioBox: React.FC<Filter> = ({
   }, [values, isFilterListLarge, isHiddenFilters]);
 
   useEffect(() => {
+    const queryOption = getQueryOption(slug);
+
     if (queryOption) {
       const options = Array.isArray(queryOption) ? queryOption : [queryOption];
 
-      setFilterRequest((filterRequest) => ({
-        ...filterRequest,
+      setFiltersRequest((filtersRequest) => ({
+        ...filtersRequest,
         [slug]: options,
       }));
       return;
     }
 
-    setFilterRequest((filterRequest) => ({
-      ...filterRequest,
+    setFiltersRequest((filtersRequest) => ({
+      ...filtersRequest,
       [slug]: [],
     }));
-  }, [setFilterRequest, queryOption, slug]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getIsChecked = useCallback(
     (name: string) => {

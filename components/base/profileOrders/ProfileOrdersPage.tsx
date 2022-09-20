@@ -78,8 +78,24 @@ const ProfileOrdersPage = () => {
       return;
     }
 
-    dispatch(fetchOrders({ order, created_after, created_before, page }));
-  }, [created_after, created_before, dispatch, order, page, isOpenDatePicker]);
+    dispatch(
+      fetchOrders({
+        order,
+        created_after,
+        created_before,
+        page,
+        search: searchValue,
+      }),
+    );
+  }, [
+    created_after,
+    created_before,
+    dispatch,
+    order,
+    page,
+    isOpenDatePicker,
+    searchValue,
+  ]);
 
   useEffect(() => {
     if (!isCorrectPage || error?.message) {
@@ -120,7 +136,7 @@ const ProfileOrdersPage = () => {
               setIsOpenDatePicker={setIsOpenDatePicker}
             />
           </Box>
-          <OrderGrid searchValue={searchValue} />
+          <OrderGrid />
         </Box>
       </Box>
     </Container>

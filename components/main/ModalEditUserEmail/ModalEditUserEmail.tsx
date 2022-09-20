@@ -158,6 +158,7 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
                 handleChangeFormValue(event, modalFields.EMAIL)
               }
               required
+              inputProps={{ maxLength: 60 }}
             />
             {errors.email && (
               <FormHelperText error className={styles.inputField_error}>

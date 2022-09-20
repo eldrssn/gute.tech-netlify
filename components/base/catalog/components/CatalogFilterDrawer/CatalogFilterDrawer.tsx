@@ -8,10 +8,10 @@ import styles from './catalogFilterDrawer.module.scss';
 import { CatalogSort } from '../CatalogSort';
 
 const CatalogFilterDrawer: FC<CatalogFilterDrawerProps> = ({
-  filterRequest,
+  filtersRequest,
   openDrawer,
   handleDrawerToggle,
-  setFilterRequest,
+  setFiltersRequest,
   anchorApplyButton,
   setAnchorApplyButton,
   setSorting,
@@ -37,8 +37,8 @@ const CatalogFilterDrawer: FC<CatalogFilterDrawerProps> = ({
         setAnchorApplyButton={setAnchorApplyButton}
       />
       <CatalogFilter
-        filterRequest={filterRequest}
-        setFilterRequest={setFilterRequest}
+        filtersRequest={filtersRequest}
+        setFiltersRequest={setFiltersRequest}
         anchorApplyButton={anchorApplyButton}
         setAnchorApplyButton={setAnchorApplyButton}
         handleDrawerToggle={handleDrawerToggle}

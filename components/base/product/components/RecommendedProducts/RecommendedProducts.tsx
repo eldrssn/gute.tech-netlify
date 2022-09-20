@@ -8,14 +8,10 @@ import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
 import { CatalogCard } from 'components/main/CatalogCard';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectRecommendedProductsList } from 'store/reducers/catalog/selectors';
 import {
-  selectCategoriesProductList,
-  // selectRecommendedProductsList,
-} from 'store/reducers/catalog/selectors';
-import {
-  // clearRecommendedProductsList,
-  fetchCategoriesProductsList,
-  // fetchRecommendedProductsList,
+  clearRecommendedProductsList,
+  fetchRecommendedProductsList,
 } from 'store/reducers/catalog/actions';
 
 import styles from './recommendedProducts.module.scss';
@@ -31,41 +27,24 @@ const RecommendedProducts: FC = () => {
   const allSlugs = makeAnArray(categorySlug);
   const [category, product] = getSlugs(allSlugs);
 
-  // TODO: Убрать после тестирования
   const lastCategorySlug = allSlugs[allSlugs.length - 2];
 
   useEffect(() => {
-    // TODO: Расскоменитировать после тестированния
-    // dispatch(
-    //   fetchRecommendedProductsList({
-    //     transportId,
-    //     categorySlug: category,
-    //     productSlug: product,
-    //   }),
-    // );
-
-    // TODO: Убрать после тестирования
     dispatch(
-      fetchCategoriesProductsList({
-        categorySlug: lastCategorySlug,
-        page: 1,
+      fetchRecommendedProductsList({
+        transportId,
+        categorySlug: category,
+        productSlug: product,
       }),
     );
 
-    // TODO: Расскоменитировать после тестированния
-    // return () => {
-    //   dispatch(clearRecommendedProductsList());
-    // };
+    return () => {
+      dispatch(clearRecommendedProductsList());
+    };
   }, [dispatch, transportId, category, product, lastCategorySlug]);
 
-  // TODO: Расскоменитировать после тестированния
-  // const { data: recommendedProductsResponse } = useSelector(
-  //   selectRecommendedProductsList,
-  // );
-
-  // TODO: Убрать после тестирования
   const { data: recommendedProductsResponse } = useSelector(
-    selectCategoriesProductList,
+    selectRecommendedProductsList,
   );
 
   if (!recommendedProductsResponse?.results) {
@@ -125,7 +104,7 @@ const RecommendedProducts: FC = () => {
               key={slug}
               title={title}
               price={price}
-              image={image || '/images/no-image.jpeg'}
+              image={image}
               slug={slug}
               categories={categories}
               isSlider

@@ -117,7 +117,6 @@ const UserForm = () => {
           onChangeForm={onChangeForm}
           setValue={setValue}
           errors={errors}
-          trigger={trigger}
           getValues={getValues}
           handleChangeFormValue={handleChangeFormValue}
         />

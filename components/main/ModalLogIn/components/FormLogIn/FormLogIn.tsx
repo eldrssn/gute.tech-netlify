@@ -96,7 +96,6 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
                 variant='outlined'
                 type='text'
                 fullWidth
-                tabIndex={0}
               />
             </InputMask>
           )}

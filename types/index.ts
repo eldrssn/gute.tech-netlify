@@ -12,13 +12,15 @@ type Sorting = {
   order: string;
 };
 
-type FilterRequest = Record<string, (string | number)[]>;
+type filtersRequest = Record<string, (string | number)[]>;
 
 type Filter = {
   filter: FiltersCategoryResponseData;
-  setFilterRequest: React.Dispatch<React.SetStateAction<FilterRequest | null>>;
+  setFiltersRequest: React.Dispatch<
+    React.SetStateAction<filtersRequest | null>
+  >;
   handleAnchorClick: (event: React.MouseEvent<HTMLElement>) => void;
-  filterRequest: FilterRequest | null;
+  filtersRequest: filtersRequest | null;
 };
 
 type Slug = string | string[] | undefined;
@@ -29,7 +31,7 @@ type AnchorClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 export type {
   ComponentWithPageLayout,
   Sorting,
-  FilterRequest,
+  filtersRequest,
   Filter,
   Slug,
   Slugs,
