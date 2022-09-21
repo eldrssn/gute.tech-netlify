@@ -111,7 +111,13 @@ const handlers = {
 
       return { title, slug };
     });
-    state.years.data = newData;
+    const sortNewData = newData.sort((a, b) => {
+      const previous = Number(a.slug);
+      const current = Number(b.slug);
+
+      return current - previous;
+    });
+    state.years.data = sortNewData;
     state.years.isLoading = false;
     state.years.error = null;
   },

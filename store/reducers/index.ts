@@ -10,6 +10,7 @@ import { userReducer } from './user';
 import { authenticationReducer } from './authentication';
 import { orderReducer } from './order';
 import { paymentReducer } from './payment';
+import { modalReducer } from './modal';
 
 const reducers = combineReducers({
   cartStore: cartReducer,
@@ -22,6 +23,7 @@ const reducers = combineReducers({
   authenticationStore: authenticationReducer,
   orderStore: orderReducer,
   paymentStore: paymentReducer,
+  modalStore: modalReducer,
 });
 
 export { reducers };
