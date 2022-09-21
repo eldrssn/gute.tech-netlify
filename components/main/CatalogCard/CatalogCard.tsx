@@ -12,13 +12,11 @@ import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
+import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
-import {
-  addProductToCartAuthorized,
-  addProductToCartUnAuthorized,
-} from 'store/reducers/cart/actions';
+import { ModalAddedItemUnAuthorized } from 'components/main/ModalAddedItemUnAuthorized';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 
 import { CustomButton } from 'components/ui/CustomButton';
@@ -45,28 +43,21 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   isSlider,
 }) => {
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
+
   const router = useRouter();
   const dispatch = useDispatch();
 
   const isAuthorized = useSelector(selectIsAuthorized);
+  const isShowAuthorizationWarning = useSelector(
+    selectShowAuthorizationWarning,
+  );
+
   const transportId = useSelector(selectTransportId);
 
   const { asPath } = router;
 
-  const addItemToBasket = () => {
-    if (isAuthorized) {
-      dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 }));
-    }
-
-    if (!isAuthorized) {
-      dispatch(addProductToCartUnAuthorized({ product: slug, quantity: 1 }));
-    }
-
-    setIsOpenModalAddedItem(true);
-  };
-
   const handleClickToBasket = (event: React.MouseEvent<HTMLElement>) => {
-    addItemToBasket();
+    setIsOpenModalAddedItem(true);
     event.preventDefault();
   };
 
@@ -83,6 +74,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
       : getLinkToProductPage({ asPath, productSlug: slug, transportId });
 
   const formattedPrice = formatPrice(price);
+  const isAuthorizationWarging = !isAuthorized && isShowAuthorizationWarning;
 
   return (
     <>
@@ -140,12 +132,27 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
         </Link>
       </Card>
 
-      {isOpenModalAddedItem && (
-        <ModalAddedItem
-          isOpen={isOpenModalAddedItem}
-          setIsOpen={setIsOpenModalAddedItem}
-          title={title}
-        />
+      {isAuthorizationWarging ? (
+        <>
+          {isOpenModalAddedItem && (
+            <ModalAddedItemUnAuthorized
+              isOpen={isOpenModalAddedItem}
+              setIsOpen={setIsOpenModalAddedItem}
+              slug={slug}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          {isOpenModalAddedItem && (
+            <ModalAddedItem
+              isOpen={isOpenModalAddedItem}
+              setIsOpen={setIsOpenModalAddedItem}
+              title={title}
+              slug={slug}
+            />
+          )}
+        </>
       )}
     </>
   );

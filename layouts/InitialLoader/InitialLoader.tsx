@@ -39,6 +39,7 @@ import { QueryUrl, COOKIE_TTL } from 'constants/variables';
 import { CookieKey } from 'constants/types';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { fetchProfile } from 'store/reducers/user/actions';
+import { setAuthorizationWarning } from 'store/reducers/modal/actions';
 
 const InitialLoader: React.FC = ({ children }) => {
   const { windowWidth } = useWindowSize();
@@ -71,7 +72,10 @@ const InitialLoader: React.FC = ({ children }) => {
   useEffect(() => {
     if (isAuthorized) {
       dispatch(fetchProfile());
+      return;
     }
+
+    dispatch(setAuthorizationWarning(true));
   }, [isAuthorized]);
 
   useEffect(() => {

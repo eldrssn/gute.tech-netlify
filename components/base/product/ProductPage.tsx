@@ -7,11 +7,13 @@ import Container from '@mui/material/Container';
 
 import { PageNotFound } from 'components/main/PageNotFound';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
+import { ModalAddedItemUnAuthorized } from 'components/main/ModalAddedItemUnAuthorized';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
 import { SubcategoriesList } from 'components/main/SubcategoriesList';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
 import { fetchCategoriesProductsRead } from 'store/reducers/catalog/actions';
 import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
 import {
@@ -42,6 +44,11 @@ const ProductPage: FC = () => {
   const dispatch = useDispatch();
 
   const transportId = useSelector(selectTransportId);
+  const isShowAuthorizationWarning = useSelector(
+    selectShowAuthorizationWarning,
+  );
+  const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
+  const isAuthorized = useSelector(selectIsAuthorized);
 
   const { categorySlug } = router.query;
   const categorySlugAnArray = makeAnArray(categorySlug);
@@ -49,9 +56,6 @@ const ProductPage: FC = () => {
   const productSlug = getProductSlug(
     categorySlugAnArray[categorySlugAnArray.length - 1],
   );
-
-  const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
-  const isAuthorized = useSelector(selectIsAuthorized);
 
   useEffect(() => {
     dispatch(
@@ -129,15 +133,31 @@ const ProductPage: FC = () => {
   };
 
   const formattedPrice = formatPrice(price);
+  const isAuthorizationWarging = !isAuthorized && isShowAuthorizationWarning;
 
   return (
     <>
-      {isOpenModalAddedItem && (
-        <ModalAddedItem
-          isOpen={isOpenModalAddedItem}
-          setIsOpen={setIsOpenModalAddedItem}
-          title={title}
-        />
+      {isAuthorizationWarging ? (
+        <>
+          {isOpenModalAddedItem && (
+            <ModalAddedItemUnAuthorized
+              isOpen={isOpenModalAddedItem}
+              setIsOpen={setIsOpenModalAddedItem}
+              slug={slug}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          {isOpenModalAddedItem && (
+            <ModalAddedItem
+              isOpen={isOpenModalAddedItem}
+              setIsOpen={setIsOpenModalAddedItem}
+              title={title}
+              slug={slug}
+            />
+          )}
+        </>
       )}
 
       <Box className={styles.mainContainer}>
