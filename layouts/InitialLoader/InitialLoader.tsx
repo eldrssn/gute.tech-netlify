@@ -69,7 +69,9 @@ const InitialLoader: React.FC = ({ children }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchProfile());
+    if (isAuthorized) {
+      dispatch(fetchProfile());
+    }
   }, [isAuthorized]);
 
   useEffect(() => {

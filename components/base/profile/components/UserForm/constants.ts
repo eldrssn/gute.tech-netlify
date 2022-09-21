@@ -33,10 +33,6 @@ const inputFullNameRule = {
     value: MIN_LENGTH,
     message: `Поле должно содержать более ${MIN_LENGTH} символов`,
   },
-  required: {
-    value: true,
-    message: 'Поле обязательно',
-  },
 };
 
 const usernameRule = {

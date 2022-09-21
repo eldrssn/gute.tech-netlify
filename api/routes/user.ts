@@ -78,7 +78,6 @@ const getOrders = ({
       params: {
         page,
         size,
-        search,
       },
     },
   });
