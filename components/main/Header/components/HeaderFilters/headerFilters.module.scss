@@ -6,12 +6,16 @@
   padding-top: 7px;
   display: flex;
   min-height: 60px;
-}
-
-.itemsContainer {
   flex-grow: 1;
   justify-content: space-between;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+.mainContainer_short {
+  min-height: 40px;
+  padding: 0;
+  padding-left: 5px;
+  justify-content: center;
 }
 
 .filterText {
