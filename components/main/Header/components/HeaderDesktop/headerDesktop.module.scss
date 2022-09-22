@@ -1,0 +1,18 @@
+.mainContainer {
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.headerDesktopFull {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 7px;
+  width: 100%;
+}
+
+.headerDesktop_short {
+  padding-bottom: 5px;
+  padding-top: 7px;
+  display: flex;
+  min-height: 60px;
+}

@@ -98,11 +98,12 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     if (isOpenPopover) {
       document.body.style.marginRight = `${widthScrollBar}px`;
       document.body.style.overflow = 'hidden';
-      return;
     }
 
-    document.body.style.overflow = 'auto';
-    document.body.style.marginRight = '0px';
+    return () => {
+      document.body.style.overflow = 'auto';
+      document.body.style.marginRight = '0px';
+    };
   }, [isOpenPopover, widthScrollBar]);
 
   const handleTransportTypeButton = (slug: string) => () => {
