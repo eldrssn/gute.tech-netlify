@@ -13,6 +13,7 @@ import {
   selectCartSavedError,
   selectCartLoading,
   selectCartSavedLoading,
+  selectCartCheckedItemsTotal,
 } from 'store/reducers/cart/selectors';
 import { selectLoadingAuthorized } from 'store/reducers/authentication/selectors';
 
@@ -23,6 +24,7 @@ import styles from './styles.module.scss';
 const CartPage: React.FC = () => {
   const dispatch = useDispatch();
 
+  const cartCheckedItemsTotal = useSelector(selectCartCheckedItemsTotal);
   const isLoadingAuthorized = useSelector(selectLoadingAuthorized);
   const cartSavedItems = useSelector(selectCartSavedItems);
   const cartIsLoading = useSelector(selectCartLoading);
@@ -59,6 +61,7 @@ const CartPage: React.FC = () => {
         <TableOrder
           cart={cart}
           orderTotal={cartTotal}
+          cartCheckedItemsTotal={cartCheckedItemsTotal}
           isLoading={isLoading}
           isError={isError}
         />
