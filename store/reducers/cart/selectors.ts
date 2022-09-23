@@ -52,7 +52,23 @@ const selectCartSavedError = createSelector(
   ({ cartSavedItems }) => cartSavedItems.error,
 );
 
+const selectCartCheckedItemsTotal = createSelector(
+  selectCartStore,
+  ({ cartItems }) => {
+    const checkedItems = cartItems.data.reduce((prev, cur) => {
+      if (cur.isChecked) {
+        return prev + cur.price * cur.quantity;
+      }
+
+      return prev;
+    }, 0);
+
+    return checkedItems;
+  },
+);
+
 export {
+  selectCartCheckedItemsTotal,
   selectCartSavedItems,
   selectCartProductTotal,
   selectCartLoading,

@@ -47,6 +47,7 @@ type TTableOrderProps = {
   orderTotal: number;
   isLoading: boolean;
   isError: boolean;
+  cartCheckedItemsTotal: number;
 };
 
 type TDeliveryAddressProps = {

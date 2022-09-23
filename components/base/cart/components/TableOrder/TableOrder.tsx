@@ -29,6 +29,7 @@ import styles from '../../styles.module.scss';
 const TableOrder: React.FC<TTableOrderProps> = ({
   cart,
   orderTotal,
+  cartCheckedItemsTotal,
   isError,
   isLoading,
 }) => {
@@ -48,6 +49,10 @@ const TableOrder: React.FC<TTableOrderProps> = ({
   };
 
   const SumbitOrder = () => {
+    if (checkedCartItemsSlug.length <= 0) {
+      return;
+    }
+
     dispatch(setItemsSlugs(checkedCartItemsSlug));
     dispatch(setItemsFromOrder(checkedCartItems));
     router.push(
@@ -118,6 +123,9 @@ const TableOrder: React.FC<TTableOrderProps> = ({
         <Box className={styles.orderBox}>
           <Typography className={styles.orderTotal}>
             Сумма заказа: {orderTotal}&#8381;
+          </Typography>
+          <Typography className={styles.orderTotal}>
+            Итого: {cartCheckedItemsTotal}&#8381;
           </Typography>
           <Button
             className={styles.orderButton}
