@@ -18,7 +18,8 @@ const CitySelect: FC<CitySelectProps> = ({
 }) => {
   const { data: regions } = useSelector(selectRegions);
 
-  const defaultCity = getValues(ProfileFields.CITY) || '';
+  const defaultCityValue = getValues(ProfileFields.CITY) || '';
+  const defaultCity = defaultCityValue instanceof Date ? '' : defaultCityValue;
 
   const cityOptions = getCityOptions(regions);
   const cityTitle = getCityTitle(defaultCity);

@@ -1,11 +1,24 @@
 import {
+  Control,
   FieldError,
   UseFormGetValues,
   UseFormRegister,
   UseFormSetValue,
 } from 'react-hook-form';
 
-import { ProfileResponseData } from 'api/models/user';
+type CityData = { title: string; slug: string };
+
+type FormData = {
+  last_name: string;
+  first_name: string;
+  patronymic: string;
+  phone_number: string;
+  date_of_birthday: Date | null;
+  email: string;
+  date_joined: string;
+  transport: string;
+  city: CityData;
+};
 
 type TDirtyFields = {
   last_name?: boolean | undefined;
@@ -19,7 +32,7 @@ type TDirtyFields = {
   city?: { title?: boolean | undefined; slug?: boolean | undefined };
 };
 
-type TFormDataFields = keyof ProfileResponseData;
+type TFormDataFields = keyof FormData;
 
 type TErrors = {
   last_name?: FieldError | undefined;
@@ -38,40 +51,43 @@ type TErrors = {
 };
 
 type PersonalFieldsProps = {
-  register: UseFormRegister<ProfileResponseData>;
+  register: UseFormRegister<FormData>;
   onChangeForm: () => Promise<void>;
   errors: TErrors;
-  getValues: UseFormGetValues<ProfileResponseData>;
+  getValues: UseFormGetValues<FormData>;
   handleChangeFormValue: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: TFormDataFields,
   ) => void;
-  setValue: UseFormSetValue<ProfileResponseData>;
+  setValue: UseFormSetValue<FormData>;
 };
 
 type AccountFieldsProps = PersonalFieldsProps & {
-  setValue: UseFormSetValue<ProfileResponseData>;
+  setValue: UseFormSetValue<FormData>;
+  control: Control<FormData>;
 };
 
 type TDate = Date | null | undefined;
 
 type DatepickerProps = {
-  getValues: UseFormGetValues<ProfileResponseData>;
+  getValues: UseFormGetValues<FormData>;
   errors: TErrors;
-  register: UseFormRegister<ProfileResponseData>;
-  setValue: UseFormSetValue<ProfileResponseData>;
+  control: Control<FormData>;
+  register: UseFormRegister<FormData>;
+  setValue: UseFormSetValue<FormData>;
   onChangeForm: () => Promise<void>;
 };
 
 type CitySelectProps = {
-  getValues: UseFormGetValues<ProfileResponseData>;
-  setValue: UseFormSetValue<ProfileResponseData>;
+  getValues: UseFormGetValues<FormData>;
+  setValue: UseFormSetValue<FormData>;
   onChangeForm: () => Promise<void>;
 };
 
 export type {
   TDate,
   TErrors,
+  FormData,
   TFormDataFields,
   PersonalFieldsProps,
   AccountFieldsProps,

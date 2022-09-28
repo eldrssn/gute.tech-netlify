@@ -29,6 +29,7 @@ import {
   selectIsAuthorized,
   selectNotAuthorizedToken,
 } from 'store/reducers/authentication/selectors';
+import { selectStatus } from 'store/reducers/payment/selectors';
 import { selectCartUpdated } from 'store/reducers/cart/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
@@ -60,6 +61,7 @@ const InitialLoader: React.FC = ({ children }) => {
   const selectedCitySlug = useSelector(selectSelectedCitySlug);
   const { favicon } = useSelector(selectShowcaseData);
   const cartIsUpdated = useSelector(selectCartUpdated);
+  const { data: status } = useSelector(selectStatus);
 
   useEffect(() => {
     dispatch(fetchShowcase());
@@ -143,7 +145,7 @@ const InitialLoader: React.FC = ({ children }) => {
     }
 
     dispatch(fetchCartUnAuthorized());
-  }, [isAuthorized, notAuthorizedToken, cartIsUpdated]);
+  }, [isAuthorized, notAuthorizedToken, cartIsUpdated, status]);
 
   useEffect(() => {
     const refresh = getCookie(CookieKey.REFRESH_TOKEN);

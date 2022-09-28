@@ -1,11 +1,13 @@
 import { KeyboardEvent } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 
-import { TFormDataFields } from 'components/base/profile/components/UserForm/types';
-import { ProfileResponseData } from 'api/models/user';
+import {
+  TFormDataFields,
+  FormData,
+} from 'components/base/profile/components/UserForm/types';
 
 type FormTextfieldProps = {
-  register?: UseFormRegister<ProfileResponseData>;
+  register?: UseFormRegister<FormData>;
   name?: TFormDataFields;
   label: string;
   error?: boolean;

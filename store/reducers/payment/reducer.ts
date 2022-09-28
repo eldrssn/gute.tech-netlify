@@ -9,7 +9,8 @@ import {
 import {
   clearCreateOrdering,
   fetchPaymentMethods,
-  fetchStatusPayment,
+  fetchStatusPaymentAuthorized,
+  fetchStatusPaymentUnAuthorized,
   createOrderingUnAuthorized,
 } from './actions';
 import { initialState } from './constants';
@@ -44,10 +45,10 @@ const handlers = {
     state.paymentMethods.error = errorData;
   },
 
-  [fetchStatusPayment.pending.type]: (state: PaymentStore) => {
+  [fetchStatusPaymentAuthorized.pending.type]: (state: PaymentStore) => {
     state.paymentStatus.isLoading = true;
   },
-  [fetchStatusPayment.fulfilled.type]: (
+  [fetchStatusPaymentAuthorized.fulfilled.type]: (
     state: PaymentStore,
     { payload }: PayloadAction<StatusResponseData>,
   ) => {
@@ -55,7 +56,27 @@ const handlers = {
     state.paymentStatus.isLoading = false;
     state.paymentStatus.error = null;
   },
-  [fetchStatusPayment.rejected.type]: (
+  [fetchStatusPaymentAuthorized.rejected.type]: (
+    state: PaymentStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.paymentStatus.isLoading = false;
+    state.paymentStatus.error = errorData;
+  },
+
+  [fetchStatusPaymentUnAuthorized.pending.type]: (state: PaymentStore) => {
+    state.paymentStatus.isLoading = true;
+  },
+  [fetchStatusPaymentUnAuthorized.fulfilled.type]: (
+    state: PaymentStore,
+    { payload }: PayloadAction<StatusResponseData>,
+  ) => {
+    state.paymentStatus.data = payload;
+    state.paymentStatus.isLoading = false;
+    state.paymentStatus.error = null;
+  },
+  [fetchStatusPaymentUnAuthorized.rejected.type]: (
     state: PaymentStore,
     { error }: ErrorAction,
   ) => {

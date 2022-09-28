@@ -2,7 +2,17 @@ import { UserStore } from './types';
 
 const initialState: UserStore = {
   profile: {
-    data: null,
+    data: {
+      last_name: '',
+      first_name: '',
+      patronymic: '',
+      phone_number: '',
+      date_of_birthday: null,
+      email: '',
+      date_joined: '',
+      transport: '',
+      city: { title: '', slug: '' },
+    },
     isLoading: false,
     error: null,
   },

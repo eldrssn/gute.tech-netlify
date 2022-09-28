@@ -2,7 +2,8 @@ import { createAction } from '@reduxjs/toolkit';
 
 import {
   getPaymentMethods,
-  getStatus,
+  getStatusAuthorized,
+  getStatusUnAuthorized,
   postOrderingUnAuthorized,
   postOrderingAuthorized,
 } from 'api/routes/payment';
@@ -22,12 +23,20 @@ const fetchPaymentMethods = createAsyncAction<PaymentMethodResponseData[]>({
   request: getPaymentMethods,
 });
 
-const fetchStatusPayment = createAsyncAction<
+const fetchStatusPaymentAuthorized = createAsyncAction<
   StatusResponseData,
   StatusRequestData
 >({
   typeAction: 'CartStore/fetchStatusPayment',
-  request: getStatus,
+  request: getStatusAuthorized,
+});
+
+const fetchStatusPaymentUnAuthorized = createAsyncAction<
+  StatusResponseData,
+  StatusRequestData
+>({
+  typeAction: 'CartStore/fetchStatusPayment',
+  request: getStatusUnAuthorized,
 });
 
 const createOrderingUnAuthorized = createAsyncAction<
@@ -53,5 +62,6 @@ export {
   createOrderingUnAuthorized,
   createOrderingAuthorized,
   fetchPaymentMethods,
-  fetchStatusPayment,
+  fetchStatusPaymentAuthorized,
+  fetchStatusPaymentUnAuthorized,
 };

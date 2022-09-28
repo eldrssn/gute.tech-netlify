@@ -16,6 +16,7 @@ const AccountFields: FC<AccountFieldsProps> = ({
   onChangeForm,
   setValue,
   errors,
+  control,
   getValues,
   handleChangeFormValue,
 }) => {
@@ -123,6 +124,7 @@ const AccountFields: FC<AccountFieldsProps> = ({
         <Datepicker
           getValues={getValues}
           errors={errors}
+          control={control}
           register={register}
           setValue={setValue}
           onChangeForm={onChangeForm}

@@ -21,7 +21,7 @@ enum UserStoreBlocks {
 }
 
 type ProfileState = {
-  data: ProfileResponseData | null;
+  data: ProfileResponseData;
 } & StoreState;
 
 type EditProfileState = {
