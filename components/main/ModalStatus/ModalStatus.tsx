@@ -4,8 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Box, Button } from '@mui/material';
 
 import { Loader } from 'components/ui/Loader';
-import { fetchStatusPayment } from 'store/reducers/payment/actions';
+import {
+  fetchStatusPaymentAuthorized,
+  fetchStatusPaymentUnAuthorized,
+} from 'store/reducers/payment/actions';
 import { ModalWrapper } from 'components/main/ModalWrapper';
+import {
+  selectIsAuthorized,
+  selectLoadingAuthorized,
+} from 'store/reducers/authentication/selectors';
 import { selectStatus } from 'store/reducers/payment/selectors';
 
 import styles from './styles.module.scss';
@@ -17,6 +24,8 @@ const ModalStatus: FC = () => {
 
   const { orderId } = router.query;
 
+  const isAuthorized = useSelector(selectIsAuthorized);
+  const isLoadingauthorized = useSelector(selectLoadingAuthorized);
   const { data, error, isLoading } = useSelector(selectStatus);
   const isError = Boolean(error);
 
@@ -31,12 +40,17 @@ const ModalStatus: FC = () => {
   };
 
   useEffect(() => {
-    if (!orderId) {
+    if (!orderId || isLoadingauthorized) {
       return;
     }
 
-    dispatch(fetchStatusPayment({ orderId }));
-  }, [dispatch, orderId]);
+    if (isAuthorized) {
+      dispatch(fetchStatusPaymentAuthorized({ orderId }));
+      return;
+    }
+
+    dispatch(fetchStatusPaymentUnAuthorized({ orderId }));
+  }, [dispatch, orderId, isLoadingauthorized, isAuthorized]);
 
   return (
     <ModalWrapper isOpen={isOpenModal} setIsOpen={setIsOpenModal}>

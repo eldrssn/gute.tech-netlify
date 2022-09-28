@@ -3,6 +3,8 @@ import { TFormDataFields } from './types';
 const MIN_LENGTH = 2;
 const MAX_LENGTH = 30;
 
+const UPDATE_DELAY = 1000;
+
 const MIN_AGE = 16;
 const MAX_AGE = 100;
 const MAX_DATE = new Date(
@@ -91,6 +93,7 @@ const selectSex = [
 ];
 
 export {
+  UPDATE_DELAY,
   DATE_INPUT_MASK,
   DATE_INPUT_FORMAT,
   inputFullNameRule,

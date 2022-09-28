@@ -7,7 +7,6 @@ import { CustomButton } from 'components/ui/CustomButton';
 import { ModalSaveChanges } from 'components/main/ModalSaveChanges';
 import { ModalCancelChanges } from 'components/main/ModalCancelChanges';
 
-import { ProfileResponseData } from 'api/models/user';
 import {
   editProfile,
   fetchProfile,
@@ -20,8 +19,14 @@ import {
 
 import { AccountFields } from './components/AccountFields';
 import { PersonalFields } from './components/PersonalFields';
-import { filterDirtyFields, setCustomErrors } from './helpers';
-import { TFormDataFields } from './types';
+import {
+  filterDirtyFields,
+  setCustomErrors,
+  formatBirthDate,
+  formatDate,
+} from './helpers';
+import { UPDATE_DELAY } from './constants';
+import { TFormDataFields, FormData } from './types';
 import styles from './userForm.module.scss';
 
 const UserForm = () => {
@@ -36,6 +41,17 @@ const UserForm = () => {
     selectEditionUserProfile,
   );
 
+  const getDefaultValue = (): FormData => {
+    const { date_of_birthday, ...other } = userProfile;
+    if (date_of_birthday) {
+      return { ...other, date_of_birthday: formatDate(date_of_birthday) };
+    }
+
+    return { ...other, date_of_birthday: null };
+  };
+
+  const defaultValue = getDefaultValue();
+
   const {
     handleSubmit,
     setValue,
@@ -44,12 +60,13 @@ const UserForm = () => {
     getValues,
     setError,
     reset,
+    control,
     formState: { errors, dirtyFields },
-  } = useForm<ProfileResponseData>({
+  } = useForm<FormData>({
     mode: 'onTouched',
     reValidateMode: 'onChange',
     criteriaMode: 'firstError',
-    defaultValues: { ...userProfile },
+    defaultValues: defaultValue,
     shouldFocusError: true,
   });
 
@@ -68,14 +85,27 @@ const UserForm = () => {
   }, [editProfileError, editProfileResponse, setError, userProfile]);
 
   const onSumbit = handleSubmit(async (data) => {
-    const filteredDirtyFields = filterDirtyFields({ data, dirtyFields });
+    const { date_of_birthday, ...other } = data;
+    const newData = () => {
+      if (date_of_birthday) {
+        const formatDateOfBirthday = formatBirthDate(date_of_birthday);
+        return { ...other, date_of_birthday: formatDateOfBirthday };
+      }
+
+      return { ...other, date_of_birthday: null };
+    };
+
+    const filteredDirtyFields = filterDirtyFields({
+      data: newData(),
+      dirtyFields,
+    });
 
     dispatch(editProfile(filteredDirtyFields));
     dispatch(resetEditProfile());
     setFormChanging(false);
     setIsOpenModalSave(false);
 
-    setTimeout(() => dispatch(fetchProfile()));
+    setTimeout(() => dispatch(fetchProfile()), UPDATE_DELAY);
   });
 
   const openModalSave = async () => {
@@ -117,6 +147,7 @@ const UserForm = () => {
           onChangeForm={onChangeForm}
           setValue={setValue}
           errors={errors}
+          control={control}
           getValues={getValues}
           handleChangeFormValue={handleChangeFormValue}
         />

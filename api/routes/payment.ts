@@ -37,8 +37,19 @@ const postOrderingAuthorized = (data: OrderingRequestData) =>
     },
   });
 
-const getStatus = ({ orderId }: StatusRequestData) =>
-  sendRequest<StatusResponseData>({
+const getStatusAuthorized = ({ orderId }: StatusRequestData) =>
+  sendRequestАuthentication<StatusResponseData>({
+    url: `/v1/payment/status/`,
+    method: ApiMethods.GET,
+    config: {
+      params: {
+        orderId,
+      },
+    },
+  });
+
+const getStatusUnAuthorized = ({ orderId }: StatusRequestData) =>
+  sendRequestNotAuthorized<StatusResponseData>({
     url: `/v1/payment/status/`,
     method: ApiMethods.GET,
     config: {
@@ -52,5 +63,6 @@ export {
   getPaymentMethods,
   postOrderingAuthorized,
   postOrderingUnAuthorized,
-  getStatus,
+  getStatusAuthorized,
+  getStatusUnAuthorized,
 };

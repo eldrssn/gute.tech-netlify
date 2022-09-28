@@ -8,13 +8,21 @@ import {
 import { RegionData } from 'api/models/regions';
 
 import { MAX_DATE, MIN_DATE, MAX_AGE, MIN_AGE } from './constants';
-import { TDirtyFields } from './types';
+import { TDirtyFields, FormData } from './types';
 
 const formatStringifiedDate = (date: string) =>
   date.split('/').reverse().join('-');
 
 const getDate = (stringifiedDate: string | null | CityRequestData) => {
   return typeof stringifiedDate === 'string' ? new Date(stringifiedDate) : null;
+};
+
+const formatBirthDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+
+  return `${year}-${month + 1}-${day}`;
 };
 
 const formatDate = (date: string | null) => {
@@ -52,24 +60,18 @@ const cutDate = (date: Date | null) => {
   return isValidDate ? date.toISOString().substring(0, 10) : null;
 };
 
-const validateMinAge = (date: string | null) => {
-  const dateOfBirth = formatDate(date);
-
-  if (dateOfBirth) {
+const validateMinAge = (date: Date | null) => {
+  if (date) {
     return (
-      dateOfBirth > new Date(MIN_DATE) ||
-      `Дата не может быть больше ${MAX_AGE} лет`
+      date > new Date(MIN_DATE) || `Дата не может быть больше ${MAX_AGE} лет`
     );
   }
 };
 
-const validateMaxAge = (date: string | null) => {
-  const dateOfBirth = formatDate(date);
-
-  if (dateOfBirth) {
+const validateMaxAge = (date: Date | null) => {
+  if (date) {
     return (
-      dateOfBirth < new Date(MAX_DATE) ||
-      `Дата не может быть меньше ${MIN_AGE} лет`
+      date < new Date(MAX_DATE) || `Дата не может быть меньше ${MIN_AGE} лет`
     );
   }
 };
@@ -88,7 +90,7 @@ const filterDirtyFields = ({
       field
         ? {
             ...accumulator,
-            [field]: data[field as keyof ProfileResponseData],
+            [field]: data[field as keyof FormData],
           }
         : { ...accumulator },
     {},
@@ -102,7 +104,7 @@ const setCustomErrors = ({
 }: {
   editProfileError: EditProfileResponseErrorData | null;
   userProfile: ProfileResponseData | null;
-  setError: UseFormSetError<ProfileResponseData>;
+  setError: UseFormSetError<FormData>;
 }) => {
   if (!editProfileError || !userProfile) {
     return;
@@ -149,6 +151,7 @@ export {
   validateMinAge,
   validateMaxAge,
   formatDate,
+  formatBirthDate,
   filterDirtyFields,
   setCustomErrors,
   getDate,
