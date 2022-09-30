@@ -1,14 +1,12 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import {
-  Table,
-  TableCell,
-  TableHead,
-  TableRow,
-  Box,
-  Typography,
-  Button,
-} from '@mui/material';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import TableHead from '@mui/material/TableHead';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 import { TotalBoxRedirectUrls } from 'utility/utils/constants';
 import { useWindowSize } from 'hooks/useWindowSize';

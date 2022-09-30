@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useScrollbarSize from 'react-scrollbar-size';
 import Button from '@mui/material/Button';
-import { useSelector } from 'react-redux';
-import { Box } from '@mui/system';
-import { Divider } from '@mui/material';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import cn from 'classnames';
 
 import {

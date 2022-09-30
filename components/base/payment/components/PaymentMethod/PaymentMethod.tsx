@@ -1,7 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 import Image from 'next/image';
-import { Typography, Box } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 // import { selectPaymentMethods } from 'store/reducers/cart/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';

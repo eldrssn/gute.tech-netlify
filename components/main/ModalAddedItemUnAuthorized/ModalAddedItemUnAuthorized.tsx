@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Typography, Button, Box } from '@mui/material';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,9 +13,8 @@ import { addProductToCartUnAuthorized } from 'store/reducers/cart/actions';
 import { setAuthorizationWarning } from 'store/reducers/modal/actions';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 
-import styles from './styles.module.scss';
 import { TOuterProps } from './types';
-import { ModalPortal } from '../ModalPortal';
+import styles from './styles.module.scss';
 
 const ModalAddedItemUnAuthorized: React.FC<TOuterProps> = ({
   isOpen,
@@ -37,29 +39,27 @@ const ModalAddedItemUnAuthorized: React.FC<TOuterProps> = ({
 
   return (
     <>
-      <ModalPortal>
-        <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
-          <Container fixed className={styles.wrap}>
-            <Box className={styles.closeModal} onClick={closeModal}>
-              <FontAwesomeIcon icon={faTimes} />
-            </Box>
-            <Typography className={styles.title}>Вы не авторизованы</Typography>
-            <Button onClick={openModalLogin} className={styles.button}>
-              Авторизироваться и добавить товар в корзину
-            </Button>
-            <Button onClick={closeModal} className={styles.button}>
-              Добавить товар в корзину без авторизации
-            </Button>
-          </Container>
-        </ModalWrapper>
-      </ModalPortal>
+      <ModalWrapper
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        modalTitle='add-item-unauthorized'
+      >
+        <Container fixed className={styles.wrap}>
+          <Box className={styles.closeModal} onClick={closeModal}>
+            <FontAwesomeIcon icon={faTimes} />
+          </Box>
+          <Typography className={styles.title}>Вы не авторизованы</Typography>
+          <Button onClick={openModalLogin} className={styles.button}>
+            Авторизироваться и добавить товар в корзину
+          </Button>
+          <Button onClick={closeModal} className={styles.button}>
+            Добавить товар в корзину без авторизации
+          </Button>
+        </Container>
+      </ModalWrapper>
+
       {!isAuthorized && (
-        <ModalPortal>
-          <ModalLogIn
-            isOpen={isOpenModalLogIn}
-            setIsOpen={setIsOpenModalLogIn}
-          />
-        </ModalPortal>
+        <ModalLogIn isOpen={isOpenModalLogIn} setIsOpen={setIsOpenModalLogIn} />
       )}
     </>
   );

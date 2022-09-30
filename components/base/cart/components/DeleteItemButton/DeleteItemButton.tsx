@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Container, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
@@ -49,7 +52,11 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
 
   return (
     <>
-      <ModalWrapper isOpen={isOpenModal} setIsOpen={setIsOpenModal}>
+      <ModalWrapper
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        modalTitle='delete-item'
+      >
         <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box component='div' className={styles.confirmedBlock}>
             <Typography className={styles.titleModal}>

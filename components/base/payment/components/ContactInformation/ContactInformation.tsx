@@ -1,6 +1,8 @@
 import React from 'react';
 import { useController, Controller } from 'react-hook-form';
-import { Box, Typography, TextField } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import InputMask from 'react-input-mask';
 
 import { FormInput } from 'components/main/FormInput';

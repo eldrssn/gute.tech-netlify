@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 import { FormInputProps } from './types';
 
@@ -15,6 +15,7 @@ const FormInput: React.FC<FormInputProps> = ({
   maxLength = 200,
   hideValue,
   type = 'text',
+  id,
 }) => (
   <TextField
     autoComplete={isAutocomplete ? 'on' : 'off'}
@@ -30,6 +31,7 @@ const FormInput: React.FC<FormInputProps> = ({
     multiline={textarea}
     rows={textarea ? 4 : undefined}
     inputProps={{ maxLength: maxLength }}
+    id={id}
   >
     {children}
   </TextField>

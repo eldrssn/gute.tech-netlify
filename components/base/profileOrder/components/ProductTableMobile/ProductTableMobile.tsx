@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import {
-  Container,
-  Typography,
-  Button,
-  Box,
-  TableBody,
-  TableCell,
-  TableRow,
-} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TableCell from '@mui/material/TableCell';
+import TableBody from '@mui/material/TableBody';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import TableRow from '@mui/material/TableRow';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
-import { ModalPortal } from 'components/main/ModalPortal';
 import { formatPrice } from 'utility/helpers';
 import { getLinkToProduct } from 'utility/helpers/linkmakers';
 
@@ -38,22 +35,21 @@ const ProductTableMobile: React.FC<TableBodyProps> = ({ products }) => {
   return (
     <>
       {isModalAlertOpen && (
-        <ModalPortal>
-          <ModalWrapper
-            isOpen={isModalAlertOpen}
-            setIsOpen={setIsModalAlertOpen}
-          >
-            <Container fixed className={styles.wrap}>
-              <Box className={styles.closeModal} onClick={closeModal}>
-                <FontAwesomeIcon icon={faTimes} />
-              </Box>
-              <Typography className={styles.title}>Товар не найден</Typography>
-              <Button onClick={closeModal} className={styles.button}>
-                Вернуться к заказу
-              </Button>
-            </Container>
-          </ModalWrapper>
-        </ModalPortal>
+        <ModalWrapper
+          isOpen={isModalAlertOpen}
+          setIsOpen={setIsModalAlertOpen}
+          modalTitle='back-order'
+        >
+          <Container fixed className={styles.wrap}>
+            <Box className={styles.closeModal} onClick={closeModal}>
+              <FontAwesomeIcon icon={faTimes} />
+            </Box>
+            <Typography className={styles.title}>Товар не найден</Typography>
+            <Button onClick={closeModal} className={styles.button}>
+              Вернуться к заказу
+            </Button>
+          </Container>
+        </ModalWrapper>
       )}
       <TableBody className={styles.tableBody}>
         {products.map((item) => {

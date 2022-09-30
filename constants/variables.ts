@@ -11,6 +11,7 @@ const TOKEN_CACHE_TTL = 30 * 24 * 60 * 60 * 1000;
 const TOKEN_CACHE_TTL_DELETE = -1 * 24 * 60 * 60 * 1000;
 const TIMER_DELAY = 59;
 const COOKIE_TTL = 30 * 24 * 60 * 60 * 1000;
+const MIN_FILTERS_COUNT = 6;
 
 const descriptionTypeName = [
   DescriptionTypes.properties,
@@ -61,4 +62,5 @@ export {
   DEV_HOST,
   QueryUrl,
   Slugs,
+  MIN_FILTERS_COUNT,
 };

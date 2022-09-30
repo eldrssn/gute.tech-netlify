@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { TextField, Autocomplete, Box, Typography } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { Controller } from 'react-hook-form';
 
 import {

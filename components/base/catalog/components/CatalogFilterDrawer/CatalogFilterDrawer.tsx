@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import { Drawer } from '@mui/material';
+import Drawer from '@mui/material/Drawer';
 
 import { CatalogFilter } from '../CatalogFilter';
+import { CatalogSort } from '../CatalogSort';
 import { CatalogFilterDrawerProps } from './types';
 
 import styles from './catalogFilterDrawer.module.scss';
-import { CatalogSort } from '../CatalogSort';
 
 const CatalogFilterDrawer: FC<CatalogFilterDrawerProps> = ({
   filtersRequest,

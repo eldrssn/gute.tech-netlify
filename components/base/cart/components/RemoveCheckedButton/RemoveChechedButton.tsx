@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  Button,
-  Container,
-  Typography,
-} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import cn from 'classnames';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
@@ -79,7 +77,11 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
 
   return (
     <>
-      <ModalWrapper isOpen={isOpenModal} setIsOpen={setIsOpenModal}>
+      <ModalWrapper
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        modalTitle='remove-checked'
+      >
         <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box component='div' className={styles.confirmedBlock}>
             <Typography className={styles.titleModal}>

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Box, Container } from '@mui/material';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 import { FooterText } from './components/FooterText';
 import { FooterSocialLinks } from './components/FooterSocialLinks';

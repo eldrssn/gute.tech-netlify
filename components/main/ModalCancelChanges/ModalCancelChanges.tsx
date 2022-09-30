@@ -1,5 +1,7 @@
 import React from 'react';
-import { Container, Typography, Box } from '@mui/material';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
 
@@ -26,9 +28,13 @@ const ModalCancelChanges: React.FC<TOuterProps> = ({
   };
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+    <ModalWrapper
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      modalTitle='cancel-changes'
+    >
       <Container fixed className={styles.wrap}>
-        <Box className={styles.closeModal} onClick={closeModal}>
+        <Box className={styles.closeModal} onClick={closeModal} tabIndex={0}>
           <FontAwesomeIcon icon={faTimes} />
         </Box>
         <Typography className={styles.title}>Отменить изменения?</Typography>

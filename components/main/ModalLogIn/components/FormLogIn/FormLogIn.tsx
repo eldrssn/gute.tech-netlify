@@ -96,6 +96,7 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
                 variant='outlined'
                 type='text'
                 fullWidth
+                id='enter-phone'
               />
             </InputMask>
           )}

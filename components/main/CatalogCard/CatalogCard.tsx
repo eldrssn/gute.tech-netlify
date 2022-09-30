@@ -67,7 +67,6 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
     event.preventDefault();
   };
 
-  // TODO: поменять работу линков, как исправят метод по категориям
   const getLink = () =>
     isSlider
       ? getLinkToProduct({ categories: categories[0], productSlug: slug })

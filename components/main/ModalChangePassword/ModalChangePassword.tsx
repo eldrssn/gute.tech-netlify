@@ -1,7 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, KeyboardEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { Box, FormHelperText, TextField, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import FormHelperText from '@mui/material/FormHelperText';
+import TextField from '@mui/material/TextField';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,6 +19,7 @@ import {
   selectChangePasswordError,
 } from 'store/reducers/user/selectors';
 import { TIMEOUT_DELAY } from 'utility/utils/constants';
+import { handleEnterPress } from 'utility/utils';
 
 import { ModalWrapper } from '../ModalWrapper';
 import { modalFields, passwordRule } from './constants';
@@ -67,11 +72,25 @@ const ModalChangePassword: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
     dispatch(changePassword(data));
   });
 
+  const onEnterPress = (event: KeyboardEvent) => {
+    handleEnterPress(event, closeModal);
+  };
+
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+    <ModalWrapper
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      modalTitle='change-password'
+      initialFocus='#enter-password'
+    >
       {isSuccess ? (
         <div className={styles.wrap}>
-          <Box className={styles.closeModal} onClick={closeModal}>
+          <Box
+            className={styles.closeModal}
+            onClick={closeModal}
+            tabIndex={0}
+            onKeyPress={onEnterPress}
+          >
             <FontAwesomeIcon icon={faTimes} />
           </Box>
 
@@ -84,7 +103,12 @@ const ModalChangePassword: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
         </div>
       ) : (
         <form className={styles.wrap} onSubmit={onSubmit}>
-          <Box className={styles.closeModal} onClick={closeModal}>
+          <Box
+            className={styles.closeModal}
+            onClick={closeModal}
+            tabIndex={0}
+            onKeyPress={onEnterPress}
+          >
             <FontAwesomeIcon icon={faTimes} />
           </Box>
 
@@ -100,6 +124,7 @@ const ModalChangePassword: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
             {...register(modalFields.CURRENT_PASSWORD, passwordRule)}
             error={Boolean(errors[modalFields.CURRENT_PASSWORD])}
             autoComplete='none'
+            id='enter-password'
           />
           {errors[modalFields.CURRENT_PASSWORD] && (
             <FormHelperText error className={styles.inputField_error}>

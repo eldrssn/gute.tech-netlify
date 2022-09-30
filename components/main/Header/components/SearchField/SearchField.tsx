@@ -2,14 +2,13 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import SearchIcon from '@mui/icons-material/Search';
-import {
-  MenuItem,
-  Box,
-  TextField,
-  Typography,
-  Divider,
-  CardMedia,
-} from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import CardMedia from '@mui/material/CardMedia';
+
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
@@ -141,6 +140,7 @@ const SearchField: FC = () => {
           placeholder='Введите артикул, наименование или код запчасти'
           value={searchValue}
           onFocusCapture={handleOpenPopover}
+          onBlur={handleClosePopover}
           type='text'
           autoComplete='off'
         />

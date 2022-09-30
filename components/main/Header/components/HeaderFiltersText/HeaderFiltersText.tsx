@@ -1,9 +1,10 @@
 import React, { FC, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box } from '@mui/system';
 import classnames from 'classnames/bind';
-import { Tooltip, Typography } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 import { clearTransportId } from 'store/reducers/transport/actions';
 import { selectTransportInfo } from 'store/reducers/transport/selectors';

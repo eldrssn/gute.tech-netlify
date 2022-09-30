@@ -1,9 +1,7 @@
 import { FC } from 'react';
-
-import { Grid } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
 import { CategoryCard } from '../CategoryCard';
-
 import { Items } from './types';
 
 const SecondRow: FC<Items> = ({ items }) => (

@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Container } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
 import { fetchItemsFromCart } from 'store/reducers/cart/actions';
 import {

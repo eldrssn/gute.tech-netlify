@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Box, FormLabel } from '@mui/material';
+import Box from '@mui/material/Box';
+import FormLabel from '@mui/material/FormLabel';
 
 import { FormTextfield } from 'components/ui/FormTextfield';
 

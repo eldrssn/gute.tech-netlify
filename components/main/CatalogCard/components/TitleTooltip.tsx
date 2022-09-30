@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Tooltip, Typography } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 
 import { useWindowSize } from 'hooks/useWindowSize';
 

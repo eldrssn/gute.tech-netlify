@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import {
-  Table,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  MenuItem,
-  Box,
-  Button,
-} from '@mui/material';
 import cn from 'classnames';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 import { setItemsFromOrder, setItemsSlugs } from 'store/reducers/order/actions';
 import { useWindowSize } from 'hooks/useWindowSize';

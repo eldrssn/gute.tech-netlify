@@ -1,7 +1,11 @@
 import React, { KeyboardEvent } from 'react';
 import cn from 'classnames';
 import { useForm, useController, Controller } from 'react-hook-form';
-import { Container, Box, Typography, Button, TextField } from '@mui/material';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
@@ -69,7 +73,12 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
     handleEnterPress(event, closeModal);
   };
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
+    <ModalWrapper
+      isOpen={isOpen}
+      setIsOpen={closeModal}
+      modalTitle='advice'
+      initialFocus='#enter-name'
+    >
       <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box
           className={styles.closeModal}
@@ -114,6 +123,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
                     value={nameInput.field.value ? nameInput.field.value : ''}
                     label='Ваше имя'
                     isError={Boolean(nameInput.fieldState.error)}
+                    id='enter-name'
                   />
                 </InputMask>
               </Box>

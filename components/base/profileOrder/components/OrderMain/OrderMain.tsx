@@ -1,7 +1,8 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 import { fetchOrder } from 'store/reducers/user/actions';
 import { selectUserOrder } from 'store/reducers/user/selectors';
