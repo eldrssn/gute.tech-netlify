@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Box, TextField } from '@mui/material';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import InputMask from 'react-input-mask';

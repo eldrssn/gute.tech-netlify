@@ -1,14 +1,15 @@
-import React, { FC } from 'react';
+import React, { FC, KeyboardEvent } from 'react';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import classnames from 'classnames/bind';
+import Link from 'next/link';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import {
   getLinkToCategoryFromCatalog,
   getLinkToParentCategory,
 } from 'utility/helpers/linkmakers';
+import { handleEnterPress } from 'utility/utils';
 
 import { CatalogMenuItemProps } from '../types';
 import styles from './catalogMenuItem.module.scss';
@@ -23,40 +24,36 @@ const CatalogMenuItem: FC<CatalogMenuItemProps> = ({
   handleClick,
   isCategory = false,
 }) => {
-  const router = useRouter();
-
   const transportId = useSelector(selectTransportId);
 
-  const handleClickMenuItem = () => {
-    handleClick();
-
-    if (!isCategory && parentSlug) {
-      router.push(
-        getLinkToCategoryFromCatalog({
+  const getLink = () =>
+    !isCategory && parentSlug
+      ? getLinkToCategoryFromCatalog({
           categorySlug: parentSlug,
           subCategorySlug: item.slug,
           transportId,
-        }),
-      );
-      return;
-    }
+        })
+      : getLinkToParentCategory({ categorySlug: item.slug, transportId });
 
-    router.push(
-      getLinkToParentCategory({ categorySlug: item.slug, transportId }),
-    );
+  const handleEnter = (event: KeyboardEvent) => {
+    handleEnterPress(event, handleClick);
   };
 
   return (
-    <Box
-      className={cn(styles.item, className)}
-      key={item.slug}
-      onClick={handleClickMenuItem}
-      onMouseEnter={onMouseEnter}
-      onFocus={onMouseEnter}
-      tabIndex={0}
-    >
-      {item.title}
-    </Box>
+    <Link href={getLink()}>
+      <a>
+        <Box
+          className={cn(styles.item, className)}
+          key={item.slug}
+          onClick={handleClick}
+          onMouseEnter={onMouseEnter}
+          onFocus={onMouseEnter}
+          onKeyPress={handleEnter}
+        >
+          {item.title}
+        </Box>
+      </a>
+    </Link>
   );
 };
 

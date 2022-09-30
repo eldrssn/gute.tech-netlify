@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 
 import { CustomButton } from 'components/ui/CustomButton';
 import { ModalSaveChanges } from 'components/main/ModalSaveChanges';
@@ -28,6 +28,7 @@ import {
 import { UPDATE_DELAY } from './constants';
 import { TFormDataFields, FormData } from './types';
 import styles from './userForm.module.scss';
+import { ModalEditUserEmail } from 'components/main/ModalEditUserEmail';
 
 const UserForm = () => {
   const dispatch = useDispatch();
@@ -139,6 +140,8 @@ const UserForm = () => {
     setFormChanging(false);
   };
 
+  const [isOpenModalEmail, setIsOpenModalEmail] = useState(false);
+
   return (
     <>
       <form onSubmit={onSumbit} className={styles.formContainer}>
@@ -150,6 +153,7 @@ const UserForm = () => {
           control={control}
           getValues={getValues}
           handleChangeFormValue={handleChangeFormValue}
+          setIsOpenModalEmail={setIsOpenModalEmail}
         />
 
         <PersonalFields
@@ -191,6 +195,15 @@ const UserForm = () => {
           </Box>
         )}
       </form>
+
+      {isOpenModalEmail && (
+        <ModalEditUserEmail
+          isOpen={isOpenModalEmail}
+          setIsOpen={setIsOpenModalEmail}
+          setValue={setValue}
+          getValues={getValues}
+        />
+      )}
     </>
   );
 };

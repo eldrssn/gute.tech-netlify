@@ -1,16 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
-import {
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-  FormControlLabel,
-  Checkbox,
-  Box,
-  CardMedia,
-} from '@mui/material';
+
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import CardMedia from '@mui/material/CardMedia';
 
 import { changeChecked } from 'store/reducers/cart/actions';
 import { formatPrice } from 'utility/helpers';

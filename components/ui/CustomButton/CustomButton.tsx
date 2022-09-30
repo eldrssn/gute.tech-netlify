@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import classnames from 'classnames/bind';
 
 import { CustomButtonType } from './types';
@@ -12,10 +12,12 @@ const CustomButton: React.FC<CustomButtonType> = ({
   href,
   onClick,
   customStyles,
+  id,
   disabled = false,
   type = 'button',
 }) => (
   <Button
+    id={id}
     className={cn(styles.button, customStyles)}
     href={href}
     onClick={onClick}

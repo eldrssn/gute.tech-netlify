@@ -9,6 +9,7 @@ type FormInputProps = {
   maxLength?: number;
   hideValue?: boolean;
   type?: string;
+  id?: string;
 };
 
 export type { FormInputProps };

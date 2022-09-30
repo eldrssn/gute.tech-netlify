@@ -2,6 +2,7 @@ import { FC, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
+import Link from 'next/link';
 import cn from 'classnames';
 
 import { Loader } from 'components/ui/Loader';
@@ -72,20 +73,18 @@ const SubcategoriesList: FC<Props> = ({ isCatalog }) => {
     lastCategorySlug,
   ]);
 
-  const handleClick = (categorySlug: string) => {
+  const getLink = (categorySlug: string) => {
     if (isProductInCategorySlug) {
       const pathWithoutProductSlug = getPathWithoutProductSlug(asPath);
 
-      return router.push(
-        getLinkToCatalog({
-          asPath: pathWithoutProductSlug,
-          categorySlug,
-          transportId,
-        }),
-      );
+      return getLinkToCatalog({
+        asPath: pathWithoutProductSlug,
+        categorySlug,
+        transportId,
+      });
     }
 
-    return router.push(getLinkToCatalog({ asPath, categorySlug, transportId }));
+    return getLinkToCatalog({ asPath, categorySlug, transportId });
   };
 
   return (
@@ -102,13 +101,13 @@ const SubcategoriesList: FC<Props> = ({ isCatalog }) => {
       ) : (
         <>
           {subcategories.length > 0 ? (
-            subcategories.map(({ title, slug: categorySlug }) => {
-              return (
-                <a key={categorySlug} onClick={() => handleClick(categorySlug)}>
+            subcategories.map(({ title, slug: categorySlug }) => (
+              <Link key={categorySlug} href={getLink(categorySlug)}>
+                <a>
                   <Box className={styles.catalogItem}>{title}</Box>
                 </a>
-              );
-            })
+              </Link>
+            ))
           ) : (
             <Box className={styles.catalogItem}>Нет доступных подкатегорий</Box>
           )}

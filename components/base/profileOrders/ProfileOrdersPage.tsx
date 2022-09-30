@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
-import { Container, Box } from '@mui/material';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 import { AsideNavigation } from 'components/ui/AsideNavigation';
 import { PaginationNav } from 'components/ui/PaginationNav';

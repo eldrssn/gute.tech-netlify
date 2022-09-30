@@ -63,7 +63,12 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
   const regionsClassName = cn({ [styles.loader]: isLoading }, styles.regions);
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal}>
+    <ModalWrapper
+      isOpen={isOpen}
+      setIsOpen={closeModal}
+      modalTitle='city'
+      initialFocus='#enter-city'
+    >
       <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box component='div' className={styles.container}>
           <Box
@@ -91,6 +96,7 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
               value={cityInput.field.value}
               label='Введите город'
               isError={Boolean(cityInput.fieldState.error)}
+              id='enter-city'
             />
             <Box className={styles.resetField} onClick={resetInput}>
               <FontAwesomeIcon icon={faTimes} />

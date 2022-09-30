@@ -65,6 +65,7 @@ type PersonalFieldsProps = {
 type AccountFieldsProps = PersonalFieldsProps & {
   setValue: UseFormSetValue<FormData>;
   control: Control<FormData>;
+  setIsOpenModalEmail: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type TDate = Date | null | undefined;

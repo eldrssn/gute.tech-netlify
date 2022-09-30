@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { Typography, Button } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 
 import {

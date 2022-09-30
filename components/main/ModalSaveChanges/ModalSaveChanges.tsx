@@ -20,7 +20,11 @@ const ModalSaveChanges: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
     handleEnterPress(event, closeModal);
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+    <ModalWrapper
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      modalTitle='save-changes'
+    >
       <Container fixed className={styles.wrap}>
         <Box
           className={styles.closeModal}

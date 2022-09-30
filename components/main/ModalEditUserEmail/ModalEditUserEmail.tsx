@@ -123,12 +123,17 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
 
     if (verifyEmailResponse?.status === 'Почта подтверждена') {
       closeModal();
-      setValue(ProfileFields.EMAIL, email);
+      setValue(ProfileFields.EMAIL, email, { shouldDirty: true });
     }
   });
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
+    <ModalWrapper
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      initialFocus='#enter-email'
+      modalTitle='edit-email'
+    >
       <form className={styles.wrap} onSubmit={handleClickSubmitCode}>
         <Box
           className={styles.closeModal}
@@ -154,6 +159,7 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
               placeholder='new-email@email.com'
               error={Boolean(errors.email)}
               autoComplete='email'
+              id='enter-email'
               onChange={(event) =>
                 handleChangeFormValue(event, modalFields.EMAIL)
               }

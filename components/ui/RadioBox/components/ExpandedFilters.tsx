@@ -6,6 +6,7 @@ import { Filters } from './Filters';
 import { FiltersProps } from '../types';
 
 import styles from '../radioBox.module.scss';
+import { MIN_FILTERS_COUNT } from 'constants/variables';
 
 const ExpandedFilters: FC<FiltersProps> = ({
   filters,
@@ -22,14 +23,18 @@ const ExpandedFilters: FC<FiltersProps> = ({
     setSearchValue(searchValue);
   };
 
+  const isTooManyFilters = filters && filters?.length > MIN_FILTERS_COUNT;
+
   return (
     <>
-      <TextField
-        className={styles.textfield}
-        placeholder='Найти'
-        onChange={(event) => handleChangeInput(event)}
-        value={searchValue}
-      />
+      {!isTooManyFilters && (
+        <TextField
+          className={styles.textfield}
+          placeholder='Найти'
+          onChange={(event) => handleChangeInput(event)}
+          value={searchValue}
+        />
+      )}
 
       <Box className={styles.expandFilterList}>
         <Filters

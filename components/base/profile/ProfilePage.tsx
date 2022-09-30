@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Container, Box } from '@mui/material';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 import { AsideNavigation } from 'components/ui/AsideNavigation';
 

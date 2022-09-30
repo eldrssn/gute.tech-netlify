@@ -1,5 +1,5 @@
 import React, { useEffect, MouseEvent } from 'react';
-import useScrollbarSize from 'react-scrollbar-size';
+import AriaModal from 'react-aria-modal';
 import cn from 'classnames';
 
 import { TOuterProps } from './types';
@@ -11,10 +11,10 @@ const ModalWrapper: React.FC<TOuterProps> = ({
   isOpen,
   setIsOpen,
   isCloseDisable,
+  modalTitle,
+  initialFocus,
   closeByEsc = true,
 }) => {
-  const { width: widthScrollBar } = useScrollbarSize();
-
   const closeModal = () => {
     if (isCloseDisable) {
       return null;
@@ -39,24 +39,6 @@ const ModalWrapper: React.FC<TOuterProps> = ({
   );
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.marginRight = `${widthScrollBar}px`;
-      document.body.style.overflow = 'hidden';
-      return;
-    }
-
-    document.body.style.overflow = 'auto';
-    document.body.style.marginRight = '0px';
-  }, [isOpen, widthScrollBar]);
-
-  useEffect(() => {
-    return () => {
-      document.body.style.overflow = 'auto';
-      document.body.style.marginRight = '0px';
-    };
-  }, []);
-
-  useEffect(() => {
     if (!closeByEsc) {
       return;
     }
@@ -69,13 +51,20 @@ const ModalWrapper: React.FC<TOuterProps> = ({
   });
 
   return (
-    <div className={modalBackgroundClassName} onClick={closeModal}>
-      <div className={styles.modal}>
-        <div className={styles.content} onClick={onClickContent}>
-          {children}
+    <AriaModal
+      titleText={modalTitle}
+      underlayStyle={{ zIndex: 1102 }}
+      mounted={isOpen}
+      initialFocus={initialFocus}
+    >
+      <div className={modalBackgroundClassName} onClick={closeModal}>
+        <div className={styles.modal}>
+          <div className={styles.content} onClick={onClickContent}>
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </AriaModal>
   );
 };
 

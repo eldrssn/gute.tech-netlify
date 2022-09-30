@@ -1,12 +1,10 @@
 import React from 'react';
-import {
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-  Box,
-  CardMedia,
-} from '@mui/material';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import CardMedia from '@mui/material/CardMedia';
 
 import { formatPrice, getStockBalance } from 'utility/helpers';
 

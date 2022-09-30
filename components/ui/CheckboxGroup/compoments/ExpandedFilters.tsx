@@ -3,6 +3,7 @@ import { Box, TextField } from '@mui/material';
 import { useRouter } from 'next/router';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
+import { MIN_FILTERS_COUNT } from 'constants/variables';
 
 import { Filters } from './Filters';
 import { FiltersSmallButton } from '../../FiltersSmallButton';
@@ -27,6 +28,8 @@ const ExpandedFilters: FC<ExpandedFilterProps> = ({
     [slug, getQueryOption, filters],
   );
 
+  const isTooManyFilters = filters && filters?.length > MIN_FILTERS_COUNT;
+
   const handleChangeInput = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
@@ -50,12 +53,14 @@ const ExpandedFilters: FC<ExpandedFilterProps> = ({
 
   return (
     <>
-      <TextField
-        className={styles.textfield}
-        placeholder='Найти'
-        onChange={(event) => handleChangeInput(event)}
-        value={searchValue}
-      />
+      {!isTooManyFilters && (
+        <TextField
+          className={styles.textfield}
+          placeholder='Найти'
+          onChange={(event) => handleChangeInput(event)}
+          value={searchValue}
+        />
+      )}
 
       {isAllFiltersChoosen ? (
         <FiltersSmallButton onClick={handleClickReset}>

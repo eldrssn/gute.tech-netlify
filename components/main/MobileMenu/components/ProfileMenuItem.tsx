@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 
 import { ModalLogIn } from 'components/main/ModalLogIn';
 import {

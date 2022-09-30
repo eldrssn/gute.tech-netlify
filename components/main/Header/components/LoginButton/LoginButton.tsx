@@ -77,10 +77,12 @@ const LoginButton = () => {
         />
       </Popover>
 
-      <ModalLogOut
-        isOpen={isOpenModalLogOut}
-        setIsOpen={setIsOpenModalLogOut}
-      />
+      {isOpenModalLogOut && (
+        <ModalLogOut
+          isOpen={isOpenModalLogOut}
+          setIsOpen={setIsOpenModalLogOut}
+        />
+      )}
       <ModalLogIn isOpen={isOpenModalLogIn} setIsOpen={setIsOpenModalLogIn} />
     </>
   );

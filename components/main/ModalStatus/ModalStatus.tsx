@@ -53,7 +53,11 @@ const ModalStatus: FC = () => {
   }, [dispatch, orderId, isLoadingauthorized, isAuthorized]);
 
   return (
-    <ModalWrapper isOpen={isOpenModal} setIsOpen={setIsOpenModal}>
+    <ModalWrapper
+      isOpen={isOpenModal}
+      setIsOpen={setIsOpenModal}
+      modalTitle='modal-status'
+    >
       {isError ? (
         <Box component='div' className={styles.box}>
           <Typography className={styles.title}>Статус Заказа:</Typography>

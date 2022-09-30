@@ -7,11 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { logOut } from 'store/reducers/authentication/exceptionAction';
 import { CustomButton } from 'components/ui/CustomButton';
+import { handleEnterPress } from 'utility/utils';
 
 import { TOuterProps } from '../ModalSaveChanges/types';
 import { ModalWrapper } from '../ModalWrapper';
 import styles from './modalLogOut.module.scss';
-import { handleEnterPress } from 'utility/utils';
 
 const ModalLogOut: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
@@ -31,13 +31,14 @@ const ModalLogOut: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Container fixed className={styles.wrap}>
+    <ModalWrapper isOpen={isOpen} setIsOpen={setIsOpen} modalTitle='logout'>
+      <Container id='modal' fixed className={styles.wrap}>
         <Box
           className={styles.closeModal}
           onClick={closeModal}
-          tabIndex={0}
           onKeyPress={handleKeyClose}
+          tabIndex={0}
+          id='closeExitModal'
         >
           <FontAwesomeIcon icon={faTimes} />
         </Box>
