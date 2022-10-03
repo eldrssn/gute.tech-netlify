@@ -8,16 +8,21 @@ import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
 import { CatalogCard } from 'components/main/CatalogCard';
 
 import { selectTransportId } from 'store/reducers/transport/selectors';
-import { selectRecommendedProductsList } from 'store/reducers/catalog/selectors';
+import {
+  selectCategoriesProductList,
+  // selectRecommendedProductsList,
+} from 'store/reducers/catalog/selectors';
 import {
   clearRecommendedProductsList,
-  fetchRecommendedProductsList,
+  fetchCategoriesProductsList,
+  // fetchRecommendedProductsList,
 } from 'store/reducers/catalog/actions';
 
 import styles from './recommendedProducts.module.scss';
 import { getSlugs } from './helpers';
 import { makeAnArray } from 'utility/helpers';
 
+// TODO: поменять потом на правильные запросы
 const RecommendedProducts: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -30,24 +35,41 @@ const RecommendedProducts: FC = () => {
   const lastCategorySlug = allSlugs[allSlugs.length - 2];
 
   useEffect(() => {
+    // dispatch(
+    //   fetchRecommendedProductsList({
+    //     transportId,
+    //     categorySlug: category,
+    //     productSlug: product,
+    //   }),
+    // );
+
     dispatch(
-      fetchRecommendedProductsList({
-        transportId,
-        categorySlug: category,
-        productSlug: product,
+      fetchCategoriesProductsList({
+        // transportId,
+        // categorySlug: category,
+        categorySlug: allSlugs[1],
+        page: 1,
+        // sort:
       }),
     );
 
     return () => {
       dispatch(clearRecommendedProductsList());
     };
-  }, [dispatch, transportId, category, product, lastCategorySlug]);
+  }, [dispatch, transportId, category, product, lastCategorySlug, allSlugs]);
+
+  // const { data: recommendedProductsResponse } = useSelector(
+  //   selectRecommendedProductsList,
+  // );
 
   const { data: recommendedProductsResponse } = useSelector(
-    selectRecommendedProductsList,
+    selectCategoriesProductList,
   );
 
-  if (!recommendedProductsResponse?.results) {
+  if (
+    !recommendedProductsResponse?.results ||
+    recommendedProductsResponse?.results.length < 4
+  ) {
     return null;
   }
 
@@ -56,7 +78,7 @@ const RecommendedProducts: FC = () => {
   const sliderSettings = {
     className: styles.slider,
     dots: false,
-    infinite: recommendedProducts.length > 3,
+    infinite: recommendedProducts.length < 2,
     speed: 1000,
     slidesToShow: 4,
     slidesToScroll: 1,
