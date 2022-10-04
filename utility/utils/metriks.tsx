@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-const METRIK_ID = 90600042;
+const METRIK_ID = 88162525;
 
 const MetrikScript = () => (
   <>
