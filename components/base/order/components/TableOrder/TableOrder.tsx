@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Table from '@mui/material/Table';
 import TableCell from '@mui/material/TableCell';
@@ -8,8 +9,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
+import { clearCreateOrdering } from 'store/reducers/payment/actions';
+import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { TotalBoxRedirectUrls } from 'utility/utils/constants';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { sendMetrik } from 'utility/utils/metriks';
 
 import { DesktopTableBody } from '../DesktopTableBody';
 import { MobileTableBody } from '../MobileTableBody';
@@ -19,9 +23,14 @@ import styles from '../../styles.module.scss';
 const TableOrder: React.FC<TableOrderProps> = ({ order, orderTotal }) => {
   const { isMobile } = useWindowSize();
 
+  const dispatch = useDispatch();
   const router = useRouter();
 
+  const metrics = useSelector(selectMetrics);
+
   const SumbitOrder = () => {
+    sendMetrik('reachGoal', metrics.button_buy_submit);
+    dispatch(clearCreateOrdering());
     router.push(TotalBoxRedirectUrls.PAYMENT);
   };
 

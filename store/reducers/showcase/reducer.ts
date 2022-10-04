@@ -28,6 +28,7 @@ const handlers = {
       favicon: payload.favicon,
       logo: payload.logo,
       title: payload.title,
+      metrics: payload.metrics,
     };
     state.showcase.isLoading = false;
     state.showcase.error = null;

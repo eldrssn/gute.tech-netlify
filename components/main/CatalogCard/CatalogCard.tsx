@@ -13,19 +13,19 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
 import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
+import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { ModalAddedItemUnAuthorized } from 'components/main/ModalAddedItemUnAuthorized';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
-
 import { CustomButton } from 'components/ui/CustomButton';
-
 import {
   getLinkToProduct,
   getLinkToProductPage,
 } from 'utility/helpers/linkmakers';
 import { formatPrice } from 'utility/helpers';
+import { sendMetrik } from 'utility/utils/metriks';
 
 import { Title } from './components/TitleTooltip';
 
@@ -51,17 +51,20 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   const isShowAuthorizationWarning = useSelector(
     selectShowAuthorizationWarning,
   );
+  const metrics = useSelector(selectMetrics);
 
   const transportId = useSelector(selectTransportId);
 
   const { asPath } = router;
 
   const handleClickToBasket = (event: React.MouseEvent<HTMLElement>) => {
+    sendMetrik('reachGoal', metrics.button_card_cart);
     setIsOpenModalAddedItem(true);
     event.preventDefault();
   };
 
   const buyItNow = (event: React.MouseEvent<HTMLButtonElement>) => {
+    sendMetrik('reachGoal', metrics.button_card_buy);
     dispatch(fetchItemFromOrder({ productSlug: slug }));
     router.push('/order');
     event.preventDefault();

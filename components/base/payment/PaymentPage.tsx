@@ -95,6 +95,10 @@ const PaymentPage: React.FC = () => {
   useEffect(() => {
     dispatch(fetchPaymentMethods());
     dispatch(clearCreateOrdering());
+
+    return () => {
+      dispatch(clearCreateOrdering());
+    };
   }, []);
 
   useEffect(() => {
