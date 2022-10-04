@@ -4,7 +4,7 @@ import { CATALOG_QUERY_DEFAULT } from 'utility/utils/constants';
 import { getIsProductInCategorySlug } from 'utility/helpers';
 
 import { defaultPaths } from './constants';
-import { GetCrumbs } from './types';
+import { TCrumbs } from './types';
 
 const getCrumbs = (
   catalogTree?: TreeCategoryResponseData[],
@@ -26,12 +26,13 @@ const getCrumbs = (
   }, {});
 };
 
-const getCrumblistFromURL: GetCrumbs = (
+const getCrumblistFromURL = ({
   router,
   paths,
   lastTitle,
   transportId,
-) => {
+  isAddDefaultPaths,
+}: TCrumbs) => {
   const asPath = router.asPath.split('?')[0].split('/').splice(1);
 
   const crumblist = asPath.map((subpath, index) => {
@@ -53,7 +54,9 @@ const getCrumblistFromURL: GetCrumbs = (
     return { href, text };
   });
 
-  return [...defaultPaths, ...crumblist.slice(1)];
+  return isAddDefaultPaths
+    ? [...defaultPaths, ...crumblist.slice(1)]
+    : [...crumblist.slice(1)];
 };
 
 export { getCrumbs, getCrumblistFromURL };

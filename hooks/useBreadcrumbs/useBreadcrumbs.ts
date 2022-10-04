@@ -9,18 +9,20 @@ const useBreadcrumbs = ({
   data,
   lastTitle,
   transportId,
+  isAddDefaultPaths,
 }: UseBreadcrumbs) =>
   useMemo(() => {
     const paths = getCrumbs(data);
 
-    const crumblist = getCrumblistFromURL(
+    const crumblist = getCrumblistFromURL({
       router,
       paths,
       lastTitle,
       transportId,
-    );
+      isAddDefaultPaths,
+    });
 
     return crumblist;
-  }, [router, data, lastTitle, transportId]);
+  }, [router, data, lastTitle, transportId, isAddDefaultPaths]);
 
 export { useBreadcrumbs };

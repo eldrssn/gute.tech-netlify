@@ -22,6 +22,7 @@ const NavigationBreadcrumbs: FC<Query> = ({ lastTitle }) => {
     data: categories,
     lastTitle,
     transportId,
+    isAddDefaultPaths: true,
   });
 
   const isLoading = checkLoadingCrumbs(breadcrumbs);

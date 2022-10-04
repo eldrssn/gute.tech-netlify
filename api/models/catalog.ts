@@ -93,6 +93,8 @@ type CategoriesProductListResponseData = {
   results: ProductListData[];
 };
 
+type RecommendedResponceData = ProductListData[];
+
 interface Property {
   title: string;
   value: string;
@@ -143,8 +145,6 @@ type RecommendedProductsListRequestData = TransportSearchRequestData & {
   categorySlug: Slug;
 };
 
-type RecommendedProductsListResponseData = CategoriesProductListResponseData;
-
 export { FilterTypes };
 export type {
   CatalogSearchReadResponseData,
@@ -166,5 +166,5 @@ export type {
   CategoriesProductsListRequestData,
   ProductListData,
   RecommendedProductsListRequestData,
-  RecommendedProductsListResponseData,
+  RecommendedResponceData,
 };

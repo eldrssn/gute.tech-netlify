@@ -6,7 +6,7 @@ import {
   CategoriesProductListResponseData,
   FiltersCategoryResponseData,
   CatalogSearchReadResponseData,
-  RecommendedProductsListResponseData,
+  RecommendedResponceData,
 } from 'api/models/catalog';
 import { ProductWarehouse } from 'api/models/cart';
 
@@ -78,7 +78,7 @@ type CategoriesSubcategoriesReadState = {
 } & StoreState;
 
 type RecommenedProductsListState = {
-  data: RecommendedProductsListResponseData | null;
+  data: RecommendedResponceData | null;
 } & StoreState;
 
 type CatalogStore = {
