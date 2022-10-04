@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import Table from '@mui/material/Table';
 import TableCell from '@mui/material/TableCell';
@@ -11,10 +11,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
+import { clearCreateOrdering } from 'store/reducers/payment/actions';
+import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { setItemsFromOrder, setItemsSlugs } from 'store/reducers/order/actions';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { TotalBoxRedirectUrls } from 'utility/utils/constants';
+import { sendMetrik } from 'utility/utils/metriks';
 
 import { Error } from '../Error';
 import { DesktopTableBody } from '../DesktopTableBody';
@@ -37,12 +40,20 @@ const TableOrder: React.FC<TTableOrderProps> = ({
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const metrics = useSelector(selectMetrics);
+
   const checkedCartItems = getCheckedCartItems(cart);
   const checkedCartItemsSlug = getCheckedCartItemsSlug(checkedCartItems);
 
   const isAllItemsSelect = cart.length === checkedCartItems.length;
 
   const openModalAdvice = () => {
+    sendMetrik('reachGoal', metrics.button_cart_help);
+    setModalAdviceOpen(true);
+  };
+
+  const openSpecialOffer = () => {
+    sendMetrik('reachGoal', metrics.button_cart_special);
     setModalAdviceOpen(true);
   };
 
@@ -51,6 +62,8 @@ const TableOrder: React.FC<TTableOrderProps> = ({
       return;
     }
 
+    sendMetrik('reachGoal', metrics.button_cart_submit);
+    dispatch(clearCreateOrdering());
     dispatch(setItemsSlugs(checkedCartItemsSlug));
     dispatch(setItemsFromOrder(checkedCartItems));
     router.push(
@@ -110,7 +123,7 @@ const TableOrder: React.FC<TTableOrderProps> = ({
             </Typography>
           </MenuItem>
           <MenuItem
-            onClick={openModalAdvice}
+            onClick={openSpecialOffer}
             className={cn(styles.menuItem, styles.menuItemSpecialOffer)}
           >
             <Typography className={styles.specialOffer}>

@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
+import { selectMetrics } from 'store/reducers/showcase/selectors';
 import {
   selectCartTotal,
   selectCartProductTotal,
@@ -16,6 +17,7 @@ import {
 import { useWindowSize } from 'hooks/useWindowSize';
 import { HIDE_PHONE_WIDTH } from 'constants/variables';
 import { formatPrice } from 'utility/helpers';
+import { sendMetrik } from 'utility/utils/metriks';
 
 import { HeaderContext } from '../HeaderContext';
 import { LoginButton } from '../LoginButton';
@@ -30,6 +32,8 @@ const HeaderAsideNav: FC = () => {
   const [isOpenModalAdvice, setIsOpenModalAdvice] = useState(false);
   const { windowWidth, isMobile } = useWindowSize();
 
+  const metrics = useSelector(selectMetrics);
+
   const { phone } = useSelector(selectShowcaseData);
   const cartTotal = useSelector(selectCartTotal);
   const cartProductTotal = useSelector(selectCartProductTotal);
@@ -43,9 +47,14 @@ const HeaderAsideNav: FC = () => {
 
   const formattedCartTotal = formatPrice(cartTotal);
 
-  const handleClickCallback = () => setIsOpenModalAdvice(true);
-  const handlePressCallback = (event: KeyboardEvent) =>
+  const handleClickCallback = () => {
+    sendMetrik('reachGoal', metrics.button_global_help);
+    setIsOpenModalAdvice(true);
+  };
+  const handlePressCallback = (event: KeyboardEvent) => {
+    sendMetrik('reachGoal', metrics.button_global_help);
     handleEnterPress(event, handleClickCallback);
+  };
 
   return (
     <>

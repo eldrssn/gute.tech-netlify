@@ -13,6 +13,7 @@ import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
 import { SubcategoriesList } from 'components/main/SubcategoriesList';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
 import { fetchCategoriesProductsRead } from 'store/reducers/catalog/actions';
 import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
@@ -22,6 +23,7 @@ import {
 } from 'store/reducers/cart/actions';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 import { formatPrice, makeAnArray } from 'utility/helpers';
+import { sendMetrik } from 'utility/utils/metriks';
 
 import { ProductPrice } from './components/ProductPrice';
 import { ProductQuantity } from './components/ProductQuantity';
@@ -49,6 +51,7 @@ const ProductPage: FC = () => {
   );
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
   const isAuthorized = useSelector(selectIsAuthorized);
+  const metrics = useSelector(selectMetrics);
 
   const { categorySlug } = router.query;
   const categorySlugAnArray = makeAnArray(categorySlug);
@@ -108,6 +111,7 @@ const ProductPage: FC = () => {
   };
 
   const buyItNow = () => {
+    sendMetrik('reachGoal', metrics.button_product_buy);
     if (!product) {
       return;
     }
@@ -120,6 +124,7 @@ const ProductPage: FC = () => {
     if (!product) {
       return;
     }
+    sendMetrik('reachGoal', metrics.button_product_cart);
 
     if (isAuthorized) {
       dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 }));

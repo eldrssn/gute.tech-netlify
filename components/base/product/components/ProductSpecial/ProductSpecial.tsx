@@ -1,12 +1,13 @@
 import React, { FC, useState } from 'react';
+import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 
-import { useWindowSize } from 'hooks/useWindowSize';
-
 import { ModalAdvice } from 'components/main/ModalAdvice';
+import { selectMetrics } from 'store/reducers/showcase/selectors';
+import { useWindowSize } from 'hooks/useWindowSize';
+import { sendMetrik } from 'utility/utils/metriks';
 
 import styles from './productSpecial.module.scss';
 
@@ -15,7 +16,15 @@ const cn = classnames.bind(styles);
 const ProductSpecial: FC = () => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState<boolean>(false);
 
+  const metrics = useSelector(selectMetrics);
+
   const openModalAdvice = () => {
+    sendMetrik('reachGoal', metrics.button_product_help);
+    setModalAdviceOpen(true);
+  };
+
+  const openSpecialOffer = () => {
+    sendMetrik('reachGoal', metrics.button_product_special);
     setModalAdviceOpen(true);
   };
 
@@ -44,7 +53,7 @@ const ProductSpecial: FC = () => {
         <Link
           className={cn(styles.productSpecialItem, styles.specialIcon)}
           href='#'
-          onClick={openModalAdvice}
+          onClick={openSpecialOffer}
         >
           Спецпредложение
         </Link>

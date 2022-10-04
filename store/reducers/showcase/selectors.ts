@@ -12,6 +12,11 @@ const selectShowcase = createSelector(
   ({ showcase }) => showcase,
 );
 
+const selectMetrics = createSelector(
+  selectShowcaseStore,
+  ({ showcase }) => showcase.data.metrics,
+);
+
 const selectShowcaseData = createSelector(selectShowcase, ({ data }) => data);
 
-export { selectShowcase, selectShowcaseData };
+export { selectShowcase, selectShowcaseData, selectMetrics };
