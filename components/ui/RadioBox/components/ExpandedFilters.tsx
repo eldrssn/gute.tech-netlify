@@ -2,11 +2,12 @@ import React, { FC, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
+import { MIN_FILTERS_COUNT } from 'constants/variables';
+
 import { Filters } from './Filters';
 import { FiltersProps } from '../types';
 
 import styles from '../radioBox.module.scss';
-import { MIN_FILTERS_COUNT } from 'constants/variables';
 
 const ExpandedFilters: FC<FiltersProps> = ({
   filters,
@@ -27,7 +28,7 @@ const ExpandedFilters: FC<FiltersProps> = ({
 
   return (
     <>
-      {!isTooManyFilters && (
+      {isTooManyFilters && (
         <TextField
           className={styles.textfield}
           placeholder='Найти'

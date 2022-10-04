@@ -16,7 +16,7 @@ import {
   CatalogSearchReadResponseData,
   CategoriesSubcategoriesReadRequestData,
   RecommendedProductsListRequestData,
-  RecommendedProductsListResponseData,
+  RecommendedResponceData,
 } from 'api/models/catalog';
 import { ApiMethods } from 'constants/types';
 import { makeStringify } from 'utility/helpers';
@@ -134,7 +134,7 @@ const getRecommendedProductsList = ({
   const product = makeStringify(productSlug);
   const transport = transportId ? transportId : undefined;
 
-  return sendRequest<RecommendedProductsListResponseData>({
+  return sendRequest<RecommendedResponceData>({
     url: `/v1/catalog/recommendations/`,
     method: ApiMethods.POST,
     config: {

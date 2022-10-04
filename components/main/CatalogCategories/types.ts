@@ -1,5 +1,5 @@
 type Props = {
-  isCatalog?: boolean;
+  isProduct?: boolean;
 };
 
 export type { Props };

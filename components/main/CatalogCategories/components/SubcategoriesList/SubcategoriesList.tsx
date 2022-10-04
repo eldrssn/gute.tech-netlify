@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
-import cn from 'classnames';
 
 import { Loader } from 'components/ui/Loader';
 import {
@@ -19,10 +18,9 @@ import { makeAnArray, getIsProductInCategorySlug } from 'utility/helpers';
 import { getLinkToCatalog } from 'utility/helpers/linkmakers';
 
 import { getPathWithoutProductSlug } from './helpers';
-import { Props } from './types';
 import styles from './styles.module.scss';
 
-const SubcategoriesList: FC<Props> = ({ isCatalog }) => {
+const SubcategoriesList: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -88,14 +86,7 @@ const SubcategoriesList: FC<Props> = ({ isCatalog }) => {
   };
 
   return (
-    <Box
-      className={cn(styles.mainContainer, {
-        [styles.mainContainerParentCategory]: isCatalog,
-      })}
-      sx={{
-        display: { xs: isCatalog ? 'block' : 'none', md: 'block' },
-      }}
-    >
+    <Box>
       {isLoading ? (
         <Loader />
       ) : (

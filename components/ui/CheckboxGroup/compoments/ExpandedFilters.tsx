@@ -1,5 +1,6 @@
 import React, { FC, useMemo, useState } from 'react';
-import { Box, TextField } from '@mui/material';
+import Box from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/router';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
@@ -53,7 +54,7 @@ const ExpandedFilters: FC<ExpandedFilterProps> = ({
 
   return (
     <>
-      {!isTooManyFilters && (
+      {isTooManyFilters && (
         <TextField
           className={styles.textfield}
           placeholder='Найти'

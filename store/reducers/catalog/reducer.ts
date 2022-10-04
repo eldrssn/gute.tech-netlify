@@ -7,7 +7,7 @@ import {
   CategoriesProductListResponseData,
   CategoriesProductReadResponseData,
   CatalogSearchReadResponseData,
-  RecommendedProductsListResponseData,
+  RecommendedResponceData,
 } from 'api/models/catalog';
 
 import {
@@ -274,7 +274,7 @@ const handlers = {
   },
   [fetchRecommendedProductsList.fulfilled.type]: (
     state: CatalogStore,
-    { payload }: PayloadAction<RecommendedProductsListResponseData>,
+    { payload }: PayloadAction<RecommendedResponceData>,
   ) => {
     state.recommendedProductsList.data = payload;
     state.recommendedProductsList.isLoading = false;

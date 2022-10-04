@@ -21,7 +21,7 @@ import { selectTransportId } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
 import { PaginationNav } from 'components/ui/PaginationNav';
-import { SubcategoriesList } from 'components/main/SubcategoriesList';
+import { CatalogCategories } from 'components/main/CatalogCategories';
 import { Sorting, filtersRequest } from 'types';
 
 import { CatalogFilter } from '../CatalogFilter';
@@ -30,6 +30,7 @@ import { CatalogGrid } from '../CatalogGrid';
 import { CatalogSort } from '../CatalogSort';
 import { PAGE_QUERY } from '../../constants';
 import { isNotEnoughtItems, makeFiltersQueryObject } from '../../helpers';
+
 import styles from './catalogMain.module.scss';
 
 const cn = classnames.bind(styles);
@@ -155,7 +156,7 @@ const CatalogMain: FC = () => {
       <Box className={styles.catalogMainBox}>
         {!isMobile && (
           <Box className={styles.sideMenu}>
-            <SubcategoriesList isCatalog />
+            <CatalogCategories />
             <Box className={styles.catalogFilter_desktop}>
               <CatalogFilter
                 filtersRequest={filtersRequest}
@@ -190,7 +191,6 @@ const CatalogMain: FC = () => {
               />
             </Box>
           )}
-          {isMobile && <SubcategoriesList isCatalog />}
 
           {isLoading ? <Loader /> : <CatalogGrid items={results || []} />}
         </Box>

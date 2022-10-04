@@ -6,18 +6,20 @@ type Crumb = {
   text?: string;
 };
 
-type GetCrumbs = (
-  router: NextRouter,
-  paths: Record<string, string>,
-  lastTitle?: string,
-  transportId?: string,
-) => Crumb[];
+type TCrumbs = {
+  router: NextRouter;
+  paths: Record<string, string>;
+  lastTitle?: string;
+  transportId?: string;
+  isAddDefaultPaths?: boolean;
+};
 
 type UseBreadcrumbs = {
   router: NextRouter;
   data?: TreeCategoryResponseData[];
   lastTitle?: string;
   transportId?: string;
+  isAddDefaultPaths?: boolean;
 };
 
-export type { GetCrumbs, UseBreadcrumbs, Crumb };
+export type { TCrumbs, UseBreadcrumbs, Crumb };

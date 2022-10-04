@@ -29,8 +29,8 @@ import {
   FiltersCategoryResponseData,
   CategoriesProductReadResponseData,
   CatalogSearchReadResponseData,
-  RecommendedProductsListResponseData,
   RecommendedProductsListRequestData,
+  RecommendedResponceData,
 } from 'api/models/catalog';
 import { createAsyncAction } from 'utility/helpers/store';
 
@@ -126,7 +126,7 @@ const fetchCategoriesSubcategoriesRead = createAsyncAction<
 });
 
 const fetchRecommendedProductsList = createAsyncAction<
-  RecommendedProductsListResponseData,
+  RecommendedResponceData,
   RecommendedProductsListRequestData
 >({
   typeAction: 'CatalogStore/fetchRecommendedProductsList',

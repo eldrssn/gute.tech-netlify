@@ -11,7 +11,6 @@ import { ModalAddedItemUnAuthorized } from 'components/main/ModalAddedItemUnAuth
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
 import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
-import { SubcategoriesList } from 'components/main/SubcategoriesList';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
@@ -21,8 +20,10 @@ import {
   addProductToCartAuthorized,
   addProductToCartUnAuthorized,
 } from 'store/reducers/cart/actions';
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 import { formatPrice, makeAnArray } from 'utility/helpers';
+import { useWindowSize } from 'hooks/useWindowSize';
 import { sendMetrik } from 'utility/utils/metriks';
 
 import { ProductPrice } from './components/ProductPrice';
@@ -31,19 +32,19 @@ import { ProductSpecial } from './components/ProductSpecial';
 import { ProductImageGallery } from './components/ProductImageGallery';
 import { ProductTabsDescription } from './components/ProductTabsDescription';
 import { RecommendedProducts } from './components/RecommendedProducts';
+import { CatalogCategories } from 'components/main/CatalogCategories';
 import { getProductSlug } from './helpers';
 import { PropertyNameByType } from './constants';
 import { Properties } from './types';
 
-import { selectTransportId } from 'store/reducers/transport/selectors';
-
 import styles from './productPage.module.scss';
 
 const ProductPage: FC = () => {
-  const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
-
   const router = useRouter();
   const dispatch = useDispatch();
+  const { isMobile } = useWindowSize();
+
+  const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
 
   const transportId = useSelector(selectTransportId);
   const isShowAuthorizationWarning = useSelector(
@@ -166,7 +167,7 @@ const ProductPage: FC = () => {
       )}
 
       <Box className={styles.mainContainer}>
-        <SubcategoriesList />
+        {!isMobile && <CatalogCategories isProduct />}
 
         <Box
           sx={{
