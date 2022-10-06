@@ -43,9 +43,14 @@ function MyApp({ Component, pageProps, metricID }: ComponentWithPageLayout) {
 MyApp.getInitialProps = async (context: AppContext) => {
   const appProps = await App.getInitialProps(context);
   const results = await getShowcase();
+
+  if (!results || !results.metrics) {
+    return { metricID: 0, appProps };
+  }
+
   const metrickID = results.metrics.metric_id;
 
-  return { metricID: metrickID, appProps };
+  return { metricID: metrickID ? metrickID : 0, appProps };
 };
 
 export default wrapper.withRedux(MyApp);
