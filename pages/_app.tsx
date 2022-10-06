@@ -1,12 +1,12 @@
 import { wrapper } from 'store';
-import App, { AppContext } from 'next/app';
+// import App, { AppContext } from 'next/app';
 import { MainLayout } from 'layouts/MainLayout';
 import { InitialLoader } from 'layouts/InitialLoader';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 
-import { getShowcase } from 'api/routes/showcase';
+// import { getShowcase } from 'api/routes/showcase';
 import { MetrikScript } from 'utility/utils/metriks';
 
 import 'styles/globals.scss';
@@ -21,12 +21,12 @@ const cache = createCache({
   prepend: true,
 });
 
-function MyApp({ Component, pageProps, metricID }: ComponentWithPageLayout) {
+function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   const Wrapper = Component.PageLayout || MainLayout;
 
   return (
     <>
-      <MetrikScript metricID={metricID} />
+      <MetrikScript metricID={90677898} />
       <CacheProvider value={cache}>
         <ThemeProvider theme={theme}>
           <InitialLoader>
@@ -40,17 +40,17 @@ function MyApp({ Component, pageProps, metricID }: ComponentWithPageLayout) {
   );
 }
 
-MyApp.getInitialProps = async (context: AppContext) => {
-  const appProps = await App.getInitialProps(context);
-  const results = await getShowcase();
+// MyApp.getInitialProps = async (context: AppContext) => {
+//   const appProps = await App.getInitialProps(context);
+//   const results = await getShowcase();
 
-  if (!results || !results.metrics) {
-    return { metricID: 0, appProps };
-  }
+//   if (!results || !results.metrics) {
+//     return { metricID: 0, appProps };
+//   }
 
-  const metrickID = results.metrics.metric_id;
+//   const metrickID = results.metrics.metric_id;
 
-  return { metricID: metrickID ? metrickID : 0, appProps };
-};
+//   return { metricID: metrickID ? metrickID : 0, appProps };
+// };
 
 export default wrapper.withRedux(MyApp);

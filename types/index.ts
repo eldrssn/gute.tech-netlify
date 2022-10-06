@@ -5,7 +5,6 @@ type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {
     PageLayout: React.ComponentType;
   };
-  metricID: number;
 };
 
 type Sorting = {
