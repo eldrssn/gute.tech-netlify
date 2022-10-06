@@ -112,7 +112,7 @@ const ProductPage: FC = () => {
   };
 
   const buyItNow = () => {
-    sendMetrik('reachGoal', metrics.button_product_buy);
+    sendMetrik('reachGoal', metrics.button_product_buy, metrics.metric_id);
     if (!product) {
       return;
     }
@@ -125,7 +125,7 @@ const ProductPage: FC = () => {
     if (!product) {
       return;
     }
-    sendMetrik('reachGoal', metrics.button_product_cart);
+    sendMetrik('reachGoal', metrics.button_product_cart, metrics.metric_id);
 
     if (isAuthorized) {
       dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 }));

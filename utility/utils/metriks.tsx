@@ -1,8 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-const METRIK_ID = 90663001;
-
-const MetrikScript = () => (
+const MetrikScript = ({ metricID }: { metricID: number }) => (
   <>
     <script
       dangerouslySetInnerHTML={{
@@ -13,7 +11,7 @@ const MetrikScript = () => (
                 k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
                 (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
       
-                ym(${METRIK_ID}, "init", {
+                ym(${metricID}, "init", {
                       clickmap:true,
                       trackLinks:true,
                       accurateTrackBounce:true
@@ -24,7 +22,7 @@ const MetrikScript = () => (
     <noscript>
       <div>
         <img
-          src={`https://mc.yandex.ru/watch/${METRIK_ID}`}
+          src={`https://mc.yandex.ru/watch/${metricID}`}
           style={{ position: 'absolute', left: '-9999px' }}
           alt=''
         />
@@ -33,8 +31,12 @@ const MetrikScript = () => (
   </>
 );
 
-const sendMetrik = (type: string, value: string) => {
-  window.ym(METRIK_ID, type, value);
+const sendMetrik = (type: string, value: string, metricID: number) => {
+  if (!value || !metricID) {
+    return;
+  }
+
+  window.ym(metricID, type, value);
 };
 
 export { sendMetrik, MetrikScript };

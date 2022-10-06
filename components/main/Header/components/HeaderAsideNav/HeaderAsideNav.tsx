@@ -48,11 +48,11 @@ const HeaderAsideNav: FC = () => {
   const formattedCartTotal = formatPrice(cartTotal);
 
   const handleClickCallback = () => {
-    sendMetrik('reachGoal', metrics.button_global_help);
+    sendMetrik('reachGoal', metrics.button_global_help, metrics.metric_id);
     setIsOpenModalAdvice(true);
   };
   const handlePressCallback = (event: KeyboardEvent) => {
-    sendMetrik('reachGoal', metrics.button_global_help);
+    sendMetrik('reachGoal', metrics.button_global_help, metrics.metric_id);
     handleEnterPress(event, handleClickCallback);
   };
 

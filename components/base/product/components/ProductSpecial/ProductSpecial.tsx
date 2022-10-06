@@ -19,12 +19,12 @@ const ProductSpecial: FC = () => {
   const metrics = useSelector(selectMetrics);
 
   const openModalAdvice = () => {
-    sendMetrik('reachGoal', metrics.button_product_help);
+    sendMetrik('reachGoal', metrics.button_product_help, metrics.metric_id);
     setModalAdviceOpen(true);
   };
 
   const openSpecialOffer = () => {
-    sendMetrik('reachGoal', metrics.button_product_special);
+    sendMetrik('reachGoal', metrics.button_product_special, metrics.metric_id);
     setModalAdviceOpen(true);
   };
 
