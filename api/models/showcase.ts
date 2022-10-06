@@ -13,6 +13,7 @@ export type ShowcaseResponseData = {
   social_link_instagram: string;
   social_link_facebook: string;
   metrics: {
+    metric_id: number;
     button_card_buy: string;
     button_card_cart: string;
     button_product_buy: string;

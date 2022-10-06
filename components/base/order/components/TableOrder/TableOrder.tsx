@@ -29,7 +29,7 @@ const TableOrder: React.FC<TableOrderProps> = ({ order, orderTotal }) => {
   const metrics = useSelector(selectMetrics);
 
   const SumbitOrder = () => {
-    sendMetrik('reachGoal', metrics.button_buy_submit);
+    sendMetrik('reachGoal', metrics.button_buy_submit, metrics.metric_id);
     dispatch(clearCreateOrdering());
     router.push(TotalBoxRedirectUrls.PAYMENT);
   };

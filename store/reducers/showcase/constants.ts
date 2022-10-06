@@ -17,6 +17,7 @@ const initialState: ShowcaseStore = {
       logo: '',
       title: '',
       metrics: {
+        metric_id: 0,
         button_card_buy: '',
         button_card_cart: '',
         button_product_buy: '',

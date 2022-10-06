@@ -5,6 +5,7 @@ enum ShowcaseStoreBlocks {
 }
 
 type Metrics = {
+  metric_id: number;
   button_card_buy: string;
   button_card_cart: string;
   button_product_buy: string;
