@@ -30,6 +30,7 @@ import { sendMetrik } from 'utility/utils/metriks';
 
 import { CatalogCardProps } from './types';
 import styles from './catalogCard.module.scss';
+import Image from 'next/image';
 
 const cn = classnames.bind(styles);
 
@@ -87,14 +88,25 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
       >
         <Link href={getLink()}>
           <a className={styles.cardLinkContainer}>
-            <CardMedia
+            {/*  TODO: ОТТЕСТИТЬ */}
+            {/* <CardMedia
               component={'img'}
               height='250'
               src={image || '/images/no-image.jpeg'}
               alt={title}
               className={styles.cardImage}
-            />
-
+            /> */}
+            <Box sx={{ height: '250px', width: '100%', position: 'relative' }}>
+              <Image
+                layout='fill'
+                alt={title}
+                src={image || '/images/no-image.jpeg'}
+                blurDataURL='/images/no-image.jpeg'
+                // height={250}
+                // width={200}
+                className={styles.cardImage}
+              />
+            </Box>
             <CardContent className={styles.cardInfo}>
               <Divider className={styles.cardDivider} />
 
