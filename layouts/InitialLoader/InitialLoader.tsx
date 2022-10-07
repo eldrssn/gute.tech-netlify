@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -59,9 +60,10 @@ const InitialLoader: React.FC = ({ children }) => {
   const transportId = useSelector(selectTransportId);
   const isAuthorized = useSelector(selectIsAuthorized);
   const selectedCitySlug = useSelector(selectSelectedCitySlug);
-  const { favicon } = useSelector(selectShowcaseData);
+  const { favicon, metrics } = useSelector(selectShowcaseData);
   const cartIsUpdated = useSelector(selectCartUpdated);
   const { data: status } = useSelector(selectStatus);
+  const metricId = metrics.metric_id;
 
   useEffect(() => {
     dispatch(fetchShowcase());
@@ -70,6 +72,19 @@ const InitialLoader: React.FC = ({ children }) => {
     dispatch(fetchRegions());
     dispatch(fetchBranches());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!metricId) {
+      return;
+    }
+
+    window.ym(metricId, 'init', {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+      ecommerce: 'dataLayer',
+    });
+  }, [metricId, dispatch]);
 
   useEffect(() => {
     if (isAuthorized) {
@@ -197,6 +212,15 @@ const InitialLoader: React.FC = ({ children }) => {
       </Head>
       {children}
       <div id='modal-root'></div>
+      <noscript>
+        <div>
+          <img
+            src={`https://mc.yandex.ru/watch/${metricId}`}
+            style={{ position: 'absolute', left: '-9999px' }}
+            alt=''
+          />
+        </div>
+      </noscript>
     </>
   );
 };
