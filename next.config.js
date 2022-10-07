@@ -34,7 +34,14 @@ const securityHeaders = [
 module.exports = {
   ...nextConfig,
   images: {
-    domains: ['api-stage.gute.tech', 'api.gute.tech'],
+    domains: ['api-stage.gute.tech', 'api.gute.tech', 'parts.gute.tech'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+        domains: '*.gute.tech',
+      },
+    ],
   },
   async headers() {
     return [
