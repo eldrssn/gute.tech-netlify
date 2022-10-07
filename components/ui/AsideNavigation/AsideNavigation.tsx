@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
-import { Box, CardMedia, Divider, MenuItem } from '@mui/material';
+import Box from '@mui/material/Box';
+import CardMedia from '@mui/material/CardMedia';
+import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
 
 import { useWindowSize } from 'hooks/useWindowSize';
 import { selectUserProfile } from 'store/reducers/user/selectors';

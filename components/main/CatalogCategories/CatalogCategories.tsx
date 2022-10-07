@@ -9,6 +9,7 @@ import { useBreadcrumbs } from 'hooks/useBreadcrumbs';
 import { selectCategoriesTreeList } from 'store/reducers/catalog/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { SubcategoriesList } from 'components/main/CatalogCategories/components/SubcategoriesList';
+import { Tittle } from 'components/ui/TittleTooltip/TittleTooltip';
 
 import { sliceLastElement } from './helpers';
 import { Props } from './types';
@@ -41,7 +42,9 @@ const CatalogCategories: FC<Props> = ({ isProduct }) => {
             {treeCrumbs.length - 1 !== index && (
               <ArrowBackIosNewIcon color='primary' className={styles.arrow} />
             )}
-            <p className={styles.categoryText}>{text}</p>
+            <Tittle className={styles.categoryText} placement='right'>
+              {text}
+            </Tittle>
           </a>
         </Link>
       ))}

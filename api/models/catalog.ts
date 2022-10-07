@@ -1,4 +1,4 @@
-import { filtersRequest, Slug } from 'types';
+import { FiltersRequest, Slug } from 'types';
 import { ProductWarehouse } from './cart';
 
 type ProductListData = {
@@ -14,7 +14,7 @@ type CategoriesProductsListRequestData = {
   page?: number;
   sort?: string;
   order?: string;
-  filter?: filtersRequest;
+  filter?: FiltersRequest;
 };
 
 type TransportSearchRequestData = {
@@ -29,7 +29,7 @@ type CategoriesFiltersListRequestData = {
   page?: number;
   sort?: string;
   order?: string;
-  filter?: filtersRequest;
+  filter?: FiltersRequest;
 };
 
 type CategoriesProductsReadRequestData = {

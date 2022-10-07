@@ -1,7 +1,6 @@
 import { CheckboxValue } from 'api/models/catalog';
-import { NextRouter } from 'next/router';
 import { MIN_FILTERS_COUNT } from './constants';
-import { GetQueryOptions } from './types';
+import { ChooseAllFilters, GetQueryOptions } from './types';
 
 const checkIsAllFiltersChoosen = (
   slug: string,
@@ -11,7 +10,7 @@ const checkIsAllFiltersChoosen = (
   const queryOptions = getQueryOption(slug);
 
   if (!queryOptions || !filters) {
-    return;
+    return false;
   }
 
   return (
@@ -25,29 +24,26 @@ const checkFilterListLarge = (values?: CheckboxValue[]) =>
 const sliceFilters = (values?: CheckboxValue[]) =>
   values?.slice(0, MIN_FILTERS_COUNT);
 
-const chooseAllFilters = (
-  router: NextRouter,
-  slug: string,
-  filters?: CheckboxValue[],
-) => {
+const chooseAllFilters = ({
+  setFiltersRequest,
+  slug,
+  filters,
+}: ChooseAllFilters) => {
   if (!filters) {
     return;
   }
 
-  const slugs: string[] = filters.reduce(
-    (accumulator: string[], filter: CheckboxValue) => {
-      return [...accumulator, filter.value];
-    },
-    [],
-  );
+  const reducedFilters =
+    filters?.reduce(
+      (accumulator: string[], filter) =>
+        accumulator ? [...accumulator, filter.value] : [filter.value],
+      [],
+    ) || [];
 
-  const checkboxQuery = slugs.reduce((accumulator, query) => {
-    return `${accumulator}&${slug}=${query}`;
-  }, '');
-
-  const { asPath } = router;
-  const href = `${asPath}${checkboxQuery}`;
-  router.push(href, undefined, { scroll: false });
+  setFiltersRequest((filtersRequest) => ({
+    ...filtersRequest,
+    [slug]: reducedFilters,
+  }));
 };
 
 const filterFilters = (searchValue: string, filters?: CheckboxValue[]) =>

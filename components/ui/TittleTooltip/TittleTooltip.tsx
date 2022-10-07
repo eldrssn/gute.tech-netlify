@@ -4,23 +4,22 @@ import Typography from '@mui/material/Typography';
 
 import { useWindowSize } from 'hooks/useWindowSize';
 
-import { TitleProps } from '../types';
-import styles from '../catalogCard.module.scss';
+import { TittleProps } from './types';
 
-const Title: FC<TitleProps> = ({ children }) => {
+const Tittle: FC<TittleProps> = ({ children, className, placement }) => {
   const { isMobile } = useWindowSize();
 
   return isMobile ? (
-    <Typography className={styles.cardTitle} gutterBottom component='h3'>
+    <Typography className={className} gutterBottom component='h3'>
       {children}
     </Typography>
   ) : (
-    <Tooltip title={children} placement='top'>
-      <Typography className={styles.cardTitle} gutterBottom component='h3'>
+    <Tooltip title={children || 'title'} placement={placement}>
+      <Typography className={className} gutterBottom component='h3'>
         {children}
       </Typography>
     </Tooltip>
   );
 };
 
-export { Title };
+export { Tittle };

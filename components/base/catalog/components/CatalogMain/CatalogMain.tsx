@@ -22,7 +22,7 @@ import { CustomButton } from 'components/ui/CustomButton';
 import { Loader } from 'components/ui/Loader';
 import { PaginationNav } from 'components/ui/PaginationNav';
 import { CatalogCategories } from 'components/main/CatalogCategories';
-import { Sorting, filtersRequest } from 'types';
+import { Sorting, FiltersRequest } from 'types';
 
 import { CatalogFilter } from '../CatalogFilter';
 import { CatalogFilterDrawer } from '../CatalogFilterDrawer';
@@ -44,7 +44,7 @@ const CatalogMain: FC = () => {
   const [page, setPage] = useState(1);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [sorting, setSorting] = useState<Sorting | null>(null);
-  const [filtersRequest, setFiltersRequest] = useState<filtersRequest | null>(
+  const [filtersRequest, setFiltersRequest] = useState<FiltersRequest | null>(
     null,
   );
   const [anchorApplyButton, setAnchorApplyButton] =
@@ -181,6 +181,7 @@ const CatalogMain: FC = () => {
             <Box
               component='section'
               className={cn(styles.cardHeader, styles.cardHeaderContainer)}
+              sx={{ top: { sm: '105px', lg: '60px' } }}
             >
               <CatalogSort setSorting={setSorting} />
 

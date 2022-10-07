@@ -1,15 +1,15 @@
-import { filtersRequest } from 'types';
+import { FiltersRequest } from 'types';
 
 type CatalogFilterProps = {
   setFiltersRequest: React.Dispatch<
-    React.SetStateAction<filtersRequest | null>
+    React.SetStateAction<FiltersRequest | null>
   >;
   anchorApplyButton: HTMLElement | null;
   setAnchorApplyButton: React.Dispatch<
     React.SetStateAction<HTMLElement | null>
   >;
   handleDrawerToggle?: () => void;
-  filtersRequest: filtersRequest | null;
+  filtersRequest: FiltersRequest | null;
 };
 
 export type { CatalogFilterProps };

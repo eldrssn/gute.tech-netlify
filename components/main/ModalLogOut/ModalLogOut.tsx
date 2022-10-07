@@ -1,7 +1,9 @@
 import React, { FC, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { Box, Container, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

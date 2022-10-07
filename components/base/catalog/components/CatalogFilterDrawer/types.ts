@@ -1,17 +1,17 @@
-import { filtersRequest, Sorting } from 'types';
+import { FiltersRequest, Sorting } from 'types';
 
 type CatalogFilterDrawerProps = {
   openDrawer: boolean;
   handleDrawerToggle: () => void;
   setFiltersRequest: React.Dispatch<
-    React.SetStateAction<filtersRequest | null>
+    React.SetStateAction<FiltersRequest | null>
   >;
   anchorApplyButton: HTMLElement | null;
   setAnchorApplyButton: React.Dispatch<
     React.SetStateAction<HTMLElement | null>
   >;
   setSorting: React.Dispatch<React.SetStateAction<Sorting | null>>;
-  filtersRequest: filtersRequest | null;
+  filtersRequest: FiltersRequest | null;
 };
 
 export type { CatalogFilterDrawerProps };

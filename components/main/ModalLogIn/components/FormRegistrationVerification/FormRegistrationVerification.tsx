@@ -2,7 +2,9 @@ import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController } from 'react-hook-form';
 import { useTimer } from 'react-timer-hook';
-import { Box, Typography, FormControl } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
 import cn from 'classnames';
 
 import {

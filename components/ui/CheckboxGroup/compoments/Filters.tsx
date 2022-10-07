@@ -22,6 +22,7 @@ const Filters: FC<FiltersProps> = ({
   if (filtredFilters?.length === 0) {
     return <p className={styles.noFoundLabel}>Ничего не найдено</p>;
   }
+
   return (
     <>
       {filtredFilters?.map((element: CheckboxValue) => {

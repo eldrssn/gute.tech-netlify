@@ -1,5 +1,5 @@
 import { CheckboxValue } from 'api/models/catalog';
-import { AnchorClick } from 'types';
+import { AnchorClick, FiltersRequest } from 'types';
 
 type GetQueryOptions = (name: string) => string | string[] | undefined;
 
@@ -13,6 +13,22 @@ type FiltersProps = {
 
 type ExpandedFilterProps = FiltersProps & {
   slug: string;
+  setFiltersRequest: React.Dispatch<
+    React.SetStateAction<FiltersRequest | null>
+  >;
 };
 
-export type { GetQueryOptions, FiltersProps, ExpandedFilterProps };
+type ChooseAllFilters = {
+  setFiltersRequest: React.Dispatch<
+    React.SetStateAction<FiltersRequest | null>
+  >;
+  slug: string;
+  filters?: CheckboxValue[];
+};
+
+export type {
+  GetQueryOptions,
+  FiltersProps,
+  ExpandedFilterProps,
+  ChooseAllFilters,
+};
