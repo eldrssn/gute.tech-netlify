@@ -51,16 +51,12 @@
   display: flex;
   justify-content: space-between;
   position: sticky;
-  top: 60px;
 
   left: 0;
   z-index: $z-index8;
 }
 
 .pages {
-  transition: transform 0.5s ease-in-out;
-  position: sticky;
-  bottom: 0;
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
@@ -71,12 +67,6 @@
   top: 3px;
   right: 3px;
   z-index: $z-index9;
-}
-
-@media (max-width: $tablet) {
-  .cardHeader {
-    top: 105px;
-  }
 }
 
 @media (max-width: $xsMobile) {

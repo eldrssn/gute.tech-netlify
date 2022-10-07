@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { Container } from '@mui/material';
+import Container from '@mui/material/Container';
 
 import { PaymentPage } from 'components/base/payment';
 

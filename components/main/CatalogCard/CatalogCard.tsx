@@ -18,6 +18,7 @@ import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { ModalAddedItemUnAuthorized } from 'components/main/ModalAddedItemUnAuthorized';
+import { Tittle } from 'components/ui/TittleTooltip/TittleTooltip';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 import { CustomButton } from 'components/ui/CustomButton';
 import {
@@ -26,8 +27,6 @@ import {
 } from 'utility/helpers/linkmakers';
 import { formatPrice } from 'utility/helpers';
 import { sendMetrik } from 'utility/utils/metriks';
-
-import { Title } from './components/TitleTooltip';
 
 import { CatalogCardProps } from './types';
 import styles from './catalogCard.module.scss';
@@ -99,7 +98,9 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
             <CardContent className={styles.cardInfo}>
               <Divider className={styles.cardDivider} />
 
-              <Title>{title}</Title>
+              <Tittle className={styles.cardTitle} placement='top'>
+                {title}
+              </Tittle>
 
               <Box className={styles.cardBottom}>
                 <div className={styles.cardBottom_price}>

@@ -1,7 +1,6 @@
-import React, { FC, useMemo, useState } from 'react';
-import Box from '@mui/material/TextField';
+import React, { FC, useState } from 'react';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { useRouter } from 'next/router';
 
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { MIN_FILTERS_COUNT } from 'constants/variables';
@@ -19,15 +18,18 @@ const ExpandedFilters: FC<ExpandedFilterProps> = ({
   setOnChange,
   getIsChecked,
   handleAnchorClick,
+  setFiltersRequest,
 }) => {
-  const router = useRouter();
-  const { removeQuery, getQueryOption } = useRouterQuery();
+  const { getQueryOption } = useRouterQuery();
   const [searchValue, setSearchValue] = useState('');
 
-  const isAllFiltersChoosen = useMemo(
-    () => checkIsAllFiltersChoosen(slug, getQueryOption, filters),
-    [slug, getQueryOption, filters],
-  );
+  const [isAllFiltersChoosen, setIsAllFiltersChoosen] = useState<
+    boolean | (() => boolean)
+  >(checkIsAllFiltersChoosen(slug, getQueryOption, filters));
+
+  const toggleAllFiltersChoosen = () => {
+    setIsAllFiltersChoosen((isAllFiltersChoosen) => !isAllFiltersChoosen);
+  };
 
   const isTooManyFilters = filters && filters?.length > MIN_FILTERS_COUNT;
 
@@ -41,15 +43,21 @@ const ExpandedFilters: FC<ExpandedFilterProps> = ({
   const handleClickReset = (
     event: React.MouseEvent<HTMLElement, MouseEvent>,
   ) => {
-    removeQuery(slug, undefined, false);
+    setFiltersRequest((filtersRequest) => ({
+      ...filtersRequest,
+      [slug]: [],
+    }));
+
+    toggleAllFiltersChoosen();
     handleAnchorClick(event);
   };
 
   const handleClickChooseAllFilters = (
     event: React.MouseEvent<HTMLElement, MouseEvent>,
   ) => {
+    toggleAllFiltersChoosen();
     handleAnchorClick(event);
-    chooseAllFilters(router, slug, filters);
+    chooseAllFilters({ setFiltersRequest, slug, filters });
   };
 
   return (

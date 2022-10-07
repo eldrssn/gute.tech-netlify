@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { FormHelperText, TextField } from '@mui/material';
+import FormHelperText from '@mui/material/FormHelperText';
+import TextField from '@mui/material/TextField';
 
 import { FormTextfieldProps } from './types';
 import styles from './fromTextfields.module.scss';

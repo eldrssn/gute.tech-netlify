@@ -1,7 +1,7 @@
 import { ParsedUrlQueryInput } from 'querystring';
 
 import { FiltersCategoryResponseData, FilterTypes } from 'api/models/catalog';
-import { filtersRequest } from 'types';
+import { FiltersRequest } from 'types';
 
 import { ITEMS_PER_PAGE } from './constants';
 
@@ -19,7 +19,7 @@ const getTypeList = (
     })
     .map((filter) => filter.slug);
 
-const setEmptyFilters = (filtersRequest: filtersRequest | null) => {
+const setEmptyFilters = (filtersRequest: FiltersRequest | null) => {
   if (!filtersRequest) {
     return {};
   }
@@ -39,7 +39,7 @@ const makeFiltersQueryObject = ({
   filtersRequest,
   filters,
 }: {
-  filtersRequest: filtersRequest;
+  filtersRequest: FiltersRequest;
   filters: FiltersCategoryResponseData[];
 }) => {
   const filtersRequestAnArray = Object.entries(filtersRequest);

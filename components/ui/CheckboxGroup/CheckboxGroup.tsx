@@ -27,8 +27,9 @@ const CheckboxGroup: React.FC<Filter> = ({
 
   const isFilterListLarge = checkFilterListLarge(values);
 
-  const toggleHiddenFilters = () =>
+  const toggleHiddenFilters = () => {
     setHiddenFilters((isHiddenFilters) => !isHiddenFilters);
+  };
 
   const filters = useMemo(() => {
     if (isHiddenFilters) {
@@ -115,6 +116,7 @@ const CheckboxGroup: React.FC<Filter> = ({
           setOnChange={setOnChange}
           getIsChecked={getIsChecked}
           handleAnchorClick={handleAnchorClick}
+          setFiltersRequest={setFiltersRequest}
         />
       )}
 

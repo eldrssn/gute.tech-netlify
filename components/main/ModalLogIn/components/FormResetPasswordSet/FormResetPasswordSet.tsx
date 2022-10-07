@@ -1,7 +1,9 @@
 import { FC, KeyboardEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, useController } from 'react-hook-form';
-import { Box, Typography, FormControl } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
 
 import {
   fetchResetPasswordSet,

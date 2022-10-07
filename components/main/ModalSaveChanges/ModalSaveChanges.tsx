@@ -1,5 +1,7 @@
 import React, { KeyboardEvent } from 'react';
-import { Container, Typography, Box } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { handleEnterPress } from 'utility/utils';

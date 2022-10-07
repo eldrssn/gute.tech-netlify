@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Link from 'next/link';
 
 import { Loader } from 'components/ui/Loader';
+import { Tittle } from 'components/ui/TittleTooltip/TittleTooltip';
 import {
   fetchCategoriesSubcategoriesList,
   fetchCategoriesSubcategoriesRead,
@@ -91,17 +92,15 @@ const SubcategoriesList: FC = () => {
         <Loader />
       ) : (
         <>
-          {subcategories.length > 0 ? (
-            subcategories.map(({ title, slug: categorySlug }) => (
-              <Link key={categorySlug} href={getLink(categorySlug)}>
-                <a>
-                  <Box className={styles.catalogItem}>{title}</Box>
-                </a>
-              </Link>
-            ))
-          ) : (
-            <Box className={styles.catalogItem}>Нет доступных подкатегорий</Box>
-          )}
+          {subcategories.map(({ title, slug: categorySlug }) => (
+            <Link key={categorySlug} href={getLink(categorySlug)}>
+              <a>
+                <Tittle className={styles.catalogItem} placement='right'>
+                  {title}
+                </Tittle>
+              </a>
+            </Link>
+          ))}
         </>
       )}
     </Box>

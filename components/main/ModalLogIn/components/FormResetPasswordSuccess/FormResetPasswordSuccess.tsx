@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 import { setActiveAuthorizationForm } from 'store/reducers/authentication/actions';
 

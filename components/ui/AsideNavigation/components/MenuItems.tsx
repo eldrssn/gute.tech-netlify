@@ -1,8 +1,8 @@
-import { MenuItem } from '@mui/material';
+import React, { FC } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { FC } from 'react';
 import classnames from 'classnames/bind';
+import MenuItem from '@mui/material/MenuItem';
 
 import { MenuItemsProps } from '../types';
 import { LOG_OUT } from '../constants';
