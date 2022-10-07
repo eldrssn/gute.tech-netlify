@@ -1,4 +1,5 @@
 import React, { KeyboardEvent } from 'react';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import { useForm, useController, Controller } from 'react-hook-form';
 import Container from '@mui/material/Container';
@@ -13,11 +14,13 @@ import InputMask from 'react-input-mask';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { FormInput } from 'components/main/FormInput';
+import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { getInputRules } from 'utility/helpers';
 import { handleEnterPress } from 'utility/utils';
 import { EValidatePattern } from 'constants/types';
 import { postFeedback } from 'api/routes/feedback';
 import { inputMasks } from 'constants/patterns';
+import { sendMetrik } from 'utility/utils/metriks';
 
 import { TFormData, TOuterProps } from './types';
 import styles from './styles.module.scss';
@@ -36,6 +39,8 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
     rules: getInputRules(),
   });
 
+  const metrics = useSelector(selectMetrics);
+
   const closeModal = () => {
     setIsOpen(false);
     resetField('message');
@@ -45,6 +50,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
 
   const onSubmit = handleSubmit((data) => {
     const { nameValue, phoneNumber, message } = data;
+    sendMetrik('reachGoal', metrics.button_callback_submit, metrics.metric_id);
     if (nameValue && phoneNumber && message) {
       nameValue;
       postFeedback({
