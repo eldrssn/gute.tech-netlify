@@ -1,5 +1,5 @@
-@import "styles/colors.scss";
-@import "~styles/constants.scss";
+@import 'styles/colors.scss';
+@import '~styles/constants.scss';
 
 .stepWrap {
   position: relative;
@@ -20,7 +20,7 @@
   transform: translateY(-50%);
   border-radius: 50%;
   background-color: $blue1;
-  // z-index: $z-index18;
+  z-index: $z-index18;
 }
 
 .stepNumber_number {

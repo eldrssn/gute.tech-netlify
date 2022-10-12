@@ -24,10 +24,10 @@ const CatalogSort: FC<CatalogSortProps> = ({
 
   useEffect(() => {
     const sortingTypes: Record<string, () => void> = {
-      byPopularDown: () => setSorting({ sort: 'popular', order: 'asc' }),
-      byPopularUp: () => setSorting({ sort: 'popular', order: 'desc' }),
-      byPriceUp: () => setSorting({ sort: 'price', order: 'desc' }),
-      byPriceDown: () => setSorting({ sort: 'price', order: 'asc' }),
+      byPopularDown: () => setSorting({ sort: 'popular', order: 'desc' }),
+      byPopularUp: () => setSorting({ sort: 'popular', order: 'asc' }),
+      byPriceUp: () => setSorting({ sort: 'price', order: 'asc' }),
+      byPriceDown: () => setSorting({ sort: 'price', order: 'desc' }),
     };
 
     orderType && sortingTypes[orderType]();

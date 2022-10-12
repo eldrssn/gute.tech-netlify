@@ -35,20 +35,21 @@ const CatalogMenuItem: FC<CatalogMenuItemProps> = ({
         })
       : getLinkToParentCategory({ categorySlug: item.slug, transportId });
 
-  const handleEnter = (event: KeyboardEvent) => {
+  const onEnterPress = (event: KeyboardEvent) => {
     handleEnterPress(event, handleClick);
   };
 
   return (
     <Link href={getLink()}>
-      <a>
+      <a
+        onFocus={onMouseEnter}
+        onMouseEnter={onMouseEnter}
+        onKeyUp={onEnterPress}
+      >
         <Box
           className={cn(styles.item, className)}
           key={item.slug}
           onClick={handleClick}
-          onMouseEnter={onMouseEnter}
-          onFocus={onMouseEnter}
-          onKeyPress={handleEnter}
         >
           {item.title}
         </Box>

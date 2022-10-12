@@ -153,12 +153,14 @@ const SearchField: FC = () => {
           />
         )}
       </Box>
+
       <Box
         className={cn(styles.popupBox, {
           [styles.activePopupBox]: isActivePopup,
           [styles.errorPopupBox]: !isCatalogSearchRead && isFocusSearchField,
           [styles.popupBoxSmallHeader]: !isFullHeader,
         })}
+        tabIndex={0}
       >
         {isCatalogSearchRead ? (
           <>
@@ -207,6 +209,7 @@ const SearchField: FC = () => {
                         className={styles.productImage}
                         src={product.image || '/images/no-image.jpeg'}
                         height='70'
+                        width='70'
                         alt={product.title}
                       />
                       <Box className={styles.productTitleBox}>
