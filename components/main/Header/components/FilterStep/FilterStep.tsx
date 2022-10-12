@@ -100,6 +100,7 @@ const FilterStep: FC<FilterStepProps> = ({
     if (!isDisable) {
       setOpenPopoverId(inputStepId);
     }
+    setIsOpenPopover(true);
   };
 
   const handleClickButton = ({
@@ -145,7 +146,52 @@ const FilterStep: FC<FilterStepProps> = ({
   const isActiveStep = inputStepId === openPopoverId;
 
   return (
-    <>
+    <Step key={name} sx={{ width: '100%' }}>
+      <div className={styles.stepWrap}>
+        <Box
+          className={cn(styles.stepNumber, {
+            [styles.stepNumber_shortHeader]: !isFullHeader || isTablet,
+            [styles.stepNumberDisable]: isDisable,
+            [styles.stepNumberLoading]: isLoadingoptionList,
+          })}
+        >
+          {isLoadingoptionList ? (
+            <Loader size={25} />
+          ) : isValue ? (
+            <FontAwesomeIcon icon={faCheck} />
+          ) : (
+            <span
+              className={cn(styles.stepNumber_number, {
+                [styles.stepNumber_numberOne]: inputNumber === 1,
+              })}
+            >
+              {inputNumber}
+            </span>
+          )}
+        </Box>
+        <TextField
+          className={styles.stepField}
+          autoComplete='off'
+          inputProps={{ type: 'text' }}
+          name={name}
+          value={valueTextField}
+          onChange={onChangeTextField}
+          placeholder={placeholder}
+          onClick={() => onClickStep(inputStepId)}
+          onFocus={() => onClickStep(inputStepId)}
+          disabled={isDisable}
+        />
+        {!isDisable && (
+          <FontAwesomeIcon
+            onClick={handleClickCaret}
+            className={cn(styles.caret, {
+              [styles.caretActive]: isActiveStep,
+            })}
+            icon={faCaretDown}
+          />
+        )}
+      </div>
+
       {isActiveStep && (
         <FilterPopover
           setIsLoadingOptionList={setIsLoadingOptionList}
@@ -163,52 +209,7 @@ const FilterStep: FC<FilterStepProps> = ({
           {...restProps}
         />
       )}
-      <Step key={name} sx={{ width: '100%' }}>
-        <div className={styles.stepWrap}>
-          <Box
-            className={cn(styles.stepNumber, {
-              [styles.stepNumber_shortHeader]: !isFullHeader || isTablet,
-              [styles.stepNumberDisable]: isDisable,
-              [styles.stepNumberLoading]: isLoadingoptionList,
-            })}
-          >
-            {isLoadingoptionList ? (
-              <Loader size={25} />
-            ) : isValue ? (
-              <FontAwesomeIcon icon={faCheck} />
-            ) : (
-              <span
-                className={cn(styles.stepNumber_number, {
-                  [styles.stepNumber_numberOne]: inputNumber === 1,
-                })}
-              >
-                {inputNumber}
-              </span>
-            )}
-          </Box>
-          <TextField
-            className={styles.stepField}
-            autoComplete='off'
-            inputProps={{ type: 'text' }}
-            name={name}
-            value={valueTextField}
-            onChange={onChangeTextField}
-            placeholder={placeholder}
-            onClick={() => onClickStep(inputStepId)}
-            disabled={isDisable}
-          />
-          {!isDisable && (
-            <FontAwesomeIcon
-              onClick={handleClickCaret}
-              className={cn(styles.caret, {
-                [styles.caretActive]: isActiveStep,
-              })}
-              icon={faCaretDown}
-            />
-          )}
-        </div>
-      </Step>
-    </>
+    </Step>
   );
 };
 

@@ -15,7 +15,6 @@ const cn = classnames.bind(styles);
 const CatalogButton: FC = () => {
   const { isFullHeader } = useContext(HeaderContext);
   const { isTablet } = useWindowSize();
-
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,38 +50,40 @@ const CatalogButton: FC = () => {
         />
       </CustomButton>
 
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: popoverLocation,
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: popoverLocation,
-        }}
-        PaperProps={{
-          style: {
-            borderRadius: 0,
-            width: '100%',
-            marginLeft: isFullHeader ? 0 : isTablet ? '-8px' : 0,
-            maxWidth: isTablet ? 'calc(100% - 48px)' : '1200px',
-          },
-        }}
-        sx={{
-          backgroundColor: '#00000031',
+      {anchorEl && (
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: popoverLocation,
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: popoverLocation,
+          }}
+          PaperProps={{
+            style: {
+              borderRadius: 0,
+              width: '100%',
+              marginLeft: isFullHeader ? 0 : isTablet ? '-8px' : 0,
+              maxWidth: isTablet ? 'calc(100% - 48px)' : '1200px',
+            },
+          }}
+          sx={{
+            backgroundColor: '#00000031',
 
-          '&	.MuiPopover-paper': {
-            backgroundColor: 'transparent',
-            boxShadow: 'none',
-          },
-        }}
-      >
-        <CatalogMenu handleClose={handleClose} />
-      </Popover>
+            '&	.MuiPopover-paper': {
+              backgroundColor: 'transparent',
+              boxShadow: 'none',
+            },
+          }}
+        >
+          <CatalogMenu handleClose={handleClose} />
+        </Popover>
+      )}
     </>
   );
 };

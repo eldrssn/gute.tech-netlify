@@ -1,6 +1,6 @@
-@import "styles/colors.scss";
-@import "styles/breakpoints.scss";
-@import "~styles/constants.scss";
+@import 'styles/colors.scss';
+@import 'styles/breakpoints.scss';
+@import '~styles/constants.scss';
 
 .wrapper {
   opacity: 0;
@@ -27,7 +27,6 @@
 }
 
 .listContainerMobile {
-  margin-top: 50px;
   position: absolute;
   display: flex;
   flex-wrap: wrap;

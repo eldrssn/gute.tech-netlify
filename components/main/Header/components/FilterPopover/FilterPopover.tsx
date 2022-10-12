@@ -33,6 +33,7 @@ import styles from './styles.module.scss';
 const FilterPopover: FC<FilterPopoverProps> = ({
   resetFilterFormFromBrand,
   isOpenPopover,
+  setIsOpenPopover,
   getValues,
   handleClosePopover,
   inputStepId,
@@ -123,6 +124,20 @@ const FilterPopover: FC<FilterPopoverProps> = ({
     { [styles.isOpen]: isOpenPopover },
     styles.wrapper,
   );
+
+  const onEscPress = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      setIsOpenPopover(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onEscPress);
+
+    return () => {
+      document.removeEventListener('keydown', onEscPress);
+    };
+  }, []);
 
   return (
     <Box component='div' className={wrapperClassName}>
