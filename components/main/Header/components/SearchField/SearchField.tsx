@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
-import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -24,6 +23,7 @@ import {
 } from 'utility/helpers/linkmakers';
 import { useDebounce } from 'hooks/useDebounce';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { useArrowNavigation } from 'hooks/useArrowNavigation';
 
 import { HeaderContext } from '../HeaderContext';
 
@@ -31,7 +31,6 @@ import styles from './styles.module.scss';
 
 const SearchField: FC = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const { isMobile, isTablet } = useWindowSize();
   const { isFullHeader } = useContext(HeaderContext);
@@ -40,6 +39,10 @@ const SearchField: FC = () => {
   const [isFocusSearch, setIsFocusSearch] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  const searchFieldRef = useArrowNavigation({
+    selectors: 'a',
+  });
 
   if (isMobile) {
     setIsFocusSearchField = setIsFocusSearch;
@@ -79,16 +82,14 @@ const SearchField: FC = () => {
     [setIsFocusSearchField],
   );
 
-  const handleClick = (link: string) => {
-    router.push(link);
-    setFieldIsFocus(false);
-    setSearchValue('');
-    dispatch(clearTransportId());
-  };
-
   const handleClosePopover = () => {
     setFieldIsFocus(false);
     setSearchValue('');
+  };
+
+  const handleEnter = () => {
+    handleClosePopover();
+    dispatch(clearTransportId());
   };
 
   const handleOpenPopover = () => {
@@ -117,8 +118,26 @@ const SearchField: FC = () => {
     setErrorMessage(errorMessage);
   }, [debouncedSearchTerm, catalogSearchRead]);
 
+  const handleKeyPress = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      handleClosePopover();
+    }
+
+    if (event.key === 'Enter') {
+      handleEnter();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
   return (
-    <MenuItem disableGutters className={styles.searchMenuItem}>
+    <Box className={styles.searchMenuItem} ref={searchFieldRef}>
       {isFocusSearchField && (
         <Box
           component='div'
@@ -140,7 +159,6 @@ const SearchField: FC = () => {
           placeholder='Введите артикул, наименование или код запчасти'
           value={searchValue}
           onFocusCapture={handleOpenPopover}
-          onBlur={handleClosePopover}
           type='text'
           autoComplete='off'
         />
@@ -160,7 +178,6 @@ const SearchField: FC = () => {
           [styles.errorPopupBox]: !isCatalogSearchRead && isFocusSearchField,
           [styles.popupBoxSmallHeader]: !isFullHeader,
         })}
-        tabIndex={0}
       >
         {isCatalogSearchRead ? (
           <>
@@ -174,14 +191,16 @@ const SearchField: FC = () => {
                   });
 
                   return (
-                    <Typography
-                      onClick={() => handleClick(link)}
-                      key={category.slug}
-                      className={styles.categoryListItem}
-                      tabIndex={0}
-                    >
-                      {category.title}
-                    </Typography>
+                    <Link href={link} key={category.slug}>
+                      <a>
+                        <Typography
+                          onClick={handleClosePopover}
+                          className={styles.categoryListItem}
+                        >
+                          {category.title}
+                        </Typography>
+                      </a>
+                    </Link>
                   );
                 })}
               </Box>
@@ -198,29 +217,29 @@ const SearchField: FC = () => {
                   });
 
                   return (
-                    <Box
-                      className={styles.productItem}
-                      key={product.slug}
-                      tabIndex={0}
-                      onClick={() => handleClick(link)}
-                    >
-                      <CardMedia
-                        component={'img'}
-                        className={styles.productImage}
-                        src={product.image || '/images/no-image.jpeg'}
-                        height='70'
-                        width='70'
-                        alt={product.title}
-                      />
-                      <Box className={styles.productTitleBox}>
-                        <Typography className={styles.productTitle}>
-                          {product.title}
-                        </Typography>
-                        <Typography className={styles.productPrice}>
-                          Цена: {product.price}
-                        </Typography>
-                      </Box>
-                    </Box>
+                    <Link href={link} key={product.slug}>
+                      <a
+                        className={styles.productItem}
+                        onClick={handleClosePopover}
+                      >
+                        <CardMedia
+                          component={'img'}
+                          className={styles.productImage}
+                          src={product.image || '/images/no-image.jpeg'}
+                          height='70'
+                          width='70'
+                          alt={product.title}
+                        />
+                        <Box className={styles.productTitleBox}>
+                          <Typography className={styles.productTitle}>
+                            {product.title}
+                          </Typography>
+                          <Typography className={styles.productPrice}>
+                            Цена: {product.price}
+                          </Typography>
+                        </Box>
+                      </a>
+                    </Link>
                   );
                 })}
               </Box>
@@ -232,7 +251,7 @@ const SearchField: FC = () => {
           </Typography>
         )}
       </Box>
-    </MenuItem>
+    </Box>
   );
 };
 

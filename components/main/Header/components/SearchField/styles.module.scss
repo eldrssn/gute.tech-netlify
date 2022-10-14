@@ -1,6 +1,6 @@
-@import "styles/colors.scss";
-@import "~styles/breakpoints.scss";
-@import "~styles/constants.scss";
+@import 'styles/colors.scss';
+@import '~styles/breakpoints.scss';
+@import '~styles/constants.scss';
 
 .searchMenuItem {
   flex: 1 auto;
@@ -139,7 +139,7 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-
+  overflow-y: hidden;
   &:hover {
     background-color: $gray5;
   }
@@ -148,6 +148,7 @@
 .productImage {
   width: 70px;
   height: 70px;
+  font-size: 10px;
   img {
     object-fit: contain;
   }

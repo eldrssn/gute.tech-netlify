@@ -15,7 +15,10 @@ import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
 import { fetchCategoriesProductsRead } from 'store/reducers/catalog/actions';
-import { selectCategoriesProductRead } from 'store/reducers/catalog/selectors';
+import {
+  selectCategoriesProductRead,
+  selectRecommendedProductsList,
+} from 'store/reducers/catalog/selectors';
 import {
   addProductToCartAuthorized,
   addProductToCartUnAuthorized,
@@ -53,6 +56,8 @@ const ProductPage: FC = () => {
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
   const isAuthorized = useSelector(selectIsAuthorized);
   const metrics = useSelector(selectMetrics);
+
+  const { data: analoguesMocks } = useSelector(selectRecommendedProductsList);
 
   const { categorySlug } = router.query;
   const categorySlugAnArray = makeAnArray(categorySlug);
@@ -104,11 +109,13 @@ const ProductPage: FC = () => {
     ...properties,
   ];
 
+  // TODO: как будет запрос с аналогами - поменять
   const productInfo = {
     faq,
     installation,
     description,
     properties: newProperties,
+    analogues: analoguesMocks || [],
   };
 
   const buyItNow = () => {

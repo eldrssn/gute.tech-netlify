@@ -32,6 +32,10 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
     selectors: 'a',
   });
 
+  const childrenRef = useArrowNavigation({
+    selectors: 'a',
+  });
+
   const [choosenCategory, setChoosenCategory] =
     useState<null | TreeCategoryResponseData>(null);
 
@@ -53,8 +57,9 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
     ? choosenCategory.children
     : null;
 
-  const setChildrenFocus = () => setFocus({ parentRef, id: '#children' });
-  const setParentsFocus = () => setFocus({ parentRef, id: '#parents' });
+  const setChildrenFocus = () =>
+    setFocus({ ref: childrenRef, id: '#children' });
+  const setParentsFocus = () => setFocus({ ref: parentRef, id: '#parents' });
 
   const toggleFocus = (event: KeyboardEvent) => {
     const key = event.key;
@@ -91,9 +96,8 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
         flexDirection: isFullHeader ? 'row-reverse' : 'row',
         paddingLeft: isTablet ? 0 : isFullHeader ? '46px' : 0,
       }}
-      ref={parentRef}
     >
-      <Box className={styles.mainCategories}>
+      <Box className={styles.mainCategories} ref={parentRef}>
         {transportId && (
           <MenuItem className={styles.warningMessage}>
             Показаны категории для вашего авто, чтобы посмотреть все категории -
@@ -124,6 +128,7 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
           <Box
             className={styles.childrenList}
             sx={{ columnCount: { md: 2, lg: 3 } }}
+            ref={childrenRef}
           >
             {childrenBox.map((child) => (
               <Box

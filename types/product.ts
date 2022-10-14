@@ -1,9 +1,12 @@
+import { RecommendedResponceData } from 'api/models/catalog';
+
 type Content =
   | string
   | string[][]
   | undefined
   | Record<string, string>[]
-  | Property[];
+  | Property[]
+  | RecommendedResponceData;
 
 interface Property {
   title: string;
@@ -22,6 +25,7 @@ enum DescriptionTypes {
   description = 'description',
   installation = 'installation',
   faq = 'faq',
+  analogues = 'analogues',
 }
 
 type DescriptionType = keyof typeof DescriptionTypes;
