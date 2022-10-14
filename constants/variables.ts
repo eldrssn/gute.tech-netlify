@@ -15,6 +15,7 @@ const MIN_FILTERS_COUNT = 8;
 
 const descriptionTypeName = [
   DescriptionTypes.properties,
+  DescriptionTypes.analogues,
   DescriptionTypes.description,
   DescriptionTypes.installation,
   DescriptionTypes.faq,
@@ -22,9 +23,10 @@ const descriptionTypeName = [
 
 const tabNameByType: Record<DescriptionType, string> = {
   [DescriptionTypes.properties]: 'Характеристики',
+  [DescriptionTypes.analogues]: 'Аналоги',
   [DescriptionTypes.description]: 'Описание',
   [DescriptionTypes.installation]: 'Установка',
-  [DescriptionTypes.faq]: 'Вопросы и ответы',
+  [DescriptionTypes.faq]: 'Отзывы',
 };
 
 const DEV_HOST = 'dev.gute.tech';

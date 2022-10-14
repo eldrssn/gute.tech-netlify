@@ -1,0 +1,76 @@
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
+
+.contentBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px 10px;
+
+  &:hover {
+    background-color: $transparentBlue2;
+  }
+}
+
+.manufacturer {
+  font-size: 16px;
+  font-weight: 700;
+  padding-right: 20px;
+  flex-shrink: 1;
+}
+
+.title {
+  padding-right: 10px;
+}
+
+.spaceLine {
+  border-bottom: 1px dashed $transparentBlue4;
+  flex-grow: 1;
+  margin: 6px;
+}
+
+.price {
+  padding-left: 10px;
+  font-weight: 700;
+}
+
+.icon_ruble::before {
+  font-family: 'icons';
+  content: '\e906';
+  font-weight: 400;
+  font-size: 85%;
+  font-style: normal;
+  margin-left: 5px;
+}
+
+.showButton {
+  background-color: $white;
+  color: $blue3;
+  padding: 5px 0;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  border-bottom: 1px dashed $white;
+  padding: 20px 10px;
+  width: 100%;
+
+  &:hover {
+    background-color: $transparentBlue2;
+  }
+}
+
+@media (max-width: $xxsMobile) {
+  .contentBox {
+    flex-direction: column;
+  }
+
+  .spaceLine {
+    display: none;
+  }
+
+  .price {
+    padding-left: 0;
+    padding-top: 5px;
+    align-self: flex-end;
+  }
+}

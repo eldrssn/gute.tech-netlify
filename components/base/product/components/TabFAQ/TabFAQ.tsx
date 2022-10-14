@@ -8,6 +8,7 @@ import { Content, Property, TabProps } from 'types/product';
 
 import styles from './tabFAQ.module.scss';
 import { TabDefault } from '../TabDefault';
+import { RecommendedResponceData } from 'api/models/catalog';
 
 const TabFAQ: FC<TabProps> = ({ content }) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -34,7 +35,13 @@ const TabFAQ: FC<TabProps> = ({ content }) => {
     return true;
   };
 
-  if (!content || isProperty(content)) {
+  const isAnalogues = (
+    value: Content | RecommendedResponceData,
+  ): value is RecommendedResponceData => {
+    return true;
+  };
+
+  if (!content || isProperty(content) || isAnalogues(content)) {
     return <p>Нет данных</p>;
   }
 

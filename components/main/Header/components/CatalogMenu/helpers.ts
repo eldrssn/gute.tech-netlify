@@ -1,11 +1,11 @@
 const setFocus = ({
-  parentRef,
+  ref,
   id,
 }: {
-  parentRef: React.MutableRefObject<HTMLDivElement | null>;
+  ref: React.MutableRefObject<HTMLDivElement | null>;
   id: string;
 }) => {
-  const nodes = parentRef && parentRef.current?.querySelector(id);
+  const nodes = ref && ref.current?.querySelector(id);
 
   if (!nodes || !nodes.firstChild) {
     return;

@@ -1,3 +1,4 @@
+import { KEY_NAMES } from './constants';
 import { HandleArrowKey, HandleEvents } from './types';
 
 const handleArrowKey = ({
@@ -9,18 +10,33 @@ const handleArrowKey = ({
     availableElements[0].focus();
   }
 
+  const [arrowUpKey, arrowDownKey, tabKey, enterKey] = KEY_NAMES;
+
+  const isMoveDown = event.key === arrowDownKey || event.key === tabKey;
+  const isMoveUp =
+    event.key === arrowUpKey || (event.shiftKey && event.key === tabKey);
+
   let nextElement;
-  if (event.key === 'ArrowDown') {
-    nextElement = availableElements[currentIndex + 1];
+
+  if (isMoveDown) {
+    const isLast = currentIndex === availableElements.length - 1;
+    const nextElementIndex = isLast ? 0 : currentIndex + 1;
+
+    nextElement = availableElements[nextElementIndex];
   }
 
-  if (event.key === 'ArrowUp') {
-    nextElement = availableElements[currentIndex - 1];
+  if (isMoveUp) {
+    const isFirst = currentIndex === 0;
+    const nextElementIndex = isFirst
+      ? availableElements.length - 1
+      : currentIndex - 1;
+
+    nextElement = availableElements[nextElementIndex];
   }
 
   nextElement && nextElement.focus();
 
-  if (event.key !== 'Enter') {
+  if (event.key !== enterKey) {
     event.preventDefault();
   }
 };
@@ -33,7 +49,7 @@ const handleEvents = ({
   if (!parentNode) return;
 
   const key = event.key;
-  if (!['ArrowUp', 'ArrowDown'].includes(key)) {
+  if (!['ArrowUp', 'ArrowDown', 'Tab', 'Enter'].includes(key)) {
     return;
   }
 

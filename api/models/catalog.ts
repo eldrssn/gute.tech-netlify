@@ -7,6 +7,7 @@ type ProductListData = {
   image?: string;
   price?: string;
   categories: string[][];
+  manufacturer?: string;
 };
 
 type CategoriesProductsListRequestData = {
