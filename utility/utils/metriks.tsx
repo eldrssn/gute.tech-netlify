@@ -11,7 +11,11 @@ const MetrikScript = () => (
   </>
 );
 
-const sendMetrik = (type: string, value: string, metricID: number) => {
+const sendMetrik = (
+  type: string,
+  value: string | undefined,
+  metricID: number | undefined,
+) => {
   if (!value || !metricID) {
     return;
   }

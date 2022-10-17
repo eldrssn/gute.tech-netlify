@@ -48,12 +48,12 @@ const TableOrder: React.FC<TTableOrderProps> = ({
   const isAllItemsSelect = cart.length === checkedCartItems.length;
 
   const openModalAdvice = () => {
-    sendMetrik('reachGoal', metrics.button_cart_help, metrics.metric_id);
+    sendMetrik('reachGoal', metrics?.button_cart_help, metrics?.metric_id);
     setModalAdviceOpen(true);
   };
 
   const openSpecialOffer = () => {
-    sendMetrik('reachGoal', metrics.button_cart_special, metrics.metric_id);
+    sendMetrik('reachGoal', metrics?.button_cart_special, metrics?.metric_id);
     setModalAdviceOpen(true);
   };
 
@@ -62,7 +62,7 @@ const TableOrder: React.FC<TTableOrderProps> = ({
       return;
     }
 
-    sendMetrik('reachGoal', metrics.button_cart_submit, metrics.metric_id);
+    sendMetrik('reachGoal', metrics?.button_cart_submit, metrics?.metric_id);
     dispatch(clearCreateOrdering());
     dispatch(setItemsSlugs(checkedCartItemsSlug));
     dispatch(setItemsFromOrder(checkedCartItems));

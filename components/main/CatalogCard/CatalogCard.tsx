@@ -57,13 +57,13 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   const { asPath } = router;
 
   const handleClickToBasket = (event: React.MouseEvent<HTMLElement>) => {
-    sendMetrik('reachGoal', metrics.button_card_cart, metrics.metric_id);
+    sendMetrik('reachGoal', metrics?.button_card_cart, metrics?.metric_id);
     setIsOpenModalAddedItem(true);
     event.preventDefault();
   };
 
   const buyItNow = (event: React.MouseEvent<HTMLButtonElement>) => {
-    sendMetrik('reachGoal', metrics.button_card_buy, metrics.metric_id);
+    sendMetrik('reachGoal', metrics?.button_card_buy, metrics?.metric_id);
     dispatch(fetchItemFromOrder({ productSlug: slug }));
     router.push('/order');
     event.preventDefault();
