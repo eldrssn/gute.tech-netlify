@@ -63,7 +63,7 @@ const InitialLoader: React.FC = ({ children }) => {
   const { favicon, metrics } = useSelector(selectShowcaseData);
   const cartIsUpdated = useSelector(selectCartUpdated);
   const { data: status } = useSelector(selectStatus);
-  const metricId = metrics.metric_id;
+  const metricId = metrics?.metric_id;
 
   useEffect(() => {
     dispatch(fetchShowcase());

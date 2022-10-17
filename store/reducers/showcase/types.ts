@@ -34,7 +34,7 @@ type ShowcaseData = {
   socialLinkVk: string;
   socialLinkInstagram: string;
   socialLinkFacebook: string;
-  metrics: Metrics;
+  metrics: Metrics | null;
 };
 
 type ShowcaseState = {

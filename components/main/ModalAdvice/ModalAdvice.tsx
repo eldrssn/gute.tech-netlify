@@ -50,7 +50,11 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
 
   const onSubmit = handleSubmit((data) => {
     const { nameValue, phoneNumber, message } = data;
-    sendMetrik('reachGoal', metrics.button_callback_submit, metrics.metric_id);
+    sendMetrik(
+      'reachGoal',
+      metrics?.button_callback_submit,
+      metrics?.metric_id,
+    );
     if (nameValue && phoneNumber && message) {
       nameValue;
       postFeedback({
