@@ -51,8 +51,8 @@ const clearCatalog = createAction('CatalogStore/clearCatalog');
 const clearRecommendedProductsList = createAction(
   'CatalogStore/clearRecommendedProductsList',
 );
-const clearProductInstallationErrorClear = createAction(
-  'clearProductInstallationErrorClear',
+const clearProductInstallationError = createAction(
+  'clearProductInstallationError',
 );
 
 const fetchTransportFilterList = createAsyncAction<
@@ -179,7 +179,7 @@ const fetchProductTransportsList = createAsyncAction<
 
 export {
   clearCatalog,
-  clearProductInstallationErrorClear,
+  clearProductInstallationError,
   fetchTransportReadCategories,
   fetchCategoriesList,
   fetchCatalogSearchRead,

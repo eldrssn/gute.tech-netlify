@@ -20,7 +20,7 @@ import {
   fetchProductModelsList,
   fetchProductYearsList,
   fetchProductTransportsList,
-  clearProductInstallationErrorClear,
+  clearProductInstallationError,
 } from 'store/reducers/catalog/actions';
 import { makeAnArray } from 'utility/helpers';
 
@@ -71,7 +71,7 @@ const InstallationColumn: FC<Props> = ({ column, getValues, setValue }) => {
     getDataByOption[column.optionColumn](slug);
     setValue(column.name, slug);
     setCurrentOption(slug);
-    dispatch(clearProductInstallationErrorClear());
+    dispatch(clearProductInstallationError());
   };
 
   const { data, error, isLoading } = dataByOption[column.optionColumn];
@@ -96,7 +96,11 @@ const InstallationColumn: FC<Props> = ({ column, getValues, setValue }) => {
         <Typography>{column.placeholder}</Typography>
       </Box>
       <Box className={styles.topShadowBox} />
-      <Box className={styles.bottomShadowBox} />
+      <Box
+        className={cn(styles.bottomShadowBox, {
+          [styles.lastBottomShadowBox]: isTransportColumn,
+        })}
+      />
       <Box
         key={column.name}
         className={cn(styles.box, {
