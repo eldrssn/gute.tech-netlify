@@ -146,6 +146,45 @@ type RecommendedProductsListRequestData = TransportSearchRequestData & {
   categorySlug: Slug;
 };
 
+type InfoBlock = {
+  title: string;
+  slug: string;
+};
+
+type ProductTransportListResponseData = {
+  id: number;
+  title: string;
+  count: number;
+  slug: string;
+  years_string?: string;
+  brand: InfoBlock;
+  engine: InfoBlock;
+  model: InfoBlock;
+  years: number[];
+};
+
+type ProductBrandsListRequestData = {
+  productSlug: string;
+};
+
+type ProductModelsListRequestData = {
+  productSlug: string;
+  brandSlug: string;
+};
+
+type ProductYearsListRequestData = {
+  productSlug: string;
+  brandSlug: string;
+  modelSlug: string;
+};
+
+type ProductTransportListRequestData = {
+  productSlug: string;
+  brandSlug: string;
+  modelSlug: string;
+  yearSlug: string;
+};
+
 export { FilterTypes };
 export type {
   CatalogSearchReadResponseData,
@@ -168,4 +207,9 @@ export type {
   ProductListData,
   RecommendedProductsListRequestData,
   RecommendedResponceData,
+  ProductTransportListResponseData,
+  ProductBrandsListRequestData,
+  ProductModelsListRequestData,
+  ProductYearsListRequestData,
+  ProductTransportListRequestData,
 };

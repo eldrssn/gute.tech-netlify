@@ -5,6 +5,7 @@ import { TabAnalogues } from '../TabAnalogues';
 
 import { TabDefault } from '../TabDefault';
 import { TabDetails } from '../TabDetails';
+import { TabInstallation } from '../TabInstallation';
 import { TabFAQ } from '../TabFAQ';
 
 import { TabContentByTypeProps } from './types';
@@ -12,7 +13,7 @@ import { TabContentByTypeProps } from './types';
 const ContentByDescription: Record<DescriptionType, FC<TabProps>> = {
   [DescriptionTypes.properties]: TabDetails,
   [DescriptionTypes.description]: TabDefault,
-  [DescriptionTypes.installation]: TabDefault,
+  [DescriptionTypes.installation]: TabInstallation,
   [DescriptionTypes.faq]: TabFAQ,
   [DescriptionTypes.analogues]: TabAnalogues,
 };

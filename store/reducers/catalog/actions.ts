@@ -13,6 +13,10 @@ import {
   getTransportCategoriesRead,
   getCategoriesSubcategoriesRead,
   getRecommendedProductsList,
+  getProductBrandsList,
+  getProductModelsList,
+  getProductYearsList,
+  getProductTransportsList,
 } from 'api/routes/catalog';
 import {
   TransportSearchRequestData,
@@ -31,6 +35,11 @@ import {
   CatalogSearchReadResponseData,
   RecommendedProductsListRequestData,
   RecommendedResponceData,
+  ProductTransportListResponseData,
+  ProductBrandsListRequestData,
+  ProductModelsListRequestData,
+  ProductYearsListRequestData,
+  ProductTransportListRequestData,
 } from 'api/models/catalog';
 import { createAsyncAction } from 'utility/helpers/store';
 
@@ -41,6 +50,9 @@ const setIsLoadingCatalogSearchRead = createAction(
 const clearCatalog = createAction('CatalogStore/clearCatalog');
 const clearRecommendedProductsList = createAction(
   'CatalogStore/clearRecommendedProductsList',
+);
+const clearProductInstallationErrorClear = createAction(
+  'clearProductInstallationErrorClear',
 );
 
 const fetchTransportFilterList = createAsyncAction<
@@ -133,8 +145,41 @@ const fetchRecommendedProductsList = createAsyncAction<
   request: getRecommendedProductsList,
 });
 
+const fetchProductBrandsList = createAsyncAction<
+  ProductTransportListResponseData[],
+  ProductBrandsListRequestData
+>({
+  typeAction: 'CatalogStore/fetchProductBrandsList',
+  request: getProductBrandsList,
+});
+
+const fetchProductModelsList = createAsyncAction<
+  ProductTransportListResponseData[],
+  ProductModelsListRequestData
+>({
+  typeAction: 'CatalogStore/fetchProductModelsList',
+  request: getProductModelsList,
+});
+
+const fetchProductYearsList = createAsyncAction<
+  ProductTransportListResponseData[],
+  ProductYearsListRequestData
+>({
+  typeAction: 'CatalogStore/fetchProductYearsList',
+  request: getProductYearsList,
+});
+
+const fetchProductTransportsList = createAsyncAction<
+  ProductTransportListResponseData[],
+  ProductTransportListRequestData
+>({
+  typeAction: 'CatalogStore/fetchProductTransportsList',
+  request: getProductTransportsList,
+});
+
 export {
   clearCatalog,
+  clearProductInstallationErrorClear,
   fetchTransportReadCategories,
   fetchCategoriesList,
   fetchCatalogSearchRead,
@@ -150,4 +195,8 @@ export {
   fetchTransportFilterList,
   fetchRecommendedProductsList,
   clearRecommendedProductsList,
+  fetchProductBrandsList,
+  fetchProductModelsList,
+  fetchProductYearsList,
+  fetchProductTransportsList,
 };
