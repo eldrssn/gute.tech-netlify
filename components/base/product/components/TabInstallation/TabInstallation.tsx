@@ -5,7 +5,10 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { Box } from '@mui/system';
 
-import { fetchProductBrandsList } from 'store/reducers/catalog/actions';
+import {
+  fetchProductBrandsList,
+  clearProductInstallationError,
+} from 'store/reducers/catalog/actions';
 import { TabProps } from 'types/product';
 import { makeAnArray } from 'utility/helpers';
 
@@ -26,6 +29,7 @@ const TabInstallation: FC<TabProps> = () => {
 
   useEffect(() => {
     dispatch(fetchProductBrandsList({ productSlug }));
+    dispatch(clearProductInstallationError());
   }, []);
 
   return (

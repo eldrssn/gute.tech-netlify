@@ -32,7 +32,7 @@ import {
   fetchProductModelsList,
   fetchProductYearsList,
   fetchProductTransportsList,
-  clearProductInstallationErrorClear,
+  clearProductInstallationError,
 } from './actions';
 
 import { CatalogStore, ErrorAction } from './types';
@@ -45,7 +45,7 @@ const handlers = {
   [setIsLoadingCatalogSearchRead.type]: (state: CatalogStore) => {
     state.catalogSearchRead.isLoading = true;
   },
-  [clearProductInstallationErrorClear.type]: (state: CatalogStore) => {
+  [clearProductInstallationError.type]: (state: CatalogStore) => {
     state.productTransportList.error = null;
     state.productYearsList.error = null;
     state.productModelsList.error = null;

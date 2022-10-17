@@ -70,3 +70,28 @@
   color: red;
   font-weight: lighter;
 }
+
+@media (max-width: $mobile) {
+  .rightSideBorderBox {
+    border-bottom: 1px solid $gray4;
+    border-right: 0;
+  }
+  .column {
+    width: 100%;
+  }
+
+  .bottomShadowBox {
+    width: 100%;
+  }
+
+  .bottomShadowBox {
+    width: 100%;
+    bottom: 1px;
+    height: 19px;
+  }
+
+  .lastBottomShadowBox {
+    height: 20px;
+    bottom: 0px;
+  }
+}
