@@ -69,6 +69,26 @@ const initialState: CatalogStore = {
     isLoading: false,
     error: null,
   },
+  productBrandsList: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
+  productModelsList: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
+  productTransportList: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
+  productYearsList: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
 };
 
 export { initProductList, initialState };

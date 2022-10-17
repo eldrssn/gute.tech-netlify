@@ -7,6 +7,7 @@ import {
   FiltersCategoryResponseData,
   CatalogSearchReadResponseData,
   RecommendedResponceData,
+  ProductTransportListResponseData,
 } from 'api/models/catalog';
 import { ProductWarehouse } from 'api/models/cart';
 
@@ -24,6 +25,10 @@ enum CategoryStoreBlocks {
   CATALOG_SEARCH_READ = 'catalogSearchRead',
   CLEAR_CATALOG = 'clearCatalog',
   RECOMMENDED_PRODUCTS_LIST = 'recommendedProductsList',
+  PRODUCT_BRANDS_LIST = 'productBrandsList',
+  PRODUCT_MODELS_LIST = 'productModelsList',
+  PRODUCT_YEARS_LIST = 'productYearsList',
+  PRODUCT_TRANSPORT_LIST = 'productTransportList',
 }
 
 interface Property {
@@ -81,6 +86,19 @@ type RecommenedProductsListState = {
   data: RecommendedResponceData | null;
 } & StoreState;
 
+type ProductBrandsListState = {
+  data: ProductTransportListResponseData[] | null;
+} & StoreState;
+type ProductModelsListState = {
+  data: ProductTransportListResponseData[] | null;
+} & StoreState;
+type ProductYearsListState = {
+  data: ProductTransportListResponseData[] | null;
+} & StoreState;
+type ProductTransportsListState = {
+  data: ProductTransportListResponseData[] | null;
+} & StoreState;
+
 type CatalogStore = {
   [CategoryStoreBlocks.TRANSPORT_READ_CATEGORY]: CategoriesTreeListState;
   [CategoryStoreBlocks.TRANSPORT_PRODUCT_LIST]: CategoriesProductListState;
@@ -94,6 +112,10 @@ type CatalogStore = {
   [CategoryStoreBlocks.CATEGORIES_FILTERS_LIST]: CategoriesFilterListState;
   [CategoryStoreBlocks.CATALOG_SEARCH_READ]: CatalogSearchReadState;
   [CategoryStoreBlocks.RECOMMENDED_PRODUCTS_LIST]: RecommenedProductsListState;
+  [CategoryStoreBlocks.PRODUCT_BRANDS_LIST]: ProductBrandsListState;
+  [CategoryStoreBlocks.PRODUCT_MODELS_LIST]: ProductModelsListState;
+  [CategoryStoreBlocks.PRODUCT_YEARS_LIST]: ProductYearsListState;
+  [CategoryStoreBlocks.PRODUCT_TRANSPORT_LIST]: ProductTransportsListState;
 };
 
 export type { ErrorAction, StoreError, CatalogStore };

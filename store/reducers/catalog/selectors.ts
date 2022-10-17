@@ -98,6 +98,26 @@ const selectRecommendedProductsList = createSelector(
   ({ recommendedProductsList }) => recommendedProductsList,
 );
 
+const selectProductBrandsList = createSelector(
+  selectCatalogStore,
+  ({ productBrandsList }) => productBrandsList,
+);
+
+const selectProductModelsList = createSelector(
+  selectCatalogStore,
+  ({ productModelsList }) => productModelsList,
+);
+
+const selectProductYearsList = createSelector(
+  selectCatalogStore,
+  ({ productYearsList }) => productYearsList,
+);
+
+const selectProductTransportsList = createSelector(
+  selectCatalogStore,
+  ({ productTransportList }) => productTransportList,
+);
+
 export {
   selectCategoriesProductRead,
   selectTransportReadCategories,
@@ -112,4 +132,8 @@ export {
   selectTransportFilterList,
   selectRecommendedProductsList,
   selectCategoriesList,
+  selectProductBrandsList,
+  selectProductModelsList,
+  selectProductYearsList,
+  selectProductTransportsList,
 };

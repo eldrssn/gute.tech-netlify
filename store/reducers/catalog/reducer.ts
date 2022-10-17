@@ -8,6 +8,7 @@ import {
   CategoriesProductReadResponseData,
   CatalogSearchReadResponseData,
   RecommendedResponceData,
+  ProductTransportListResponseData,
 } from 'api/models/catalog';
 
 import {
@@ -27,6 +28,11 @@ import {
   clearCatalog,
   fetchRecommendedProductsList,
   clearRecommendedProductsList,
+  fetchProductBrandsList,
+  fetchProductModelsList,
+  fetchProductYearsList,
+  fetchProductTransportsList,
+  clearProductInstallationErrorClear,
 } from './actions';
 
 import { CatalogStore, ErrorAction } from './types';
@@ -38,6 +44,12 @@ const handlers = {
   },
   [setIsLoadingCatalogSearchRead.type]: (state: CatalogStore) => {
     state.catalogSearchRead.isLoading = true;
+  },
+  [clearProductInstallationErrorClear.type]: (state: CatalogStore) => {
+    state.productTransportList.error = null;
+    state.productYearsList.error = null;
+    state.productModelsList.error = null;
+    state.productBrandsList.error = null;
   },
 
   [fetchTransportProductList.pending.type]: (state: CatalogStore) => {
@@ -288,8 +300,99 @@ const handlers = {
     state.recommendedProductsList.isLoading = false;
     state.recommendedProductsList.error = errorData;
   },
+
   [clearRecommendedProductsList.type]: (state: CatalogStore) => {
     state.recommendedProductsList.data = null;
+  },
+
+  [fetchProductBrandsList.pending.type]: (state: CatalogStore) => {
+    state.productBrandsList.isLoading = true;
+  },
+  [fetchProductBrandsList.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<ProductTransportListResponseData[]>,
+  ) => {
+    state.productBrandsList.data = payload;
+    state.productModelsList.data = null;
+    state.productYearsList.data = null;
+    state.productTransportList.data = null;
+    state.productBrandsList.isLoading = false;
+    state.productBrandsList.error = null;
+  },
+  [fetchProductBrandsList.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.productBrandsList.data = null;
+    state.productBrandsList.isLoading = false;
+    state.productBrandsList.error = errorData;
+  },
+
+  [fetchProductModelsList.pending.type]: (state: CatalogStore) => {
+    state.productModelsList.isLoading = true;
+  },
+  [fetchProductModelsList.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<ProductTransportListResponseData[]>,
+  ) => {
+    state.productModelsList.data = payload;
+    state.productYearsList.data = null;
+    state.productTransportList.data = null;
+    state.productModelsList.isLoading = false;
+    state.productModelsList.error = null;
+  },
+  [fetchProductModelsList.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.productModelsList.data = null;
+    state.productModelsList.isLoading = false;
+    state.productModelsList.error = errorData;
+  },
+
+  [fetchProductYearsList.pending.type]: (state: CatalogStore) => {
+    state.productYearsList.isLoading = true;
+  },
+  [fetchProductYearsList.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<ProductTransportListResponseData[]>,
+  ) => {
+    state.productYearsList.data = payload;
+    state.productTransportList.data = null;
+    state.productYearsList.isLoading = false;
+    state.productYearsList.error = null;
+  },
+  [fetchProductYearsList.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.productYearsList.data = null;
+    state.productYearsList.isLoading = false;
+    state.productYearsList.error = errorData;
+  },
+
+  [fetchProductTransportsList.pending.type]: (state: CatalogStore) => {
+    state.productTransportList.isLoading = true;
+  },
+  [fetchProductTransportsList.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<ProductTransportListResponseData[]>,
+  ) => {
+    state.productTransportList.data = payload;
+    state.productTransportList.isLoading = false;
+    state.productTransportList.error = null;
+  },
+  [fetchProductTransportsList.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.productTransportList.data = null;
+    state.productTransportList.isLoading = false;
+    state.productTransportList.error = errorData;
   },
 };
 

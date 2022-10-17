@@ -17,6 +17,11 @@ import {
   CategoriesSubcategoriesReadRequestData,
   RecommendedProductsListRequestData,
   RecommendedResponceData,
+  ProductTransportListResponseData,
+  ProductBrandsListRequestData,
+  ProductModelsListRequestData,
+  ProductYearsListRequestData,
+  ProductTransportListRequestData,
 } from 'api/models/catalog';
 import { ApiMethods } from 'constants/types';
 import { makeStringify } from 'utility/helpers';
@@ -147,6 +152,42 @@ const getRecommendedProductsList = ({
   });
 };
 
+const getProductBrandsList = ({ productSlug }: ProductBrandsListRequestData) =>
+  sendRequest<ProductTransportListResponseData[]>({
+    url: `/v1/catalog/products/${productSlug}/brands/`,
+    method: ApiMethods.GET,
+  });
+
+const getProductModelsList = ({
+  productSlug,
+  brandSlug,
+}: ProductModelsListRequestData) =>
+  sendRequest<ProductTransportListResponseData[]>({
+    url: `/v1/catalog/products/${productSlug}/brands/${brandSlug}/models/`,
+    method: ApiMethods.GET,
+  });
+
+const getProductYearsList = ({
+  productSlug,
+  brandSlug,
+  modelSlug,
+}: ProductYearsListRequestData) =>
+  sendRequest<ProductTransportListResponseData[]>({
+    url: `/v1/catalog/products/${productSlug}/brands/${brandSlug}/models/${modelSlug}/years/`,
+    method: ApiMethods.GET,
+  });
+
+const getProductTransportsList = ({
+  productSlug,
+  brandSlug,
+  modelSlug,
+  yearSlug,
+}: ProductTransportListRequestData) =>
+  sendRequest<ProductTransportListResponseData[]>({
+    url: `/v1/catalog/products/${productSlug}/brands/${brandSlug}/models/${modelSlug}/years/${yearSlug}/transport/`,
+    method: ApiMethods.GET,
+  });
+
 export {
   getCategoriesList,
   getCatalogSearchRead,
@@ -160,4 +201,8 @@ export {
   getTransportFilterList,
   getCategoriesSubcategoriesRead,
   getRecommendedProductsList,
+  getProductBrandsList,
+  getProductModelsList,
+  getProductYearsList,
+  getProductTransportsList,
 };
