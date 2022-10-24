@@ -1,4 +1,4 @@
-import { ProductTransportListResponseData } from 'api/models/catalog';
+import { ProductTransportListResponseData } from 'api/models/product';
 import { StoreError } from 'store/types';
 
 import { optionColumn } from '../../types';

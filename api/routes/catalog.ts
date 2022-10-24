@@ -5,27 +5,16 @@ import {
   TreeCategoryResponseData,
   CategoriesFiltersListRequestData,
   CategoriesProductsListRequestData,
-  CategoriesProductsReadRequestData,
   CategoriesSubcategoriesListRequestData,
   CategoriesProductListResponseData,
-  CategoriesProductReadResponseData,
   FiltersCategoryResponseData,
   TransportProductListRead,
   TransportSearchRequestData,
   CatalogSearchReadRequestData,
   CatalogSearchReadResponseData,
   CategoriesSubcategoriesReadRequestData,
-  RecommendedProductsListRequestData,
-  RecommendedResponceData,
-  ProductTransportListResponseData,
-  ProductBrandsListRequestData,
-  ProductModelsListRequestData,
-  ProductYearsListRequestData,
-  ProductTransportListRequestData,
-  ProductAnaloguesResponseData,
 } from 'api/models/catalog';
 import { ApiMethods } from 'constants/types';
-import { makeStringify } from 'utility/helpers';
 
 const getCategoriesList = () =>
   sendRequest<CategoryResponseData[]>({
@@ -95,22 +84,6 @@ const getCategoriesProductsList = ({
     },
   });
 
-const getCategoriesProductsRead = ({
-  productSlug,
-}: CategoriesProductsReadRequestData) =>
-  sendRequest<CategoriesProductReadResponseData>({
-    url: `/v1/catalog/products/${productSlug}/`,
-    method: ApiMethods.GET,
-  });
-
-const getProductAnaloguesRead = ({
-  productSlug,
-}: CategoriesProductsReadRequestData) =>
-  sendRequest<ProductAnaloguesResponseData>({
-    url: `/v1/catalog/products/${productSlug}/analogues/`,
-    method: ApiMethods.GET,
-  });
-
 const getCategoriesSubcategoriesList = ({
   categorySlug,
 }: CategoriesSubcategoriesListRequestData) =>
@@ -139,64 +112,6 @@ const getCatalogSearchRead = ({ searchValue }: CatalogSearchReadRequestData) =>
     },
   });
 
-const getRecommendedProductsList = ({
-  productSlug,
-  categorySlug,
-  transportId,
-}: RecommendedProductsListRequestData) => {
-  const category = makeStringify(categorySlug);
-  const product = makeStringify(productSlug);
-  const transport = transportId ? transportId : undefined;
-
-  return sendRequest<RecommendedResponceData>({
-    url: `/v1/catalog/recommendations/`,
-    method: ApiMethods.POST,
-    config: {
-      data: {
-        product,
-        category,
-        transport,
-      },
-    },
-  });
-};
-
-const getProductBrandsList = ({ productSlug }: ProductBrandsListRequestData) =>
-  sendRequest<ProductTransportListResponseData[]>({
-    url: `/v1/catalog/products/${productSlug}/brands/`,
-    method: ApiMethods.GET,
-  });
-
-const getProductModelsList = ({
-  productSlug,
-  brandSlug,
-}: ProductModelsListRequestData) =>
-  sendRequest<ProductTransportListResponseData[]>({
-    url: `/v1/catalog/products/${productSlug}/brands/${brandSlug}/models/`,
-    method: ApiMethods.GET,
-  });
-
-const getProductYearsList = ({
-  productSlug,
-  brandSlug,
-  modelSlug,
-}: ProductYearsListRequestData) =>
-  sendRequest<ProductTransportListResponseData[]>({
-    url: `/v1/catalog/products/${productSlug}/brands/${brandSlug}/models/${modelSlug}/years/`,
-    method: ApiMethods.GET,
-  });
-
-const getProductTransportsList = ({
-  productSlug,
-  brandSlug,
-  modelSlug,
-  yearSlug,
-}: ProductTransportListRequestData) =>
-  sendRequest<ProductTransportListResponseData[]>({
-    url: `/v1/catalog/products/${productSlug}/brands/${brandSlug}/models/${modelSlug}/years/${yearSlug}/transport/`,
-    method: ApiMethods.GET,
-  });
-
 export {
   getCategoriesList,
   getCatalogSearchRead,
@@ -204,15 +119,8 @@ export {
   getCategoriesTreeList,
   getCategoriesFiltersList,
   getCategoriesProductsList,
-  getCategoriesProductsRead,
   getCategoriesSubcategoriesList,
   getTransportProductListRead,
   getTransportFilterList,
   getCategoriesSubcategoriesRead,
-  getRecommendedProductsList,
-  getProductBrandsList,
-  getProductModelsList,
-  getProductYearsList,
-  getProductTransportsList,
-  getProductAnaloguesRead,
 };

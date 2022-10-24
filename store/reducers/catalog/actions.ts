@@ -6,24 +6,16 @@ import {
   getCategoriesTreeList,
   getCategoriesFiltersList,
   getCategoriesProductsList,
-  getCategoriesProductsRead,
   getCategoriesSubcategoriesList,
   getCatalogSearchRead,
   getTransportFilterList,
   getTransportCategoriesRead,
   getCategoriesSubcategoriesRead,
-  getRecommendedProductsList,
-  getProductBrandsList,
-  getProductModelsList,
-  getProductYearsList,
-  getProductTransportsList,
-  getProductAnaloguesRead,
 } from 'api/routes/catalog';
 import {
   TransportSearchRequestData,
   CategoriesFiltersListRequestData,
   CategoriesProductsListRequestData,
-  CategoriesProductsReadRequestData,
   CategoriesSubcategoriesListRequestData,
   TransportProductListRead,
   CatalogSearchReadRequestData,
@@ -32,17 +24,9 @@ import {
   CategoriesProductListResponseData,
   TreeCategoryResponseData,
   FiltersCategoryResponseData,
-  CategoriesProductReadResponseData,
   CatalogSearchReadResponseData,
-  RecommendedProductsListRequestData,
-  RecommendedResponceData,
-  ProductTransportListResponseData,
-  ProductBrandsListRequestData,
-  ProductModelsListRequestData,
-  ProductYearsListRequestData,
-  ProductTransportListRequestData,
-  ProductAnaloguesResponseData,
 } from 'api/models/catalog';
+
 import { createAsyncAction } from 'utility/helpers/store';
 
 const clearCatalogSearchRead = createAction('clearCatalogSearchRead');
@@ -50,12 +34,6 @@ const setIsLoadingCatalogSearchRead = createAction(
   'setIsLoadingCatalogSearchRead',
 );
 const clearCatalog = createAction('CatalogStore/clearCatalog');
-const clearRecommendedProductsList = createAction(
-  'CatalogStore/clearRecommendedProductsList',
-);
-const clearProductInstallationError = createAction(
-  'clearProductInstallationError',
-);
 
 const fetchTransportFilterList = createAsyncAction<
   CategoryResponseData[],
@@ -107,22 +85,6 @@ const fetchCategoriesProductsList = createAsyncAction<
   request: getCategoriesProductsList,
 });
 
-const fetchCategoriesProductsRead = createAsyncAction<
-  CategoriesProductReadResponseData,
-  CategoriesProductsReadRequestData
->({
-  typeAction: 'CatalogStore/fetchCategoriesProductsRead',
-  request: getCategoriesProductsRead,
-});
-
-const fetchProductAnaloguesRead = createAsyncAction<
-  ProductAnaloguesResponseData,
-  CategoriesProductsReadRequestData
->({
-  typeAction: 'CatalogStore/fetchProductAnalogueRead',
-  request: getProductAnaloguesRead,
-});
-
 const fetchCategoriesSubcategoriesList = createAsyncAction<
   CategoryResponseData[],
   CategoriesSubcategoriesListRequestData
@@ -147,49 +109,8 @@ const fetchCategoriesSubcategoriesRead = createAsyncAction<
   request: getCategoriesSubcategoriesRead,
 });
 
-const fetchRecommendedProductsList = createAsyncAction<
-  RecommendedResponceData,
-  RecommendedProductsListRequestData
->({
-  typeAction: 'CatalogStore/fetchRecommendedProductsList',
-  request: getRecommendedProductsList,
-});
-
-const fetchProductBrandsList = createAsyncAction<
-  ProductTransportListResponseData[],
-  ProductBrandsListRequestData
->({
-  typeAction: 'CatalogStore/fetchProductBrandsList',
-  request: getProductBrandsList,
-});
-
-const fetchProductModelsList = createAsyncAction<
-  ProductTransportListResponseData[],
-  ProductModelsListRequestData
->({
-  typeAction: 'CatalogStore/fetchProductModelsList',
-  request: getProductModelsList,
-});
-
-const fetchProductYearsList = createAsyncAction<
-  ProductTransportListResponseData[],
-  ProductYearsListRequestData
->({
-  typeAction: 'CatalogStore/fetchProductYearsList',
-  request: getProductYearsList,
-});
-
-const fetchProductTransportsList = createAsyncAction<
-  ProductTransportListResponseData[],
-  ProductTransportListRequestData
->({
-  typeAction: 'CatalogStore/fetchProductTransportsList',
-  request: getProductTransportsList,
-});
-
 export {
   clearCatalog,
-  clearProductInstallationError,
   fetchTransportReadCategories,
   fetchCategoriesList,
   fetchCatalogSearchRead,
@@ -198,16 +119,8 @@ export {
   fetchCategoriesTreeList,
   fetchCategoriesFiltersList,
   fetchCategoriesProductsList,
-  fetchCategoriesProductsRead,
   fetchCategoriesSubcategoriesList,
   fetchCategoriesSubcategoriesRead,
   fetchTransportProductList,
   fetchTransportFilterList,
-  fetchRecommendedProductsList,
-  clearRecommendedProductsList,
-  fetchProductBrandsList,
-  fetchProductModelsList,
-  fetchProductYearsList,
-  fetchProductTransportsList,
-  fetchProductAnaloguesRead,
 };

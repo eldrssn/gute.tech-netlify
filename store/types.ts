@@ -9,6 +9,7 @@ import { AuthenticationStore } from './reducers/authentication/types';
 import { OrderStore } from './reducers/order/types';
 import { PaymentStore } from './reducers/payment/types';
 import { ModalStore } from './reducers/modal/types';
+import { ProductStore } from './reducers/product/types';
 
 type State = {
   cartStore: CartStore;
@@ -22,6 +23,7 @@ type State = {
   orderStore: OrderStore;
   paymentStore: PaymentStore;
   modalStore: ModalStore;
+  productStore: ProductStore;
 };
 
 type ErrorАuthenticationPayload<P = void> = {

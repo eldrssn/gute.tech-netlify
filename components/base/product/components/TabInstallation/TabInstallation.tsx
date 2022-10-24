@@ -8,7 +8,7 @@ import { Box } from '@mui/system';
 import {
   fetchProductBrandsList,
   clearProductInstallationError,
-} from 'store/reducers/catalog/actions';
+} from 'store/reducers/product/actions';
 import { TabProps } from 'types/product';
 import { makeAnArray } from 'utility/helpers';
 

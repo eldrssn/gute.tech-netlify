@@ -28,7 +28,6 @@ const initialState: CatalogStore = {
     isLoading: false,
     error: null,
   },
-
   categoriesTreeList: {
     data: [],
     isLoading: false,
@@ -44,11 +43,6 @@ const initialState: CatalogStore = {
     isLoading: true,
     error: null,
   },
-  categoriesProductRead: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
   categoriesSubcategoriesList: {
     data: [],
     isLoading: false,
@@ -60,36 +54,6 @@ const initialState: CatalogStore = {
     error: null,
   },
   catalogSearchRead: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
-  recommendedProductsList: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
-  productBrandsList: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
-  productModelsList: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
-  productTransportList: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
-  productYearsList: {
-    data: null,
-    isLoading: false,
-    error: null,
-  },
-  productAnaloguesList: {
     data: null,
     isLoading: false,
     error: null,

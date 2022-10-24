@@ -2,8 +2,6 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { useWindowSize } from 'hooks/useWindowSize';
-
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import {
   selectCategoriesTreeList,
@@ -13,7 +11,6 @@ import { CatalogPage } from 'components/base/catalog';
 import { PageNotFound } from 'components/main/PageNotFound';
 import HomePage from 'components/base/home';
 import { NavigationBreadcrumbs } from 'components/main/NavigationBreadcrumbs';
-import { SearchField } from 'components/main/Header/components/SearchField';
 import {
   makeAnArray,
   getIsProductInCategorySlug,
@@ -25,7 +22,6 @@ import { Loader } from 'components/ui/Loader';
 const Catalog: FC = () => {
   const router = useRouter();
 
-  const { isMobile } = useWindowSize();
   const transportId = useSelector(selectTransportId);
 
   const { categorySlug } = router.query;
@@ -65,7 +61,6 @@ const Catalog: FC = () => {
 
   return (
     <>
-      {isMobile && <SearchField />}
       <NavigationBreadcrumbs />
       {isProductFoundInCategory ? <CatalogPage /> : <HomePage isCatalog />}
     </>

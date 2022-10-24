@@ -1,5 +1,4 @@
-import { FiltersRequest, Slug } from 'types';
-import { ProductWarehouse } from './cart';
+import { FiltersRequest } from 'types';
 
 type ProductListData = {
   title: string;
@@ -31,10 +30,6 @@ type CategoriesFiltersListRequestData = {
   sort?: string;
   order?: string;
   filter?: FiltersRequest;
-};
-
-type CategoriesProductsReadRequestData = {
-  productSlug: string;
 };
 
 type CategoriesSubcategoriesListRequestData = {
@@ -103,35 +98,6 @@ type AnalogueItem = {
   is_original: boolean;
 };
 
-type ProductAnaloguesResponseData = {
-  current: string;
-  total: string;
-  pages: string;
-  results: AnalogueItem[];
-};
-
-type RecommendedResponceData = ProductListData[];
-
-interface Property {
-  title: string;
-  value: string;
-}
-
-type CategoriesProductReadResponseData = {
-  title: string;
-  slug: string;
-  manufacturer?: string;
-  vendor_code: string;
-  description?: string;
-  price?: string;
-  images?: string[];
-  properties?: Property[];
-  is_service: boolean;
-  warehouses?: ProductWarehouse[];
-  faq: Record<string, string>[];
-  installation: string;
-};
-
 type CatalogSearchReadRequestData = {
   searchValue: string;
 };
@@ -157,57 +123,12 @@ type CatalogSearchReadResponseData = {
   products: CatalogSearchReadProductData[];
 };
 
-type RecommendedProductsListRequestData = TransportSearchRequestData & {
-  productSlug: Slug;
-  categorySlug: Slug;
-};
-
-type InfoBlock = {
-  title: string;
-  slug: string;
-};
-
-type ProductTransportListResponseData = {
-  id: number;
-  title: string;
-  count: number;
-  slug: string;
-  years_string?: string;
-  brand: InfoBlock;
-  engine: InfoBlock;
-  model: InfoBlock;
-  years: number[];
-};
-
-type ProductBrandsListRequestData = {
-  productSlug: string;
-};
-
-type ProductModelsListRequestData = {
-  productSlug: string;
-  brandSlug: string;
-};
-
-type ProductYearsListRequestData = {
-  productSlug: string;
-  brandSlug: string;
-  modelSlug: string;
-};
-
-type ProductTransportListRequestData = {
-  productSlug: string;
-  brandSlug: string;
-  modelSlug: string;
-  yearSlug: string;
-};
-
 export { FilterTypes };
 export type {
   CatalogSearchReadResponseData,
   CatalogSearchReadCategoryData,
   CatalogSearchReadProductData,
   CatalogSearchReadRequestData,
-  CategoriesProductReadResponseData,
   CategoriesProductListResponseData,
   FiltersCategoryResponseData,
   CheckboxValue,
@@ -215,19 +136,10 @@ export type {
   CategoryResponseData,
   CategoriesSubcategoriesReadRequestData,
   CategoriesSubcategoriesListRequestData,
-  CategoriesProductsReadRequestData,
   CategoriesFiltersListRequestData,
   TransportProductListRead,
   TransportSearchRequestData,
   CategoriesProductsListRequestData,
   ProductListData,
-  RecommendedProductsListRequestData,
-  RecommendedResponceData,
-  ProductTransportListResponseData,
-  ProductBrandsListRequestData,
-  ProductModelsListRequestData,
-  ProductYearsListRequestData,
-  ProductTransportListRequestData,
-  ProductAnaloguesResponseData,
   AnalogueItem,
 };

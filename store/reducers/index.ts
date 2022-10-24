@@ -11,12 +11,14 @@ import { authenticationReducer } from './authentication';
 import { orderReducer } from './order';
 import { paymentReducer } from './payment';
 import { modalReducer } from './modal';
+import { productReducer } from './product';
 
 const reducers = combineReducers({
   cartStore: cartReducer,
   transportStore: transportReducer,
   showcaseStore: showcaseReducer,
   catalogStore: catalogReducer,
+  productStore: productReducer,
   regionStore: regionReducer,
   pagesStore: pagesReducer,
   userStore: userReducer,

@@ -15,13 +15,13 @@ import {
   selectProductModelsList,
   selectProductYearsList,
   selectProductTransportsList,
-} from 'store/reducers/catalog/selectors';
+} from 'store/reducers/product/selectors';
 import {
   fetchProductModelsList,
   fetchProductYearsList,
   fetchProductTransportsList,
   clearProductInstallationError,
-} from 'store/reducers/catalog/actions';
+} from 'store/reducers/product/actions';
 import { makeAnArray } from 'utility/helpers';
 
 import { getDisplayedInformation } from './helpers';
