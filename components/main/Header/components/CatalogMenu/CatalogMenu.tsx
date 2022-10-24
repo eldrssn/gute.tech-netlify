@@ -38,6 +38,7 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
 
   const [choosenCategory, setChoosenCategory] =
     useState<null | TreeCategoryResponseData>(null);
+  const [choosenCategoryIndex, setChoosenCategoryIndex] = useState<number>();
 
   const { transportId } = useSelector(selectTransportStore);
 
@@ -49,8 +50,9 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
 
   const resetCategory = () => setChoosenCategory(null);
 
-  const showCatalogItem = (item: TreeCategoryResponseData) => {
+  const showCatalogItem = (item: TreeCategoryResponseData, index: number) => {
     item.children ? setChoosenCategory(item) : resetCategory();
+    setChoosenCategoryIndex(index);
   };
 
   const childrenBox = choosenCategory?.children
@@ -59,7 +61,8 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
 
   const setChildrenFocus = () =>
     setFocus({ ref: childrenRef, id: '#children' });
-  const setParentsFocus = () => setFocus({ ref: parentRef, id: '#parents' });
+  const setParentsFocus = () =>
+    setFocus({ ref: parentRef, id: '#parents', choosenCategoryIndex });
 
   const toggleFocus = (event: KeyboardEvent) => {
     const key = event.key;
@@ -105,12 +108,14 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
           </MenuItem>
         )}
         <Box id='parents'>
-          {categoriesTree.map((item: TreeCategoryResponseData) => (
+          {categoriesTree.map((item: TreeCategoryResponseData, index) => (
             <CatalogMenuItem
               key={item.slug}
               item={item}
               parentSlug={item.slug}
-              onMouseEnter={() => showCatalogItem(item)}
+              onMouseEnter={() => {
+                showCatalogItem(item, index);
+              }}
               handleClick={handleClose}
               isCategory
             />

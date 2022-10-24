@@ -22,14 +22,12 @@ const MenuItems: FC<MenuItemsProps> = ({
         if (href) {
           return (
             <Link href={href} key={title}>
-              <a>
-                <MenuItem
-                  className={cn(styles.navItem, {
-                    [styles.navItem_active]: href === router.pathname,
-                  })}
-                >
-                  {title}
-                </MenuItem>
+              <a
+                className={cn(styles.navItem, {
+                  [styles.navItem_active]: href === router.pathname,
+                })}
+              >
+                <MenuItem>{title}</MenuItem>
               </a>
             </Link>
           );
@@ -41,6 +39,7 @@ const MenuItems: FC<MenuItemsProps> = ({
               onClick={handleOpenModalLogOut}
               className={styles.navItem}
               key={title}
+              tabIndex={0}
             >
               {title}
             </MenuItem>

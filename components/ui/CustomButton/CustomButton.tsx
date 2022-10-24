@@ -13,6 +13,7 @@ const CustomButton: React.FC<CustomButtonType> = ({
   onClick,
   customStyles,
   id,
+  form,
   disabled = false,
   type = 'button',
 }) => (
@@ -24,6 +25,7 @@ const CustomButton: React.FC<CustomButtonType> = ({
     disableRipple={true}
     disabled={disabled}
     type={type}
+    form={form}
   >
     {children}
   </Button>

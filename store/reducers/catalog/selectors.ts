@@ -118,6 +118,11 @@ const selectProductTransportsList = createSelector(
   ({ productTransportList }) => productTransportList,
 );
 
+const selectProductAnaloguesList = createSelector(
+  selectCatalogStore,
+  ({ productAnaloguesList }) => productAnaloguesList,
+);
+
 export {
   selectCategoriesProductRead,
   selectTransportReadCategories,
@@ -136,4 +141,5 @@ export {
   selectProductModelsList,
   selectProductYearsList,
   selectProductTransportsList,
+  selectProductAnaloguesList,
 };

@@ -16,7 +16,13 @@
 .navItem {
   width: 97%;
   margin-left: 3px;
+
+  &:focus {
+    background-color: $gray4;
+    outline: none;
+  }
 }
+
 .navItem_active {
   border-right: 2px solid $blue1;
   color: $blue1;

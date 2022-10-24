@@ -1,0 +1,16 @@
+@import 'styles/colors.scss';
+
+.item_box {
+  &:hover {
+    background-color: $gray5;
+  }
+
+  &:focus {
+    background-color: $gray4;
+    outline: none;
+  }
+}
+
+.item {
+  background-color: inherit;
+}

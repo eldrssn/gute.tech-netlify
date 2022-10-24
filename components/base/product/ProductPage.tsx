@@ -14,16 +14,18 @@ import { Loader } from 'components/ui/Loader';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
-import { fetchCategoriesProductsRead } from 'store/reducers/catalog/actions';
+import {
+  fetchCategoriesProductsRead,
+  fetchProductAnaloguesRead,
+} from 'store/reducers/catalog/actions';
 import {
   selectCategoriesProductRead,
-  selectRecommendedProductsList,
+  selectProductAnaloguesList,
 } from 'store/reducers/catalog/selectors';
 import {
   addProductToCartAuthorized,
   addProductToCartUnAuthorized,
 } from 'store/reducers/cart/actions';
-import { selectTransportId } from 'store/reducers/transport/selectors';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 import { formatPrice, makeAnArray } from 'utility/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
@@ -49,7 +51,6 @@ const ProductPage: FC = () => {
 
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
 
-  const transportId = useSelector(selectTransportId);
   const isShowAuthorizationWarning = useSelector(
     selectShowAuthorizationWarning,
   );
@@ -57,7 +58,7 @@ const ProductPage: FC = () => {
   const isAuthorized = useSelector(selectIsAuthorized);
   const metrics = useSelector(selectMetrics);
 
-  const { data: analoguesMocks } = useSelector(selectRecommendedProductsList);
+  const { data: analogues } = useSelector(selectProductAnaloguesList);
 
   const { categorySlug } = router.query;
   const categorySlugAnArray = makeAnArray(categorySlug);
@@ -68,11 +69,12 @@ const ProductPage: FC = () => {
 
   useEffect(() => {
     dispatch(
-      fetchCategoriesProductsRead({
-        productSlug: productSlug,
+      fetchProductAnaloguesRead({
+        productSlug,
       }),
     );
-  }, [сategorySlug, productSlug, transportId, dispatch]);
+    dispatch(fetchCategoriesProductsRead({ productSlug }));
+  }, [productSlug, сategorySlug, dispatch]);
 
   if (isLoading) {
     return <Loader />;
@@ -115,7 +117,9 @@ const ProductPage: FC = () => {
     installation,
     description,
     properties: newProperties,
-    analogues: analoguesMocks || [],
+    analogues: analogues?.results || [],
+    // TODO: удалить отсюда ревьюсы
+    reviews: [],
   };
 
   const buyItNow = () => {

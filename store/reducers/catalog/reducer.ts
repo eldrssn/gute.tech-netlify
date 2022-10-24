@@ -9,6 +9,7 @@ import {
   CatalogSearchReadResponseData,
   RecommendedResponceData,
   ProductTransportListResponseData,
+  ProductAnaloguesResponseData,
 } from 'api/models/catalog';
 
 import {
@@ -33,6 +34,7 @@ import {
   fetchProductYearsList,
   fetchProductTransportsList,
   clearProductInstallationError,
+  fetchProductAnaloguesRead,
 } from './actions';
 
 import { CatalogStore, ErrorAction } from './types';
@@ -393,6 +395,27 @@ const handlers = {
     state.productTransportList.data = null;
     state.productTransportList.isLoading = false;
     state.productTransportList.error = errorData;
+  },
+
+  [fetchProductAnaloguesRead.pending.type]: (state: CatalogStore) => {
+    state.productAnaloguesList.isLoading = true;
+  },
+  [fetchProductAnaloguesRead.fulfilled.type]: (
+    state: CatalogStore,
+    { payload }: PayloadAction<ProductAnaloguesResponseData>,
+  ) => {
+    state.productAnaloguesList.data = payload;
+    state.productAnaloguesList.isLoading = false;
+    state.productAnaloguesList.error = null;
+  },
+  [fetchProductAnaloguesRead.rejected.type]: (
+    state: CatalogStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.productAnaloguesList.data = null;
+    state.productAnaloguesList.isLoading = false;
+    state.productAnaloguesList.error = errorData;
   },
 };
 

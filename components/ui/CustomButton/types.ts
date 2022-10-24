@@ -5,6 +5,7 @@ type CustomButtonType = {
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   id?: string;
+  form?: string;
 };
 
 export type { CustomButtonType };

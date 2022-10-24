@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { CustomButton } from 'components/ui/CustomButton';
 import { ModalSaveChanges } from 'components/main/ModalSaveChanges';
 import { ModalCancelChanges } from 'components/main/ModalCancelChanges';
+import { ModalEditUserEmail } from 'components/main/ModalEditUserEmail';
 
 import {
   editProfile,
@@ -28,7 +29,6 @@ import {
 import { UPDATE_DELAY } from './constants';
 import { TFormDataFields, FormData } from './types';
 import styles from './userForm.module.scss';
-import { ModalEditUserEmail } from 'components/main/ModalEditUserEmail';
 
 const UserForm = () => {
   const dispatch = useDispatch();
@@ -144,7 +144,7 @@ const UserForm = () => {
 
   return (
     <>
-      <form onSubmit={onSumbit} className={styles.formContainer}>
+      <form onSubmit={onSumbit} className={styles.formContainer} id='user-form'>
         <AccountFields
           register={register}
           onChangeForm={onChangeForm}

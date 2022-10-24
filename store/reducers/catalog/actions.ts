@@ -17,6 +17,7 @@ import {
   getProductModelsList,
   getProductYearsList,
   getProductTransportsList,
+  getProductAnaloguesRead,
 } from 'api/routes/catalog';
 import {
   TransportSearchRequestData,
@@ -40,6 +41,7 @@ import {
   ProductModelsListRequestData,
   ProductYearsListRequestData,
   ProductTransportListRequestData,
+  ProductAnaloguesResponseData,
 } from 'api/models/catalog';
 import { createAsyncAction } from 'utility/helpers/store';
 
@@ -111,6 +113,14 @@ const fetchCategoriesProductsRead = createAsyncAction<
 >({
   typeAction: 'CatalogStore/fetchCategoriesProductsRead',
   request: getCategoriesProductsRead,
+});
+
+const fetchProductAnaloguesRead = createAsyncAction<
+  ProductAnaloguesResponseData,
+  CategoriesProductsReadRequestData
+>({
+  typeAction: 'CatalogStore/fetchProductAnalogueRead',
+  request: getProductAnaloguesRead,
 });
 
 const fetchCategoriesSubcategoriesList = createAsyncAction<
@@ -199,4 +209,5 @@ export {
   fetchProductModelsList,
   fetchProductYearsList,
   fetchProductTransportsList,
+  fetchProductAnaloguesRead,
 };

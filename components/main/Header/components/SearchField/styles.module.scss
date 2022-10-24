@@ -143,6 +143,11 @@
   &:hover {
     background-color: $gray5;
   }
+
+  &:focus {
+    background-color: $gray4;
+    outline: none;
+  }
 }
 
 .productImage {
@@ -177,8 +182,15 @@
   padding: 10px 25px;
   width: 100%;
   font-size: 14px;
+
   &:hover {
     background-color: $gray5;
+  }
+}
+.categoryListItem_box {
+  &:focus {
+    background-color: $gray4;
+    outline: none;
   }
 }
 

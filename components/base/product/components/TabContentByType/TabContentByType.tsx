@@ -9,12 +9,14 @@ import { TabInstallation } from '../TabInstallation';
 import { TabFAQ } from '../TabFAQ';
 
 import { TabContentByTypeProps } from './types';
+import { TabReviews } from '../TabReviews';
 
 const ContentByDescription: Record<DescriptionType, FC<TabProps>> = {
   [DescriptionTypes.properties]: TabDetails,
   [DescriptionTypes.description]: TabDefault,
   [DescriptionTypes.installation]: TabInstallation,
   [DescriptionTypes.faq]: TabFAQ,
+  [DescriptionTypes.reviews]: TabReviews,
   [DescriptionTypes.analogues]: TabAnalogues,
 };
 

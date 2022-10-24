@@ -39,7 +39,11 @@ const ModalSaveChanges: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
         <Typography className={styles.title}>Сохранить изменения?</Typography>
 
         <Box className={styles.buttonsContainer}>
-          <CustomButton customStyles={styles.button} type='submit'>
+          <CustomButton
+            customStyles={styles.button}
+            form='user-form'
+            type='submit'
+          >
             Сохранить
           </CustomButton>
           <CustomButton customStyles={styles.button} onClick={closeModal}>

@@ -22,6 +22,7 @@ import {
   ProductModelsListRequestData,
   ProductYearsListRequestData,
   ProductTransportListRequestData,
+  ProductAnaloguesResponseData,
 } from 'api/models/catalog';
 import { ApiMethods } from 'constants/types';
 import { makeStringify } from 'utility/helpers';
@@ -99,6 +100,14 @@ const getCategoriesProductsRead = ({
 }: CategoriesProductsReadRequestData) =>
   sendRequest<CategoriesProductReadResponseData>({
     url: `/v1/catalog/products/${productSlug}/`,
+    method: ApiMethods.GET,
+  });
+
+const getProductAnaloguesRead = ({
+  productSlug,
+}: CategoriesProductsReadRequestData) =>
+  sendRequest<ProductAnaloguesResponseData>({
+    url: `/v1/catalog/products/${productSlug}/analogues/`,
     method: ApiMethods.GET,
   });
 
@@ -205,4 +214,5 @@ export {
   getProductModelsList,
   getProductYearsList,
   getProductTransportsList,
+  getProductAnaloguesRead,
 };

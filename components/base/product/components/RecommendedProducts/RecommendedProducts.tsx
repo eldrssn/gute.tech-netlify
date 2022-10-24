@@ -7,6 +7,7 @@ import Slider from 'react-slick';
 import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
 import { CatalogCard } from 'components/main/CatalogCard';
 
+import { makeAnArray } from 'utility/helpers';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { selectRecommendedProductsList } from 'store/reducers/catalog/selectors';
 import {
@@ -14,11 +15,9 @@ import {
   fetchRecommendedProductsList,
 } from 'store/reducers/catalog/actions';
 
-import styles from './recommendedProducts.module.scss';
 import { getSlugs } from './helpers';
-import { makeAnArray } from 'utility/helpers';
+import styles from './recommendedProducts.module.scss';
 
-// TODO: поменять потом на правильные запросы
 const RecommendedProducts: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -54,7 +53,7 @@ const RecommendedProducts: FC = () => {
   const sliderSettings = {
     className: styles.slider,
     dots: false,
-    infinite: recommendedProducts.length > 2,
+    infinite: recommendedProducts.length > 4,
     speed: 1000,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -71,7 +70,7 @@ const RecommendedProducts: FC = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
-          infinite: true,
+          infinite: recommendedProducts.length > 2,
         },
       },
       {
@@ -80,6 +79,7 @@ const RecommendedProducts: FC = () => {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
+          infinite: recommendedProducts.length > 2,
         },
       },
       {
@@ -87,6 +87,7 @@ const RecommendedProducts: FC = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          infinite: recommendedProducts.length > 1,
         },
       },
     ],
