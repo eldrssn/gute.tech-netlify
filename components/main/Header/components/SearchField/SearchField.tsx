@@ -1,5 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
@@ -27,6 +34,7 @@ import { useArrowNavigation } from 'hooks/useArrowNavigation';
 
 import { HeaderContext } from '../HeaderContext';
 
+import { checkResultList } from './helpers';
 import styles from './styles.module.scss';
 
 const SearchField: FC = () => {
@@ -39,6 +47,9 @@ const SearchField: FC = () => {
   const [isFocusSearch, setIsFocusSearch] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  const popupRef = useRef<HTMLDivElement | null>(null);
+  const isResult = checkResultList(popupRef);
 
   const searchFieldRef = useArrowNavigation({
     selectors: 'a',
@@ -96,6 +107,12 @@ const SearchField: FC = () => {
     setFieldIsFocus(true);
   };
 
+  const handleBlur = () => {
+    if (!isResult) {
+      setFieldIsFocus(false);
+    }
+  };
+
   useEffect(() => {
     if (debouncedSearchTerm.length >= 3) {
       dispatch(fetchCatalogSearchRead({ searchValue: debouncedSearchTerm }));
@@ -137,7 +154,11 @@ const SearchField: FC = () => {
   }, []);
 
   return (
-    <Box className={styles.searchMenuItem} ref={searchFieldRef}>
+    <Box
+      className={styles.searchMenuItem}
+      ref={searchFieldRef}
+      onBlur={handleBlur}
+    >
       {isFocusSearchField && (
         <Box
           component='div'
@@ -178,6 +199,7 @@ const SearchField: FC = () => {
           [styles.errorPopupBox]: !isCatalogSearchRead && isFocusSearchField,
           [styles.popupBoxSmallHeader]: !isFullHeader,
         })}
+        ref={popupRef}
       >
         {isCatalogSearchRead ? (
           <>
@@ -192,7 +214,7 @@ const SearchField: FC = () => {
 
                   return (
                     <Link href={link} key={category.slug}>
-                      <a>
+                      <a className={styles.categoryListItem_box}>
                         <Typography
                           onClick={handleClosePopover}
                           className={styles.categoryListItem}

@@ -184,23 +184,27 @@ const FilterPopover: FC<FilterPopoverProps> = ({
               })}
               sx={{ width: isMobile ? '100%' : widthList }}
             >
-              {filteredData.map((item) => (
-                <Button
-                  sx={{ width: isMobile ? '100%' : widthButton }}
-                  className={styles.button}
-                  onClick={() => {
-                    handleClick({
-                      title: item.title,
-                      slug: item.slug,
-                      searchValue: null,
-                      inputStepId,
-                    });
-                  }}
-                  key={item.slug}
-                >
-                  {item.title}
-                </Button>
-              ))}
+              {filteredData.length > 0 ? (
+                filteredData.map((item) => (
+                  <Button
+                    sx={{ width: isMobile ? '100%' : widthButton }}
+                    className={styles.button}
+                    onClick={() => {
+                      handleClick({
+                        title: item.title,
+                        slug: item.slug,
+                        searchValue: null,
+                        inputStepId,
+                      });
+                    }}
+                    key={item.slug}
+                  >
+                    {item.title}
+                  </Button>
+                ))
+              ) : (
+                <p className={styles.noResults}>Ничего не найдено</p>
+              )}
             </Box>
           </>
         )}

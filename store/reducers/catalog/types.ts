@@ -8,6 +8,7 @@ import {
   CatalogSearchReadResponseData,
   RecommendedResponceData,
   ProductTransportListResponseData,
+  ProductAnaloguesResponseData,
 } from 'api/models/catalog';
 import { ProductWarehouse } from 'api/models/cart';
 
@@ -29,6 +30,7 @@ enum CategoryStoreBlocks {
   PRODUCT_MODELS_LIST = 'productModelsList',
   PRODUCT_YEARS_LIST = 'productYearsList',
   PRODUCT_TRANSPORT_LIST = 'productTransportList',
+  PRODUCT_ANALOGUES_LIST = 'productAnaloguesList',
 }
 
 interface Property {
@@ -98,6 +100,9 @@ type ProductYearsListState = {
 type ProductTransportsListState = {
   data: ProductTransportListResponseData[] | null;
 } & StoreState;
+type ProductAnaloguesListState = {
+  data: ProductAnaloguesResponseData | null;
+} & StoreState;
 
 type CatalogStore = {
   [CategoryStoreBlocks.TRANSPORT_READ_CATEGORY]: CategoriesTreeListState;
@@ -116,6 +121,7 @@ type CatalogStore = {
   [CategoryStoreBlocks.PRODUCT_MODELS_LIST]: ProductModelsListState;
   [CategoryStoreBlocks.PRODUCT_YEARS_LIST]: ProductYearsListState;
   [CategoryStoreBlocks.PRODUCT_TRANSPORT_LIST]: ProductTransportsListState;
+  [CategoryStoreBlocks.PRODUCT_ANALOGUES_LIST]: ProductAnaloguesListState;
 };
 
 export type { ErrorAction, StoreError, CatalogStore };

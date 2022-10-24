@@ -114,6 +114,11 @@
   }
 }
 
+.noResults {
+  padding: 5px 15px;
+  margin: 15px auto;
+}
+
 @media (max-width: $mobile) {
   .listContainer {
     z-index: $z-index19;

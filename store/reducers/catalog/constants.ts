@@ -89,6 +89,11 @@ const initialState: CatalogStore = {
     isLoading: false,
     error: null,
   },
+  productAnaloguesList: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
 };
 
 export { initProductList, initialState };

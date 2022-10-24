@@ -1,9 +1,11 @@
 const setFocus = ({
   ref,
   id,
+  choosenCategoryIndex,
 }: {
   ref: React.MutableRefObject<HTMLDivElement | null>;
   id: string;
+  choosenCategoryIndex?: number;
 }) => {
   const nodes = ref && ref.current?.querySelector(id);
 
@@ -11,7 +13,10 @@ const setFocus = ({
     return;
   }
 
-  const element = nodes.firstChild as HTMLElement;
+  const element = choosenCategoryIndex
+    ? (nodes.children[choosenCategoryIndex] as HTMLElement)
+    : (nodes.firstChild as HTMLElement);
+
   element.focus();
 };
 

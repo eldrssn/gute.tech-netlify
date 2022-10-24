@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 
 import { Props } from './types';
+import styles from './loginPopover.module.scss';
 
 const LoginPopover: FC<Props> = ({ closePopover, setIsOpenModalLogOut }) => {
   const handleClickExit = () => {
@@ -15,20 +16,26 @@ const LoginPopover: FC<Props> = ({ closePopover, setIsOpenModalLogOut }) => {
   return (
     <Container disableGutters sx={{ position: 'relative' }}>
       <Link href='/profile'>
-        <a>
-          <MenuItem onClick={closePopover}>Мой профиль</MenuItem>
+        <a className={styles.item_box}>
+          <MenuItem onClick={closePopover} className={styles.item}>
+            Мой профиль
+          </MenuItem>
         </a>
       </Link>
 
       <Link href='/profile/orders'>
-        <a>
-          <MenuItem onClick={closePopover} tabIndex={0}>
+        <a className={styles.item_box}>
+          <MenuItem className={styles.item} onClick={closePopover}>
             История заказов
           </MenuItem>
         </a>
       </Link>
 
-      <MenuItem tabIndex={0} onClick={handleClickExit}>
+      <MenuItem
+        tabIndex={0}
+        onClick={handleClickExit}
+        className={styles.menuItem}
+      >
         Выйти
       </MenuItem>
     </Container>

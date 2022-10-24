@@ -2,7 +2,7 @@ import React, { FC, useMemo, useState } from 'react';
 import Link from 'next/link';
 
 import { Content, TabProps } from 'types/product';
-import { RecommendedResponceData } from 'api/models/catalog';
+import { AnalogueItem } from 'api/models/catalog';
 import { getLinkToProduct } from 'utility/helpers/linkmakers';
 import { CustomButton } from 'components/ui/CustomButton';
 
@@ -17,18 +17,20 @@ const TabAnalogues: FC<TabProps> = ({ content }) => {
     setIsExpandedList((isExpandedList) => !isExpandedList);
   };
 
+  // TODO: перенести сюда фетчинг аналогов
+
   const items = useMemo(
     () => (isExpandedList ? content : content?.slice(0, MAX_ITEMS_COUNT)) || [],
     [isExpandedList, content],
   );
 
   if (items.length === 0) {
-    return <p>Нет данных</p>;
+    return <p>Нет аналогов</p>;
   }
 
   const isProperties = (
-    value: Content | RecommendedResponceData,
-  ): value is RecommendedResponceData => {
+    value: Content | AnalogueItem[],
+  ): value is AnalogueItem[] => {
     return true;
   };
 
@@ -41,7 +43,7 @@ const TabAnalogues: FC<TabProps> = ({ content }) => {
       {items.map(
         ({ title, manufacturer = 'NO_BRAND', price, categories, slug }) => {
           const getLink = () =>
-            getLinkToProduct({ categories: categories[0], productSlug: slug });
+            getLinkToProduct({ categories, productSlug: slug });
 
           return (
             <Link href={getLink()} key={title}>

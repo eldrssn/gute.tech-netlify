@@ -94,6 +94,22 @@ type CategoriesProductListResponseData = {
   results: ProductListData[];
 };
 
+type AnalogueItem = {
+  title: string;
+  slug: string;
+  categories: string[];
+  manufacturer: string;
+  price: string;
+  is_original: boolean;
+};
+
+type ProductAnaloguesResponseData = {
+  current: string;
+  total: string;
+  pages: string;
+  results: AnalogueItem[];
+};
+
 type RecommendedResponceData = ProductListData[];
 
 interface Property {
@@ -212,4 +228,6 @@ export type {
   ProductModelsListRequestData,
   ProductYearsListRequestData,
   ProductTransportListRequestData,
+  ProductAnaloguesResponseData,
+  AnalogueItem,
 };

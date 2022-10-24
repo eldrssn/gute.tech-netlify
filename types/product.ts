@@ -1,4 +1,4 @@
-import { RecommendedResponceData } from 'api/models/catalog';
+import { AnalogueItem } from 'api/models/catalog';
 
 type Content =
   | string
@@ -6,7 +6,7 @@ type Content =
   | undefined
   | Record<string, string>[]
   | Property[]
-  | RecommendedResponceData;
+  | AnalogueItem[];
 
 interface Property {
   title: string;
@@ -24,6 +24,7 @@ enum DescriptionTypes {
   properties = 'properties',
   description = 'description',
   installation = 'installation',
+  reviews = 'reviews',
   faq = 'faq',
   analogues = 'analogues',
 }
