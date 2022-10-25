@@ -22,6 +22,7 @@ import {
   fetchOrder,
   changePassword,
   resetChangePassword,
+  clearUserProfileData,
 } from './actions';
 
 import { initialState } from './constants';
@@ -29,6 +30,35 @@ import { initialState } from './constants';
 import { UserStore, ErrorAction } from './types';
 
 const handlers = {
+  [resetChangePassword.type]: (state: UserStore) => {
+    state.changePassword.data = null;
+    state.changePassword.isLoading = false;
+    state.changePassword.error = null;
+  },
+  [resetVerifyEmail.type]: (state: UserStore) => {
+    state.verifyEmail.data = null;
+    state.verifyEmail.isLoading = false;
+    state.verifyEmail.error = null;
+  },
+  [resetEditProfile.type]: (state: UserStore) => {
+    state.editProfile.data = null;
+    state.editProfile.isLoading = false;
+    state.editProfile.error = null;
+  },
+  [clearUserProfileData.type]: (state: UserStore) => {
+    state.profile.data = {
+      last_name: '',
+      first_name: '',
+      patronymic: '',
+      phone_number: '',
+      date_of_birthday: null,
+      email: '',
+      date_joined: '',
+      transport: '',
+      city: { title: '', slug: '' },
+    };
+  },
+
   [fetchProfile.pending.type]: (state: UserStore) => {
     state.profile.isLoading = true;
   },
@@ -86,16 +116,6 @@ const handlers = {
     state.verifyEmail.error = payload;
   },
 
-  [resetVerifyEmail.type]: (state: UserStore) => {
-    state.verifyEmail.data = null;
-    state.verifyEmail.isLoading = false;
-    state.verifyEmail.error = null;
-  },
-  [resetEditProfile.type]: (state: UserStore) => {
-    state.editProfile.data = null;
-    state.editProfile.isLoading = false;
-    state.editProfile.error = null;
-  },
   [fetchOrders.pending.type]: (state: UserStore) => {
     state.orders.isLoading = true;
   },
@@ -148,12 +168,6 @@ const handlers = {
     state.changePassword.isLoading = false;
     state.changePassword.data = null;
     state.changePassword.error = payload;
-  },
-
-  [resetChangePassword.type]: (state: UserStore) => {
-    state.changePassword.data = null;
-    state.changePassword.isLoading = false;
-    state.changePassword.error = null;
   },
 };
 

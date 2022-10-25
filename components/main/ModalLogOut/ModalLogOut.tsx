@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { clearUserProfileData } from 'store/reducers/user/actions';
 import { logOut } from 'store/reducers/authentication/exceptionAction';
 import { CustomButton } from 'components/ui/CustomButton';
 import { handleEnterPress } from 'utility/utils';
@@ -28,6 +29,7 @@ const ModalLogOut: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
 
   const handleClickExit = () => {
     dispatch(logOut());
+    dispatch(clearUserProfileData());
     closeModal();
     router.push('/');
   };

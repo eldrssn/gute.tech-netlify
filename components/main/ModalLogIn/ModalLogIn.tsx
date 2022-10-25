@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+import { clearOrder } from 'store/reducers/order/actions';
 import { setActiveAuthorizationForm } from 'store/reducers/authentication/actions';
 import {
   selectactiveAuthorizationForm,
@@ -47,6 +48,8 @@ const ModalLogIn: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
     if (isAuthorized) {
       closeModal();
     }
+
+    dispatch(clearOrder());
   }, [isAuthorized]);
 
   const ActiveFormComponent = {
