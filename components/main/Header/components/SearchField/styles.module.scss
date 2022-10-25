@@ -1,6 +1,6 @@
-@import 'styles/colors.scss';
-@import '~styles/breakpoints.scss';
-@import '~styles/constants.scss';
+@import "styles/colors.scss";
+@import "~styles/breakpoints.scss";
+@import "~styles/constants.scss";
 
 .searchMenuItem {
   flex: 1 auto;
@@ -208,6 +208,8 @@
 @media (max-width: $mobile) {
   .searchBoxSmallHeader {
     height: 40px;
+    margin: 10px 20px;
+    width: calc(100% - 40px);
   }
 
   .searchBox {
@@ -215,11 +217,14 @@
   }
 
   .popupBox {
-    top: 36px;
+    top: 38px;
     z-index: $z-index6;
+    margin: 10px 20px;
+    width: calc(100% - 40px);
   }
 
   .searchMenuItem {
     margin: 0;
+    border-bottom: 1px solid $gray5;
   }
 }

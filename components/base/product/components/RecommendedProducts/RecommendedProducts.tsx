@@ -9,11 +9,11 @@ import { CatalogCard } from 'components/main/CatalogCard';
 
 import { makeAnArray } from 'utility/helpers';
 import { selectTransportId } from 'store/reducers/transport/selectors';
-import { selectRecommendedProductsList } from 'store/reducers/catalog/selectors';
+import { selectRecommendedProductsList } from 'store/reducers/product/selectors';
 import {
   clearRecommendedProductsList,
   fetchRecommendedProductsList,
-} from 'store/reducers/catalog/actions';
+} from 'store/reducers/product/actions';
 
 import { getSlugs } from './helpers';
 import styles from './recommendedProducts.module.scss';

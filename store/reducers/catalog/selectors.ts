@@ -7,11 +7,6 @@ const selectCatalogStore = createSelector(
   ({ catalogStore }) => catalogStore,
 );
 
-const selectCategoriesProductRead = createSelector(
-  selectCatalogStore,
-  ({ categoriesProductRead }) => categoriesProductRead,
-);
-
 const selectCategoriesTreeList = createSelector(
   selectCatalogStore,
   ({ categoriesTreeList }) => categoriesTreeList,
@@ -93,38 +88,7 @@ const selectCatalogSearchRead = createSelector(
   ({ catalogSearchRead }) => catalogSearchRead,
 );
 
-const selectRecommendedProductsList = createSelector(
-  selectCatalogStore,
-  ({ recommendedProductsList }) => recommendedProductsList,
-);
-
-const selectProductBrandsList = createSelector(
-  selectCatalogStore,
-  ({ productBrandsList }) => productBrandsList,
-);
-
-const selectProductModelsList = createSelector(
-  selectCatalogStore,
-  ({ productModelsList }) => productModelsList,
-);
-
-const selectProductYearsList = createSelector(
-  selectCatalogStore,
-  ({ productYearsList }) => productYearsList,
-);
-
-const selectProductTransportsList = createSelector(
-  selectCatalogStore,
-  ({ productTransportList }) => productTransportList,
-);
-
-const selectProductAnaloguesList = createSelector(
-  selectCatalogStore,
-  ({ productAnaloguesList }) => productAnaloguesList,
-);
-
 export {
-  selectCategoriesProductRead,
   selectTransportReadCategories,
   selectCategoriesTreeList,
   selectCategoriesSubcategoriesList,
@@ -135,11 +99,5 @@ export {
   selectCategoriesProductList,
   selectCategoriesFilterList,
   selectTransportFilterList,
-  selectRecommendedProductsList,
   selectCategoriesList,
-  selectProductBrandsList,
-  selectProductModelsList,
-  selectProductYearsList,
-  selectProductTransportsList,
-  selectProductAnaloguesList,
 };

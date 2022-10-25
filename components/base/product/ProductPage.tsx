@@ -17,11 +17,11 @@ import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
 import {
   fetchCategoriesProductsRead,
   fetchProductAnaloguesRead,
-} from 'store/reducers/catalog/actions';
+} from 'store/reducers/product/actions';
 import {
   selectCategoriesProductRead,
   selectProductAnaloguesList,
-} from 'store/reducers/catalog/selectors';
+} from 'store/reducers/product/selectors';
 import {
   addProductToCartAuthorized,
   addProductToCartUnAuthorized,

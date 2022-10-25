@@ -6,6 +6,7 @@ import { CustomButton } from 'components/ui/CustomButton';
 
 import { HeaderFilters } from '../HeaderFilters';
 import { HeaderMobileNav } from '../HeaderMobileNav';
+import { SearchField } from '../SearchField';
 import { HeaderContext } from '../HeaderContext';
 
 import styles from './headerMobile.module.scss';
@@ -37,6 +38,7 @@ const HeaderMobile: FC = () => {
       >
         {transportText ? `${transportText}` : 'Выберите транспорт'}
       </CustomButton>
+      <SearchField />
 
       <Menu
         anchorOrigin={{
