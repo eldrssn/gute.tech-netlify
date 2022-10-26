@@ -23,6 +23,11 @@ import {
 } from 'api/models/user';
 import { createAsyncAction } from 'utility/helpers/store';
 
+const resetVerifyEmail = createAction('user/resetVerifyEmail');
+const resetEditProfile = createAction('user/resetEditProfile');
+const resetChangePassword = createAction('user/resetChangePassword');
+const clearUserProfileData = createAction('user/clearUserProfileData');
+
 const changePassword = createAsyncAction<
   ChangePasswordResponseData,
   ChangePasswordRequestData
@@ -56,10 +61,6 @@ const verifyEmail = createAsyncAction<
   shouldHandleError: true,
 });
 
-const resetVerifyEmail = createAction('user/resetVerifyEmail');
-const resetEditProfile = createAction('user/resetEditProfile');
-const resetChangePassword = createAction('user/resetChangePassword');
-
 const fetchOrders = createAsyncAction<OrdersResponseData, OrdersRequestData>({
   typeAction: 'user/fetchOrders',
   request: getOrders,
@@ -73,6 +74,7 @@ const fetchOrder = createAsyncAction<OrderResponseData, OrderRequestData>({
 });
 
 export {
+  clearUserProfileData,
   changePassword,
   resetChangePassword,
   fetchProfile,
