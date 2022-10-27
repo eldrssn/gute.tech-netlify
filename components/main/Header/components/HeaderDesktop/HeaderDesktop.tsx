@@ -35,19 +35,21 @@ const HeaderDesktop: FC = () => {
           className={cn(styles.headerDesktopFull, {
             [styles.headerDesktop_short]: isShortDesktopHeader,
           })}
-          sx={{ flexWrap: { xs: 'wrap', lg: 'nowrap' } }}
+          sx={{
+            flexWrap: isFullHeader ? 'wrap' : isTablet ? 'wrap' : 'nowrap',
+          }}
         >
           <HeaderLogo />
           {isShortDesktopHeader && <CatalogButton />}
-          {isShortDesktopHeader && !isHiddenFilter && <HeaderFilters />}
+
           <SearchField />
           <HeaderAsideNav />
+          {isFullHeader && <Divider className={styles.divider} />}
+
+          {!isHiddenFilter && <HeaderFilters />}
         </Box>
       </Container>
-
-      <Divider />
-
-      {isFullHeader && <HeaderFilters />}
+      {!isFullHeader && <Divider />}
     </>
   );
 };

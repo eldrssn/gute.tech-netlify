@@ -19,7 +19,6 @@ const descriptionTypeName = [
   DescriptionTypes.description,
   DescriptionTypes.installation,
   DescriptionTypes.reviews,
-  DescriptionTypes.faq,
 ];
 
 const tabNameByType: Record<DescriptionType, string> = {
@@ -28,7 +27,6 @@ const tabNameByType: Record<DescriptionType, string> = {
   [DescriptionTypes.description]: 'Описание',
   [DescriptionTypes.installation]: 'Установка',
   [DescriptionTypes.reviews]: 'Отзывы',
-  [DescriptionTypes.faq]: 'Вопросы',
 };
 
 const DEV_HOST = 'dev.gute.tech';

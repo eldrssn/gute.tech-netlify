@@ -30,6 +30,7 @@ import { sendMetrik } from 'utility/utils/metriks';
 
 import { CatalogCardProps } from './types';
 import styles from './catalogCard.module.scss';
+import { TransportWarning } from './components/TransportWarning';
 
 const cn = classnames.bind(styles);
 
@@ -39,6 +40,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   slug,
   title,
   categories,
+  is_linked_transport,
   isSlider,
 }) => {
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
@@ -85,6 +87,8 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
           [styles.cardContainer_slider]: isSlider,
         })}
       >
+        {is_linked_transport && <TransportWarning />}
+
         <Link href={getLink()}>
           <a className={styles.cardLinkContainer}>
             <CardMedia

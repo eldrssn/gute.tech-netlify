@@ -34,6 +34,7 @@ type ProductsReadData = {
   warehouses?: ProductWarehouse[];
   faq: Record<string, string>[];
   installation: string;
+  is_linked_transport?: boolean;
 };
 
 type ProductReadState = {

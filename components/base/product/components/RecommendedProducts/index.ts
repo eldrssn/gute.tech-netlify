@@ -1,1 +1,3 @@
-export * from './RecommendedProducts';
+import RecommendedProducts from './RecommendedProducts';
+
+export default RecommendedProducts;

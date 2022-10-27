@@ -1,15 +1,26 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
-import { Content, TabProps } from 'types/product';
-import { AnalogueItem } from 'api/models/catalog';
 import { getLinkToProduct } from 'utility/helpers/linkmakers';
 import { CustomButton } from 'components/ui/CustomButton';
+import { fetchProductAnaloguesRead } from 'store/reducers/product/actions';
+import { selectProductAnaloguesList } from 'store/reducers/product/selectors';
 
+import { getProductSlugQuery } from '../../helpers';
 import { MAX_ITEMS_COUNT } from './constants';
 import styles from './tabAnalogues.module.scss';
 
-const TabAnalogues: FC<TabProps> = ({ content }) => {
+const TabAnalogues: FC = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { data: analogues } = useSelector(selectProductAnaloguesList);
+  const content = analogues?.results;
+
+  const productSlug = getProductSlugQuery(router);
+
   const [isExpandedList, setIsExpandedList] = useState(false);
   const isTooManyItems = content && content.length > MAX_ITEMS_COUNT;
 
@@ -17,7 +28,13 @@ const TabAnalogues: FC<TabProps> = ({ content }) => {
     setIsExpandedList((isExpandedList) => !isExpandedList);
   };
 
-  // TODO: перенести сюда фетчинг аналогов
+  useEffect(() => {
+    dispatch(
+      fetchProductAnaloguesRead({
+        productSlug,
+      }),
+    );
+  }, [productSlug, dispatch]);
 
   const items = useMemo(
     () => (isExpandedList ? content : content?.slice(0, MAX_ITEMS_COUNT)) || [],
@@ -25,17 +42,7 @@ const TabAnalogues: FC<TabProps> = ({ content }) => {
   );
 
   if (items.length === 0) {
-    return <p>Нет аналогов</p>;
-  }
-
-  const isProperties = (
-    value: Content | AnalogueItem[],
-  ): value is AnalogueItem[] => {
-    return true;
-  };
-
-  if (!Array.isArray(items) || !isProperties(items)) {
-    return <p>{items}</p>;
+    return <p>Доступных аналогов нет</p>;
   }
 
   return (

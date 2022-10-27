@@ -7,6 +7,7 @@ type ProductListData = {
   price?: string;
   categories: string[][];
   manufacturer?: string;
+  is_linked_transport?: boolean;
 };
 
 type CategoriesProductsListRequestData = {

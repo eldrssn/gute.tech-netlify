@@ -65,7 +65,7 @@ const FooterSocialLinks: FC = () => {
         })}
       </Box>
 
-      <a href='tel:+74992832026' className={styles.footerPhone}>
+      <a href={`tel:${phone}`} className={styles.footerPhone}>
         <FontAwesomeIcon icon={faPhone} className={styles.footerPhoneIcon} />
         <span className={styles.footerPhoneNumber}>{phone}</span>
       </a>
