@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -18,10 +19,7 @@ import {
   fetchCategoriesProductsRead,
   fetchProductAnaloguesRead,
 } from 'store/reducers/product/actions';
-import {
-  selectCategoriesProductRead,
-  selectProductAnaloguesList,
-} from 'store/reducers/product/selectors';
+import { selectCategoriesProductRead } from 'store/reducers/product/selectors';
 import {
   addProductToCartAuthorized,
   addProductToCartUnAuthorized,
@@ -36,7 +34,6 @@ import { ProductQuantity } from './components/ProductQuantity';
 import { ProductSpecial } from './components/ProductSpecial';
 import { ProductImageGallery } from './components/ProductImageGallery';
 import { ProductTabsDescription } from './components/ProductTabsDescription';
-import { RecommendedProducts } from './components/RecommendedProducts';
 import { CatalogCategories } from 'components/main/CatalogCategories';
 import { getProductSlug } from './helpers';
 import { PropertyNameByType } from './constants';
@@ -44,10 +41,14 @@ import { Properties } from './types';
 
 import styles from './productPage.module.scss';
 
+const RecommendedProducts = dynamic(
+  () => import('./components/RecommendedProducts'),
+);
+
 const ProductPage: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { isMobile } = useWindowSize();
+  const { isTablet } = useWindowSize();
 
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
 
@@ -57,8 +58,6 @@ const ProductPage: FC = () => {
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
   const isAuthorized = useSelector(selectIsAuthorized);
   const metrics = useSelector(selectMetrics);
-
-  const { data: analogues } = useSelector(selectProductAnaloguesList);
 
   const { categorySlug } = router.query;
   const categorySlugAnArray = makeAnArray(categorySlug);
@@ -92,8 +91,8 @@ const ProductPage: FC = () => {
     properties = [],
     slug,
     warehouses,
-    faq,
     installation,
+    is_linked_transport,
     manufacturer = '',
     vendor_code = '',
   } = product;
@@ -111,15 +110,12 @@ const ProductPage: FC = () => {
     ...properties,
   ];
 
-  // TODO: как будет запрос с аналогами - поменять
   const productInfo = {
-    faq,
     installation,
     description,
     properties: newProperties,
-    analogues: analogues?.results || [],
-    // TODO: удалить отсюда ревьюсы
     reviews: [],
+    analogues: [],
   };
 
   const buyItNow = () => {
@@ -178,11 +174,11 @@ const ProductPage: FC = () => {
       )}
 
       <Box className={styles.mainContainer}>
-        {!isMobile && <CatalogCategories isProduct />}
+        {!isTablet && <CatalogCategories isProduct />}
 
         <Box
           sx={{
-            width: { xs: '100%', md: '75%', lg: '80%' },
+            width: { xs: '100%', lg: '80%' },
           }}
         >
           <NavigationBreadcrumbs lastTitle={title || 'Имя отсутствует'} />
@@ -241,7 +237,7 @@ const ProductPage: FC = () => {
               </Box>
 
               <ProductQuantity quantity={quantity || 0} />
-              <ProductSpecial />
+              <ProductSpecial is_linked_transport={is_linked_transport} />
             </Container>
           </Box>
 

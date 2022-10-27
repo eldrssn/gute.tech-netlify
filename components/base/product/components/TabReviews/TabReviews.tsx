@@ -15,7 +15,7 @@ const TabReviews: FC = () => (
       <Review key={review.id} item={review} />
     ))}
     <Box className={styles.navBox}>
-      <CustomButton>Добавит отзыв</CustomButton>
+      <CustomButton>Добавить отзыв</CustomButton>
       <PaginationNav />
     </Box>
   </>

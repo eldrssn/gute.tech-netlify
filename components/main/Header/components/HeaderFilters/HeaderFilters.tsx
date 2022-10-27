@@ -3,7 +3,6 @@ import classnames from 'classnames/bind';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
 
 import { useWindowSize } from 'hooks/useWindowSize';
@@ -25,43 +24,52 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({ closePopupMobile }) => {
   const isFullDesktopHeader = isFullHeader && !isMobile;
   const isShortDesktopHeader = !isFullHeader && !isMobile;
 
+  const order = {
+    xs: isFullHeader ? 1 : 'unset',
+    lg: isFullHeader ? 'unset' : '-1',
+  };
+
   return (
-    <Container
-      sx={{
-        order: { xs: 1, lg: 0 },
-        display: isFullHeader ? 'block' : 'flex',
-        flexWrap: { xs: 'wrap', lg: 'nowrap' },
-      }}
+    <Box
+      sx={{ order }}
       className={cn(styles.mainContainer, {
         [styles.mainContainer_short]: isShortDesktopHeader,
       })}
     >
-      {isFullDesktopHeader && (
-        <Typography className={styles.filterText} component='p'>
-          Воспользуйтесь фильтром и сайт автоматически подберёт подходящие
-          детали для вашего транспорта
-        </Typography>
-      )}
-
       <Box
-        className={styles.formAndCatalogContainer}
         sx={{
           order: { xs: 1, lg: 0 },
-          marginTop: { sm: '5px', lg: 0 },
+          display: isFullHeader ? 'block' : 'flex',
+          flexWrap: { xs: 'wrap', lg: 'nowrap' },
         }}
       >
-        <FormControl
-          className={cn(styles.filterStepsForm, {
-            [styles.filterStepsForm_shortHeader]: !isFullHeader || isTablet,
-            [styles.filterStepsForm_mobileView]: isMobile,
-          })}
-        >
-          <HeaderFiltersForm closePopupMobile={closePopupMobile} />
-        </FormControl>
+        {isFullDesktopHeader && (
+          <Typography className={styles.filterText} component='p'>
+            Воспользуйтесь фильтром и сайт автоматически подберёт подходящие
+            детали для вашего транспорта
+          </Typography>
+        )}
 
-        {isFullDesktopHeader && <CatalogButton />}
+        <Box
+          className={styles.formAndCatalogContainer}
+          sx={{
+            order: { xs: 1, lg: 0 },
+            marginTop: { sm: '5px', lg: 0 },
+          }}
+        >
+          <FormControl
+            className={cn(styles.filterStepsForm, {
+              [styles.filterStepsForm_shortHeader]: !isFullHeader || isTablet,
+              [styles.filterStepsForm_mobileView]: isMobile,
+            })}
+          >
+            <HeaderFiltersForm closePopupMobile={closePopupMobile} />
+          </FormControl>
+
+          {isFullDesktopHeader && <CatalogButton />}
+        </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

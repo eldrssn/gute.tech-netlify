@@ -50,7 +50,7 @@ const TabsMobileView: FC<TabsProps> = (props) => {
             <p className={styles.accordionSummaryText}>{tabNameByType[type]}</p>
           </AccordionSummary>
           <AccordionDetails className={styles.accordionDetails}>
-            <TabContentByType type={type} content={props[type]} />
+            <TabContentByType type={type} content={props} />
           </AccordionDetails>
         </Accordion>
       ))}

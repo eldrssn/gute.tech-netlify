@@ -115,4 +115,4 @@ const RecommendedProducts: FC = () => {
   );
 };
 
-export { RecommendedProducts };
+export default RecommendedProducts;

@@ -1,12 +1,9 @@
-import { AnalogueItem } from 'api/models/catalog';
-
 type Content =
   | string
   | string[][]
   | undefined
   | Record<string, string>[]
-  | Property[]
-  | AnalogueItem[];
+  | Property[];
 
 interface Property {
   title: string;
@@ -25,13 +22,12 @@ enum DescriptionTypes {
   description = 'description',
   installation = 'installation',
   reviews = 'reviews',
-  faq = 'faq',
   analogues = 'analogues',
 }
 
 type DescriptionType = keyof typeof DescriptionTypes;
 
-type TabsProps = Record<DescriptionType, Content>;
+type TabsProps = Record<DescriptionType, Content | undefined>;
 
 export { DescriptionTypes };
 

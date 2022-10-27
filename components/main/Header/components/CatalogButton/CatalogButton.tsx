@@ -37,7 +37,6 @@ const CatalogButton: FC = () => {
         onClick={handleClick}
         customStyles={cn(styles.catalogButton, {
           [styles.catalogButton_hidden]: !isFullHeader,
-          [styles.catalogButton_tablet]: isTablet && isFullHeader,
           [styles.catalogButton_full]: isFullHeader,
         })}
       >

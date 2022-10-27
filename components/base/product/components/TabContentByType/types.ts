@@ -1,8 +1,8 @@
-import { Content, DescriptionType } from 'types/product';
+import { DescriptionType, TabsProps } from 'types/product';
 
 type TabContentByTypeProps = {
   type: DescriptionType;
-  content?: Content;
+  content?: TabsProps;
 };
 
 export type { TabContentByTypeProps };

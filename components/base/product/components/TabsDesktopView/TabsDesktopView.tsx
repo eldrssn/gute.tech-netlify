@@ -48,7 +48,7 @@ const TabsDesktopView: FC<TabsProps> = (props) => {
 
         {descriptionTypeName.map((type: DescriptionType) => (
           <TabPanel className={styles.tabPanel} key={type} value={type}>
-            <TabContentByType type={type} content={props[type]} />
+            <TabContentByType type={type} content={props} />
           </TabPanel>
         ))}
       </TabContext>

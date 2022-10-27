@@ -3,17 +3,20 @@ import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import ErrorIcon from '@mui/icons-material/Error';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { sendMetrik } from 'utility/utils/metriks';
+import { CONSULTATION_TEXT } from 'utility/utils/constants';
 
+import { ProductSpecialProps } from './types';
 import styles from './productSpecial.module.scss';
 
 const cn = classnames.bind(styles);
 
-const ProductSpecial: FC = () => {
+const ProductSpecial: FC<ProductSpecialProps> = ({ is_linked_transport }) => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState<boolean>(false);
 
   const metrics = useSelector(selectMetrics);
@@ -38,8 +41,6 @@ const ProductSpecial: FC = () => {
     <>
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', lg: 'row' },
           order: { xs: -1, sm: 0 },
           alignItems: { xs: 'center', sm: 'start' },
         }}
@@ -47,20 +48,37 @@ const ProductSpecial: FC = () => {
           [styles.mobileView]: isMobile,
         })}
       >
-        <Link
-          className={cn(styles.productSpecialItem, styles.helpIcon)}
-          href='#'
-          onClick={openModalAdvice}
+        {is_linked_transport && (
+          <Box className={styles.warningBox}>
+            <ErrorIcon color='error' className={styles.warningIcon} />
+            <Link
+              href='#'
+              onClick={openModalAdvice}
+              className={styles.warningText}
+            >
+              {CONSULTATION_TEXT}
+            </Link>
+          </Box>
+        )}
+
+        <Box
+          sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' } }}
         >
-          Помочь с выбором
-        </Link>
-        <Link
-          className={cn(styles.productSpecialItem, styles.specialIcon)}
-          href='#'
-          onClick={openSpecialOffer}
-        >
-          Спецпредложение
-        </Link>
+          <Link
+            className={cn(styles.productSpecialItem, styles.helpIcon)}
+            href='#'
+            onClick={openModalAdvice}
+          >
+            Помочь с выбором
+          </Link>
+          <Link
+            className={cn(styles.productSpecialItem, styles.specialIcon)}
+            href='#'
+            onClick={openSpecialOffer}
+          >
+            Спецпредложение
+          </Link>
+        </Box>
       </Box>
 
       {isModalAdviceOpen && (
