@@ -14,6 +14,7 @@ import InputMask from 'react-input-mask';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { FormInput } from 'components/main/FormInput';
+import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { getInputRules } from 'utility/helpers';
 import { handleEnterPress } from 'utility/utils';
@@ -39,6 +40,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
     rules: getInputRules(),
   });
 
+  const showcase = useSelector(selectShowcaseData);
   const metrics = useSelector(selectMetrics);
 
   const closeModal = () => {
@@ -78,6 +80,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   });
 
   const phoneInputIsError = Boolean(formState.errors.phoneNumber);
+  const privacyPolicyLink = showcase.privacyPolicyLink;
 
   const handlePressEnterCloseModal = (event: KeyboardEvent) => {
     handleEnterPress(event, closeModal);
@@ -204,7 +207,9 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
           >
             Нажимая на кнопку «Отправить», вы даете согласие на обработку даных
             и соглашаетесь с{' '}
-            <Link href='/policy'>политикой конфиденциальности.</Link>
+            <Link href={privacyPolicyLink ? privacyPolicyLink : ''}>
+              политикой конфиденциальности.
+            </Link>
           </Typography>
         </form>
       </Container>
