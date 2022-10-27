@@ -81,13 +81,19 @@ const sendRequestNotAuthorized = <ResponseType>({
 };
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  // baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: 'https://api-stage.gute.tech/api',
+  // api-stage.gute.tech/api
   headers: {
+    // origin: 'https://parts.gute.tech',
+    // referer: 'https://parts.gute.tech/',
+
     'content-type': 'application/json',
-    'X-Client-Host':
-      process.env.NODE_ENV === 'production' && typeof window !== 'undefined'
-        ? window.location.hostname
-        : DEV_HOST,
+    // 'X-Client-Host':
+    //   process.env.NODE_ENV === 'production' && typeof window !== 'undefined'
+    //     ? window.location  .hostname
+    //     : DEV_HOST,
+    'X-Client-Host': 'dev.gute.tech',
   },
 });
 
