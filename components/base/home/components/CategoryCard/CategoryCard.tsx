@@ -84,6 +84,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
           src={image || '/images/no-image.jpeg'}
           alt={title || 'category name'}
           layout='fill'
+<<<<<<< components/base/home/components/CategoryCard/CategoryCard.tsx
+          loading='lazy'
+=======
+>>>>>>> components/base/home/components/CategoryCard/CategoryCard.tsx
         />
       </a>
     </Link>
