@@ -35,11 +35,6 @@ module.exports = {
   ...nextConfig,
   images: {
     domains: ['api-stage.gute.tech', 'api.gute.tech'],
-    path: `https://${
-      process.env.NODE_ENV === 'production' && typeof window !== 'undefined'
-        ? window.location.hostname
-        : 'dev.gute.tech'
-    }/_next/image`,
   },
   async headers() {
     return [
