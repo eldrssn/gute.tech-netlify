@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -8,7 +9,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
@@ -87,16 +87,15 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
           [styles.cardContainer_slider]: isSlider,
         })}
       >
-        {is_linked_transport && <TransportWarning />}
+        {!is_linked_transport && transportId && <TransportWarning />}
 
         <Link href={getLink()}>
           <a className={styles.cardLinkContainer}>
-            <CardMedia
-              component={'img'}
-              height='250'
+            <img
               src={image || '/images/no-image.jpeg'}
               alt={title}
               className={styles.cardImage}
+              loading='lazy'
             />
             <CardContent className={styles.cardInfo}>
               <Divider className={styles.cardDivider} />

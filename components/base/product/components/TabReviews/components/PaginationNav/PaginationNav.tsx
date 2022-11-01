@@ -10,11 +10,10 @@ const PaginationNav: FC = () => (
     shape='rounded'
     size='small'
     sx={{
-      marginLeft: 'auto',
       padding: '13px 18px',
       '& .MuiPagination-ul': {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
       },
 
       '& .MuiButtonBase-root': { borderRadius: 0 },
