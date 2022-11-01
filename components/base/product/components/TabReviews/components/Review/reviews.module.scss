@@ -1,4 +1,5 @@
 @import 'styles/colors.scss';
+@import 'styles/breakpoints.scss';
 
 .mainBox {
   min-height: 100px;
@@ -79,4 +80,58 @@
 .reviewText {
   font-size: 14px;
   margin: 10px 0;
+}
+
+@media (max-width: $mobile) {
+  .userBox {
+    width: 25%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userName {
+    padding-left: 0;
+  }
+
+  .userDate {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .ratingBox {
+    flex-direction: column;
+  }
+
+  .ratingItem {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: $xxsMobile) {
+  .mainBox {
+    padding: 10px;
+
+    flex-direction: column;
+  }
+
+  .userName {
+    padding-left: 10px;
+  }
+
+  .userDate {
+    padding-left: 10px;
+    text-align: unset;
+  }
+
+  .reviewBox {
+    margin-left: 0px;
+  }
+
+  .userBox {
+    width: 100%;
+    flex-direction: row;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid $transparentBlue1;
+  }
 }

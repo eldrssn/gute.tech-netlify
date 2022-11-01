@@ -1,5 +1,5 @@
 type ProductSpecialProps = {
-  is_linked_transport?: boolean;
+  isWarningMessage?: boolean;
 };
 
 export type { ProductSpecialProps };

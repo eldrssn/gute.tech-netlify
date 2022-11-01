@@ -25,6 +25,7 @@ import {
   addProductToCartUnAuthorized,
 } from 'store/reducers/cart/actions';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import { formatPrice, makeAnArray } from 'utility/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { sendMetrik } from 'utility/utils/metriks';
@@ -58,6 +59,7 @@ const ProductPage: FC = () => {
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
   const isAuthorized = useSelector(selectIsAuthorized);
   const metrics = useSelector(selectMetrics);
+  const transportId = useSelector(selectTransportId);
 
   const { categorySlug } = router.query;
   const categorySlugAnArray = makeAnArray(categorySlug);
@@ -145,6 +147,7 @@ const ProductPage: FC = () => {
     setIsOpenModalAddedItem(true);
   };
 
+  const isWarningMessage = Boolean(!is_linked_transport && transportId);
   const formattedPrice = formatPrice(price);
   const isAuthorizationWarging = !isAuthorized && isShowAuthorizationWarning;
 
@@ -237,7 +240,7 @@ const ProductPage: FC = () => {
               </Box>
 
               <ProductQuantity quantity={quantity || 0} />
-              <ProductSpecial is_linked_transport={is_linked_transport} />
+              <ProductSpecial isWarningMessage={isWarningMessage} />
             </Container>
           </Box>
 

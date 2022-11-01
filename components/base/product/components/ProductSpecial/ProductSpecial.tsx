@@ -16,7 +16,7 @@ import styles from './productSpecial.module.scss';
 
 const cn = classnames.bind(styles);
 
-const ProductSpecial: FC<ProductSpecialProps> = ({ is_linked_transport }) => {
+const ProductSpecial: FC<ProductSpecialProps> = ({ isWarningMessage }) => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState<boolean>(false);
 
   const metrics = useSelector(selectMetrics);
@@ -48,7 +48,7 @@ const ProductSpecial: FC<ProductSpecialProps> = ({ is_linked_transport }) => {
           [styles.mobileView]: isMobile,
         })}
       >
-        {is_linked_transport && (
+        {isWarningMessage && (
           <Box className={styles.warningBox}>
             <ErrorIcon color='error' className={styles.warningIcon} />
             <Link
