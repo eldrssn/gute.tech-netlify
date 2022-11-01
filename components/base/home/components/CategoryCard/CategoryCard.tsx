@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useSelector } from 'react-redux';
-// import CardMedia from '@mui/material/CardMedia';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
@@ -14,7 +15,6 @@ import {
 import { CategoryCardProps } from './types';
 import styles from './CategoryCard.module.scss';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
   const router = useRouter();
@@ -73,17 +73,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
         >
           {title}
         </Typography>
-        {/* <CardMedia
-          component='img'
+        <img
           className={styles.categoryImage}
           src={image || '/images/no-image.jpeg'}
           alt={title || 'category name'}
-        /> */}
-        <Image
-          className={styles.categoryImage}
-          src={image || '/images/no-image.jpeg'}
-          alt={title || 'category name'}
-          layout='fill'
           loading='lazy'
         />
       </a>
