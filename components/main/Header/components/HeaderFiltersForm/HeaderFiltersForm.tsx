@@ -31,7 +31,6 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
   closePopupMobile,
 }) => {
   const router = useRouter();
-
   const { transportText, setTransportText } = useContext(HeaderContext);
 
   const { getValues, control, setValue, handleSubmit, reset, watch } =
@@ -71,7 +70,7 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
 
   const resetFilterFormFromBrand = () => {
     const brands = namesDefaultValueByStep[StepInputs.BRAND];
-    setDefaultValueByName(brands, setValue, valueForm);
+    setDefaultValueByName(brands, setValue);
     setCurrentStep(StepInputs.BRAND);
   };
 

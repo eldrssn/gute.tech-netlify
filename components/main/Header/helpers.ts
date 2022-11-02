@@ -16,14 +16,12 @@ const getCityTitle = (branches: BranchesData[], selectedCitySlug: string) =>
 const setDefaultValueByName = (
   nameArray: FilterInputName[],
   setValue: UseFormSetValue<FormData>,
-  valueForm: WatchFormData | undefined,
 ) => {
   nameArray.forEach((name) => {
-    const searchValue = valueForm ? valueForm[name]?.searchValue : '';
     setValue(name, {
       title: '',
       slug: '',
-      searchValue: searchValue ? searchValue : null,
+      searchValue: null,
     });
   });
 };

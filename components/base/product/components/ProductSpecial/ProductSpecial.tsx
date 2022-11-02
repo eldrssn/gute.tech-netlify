@@ -26,6 +26,11 @@ const ProductSpecial: FC<ProductSpecialProps> = ({ isWarningMessage }) => {
     setModalAdviceOpen(true);
   };
 
+  const openModalPartAdvice = () => {
+    // sendMetrik('reachGoal', metrics?.button_part_help, metrics?.metric_id); TODO: добавить как появиться свойство на беке
+    setModalAdviceOpen(true);
+  };
+
   const openSpecialOffer = () => {
     sendMetrik(
       'reachGoal',
@@ -53,7 +58,7 @@ const ProductSpecial: FC<ProductSpecialProps> = ({ isWarningMessage }) => {
             <ErrorIcon color='error' className={styles.warningIcon} />
             <Link
               href='#'
-              onClick={openModalAdvice}
+              onClick={openModalPartAdvice}
               className={styles.warningText}
             >
               {CONSULTATION_TEXT}

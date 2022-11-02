@@ -12,6 +12,7 @@ import {
   fetchYears,
   fetchEngines,
   fetchTransportInfo,
+  resetOptionsWhenEditFilter,
   resetTransportInfo,
   resetEngines,
   resetBrands,
@@ -148,6 +149,13 @@ const handlers = {
     const errorData = { name: error.name, message: error.message };
     state.engines.isLoading = false;
     state.engines.error = errorData;
+  },
+
+  [resetOptionsWhenEditFilter.type]: (state: TransportStore) => {
+    state.brands.data = [];
+    state.models.data = [];
+    state.engines.data = [];
+    state.years.data = [];
   },
 
   [resetTransportInfo.type]: (state: TransportStore) => {

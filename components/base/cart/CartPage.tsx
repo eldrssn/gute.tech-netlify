@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import { fetchItemsFromCart } from 'store/reducers/cart/actions';
+import { fetchItemsFromCart, setAllChecked } from 'store/reducers/cart/actions';
 import {
   selectCart,
   selectCartTotal,
@@ -23,6 +23,8 @@ import { TableOrder } from './components/TableOrder';
 import styles from './styles.module.scss';
 
 const CartPage: React.FC = () => {
+  const [isFirstRender, setIsFirstRender] = useState(true);
+
   const dispatch = useDispatch();
 
   const cartCheckedItemsTotal = useSelector(selectCartCheckedItemsTotal);
@@ -50,6 +52,15 @@ const CartPage: React.FC = () => {
 
     dispatch(fetchItemsFromCart({ productsOptions: cartSavedProducts }));
   }, [cartSavedItems]);
+
+  useEffect(() => {
+    if (!isFirstRender && cart.length <= 0 && cartIsLoading) {
+      return;
+    }
+
+    dispatch(setAllChecked());
+    setIsFirstRender(false);
+  }, []);
 
   const isError = Boolean(cartError) || Boolean(cartSavedError);
   const isLoading = cartIsUpdated || cartIsLoading || cartSavedIsLoading;

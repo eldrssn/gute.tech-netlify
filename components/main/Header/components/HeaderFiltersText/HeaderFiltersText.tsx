@@ -6,7 +6,10 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import { clearTransportId } from 'store/reducers/transport/actions';
+import {
+  clearTransportId,
+  resetOptionsWhenEditFilter,
+} from 'store/reducers/transport/actions';
 import { selectTransportInfo } from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { useWindowSize } from 'hooks/useWindowSize';
@@ -30,9 +33,14 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
 
   const { transportText, isFullHeader } = useContext(HeaderContext);
 
-  const { data: TransportInfo } = useSelector(selectTransportInfo);
+  const { data: TransportInfo, isLoading: isLoadingTransportInfo } =
+    useSelector(selectTransportInfo);
 
   const resetFilter = () => {
+    if (isLoadingTransportInfo) {
+      return;
+    }
+
     router.push('/');
     reset();
     dispatch(clearTransportId());
@@ -40,10 +48,15 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
   };
 
   const editFilter = () => {
+    if (isLoadingTransportInfo) {
+      return;
+    }
+
     if (!TransportInfo) {
       return null;
     }
 
+    dispatch(resetOptionsWhenEditFilter());
     const { brand, engine, model, years, type } = TransportInfo;
 
     setTransportType(type.slug);
@@ -103,6 +116,7 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
         onClick={resetFilter}
         customStyles={cn(styles.stepButtonSubmit, {
           [styles.stepButtonSubmitShortHeader]: !isFullHeader,
+          [styles.stepButtonSubmitDisable]: isLoadingTransportInfo,
         })}
       >
         Сбросить фильтр
@@ -112,6 +126,7 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
         onClick={editFilter}
         customStyles={cn(styles.stepButtonSubmit, styles.editButton, {
           [styles.stepButtonSubmitShortHeader]: !isFullHeader,
+          [styles.stepButtonSubmitDisable]: isLoadingTransportInfo,
         })}
       >
         Редактировать фильтр
