@@ -77,6 +77,7 @@ const handlers = {
       state.cartItems.data = [];
       return;
     }
+    const oldCartItems = state.cartItems.data;
     const { productsOptions } = payload.requestData;
     const newCartItems = payload.data.map((item) => {
       const newItemslug = item.slug;
@@ -84,14 +85,17 @@ const handlers = {
         (productOption) => productOption.productSlug === newItemslug,
       );
       const productOption = productsOptions[productOptionsIndex];
+      const oldCartItem = oldCartItems.find(
+        (oldItem) => oldItem.slug === item.slug,
+      );
+      const isChecked = oldCartItem ? oldCartItem.isChecked : true;
 
       return {
         ...item,
         quantity: productOption.quantity,
-        isChecked: true,
+        isChecked,
       };
     });
-
     state.cartItems.isLoading = false;
     state.cartItems.data = newCartItems;
   },

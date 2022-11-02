@@ -34,7 +34,6 @@ import { useArrowNavigation } from 'hooks/useArrowNavigation';
 
 import { HeaderContext } from '../HeaderContext';
 
-import { checkResultList } from './helpers';
 import styles from './styles.module.scss';
 
 const SearchField: FC = () => {
@@ -49,7 +48,6 @@ const SearchField: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const popupRef = useRef<HTMLDivElement | null>(null);
-  const isResult = checkResultList(popupRef);
 
   const searchFieldRef = useArrowNavigation({
     selectors: 'a',
@@ -108,9 +106,11 @@ const SearchField: FC = () => {
   };
 
   const handleBlur = () => {
-    if (!isResult) {
-      setFieldIsFocus(false);
+    if (isProductSeacrh || isCategorySearch) {
+      return;
     }
+
+    setFieldIsFocus(false);
   };
 
   useEffect(() => {

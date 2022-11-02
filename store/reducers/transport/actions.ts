@@ -47,6 +47,8 @@ const fetchTransportInfo = createAsyncAction<
   request: getTransportInfo,
 });
 
+const resetOptionsWhenEditFilter = createAction('resetOptionsWhenEditFilter');
+
 const resetTransportInfo = createAction('resetTransportInfo');
 
 const resetBrands = createAction('resetBrands');
@@ -72,6 +74,7 @@ export {
   resetModels,
   resetYears,
   resetEngines,
+  resetOptionsWhenEditFilter,
   resetOptionsDataInBrandStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,

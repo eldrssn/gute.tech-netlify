@@ -71,21 +71,21 @@ const FilterStep: FC<FilterStepProps> = ({
     [StepInputs.BRAND]: () => {
       dispatch(resetOptionsDataInBrandStep());
       const names = namesDefaultValueByStep[StepInputs.BRAND];
-      setDefaultValueByName(names, setValue, valueForm);
+      setDefaultValueByName(names, setValue);
     },
     [StepInputs.MODEL]: () => {
       dispatch(resetOptionsDataInModelStep());
       const names = namesDefaultValueByStep[StepInputs.MODEL];
-      setDefaultValueByName(names, setValue, valueForm);
+      setDefaultValueByName(names, setValue);
     },
     [StepInputs.YEAR]: () => {
       dispatch(resetOptionsDataInYearStep());
       const names = namesDefaultValueByStep[StepInputs.YEAR];
-      setDefaultValueByName(names, setValue, valueForm);
+      setDefaultValueByName(names, setValue);
     },
     [StepInputs.ENGINE]: () => {
       const names = namesDefaultValueByStep[StepInputs.ENGINE];
-      setDefaultValueByName(names, setValue, valueForm);
+      setDefaultValueByName(names, setValue);
     },
     [StepInputs.INACTIVE]: () => {
       null;

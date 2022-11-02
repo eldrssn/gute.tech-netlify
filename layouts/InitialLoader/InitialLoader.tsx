@@ -29,6 +29,7 @@ import {
 import {
   selectIsAuthorized,
   selectNotAuthorizedToken,
+  selectLoadingAuthorized,
 } from 'store/reducers/authentication/selectors';
 import { selectStatus } from 'store/reducers/payment/selectors';
 import { selectCartUpdated } from 'store/reducers/cart/selectors';
@@ -59,6 +60,7 @@ const InitialLoader: React.FC = ({ children }) => {
   const notAuthorizedToken = useSelector(selectNotAuthorizedToken);
   const transportId = useSelector(selectTransportId);
   const isAuthorized = useSelector(selectIsAuthorized);
+  const isAuthorizedLoading = useSelector(selectLoadingAuthorized);
   const selectedCitySlug = useSelector(selectSelectedCitySlug);
   const { favicon, metrics } = useSelector(selectShowcaseData);
   const cartIsUpdated = useSelector(selectCartUpdated);
@@ -146,7 +148,14 @@ const InitialLoader: React.FC = ({ children }) => {
   }, [transportId, setCookieTransportId]);
 
   useEffect(() => {
-    if (cartIsUpdated) {
+    const refresh = getCookie(CookieKey.REFRESH_TOKEN);
+    if (refresh) {
+      dispatch(fetchAccessToken({ refresh }));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (cartIsUpdated || isAuthorizedLoading) {
       return;
     }
 
@@ -160,14 +169,13 @@ const InitialLoader: React.FC = ({ children }) => {
     }
 
     dispatch(fetchCartUnAuthorized());
-  }, [isAuthorized, notAuthorizedToken, cartIsUpdated, status]);
-
-  useEffect(() => {
-    const refresh = getCookie(CookieKey.REFRESH_TOKEN);
-    if (refresh) {
-      dispatch(fetchAccessToken({ refresh }));
-    }
-  }, []);
+  }, [
+    isAuthorized,
+    notAuthorizedToken,
+    cartIsUpdated,
+    status,
+    isAuthorizedLoading,
+  ]);
 
   useEffect(() => {
     if (isAuthorized) {
