@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
@@ -91,10 +92,12 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
 
         <Link href={getLink()}>
           <a className={styles.cardLinkContainer}>
-            <img
+            <CardMedia
+              component='img'
               src={image || '/images/no-image.jpeg'}
               alt={title}
               className={styles.cardImage}
+              height='250px'
               loading='lazy'
             />
             <CardContent className={styles.cardInfo}>

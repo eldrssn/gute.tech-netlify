@@ -48,10 +48,10 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
   const [currentTransportId, setCurrentTransportId] = useState<TransportType>();
   const [valueForm, setValueForm] = useState<WatchFormData>();
 
-  const brandSlugValue = getValues('brand.slug');
-  const modelSlugValue = getValues('model.slug');
-  const yearSlugValue = getValues('year.slug');
-  const engineSlug = getValues('engine.slug');
+  const brandSlugValue = getValues('brand.title');
+  const modelSlugValue = getValues('model.title');
+  const yearSlugValue = getValues('year.title');
+  const engineSlug = getValues('engine.title');
 
   const brand = useSelector(selectBrands);
 
@@ -98,6 +98,7 @@ const HeaderFiltersForm: FC<HeaderFiltersFormProps> = ({
       setValue={setValue}
       setCurrentStep={setCurrentStep}
       setTransportType={setTransportType}
+      setCurrentTransportId={setCurrentTransportId}
     />
   ) : (
     <>

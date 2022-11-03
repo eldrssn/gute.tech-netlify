@@ -1,10 +1,6 @@
 import { UseFormSetValue } from 'react-hook-form';
 
-import {
-  FilterInputName,
-  FormData,
-  WatchFormData,
-} from 'components/main/Header/types';
+import { FilterInputName, FormData } from 'components/main/Header/types';
 import { BranchesData } from 'api/models/regions';
 
 const getYearsInfo = (years: number[]) =>

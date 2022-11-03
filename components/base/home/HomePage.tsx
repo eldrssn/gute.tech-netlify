@@ -92,10 +92,12 @@ const Home: FC<Props> = ({ isCatalog }) => {
                 const type: Index = ((index % 4) + 1) as Index;
 
                 const Component = rowHashMap[type];
+                const lazyAttribute = index > 3 ? 'lazy' : 'eager';
 
                 return (
                   <Component
                     key={index}
+                    lazy={lazyAttribute}
                     items={items}
                     isTransportSearch={!!transportId}
                   />

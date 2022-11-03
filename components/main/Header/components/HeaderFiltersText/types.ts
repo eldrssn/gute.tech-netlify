@@ -5,6 +5,9 @@ type HeaderFiltersTextProps = {
   setTransportType: (transportType: string) => void;
   setCurrentStep: (number: StepInputs) => void;
   reset: UseFormReset<FormData>;
+  setCurrentTransportId: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >;
 } & FormProps;
 
 export type { HeaderFiltersTextProps };

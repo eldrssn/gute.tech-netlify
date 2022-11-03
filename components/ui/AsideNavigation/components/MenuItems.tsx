@@ -22,12 +22,14 @@ const MenuItems: FC<MenuItemsProps> = ({
         if (href) {
           return (
             <Link href={href} key={title}>
-              <a
-                className={cn(styles.navItem, {
-                  [styles.navItem_active]: href === router.pathname,
-                })}
-              >
-                <MenuItem>{title}</MenuItem>
+              <a>
+                <MenuItem
+                  className={cn(styles.navItem, {
+                    [styles.navItem_active]: href === router.pathname,
+                  })}
+                >
+                  {title}
+                </MenuItem>
               </a>
             </Link>
           );
