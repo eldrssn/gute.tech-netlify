@@ -16,7 +16,11 @@ import { CategoryCardProps } from './types';
 import styles from './CategoryCard.module.scss';
 import Link from 'next/link';
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({
+  item,
+  isSmallBox,
+  lazy,
+}) => {
   const router = useRouter();
 
   const { title, image, slug, found, total } = item;
@@ -58,7 +62,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
           )}
           <span className={styles.categoryQuantity}>{total} деталей всего</span>
         </Box>
-        <div className={styles.backgroundImage}></div>
+        <div className={styles.background}></div>
 
         <Typography
           component='h4'
@@ -73,11 +77,12 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
         >
           {title}
         </Typography>
+
         <img
           className={styles.categoryImage}
           src={image || '/images/no-image.jpeg'}
           alt={title || 'category name'}
-          loading='lazy'
+          loading={lazy}
         />
       </a>
     </Link>

@@ -1,6 +1,5 @@
 import React, { FC, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -18,7 +17,6 @@ import styles from './modalLogOut.module.scss';
 
 const ModalLogOut: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const closeModal = () => {
     setIsOpen(false);
@@ -31,7 +29,6 @@ const ModalLogOut: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
     dispatch(logOut());
     dispatch(clearUserProfileData());
     closeModal();
-    router.push('/');
   };
 
   return (

@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/breakpoints.scss";
+@import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .choosenTransport_container {
   height: 100%;
@@ -111,7 +111,7 @@
 @media (max-width: $mobile) {
   .stepButtonSubmit {
     padding: 0;
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 20px 20px;
     margin: 10px;
     height: 60px;

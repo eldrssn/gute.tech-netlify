@@ -140,7 +140,7 @@ const SearchField: FC = () => {
       handleClosePopover();
     }
 
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && isFocusSearchField) {
       handleEnter();
     }
   };

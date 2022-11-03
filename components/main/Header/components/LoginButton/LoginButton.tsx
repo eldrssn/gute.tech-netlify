@@ -83,7 +83,9 @@ const LoginButton = () => {
           setIsOpen={setIsOpenModalLogOut}
         />
       )}
-      <ModalLogIn isOpen={isOpenModalLogIn} setIsOpen={setIsOpenModalLogIn} />
+      {isOpenModalLogIn && (
+        <ModalLogIn isOpen={isOpenModalLogIn} setIsOpen={setIsOpenModalLogIn} />
+      )}
     </>
   );
 };

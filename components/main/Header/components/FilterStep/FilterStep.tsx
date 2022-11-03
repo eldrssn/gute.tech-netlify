@@ -41,7 +41,6 @@ const FilterStep: FC<FilterStepProps> = ({
   transportType,
   setTransportType,
   setCurrentTransportId,
-  valueForm,
   getValues,
   ...restProps
 }) => {
