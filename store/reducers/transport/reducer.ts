@@ -21,12 +21,19 @@ import {
   resetOptionsDataInBrandStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
+  setTransportYear,
+  clearTransportYear,
   setTransportId,
   clearTransportId,
 } from './actions';
 import { initialState } from './constants';
 
-import { TransportStore, ErrorAction, TransportIdData } from './types';
+import {
+  TransportStore,
+  ErrorAction,
+  TransportIdData,
+  TransportYearData,
+} from './types';
 
 const handlers = {
   [setTransportId.type]: (
@@ -37,6 +44,15 @@ const handlers = {
   },
   [clearTransportId.type]: (state: TransportStore) => {
     state.transportId = '';
+  },
+  [setTransportYear.type]: (
+    state: TransportStore,
+    { payload }: PayloadAction<TransportYearData>,
+  ) => {
+    state.transportYear = payload;
+  },
+  [clearTransportYear.type]: (state: TransportStore) => {
+    state.transportYear = '';
   },
 
   [fetchTransportInfo.pending.type]: (state: TransportStore) => {

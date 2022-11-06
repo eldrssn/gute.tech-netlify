@@ -8,10 +8,14 @@ import Box from '@mui/material/Box';
 
 import {
   clearTransportId,
+  clearTransportYear,
   resetOptionsWhenEditFilter,
 } from 'store/reducers/transport/actions';
 import { selectTransportInfo } from 'store/reducers/transport/selectors';
-import { selectEngines } from 'store/reducers/transport/selectors';
+import {
+  selectTransportYear,
+  selectTransportId,
+} from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { useWindowSize } from 'hooks/useWindowSize';
 
@@ -35,7 +39,8 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
 
   const { transportText, isFullHeader } = useContext(HeaderContext);
 
-  const { data: engines } = useSelector(selectEngines);
+  const transportYear = useSelector(selectTransportYear);
+  const transportId = useSelector(selectTransportId);
   const { data: TransportInfo, isLoading: isLoadingTransportInfo } =
     useSelector(selectTransportInfo);
 
@@ -47,6 +52,7 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
     router.push('/');
     reset();
     dispatch(clearTransportId());
+    dispatch(clearTransportYear());
     setCurrentStep(StepInputs.YEAR);
   };
 
@@ -66,29 +72,26 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
     setValue('brand', {
       title: brand.title,
       slug: brand.slug,
-      searchValue: brand.title,
+      searchValue: '',
     });
     setValue('engine', {
       title: engine.title,
       slug: engine.slug,
-      searchValue: engine.title,
+      searchValue: '',
     });
     setValue('model', {
       title: model.title,
       slug: model.slug,
-      searchValue: model.title,
+      searchValue: '',
     });
     setValue('year', {
-      title: years[0].toString(),
-      slug: years[0].toString(),
-      searchValue: years[0].toString(),
+      title: transportYear ? transportYear : years[0].toString(),
+      slug: transportYear ? transportYear : years[0].toString(),
+      searchValue: '',
     });
-    setCurrentStep(StepInputs.ENGINE);
 
-    const currentEngine = engines.find(
-      (engineItem) => engineItem.slug === engine.slug,
-    );
-    setCurrentTransportId(currentEngine?.transport_id);
+    setCurrentStep(StepInputs.ENGINE);
+    setCurrentTransportId(transportId);
 
     router.push('/');
     dispatch(clearTransportId());

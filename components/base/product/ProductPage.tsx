@@ -26,6 +26,7 @@ import {
 } from 'store/reducers/cart/actions';
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectCartUpdated } from 'store/reducers/cart/selectors';
 import { formatPrice, makeAnArray } from 'utility/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { sendMetrik } from 'utility/utils/metriks';
@@ -60,6 +61,7 @@ const ProductPage: FC = () => {
   const isAuthorized = useSelector(selectIsAuthorized);
   const metrics = useSelector(selectMetrics);
   const transportId = useSelector(selectTransportId);
+  const isCartUpdated = useSelector(selectCartUpdated);
 
   const { categorySlug } = router.query;
   const categorySlugAnArray = makeAnArray(categorySlug);
@@ -231,6 +233,7 @@ const ProductPage: FC = () => {
                   <CustomButton
                     customStyles={styles.buyButton}
                     onClick={addItemToBasket}
+                    disabled={isCartUpdated}
                   >
                     В корзину
                   </CustomButton>

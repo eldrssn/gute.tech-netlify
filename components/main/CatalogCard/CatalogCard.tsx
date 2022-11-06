@@ -17,6 +17,7 @@ import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectCartUpdated } from 'store/reducers/cart/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { ModalAddedItemUnAuthorized } from 'components/main/ModalAddedItemUnAuthorized';
 import { Tittle } from 'components/ui/TittleTooltip/TittleTooltip';
@@ -54,7 +55,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
     selectShowAuthorizationWarning,
   );
   const metrics = useSelector(selectMetrics);
-
+  const isCartUpdated = useSelector(selectCartUpdated);
   const transportId = useSelector(selectTransportId);
 
   const { asPath } = router;
@@ -130,6 +131,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
                   <CustomButton
                     customStyles={styles.cardAddToShoppingButton}
                     onClick={handleClickToBasket}
+                    disabled={isCartUpdated}
                   >
                     <i className={styles.shoppingIcon} />
                   </CustomButton>

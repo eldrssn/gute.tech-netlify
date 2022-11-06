@@ -32,11 +32,10 @@ const ModalAddedItem: React.FC<TOuterProps> = ({
   useEffect(() => {
     if (isAuthorized) {
       dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 }));
+      return;
     }
 
-    if (!isAuthorized) {
-      dispatch(addProductToCartUnAuthorized({ product: slug, quantity: 1 }));
-    }
+    dispatch(addProductToCartUnAuthorized({ product: slug, quantity: 1 }));
   }, []);
 
   const closeModal = () => {

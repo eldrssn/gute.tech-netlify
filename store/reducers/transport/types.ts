@@ -10,10 +10,12 @@ enum TransportStoreBlocks {
   YEARS = 'years',
   ENGINES = 'engines',
   TRANSPORT_ID = 'transportId',
+  TRANSPORT_YEAR = 'transportYear',
   TRANSPORT_INFO = 'transportInfo',
 }
 
 type TransportIdData = string;
+type TransportYearData = string;
 
 type TransportInfoState = {
   data: TransportInfoResponseData | null;
@@ -41,9 +43,16 @@ type TransportStore = {
   [TransportStoreBlocks.YEARS]: YearsState;
   [TransportStoreBlocks.ENGINES]: EnginesState;
   [TransportStoreBlocks.TRANSPORT_ID]: TransportIdData;
+  [TransportStoreBlocks.TRANSPORT_YEAR]: TransportYearData;
   [TransportStoreBlocks.TRANSPORT_INFO]: TransportInfoState;
 };
 
-export type { ErrorAction, StoreError, TransportStore, TransportIdData };
+export type {
+  ErrorAction,
+  StoreError,
+  TransportStore,
+  TransportIdData,
+  TransportYearData,
+};
 
 export { TransportStoreBlocks };

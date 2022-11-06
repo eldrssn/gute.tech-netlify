@@ -17,7 +17,7 @@ import {
   TransportInfoResponseData,
 } from 'api/models/transport';
 import { createAsyncAction } from 'utility/helpers/store';
-import { TransportIdData } from './types';
+import { TransportIdData, TransportYearData } from './types';
 
 const fetchBrands = createAsyncAction<ListOptionsItemData[], BrandsSlug>({
   typeAction: 'transport/fetchBrands',
@@ -60,6 +60,8 @@ const resetOptionsDataInBrandStep = createAction('resetOptionsDataInBrandStep');
 const resetOptionsDataInModelStep = createAction('resetOptionsDataInModelStep');
 const resetOptionsDataInYearStep = createAction('resetOptionsDataInYearStep');
 
+const setTransportYear = createAction<TransportYearData>('setTransportYear');
+const clearTransportYear = createAction('clearTransportYear');
 const setTransportId = createAction<TransportIdData>('setTransportSlugs');
 const clearTransportId = createAction('clearTransportId');
 
@@ -78,6 +80,8 @@ export {
   resetOptionsDataInBrandStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
+  setTransportYear,
+  clearTransportYear,
   setTransportId,
   clearTransportId,
 };
