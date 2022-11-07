@@ -19,6 +19,7 @@ import { fetchShowcase } from 'store/reducers/showcase/actions';
 import {
   fetchTransportInfo,
   setTransportId,
+  setTransportYear,
 } from 'store/reducers/transport/actions';
 import { setCitySlug } from 'store/reducers/regions/actions';
 import {
@@ -53,6 +54,7 @@ const InitialLoader: React.FC = ({ children }) => {
     useCookies();
   const [cookiesTransportId, setCookieTransportId] = useCookies();
   const [cookiesCity, setCookiesCity] = useCookies();
+  const [CookieTransportYear] = useCookies();
 
   const isLoadingApp = windowWidth;
   const transportIdQuery = getQueryOption(QueryUrl.TRANSPORT_ID);
@@ -120,6 +122,14 @@ const InitialLoader: React.FC = ({ children }) => {
       expires: date,
     });
   }, [selectedCitySlug]);
+
+  useEffect(() => {
+    const savedTransportYear = CookieTransportYear.transportYear;
+
+    if (savedTransportYear) {
+      dispatch(setTransportYear(savedTransportYear));
+    }
+  }, []);
 
   useEffect(() => {
     const transportIdSaved = cookiesTransportId.transportId;

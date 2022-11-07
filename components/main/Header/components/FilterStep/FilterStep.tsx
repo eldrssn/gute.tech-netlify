@@ -1,21 +1,25 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import classnames from 'classnames/bind';
+import { useDispatch, useSelector } from 'react-redux';
 import { useController } from 'react-hook-form';
-import Step from '@mui/material/Step';
+import { useCookies } from 'react-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@mui/material/TextField';
+import Step from '@mui/material/Step';
 import Box from '@mui/material/Box';
-import { useDispatch, useSelector } from 'react-redux';
+import classnames from 'classnames/bind';
 
 import { Loader } from 'components/ui/Loader';
 import {
   resetOptionsDataInBrandStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
+  setTransportYear,
 } from 'store/reducers/transport/actions';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { selectEngines } from 'store/reducers/transport/selectors';
+import { CookieKey } from 'constants/types';
+import { COOKIE_TTL } from 'constants/variables';
 
 import { FilterStepProps } from './types';
 import { FilterPopover } from '../FilterPopover';
@@ -46,6 +50,7 @@ const FilterStep: FC<FilterStepProps> = ({
 }) => {
   const dispatch = useDispatch();
 
+  const [, setCookieTransportYear] = useCookies();
   const { isFullHeader } = useContext(HeaderContext);
   const { isTablet } = useWindowSize();
   const [isOpenPopover, setIsOpenPopover] = useState(false);
@@ -113,6 +118,18 @@ const FilterStep: FC<FilterStepProps> = ({
     if (inputStepId === StepInputs.ENGINE) {
       const currentEngine = engines.find((engine) => engine.slug === slug);
       setCurrentTransportId(currentEngine?.transport_id);
+    }
+
+    if (inputStepId === StepInputs.YEAR) {
+      dispatch(setTransportYear(slug));
+
+      const date = new Date();
+      date.setTime(date.getTime() + COOKIE_TTL);
+
+      setCookieTransportYear(CookieKey.TRANSPORT_YEAR, slug, {
+        path: '/',
+        expires: date,
+      });
     }
 
     setCurrentStep(

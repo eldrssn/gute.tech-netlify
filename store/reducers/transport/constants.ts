@@ -22,6 +22,7 @@ const initialState: TransportStore = {
     error: null,
   },
   transportId: '',
+  transportYear: '',
   transportInfo: {
     data: null,
     isLoading: false,
