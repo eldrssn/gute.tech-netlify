@@ -87,6 +87,7 @@ const InitialLoader: React.FC = ({ children }) => {
       trackLinks: true,
       accurateTrackBounce: true,
       ecommerce: 'dataLayer',
+      webvisor: true,
     });
   }, [metricId, dispatch]);
 
