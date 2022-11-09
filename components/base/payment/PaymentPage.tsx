@@ -69,12 +69,13 @@ const PaymentPage: React.FC = () => {
 
   const onSubmit = handleSubmit((data) => {
     const orderList = getOrderList(order);
+
     const postData = {
       name: data.nameValue,
       phone: data.phoneNumber,
       email: data.emailValue,
       payment_type: data.paymentMethod,
-      gateway: data.paymentGateway,
+      payment_method_id: data.paymentId,
       cart: orderList,
       branch_office_id: data.branch ? data.branch.id : 0,
     };
@@ -135,7 +136,7 @@ const PaymentPage: React.FC = () => {
       >
         Оформление заказа
       </Typography>
-      <PaymentMethod control={control} />
+      <PaymentMethod control={control} setValue={setValue} />
       <ContactInformation control={control} />
       <DeliveryAddress control={control} setValue={setValue} />
       <Button sx={{ mt: '20px' }} onClick={onSubmit} variant={'contained'}>

@@ -58,8 +58,6 @@ const getDefaultValues = (
   selectBranch: BranchesData | undefined,
 ) => {
   return {
-    paymentMethod: 'CARD',
-    paymentGateway: 'SBERBANK',
     phoneNumber: profile?.phone_number ? profile?.phone_number : '',
     nameValue: profile?.first_name ? profile.first_name : '',
     emailValue: profile?.email ? profile?.email : '',

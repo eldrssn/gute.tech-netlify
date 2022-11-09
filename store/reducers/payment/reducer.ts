@@ -103,6 +103,7 @@ const handlers = {
     { payload }: PayloadAction<OrderingResponseErrorData>,
   ) => {
     state.createOrderingStatus.isCreateOrdering = false;
+    state.createOrderingStatus.loadingCreateOrdering = false;
     state.paymentStatus.isLoading = false;
     state.createOrderingStatus.errorCreateOrdering = payload;
   },

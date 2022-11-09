@@ -7,7 +7,7 @@ type TFormData = {
   phoneNumber: string;
   emailValue: string;
   paymentMethod: string;
-  paymentGateway: string;
+  paymentId: number;
   branchesData: BranchesData | null;
   branch: BranchOfficeData | null;
 };
@@ -17,13 +17,14 @@ enum FormKey {
   PHONE_NUMBER = 'phoneNumber',
   EMAIL_VALUE = 'emailValue',
   PAYMENT_METHODS = 'paymentMethod',
-  PAYMENT_GATEWAY = 'paymentGateway',
+  PAYMENT_ID = 'paymentId',
   BRANCHES_DATA = 'branchesData',
   BRANCH = 'BRANCH',
 }
 
 type TPaymentMethodProps = {
   control: Control<TFormData>;
+  setValue: UseFormSetValue<TFormData>;
 };
 
 type TContactInformationProps = {
