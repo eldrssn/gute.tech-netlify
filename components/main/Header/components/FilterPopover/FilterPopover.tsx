@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useScrollbarSize from 'react-scrollbar-size';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -97,13 +96,18 @@ const FilterPopover: FC<FilterPopoverProps> = ({
 
   useEffect(() => {
     if (isOpenPopover) {
-      document.body.style.marginRight = `${widthScrollBar}px`;
       document.body.style.overflow = 'hidden';
+
+      if (!isMobile) {
+        document.body.style.marginRight = `${widthScrollBar}px`;
+      }
     }
 
     return () => {
-      document.body.style.overflow = 'auto';
-      document.body.style.marginRight = '0px';
+      if (!isMobile) {
+        document.body.style.overflow = 'auto';
+        document.body.style.marginRight = '0px';
+      }
     };
   }, [isOpenPopover, widthScrollBar]);
 
@@ -213,4 +217,4 @@ const FilterPopover: FC<FilterPopoverProps> = ({
   );
 };
 
-export { FilterPopover };
+export default FilterPopover;

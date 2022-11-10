@@ -7,10 +7,9 @@ import TableBody from '@mui/material/TableBody';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import TableRow from '@mui/material/TableRow';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { formatPrice } from 'utility/helpers';
 import { getLinkToProduct } from 'utility/helpers/linkmakers';
 
@@ -42,7 +41,7 @@ const ProductTableMobile: React.FC<TableBodyProps> = ({ products }) => {
         >
           <Container fixed className={styles.wrap}>
             <Box className={styles.closeModal} onClick={closeModal}>
-              <FontAwesomeIcon icon={faTimes} />
+              <CloseIcon fillColor='black' />
             </Box>
             <Typography className={styles.title}>Товар не найден</Typography>
             <Button onClick={closeModal} className={styles.button}>

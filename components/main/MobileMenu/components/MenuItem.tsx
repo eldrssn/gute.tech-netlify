@@ -6,20 +6,12 @@ import { ProfileMenuItem } from './ProfileMenuItem';
 import { MenuTittles } from '../constants';
 import { MenuItemProps } from '../types';
 
-const MenuItem: FC<MenuItemProps> = ({ menuItem, router }) => {
+const MenuItem: FC<MenuItemProps> = ({ menuItem }) => {
   const Component = {
-    [MenuTittles.HOME]: () => (
-      <DefaultMenuItem menuItem={menuItem} router={router} />
-    ),
-    [MenuTittles.CATALOG]: () => (
-      <DefaultMenuItem menuItem={menuItem} router={router} />
-    ),
-    [MenuTittles.CART]: () => (
-      <DefaultMenuItem menuItem={menuItem} router={router} />
-    ),
-    [MenuTittles.PROFILE]: () => (
-      <ProfileMenuItem menuItem={menuItem} router={router} />
-    ),
+    [MenuTittles.HOME]: () => <DefaultMenuItem menuItem={menuItem} />,
+    [MenuTittles.CATALOG]: () => <DefaultMenuItem menuItem={menuItem} />,
+    [MenuTittles.CART]: () => <DefaultMenuItem menuItem={menuItem} />,
+    [MenuTittles.PROFILE]: () => <ProfileMenuItem menuItem={menuItem} />,
   };
 
   return Component[menuItem.title]();

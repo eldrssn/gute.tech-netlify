@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { Box } from '@mui/system';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
+
+import { PhoneIcon } from 'components/ui/PhoneIcon';
 
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 
@@ -59,7 +59,7 @@ const FooterSocialLinks: FC = () => {
         </Box>
 
         <a href={`tel:${phone}`} className={styles.footerPhone}>
-          <FontAwesomeIcon icon={faPhone} className={styles.footerPhoneIcon} />
+          <PhoneIcon className={styles.footerPhoneIcon} />
           <span className={styles.footerPhoneNumber}>{phone}</span>
         </a>
       </Box>

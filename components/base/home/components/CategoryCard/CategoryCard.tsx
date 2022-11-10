@@ -43,7 +43,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
       : linkToParentCategory;
 
   return (
-    <Link href={getLink()}>
+    <Link href={getLink()} prefetch={false}>
       <a className={styles.categoryCard} tabIndex={0}>
         <Box
           className={styles.categoryQuantity_container}

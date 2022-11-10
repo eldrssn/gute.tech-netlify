@@ -28,6 +28,10 @@ type Slugs = Record<string, Slug>;
 
 type AnchorClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 
+type IconProps = {
+  className?: string;
+};
+
 export type {
   ComponentWithPageLayout,
   Sorting,
@@ -36,4 +40,5 @@ export type {
   Slug,
   Slugs,
   AnchorClick,
+  IconProps,
 };

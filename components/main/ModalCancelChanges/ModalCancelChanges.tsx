@@ -4,12 +4,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
-
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { CustomButton } from 'components/ui/CustomButton';
 import { TOuterProps } from './types';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './modalCancelChanges.module.scss';
 
@@ -35,7 +32,7 @@ const ModalCancelChanges: React.FC<TOuterProps> = ({
     >
       <Container fixed className={styles.wrap}>
         <Box className={styles.closeModal} onClick={closeModal} tabIndex={0}>
-          <FontAwesomeIcon icon={faTimes} />
+          <CloseIcon fillColor='black' />
         </Box>
         <Typography className={styles.title}>Отменить изменения?</Typography>
 

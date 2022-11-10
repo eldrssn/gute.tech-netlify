@@ -3,8 +3,6 @@ import React, { KeyboardEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { clearOrder } from 'store/reducers/order/actions';
 import { setActiveAuthorizationForm } from 'store/reducers/authentication/actions';
@@ -17,6 +15,7 @@ import { resetAllField } from 'store/reducers/authentication/actions';
 import { ActiveAutorizationFormKey } from 'constants/types';
 import { handleEnterPress } from 'utility/utils';
 
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { FormLogIn } from './components/FormLogIn';
 import { FormRegistration } from './components/FormRegistration';
 import { FormResetPassword } from './components/FormResetPassword';
@@ -81,7 +80,7 @@ const ModalLogIn: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
         onKeyPress={handlePress}
         tabIndex={0}
       >
-        <FontAwesomeIcon icon={faTimes} />
+        <CloseIcon />
       </Box>
       <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box className={styles.formWrap}>

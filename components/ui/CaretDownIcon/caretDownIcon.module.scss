@@ -1,0 +1,28 @@
+.caretDownIcon {
+  display: inline-block;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+
+.caret {
+  cursor: pointer;
+  z-index: 1302;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+
+  transform: translate(0, -50%);
+
+  path {
+    transform-origin: center;
+    transition: 0.3s;
+  }
+}
+
+.caretActive {
+  path {
+    transition: 0.3s;
+    transform: rotate(180deg);
+  }
+}

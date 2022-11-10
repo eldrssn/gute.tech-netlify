@@ -1,28 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, useEffect, useState, MouseEvent } from 'react';
 import { useRouter } from 'next/router';
-import { DateRange } from 'react-date-range';
+import { DateRange, Range } from 'react-date-range';
 import { ru } from 'date-fns/locale';
 import cn from 'classnames';
 import Box from '@mui/material/Box';
-import { Range } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import useScrollbarSize from 'react-scrollbar-size';
 
+import colors from 'styles/_export.module.scss';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { formatStringifiedDate, getFullDate } from 'utility/helpers';
+
+import { CloseIcon } from 'components/ui/CloseIcon';
 
 import {
   CREATED_AFTER_QUERY,
   CREATED_BEFORE_QUERY,
   DateRangeInitialState,
 } from '../../constants';
-import styles from './styles.module.scss';
 import { OrdersFilterProps } from '../../types';
+
+import styles from './styles.module.scss';
+
+const closeIconColor = colors.red;
 
 const OrdersFilter: FC<OrdersFilterProps> = ({
   isOpenDatePicker,
@@ -125,7 +128,7 @@ const OrdersFilter: FC<OrdersFilterProps> = ({
         {dateRangeButtonTitle}
         {isDateRange && (
           <Box className={styles.clearDateRange} onClick={handleClearDateRange}>
-            <FontAwesomeIcon icon={faTimes} />
+            <CloseIcon fillColor={closeIconColor} />
           </Box>
         )}
 
@@ -138,7 +141,7 @@ const OrdersFilter: FC<OrdersFilterProps> = ({
             className={styles.closeDateRangePopover}
             onClick={handleCloseDateRangePopover}
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <CloseIcon fillColor='black' />
           </Box>
           <DateRange
             className={styles.dateRangePicker}
@@ -165,4 +168,4 @@ const OrdersFilter: FC<OrdersFilterProps> = ({
   );
 };
 
-export { OrdersFilter };
+export default OrdersFilter;

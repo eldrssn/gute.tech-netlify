@@ -1,10 +1,12 @@
 import React, { useEffect, MouseEvent } from 'react';
-import AriaModal from 'react-aria-modal';
+import dynamic from 'next/dynamic';
 import cn from 'classnames';
 
 import { TOuterProps } from './types';
 
 import styles from './styles.module.scss';
+
+const AriaModal = dynamic(() => import('react-aria-modal'));
 
 const ModalWrapper: React.FC<TOuterProps> = ({
   children,

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
@@ -19,10 +20,11 @@ import { makeStringify } from 'utility/helpers';
 import { SearchPanel } from './components/SearchPanel';
 import { OrderGrid } from './components/OrderGrid';
 import { OrdersSort } from './components/OrdersSort';
-import { OrdersFilter } from './components/OrdersFilter';
 import { isNotEnoughtItems } from './helpers';
 import { PAGE_QUERY, NUM_PAGES_IN_SEARCH } from './constants';
 import styles from './styles.module.scss';
+
+const OrdersFilter = dynamic(() => import('./components/OrdersFilter'));
 
 const ProfileOrdersPage = () => {
   const [page, setPage] = useState(1);
@@ -132,10 +134,12 @@ const ProfileOrdersPage = () => {
 
             <OrdersSort />
 
-            <OrdersFilter
-              isOpenDatePicker={isOpenDatePicker}
-              setIsOpenDatePicker={setIsOpenDatePicker}
-            />
+            {isOpenDatePicker && (
+              <OrdersFilter
+                isOpenDatePicker={isOpenDatePicker}
+                setIsOpenDatePicker={setIsOpenDatePicker}
+              />
+            )}
           </Box>
           <OrderGrid />
         </Box>

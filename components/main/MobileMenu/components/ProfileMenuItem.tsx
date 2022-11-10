@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames/bind';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Box from '@mui/material/Box';
 
 import { ModalLogIn } from 'components/main/ModalLogIn';
@@ -15,12 +15,14 @@ import styles from '../mobileMenu.module.scss';
 
 const cn = classnames.bind(styles);
 
-const ProfileMenuItem: FC<MenuItemProps> = ({ menuItem, router }) => {
+const ProfileMenuItem: FC<MenuItemProps> = ({ menuItem }) => {
+  const router = useRouter();
+
   const [isOpenModalLogIn, setIsOpenModalLogIn] = useState(false);
   const isAuthorized = useSelector(selectIsAuthorized);
   const loadingAuthorized = useSelector(selectLoadingAuthorized);
 
-  const { title, href, icon } = menuItem;
+  const { title, href, icon: Icon } = menuItem;
 
   const handleClickProfile = () => {
     if (loadingAuthorized) {
@@ -47,7 +49,7 @@ const ProfileMenuItem: FC<MenuItemProps> = ({ menuItem, router }) => {
         })}
         onClick={handleClickProfile}
       >
-        <FontAwesomeIcon icon={icon} className={styles.menuItem_icon} />
+        <Icon className={styles.menuItem_icon} />
         <span className={styles.menuItem_title}>{title}</span>
       </Box>
     </>
