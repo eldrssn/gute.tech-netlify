@@ -17,7 +17,7 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
   setValue,
 }) => {
   const [paymentType, setPaymentType] = useState('');
-  const [paymentValue, setPaymentValue] = useState<PaymentMethodValue>();
+  const [paymentValue, setPaymentValue] = useState<PaymentMethodValue | null>();
   const paymentMethods = useSelector(selectPaymentMethods);
 
   const paymentMethod = paymentMethods.find(
@@ -37,6 +37,14 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
     setValue('paymentId', firstPaymentValue.id);
   }, [paymentMethods, setValue]);
 
+  useEffect(() => {
+    if (paymentMethodValues && paymentMethodValues?.length > 0) {
+      return;
+    }
+
+    setPaymentValue(null);
+  }, [paymentMethodValues]);
+
   return (
     <Box component='div' className={styles.paymentBox}>
       <Typography variant='h6' className={styles.formHeading}>
@@ -44,6 +52,9 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
       </Typography>
       <Box component='div' className={styles.paymentMethod}>
         <Box className={styles.paymentChoice}>
+          <Typography variant='h6' className={styles.formSubtitle}>
+            Выберите тип
+          </Typography>
           <Controller
             render={({ field: { onChange, value } }) => (
               <RadioGroup
@@ -84,7 +95,7 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
             name='paymentMethod'
             control={control}
           />
-          {paymentMethodValues && (
+          {paymentMethodValues && paymentMethodValues.length > 0 && (
             <Box component='div' className={styles.gatewayBox}>
               <Typography variant='h6' className={styles.formSubtitle}>
                 Выберите способ
@@ -136,17 +147,19 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
             </Box>
           )}
         </Box>
-        <Box className={styles.infoPayment}>
-          {paymentValue?.icons && (
-            <Box
-              className={styles.imageIconCard}
-              dangerouslySetInnerHTML={{ __html: paymentValue?.icons }}
-            ></Box>
-          )}
-          <Typography className={styles.info}>
-            {paymentValue?.description}
-          </Typography>
-        </Box>
+        {paymentValue && (
+          <Box className={styles.infoPayment}>
+            {paymentValue?.icons && (
+              <Box
+                className={styles.imageIconCard}
+                dangerouslySetInnerHTML={{ __html: paymentValue?.icons }}
+              ></Box>
+            )}
+            <Typography className={styles.info}>
+              {paymentValue?.description}
+            </Typography>
+          </Box>
+        )}
       </Box>
     </Box>
   );
