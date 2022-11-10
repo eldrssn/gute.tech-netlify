@@ -1,29 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
-import Image from 'next/image';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { Controller } from 'react-hook-form';
+import { RadioGroup, FormControlLabel, Radio } from '@mui/material';
 
-// import { selectPaymentMethods } from 'store/reducers/cart/selectors';
-import { useWindowSize } from 'hooks/useWindowSize';
-import { TPaymentMethodProps } from 'components/base/cart/types';
-import { paymantCardIconPatch } from 'components/base/cart/constants';
+import { selectPaymentMethods } from 'store/reducers/payment/selectors';
+import { TPaymentMethodProps } from 'components/base/payment/types';
+import { PaymentMethodValue } from 'api/models/payment';
 
 import styles from './PaymentMethod.module.scss';
 
-const PaymentMethod: React.FC<TPaymentMethodProps> = () => {
-  const { isXSMobile } = useWindowSize();
-  // const [paymentType, setPaymentType] = useState('');
-  // const paymentMethods = useSelector(selectPaymentMethods);
+const PaymentMethod: React.FC<TPaymentMethodProps> = ({
+  control,
+  setValue,
+}) => {
+  const [paymentType, setPaymentType] = useState('');
+  const [paymentValue, setPaymentValue] = useState<PaymentMethodValue>();
+  const paymentMethods = useSelector(selectPaymentMethods);
 
-  // const paymentMethodValue = paymentMethods.find(
-  //   (method) => method.payment_type === paymentType,
-  // )?.values;
+  const paymentMethod = paymentMethods.find(
+    (method) => method.type === paymentType,
+  );
+  const paymentMethodValues = paymentMethod?.values;
 
-  const imageSize = {
-    width: isXSMobile ? 75 : 100,
-    height: isXSMobile ? 37 : 50,
-  };
+  useEffect(() => {
+    if (paymentMethods.length <= 0 && paymentMethods.values.length <= 0) {
+      return;
+    }
+
+    const firstPaymentMethod = paymentMethods[0];
+    const firstPaymentValue = firstPaymentMethod.values[0];
+
+    setValue('paymentMethod', firstPaymentMethod.type);
+    setValue('paymentId', firstPaymentValue.id);
+  }, [paymentMethods, setValue]);
 
   return (
     <Box component='div' className={styles.paymentBox}>
@@ -31,78 +43,7 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = () => {
         Способ оплаты
       </Typography>
       <Box component='div' className={styles.paymentMethod}>
-        <Box
-          className={cn(styles.radioButtonContainer, styles.radioButtonActive)}
-        >
-          Картой онлайн
-        </Box>
-        <Box className={styles.infoPayment}>
-          {paymantCardIconPatch.map((cardIcon) => (
-            <Image
-              className={styles.imageIconCard}
-              src={cardIcon.path}
-              key={cardIcon.name}
-              alt={cardIcon.name}
-              {...imageSize}
-            />
-          ))}
-          <Typography className={styles.info}>
-            Для оплаты (ввода реквизитов Вашей карты) Вы будете перенаправлены
-            на платёжный шлюз ПАО СБЕРБАНК. Соединение с платёжным шлюзом и
-            передача информации осуществляется в защищённом режиме с
-            использованием протокола шифрования SSL. В случае если Ваш банк
-            поддерживает технологию безопасного проведения интернет-платежей
-            Verified By Visa, MasterCard SecureCode, MIR Accept, J-Secure, для
-            проведения платежа также может потребоваться ввод специального
-            пароля.
-          </Typography>
-        </Box>
-      </Box>
-      {/* Добавить при подключении выбора оплаты */}
-      {/* <Controller
-        render={({ field: { onChange, value } }) => (
-          <RadioGroup
-            aria-label='gender'
-            onChange={onChange}
-            value={value}
-            sx={{ width: '100%' }}
-          >
-            {paymentMethods.map((method) => {
-              if (value === method.payment_type) {
-                setPaymentType(method.payment_type);
-              }
-
-              return (
-                <FormControlLabel
-                  className={styles.formControlLabel}
-                  key={method.payment_type}
-                  value={method.payment_type}
-                  control={<Radio sx={{ display: 'none' }} />}
-                  label={
-                    <Box component='div' className={styles.paymentMethod}>
-                      <Box
-                        className={cn(styles.radioButtonContainer, {
-                          [styles.radioButtonActive]:
-                            value === method.payment_type,
-                        })}
-                      >
-                        {method.title}
-                      </Box>
-                    </Box>
-                  }
-                />
-              );
-            })}
-          </RadioGroup>
-        )}
-        name='paymentMethod'
-        control={control}
-      />
-      {paymentMethodValue && (
-        <Box component='div' className={styles.gatewayBox}>
-          <Typography variant='h6' className={styles.formSubtitle}>
-            Выберите способ
-          </Typography>
+        <Box className={styles.paymentChoice}>
           <Controller
             render={({ field: { onChange, value } }) => (
               <RadioGroup
@@ -111,33 +52,102 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = () => {
                 value={value}
                 sx={{ width: '100%' }}
               >
-                {paymentMethodValue?.map((methodValue) => (
-                  <FormControlLabel
-                    className={styles.formControlLabel}
-                    key={methodValue.gateway}
-                    value={methodValue.gateway}
-                    control={<Radio sx={{ display: 'none' }} />}
-                    label={
-                      <Box component='div' className={styles.paymentMethod}>
-                        <Box
-                          className={cn(styles.radioButtonContainer, {
-                            [styles.radioButtonActive]:
-                              value === methodValue.gateway,
-                          })}
-                        >
-                          {methodValue.title}
+                {paymentMethods.map((method) => {
+                  const methodType = method.type;
+
+                  if (value === methodType) {
+                    setPaymentType(methodType);
+                  }
+
+                  return (
+                    <FormControlLabel
+                      className={styles.formControlLabel}
+                      key={methodType}
+                      value={methodType}
+                      control={<Radio sx={{ display: 'none' }} />}
+                      label={
+                        <Box component='div' className={styles.paymentMethod}>
+                          <Box
+                            className={cn(styles.radioButtonContainer, {
+                              [styles.radioButtonActive]: value === methodType,
+                            })}
+                          >
+                            {method.title}
+                          </Box>
                         </Box>
-                      </Box>
-                    }
-                  />
-                ))}
+                      }
+                    />
+                  );
+                })}
               </RadioGroup>
             )}
-            name='paymentGateway'
+            name='paymentMethod'
             control={control}
           />
+          {paymentMethodValues && (
+            <Box component='div' className={styles.gatewayBox}>
+              <Typography variant='h6' className={styles.formSubtitle}>
+                Выберите способ
+              </Typography>
+              <Controller
+                render={({ field: { onChange, value } }) => (
+                  <RadioGroup
+                    aria-label='gender'
+                    onChange={onChange}
+                    value={value}
+                    sx={{ width: '100%' }}
+                  >
+                    {paymentMethodValues?.map((methodValue) => {
+                      const numberValue = Number(value);
+
+                      if (numberValue === methodValue.id) {
+                        setPaymentValue(methodValue);
+                      }
+
+                      return (
+                        <FormControlLabel
+                          className={styles.formControlLabel}
+                          key={methodValue.id}
+                          value={methodValue.id}
+                          control={<Radio sx={{ display: 'none' }} />}
+                          label={
+                            <Box
+                              component='div'
+                              className={styles.paymentMethod}
+                            >
+                              <Box
+                                className={cn(styles.radioButtonContainer, {
+                                  [styles.radioButtonActive]:
+                                    numberValue === methodValue.id,
+                                })}
+                              >
+                                {methodValue.title}
+                              </Box>
+                            </Box>
+                          }
+                        />
+                      );
+                    })}
+                  </RadioGroup>
+                )}
+                name='paymentId'
+                control={control}
+              />
+            </Box>
+          )}
         </Box>
-      )} */}
+        <Box className={styles.infoPayment}>
+          {paymentValue?.icons && (
+            <Box
+              className={styles.imageIconCard}
+              dangerouslySetInnerHTML={{ __html: paymentValue?.icons }}
+            ></Box>
+          )}
+          <Typography className={styles.info}>
+            {paymentValue?.description}
+          </Typography>
+        </Box>
+      </Box>
     </Box>
   );
 };

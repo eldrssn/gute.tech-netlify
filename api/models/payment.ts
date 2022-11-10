@@ -1,11 +1,14 @@
 type PaymentMethodValue = {
   title: string;
   gateway: string;
+  description: string;
+  icons: string;
+  id: number;
 };
 
 type PaymentMethodResponseData = {
   title: string;
-  payment_type: string;
+  type: string;
   values: PaymentMethodValue[];
 };
 
@@ -37,7 +40,7 @@ type OrderingRequestData = {
   phone: string;
   email: string;
   payment_type: string;
-  gateway: string;
+  payment_method_id: number;
   cart: OrderingProductCartRequestData[];
   branch_office_id: number;
 };
