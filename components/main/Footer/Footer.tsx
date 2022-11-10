@@ -22,4 +22,4 @@ const Footer: FC = () => (
   </Box>
 );
 
-export { Footer };
+export default Footer;

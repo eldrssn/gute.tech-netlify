@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useSelector } from 'react-redux';
 
 import {
   fetchPaymentMethods,

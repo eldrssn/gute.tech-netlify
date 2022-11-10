@@ -1,7 +1,7 @@
-import { faHouse } from '@fortawesome/free-solid-svg-icons';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { BasketIcon } from 'components/ui/BasketIcon';
+import { CatalogIcon } from 'components/ui/CatalogIcon';
+import { HomeIcon } from 'components/ui/HomeIcon';
+import { UserIcon } from 'components/ui/UserIcon';
 
 enum MenuTittles {
   HOME = 'Главная',
@@ -14,22 +14,25 @@ const menuLinks = [
   {
     title: MenuTittles.HOME,
     href: '/',
-    icon: faHouse,
+    icon: HomeIcon,
   },
   {
     title: MenuTittles.CATALOG,
     href: '/catalog',
-    icon: faMagnifyingGlass,
+
+    icon: CatalogIcon,
   },
   {
     title: MenuTittles.CART,
     href: '/cart',
-    icon: faCartShopping,
+
+    icon: BasketIcon,
   },
   {
     title: MenuTittles.PROFILE,
     href: '/profile',
-    icon: faCircleUser,
+
+    icon: UserIcon,
   },
 ];
 

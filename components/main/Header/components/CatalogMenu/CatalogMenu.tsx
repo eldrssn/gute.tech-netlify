@@ -157,4 +157,4 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
   );
 };
 
-export { CatalogMenu };
+export default CatalogMenu;

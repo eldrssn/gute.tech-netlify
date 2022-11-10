@@ -73,17 +73,6 @@
   margin-left: 5px;
 }
 
-.icon_phone::before {
-  font-family: 'fontawesome';
-  content: '\f095';
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: 24px;
-  width: 30px;
-  display: block;
-  margin-top: 4px;
-  margin-right: -15px;
-}
-
 .shoppingCartIcon {
   display: flex;
   flex-direction: row;
@@ -112,6 +101,7 @@
 
 .menuItem_phone {
   font-size: 16px;
+  padding-left: 3px;
 }
 
 @media (max-width: $mobile) {

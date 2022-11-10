@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
@@ -14,6 +12,7 @@ import {
   updateCartItemUnAuthorized,
 } from 'store/reducers/cart/actions';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { CloseIcon } from 'components/ui/CloseIcon';
 
 import { TDeleteItemButtonProps } from '../../types';
 import styles from './DeleteItemButton.module.scss';
@@ -93,7 +92,7 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
         })}
         onClick={handleClick}
       >
-        <FontAwesomeIcon icon={faTimes} />
+        <CloseIcon />
       </Button>
     </>
   );

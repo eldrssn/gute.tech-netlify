@@ -5,9 +5,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { CustomButton } from 'components/ui/CustomButton';
 import {
@@ -146,7 +145,7 @@ const ModalEditUserEmail: React.FC<TOuterProps> = ({
             handleEnterPress(event, closeModal)
           }
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <CloseIcon fillColor='black' />
         </Box>
         {!isNextStep && (
           <>

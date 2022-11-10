@@ -3,12 +3,10 @@ import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { clearUserProfileData } from 'store/reducers/user/actions';
 import { logOut } from 'store/reducers/authentication/exceptionAction';
 import { CustomButton } from 'components/ui/CustomButton';
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { handleEnterPress } from 'utility/utils';
 
 import { TOuterProps } from '../ModalSaveChanges/types';
@@ -41,7 +39,7 @@ const ModalLogOut: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
           tabIndex={0}
           id='closeExitModal'
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <CloseIcon fillColor='black' />
         </Box>
         <Typography className={styles.title}>Вы точно хотите выйти?</Typography>
 

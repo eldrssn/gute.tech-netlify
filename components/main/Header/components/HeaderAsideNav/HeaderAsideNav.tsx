@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
+import Image from 'next/image';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
@@ -66,7 +66,7 @@ const HeaderAsideNav: FC = () => {
       )}
       {(isFullHeader || isMobile) && !hidePhone && (
         <MenuItem disableGutters>
-          <i className={styles.icon_phone} />
+          <Image src='/icons/phonev1.png' alt='phone' width='30' height='30' />
           <a
             href={`tel:${phone}`}
             className={cn(menuItemStyles, styles.menuItem_phone)}
@@ -91,10 +91,10 @@ const HeaderAsideNav: FC = () => {
                       {cartProductTotal}
                     </span>
                   </Box>
-                  <Typography className={styles.orderTotalCard}>
+                  <span className={styles.orderTotalCard}>
                     {formattedCartTotal}
                     <i className={styles.icon_ruble} />
-                  </Typography>
+                  </span>
                 </Box>
               </MenuItem>
             </a>
@@ -109,9 +109,7 @@ const HeaderAsideNav: FC = () => {
           tabIndex={0}
         >
           <Box className={styles.consiltIcon} />
-          {isFullHeader && (
-            <Typography className={menuItemStyles}>Консультация</Typography>
-          )}
+          {isFullHeader && <span className={menuItemStyles}>Консультация</span>}
         </MenuItem>
         <LoginButton />
       </Box>

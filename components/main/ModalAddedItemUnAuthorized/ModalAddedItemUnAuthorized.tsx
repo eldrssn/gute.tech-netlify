@@ -4,9 +4,8 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { ModalLogIn } from 'components/main/ModalLogIn';
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { addProductToCartUnAuthorized } from 'store/reducers/cart/actions';
@@ -46,7 +45,7 @@ const ModalAddedItemUnAuthorized: React.FC<TOuterProps> = ({
       >
         <Container fixed className={styles.wrap}>
           <Box className={styles.closeModal} onClick={closeModal}>
-            <FontAwesomeIcon icon={faTimes} />
+            <CloseIcon fillColor='black' />
           </Box>
           <Typography className={styles.title}>Вы не авторизованы</Typography>
           <Button onClick={openModalLogin} className={styles.button}>

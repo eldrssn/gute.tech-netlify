@@ -1,14 +1,16 @@
 import React, { FC, useContext, useState } from 'react';
 import classnames from 'classnames/bind';
-import Popover from '@mui/material/Popover';
+import dynamic from 'next/dynamic';
 
 import { useWindowSize } from 'hooks/useWindowSize';
 import { CustomButton } from 'components/ui/CustomButton';
 
 import { HeaderContext } from '../HeaderContext';
-import { CatalogMenu } from '../CatalogMenu';
 
 import styles from './catalogButton.module.scss';
+
+const Popover = dynamic(() => import('@mui/material/Popover'));
+const CatalogMenu = dynamic(() => import('../CatalogMenu'));
 
 const cn = classnames.bind(styles);
 

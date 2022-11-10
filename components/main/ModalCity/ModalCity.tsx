@@ -8,9 +8,8 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { Loader } from 'components/ui/Loader';
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { FormInput } from 'components/main/FormInput';
@@ -75,7 +74,7 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
             onKeyPress={handlePress}
             tabIndex={0}
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <CloseIcon />
           </Box>
           <Typography
             className={styles.title}
@@ -97,7 +96,7 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
               id='enter-city'
             />
             <Box className={styles.resetField} onClick={resetInput}>
-              <FontAwesomeIcon icon={faTimes} />
+              <CloseIcon fillColor='black' />
             </Box>
           </Box>
           <Box component='div' className={regionsClassName}>

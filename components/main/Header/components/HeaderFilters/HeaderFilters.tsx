@@ -73,4 +73,4 @@ const HeaderFilters: FC<HeaderFiltersProps> = ({ closePopupMobile }) => {
   );
 };
 
-export { HeaderFilters };
+export default HeaderFilters;

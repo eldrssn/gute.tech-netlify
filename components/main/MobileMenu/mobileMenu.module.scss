@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/constants.scss";
+@import '~styles/colors.scss';
+@import '~styles/constants.scss';
 
 .mainContainer {
   height: 50px;
@@ -27,6 +27,10 @@
 
 .menuItem_active {
   color: $blue1;
+
+  & svg {
+    fill: $blue1;
+  }
 }
 
 .menuItem_icon {

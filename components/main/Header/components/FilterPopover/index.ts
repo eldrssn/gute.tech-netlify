@@ -1,1 +1,3 @@
-export * from './FilterPopover';
+import FilterPopover from './FilterPopover';
+
+export default FilterPopover;

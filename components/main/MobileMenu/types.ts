@@ -1,5 +1,4 @@
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { NextRouter } from 'next/router';
+import { IconProps } from 'types';
 
 import { MenuTittles } from './constants';
 
@@ -7,9 +6,8 @@ type MenuItemProps = {
   menuItem: {
     title: MenuTittles;
     href: string;
-    icon: IconDefinition;
+    icon: React.FC<IconProps>;
   };
-  router: NextRouter;
 };
 
 export type { MenuItemProps };

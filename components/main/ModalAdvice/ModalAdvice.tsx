@@ -7,11 +7,10 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import InputMask from 'react-input-mask';
 
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { ModalWrapper } from 'components/main/ModalWrapper';
 import { FormInput } from 'components/main/FormInput';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
@@ -99,7 +98,7 @@ const ModalAdvice: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
           tabIndex={0}
           onKeyPress={handlePressEnterCloseModal}
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <CloseIcon />
         </Box>
         <form onSubmit={onSubmit} className={styles.container}>
           <Typography

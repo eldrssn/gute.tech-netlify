@@ -1,9 +1,8 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useDispatch, useSelector } from 'react-redux';
 import { useController } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import TextField from '@mui/material/TextField';
 import Step from '@mui/material/Step';
 import Box from '@mui/material/Box';
@@ -21,14 +20,18 @@ import { selectEngines } from 'store/reducers/transport/selectors';
 import { CookieKey } from 'constants/types';
 import { COOKIE_TTL } from 'constants/variables';
 
+import { CheckIcon } from 'components/ui/CheckIcon';
+import { CaretDownIcon } from 'components/ui/CaretDownIcon';
+
 import { FilterStepProps } from './types';
-import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
 import { setDefaultValueByName } from '../../helpers';
 import { namesDefaultValueByStep } from '../../constants';
 import { HandleClickProps, StepInputs } from '../../types';
 
 import styles from './filterStep.module.scss';
+
+const FilterPopover = dynamic(() => import('../FilterPopover'));
 
 const cn = classnames.bind(styles);
 
@@ -174,7 +177,7 @@ const FilterStep: FC<FilterStepProps> = ({
           {isLoadingoptionList ? (
             <Loader size={25} />
           ) : isValue ? (
-            <FontAwesomeIcon icon={faCheck} />
+            <CheckIcon />
           ) : (
             <span
               className={cn(styles.stepNumber_number, {
@@ -198,12 +201,9 @@ const FilterStep: FC<FilterStepProps> = ({
           disabled={isDisable}
         />
         {!isDisable && (
-          <FontAwesomeIcon
-            onClick={handleClickCaret}
-            className={cn(styles.caret, {
-              [styles.caretActive]: isActiveStep,
-            })}
-            icon={faCaretDown}
+          <CaretDownIcon
+            handleClickCaret={handleClickCaret}
+            isActiveStep={isActiveStep}
           />
         )}
       </div>

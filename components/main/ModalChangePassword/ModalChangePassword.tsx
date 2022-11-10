@@ -6,9 +6,7 @@ import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '@mui/material/TextField';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { CustomButton } from 'components/ui/CustomButton';
 import {
   changePassword,
@@ -91,7 +89,7 @@ const ModalChangePassword: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
             tabIndex={0}
             onKeyPress={onEnterPress}
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <CloseIcon fillColor='black' />
           </Box>
 
           <Typography className={styles.title}>
@@ -109,7 +107,7 @@ const ModalChangePassword: FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
             tabIndex={0}
             onKeyPress={onEnterPress}
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <CloseIcon fillColor='black' />
           </Box>
 
           <Typography className={styles.title}>Изменение пароля</Typography>

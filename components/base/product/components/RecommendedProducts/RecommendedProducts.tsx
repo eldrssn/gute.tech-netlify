@@ -1,8 +1,8 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import Box from '@mui/material/Box';
-import Slider from 'react-slick';
 
 import { NextArrowButton, PrevArrowButton } from 'components/ui/ArrowButtons';
 import { CatalogCard } from 'components/main/CatalogCard';
@@ -17,6 +17,8 @@ import {
 
 import { getSlugs } from './helpers';
 import styles from './recommendedProducts.module.scss';
+
+const Slider = dynamic(() => import('react-slick'));
 
 const RecommendedProducts: FC = () => {
   const router = useRouter();

@@ -1,15 +1,16 @@
 import React, { FC, useContext, useState } from 'react';
-
+import dynamic from 'next/dynamic';
 import Menu from '@mui/material/Menu';
 
 import { CustomButton } from 'components/ui/CustomButton';
 
-import { HeaderFilters } from '../HeaderFilters';
 import { HeaderMobileNav } from '../HeaderMobileNav';
 import { SearchField } from '../SearchField';
 import { HeaderContext } from '../HeaderContext';
 
 import styles from './headerMobile.module.scss';
+
+const HeaderFilters = dynamic(() => import('../HeaderFilters'));
 
 const HeaderMobile: FC = () => {
   const { transportText } = useContext(HeaderContext);
