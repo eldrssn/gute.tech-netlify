@@ -14,9 +14,6 @@ const FooterText: FC = () => {
 
   return (
     <div>
-      <Link href={LINK} passHref>
-        <Box className={styles.logo} />
-      </Link>
       <p className={styles.footerText}>{title}</p>
       <p className={styles.footerYear}>© 2022</p>
       <div
