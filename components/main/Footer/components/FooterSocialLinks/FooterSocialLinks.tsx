@@ -65,7 +65,6 @@ const FooterSocialLinks: FC = () => {
       </Box>
       <Link href={LINK} passHref>
         <a target='_blank' className={styles.logo} />
-        {/* <Box className={styles.logo} /> */}
       </Link>
     </Box>
   );
