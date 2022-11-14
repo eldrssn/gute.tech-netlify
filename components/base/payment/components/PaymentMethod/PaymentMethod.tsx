@@ -30,7 +30,7 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
       return;
     }
 
-    const firstPaymentMethod = paymentMethods[0];
+    const firstPaymentMethod = paymentMethods[1];
     const firstPaymentValue = firstPaymentMethod.values[0];
 
     setValue('paymentMethod', firstPaymentMethod.type);
@@ -65,6 +65,10 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
               >
                 {paymentMethods.map((method) => {
                   const methodType = method.type;
+
+                  if (method.values.length <= 0) {
+                    return;
+                  }
 
                   if (value === methodType) {
                     setPaymentType(methodType);
