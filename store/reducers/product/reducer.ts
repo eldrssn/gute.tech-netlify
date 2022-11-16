@@ -5,6 +5,7 @@ import {
   RecommendedResponceData,
   ProductTransportListResponseData,
   ProductAnaloguesResponseData,
+  ProductReviewsListResponseData,
 } from 'api/models/product';
 
 import {
@@ -17,6 +18,8 @@ import {
   fetchProductTransportsList,
   clearProductInstallationError,
   fetchProductAnaloguesRead,
+  fetchProductReviewsList,
+  clearProductReviewsList,
 } from './actions';
 
 import { ProductStore, ErrorAction } from './types';
@@ -185,6 +188,31 @@ const handlers = {
     state.productAnaloguesList.data = null;
     state.productAnaloguesList.isLoading = false;
     state.productAnaloguesList.error = errorData;
+  },
+
+  [fetchProductReviewsList.pending.type]: (state: ProductStore) => {
+    state.productReviewsList.isLoading = true;
+  },
+  [fetchProductReviewsList.fulfilled.type]: (
+    state: ProductStore,
+    { payload }: PayloadAction<ProductReviewsListResponseData>,
+  ) => {
+    state.productReviewsList.data = payload;
+    state.productReviewsList.isLoading = false;
+    state.productReviewsList.error = null;
+  },
+  [fetchProductReviewsList.rejected.type]: (
+    state: ProductStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.productReviewsList.data = null;
+    state.productReviewsList.isLoading = false;
+    state.productReviewsList.error = errorData;
+  },
+  [clearProductReviewsList.type]: (state: ProductStore) => {
+    state.productReviewsList.data = null;
+    state.productReviewsList.isLoading = true;
   },
 };
 

@@ -23,6 +23,26 @@
   }
 }
 
+.ratingBox {
+  display: flex;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  background-color: $blue1;
+  color: $white;
+  padding: 5px;
+  width: 50px;
+  height: 30px;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+}
+
+.ratingNumber {
+  margin-top: 1px;
+  margin-left: 1px;
+}
+
 .cardLinkContainer {
   display: flex;
   flex-direction: column;

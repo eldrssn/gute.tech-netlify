@@ -42,6 +42,11 @@ const selectProductAnaloguesList = createSelector(
   ({ productAnaloguesList }) => productAnaloguesList,
 );
 
+const selectProductReviewsList = createSelector(
+  selectCatalogStore,
+  ({ productReviewsList }) => productReviewsList,
+);
+
 export {
   selectCategoriesProductRead,
   selectRecommendedProductsList,
@@ -50,4 +55,5 @@ export {
   selectProductYearsList,
   selectProductTransportsList,
   selectProductAnaloguesList,
+  selectProductReviewsList,
 };

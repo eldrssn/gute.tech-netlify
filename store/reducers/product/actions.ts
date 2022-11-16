@@ -8,6 +8,7 @@ import {
   getRecommendedProductsList,
   getProductAnaloguesRead,
   getCategoriesProductsRead,
+  getProductReviewsList,
 } from 'api/routes/product';
 import {
   ProductTransportListRequestData,
@@ -20,6 +21,8 @@ import {
   ProductAnaloguesResponseData,
   RecommendedResponceData,
   ProductsReadRequestData,
+  ProductReviewsListResponseData,
+  ProductReviewsListRequestData,
 } from 'api/models/product';
 import { createAsyncAction } from 'utility/helpers/store';
 
@@ -29,6 +32,7 @@ const clearRecommendedProductsList = createAction(
 const clearProductInstallationError = createAction(
   'clearProductInstallationError',
 );
+const clearProductReviewsList = createAction('clearProductReviewsList');
 
 const fetchCategoriesProductsRead = createAsyncAction<
   ProductReadResponseData,
@@ -86,6 +90,14 @@ const fetchProductTransportsList = createAsyncAction<
   request: getProductTransportsList,
 });
 
+const fetchProductReviewsList = createAsyncAction<
+  ProductReviewsListResponseData,
+  ProductReviewsListRequestData
+>({
+  typeAction: 'CatalogStore/fetchProductReviewsList',
+  request: getProductReviewsList,
+});
+
 export {
   clearProductInstallationError,
   fetchCategoriesProductsRead,
@@ -96,4 +108,6 @@ export {
   fetchProductYearsList,
   fetchProductTransportsList,
   fetchProductAnaloguesRead,
+  fetchProductReviewsList,
+  clearProductReviewsList,
 };

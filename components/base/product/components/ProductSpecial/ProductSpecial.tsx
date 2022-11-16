@@ -4,10 +4,10 @@ import classnames from 'classnames/bind';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import ErrorIcon from '@mui/icons-material/Error';
+import Rating from '@mui/material/Rating';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
-import { useWindowSize } from 'hooks/useWindowSize';
 import { sendMetrik } from 'utility/utils/metriks';
 import { CONSULTATION_TEXT } from 'utility/utils/constants';
 
@@ -16,7 +16,10 @@ import styles from './productSpecial.module.scss';
 
 const cn = classnames.bind(styles);
 
-const ProductSpecial: FC<ProductSpecialProps> = ({ isWarningMessage }) => {
+const ProductSpecial: FC<ProductSpecialProps> = ({
+  isWarningMessage,
+  averageRating,
+}) => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState<boolean>(false);
 
   const metrics = useSelector(selectMetrics);
@@ -40,8 +43,6 @@ const ProductSpecial: FC<ProductSpecialProps> = ({ isWarningMessage }) => {
     setModalAdviceOpen(true);
   };
 
-  const { isMobile } = useWindowSize();
-
   return (
     <>
       <Box
@@ -49,10 +50,17 @@ const ProductSpecial: FC<ProductSpecialProps> = ({ isWarningMessage }) => {
           order: { xs: -1, sm: 0 },
           alignItems: { xs: 'center', sm: 'start' },
         }}
-        className={cn(styles.productSpecialWrapper, {
-          [styles.mobileView]: isMobile,
-        })}
+        className={styles.productSpecialWrapper}
       >
+        <Box className={styles.ratingBox}>
+          <Rating
+            size='large'
+            defaultValue={averageRating}
+            precision={0.5}
+            readOnly
+          />
+        </Box>
+
         {isWarningMessage && (
           <Box className={styles.warningBox}>
             <ErrorIcon color='error' className={styles.warningIcon} />
