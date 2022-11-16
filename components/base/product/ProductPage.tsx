@@ -99,6 +99,7 @@ const ProductPage: FC = () => {
     is_linked_transport,
     manufacturer = '',
     vendor_code = '',
+    average_rating,
   } = product;
 
   const quantity =
@@ -243,7 +244,10 @@ const ProductPage: FC = () => {
               </Box>
 
               <ProductQuantity quantity={quantity || 0} />
-              <ProductSpecial isWarningMessage={isWarningMessage} />
+              <ProductSpecial
+                isWarningMessage={isWarningMessage}
+                averageRating={Number(average_rating)}
+              />
             </Container>
           </Box>
 

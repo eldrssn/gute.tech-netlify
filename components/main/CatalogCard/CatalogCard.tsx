@@ -33,6 +33,7 @@ import { sendMetrik } from 'utility/utils/metriks';
 import { CatalogCardProps } from './types';
 import styles from './catalogCard.module.scss';
 import { TransportWarning } from './components/TransportWarning';
+import { Rating } from './components/Rating';
 
 const cn = classnames.bind(styles);
 
@@ -44,6 +45,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   categories,
   is_linked_transport,
   isSlider,
+  average_rating,
 }) => {
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
 
@@ -90,6 +92,10 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
         })}
       >
         {!is_linked_transport && transportId && <TransportWarning />}
+
+        {Number(average_rating) > 0 && (
+          <Rating averageRating={average_rating} />
+        )}
 
         <Link href={getLink()}>
           <a className={styles.cardLinkContainer}>

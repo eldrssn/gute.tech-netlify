@@ -1,4 +1,4 @@
-import { sendRequest } from '../utils';
+import { sendRequest, sendRequestАuthentication } from '../utils';
 
 import {
   ProductTransportListResponseData,
@@ -11,6 +11,9 @@ import {
   ProductsReadRequestData,
   ProductReadResponseData,
   ProductAnaloguesResponseData,
+  ProductReviewsListRequestData,
+  ProductReviewsListResponseData,
+  ProductReviewRequestData,
 } from 'api/models/product';
 import { ApiMethods } from 'constants/types';
 import { makeStringify } from 'utility/helpers';
@@ -85,6 +88,32 @@ const getProductTransportsList = ({
     method: ApiMethods.GET,
   });
 
+const getProductReviewsList = ({
+  productSlug,
+  page = 1,
+}: ProductReviewsListRequestData) =>
+  sendRequest<ProductReviewsListResponseData>({
+    url: `/v1/review/${productSlug}/?page=${page}&size=5`,
+    method: ApiMethods.GET,
+  });
+
+const postProductReview = ({
+  productSlug,
+  grade,
+  comment = null,
+}: ProductReviewRequestData) =>
+  sendRequestАuthentication({
+    url: `/v1/review/`,
+    method: ApiMethods.POST,
+    config: {
+      data: {
+        product_slug: productSlug,
+        grade,
+        comment,
+      },
+    },
+  });
+
 export {
   getProductBrandsList,
   getProductModelsList,
@@ -93,4 +122,6 @@ export {
   getRecommendedProductsList,
   getCategoriesProductsRead,
   getProductAnaloguesRead,
+  getProductReviewsList,
+  postProductReview,
 };

@@ -4,6 +4,7 @@ import {
   RecommendedResponceData,
   ProductTransportListResponseData,
   ProductAnaloguesResponseData,
+  ProductReviewsListResponseData,
 } from 'api/models/product';
 import { ProductWarehouse } from 'api/models/cart';
 
@@ -15,6 +16,7 @@ enum ProductStoreBlocks {
   PRODUCT_YEARS_LIST = 'productYearsList',
   PRODUCT_TRANSPORT_LIST = 'productTransportList',
   PRODUCT_ANALOGUES_LIST = 'productAnaloguesList',
+  PRODUCT_REVIEWS_LIST = 'productReviewsList',
 }
 
 interface Property {
@@ -34,6 +36,7 @@ type ProductsReadData = {
   warehouses?: ProductWarehouse[];
   faq: Record<string, string>[];
   installation: string;
+  average_rating: number;
   is_linked_transport?: boolean;
 };
 
@@ -60,6 +63,9 @@ type ProductTransportsListState = {
 type ProductAnaloguesListState = {
   data: ProductAnaloguesResponseData | null;
 } & StoreState;
+type ProductReviewsListState = {
+  data: ProductReviewsListResponseData | null;
+} & StoreState;
 
 type ProductStore = {
   [ProductStoreBlocks.PRODUCT_READ]: ProductReadState;
@@ -69,6 +75,7 @@ type ProductStore = {
   [ProductStoreBlocks.PRODUCT_YEARS_LIST]: ProductYearsListState;
   [ProductStoreBlocks.PRODUCT_TRANSPORT_LIST]: ProductTransportsListState;
   [ProductStoreBlocks.PRODUCT_ANALOGUES_LIST]: ProductAnaloguesListState;
+  [ProductStoreBlocks.PRODUCT_REVIEWS_LIST]: ProductReviewsListState;
 };
 
 export type { ErrorAction, StoreError, ProductStore };

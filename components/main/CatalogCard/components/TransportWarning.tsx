@@ -12,7 +12,7 @@ const TransportWarning = () => (
     title={CONSULTATION_TEXT}
     placement='bottom-end'
   >
-    <ErrorIcon color='error' />
+    <ErrorIcon sx={{ fontSize: '28px' }} color='error' />
   </Tooltip>
 );
 

@@ -56,6 +56,7 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
     <Box
       sx={{
         width: { xs: '100%', sm: '50%' },
+        marginBottom: '20px',
       }}
     >
       <ImageGallery
