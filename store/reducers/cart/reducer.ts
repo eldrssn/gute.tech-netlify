@@ -13,6 +13,7 @@ import {
   addProductToCartUnAuthorized,
   updateCartItemAuthorized,
   updateCartItemUnAuthorized,
+  clearCartAuthorized,
 } from './actions';
 import { initialState } from './constants';
 
@@ -36,6 +37,13 @@ const handlers = {
       newItem,
       ...order.slice(itemIndex + 1),
     ];
+  },
+
+  [clearCartAuthorized.pending.type]: (state: CartStore) => {
+    state.cartItems.data = [];
+    state.cartSavedItems.data = [];
+    state.cartProductCount = 0;
+    state.cartTotal = 0;
   },
 
   [setAllChecked.type]: (state: CartStore) => {

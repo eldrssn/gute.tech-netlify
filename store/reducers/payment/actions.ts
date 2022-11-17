@@ -17,6 +17,7 @@ import {
 import { createAsyncAction } from 'utility/helpers/store';
 
 const clearCreateOrdering = createAction('clearCreateOrdering');
+const clearStatus = createAction('clearStatus');
 
 const fetchPaymentMethods = createAsyncAction<PaymentMethodResponseData[]>({
   typeAction: 'CartStore/fetchPaymentMethods',
@@ -58,6 +59,7 @@ const createOrderingAuthorized = createAsyncAction<
 });
 
 export {
+  clearStatus,
   clearCreateOrdering,
   createOrderingUnAuthorized,
   createOrderingAuthorized,

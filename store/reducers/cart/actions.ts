@@ -55,12 +55,12 @@ const addProductToCartUnAuthorized = createAsyncAction<
 });
 
 const clearCartAuthorized = createAsyncAction({
-  typeAction: 'cartStore/clearCartAuthorized',
+  typeAction: 'cartStore/clearCart',
   request: postCartClearAuthorized,
 });
 
 const clearCartUnAuthorized = createAsyncAction({
-  typeAction: 'cartStore/clearCartUnAuthorized',
+  typeAction: 'cartStore/clearCart',
   request: postCartClearUnAuthorized,
 });
 

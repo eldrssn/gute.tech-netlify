@@ -12,6 +12,14 @@ type TFormData = {
   branch: BranchOfficeData | null;
 };
 
+type WatchFormData = {
+  nameValue?: string;
+  phoneNumber?: string;
+  emailValue?: string;
+  paymentMethod?: string;
+  paymentId?: number;
+};
+
 enum FormKey {
   NAME_VALUE = 'nameValue',
   PHONE_NUMBER = 'phoneNumber',
@@ -36,8 +44,14 @@ type TDeliveryAddressProps = {
   setValue: UseFormSetValue<TFormData>;
 };
 
-export { FormKey };
+enum PaymentType {
+  CASH = 'CASH',
+  CARD = 'CARD',
+}
+
+export { FormKey, PaymentType };
 export type {
+  WatchFormData,
   TFormData,
   TPaymentMethodProps,
   TContactInformationProps,
