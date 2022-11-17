@@ -58,6 +58,8 @@ const getDefaultValues = (
   selectBranch: BranchesData | undefined,
 ) => {
   return {
+    paymentMethod: '',
+    paymentId: 0,
     phoneNumber: profile?.phone_number ? profile?.phone_number : '',
     nameValue: profile?.first_name ? profile.first_name : '',
     emailValue: profile?.email ? profile?.email : '',
@@ -75,10 +77,14 @@ const getBranchOffice = (
 const getBranch = (branches: BranchesData[], selectedCitySlug: string) =>
   branches.find((branch) => branch.slug === selectedCitySlug);
 
+const getUrlCashPaymentType = (orderId: number) =>
+  `/payment/status?orderId=${orderId}&payment_type=CASH&lang=ru`;
+
 export {
   getOrderList,
   setPaymentFormErrors,
   getDefaultValues,
   getBranchOffice,
   getBranch,
+  getUrlCashPaymentType,
 };

@@ -30,12 +30,13 @@ import {
 import { DeliveryAddress } from './components/DeliveryAddress';
 import { ContactInformation } from './components/ContactInformation';
 import { PaymentMethod } from './components/PaymentMethod';
-import { TFormData } from './types';
+import { TFormData, PaymentType } from './types';
 import {
   getOrderList,
   setPaymentFormErrors,
   getDefaultValues,
   getBranch,
+  getUrlCashPaymentType,
 } from './helpers';
 import styles from './styles.module.scss';
 
@@ -61,6 +62,8 @@ const PaymentPage: React.FC = () => {
   const createOrderStatus = useSelector(selectCreateOrderingStatus);
 
   const paymentUrl = createOrderStatus.data?.payment_url;
+  const paymentId = createOrderStatus.data?.id;
+  const paymentType = createOrderStatus.data?.payment_type;
   const createOrderLoading = createOrderStatus.loadingCreateOrdering;
   const isCreateOrdering = createOrderStatus.isCreateOrdering;
   const errors = createOrderStatus.errorCreateOrdering?.errors;
@@ -108,6 +111,14 @@ const PaymentPage: React.FC = () => {
   }, [router, isOrderList, isLoadingOrder]);
 
   useEffect(() => {
+    if (!isCreateOrdering) {
+      return;
+    }
+
+    if (paymentType === PaymentType.CASH && paymentId) {
+      router.push(getUrlCashPaymentType(paymentId));
+    }
+
     if (paymentUrl) {
       window.location.href = paymentUrl;
     }

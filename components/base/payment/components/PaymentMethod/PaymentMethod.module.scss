@@ -40,7 +40,7 @@
 }
 
 .paymentChoice {
-  width: 50%;
+  width: 48%;
   display: flex;
   flex-direction: column;
 }
@@ -53,9 +53,7 @@
 
 .infoPayment {
   width: 50%;
-  margin-left: 2%;
   padding-left: 2%;
-  border-left: 1px solid $gray2;
 }
 
 .imageIconCard {
@@ -93,8 +91,18 @@
   }
 }
 
+.radioButtonError {
+  border-color: $red3;
+  color: $red3;
+
+  &:hover {
+    color: $red3;
+  }
+}
+
 .formControlLabel {
-  width: 100%;
+  margin-right: 0px;
+
   span {
     color: $gray3;
     width: 100%;
@@ -104,6 +112,10 @@
 
 .paymentBox {
   margin-bottom: 40px;
+}
+
+.selectInput {
+  width: 100%;
 }
 
 @media (max-width: $xsMobile) {
