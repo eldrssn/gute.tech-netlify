@@ -38,7 +38,7 @@ const HeaderLogo: FC = () => {
             component='img'
             className={styles.header_img}
             src={logo}
-            alt='header logo'
+            alt='logo'
           />
         </a>
       </Link>

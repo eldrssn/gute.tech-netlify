@@ -1,17 +1,13 @@
-@import "styles/colors.scss";
-@import "~styles/breakpoints.scss";
-@import "~styles/constants.scss";
+@import 'styles/colors.scss';
+@import '~styles/breakpoints.scss';
+@import '~styles/constants.scss';
 
 .searchMenuItem {
   flex: 1 auto;
-  margin: auto 20px;
+  margin: auto 10px;
   padding: 0;
   position: relative;
   transition: 0.3s;
-}
-
-.searchMenuItemSmallHeader {
-  margin: auto 0px;
 }
 
 .background {
@@ -34,13 +30,8 @@
   justify-content: center;
   align-items: center;
   border: 1px solid $gray4;
-  border-radius: 2px;
   padding: 0;
   background-color: $white !important;
-}
-
-.searchBoxSmallHeader {
-  height: 36px;
 }
 
 .activeSearchBox {
@@ -60,6 +51,16 @@
   fieldset {
     border: 0;
   }
+}
+
+.textfield_smallHeader {
+  input {
+    padding: 2px 20px;
+  }
+}
+
+.searchBoxSmallHeader {
+  height: 36px;
 }
 
 .searchIcon {
@@ -199,17 +200,11 @@
   font-size: 14px;
 }
 
-@media (max-width: $tablet) {
-  .searchMenuItemSmallHeader {
-    min-width: 500px;
-  }
-}
-
 @media (max-width: $mobile) {
   .searchBoxSmallHeader {
     height: 40px;
-    margin: 10px 20px;
-    width: calc(100% - 40px);
+    margin: 5px 8px;
+    width: calc(100% - 16px);
   }
 
   .searchBox {
@@ -219,8 +214,8 @@
   .popupBox {
     top: 38px;
     z-index: $z-index6;
-    margin: 10px 20px;
-    width: calc(100% - 40px);
+    margin: 5px 8px;
+    width: calc(100% - 16px);
   }
 
   .searchMenuItem {

@@ -1,11 +1,9 @@
 @import 'styles/colors.scss';
-@import '~styles/breakpoints.scss';
 
 .menuItem {
   font-weight: 700;
   text-align: center;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
   font-size: 18px;
   font-family: Roboto, sans-serif !important;
 }
@@ -15,13 +13,16 @@
   margin-right: 5px;
 }
 
+.menuOutline {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 .menuItemsBox {
   display: flex;
 }
 
 .menuItem_callback {
-  flex-grow: 1;
-  padding-left: 10px;
   padding-right: 10px;
 }
 
@@ -61,15 +62,6 @@
   font-weight: bold;
   font-size: 18px;
   font-family: Roboto, sans-serif !important;
-  margin-left: 10px;
-}
-
-.icon_ruble::before {
-  font-family: 'icons';
-  content: '\e906';
-  font-weight: 400;
-  font-size: 85%;
-  font-style: normal;
   margin-left: 5px;
 }
 
@@ -79,24 +71,14 @@
   position: relative;
   padding: 5px;
 }
+
 .focusKeyboard:focus-visible {
   background-color: $gray5;
 }
 
-.shoppingCart {
-  width: 24px;
-  height: 24px;
-  background-image: url('~assets/images/shoppingCart.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.consiltIcon {
-  width: 20px;
-  height: 24px;
-  background-image: url('~assets/images/consultIcon.png');
-  background-size: contain;
-  background-repeat: no-repeat;
+.basketIcon {
+  width: 25px;
+  height: 25px;
 }
 
 .menuItem_phone {
@@ -104,13 +86,8 @@
   padding-left: 3px;
 }
 
-@media (max-width: $mobile) {
-  .consiltIcon {
-    margin-right: 10px;
-    filter: invert(100%);
-  }
-
-  .icon_phone {
-    margin-right: 10px;
-  }
+.rubleIcon {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 1px;
 }

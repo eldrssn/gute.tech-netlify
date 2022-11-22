@@ -1,4 +1,5 @@
 import React, { useEffect, MouseEvent } from 'react';
+import useScrollbarSize from 'react-scrollbar-size';
 import dynamic from 'next/dynamic';
 import cn from 'classnames';
 
@@ -17,6 +18,8 @@ const ModalWrapper: React.FC<TOuterProps> = ({
   initialFocus,
   closeByEsc = true,
 }) => {
+  const { width: widthScrollBar } = useScrollbarSize();
+
   const closeModal = () => {
     if (isCloseDisable) {
       return null;
@@ -46,9 +49,13 @@ const ModalWrapper: React.FC<TOuterProps> = ({
     }
 
     document.body.addEventListener('keydown', handlePressEscClose);
+    document.body.style.marginRight = `${widthScrollBar}px`;
+    document.body.style.overflow = 'hidden';
 
     return () => {
       document.body.removeEventListener('keydown', handlePressEscClose);
+      document.body.style.overflow = 'auto';
+      document.body.style.marginRight = '0px';
     };
   });
 
@@ -58,6 +65,7 @@ const ModalWrapper: React.FC<TOuterProps> = ({
       underlayStyle={{ zIndex: 1102 }}
       mounted={isOpen}
       initialFocus={initialFocus}
+      scrollDisabled={false}
     >
       <div className={modalBackgroundClassName} onClick={closeModal}>
         <div className={styles.modal}>
