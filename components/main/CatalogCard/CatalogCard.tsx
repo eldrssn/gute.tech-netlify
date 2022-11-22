@@ -34,6 +34,8 @@ import { CatalogCardProps } from './types';
 import styles from './catalogCard.module.scss';
 import { TransportWarning } from './components/TransportWarning';
 import { Rating } from './components/Rating';
+import { BasketIcon } from 'components/ui/BasketIcon';
+import { RubleIcon } from 'components/ui/RubleIcon';
 
 const cn = classnames.bind(styles);
 
@@ -119,9 +121,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
                   <Typography className={styles.cardPrice}>
                     {formattedPrice}
                   </Typography>
-                  <Typography className={styles.cardPrice}>
-                    <i className={styles.icon_ruble} />
-                  </Typography>
+                  <RubleIcon className={styles.icon_ruble} />
                 </div>
 
                 <CardActions className={styles.cardActions}>
@@ -139,7 +139,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
                     onClick={handleClickToBasket}
                     disabled={isCartUpdated}
                   >
-                    <i className={styles.shoppingIcon} />
+                    <BasketIcon className={styles.shoppingIcon} />
                   </CustomButton>
                 </CardActions>
               </Box>

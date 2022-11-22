@@ -8,6 +8,9 @@ import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
+import { BasketIcon } from 'components/ui/BasketIcon';
+import { HeadsetIcon } from 'components/ui/HeadsetIcon';
+import { RubleIcon } from 'components/ui/RubleIcon';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
 import {
@@ -18,12 +21,12 @@ import { useWindowSize } from 'hooks/useWindowSize';
 import { HIDE_PHONE_WIDTH } from 'constants/variables';
 import { formatPrice } from 'utility/helpers';
 import { sendMetrik } from 'utility/utils/metriks';
+import { handleEnterPress } from 'utility/utils';
 
 import { HeaderContext } from '../HeaderContext';
 import { LoginButton } from '../LoginButton';
 
 import styles from './headerAsideNav.module.scss';
-import { handleEnterPress } from 'utility/utils';
 
 const cn = classnames.bind(styles);
 
@@ -65,8 +68,8 @@ const HeaderAsideNav: FC = () => {
         />
       )}
       {(isFullHeader || isMobile) && !hidePhone && (
-        <MenuItem disableGutters>
-          <Image src='/icons/phonev1.png' alt='phone' width='30' height='30' />
+        <MenuItem disableGutters className={styles.menuOutline}>
+          <Image src='/icons/phonev1.png' alt='phone' width='28' height='28' />
           <a
             href={`tel:${phone}`}
             className={cn(menuItemStyles, styles.menuItem_phone)}
@@ -83,9 +86,9 @@ const HeaderAsideNav: FC = () => {
         {!isMobile && (
           <Link href={'/cart'} passHref>
             <a className={styles.focusKeyboard}>
-              <MenuItem disableGutters>
+              <MenuItem className={styles.menuOutline} disableGutters>
                 <Box className={styles.shoppingCartIcon}>
-                  <Box className={styles.shoppingCart} />
+                  <BasketIcon className={styles.basketIcon} />
                   <Box component='div' className={styles.countCartItem}>
                     <span className={styles.countCartItem_number}>
                       {cartProductTotal}
@@ -93,7 +96,7 @@ const HeaderAsideNav: FC = () => {
                   </Box>
                   <span className={styles.orderTotalCard}>
                     {formattedCartTotal}
-                    <i className={styles.icon_ruble} />
+                    <RubleIcon className={styles.rubleIcon} />
                   </span>
                 </Box>
               </MenuItem>
@@ -102,13 +105,13 @@ const HeaderAsideNav: FC = () => {
         )}
 
         <MenuItem
-          className={styles.menuItem_callback}
+          className={cn(styles.menuItem_callback, styles.menuOutline)}
           disableGutters={!isFullHeader}
           onClick={handleClickCallback}
           onKeyDown={handlePressCallback}
           tabIndex={0}
         >
-          <Box className={styles.consiltIcon} />
+          <HeadsetIcon className={styles.basketIcon} />
           {isFullHeader && <span className={menuItemStyles}>Консультация</span>}
         </MenuItem>
         <LoginButton />

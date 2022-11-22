@@ -107,21 +107,12 @@
   display: inline-flex;
   align-items: center;
 }
-.icon_ruble {
-  font-weight: 400;
-  font-size: 85%;
-  font-style: normal;
-  height: auto;
-  justify-content: center;
-  display: block;
-  margin-left: 5px;
-  margin-top: 2px;
 
-  text-align: center;
-}
-.icon_ruble::before {
-  font-family: 'icons';
-  content: '\e906';
+.icon_ruble {
+  width: 15px;
+  height: 15px;
+  margin-bottom: 2px;
+  fill: $blue1;
 }
 
 .cardAddToShoppingButton {
@@ -157,30 +148,16 @@
   font-weight: 700;
 }
 
-.shoppingCart {
-  width: 24px;
-  height: 24px;
-  background-image: url('~assets/images/shoppingCart.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  filter: invert(100%);
-}
-
 .shoppingIcon {
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  font-size: 85%;
-  -webkit-font-smoothing: antialiased;
   margin-right: 2px;
   margin-top: 2px;
-}
 
-.shoppingIcon::before {
-  font-family: 'icons';
-  content: '\e908';
+  width: 24px;
+  height: 24px;
+
+  path {
+    fill: $white;
+  }
 }
 
 .cardContainer_slider {

@@ -1,5 +1,6 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import Menu from '@mui/material/Menu';
 
 import { CustomButton } from 'components/ui/CustomButton';
@@ -13,6 +14,7 @@ import styles from './headerMobile.module.scss';
 const HeaderFilters = dynamic(() => import('../HeaderFilters'));
 
 const HeaderMobile: FC = () => {
+  const router = useRouter();
   const { transportText } = useContext(HeaderContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -25,6 +27,10 @@ const HeaderMobile: FC = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    handleClose();
+  }, [router.asPath]);
 
   return (
     <>

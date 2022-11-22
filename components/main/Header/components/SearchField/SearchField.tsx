@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
@@ -38,6 +39,7 @@ import styles from './styles.module.scss';
 
 const SearchField: FC = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { isMobile, isTablet } = useWindowSize();
   const { isFullHeader } = useContext(HeaderContext);
@@ -123,7 +125,7 @@ const SearchField: FC = () => {
 
   useEffect(() => {
     setFieldIsFocus(false);
-  }, [isFullHeader, isMobile, isTablet, setFieldIsFocus]);
+  }, [isFullHeader, isMobile, isTablet, setFieldIsFocus, router.asPath]);
 
   useEffect(() => {
     const errorMessage = cn({
@@ -173,7 +175,9 @@ const SearchField: FC = () => {
         })}
       >
         <TextField
-          className={styles.textField}
+          className={cn(styles.textField, {
+            [styles.textfield_smallHeader]: !isFullHeader,
+          })}
           inputProps={{ type: 'text' }}
           onChange={handleChangeInput}
           onClick={handleOpenPopover}

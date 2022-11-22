@@ -16,6 +16,7 @@
   padding: 0;
   padding-left: 5px;
   justify-content: center;
+  width: 100%;
 }
 
 .filterText {
@@ -131,6 +132,12 @@
 .choosenTransport_container_mobile {
   flex-direction: column;
   width: 100%;
+}
+
+@media (max-width: $tablet) {
+  .mainContainer_short {
+    padding-left: 0;
+  }
 }
 
 @media (max-width: $mobile) {
