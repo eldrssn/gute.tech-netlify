@@ -89,6 +89,7 @@ const FormLogIn: FC<Props> = ({ isOpen }) => {
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <InputMask
               mask={inputMasks.phoneMask}
+              maskPlaceholder={null}
               value={value ? value : ''}
               onChange={onChange}
             >

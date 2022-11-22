@@ -227,6 +227,7 @@ const InitialLoader: React.FC = ({ children }) => {
   return (
     <>
       <Head>
+        <meta charSet='utf-8' />
         <link rel='shortcut icon' href={favicon}></link>
       </Head>
       {children}
