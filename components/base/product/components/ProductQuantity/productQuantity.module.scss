@@ -3,7 +3,18 @@
 .quantity {
   font-size: 14px;
   color: $black;
-  opacity: 0.5;
+  opacity: 0.8;
   margin-bottom: 45px;
   margin-left: 5px;
+}
+
+.button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  font-size: 14px;
+  border-bottom: 1px dashed $blue1;
+  transition: all 0.6s ease;
+  color: $blue1;
+  cursor: pointer;
 }

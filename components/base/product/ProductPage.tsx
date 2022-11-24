@@ -102,13 +102,6 @@ const ProductPage: FC = () => {
     average_rating,
   } = product;
 
-  const quantity =
-    warehouses &&
-    warehouses.reduce(
-      (accumulator, warehouse) => accumulator + Number(warehouse.quantity),
-      0,
-    );
-
   const newProperties = [
     { title: PropertyNameByType[Properties.manufacturer], value: manufacturer },
     { title: PropertyNameByType[Properties.vendor_code], value: vendor_code },
@@ -184,7 +177,7 @@ const ProductPage: FC = () => {
 
         <Box
           sx={{
-            width: { xs: '100%', lg: '80%' },
+            width: { xs: '100%', lg: '74%' },
           }}
         >
           <NavigationBreadcrumbs lastTitle={title || 'Имя отсутствует'} />
@@ -243,7 +236,7 @@ const ProductPage: FC = () => {
                 <ProductPrice>{formattedPrice || 9999}</ProductPrice>
               </Box>
 
-              <ProductQuantity quantity={quantity || 0} />
+              <ProductQuantity warehouses={warehouses} />
               <ProductSpecial
                 isWarningMessage={isWarningMessage}
                 averageRating={Number(average_rating)}

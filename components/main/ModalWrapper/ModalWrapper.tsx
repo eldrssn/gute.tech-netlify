@@ -48,9 +48,11 @@ const ModalWrapper: React.FC<TOuterProps> = ({
       return;
     }
 
-    document.body.addEventListener('keydown', handlePressEscClose);
-    document.body.style.marginRight = `${widthScrollBar}px`;
-    document.body.style.overflow = 'hidden';
+    if (isOpen) {
+      document.body.addEventListener('keydown', handlePressEscClose);
+      document.body.style.marginRight = `${widthScrollBar}px`;
+      document.body.style.overflow = 'hidden';
+    }
 
     return () => {
       document.body.removeEventListener('keydown', handlePressEscClose);
@@ -62,7 +64,7 @@ const ModalWrapper: React.FC<TOuterProps> = ({
   return (
     <AriaModal
       titleText={modalTitle}
-      underlayStyle={{ zIndex: 1102 }}
+      underlayStyle={{ zIndex: 1104 }}
       mounted={isOpen}
       initialFocus={initialFocus}
       scrollDisabled={false}
