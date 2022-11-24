@@ -1,0 +1,25 @@
+@import '~styles/colors.scss';
+
+.warehouseBox {
+  border-bottom: 1px solid $transparentGray;
+  padding: 10px 0;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 20px;
+  margin: 0;
+  margin-bottom: 10px;
+  color: $blue1;
+}
+
+.address {
+  font-size: 14px;
+  margin: 0;
+}
+
+.quantity {
+  font-size: 16px;
+  margin: 15px 0;
+  text-align: end;
+}

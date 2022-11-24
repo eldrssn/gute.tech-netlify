@@ -1,5 +1,7 @@
+import { ProductWarehouse } from 'api/models/cart';
+
 type ProductQuantityProps = {
-  quantity: number;
+  warehouses?: ProductWarehouse[];
 };
 
 export type { ProductQuantityProps };

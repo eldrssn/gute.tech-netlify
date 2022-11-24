@@ -17,6 +17,7 @@ import {
 
 import { getSlugs } from './helpers';
 import styles from './recommendedProducts.module.scss';
+import { getProductSlugQuery } from '../../helpers';
 
 const Slider = dynamic(() => import('react-slick'));
 
@@ -28,21 +29,23 @@ const RecommendedProducts: FC = () => {
   const { categorySlug } = router.query;
   const allSlugs = makeAnArray(categorySlug);
 
-  const [category, product] = getSlugs(allSlugs);
+  const [category] = getSlugs(allSlugs);
+
+  const productSlug = getProductSlugQuery(router);
 
   useEffect(() => {
     dispatch(
       fetchRecommendedProductsList({
         transportId,
+        productSlug,
         categorySlug: category,
-        productSlug: product,
       }),
     );
 
     return () => {
       dispatch(clearRecommendedProductsList());
     };
-  }, [dispatch, transportId, category, product]);
+  }, [dispatch, transportId, category, productSlug]);
 
   const { data: recommendedProducts } = useSelector(
     selectRecommendedProductsList,

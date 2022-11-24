@@ -1,15 +1,14 @@
 import React, { FC, KeyboardEvent, useContext, useState } from 'react';
 import classnames from 'classnames/bind';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
-import Image from 'next/image';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
 import { BasketIcon } from 'components/ui/BasketIcon';
-import { HeadsetIcon } from 'components/ui/HeadsetIcon';
 import { RubleIcon } from 'components/ui/RubleIcon';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
@@ -111,7 +110,12 @@ const HeaderAsideNav: FC = () => {
           onKeyDown={handlePressCallback}
           tabIndex={0}
         >
-          <HeadsetIcon className={styles.basketIcon} />
+          <Image
+            src='/icons/consultIcon.png'
+            width={19}
+            height={26}
+            alt='consultation icon'
+          />
           {isFullHeader && <span className={menuItemStyles}>Консультация</span>}
         </MenuItem>
         <LoginButton />
