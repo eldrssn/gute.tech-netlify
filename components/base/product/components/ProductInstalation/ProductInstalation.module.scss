@@ -1,0 +1,28 @@
+@import "~styles/colors.scss";
+
+.instalation {
+  max-width: 60%;
+  height: calc(100% - 45px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.text {
+  text-align: center;
+  align-items: center;
+  font-size: 14px;
+  color: $black;
+}
+
+.cost {
+  font-size: 14px;
+  color: $blue1;
+}
+
+.select {
+  font-size: 14px;
+  border-bottom: 1px dashed $blue1;
+  color: $blue1;
+  cursor: pointer;
+}

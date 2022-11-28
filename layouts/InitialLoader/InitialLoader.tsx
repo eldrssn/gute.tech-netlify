@@ -21,7 +21,7 @@ import {
   setTransportId,
   setTransportYear,
 } from 'store/reducers/transport/actions';
-import { setCitySlug } from 'store/reducers/regions/actions';
+import { setCitySlug, setBranchId } from 'store/reducers/regions/actions';
 import {
   fetchAccessToken,
   fetchUnauthorizationToken,
@@ -35,7 +35,10 @@ import {
 import { selectStatus } from 'store/reducers/payment/selectors';
 import { selectCartUpdated } from 'store/reducers/cart/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
-import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
+import {
+  selectSelectedBranchId,
+  selectSelectedCitySlug,
+} from 'store/reducers/regions/selectors';
 import { useRouterQuery } from 'hooks/useRouterQuery';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { getCookie } from 'utility/helpers';
@@ -64,6 +67,7 @@ const InitialLoader: React.FC = ({ children }) => {
   const isAuthorized = useSelector(selectIsAuthorized);
   const isAuthorizedLoading = useSelector(selectLoadingAuthorized);
   const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const selectedBranchId = useSelector(selectSelectedBranchId);
   const { favicon, metrics } = useSelector(selectShowcaseData);
   const cartIsUpdated = useSelector(selectCartUpdated);
   const { data: status } = useSelector(selectStatus);
@@ -123,6 +127,24 @@ const InitialLoader: React.FC = ({ children }) => {
       expires: date,
     });
   }, [selectedCitySlug]);
+
+  useEffect(() => {
+    const savedBranchId = cookiesCity.selectedBranchId;
+
+    if (savedBranchId) {
+      dispatch(setBranchId(Number(savedBranchId)));
+    }
+  }, []);
+
+  useEffect(() => {
+    const date = new Date();
+    date.setTime(date.getTime() + COOKIE_TTL);
+
+    setCookiesCity(CookieKey.SELECTED_BRANCH_ID, selectedBranchId, {
+      path: '/',
+      expires: date,
+    });
+  }, [selectedBranchId]);
 
   useEffect(() => {
     const savedTransportYear = CookieTransportYear.transportYear;
