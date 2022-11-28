@@ -12,6 +12,7 @@ enum CookieKey {
   TRANSPORT_ID = 'transportId',
   TRANSPORT_YEAR = 'transportYear',
   SELECTED_CITY = 'selectedCity',
+  SELECTED_BRANCH_ID = 'selectedBranchId',
 }
 
 enum LocalStorageKey {

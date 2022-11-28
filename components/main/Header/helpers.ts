@@ -1,13 +1,9 @@
 import { UseFormSetValue } from 'react-hook-form';
 
 import { FilterInputName, FormData } from 'components/main/Header/types';
-import { BranchesData } from 'api/models/regions';
 
 const getYearsInfo = (years: number[]) =>
   years.length > 1 ? `${years[0]} - ${years[years.length - 1]}` : `${years[0]}`;
-
-const getCityTitle = (branches: BranchesData[], selectedCitySlug: string) =>
-  branches.find((branch) => branch.slug === selectedCitySlug)?.title;
 
 const setDefaultValueByName = (
   nameArray: FilterInputName[],
@@ -22,4 +18,4 @@ const setDefaultValueByName = (
   });
 };
 
-export { getYearsInfo, getCityTitle, setDefaultValueByName };
+export { getYearsInfo, setDefaultValueByName };

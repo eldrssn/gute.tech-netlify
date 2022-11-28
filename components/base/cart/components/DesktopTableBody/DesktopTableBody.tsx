@@ -37,7 +37,7 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
     <>
       <TableBody className={styles.tableBody}>
         {cart.length > 0 ? (
-          cart.map((item) => {
+          cart.map((item, index) => {
             const stockBalance = getStockBalance(item);
             const itemPrice = formatPrice(item.price);
             const countItemsPrice = formatPrice(item.quantity * item.price);
@@ -81,18 +81,28 @@ const DesktopTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
                       </a>
                     </Link>
                   </Box>
-                  <Typography className={styles.itemTitleBox}>
-                    <Link href={link}>
-                      <a>
-                        <Typography className={styles.itemTitle}>
-                          {item.title}
-                        </Typography>
-                      </a>
-                    </Link>
-                    <Typography className={styles.itemManufacturer}>
-                      {item.manufacturer}
+                  <Box className={styles.itemInformationBox}>
+                    <Typography className={styles.itemTitleBox}>
+                      <Link href={link}>
+                        <a>
+                          <Typography className={styles.itemTitle}>
+                            {item.title}
+                          </Typography>
+                        </a>
+                      </Link>
+                      <Typography className={styles.itemManufacturer}>
+                        {item.manufacturer}
+                      </Typography>
                     </Typography>
-                  </Typography>
+                    {index === 1 && (
+                      <Box className={styles.installation}>
+                        <Checkbox />
+                        <Typography className={styles.installationTitle}>
+                          Установка: +100&#8381;
+                        </Typography>
+                      </Box>
+                    )}
+                  </Box>
                 </TableCell>
                 <TableCell align='right'>{itemPrice}&#8381;</TableCell>
                 <TableCell align='right'>

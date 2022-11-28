@@ -16,7 +16,7 @@ import { FormInput } from 'components/main/FormInput';
 import { filterRegionsOption } from 'utility/helpers';
 import { handleEnterPress } from 'utility/utils';
 import { selectBranches } from 'store/reducers/regions/selectors';
-import { setCitySlug } from 'store/reducers/regions/actions';
+import { setBranchId, setCitySlug } from 'store/reducers/regions/actions';
 
 import { TFormData, OuterProps } from './types';
 import styles from './styles.module.scss';
@@ -45,8 +45,9 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
     reset({ cityName: '' });
   };
 
-  const selectCity = (slug: string) => {
-    dispatch(setCitySlug(slug));
+  const selectBranch = (branchId: number, slugCity: string) => {
+    dispatch(setCitySlug(slugCity));
+    dispatch(setBranchId(branchId));
     reset({ cityName: '' });
   };
 
@@ -109,15 +110,26 @@ const ModalCity: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
                   className={styles.region}
                   key={region.title}
                 >
-                  <ListItemButton
-                    className={styles.regionTitle}
-                    onClick={() => {
-                      selectCity(region.slug);
-                      closeModal();
-                    }}
-                  >
+                  <Typography className={styles.regionTitle}>
                     {region.title}
-                  </ListItemButton>
+                  </Typography>
+                  {region.branches.map((branch) => (
+                    <List
+                      component='div'
+                      className={styles.region}
+                      key={branch.street}
+                    >
+                      <ListItemButton
+                        className={styles.branch}
+                        onClick={() => {
+                          selectBranch(branch.id, region.slug);
+                          closeModal();
+                        }}
+                      >
+                        {branch.street}
+                      </ListItemButton>
+                    </List>
+                  ))}
                 </List>
               ))
             )}

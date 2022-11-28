@@ -17,9 +17,19 @@ const selectBranches = createSelector(
   ({ branches }) => branches,
 );
 
+const selectSelectedBranchId = createSelector(
+  selectContentStore,
+  ({ selectedBranchId }) => selectedBranchId,
+);
+
 const selectSelectedCitySlug = createSelector(
   selectContentStore,
   ({ selectedCitySlug }) => selectedCitySlug,
 );
 
-export { selectRegions, selectSelectedCitySlug, selectBranches };
+export {
+  selectRegions,
+  selectSelectedCitySlug,
+  selectSelectedBranchId,
+  selectBranches,
+};

@@ -11,6 +11,7 @@ const initialState: RegionsStore = {
     isLoading: false,
     error: null,
   },
+  selectedBranchId: 0,
   selectedCitySlug: '',
 };
 

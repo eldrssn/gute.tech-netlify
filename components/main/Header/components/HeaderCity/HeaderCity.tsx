@@ -7,24 +7,33 @@ import Box from '@mui/material/Box';
 
 import {
   selectSelectedCitySlug,
+  selectSelectedBranchId,
   selectBranches,
 } from 'store/reducers/regions/selectors';
 import { ModalCity } from 'components/main/ModalCity';
+import { getBranches, getBranch } from 'utility/helpers';
 import { handleEnterPress } from 'utility/utils';
 
-import { getCityTitle } from '../../helpers';
 import styles from './headerCity.module.scss';
 
 const HeaderCity: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const selectedBranchId = useSelector(selectSelectedBranchId);
   const { data: branches } = useSelector(selectBranches);
 
-  const selectCityTitle = getCityTitle(branches, selectedCitySlug);
+  const selectedBranches = getBranches(branches, selectedCitySlug);
+  const selectedBranch = getBranch(
+    selectedBranches?.branches,
+    selectedBranchId,
+  );
   const handleClick = () => setIsOpenModal(true);
   const handleKeyDown = (event: KeyboardEvent) =>
     handleEnterPress(event, handleClick);
+
+  const selectedCityTitle = selectedBranches?.title;
+  const selectedBranchStreet = selectedBranch?.street;
 
   return (
     <>
@@ -36,8 +45,8 @@ const HeaderCity: FC = () => {
           onKeyDown={handleKeyDown}
         >
           <Typography className={styles.cityName}>
-            {selectCityTitle
-              ? `Ваш город: ${selectCityTitle}`
+            {selectedCityTitle && selectedBranchStreet
+              ? `Выбранный филиал: ${selectedCityTitle}, ${selectedBranchStreet}`
               : 'Выберите город'}
           </Typography>
         </Box>

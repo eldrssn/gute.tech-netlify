@@ -2,7 +2,7 @@ import { GroupedItemsItem, ItemKeys } from 'components/base/home';
 import { validatePatterns } from 'constants/patterns';
 import { EValidatePattern } from 'constants/types';
 import { TOKEN_CACHE_TTL, TOKEN_CACHE_TTL_DELETE } from 'constants/variables';
-import { BranchesData } from 'store/reducers/regions/types';
+import { BranchOfficeData, BranchesData } from 'api/models/regions';
 import { TreeCategoryResponseData } from 'api/models/catalog';
 import { CartItemData } from 'store/reducers/cart/types';
 import { CookieSameSite } from 'constants/types';
@@ -243,6 +243,14 @@ const getCategory = ({
   });
 };
 
+const getBranches = (branches: BranchesData[], selectedCitySlug: string) =>
+  branches.find((branch) => branch.slug === selectedCitySlug);
+
+const getBranch = (
+  branches: BranchOfficeData[] | undefined,
+  selectedBranchId: number,
+) => branches && branches.find((branch) => branch.id === selectedBranchId);
+
 export default setBreakpointSize;
 
 export {
@@ -266,4 +274,6 @@ export {
   getCategory,
   getIsProductInCategorySlug,
   formatStringifiedDate,
+  getBranches,
+  getBranch,
 };

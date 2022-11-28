@@ -9,6 +9,26 @@
   align-items: center;
 }
 
+.itemInformationBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.installation {
+  border-top: 1px solid $gray4;
+  width: 100%;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.installationTitle {
+  font-weight: 100;
+}
+
 .tableBodyName {
   min-width: 220px;
 }

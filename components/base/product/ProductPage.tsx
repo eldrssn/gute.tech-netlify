@@ -36,6 +36,7 @@ import { ProductQuantity } from './components/ProductQuantity';
 import { ProductSpecial } from './components/ProductSpecial';
 import { ProductImageGallery } from './components/ProductImageGallery';
 import { ProductTabsDescription } from './components/ProductTabsDescription';
+import { ProductInstalation } from './components/ProductInstalation';
 import { CatalogCategories } from 'components/main/CatalogCategories';
 import { getProductSlug } from './helpers';
 import { PropertyNameByType } from './constants';
@@ -236,7 +237,15 @@ const ProductPage: FC = () => {
                 <ProductPrice>{formattedPrice || 9999}</ProductPrice>
               </Box>
 
-              <ProductQuantity warehouses={warehouses} />
+              <Box
+                display='flex'
+                flexDirection='row'
+                justifyContent='space-between'
+              >
+                <ProductQuantity warehouses={warehouses} />
+                <ProductInstalation />
+              </Box>
+
               <ProductSpecial
                 isWarningMessage={isWarningMessage}
                 averageRating={Number(average_rating)}
