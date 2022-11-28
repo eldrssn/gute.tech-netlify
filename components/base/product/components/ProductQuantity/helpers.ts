@@ -11,4 +11,10 @@ const getWholeQuantity = (warehouses: ProductWarehouse[] | undefined) => {
   return Number(quantity);
 };
 
-export { getWholeQuantity };
+const addMockInstallation = (warehouses?: ProductWarehouse[]) =>
+  warehouses?.map((warehouse, index) => {
+    const isEven = index % 2 === 0;
+    return { ...warehouse, installation: isEven ? true : false };
+  });
+
+export { getWholeQuantity, addMockInstallation };

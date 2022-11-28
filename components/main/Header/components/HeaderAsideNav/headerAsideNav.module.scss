@@ -16,14 +16,11 @@
 .menuOutline {
   padding-left: 5px;
   padding-right: 5px;
+  min-width: 30px;
 }
 
 .menuItemsBox {
   display: flex;
-}
-
-.menuItem_callback {
-  padding-right: 10px;
 }
 
 .menuItem_mobile {
