@@ -104,8 +104,7 @@ const HeaderAsideNav: FC = () => {
         )}
 
         <MenuItem
-          className={cn(styles.menuItem_callback, styles.menuOutline)}
-          disableGutters={!isFullHeader}
+          className={styles.menuOutline}
           onClick={handleClickCallback}
           onKeyDown={handlePressCallback}
           tabIndex={0}

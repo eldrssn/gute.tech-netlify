@@ -10,6 +10,9 @@ type ProductWarehouse = {
   email: string;
   city: string;
   quantity: string;
+
+  // mock value
+  installation?: boolean;
 };
 
 type ProductProperties = {

@@ -1,9 +1,10 @@
 import React, { FC, useState } from 'react';
 
-import { ProductQuantityProps } from './types';
-import styles from './productQuantity.module.scss';
 import { ModalWarehouses } from 'components/main/ModalWarehouses';
-import { getWholeQuantity } from './helpers';
+import { addMockInstallation, getWholeQuantity } from './helpers';
+import { ProductQuantityProps } from './types';
+
+import styles from './productQuantity.module.scss';
 
 const ProductQuantity: FC<ProductQuantityProps> = ({ warehouses }) => {
   const [isOpenWarehousesModal, setIsOpenWarehousesModal] = useState(false);
@@ -15,13 +16,15 @@ const ProductQuantity: FC<ProductQuantityProps> = ({ warehouses }) => {
     setIsOpenWarehousesModal(true);
   };
 
+  const mockedWarehouses = addMockInstallation(warehouses);
+
   return (
     <>
       {isOpenWarehousesModal && (
         <ModalWarehouses
           isOpen={isOpenWarehousesModal}
           setIsOpen={setIsOpenWarehousesModal}
-          warehouses={warehouses}
+          warehouses={mockedWarehouses}
         />
       )}
       <div className={styles.quantity}>
