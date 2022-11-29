@@ -16,10 +16,7 @@ import {
   selectOrder,
   selectOrderLoading,
 } from 'store/reducers/order/selectors';
-import {
-  selectSelectedCitySlug,
-  selectBranches,
-} from 'store/reducers/regions/selectors';
+import { selectSelectedBranchId } from 'store/reducers/regions/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectUserProfile } from 'store/reducers/user/selectors';
 import {
@@ -27,7 +24,6 @@ import {
   createOrderingAuthorized,
 } from 'store/reducers/payment/actions';
 
-import { DeliveryAddress } from './components/DeliveryAddress';
 import { ContactInformation } from './components/ContactInformation';
 import { PaymentMethod } from './components/PaymentMethod';
 import { TFormData, PaymentType } from './types';
@@ -35,7 +31,6 @@ import {
   getOrderList,
   setPaymentFormErrors,
   getDefaultValues,
-  getBranch,
   getUrlCashPaymentType,
 } from './helpers';
 import styles from './styles.module.scss';
@@ -44,13 +39,10 @@ const PaymentPage: React.FC = () => {
   const [otherError, setOtherError] = useState<string[]>([]);
 
   const userProfile = useSelector(selectUserProfile);
-  const selectedCitySlug = useSelector(selectSelectedCitySlug);
-  const { data: branches } = useSelector(selectBranches);
-
-  const selectBranch = getBranch(branches, selectedCitySlug);
+  const selectedBranchId = useSelector(selectSelectedBranchId);
 
   const { handleSubmit, control, setValue, setError } = useForm<TFormData>({
-    defaultValues: getDefaultValues(userProfile.data, selectBranch),
+    defaultValues: getDefaultValues(userProfile.data),
   });
 
   const router = useRouter();
@@ -79,7 +71,7 @@ const PaymentPage: React.FC = () => {
       payment_type: data.paymentMethod,
       payment_method_id: data.paymentId,
       cart: orderList,
-      branch_office_id: data.branch ? data.branch.id : 0,
+      branch_office_id: selectedBranchId,
     };
     setOtherError([]);
 
@@ -148,7 +140,6 @@ const PaymentPage: React.FC = () => {
       </Typography>
       <PaymentMethod control={control} setValue={setValue} />
       <ContactInformation control={control} />
-      <DeliveryAddress control={control} setValue={setValue} />
       <Button sx={{ mt: '20px' }} onClick={onSubmit} variant={'contained'}>
         Заказать
       </Button>

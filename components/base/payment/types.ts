@@ -1,15 +1,11 @@
 import { Control, UseFormSetValue } from 'react-hook-form';
 
-import { BranchOfficeData, BranchesData } from 'api/models/regions';
-
 type TFormData = {
   nameValue: string;
   phoneNumber: string;
   emailValue: string;
   paymentMethod: string;
   paymentId: number;
-  branchesData: BranchesData | null;
-  branch: BranchOfficeData | null;
 };
 
 type WatchFormData = {

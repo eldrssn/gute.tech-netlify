@@ -53,11 +53,7 @@ const InitialLoader: React.FC = ({ children }) => {
   const { getQueryOption } = useRouterQuery();
   const dispatch = useDispatch();
 
-  const [cookiesNotAuthorizedToken, setCookiesNotAuthorizedToken] =
-    useCookies();
-  const [cookiesTransportId, setCookieTransportId] = useCookies();
-  const [cookiesCity, setCookiesCity] = useCookies();
-  const [CookieTransportYear] = useCookies();
+  const [cookie, setCookie] = useCookies();
 
   const isLoadingApp = windowWidth;
   const transportIdQuery = getQueryOption(QueryUrl.TRANSPORT_ID);
@@ -111,7 +107,7 @@ const InitialLoader: React.FC = ({ children }) => {
   }, [dispatch, transportId]);
 
   useEffect(() => {
-    const savedCity = cookiesCity.selectedCity;
+    const savedCity = cookie.selectedCity;
 
     if (savedCity) {
       dispatch(setCitySlug(savedCity));
@@ -122,14 +118,14 @@ const InitialLoader: React.FC = ({ children }) => {
     const date = new Date();
     date.setTime(date.getTime() + COOKIE_TTL);
 
-    setCookiesCity(CookieKey.SELECTED_CITY, selectedCitySlug, {
+    setCookie(CookieKey.SELECTED_CITY, selectedCitySlug, {
       path: '/',
       expires: date,
     });
   }, [selectedCitySlug]);
 
   useEffect(() => {
-    const savedBranchId = cookiesCity.selectedBranchId;
+    const savedBranchId = cookie.selectedBranchId;
 
     if (savedBranchId) {
       dispatch(setBranchId(Number(savedBranchId)));
@@ -140,14 +136,14 @@ const InitialLoader: React.FC = ({ children }) => {
     const date = new Date();
     date.setTime(date.getTime() + COOKIE_TTL);
 
-    setCookiesCity(CookieKey.SELECTED_BRANCH_ID, selectedBranchId, {
+    setCookie(CookieKey.SELECTED_BRANCH_ID, selectedBranchId, {
       path: '/',
       expires: date,
     });
   }, [selectedBranchId]);
 
   useEffect(() => {
-    const savedTransportYear = CookieTransportYear.transportYear;
+    const savedTransportYear = cookie.transportYear;
 
     if (savedTransportYear) {
       dispatch(setTransportYear(savedTransportYear));
@@ -155,7 +151,7 @@ const InitialLoader: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const transportIdSaved = cookiesTransportId.transportId;
+    const transportIdSaved = cookie.transportId;
     const isTransportIdQuery =
       transportIdQuery && !Array.isArray(transportIdQuery);
     if (isTransportIdQuery) {
@@ -174,11 +170,11 @@ const InitialLoader: React.FC = ({ children }) => {
     const date = new Date();
     date.setTime(date.getTime() + COOKIE_TTL);
 
-    setCookieTransportId(CookieKey.TRANSPORT_ID, transportId, {
+    setCookie(CookieKey.TRANSPORT_ID, transportId, {
       path: '/',
       expires: date,
     });
-  }, [transportId, setCookieTransportId]);
+  }, [transportId, setCookie]);
 
   useEffect(() => {
     const refresh = getCookie(CookieKey.REFRESH_TOKEN);
@@ -218,21 +214,16 @@ const InitialLoader: React.FC = ({ children }) => {
     const date = new Date();
     date.setTime(date.getTime() + COOKIE_TTL);
 
-    setCookiesNotAuthorizedToken(
-      CookieKey.NOT_AUTHORIZED_TOKEN,
-      notAuthorizedToken,
-      {
-        path: '/',
-        expires: date,
-      },
-    );
+    setCookie(CookieKey.NOT_AUTHORIZED_TOKEN, notAuthorizedToken, {
+      path: '/',
+      expires: date,
+    });
 
     if (notAuthorizedToken) {
       return;
     }
 
-    const notAuthorizedTokenCookie =
-      cookiesNotAuthorizedToken.notAuthorizedToken;
+    const notAuthorizedTokenCookie = cookie.notAuthorizedToken;
 
     if (notAuthorizedTokenCookie) {
       dispatch(setNotAuthorizationToken(notAuthorizedTokenCookie));
