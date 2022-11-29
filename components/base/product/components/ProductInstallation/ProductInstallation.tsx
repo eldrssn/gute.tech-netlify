@@ -5,9 +5,9 @@ import { Box } from '@mui/material';
 import { ModalCity } from 'components/main/ModalCity';
 import { selectSelectedBranchId } from 'store/reducers/regions/selectors';
 
-import styles from './productInstalation.module.scss';
+import styles from './productInstallation.module.scss';
 
-const ProductInstalation: FC = () => {
+const ProductInstallation: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedBranchId = useSelector(selectSelectedBranchId);
@@ -38,4 +38,4 @@ const ProductInstalation: FC = () => {
   );
 };
 
-export { ProductInstalation };
+export { ProductInstallation };

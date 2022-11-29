@@ -36,7 +36,7 @@ import { ProductQuantity } from './components/ProductQuantity';
 import { ProductSpecial } from './components/ProductSpecial';
 import { ProductImageGallery } from './components/ProductImageGallery';
 import { ProductTabsDescription } from './components/ProductTabsDescription';
-import { ProductInstalation } from './components/ProductInstalation';
+import { ProductInstallation } from './components/ProductInstallation';
 import { CatalogCategories } from 'components/main/CatalogCategories';
 import { getProductSlug } from './helpers';
 import { PropertyNameByType } from './constants';
@@ -243,7 +243,7 @@ const ProductPage: FC = () => {
                 justifyContent='space-between'
               >
                 <ProductQuantity warehouses={warehouses} />
-                <ProductInstalation />
+                <ProductInstallation />
               </Box>
 
               <ProductSpecial
