@@ -13,7 +13,7 @@ import {
 } from 'store/reducers/regions/selectors';
 import { setCitySlug, setBranchId } from 'store/reducers/regions/actions';
 import { ModalCity } from 'components/main/ModalCity';
-import { getBranches, getBranch } from 'utility/helpers';
+import { getBranches } from 'utility/helpers';
 import { handleEnterPress } from 'utility/utils';
 import { CookieKey } from 'constants/types';
 import { COOKIE_TTL, STRINGIFY_FALSE } from 'constants/variables';
@@ -33,10 +33,6 @@ const HeaderCity: FC = () => {
   const { data: branches } = useSelector(selectBranches);
 
   const selectedBranches = getBranches(branches, selectedCitySlug);
-  const selectedBranch = getBranch(
-    selectedBranches?.branches,
-    selectedBranchId,
-  );
 
   const handleCloseAttention = () => {
     const date = new Date();
@@ -55,7 +51,6 @@ const HeaderCity: FC = () => {
     handleEnterPress(event, handleClick);
 
   const selectedCityTitle = selectedBranches?.title;
-  const selectedBranchStreet = selectedBranch?.street;
 
   useEffect(() => {
     if (!isFirstChangeCity || branches.length <= 0) {
@@ -85,7 +80,7 @@ const HeaderCity: FC = () => {
           onKeyDown={handleKeyDown}
         >
           <Typography className={styles.cityName}>
-            Филиал: {selectedCityTitle}, {selectedBranchStreet}
+            Город: {selectedCityTitle}
           </Typography>
         </Box>
         {isFirstChangeCity && (
