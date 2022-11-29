@@ -53,14 +53,12 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
 
     setValue('paymentMethod', firstPaymentMethod.type);
     setValue('paymentId', firstPaymentValue.id);
-    setPaymentId(firstPaymentValue.id);
   }, [paymentMethods, setValue]);
 
   const handleChangePaymentMethod = (event: SelectChangeEvent<number>) => {
     const paymentId = Number(event.target.value);
 
     setValue('paymentId', paymentId);
-    setPaymentId(paymentId);
   };
 
   return (
@@ -90,7 +88,6 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
 
                   if (value === methodType) {
                     setPaymentType(methodType);
-                    setPaymentId(null);
                   }
 
                   return (
@@ -126,18 +123,29 @@ const PaymentMethod: React.FC<TPaymentMethodProps> = ({
               </Typography>
 
               <Controller
-                render={({ field }) => (
+                render={({ field: { value } }) => (
                   <Select
                     className={styles.selectInput}
                     disabled={paymentMethodValues.length === 0}
-                    value={field.value}
+                    value={value}
                     onChange={(event) => handleChangePaymentMethod(event)}
                   >
-                    {paymentMethodValues.map((paymentMethod) => (
-                      <MenuItem key={paymentMethod.id} value={paymentMethod.id}>
-                        {paymentMethod.title}
-                      </MenuItem>
-                    ))}
+                    {paymentMethodValues.map((paymentMethod) => {
+                      const methodId = paymentMethod.id;
+
+                      if (methodId === value) {
+                        setPaymentId(methodId);
+                      }
+
+                      return (
+                        <MenuItem
+                          key={paymentMethod.id}
+                          value={paymentMethod.id}
+                        >
+                          {paymentMethod.title}
+                        </MenuItem>
+                      );
+                    })}
                   </Select>
                 )}
                 name='paymentId'
