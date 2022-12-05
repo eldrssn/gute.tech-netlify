@@ -68,12 +68,7 @@ const ModalLogIn: React.FC<OuterProps> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <ModalWrapper
-      isOpen={isOpen}
-      setIsOpen={closeModal}
-      modalTitle='login'
-      initialFocus='#enter-phone'
-    >
+    <ModalWrapper isOpen={isOpen} setIsOpen={closeModal} modalTitle='login'>
       <Box
         className={styles.closeModal}
         onClick={closeModal}

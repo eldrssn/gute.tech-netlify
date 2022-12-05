@@ -7,13 +7,12 @@ import { CONSULTATION_TEXT } from 'utility/utils/constants';
 import styles from '../catalogCard.module.scss';
 
 const TransportWarning = () => (
-  <Tooltip
-    className={styles.warningBox}
-    title={CONSULTATION_TEXT}
-    placement='bottom-end'
-  >
-    <ErrorIcon sx={{ fontSize: '28px' }} color='error' />
-  </Tooltip>
+  <div className={styles.warningBox}>
+    <p className={styles.consultationText_mobile}>{CONSULTATION_TEXT}</p>
+    <Tooltip title={CONSULTATION_TEXT} placement='bottom-end'>
+      <ErrorIcon sx={{ fontSize: '28px' }} color='error' />
+    </Tooltip>
+  </div>
 );
 
 export { TransportWarning };

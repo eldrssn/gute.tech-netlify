@@ -1,10 +1,12 @@
 @import '~styles/breakpoints.scss';
+@import '~styles/constants.scss';
 
 .header_logo {
   position: relative;
   float: left;
   height: 44px;
   margin-right: 10px;
+  z-index: $z-index2;
 }
 
 .header_img {
