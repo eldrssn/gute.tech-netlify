@@ -54,6 +54,7 @@ const ProductPage: FC = () => {
   const { isTablet } = useWindowSize();
 
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
+  const [isToReview, setIsToReview] = useState(false);
 
   const isShowAuthorizationWarning = useSelector(
     selectShowAuthorizationWarning,
@@ -147,6 +148,10 @@ const ProductPage: FC = () => {
   const isWarningMessage = Boolean(!is_linked_transport && transportId);
   const formattedPrice = formatPrice(price);
   const isAuthorizationWarging = !isAuthorized && isShowAuthorizationWarning;
+
+  const handleClickToReviews = () => {
+    setIsToReview(true);
+  };
 
   return (
     <>
@@ -249,11 +254,16 @@ const ProductPage: FC = () => {
               <ProductSpecial
                 isWarningMessage={isWarningMessage}
                 averageRating={Number(average_rating)}
+                handleClickToReviews={handleClickToReviews}
               />
             </Container>
           </Box>
 
-          <ProductTabsDescription {...productInfo} />
+          <ProductTabsDescription
+            productInfo={productInfo}
+            isToReview={isToReview}
+            setIsToReview={setIsToReview}
+          />
 
           <RecommendedProducts />
         </Box>

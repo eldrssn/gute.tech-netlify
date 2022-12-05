@@ -64,12 +64,13 @@ const HeaderMobile: FC = () => {
         sx={{
           overflowY: 'auto !important',
           top: '121px !important',
+          zIndex: '1100',
 
           '& .MuiPopover-paper': {
             borderRadius: 0,
             margin: 0,
             maxWidth: '100vw',
-            maxHeight: '350px',
+            maxHeight: '365px',
 
             boxSizing: 'border-box',
             left: '0px !important',
@@ -77,9 +78,9 @@ const HeaderMobile: FC = () => {
           },
           '& .MuiMenu-list': {
             display: 'block',
-            height: transportText ? '250px' : '350px',
+            height: transportText ? '250px' : '365px',
             overflow: 'visible',
-            maxHeight: '350px',
+            maxHeight: '365px',
             width: '100vw',
           },
           '& .MuiMenuItem-root': {

@@ -13,12 +13,14 @@ import { CONSULTATION_TEXT } from 'utility/utils/constants';
 
 import { ProductSpecialProps } from './types';
 import styles from './productSpecial.module.scss';
+import { CustomButton } from 'components/ui/CustomButton';
 
 const cn = classnames.bind(styles);
 
 const ProductSpecial: FC<ProductSpecialProps> = ({
   isWarningMessage,
   averageRating,
+  handleClickToReviews,
 }) => {
   const [isModalAdviceOpen, setModalAdviceOpen] = useState<boolean>(false);
 
@@ -52,14 +54,17 @@ const ProductSpecial: FC<ProductSpecialProps> = ({
         }}
         className={styles.productSpecialWrapper}
       >
-        <Box className={styles.ratingBox}>
+        <CustomButton
+          customStyles={styles.ratingBox}
+          onClick={handleClickToReviews}
+        >
           <Rating
             size='large'
             defaultValue={averageRating}
             precision={0.5}
             readOnly
           />
-        </Box>
+        </CustomButton>
 
         {isWarningMessage && (
           <Box className={styles.warningBox}>
@@ -77,20 +82,18 @@ const ProductSpecial: FC<ProductSpecialProps> = ({
         <Box
           sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' } }}
         >
-          <Link
+          <div
             className={cn(styles.productSpecialItem, styles.helpIcon)}
-            href='#'
             onClick={openModalAdvice}
           >
             Помочь с выбором
-          </Link>
-          <Link
+          </div>
+          <div
             className={cn(styles.productSpecialItem, styles.specialIcon)}
-            href='#'
             onClick={openSpecialOffer}
           >
             Спецпредложение
-          </Link>
+          </div>
         </Box>
       </Box>
 

@@ -27,7 +27,11 @@ enum DescriptionTypes {
 
 type DescriptionType = keyof typeof DescriptionTypes;
 
-type TabsProps = Record<DescriptionType, Content | undefined>;
+type TabsProps = {
+  productInfo: Record<DescriptionType, Content | undefined>;
+  isToReview: boolean;
+  setIsToReview: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 export { DescriptionTypes };
 
