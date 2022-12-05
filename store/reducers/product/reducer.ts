@@ -6,6 +6,7 @@ import {
   ProductTransportListResponseData,
   ProductAnaloguesResponseData,
   ProductReviewsListResponseData,
+  InstallationPriceResponseData,
 } from 'api/models/product';
 
 import {
@@ -20,6 +21,7 @@ import {
   fetchProductAnaloguesRead,
   fetchProductReviewsList,
   clearProductReviewsList,
+  fetchProductInstallationPrice,
 } from './actions';
 
 import { ProductStore, ErrorAction } from './types';
@@ -210,6 +212,28 @@ const handlers = {
     state.productReviewsList.isLoading = false;
     state.productReviewsList.error = errorData;
   },
+
+  [fetchProductInstallationPrice.pending.type]: (state: ProductStore) => {
+    state.productInstallationPrice.isLoading = true;
+  },
+  [fetchProductInstallationPrice.fulfilled.type]: (
+    state: ProductStore,
+    { payload }: PayloadAction<InstallationPriceResponseData>,
+  ) => {
+    state.productInstallationPrice.data = payload;
+    state.productInstallationPrice.isLoading = false;
+    state.productInstallationPrice.error = null;
+  },
+  [fetchProductInstallationPrice.rejected.type]: (
+    state: ProductStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.productInstallationPrice.data = null;
+    state.productInstallationPrice.isLoading = false;
+    state.productInstallationPrice.error = errorData;
+  },
+
   [clearProductReviewsList.type]: (state: ProductStore) => {
     state.productReviewsList.data = null;
     state.productReviewsList.isLoading = true;
