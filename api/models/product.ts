@@ -135,6 +135,17 @@ type ProductReviewRequestData = {
   comment: string | null;
 };
 
+type InstallationPriceRequestData = {
+  productSlug: string;
+  сategorySlug: string;
+  transportId: string;
+  citySlug: string;
+};
+
+type InstallationPriceResponseData = {
+  installation_price: string;
+};
+
 export type {
   ProductAnaloguesResponseData,
   ProductReadResponseData,
@@ -149,4 +160,6 @@ export type {
   ProductReviewsListResponseData,
   ProductReviewsListRequestData,
   ProductReviewRequestData,
+  InstallationPriceRequestData,
+  InstallationPriceResponseData,
 };

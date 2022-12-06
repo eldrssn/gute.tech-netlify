@@ -14,6 +14,8 @@ import {
   ProductReviewsListRequestData,
   ProductReviewsListResponseData,
   ProductReviewRequestData,
+  InstallationPriceRequestData,
+  InstallationPriceResponseData,
 } from 'api/models/product';
 import { ApiMethods } from 'constants/types';
 import { makeStringify } from 'utility/helpers';
@@ -114,6 +116,24 @@ const postProductReview = ({
     },
   });
 
+const getInstallationPrice = ({
+  productSlug,
+  citySlug,
+  сategorySlug,
+  transportId,
+}: InstallationPriceRequestData) =>
+  sendRequest<InstallationPriceResponseData>({
+    url: `/v1/catalog/products/${productSlug}/installation-price/`,
+    method: ApiMethods.POST,
+    config: {
+      data: {
+        category: сategorySlug,
+        city: citySlug,
+        transport: transportId,
+      },
+    },
+  });
+
 export {
   getProductBrandsList,
   getProductModelsList,
@@ -124,4 +144,5 @@ export {
   getProductAnaloguesRead,
   getProductReviewsList,
   postProductReview,
+  getInstallationPrice,
 };

@@ -5,6 +5,7 @@ import {
   ProductTransportListResponseData,
   ProductAnaloguesResponseData,
   ProductReviewsListResponseData,
+  InstallationPriceResponseData,
 } from 'api/models/product';
 import { ProductWarehouse } from 'api/models/cart';
 
@@ -17,6 +18,7 @@ enum ProductStoreBlocks {
   PRODUCT_TRANSPORT_LIST = 'productTransportList',
   PRODUCT_ANALOGUES_LIST = 'productAnaloguesList',
   PRODUCT_REVIEWS_LIST = 'productReviewsList',
+  PRODUCT_INSTALLATION_PRICE = 'productInstallationPrice',
 }
 
 interface Property {
@@ -66,6 +68,9 @@ type ProductAnaloguesListState = {
 type ProductReviewsListState = {
   data: ProductReviewsListResponseData | null;
 } & StoreState;
+type ProductInstallationPriceState = {
+  data: InstallationPriceResponseData | null;
+} & StoreState;
 
 type ProductStore = {
   [ProductStoreBlocks.PRODUCT_READ]: ProductReadState;
@@ -76,6 +81,7 @@ type ProductStore = {
   [ProductStoreBlocks.PRODUCT_TRANSPORT_LIST]: ProductTransportsListState;
   [ProductStoreBlocks.PRODUCT_ANALOGUES_LIST]: ProductAnaloguesListState;
   [ProductStoreBlocks.PRODUCT_REVIEWS_LIST]: ProductReviewsListState;
+  [ProductStoreBlocks.PRODUCT_INSTALLATION_PRICE]: ProductInstallationPriceState;
 };
 
 export type { ErrorAction, StoreError, ProductStore };

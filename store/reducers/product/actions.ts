@@ -9,6 +9,7 @@ import {
   getProductAnaloguesRead,
   getCategoriesProductsRead,
   getProductReviewsList,
+  getInstallationPrice,
 } from 'api/routes/product';
 import {
   ProductTransportListRequestData,
@@ -23,6 +24,8 @@ import {
   ProductsReadRequestData,
   ProductReviewsListResponseData,
   ProductReviewsListRequestData,
+  InstallationPriceRequestData,
+  InstallationPriceResponseData,
 } from 'api/models/product';
 import { createAsyncAction } from 'utility/helpers/store';
 
@@ -98,6 +101,14 @@ const fetchProductReviewsList = createAsyncAction<
   request: getProductReviewsList,
 });
 
+const fetchProductInstallationPrice = createAsyncAction<
+  InstallationPriceResponseData,
+  InstallationPriceRequestData
+>({
+  typeAction: 'CatalogStore/fetchProductInstallationPrice',
+  request: getInstallationPrice,
+});
+
 export {
   clearProductInstallationError,
   fetchCategoriesProductsRead,
@@ -110,4 +121,5 @@ export {
   fetchProductAnaloguesRead,
   fetchProductReviewsList,
   clearProductReviewsList,
+  fetchProductInstallationPrice,
 };
