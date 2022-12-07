@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -14,8 +15,6 @@ import {
 
 import { CategoryCardProps } from './types';
 import styles from './CategoryCard.module.scss';
-import Link from 'next/link';
-import Image from 'next/image';
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
   item,
