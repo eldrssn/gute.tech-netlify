@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import Head from 'next/head';
 
-import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
+import {
+  fetchCategoriesList,
+  fetchCategoriesTreeList,
+  fetchTransportReadCategories,
+} from 'store/reducers/catalog/actions';
 import {
   fetchCartAuthorized,
   fetchCartUnAuthorized,
@@ -15,7 +19,12 @@ import {
   setTransportId,
   setTransportYear,
 } from 'store/reducers/transport/actions';
-import { setCitySlug, setBranchId } from 'store/reducers/regions/actions';
+import {
+  setCitySlug,
+  setBranchId,
+  fetchBranches,
+  fetchRegions,
+} from 'store/reducers/regions/actions';
 import {
   fetchAccessToken,
   fetchUnauthorizationToken,
@@ -63,6 +72,13 @@ const InitialLoader: React.FC = ({ children }) => {
   const cartIsUpdated = useSelector(selectCartUpdated);
   const { data: status } = useSelector(selectStatus);
   const metricId = metrics?.metric_id;
+
+  useEffect(() => {
+    dispatch(fetchBranches());
+    dispatch(fetchRegions());
+    dispatch(fetchCategoriesTreeList());
+    dispatch(fetchCategoriesList());
+  }, [dispatch]);
 
   useEffect(() => {
     if (!metricId) {
