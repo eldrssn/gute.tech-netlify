@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { store } from 'store';
-import { logOut } from 'store/reducers/authentication/exceptionAction';
-import { getCookie, setCookie } from 'utility/helpers';
-import { CookieKey } from 'constants/types';
-import { apiАuthentication } from 'api/utils';
-import { refreshToken } from 'api/routes/authentication';
+// import { store } from 'store';
+// import { logOut } from 'store/reducers/authentication/exceptionAction';
+// import { getCookie, setCookie } from 'utility/helpers';
+// import { CookieKey } from 'constants/types';
+// import { apiАuthentication } from 'api/utils';
+// import { refreshToken } from 'api/routes/authentication';
 
 import { CreateAsyncActionProps } from './types';
 
@@ -30,23 +30,23 @@ const createAsyncAction = <ResponseData, RequestData = never>({
           ? { requestData: requestData, data: data }
           : data;
       } catch (error) {
-        const originalRequest = error.config;
-        const refresh = getCookie(CookieKey.REFRESH_TOKEN);
+        // const originalRequest = error.config;
+        // const refresh = getCookie(CookieKey.REFRESH_TOKEN);
 
-        if (error.response.status == 401 && !error.config._isRetry && refresh) {
-          originalRequest._isRetry = true;
-          try {
-            const response = await refreshToken({ refresh });
-            setCookie(CookieKey.ACCESS_TOKEN, response.access);
+        // if (error.response.status == 401 && !error.config._isRetry && refresh) {
+        //   originalRequest._isRetry = true;
+        //   try {
+        //     const response = await refreshToken({ refresh });
+        //     setCookie(CookieKey.ACCESS_TOKEN, response.access);
 
-            return apiАuthentication
-              .request(originalRequest)
-              .then<ResponseData>((response) => response.data);
-          } catch {
-            store.dispatch(logOut());
-            throw error;
-          }
-        }
+        //     return apiАuthentication
+        //       .request(originalRequest)
+        //       .then<ResponseData>((response) => response.data);
+        //   } catch {
+        //     store.dispatch(logOut());
+        //     throw error;
+        //   }
+        // }
 
         if (!error.response) {
           throw error;
