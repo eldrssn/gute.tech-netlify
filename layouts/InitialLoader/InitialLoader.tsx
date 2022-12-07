@@ -5,17 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import Head from 'next/head';
 
-import { fetchRegions, fetchBranches } from 'store/reducers/regions/actions';
-import {
-  fetchTransportReadCategories,
-  fetchCategoriesList,
-} from 'store/reducers/catalog/actions';
+import { fetchTransportReadCategories } from 'store/reducers/catalog/actions';
 import {
   fetchCartAuthorized,
   fetchCartUnAuthorized,
 } from 'store/reducers/cart/actions';
-import { fetchCategoriesTreeList } from 'store/reducers/catalog/actions';
-import { fetchShowcase } from 'store/reducers/showcase/actions';
 import {
   fetchTransportInfo,
   setTransportId,
@@ -47,6 +41,7 @@ import { CookieKey } from 'constants/types';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { fetchProfile } from 'store/reducers/user/actions';
 import { setAuthorizationWarning } from 'store/reducers/modal/actions';
+import { MainLayout } from 'layouts/MainLayout';
 
 const InitialLoader: React.FC = ({ children }) => {
   const { windowWidth } = useWindowSize();
@@ -68,14 +63,6 @@ const InitialLoader: React.FC = ({ children }) => {
   const cartIsUpdated = useSelector(selectCartUpdated);
   const { data: status } = useSelector(selectStatus);
   const metricId = metrics?.metric_id;
-
-  useEffect(() => {
-    dispatch(fetchShowcase());
-    dispatch(fetchCategoriesList());
-    dispatch(fetchCategoriesTreeList());
-    dispatch(fetchRegions());
-    dispatch(fetchBranches());
-  }, [dispatch]);
 
   useEffect(() => {
     if (!metricId) {
@@ -243,7 +230,7 @@ const InitialLoader: React.FC = ({ children }) => {
         <meta charSet='utf-8' />
         <link rel='shortcut icon' href={favicon}></link>
       </Head>
-      {children}
+      <MainLayout>{children}</MainLayout>
       <div id='modal-root'></div>
       <noscript>
         <div>

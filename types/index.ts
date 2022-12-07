@@ -1,11 +1,4 @@
-import type { AppProps } from 'next/app';
 import { FiltersCategoryResponseData } from 'api/models/catalog';
-
-type ComponentWithPageLayout = AppProps & {
-  Component: AppProps['Component'] & {
-    PageLayout: React.ComponentType;
-  };
-};
 
 type Sorting = {
   sort: string;
@@ -33,7 +26,6 @@ type IconProps = {
 };
 
 export type {
-  ComponentWithPageLayout,
   Sorting,
   FiltersRequest,
   Filter,
