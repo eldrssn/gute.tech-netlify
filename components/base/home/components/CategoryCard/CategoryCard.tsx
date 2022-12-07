@@ -78,11 +78,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
           {title}
         </Typography>
 
-        <Image
+        <img
           className={styles.categoryImage}
           src={image || '/images/no-image.jpeg'}
           alt={title || 'category name'}
-          layout='fill'
           loading={lazy}
         />
       </a>
