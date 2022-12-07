@@ -7,7 +7,6 @@ import { AsideNavigation } from 'components/ui/AsideNavigation';
 
 import { selectUserProfile } from 'store/reducers/user/selectors';
 
-// import { UserForm } from './components/UserForm';
 import { UserActionButtons } from './components/UserActionButtons';
 
 import styles from './profilePage.module.scss';

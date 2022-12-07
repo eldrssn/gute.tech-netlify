@@ -1,4 +1,5 @@
-import { createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 import {
   EditProfileResponseData,
@@ -30,6 +31,10 @@ import { initialState } from './constants';
 import { UserStore, ErrorAction } from './types';
 
 const handlers = {
+  [HYDRATE]: (state: UserStore, action: AnyAction) => {
+    state.profile = action.payload.userStore.profile;
+  },
+
   [resetChangePassword.type]: (state: UserStore) => {
     state.changePassword.data = null;
     state.changePassword.isLoading = false;

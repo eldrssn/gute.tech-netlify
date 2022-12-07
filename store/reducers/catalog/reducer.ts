@@ -1,4 +1,5 @@
-import { createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 import {
   CategoryResponseData,
@@ -28,6 +29,11 @@ import { CatalogStore, ErrorAction } from './types';
 import { initialState, initProductList } from './constants';
 
 const handlers = {
+  [HYDRATE]: (state: CatalogStore, action: AnyAction) => {
+    state.categoriesTreeList = action.payload.catalogStore.categoriesTreeList;
+    state.categoriesList = action.payload.catalogStore.categoriesList;
+  },
+
   [clearCatalogSearchRead.type]: (state: CatalogStore) => {
     state.catalogSearchRead.data = null;
   },

@@ -1,4 +1,5 @@
-import { createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 import {
   fetchRegions,
@@ -18,6 +19,11 @@ import {
 } from './types';
 
 const handlers = {
+  [HYDRATE]: (state: RegionsStore, action: AnyAction) => {
+    state.regions = action.payload.regionStore.regions;
+    state.branches = action.payload.regionStore.branches;
+  },
+
   [fetchRegions.pending.type]: (state: RegionsStore) => {
     state.regions.isLoading = true;
   },

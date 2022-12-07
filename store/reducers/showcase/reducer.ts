@@ -1,4 +1,5 @@
-import { createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 import { ShowcaseResponseData } from 'api/models/showcase';
 
@@ -7,6 +8,10 @@ import { ShowcaseStore, ErrorAction } from './types';
 import { initialState } from './constants';
 
 const handlers = {
+  [HYDRATE]: (state: ShowcaseStore, action: AnyAction) => {
+    state.showcase = action.payload.showcaseStore.showcase;
+  },
+
   [fetchShowcase.pending.type]: (state: ShowcaseStore) => {
     state.showcase.isLoading = true;
   },
