@@ -6,8 +6,6 @@ import App, { AppProps } from 'next/app';
 
 import { wrapper } from 'store';
 import { fetchShowcase } from 'store/reducers/showcase/actions';
-import { fetchBranches, fetchRegions } from 'store/reducers/regions/actions';
-import { fetchCategoriesTreeList } from 'store/reducers/catalog/actions';
 
 import { InitialLoader } from 'layouts/InitialLoader';
 import { MetrikScript } from 'utility/utils/metriks';
@@ -42,11 +40,11 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(
     const { ctx } = context;
     const isServer = !!ctx.req;
 
+    // TODO: убрать
+    console.log(ctx.req);
+
     if (isServer) {
-      await store.dispatch(fetchShowcase() as any);
-      await store.dispatch(fetchBranches() as any);
-      await store.dispatch(fetchRegions() as any);
-      await store.dispatch(fetchCategoriesTreeList() as any);
+      await store.dispatch(fetchShowcase() as never);
     }
 
     return {

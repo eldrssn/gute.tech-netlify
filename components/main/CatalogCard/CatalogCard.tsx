@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
@@ -36,6 +35,7 @@ import { TransportWarning } from './components/TransportWarning';
 import { Rating } from './components/Rating';
 import { BasketIcon } from 'components/ui/BasketIcon';
 import { RubleIcon } from 'components/ui/RubleIcon';
+import Image from 'next/image';
 
 const cn = classnames.bind(styles);
 
@@ -101,13 +101,12 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
 
         <Link href={getLink()}>
           <a className={styles.cardLinkContainer}>
-            <CardMedia
-              component='img'
+            <Image
               src={image || '/images/no-image.jpeg'}
               alt={title}
               className={styles.cardImage}
-              height='250px'
-              loading='lazy'
+              height='250'
+              width='250'
             />
             <CardContent className={styles.cardInfo}>
               <Divider className={styles.cardDivider} />
