@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import classnames from 'classnames/bind';
 import Link from 'next/link';
 
+import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -35,7 +36,6 @@ import { TransportWarning } from './components/TransportWarning';
 import { Rating } from './components/Rating';
 import { BasketIcon } from 'components/ui/BasketIcon';
 import { RubleIcon } from 'components/ui/RubleIcon';
-import Image from 'next/image';
 
 const cn = classnames.bind(styles);
 
@@ -101,12 +101,13 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
 
         <Link href={getLink()}>
           <a className={styles.cardLinkContainer}>
-            <Image
+            <CardMedia
+              component='img'
               src={image || '/images/no-image.jpeg'}
               alt={title}
               className={styles.cardImage}
-              height='250'
-              width='250'
+              height='250px'
+              loading='lazy'
             />
             <CardContent className={styles.cardInfo}>
               <Divider className={styles.cardDivider} />
