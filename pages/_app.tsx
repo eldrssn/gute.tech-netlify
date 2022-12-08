@@ -44,41 +44,36 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(
     const { ctx } = context;
     const isServer = !!ctx.req;
 
-    // TODO: убрать
-    console.log(global.Document);
-
-    ctx.req?.headers.host;
-
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      headers: {
-        'content-type': 'application/json',
-        'X-Client-Host':
-          process.env.NODE_ENV === 'production' && ctx.req?.headers.host
-            ? ctx.req.headers.host
-            : DEV_HOST,
-      },
-    });
-
-    const showcase = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/showcase/`,
-      {
-        headers: {
-          'content-type': 'application/json',
-          'X-Client-Host':
-            process.env.NODE_ENV === 'production' && ctx.req?.headers.host
-              ? ctx.req.headers.host
-              : DEV_HOST,
-        },
-      },
-    ).then((response) => {
-      // console.log(response.json());
-      return response.json();
-    });
-
-    console.log('SHOWCASE', showcase);
+    // const api = axios.create({
+    //   baseURL: process.env.NEXT_PUBLIC_API_URL,
+    //   headers: {
+    //     'content-type': 'application/json',
+    //     'X-Client-Host':
+    //       process.env.NODE_ENV === 'production' && ctx.req?.headers.host
+    //         ? ctx.req.headers.host
+    //         : DEV_HOST,
+    //   },
+    // });
 
     if (isServer) {
+      const showcase = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/showcase/`,
+        {
+          headers: {
+            'content-type': 'application/json',
+            'X-Client-Host':
+              process.env.NODE_ENV === 'production' && ctx.req?.headers.host
+                ? ctx.req.headers.host
+                : DEV_HOST,
+          },
+        },
+      ).then((response) => {
+        // console.log(response.json());
+        return response.json();
+      });
+
+      console.log('SHOWCASE', showcase);
+
       store.dispatch(fetchShowcase(showcase));
     }
 
