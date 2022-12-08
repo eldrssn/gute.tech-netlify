@@ -13,6 +13,9 @@ import { MetrikScript } from 'utility/utils/metriks';
 import 'slick-carousel/slick/slick.scss';
 import 'styles/globals.scss';
 
+import axios from 'axios';
+import { DEV_HOST } from 'constants/variables';
+
 const theme = createTheme();
 
 const cache = createCache({
@@ -41,10 +44,29 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(
     const isServer = !!ctx.req;
 
     // TODO: убрать
-    console.log(ctx.req);
+    console.log(global.Document);
+
+    ctx.req?.headers.host;
+
+    const api = axios.create({
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
+      headers: {
+        'content-type': 'application/json',
+        'X-Client-Host':
+          process.env.NODE_ENV === 'production' && ctx.req?.headers.host
+            ? ctx.req.headers.host
+            : DEV_HOST,
+      },
+    });
+
+    const showcase = await api
+      .get(`/v1/showcase/`)
+      .then((response) => response.data);
+
+    console.log('SHOWCASE', showcase);
 
     if (isServer) {
-      await store.dispatch(fetchShowcase() as never);
+      store.dispatch(fetchShowcase(showcase));
     }
 
     return {
