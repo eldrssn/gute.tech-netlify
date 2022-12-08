@@ -15,6 +15,7 @@ import 'styles/globals.scss';
 
 import axios from 'axios';
 import { DEV_HOST } from 'constants/variables';
+import { ShowcaseResponseData } from 'api/models/showcase';
 
 const theme = createTheme();
 
@@ -59,9 +60,21 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(
       },
     });
 
-    const showcase = await api
-      .get(`/v1/showcase/`)
-      .then((response) => response.data);
+    const showcase = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/showcase/`,
+      {
+        headers: {
+          'content-type': 'application/json',
+          'X-Client-Host':
+            process.env.NODE_ENV === 'production' && ctx.req?.headers.host
+              ? ctx.req.headers.host
+              : DEV_HOST,
+        },
+      },
+    ).then((response) => {
+      // console.log(response.json());
+      return response.json();
+    });
 
     console.log('SHOWCASE', showcase);
 
