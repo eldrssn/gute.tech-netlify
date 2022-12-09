@@ -9,7 +9,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const { req } = context;
     const isServer = req;
 
-    console.log('SHOWCASE ====>>>>>>>', showcase);
     console.log('HOSTNAME ====>>>>>>>', req?.headers.host);
 
     
@@ -26,6 +25,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       });
 
       store.dispatch(fetchShowcase(showcase));
+      console.log('SHOWCASE ====>>>>>>>', showcase);
     
 
     return {
