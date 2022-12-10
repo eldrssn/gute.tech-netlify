@@ -49,6 +49,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             process.env.NODE_ENV === 'production' && req?.headers.host
               ? req.headers.host
               : DEV_HOST,
+          'Sec-Fetch-Site': 'same-origin',
         },
       },
     ).then((response) => {
