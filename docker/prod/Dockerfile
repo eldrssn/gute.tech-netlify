@@ -47,11 +47,4 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-COPY /app/public ./public
-
-COPY /app/.next/standalone ./
-COPY /app/.next/static ./.next/static
-
-ENTRYPOINT ["/entrypoint.sh"]
-
 CMD ["node", "server.js"]
