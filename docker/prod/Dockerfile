@@ -47,6 +47,4 @@ CMD ["node", "server.js"]
 
 COPY docker/prod/entrypoint.sh /
 
-RUN chmod +x /entrypoint.sh
-
 ENTRYPOINT ["/entrypoint.sh"]
