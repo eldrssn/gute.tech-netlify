@@ -1,16 +1,10 @@
-// import { getShowcase } from 'api/routes/showcase';
+import { getShowcase } from 'api/routes/showcase';
 import { ShowcaseResponseData } from 'api/models/showcase';
-// import { createAsyncAction } from 'utility/helpers/store';
-import { createAction } from '@reduxjs/toolkit';
+import { createAsyncAction } from 'utility/helpers/store';
 
-// TODO: оттестить и поправить
-// const fetchShowcase = createAsyncAction<ShowcaseResponseData>({
-//   typeAction: 'showcaseStore/fetchShowcase',
-//   request: getShowcase,
-// });
-
-const fetchShowcase = createAction<ShowcaseResponseData>(
-  'showcaseStore/fetchShowcase',
-);
+const fetchShowcase = createAsyncAction<ShowcaseResponseData>({
+  typeAction: 'showcaseStore/fetchShowcase',
+  request: getShowcase,
+});
 
 export { fetchShowcase };

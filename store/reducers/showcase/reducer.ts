@@ -4,10 +4,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { ShowcaseResponseData } from 'api/models/showcase';
 
 import { fetchShowcase } from './actions';
-import {
-  ShowcaseStore,
-  // ErrorAction
-} from './types';
+import { ShowcaseStore, ErrorAction } from './types';
 import { initialState } from './constants';
 
 const handlers = {
@@ -15,12 +12,10 @@ const handlers = {
     state.showcase = action.payload.showcaseStore.showcase;
   },
 
-  // TODO: оттестить и поправить
-  // [fetchShowcase.pending.type]: (state: ShowcaseStore) => {
-  //   state.showcase.isLoading = true;
-  // },
-  // [fetchShowcase.fulfilled.type]: (
-  [fetchShowcase.type]: (
+  [fetchShowcase.pending.type]: (state: ShowcaseStore) => {
+    state.showcase.isLoading = true;
+  },
+  [fetchShowcase.fulfilled.type]: (
     state: ShowcaseStore,
     { payload }: PayloadAction<ShowcaseResponseData>,
   ) => {
@@ -43,14 +38,14 @@ const handlers = {
     state.showcase.isLoading = false;
     state.showcase.error = null;
   },
-  // [fetchShowcase.rejected.type]: (
-  //   state: ShowcaseStore,
-  //   { error }: ErrorAction,
-  // ) => {
-  //   const errorData = { name: error.name, message: error.message };
-  //   state.showcase.isLoading = false;
-  //   state.showcase.error = errorData;
-  // },
+  [fetchShowcase.rejected.type]: (
+    state: ShowcaseStore,
+    { error }: ErrorAction,
+  ) => {
+    const errorData = { name: error.name, message: error.message };
+    state.showcase.isLoading = false;
+    state.showcase.error = errorData;
+  },
 };
 
 const showcaseReducer = createReducer(initialState, handlers);
