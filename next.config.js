@@ -1,6 +1,4 @@
 /** @type {import('next').NextConfig} */
-const path = require('path');
-
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -35,22 +33,9 @@ const securityHeaders = [
 
 module.exports = {
   ...nextConfig,
-  output: 'standalone',
-  nx: {
-    // Set this to true if you would like to to use SVGR
-    // See: https://github.com/gregberge/svgr
-    svgr: false,
-  },
-  experimental: {
-    outputStandalone: true,
-    outputFileTracingRoot: path.join(__dirname, '../../'),
-  },
-  // esmExternals: 'loose',
-
   images: {
     domains: ['api-stage.gute.tech', 'api.gute.tech'],
   },
-
   async headers() {
     return [
       {
