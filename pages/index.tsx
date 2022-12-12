@@ -5,10 +5,8 @@ import { fetchShowcase } from 'store/reducers/showcase/actions';
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
-    const { req, res } = context;
-    const isServer = req;
+    const { req } = context;
 
-    // if (isServer) {
     const showcase = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/showcase/`,
       {
@@ -28,7 +26,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     return {
       props: {},
-      fallback: true,
     };
   },
 );
