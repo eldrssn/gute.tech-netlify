@@ -33,6 +33,7 @@ const securityHeaders = [
 
 module.exports = {
   ...nextConfig,
+  output: 'standalone',
   images: {
     domains: ['api-stage.gute.tech', 'api.gute.tech'],
   },
