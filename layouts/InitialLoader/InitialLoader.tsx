@@ -38,6 +38,7 @@ import {
 import { selectStatus } from 'store/reducers/payment/selectors';
 import { selectCartUpdated } from 'store/reducers/cart/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
+import { fetchShowcase } from 'store/reducers/showcase/actions';
 import {
   selectSelectedBranchId,
   selectSelectedCitySlug,
@@ -78,6 +79,7 @@ const InitialLoader: React.FC = ({ children }) => {
     dispatch(fetchRegions());
     dispatch(fetchCategoriesTreeList());
     dispatch(fetchCategoriesList());
+    dispatch(fetchShowcase());
   }, [dispatch]);
 
   useEffect(() => {
