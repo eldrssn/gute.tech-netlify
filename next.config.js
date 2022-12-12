@@ -4,8 +4,6 @@ const nextConfig = {
   poweredByHeader: false,
 };
 
-const path = require('path');
-
 const securityHeaders = [
   {
     key: 'Strict-Transport-Security',
@@ -35,20 +33,7 @@ const securityHeaders = [
 
 module.exports = {
   ...nextConfig,
-  output: 'standalone',
-  nx: {
-    // Set this to true if you would like to to use SVGR
-    // See: https://github.com/gregberge/svgr
-    svgr: false,
-  },
-  experimental: {
-    outputStandalone: true,
-    outputFileTracingRoot: path.join(__dirname, '../../'),
-  },
-  images: {
-    domains: ['api-stage.gute.tech', 'api.gute.tech'],
-  },
-  esmExternals: 'loose',
+  
   async headers() {
     return [
       {
