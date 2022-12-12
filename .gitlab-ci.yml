@@ -21,7 +21,7 @@ build-for-stage:
     - echo "NEXT_PUBLIC_API_URL=$STAGE_API_URL" >> .env
     - docker-compose -f docker-compose.stage.yml -p frontend-stage build
     - docker-compose -f docker-compose.stage.yml -p frontend-stage push
-    - docker-compose -f docker-compose.stage.yml -p frontend-stage down
+    # - docker-compose -f docker-compose.stage.yml -p frontend-stage down
     # - docker-compose -f docker-compose.stage.yml -p frontend-stage pull
     # - docker-compose -f docker-compose.stage.yml -p frontend-stage up -d
   only:
