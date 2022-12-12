@@ -10,8 +10,6 @@ RUN npm ci --legacy-peer-deps && npm cache clean --force
 
 COPY . ./
 
-COPY /app/node_modules ./node_modules
-
 COPY docker/prod/entrypoint.sh /
 
 RUN chmod +x /entrypoint.sh
