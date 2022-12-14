@@ -33,7 +33,7 @@
   margin-bottom: 20px;
   display: flex;
   flex-direction: row;
-
+  width: 100%;
   align-items: center;
 }
 
@@ -68,8 +68,11 @@
   bottom: 3px;
 }
 
-.inputIsError {
-  margin-bottom: 7px;
+.ratingError {
+  font-size: 12px;
+  color: red;
+  display: inline-block;
+  margin-left: auto;
 }
 
 .title {
@@ -106,6 +109,7 @@
   .inputContainer {
     width: 100%;
     margin-bottom: 10px;
+    flex-wrap: wrap;
   }
 
   .textAreaContainer,
@@ -145,5 +149,19 @@
     top: 10px;
     right: 10px;
     color: $black;
+  }
+
+  .inputContainer {
+    flex-wrap: wrap;
+    margin-top: 15px;
+
+    .ratingLabel {
+      margin: 0;
+    }
+
+    .ratingError {
+      width: 100%;
+      margin: 0;
+    }
   }
 }

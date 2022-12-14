@@ -32,7 +32,9 @@ const ModalAddProductReview: React.FC<TOuterProps> = ({
   const grade = useController({
     name: 'grade',
     control,
+    rules: { required: true },
   });
+
   const comment = useController({
     name: 'comment',
     control,
@@ -78,6 +80,8 @@ const ModalAddProductReview: React.FC<TOuterProps> = ({
     handleEnterPress(event, closeModal);
   };
 
+  console.log('grade.fieldState.error', grade.fieldState.error);
+
   return (
     <ModalWrapper isOpen={isOpen} setIsOpen={closeModal} modalTitle='review'>
       <Container fixed sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -102,16 +106,15 @@ const ModalAddProductReview: React.FC<TOuterProps> = ({
 
           <>
             <Box component='div' className={styles.inputBox}>
-              <Box
-                className={cn(styles.inputContainer, {
-                  [styles.inputIsError]: Boolean(grade.fieldState.error),
-                })}
-              >
+              <Box className={styles.inputContainer}>
                 <p className={styles.ratingLabel}>Ваша оценка товара: </p>
                 <Rating
                   value={Number(grade.field.value)}
                   onChange={grade.field.onChange}
                 />
+                {grade.fieldState.error && (
+                  <p className={styles.ratingError}>Поставьте оценку</p>
+                )}
               </Box>
             </Box>
             <Box
