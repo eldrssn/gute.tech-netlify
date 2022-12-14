@@ -17,7 +17,7 @@ const getLinkToProductPage = ({
   transportId: string;
 }) =>
   `${asPath.split('?')[0]}/${PRODUCT_MARKER}${productSlug}${
-    transportId && getTransportSlugs({ transportId })
+    transportId && `?${QueryUrl.TRANSPORT_ID}=${makeStringify(transportId)}`
   }`;
 
 const getLinkToParentCategory = ({

@@ -2,6 +2,8 @@ import React, { FC, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Box } from '@mui/material';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 import { fetchProductInstallationPrice } from 'store/reducers/product/actions';
 import { selectInstallationPriceState } from 'store/reducers/product/selectors';
@@ -9,10 +11,14 @@ import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { makeAnArray } from 'utility/helpers';
 
+import { Props } from './types';
 import { getProductSlug } from '../../helpers';
 import styles from './productInstallation.module.scss';
 
-const ProductInstallation: FC = () => {
+const ProductInstallation: FC<Props> = ({
+  withInstallation,
+  setWithInstallation,
+}) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -37,17 +43,23 @@ const ProductInstallation: FC = () => {
     );
   }, [сategorySlug, productSlug, transportId, citySlug, dispatch]);
 
-  const installationPrice = data?.installation_price;
+  const installationPrice = data?.price;
   const isInstallationPrice = Boolean(installationPrice);
 
   return (
     <>
       {isInstallationPrice && !error && (
         <Box className={styles.instalation}>
-          <p className={styles.text}>
-            Цена за установку: &nbsp;
-            <span className={styles.cost}>{installationPrice} руб. </span>
-          </p>
+          <FormControlLabel
+            className={styles.checkbox}
+            label={`Добавить установку (${installationPrice} руб.)`}
+            control={
+              <Checkbox
+                checked={withInstallation}
+                onChange={() => setWithInstallation(!withInstallation)}
+              />
+            }
+          />
         </Box>
       )}
     </>

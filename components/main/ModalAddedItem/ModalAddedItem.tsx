@@ -14,6 +14,8 @@ import {
   addProductToCartUnAuthorized,
 } from 'store/reducers/cart/actions';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
 
 import { TOuterProps } from './types';
 import styles from './styles.module.scss';
@@ -21,20 +23,39 @@ import styles from './styles.module.scss';
 const ModalAddedItem: React.FC<TOuterProps> = ({
   isOpen,
   setIsOpen,
+  withInstallation,
   title,
   slug,
 }) => {
   const dispatch = useDispatch();
 
   const isAuthorized = useSelector(selectIsAuthorized);
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const transportId = useSelector(selectTransportId);
 
   useEffect(() => {
     if (isAuthorized) {
-      dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 }));
+      dispatch(
+        addProductToCartAuthorized({
+          product: slug,
+          quantity: 1,
+          with_installation: withInstallation,
+          transport: transportId,
+          city: selectedCitySlug,
+        }),
+      );
       return;
     }
 
-    dispatch(addProductToCartUnAuthorized({ product: slug, quantity: 1 }));
+    dispatch(
+      addProductToCartUnAuthorized({
+        product: slug,
+        quantity: 1,
+        with_installation: withInstallation,
+        transport: transportId,
+        city: selectedCitySlug,
+      }),
+    );
   }, []);
 
   const closeModal = () => {

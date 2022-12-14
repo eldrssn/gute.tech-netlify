@@ -30,7 +30,7 @@ const tabNameByType: Record<DescriptionType, string> = {
   [DescriptionTypes.reviews]: 'Отзывы',
 };
 
-const DEV_HOST = 'dev.gute.tech';
+const DEV_HOST = 'parts.gute.tech';
 
 enum QueryUrl {
   BRAND_SLUG = 'brandSlug',

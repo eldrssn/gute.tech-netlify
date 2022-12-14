@@ -143,7 +143,7 @@ type InstallationPriceRequestData = {
 };
 
 type InstallationPriceResponseData = {
-  installation_price: string;
+  price: string;
 };
 
 export type {

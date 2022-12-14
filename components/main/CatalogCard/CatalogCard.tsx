@@ -155,6 +155,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
               isOpen={isOpenModalAddedItem}
               setIsOpen={setIsOpenModalAddedItem}
               slug={slug}
+              withInstallation={false}
             />
           )}
         </>
@@ -166,6 +167,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
               setIsOpen={setIsOpenModalAddedItem}
               title={title}
               slug={slug}
+              withInstallation={false}
             />
           )}
         </>

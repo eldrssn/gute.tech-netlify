@@ -20,10 +20,7 @@ import {
   fetchProductAnaloguesRead,
 } from 'store/reducers/product/actions';
 import { selectCategoriesProductRead } from 'store/reducers/product/selectors';
-import {
-  addProductToCartAuthorized,
-  addProductToCartUnAuthorized,
-} from 'store/reducers/cart/actions';
+
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { selectCartUpdated } from 'store/reducers/cart/selectors';
@@ -53,6 +50,7 @@ const ProductPage: FC = () => {
   const dispatch = useDispatch();
   const { isTablet } = useWindowSize();
 
+  const [withInstallation, setWithInstallation] = useState(false);
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
   const [isToReview, setIsToReview] = useState(false);
 
@@ -134,14 +132,6 @@ const ProductPage: FC = () => {
     }
     sendMetrik('reachGoal', metrics?.button_product_cart, metrics?.metric_id);
 
-    if (isAuthorized) {
-      dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 }));
-    }
-
-    if (!isAuthorized) {
-      dispatch(addProductToCartUnAuthorized({ product: slug, quantity: 1 }));
-    }
-
     setIsOpenModalAddedItem(true);
   };
 
@@ -159,6 +149,7 @@ const ProductPage: FC = () => {
         <>
           {isOpenModalAddedItem && (
             <ModalAddedItemUnAuthorized
+              withInstallation={withInstallation}
               isOpen={isOpenModalAddedItem}
               setIsOpen={setIsOpenModalAddedItem}
               slug={slug}
@@ -169,6 +160,7 @@ const ProductPage: FC = () => {
         <>
           {isOpenModalAddedItem && (
             <ModalAddedItem
+              withInstallation={withInstallation}
               isOpen={isOpenModalAddedItem}
               setIsOpen={setIsOpenModalAddedItem}
               title={title}
@@ -227,6 +219,7 @@ const ProductPage: FC = () => {
                   <CustomButton
                     customStyles={styles.buyButton}
                     onClick={buyItNow}
+                    disabled={withInstallation}
                   >
                     Купить сейчас
                   </CustomButton>
@@ -248,7 +241,10 @@ const ProductPage: FC = () => {
                 justifyContent='space-between'
               >
                 <ProductQuantity warehouses={warehouses} />
-                <ProductInstallation />
+                <ProductInstallation
+                  withInstallation={withInstallation}
+                  setWithInstallation={setWithInstallation}
+                />
               </Box>
 
               <ProductSpecial

@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import ErrorIcon from '@mui/icons-material/Error';
 
 import { ModalCity } from 'components/main/ModalCity';
 import {
@@ -30,15 +31,12 @@ import { Error } from '../Error';
 import { DesktopTableBody } from '../DesktopTableBody';
 import { MobileTableBody } from '../MobileTableBody';
 import {
-  BUTTON_TITLE_ORDER,
   BUTTON_TITLE_PAYMENT,
   BUTTON_TITLE_CHANGE_ADRESS,
 } from '../../constants';
 import { getCheckedCartItemsSlug, getCheckedCartItems } from '../../helpers';
 import { TTableOrderProps } from '../../types';
 import styles from '../../styles.module.scss';
-
-import ErrorIcon from '@mui/icons-material/Error';
 
 const TableOrder: React.FC<TTableOrderProps> = ({
   cart,
@@ -71,8 +69,6 @@ const TableOrder: React.FC<TTableOrderProps> = ({
   const checkedCartItems = getCheckedCartItems(cart);
   const checkedCartItemsSlug = getCheckedCartItemsSlug(checkedCartItems);
 
-  const isAllItemsSelect = cart.length === checkedCartItems.length;
-
   const openModalAdvice = () => {
     sendMetrik('reachGoal', metrics?.button_cart_help, metrics?.metric_id);
     setModalAdviceOpen(true);
@@ -96,16 +92,10 @@ const TableOrder: React.FC<TTableOrderProps> = ({
     dispatch(clearCreateOrdering());
     dispatch(setItemsSlugs(checkedCartItemsSlug));
     dispatch(setItemsFromOrder(checkedCartItems));
-    router.push(
-      isAllItemsSelect
-        ? TotalBoxRedirectUrls.PAYMENT
-        : TotalBoxRedirectUrls.ORDER,
-    );
+    router.push(TotalBoxRedirectUrls.PAYMENT);
   };
 
-  const submitButtonTitle = isAllItemsSelect
-    ? BUTTON_TITLE_PAYMENT
-    : BUTTON_TITLE_ORDER;
+  const submitButtonTitle = BUTTON_TITLE_PAYMENT;
 
   return isError ? (
     <Error />

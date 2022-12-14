@@ -15,6 +15,8 @@ import {
   updateCartItemAuthorized,
 } from 'store/reducers/cart/actions';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
 import { useWindowSize } from 'hooks/useWindowSize';
 
 import {
@@ -41,6 +43,8 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
     checkedCartItems.length <= MIN_NUMBER_SELECTED_ITEMS;
   const isCartEmpty = cart.length <= MIN_NUMBER_ITEMS_IN_CART;
 
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const transportId = useSelector(selectTransportId);
   const isAuthorized = useSelector(selectIsAuthorized);
 
   const handleChangeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,14 +60,28 @@ const RemoveCheckedButton: React.FC<TRemoveCheckedButtonProps> = ({
 
   const confirmedSolution = () => {
     const deleteArray = checkedCartItemsSlug.map((item) => {
-      return { product: item, quantity: 0 };
+      return { product: item, quantity: 0, with_installation: false };
     });
 
-    if (isAuthorized) dispatch(updateCartItemAuthorized(deleteArray));
+    if (isAuthorized)
+      dispatch(
+        updateCartItemAuthorized({
+          items: deleteArray,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
+      );
 
     if (!isAuthorized) {
-      dispatch(updateCartItemUnAuthorized(deleteArray));
+      dispatch(
+        updateCartItemUnAuthorized({
+          items: deleteArray,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
+      );
     }
+
     setIsOpenModal(false);
   };
 

@@ -12,6 +12,7 @@ const getOrderList = (cart: CartItemData[]) =>
     .map((item) => ({
       quantity: Number(item.quantity),
       slug: item.slug,
+      with_installation: item.withInstallation,
     }));
 
 const setPaymentFormErrors = ({

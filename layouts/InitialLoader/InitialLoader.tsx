@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
+import { YMaps } from '@pbe/react-yandex-maps';
 import Head from 'next/head';
 
 import {
@@ -36,7 +37,6 @@ import {
   selectLoadingAuthorized,
 } from 'store/reducers/authentication/selectors';
 import { selectStatus } from 'store/reducers/payment/selectors';
-import { selectCartUpdated } from 'store/reducers/cart/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
 import { fetchShowcase } from 'store/reducers/showcase/actions';
 import {
@@ -69,8 +69,8 @@ const InitialLoader: React.FC = ({ children }) => {
   const isAuthorizedLoading = useSelector(selectLoadingAuthorized);
   const selectedCitySlug = useSelector(selectSelectedCitySlug);
   const selectedBranchId = useSelector(selectSelectedBranchId);
+
   const { favicon, metrics } = useSelector(selectShowcaseData);
-  const cartIsUpdated = useSelector(selectCartUpdated);
   const { data: status } = useSelector(selectStatus);
   const metricId = metrics?.metric_id;
 
@@ -189,12 +189,14 @@ const InitialLoader: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (cartIsUpdated || isAuthorizedLoading) {
+    if (isAuthorizedLoading) {
       return;
     }
 
     if (isAuthorized) {
-      dispatch(fetchCartAuthorized());
+      dispatch(
+        fetchCartAuthorized({ transport: transportId, city: selectedCitySlug }),
+      );
       return;
     }
 
@@ -202,14 +204,10 @@ const InitialLoader: React.FC = ({ children }) => {
       return;
     }
 
-    dispatch(fetchCartUnAuthorized());
-  }, [
-    isAuthorized,
-    notAuthorizedToken,
-    cartIsUpdated,
-    status,
-    isAuthorizedLoading,
-  ]);
+    dispatch(
+      fetchCartUnAuthorized({ transport: transportId, city: selectedCitySlug }),
+    );
+  }, [isAuthorized, notAuthorizedToken, status, isAuthorizedLoading]);
 
   useEffect(() => {
     if (isAuthorized) {
@@ -248,7 +246,9 @@ const InitialLoader: React.FC = ({ children }) => {
         <meta charSet='utf-8' />
         <link rel='shortcut icon' href={favicon}></link>
       </Head>
-      <MainLayout>{children}</MainLayout>
+      <YMaps>
+        <MainLayout>{children}</MainLayout>
+      </YMaps>
       <div id='modal-root'></div>
       <noscript>
         <div>
