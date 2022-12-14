@@ -39,14 +39,16 @@ const CartPage: React.FC = () => {
   const cart = useSelector(selectCart);
 
   const cartSavedProducts = cartSavedItems.map((savedItem) => {
-    const slug = savedItem.product.slug;
+    const productSlug = savedItem.product.slug;
     const quantity = savedItem.quantity;
+    const withInstallation = savedItem.product.with_installation;
+    const installationPrice = savedItem.product.installation_price;
 
-    return { productSlug: slug, quantity };
+    return { productSlug, quantity, withInstallation, installationPrice };
   });
 
   useEffect(() => {
-    if (isLoadingAuthorized || cartIsUpdated || cartSavedIsLoading) {
+    if (isLoadingAuthorized || cartSavedIsLoading) {
       return;
     }
 

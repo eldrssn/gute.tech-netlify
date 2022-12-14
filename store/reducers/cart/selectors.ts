@@ -57,7 +57,11 @@ const selectCartCheckedItemsTotal = createSelector(
   ({ cartItems }) => {
     const checkedItems = cartItems.data.reduce((prev, cur) => {
       if (cur.isChecked) {
-        return prev + cur.price * cur.quantity;
+        const installationPrice = cur.withInstallation
+          ? cur.installationPrice * cur.quantity
+          : 0;
+        const positionPrice = cur.price * cur.quantity + installationPrice;
+        return prev + positionPrice;
       }
 
       return prev;

@@ -90,6 +90,7 @@ const handlers = {
     { payload }: { payload: FetchItemPayloadData },
   ) => {
     const { productSlug: slugAddedItem, quantity } = payload.requestData;
+    const { with_installation } = payload.data;
     const currentQuantity =
       Number(quantity) > MIN_COUNT_ORDER_ITEM ? quantity : MIN_COUNT_ORDER_ITEM;
     const order = state.orderItems.data;
@@ -102,6 +103,8 @@ const handlers = {
       {
         ...payload.data,
         quantity: currentQuantity ? currentQuantity : MIN_COUNT_ORDER_ITEM,
+        withInstallation: with_installation,
+        installationPrice: payload.data.installation_price,
         isChecked: true,
       },
     ];

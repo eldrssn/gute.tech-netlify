@@ -12,6 +12,8 @@ import {
   updateCartItemUnAuthorized,
 } from 'store/reducers/cart/actions';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
 import { CloseIcon } from 'components/ui/CloseIcon';
 
 import { TDeleteItemButtonProps } from '../../types';
@@ -26,6 +28,8 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
   const dispatch = useDispatch();
 
   const isAuthorized = useSelector(selectIsAuthorized);
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const transportId = useSelector(selectTransportId);
 
   const handleClick = () => {
     if (isLoading) {
@@ -36,13 +40,31 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
   };
 
   const confirmedSolution = () => {
+    const items = [
+      {
+        product: item.slug,
+        quantity: 0,
+        with_installation: item.withInstallation,
+      },
+    ];
+
     if (isAuthorized) {
-      dispatch(updateCartItemAuthorized([{ product: item.slug, quantity: 0 }]));
+      dispatch(
+        updateCartItemAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
+      );
     }
 
     if (!isAuthorized) {
       dispatch(
-        updateCartItemUnAuthorized([{ product: item.slug, quantity: 0 }]),
+        updateCartItemUnAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
       );
     }
 

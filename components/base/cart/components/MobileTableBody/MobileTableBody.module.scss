@@ -94,6 +94,18 @@
   min-width: 0;
 }
 
+.installation {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+.installationCheckbox {
+  left: 0px;
+  margin-right: 0;
+}
+
 @media (max-width: $mobile) {
   .imageBox {
     margin: auto;
@@ -125,6 +137,10 @@
 
   .checkbox {
     margin-left: 5px;
+  }
+
+  .installationTitle {
+    font-size: 12px;
   }
 }
 

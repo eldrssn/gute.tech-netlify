@@ -72,6 +72,16 @@
   font-weight: 100;
 }
 
+.installation {
+  position: relative;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.installationCheckbox {
+  left: 0px;
+}
+
 @media (max-width: 900px) {
   .itemTitleBox {
     max-width: 240px;

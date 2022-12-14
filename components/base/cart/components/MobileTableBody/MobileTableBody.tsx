@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
 import TableBody from '@mui/material/TableBody';
@@ -11,7 +11,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import CardMedia from '@mui/material/CardMedia';
 
-import { changeChecked } from 'store/reducers/cart/actions';
+import {
+  changeChecked,
+  updateCartItemAuthorized,
+  updateCartItemUnAuthorized,
+} from 'store/reducers/cart/actions';
+import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
+import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { formatPrice } from 'utility/helpers';
 import { getStockBalance } from 'utility/helpers';
 import { getLinkToProduct } from 'utility/helpers/linkmakers';
@@ -24,6 +31,39 @@ import styles from './MobileTableBody.module.scss';
 const MobileTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
   const dispatch = useDispatch();
 
+  const isAuthorized = useSelector(selectIsAuthorized);
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const transportId = useSelector(selectTransportId);
+
+  const handleChandeInstallation = (
+    slug: string,
+    quantity: number,
+    withInstallation: boolean,
+  ) => {
+    const items = [
+      { product: slug, quantity, with_installation: withInstallation },
+    ];
+
+    if (isAuthorized) {
+      dispatch(
+        updateCartItemAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
+      );
+      return;
+    }
+
+    dispatch(
+      updateCartItemUnAuthorized({
+        items,
+        city: selectedCitySlug,
+        transport: transportId,
+      }),
+    );
+  };
+
   const handleChangeCheckBox = (slug: string) => {
     dispatch(changeChecked(slug));
   };
@@ -35,14 +75,17 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
         const itemPrice = formatPrice(item.price);
         const countItemsPrice = formatPrice(item.quantity * item.price);
         const categories = item.categories[0];
+        const itemSlug = item.slug;
+        const itemQuantity = item.quantity;
+        const itemWithInstallation = item.withInstallation;
         const link = getLinkToProduct({
           categories: categories,
-          productSlug: item.slug,
+          productSlug: itemSlug,
         });
 
         return (
           <TableRow
-            key={item.slug}
+            key={itemSlug}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell
@@ -58,7 +101,7 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
                   control={
                     <Checkbox
                       checked={item.isChecked}
-                      onChange={() => handleChangeCheckBox(item.slug)}
+                      onChange={() => handleChangeCheckBox(itemSlug)}
                     />
                   }
                 />
@@ -94,6 +137,30 @@ const MobileTableBody: React.FC<TTableBodyProps> = ({ cart, isLoading }) => {
               <Typography className={styles.itemCost}>
                 Стоимость: {countItemsPrice}&#8381;
               </Typography>
+              {item.installationPrice && (
+                <Box className={styles.installation}>
+                  <FormControlLabel
+                    className={styles.installationCheckbox}
+                    label=''
+                    disabled={isLoading}
+                    control={
+                      <Checkbox
+                        checked={item.withInstallation}
+                        onChange={() =>
+                          handleChandeInstallation(
+                            itemSlug,
+                            itemQuantity,
+                            !itemWithInstallation,
+                          )
+                        }
+                      />
+                    }
+                  />
+                  <Typography className={styles.installationTitle}>
+                    добавить установку: +{item.installationPrice}&#8381;
+                  </Typography>
+                </Box>
+              )}
               <DeleteItemButton item={item} isLoading={isLoading} />
             </TableCell>
           </TableRow>

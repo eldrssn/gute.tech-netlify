@@ -10,9 +10,8 @@ import {
   ProductsRequestData,
   CartResponseData,
   CartAddItemRequestData,
-  CartAddItemResponseData,
   CartUpdateItemRequestData,
-  CartUpdateItemResponeData,
+  CartItemRequestData,
 } from '../models/cart';
 import { ApiMethods } from 'constants/types';
 import { getProductSlugList } from 'utility/helpers/index';
@@ -32,29 +31,47 @@ const getProductsInfoFromSlugs = ({ productsOptions }: ProductsRequestData) =>
     },
   });
 
-const getCartAuthorized = () =>
+const getCartAuthorized = ({ transport, city }: CartItemRequestData) =>
   sendRequestАuthentication<CartResponseData[]>({
     url: `/v1/payment/cart/`,
-    method: ApiMethods.GET,
+    method: ApiMethods.POST,
+    config: {
+      data: {
+        transport,
+        city,
+      },
+    },
   });
 
-const getCartUnAuthorized = () =>
+const getCartUnAuthorized = ({ transport, city }: CartItemRequestData) =>
   sendRequestNotAuthorized<CartResponseData[]>({
     url: `/v1/payment/cart/`,
-    method: ApiMethods.GET,
+    method: ApiMethods.POST,
+    config: {
+      data: {
+        transport,
+        city,
+      },
+    },
   });
 
 const postCartItemAuthorized = ({
   product,
   quantity,
+  with_installation,
+  transport,
+  city,
 }: CartAddItemRequestData) =>
-  sendRequestАuthentication<CartAddItemResponseData>({
+  sendRequestАuthentication<CartResponseData[]>({
     url: `/v1/payment/cart/add-item/`,
     method: ApiMethods.POST,
     config: {
       data: {
         product,
         quantity,
+        with_installation,
+        transport,
+        city,
       },
     },
   });
@@ -62,14 +79,20 @@ const postCartItemAuthorized = ({
 const postCartItemUnAuthorized = ({
   product,
   quantity,
+  with_installation,
+  transport,
+  city,
 }: CartAddItemRequestData) =>
-  sendRequestNotAuthorized<CartAddItemResponseData>({
+  sendRequestNotAuthorized<CartResponseData[]>({
     url: `/v1/payment/cart/add-item/`,
     method: ApiMethods.POST,
     config: {
       data: {
         product,
         quantity,
+        with_installation,
+        transport,
+        city,
       },
     },
   });
@@ -87,26 +110,36 @@ const postCartClearUnAuthorized = () =>
     config: {},
   });
 
-const putCartItemUpdateAuthorized = (cartItems: CartUpdateItemRequestData[]) =>
-  sendRequestАuthentication<CartUpdateItemResponeData>({
+const putCartItemUpdateAuthorized = ({
+  items,
+  transport,
+  city,
+}: CartUpdateItemRequestData) =>
+  sendRequestАuthentication<CartResponseData[]>({
     url: `/v1/payment/cart/update-item/`,
     method: ApiMethods.PUT,
     config: {
       data: {
-        items: cartItems,
+        items: items,
+        transport,
+        city,
       },
     },
   });
 
-const putCartItemUpdateUnAuthorized = (
-  cartItems: CartUpdateItemRequestData[],
-) =>
-  sendRequestNotAuthorized<CartUpdateItemResponeData>({
+const putCartItemUpdateUnAuthorized = ({
+  items,
+  transport,
+  city,
+}: CartUpdateItemRequestData) =>
+  sendRequestNotAuthorized<CartResponseData[]>({
     url: `/v1/payment/cart/update-item/`,
     method: ApiMethods.PUT,
     config: {
       data: {
-        items: cartItems,
+        items: items,
+        transport,
+        city,
       },
     },
   });

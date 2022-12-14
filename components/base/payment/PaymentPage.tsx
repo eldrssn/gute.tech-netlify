@@ -18,6 +18,7 @@ import {
 } from 'store/reducers/order/selectors';
 import { selectSelectedBranchId } from 'store/reducers/regions/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectTransportId } from 'store/reducers/transport/selectors';
 import { selectUserProfile } from 'store/reducers/user/selectors';
 import {
   createOrderingUnAuthorized,
@@ -52,6 +53,7 @@ const PaymentPage: React.FC = () => {
   const isLoadingOrder = useSelector(selectOrderLoading);
   const isAuthorized = useSelector(selectIsAuthorized);
   const createOrderStatus = useSelector(selectCreateOrderingStatus);
+  const transportId = useSelector(selectTransportId);
 
   const paymentUrl = createOrderStatus.data?.payment_url;
   const paymentId = createOrderStatus.data?.id;
@@ -72,6 +74,7 @@ const PaymentPage: React.FC = () => {
       payment_method_id: data.paymentId,
       cart: orderList,
       branch_office_id: selectedBranchId,
+      transport_id: transportId,
     };
     setOtherError([]);
 
