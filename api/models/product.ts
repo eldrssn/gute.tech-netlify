@@ -18,6 +18,14 @@ type AnalogueItem = {
   is_original: boolean;
 };
 
+type ReviewItem = {
+  grade: number;
+  comment: string;
+  created_at: string;
+  first_name: string;
+  last_name: string;
+};
+
 type ProductWarehouse = {
   title: string;
   address: string;
@@ -49,6 +57,7 @@ type ProductReadResponseData = {
   warehouses?: ProductWarehouse[];
   faq: Record<string, string>[];
   installation: string;
+  average_rating: number;
 };
 
 type ProductAnaloguesResponseData = {
@@ -56,6 +65,13 @@ type ProductAnaloguesResponseData = {
   total: string;
   pages: string;
   results: AnalogueItem[];
+};
+
+type ProductReviewsListResponseData = {
+  current: string;
+  total: string;
+  pages: string;
+  results: ReviewItem[];
 };
 
 type RecommendedResponceData = ProductListData[];
@@ -108,6 +124,28 @@ type ProductTransportListRequestData = {
   yearSlug: string;
 };
 
+type ProductReviewsListRequestData = {
+  productSlug: string;
+  page?: number;
+};
+
+type ProductReviewRequestData = {
+  productSlug: string;
+  grade: number;
+  comment: string | null;
+};
+
+type InstallationPriceRequestData = {
+  productSlug: string;
+  сategorySlug: string;
+  transportId: string;
+  citySlug: string;
+};
+
+type InstallationPriceResponseData = {
+  price: string;
+};
+
 export type {
   ProductAnaloguesResponseData,
   ProductReadResponseData,
@@ -119,4 +157,9 @@ export type {
   ProductModelsListRequestData,
   ProductYearsListRequestData,
   ProductTransportListRequestData,
+  ProductReviewsListResponseData,
+  ProductReviewsListRequestData,
+  ProductReviewRequestData,
+  InstallationPriceRequestData,
+  InstallationPriceResponseData,
 };

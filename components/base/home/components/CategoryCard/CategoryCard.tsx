@@ -1,6 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useSelector } from 'react-redux';
-import CardMedia from '@mui/material/CardMedia';
+import Link from 'next/link';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
@@ -13,10 +15,12 @@ import {
 
 import { CategoryCardProps } from './types';
 import styles from './CategoryCard.module.scss';
-import Link from 'next/link';
-import Image from 'next/image';
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({
+  item,
+  isSmallBox,
+  lazy,
+}) => {
   const router = useRouter();
 
   const { title, image, slug, found, total } = item;
@@ -39,7 +43,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
       : linkToParentCategory;
 
   return (
-    <Link href={getLink()}>
+    <Link href={getLink()} prefetch={false}>
       <a className={styles.categoryCard} tabIndex={0}>
         <Box
           className={styles.categoryQuantity_container}
@@ -58,7 +62,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
           )}
           <span className={styles.categoryQuantity}>{total} деталей всего</span>
         </Box>
-        <div className={styles.backgroundImage}></div>
+        <div className={styles.background}></div>
 
         <Typography
           component='h4'
@@ -73,17 +77,12 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item, isSmallBox }) => {
         >
           {title}
         </Typography>
-        {/* <CardMedia
-          component='img'
+
+        <img
           className={styles.categoryImage}
           src={image || '/images/no-image.jpeg'}
           alt={title || 'category name'}
-        /> */}
-        <Image
-          alt={title || 'category name'}
-          layout='fill'
-          src={image || '/images/no-image.jpeg'}
-          loading='lazy'
+          loading={lazy}
         />
       </a>
     </Link>

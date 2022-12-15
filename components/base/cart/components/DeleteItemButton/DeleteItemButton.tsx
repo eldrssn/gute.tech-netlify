@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cn from 'classnames';
 
 import { ModalWrapper } from 'components/main/ModalWrapper';
@@ -14,6 +12,9 @@ import {
   updateCartItemUnAuthorized,
 } from 'store/reducers/cart/actions';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
+import { CloseIcon } from 'components/ui/CloseIcon';
 
 import { TDeleteItemButtonProps } from '../../types';
 import styles from './DeleteItemButton.module.scss';
@@ -27,6 +28,8 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
   const dispatch = useDispatch();
 
   const isAuthorized = useSelector(selectIsAuthorized);
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const transportId = useSelector(selectTransportId);
 
   const handleClick = () => {
     if (isLoading) {
@@ -37,13 +40,31 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
   };
 
   const confirmedSolution = () => {
+    const items = [
+      {
+        product: item.slug,
+        quantity: 0,
+        with_installation: item.withInstallation,
+      },
+    ];
+
     if (isAuthorized) {
-      dispatch(updateCartItemAuthorized([{ product: item.slug, quantity: 0 }]));
+      dispatch(
+        updateCartItemAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
+      );
     }
 
     if (!isAuthorized) {
       dispatch(
-        updateCartItemUnAuthorized([{ product: item.slug, quantity: 0 }]),
+        updateCartItemUnAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
       );
     }
 
@@ -93,7 +114,7 @@ const DeleteItemButton: React.FC<TDeleteItemButtonProps> = ({
         })}
         onClick={handleClick}
       >
-        <FontAwesomeIcon icon={faTimes} />
+        <CloseIcon />
       </Button>
     </>
   );

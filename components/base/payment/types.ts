@@ -1,15 +1,19 @@
 import { Control, UseFormSetValue } from 'react-hook-form';
 
-import { BranchOfficeData, BranchesData } from 'api/models/regions';
-
 type TFormData = {
   nameValue: string;
   phoneNumber: string;
   emailValue: string;
   paymentMethod: string;
-  paymentGateway: string;
-  branchesData: BranchesData | null;
-  branch: BranchOfficeData | null;
+  paymentId: number;
+};
+
+type WatchFormData = {
+  nameValue?: string;
+  phoneNumber?: string;
+  emailValue?: string;
+  paymentMethod?: string;
+  paymentId?: number;
 };
 
 enum FormKey {
@@ -17,13 +21,14 @@ enum FormKey {
   PHONE_NUMBER = 'phoneNumber',
   EMAIL_VALUE = 'emailValue',
   PAYMENT_METHODS = 'paymentMethod',
-  PAYMENT_GATEWAY = 'paymentGateway',
+  PAYMENT_ID = 'paymentId',
   BRANCHES_DATA = 'branchesData',
   BRANCH = 'BRANCH',
 }
 
 type TPaymentMethodProps = {
   control: Control<TFormData>;
+  setValue: UseFormSetValue<TFormData>;
 };
 
 type TContactInformationProps = {
@@ -35,8 +40,14 @@ type TDeliveryAddressProps = {
   setValue: UseFormSetValue<TFormData>;
 };
 
-export { FormKey };
+enum PaymentType {
+  CASH = 'CASH',
+  CARD = 'CARD',
+}
+
+export { FormKey, PaymentType };
 export type {
+  WatchFormData,
   TFormData,
   TPaymentMethodProps,
   TContactInformationProps,

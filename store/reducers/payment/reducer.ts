@@ -7,6 +7,7 @@ import {
 } from 'api/models/payment';
 
 import {
+  clearStatus,
   clearCreateOrdering,
   fetchPaymentMethods,
   fetchStatusPaymentAuthorized,
@@ -18,6 +19,12 @@ import { initialState } from './constants';
 import { PaymentStore, ErrorAction, StatusResponseData } from './types';
 
 const handlers = {
+  [clearStatus.type]: (state: PaymentStore) => {
+    state.paymentStatus.data = null;
+    state.paymentStatus.error = null;
+    state.paymentStatus.isLoading = false;
+  },
+
   [clearCreateOrdering.type]: (state: PaymentStore) => {
     state.createOrderingStatus.data = null;
     state.createOrderingStatus.errorCreateOrdering = null;
@@ -86,6 +93,7 @@ const handlers = {
   },
 
   [createOrderingUnAuthorized.pending.type]: (state: PaymentStore) => {
+    state.createOrderingStatus.data = null;
     state.createOrderingStatus.loadingCreateOrdering = true;
     state.createOrderingStatus.errorCreateOrdering = null;
   },
@@ -103,6 +111,7 @@ const handlers = {
     { payload }: PayloadAction<OrderingResponseErrorData>,
   ) => {
     state.createOrderingStatus.isCreateOrdering = false;
+    state.createOrderingStatus.loadingCreateOrdering = false;
     state.paymentStatus.isLoading = false;
     state.createOrderingStatus.errorCreateOrdering = payload;
   },

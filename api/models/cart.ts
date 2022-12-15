@@ -10,6 +10,7 @@ type ProductWarehouse = {
   email: string;
   city: string;
   quantity: string;
+  installation?: boolean;
 };
 
 type ProductProperties = {
@@ -32,6 +33,8 @@ type ProductResponseData = {
   warehouses: ProductWarehouse[];
   properties: ProductProperties[];
   categories: string[][];
+  with_installation: boolean;
+  installation_price: number;
 };
 
 type ProductRequestData = {
@@ -42,6 +45,8 @@ type ProductRequestData = {
 type productOptions = {
   productSlug: string;
   quantity: number;
+  withInstallation: boolean;
+  installationPrice: number;
 };
 
 type ProductsRequestData = {
@@ -53,6 +58,13 @@ type Product = {
   slug: string;
   price: string;
   warehouse_stock: string;
+  with_installation: boolean;
+  installation_price: number;
+};
+
+type CartItemRequestData = {
+  transport: string;
+  city: string;
 };
 
 type CartItemResponseData = {
@@ -70,24 +82,25 @@ type CartResponseData = {
 type CartAddItemRequestData = {
   product: string;
   quantity: number;
+  with_installation: boolean;
+  transport: string;
+  city: string;
 };
 
-type CartAddItemResponseData = {
-  total_price: number;
-  total: number;
+type CartUpdateItem = {
+  quantity: number;
+  product: string;
+  with_installation: boolean;
 };
 
 type CartUpdateItemRequestData = {
-  quantity: number;
-  product: string;
-};
-
-type CartUpdateItemResponeData = {
-  total_price: number;
-  total: number;
+  items: CartUpdateItem[];
+  transport: string;
+  city: string;
 };
 
 export type {
+  CartItemRequestData,
   CartItemResponseData,
   ProductResponseData,
   ProductRequestData,
@@ -96,7 +109,5 @@ export type {
   productOptions,
   CartResponseData,
   CartAddItemRequestData,
-  CartAddItemResponseData,
   CartUpdateItemRequestData,
-  CartUpdateItemResponeData,
 };

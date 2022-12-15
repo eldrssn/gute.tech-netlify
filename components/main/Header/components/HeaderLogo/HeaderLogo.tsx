@@ -25,6 +25,7 @@ const HeaderLogo: FC = () => {
           sm: 'flex',
         },
         flexDirection: 'row',
+        order: '-2',
       }}
     >
       <Link href={'/'} passHref>
@@ -36,8 +37,8 @@ const HeaderLogo: FC = () => {
           <CardMedia
             component='img'
             className={styles.header_img}
-            src={logo ? logo : '/logo-example.jpeg'}
-            alt='header logo'
+            src={logo}
+            alt='logo'
           />
         </a>
       </Link>

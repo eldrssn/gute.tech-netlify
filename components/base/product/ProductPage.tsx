@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -18,15 +19,11 @@ import {
   fetchCategoriesProductsRead,
   fetchProductAnaloguesRead,
 } from 'store/reducers/product/actions';
-import {
-  selectCategoriesProductRead,
-  selectProductAnaloguesList,
-} from 'store/reducers/product/selectors';
-import {
-  addProductToCartAuthorized,
-  addProductToCartUnAuthorized,
-} from 'store/reducers/cart/actions';
+import { selectCategoriesProductRead } from 'store/reducers/product/selectors';
+
 import { fetchItemFromOrder } from 'store/reducers/order/actions';
+import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectCartUpdated } from 'store/reducers/cart/selectors';
 import { formatPrice, makeAnArray } from 'utility/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { sendMetrik } from 'utility/utils/metriks';
@@ -36,7 +33,7 @@ import { ProductQuantity } from './components/ProductQuantity';
 import { ProductSpecial } from './components/ProductSpecial';
 import { ProductImageGallery } from './components/ProductImageGallery';
 import { ProductTabsDescription } from './components/ProductTabsDescription';
-import { RecommendedProducts } from './components/RecommendedProducts';
+import { ProductInstallation } from './components/ProductInstallation';
 import { CatalogCategories } from 'components/main/CatalogCategories';
 import { getProductSlug } from './helpers';
 import { PropertyNameByType } from './constants';
@@ -44,12 +41,18 @@ import { Properties } from './types';
 
 import styles from './productPage.module.scss';
 
+const RecommendedProducts = dynamic(
+  () => import('./components/RecommendedProducts'),
+);
+
 const ProductPage: FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { isMobile } = useWindowSize();
+  const { isTablet } = useWindowSize();
 
+  const [withInstallation, setWithInstallation] = useState(false);
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
+  const [isToReview, setIsToReview] = useState(false);
 
   const isShowAuthorizationWarning = useSelector(
     selectShowAuthorizationWarning,
@@ -57,8 +60,8 @@ const ProductPage: FC = () => {
   const { data: product, isLoading } = useSelector(selectCategoriesProductRead);
   const isAuthorized = useSelector(selectIsAuthorized);
   const metrics = useSelector(selectMetrics);
-
-  const { data: analogues } = useSelector(selectProductAnaloguesList);
+  const transportId = useSelector(selectTransportId);
+  const isCartUpdated = useSelector(selectCartUpdated);
 
   const { categorySlug } = router.query;
   const categorySlugAnArray = makeAnArray(categorySlug);
@@ -92,18 +95,12 @@ const ProductPage: FC = () => {
     properties = [],
     slug,
     warehouses,
-    faq,
     installation,
+    is_linked_transport,
     manufacturer = '',
     vendor_code = '',
+    average_rating,
   } = product;
-
-  const quantity =
-    warehouses &&
-    warehouses.reduce(
-      (accumulator, warehouse) => accumulator + Number(warehouse.quantity),
-      0,
-    );
 
   const newProperties = [
     { title: PropertyNameByType[Properties.manufacturer], value: manufacturer },
@@ -111,15 +108,12 @@ const ProductPage: FC = () => {
     ...properties,
   ];
 
-  // TODO: как будет запрос с аналогами - поменять
   const productInfo = {
-    faq,
     installation,
     description,
     properties: newProperties,
-    analogues: analogues?.results || [],
-    // TODO: удалить отсюда ревьюсы
     reviews: [],
+    analogues: [],
   };
 
   const buyItNow = () => {
@@ -138,19 +132,16 @@ const ProductPage: FC = () => {
     }
     sendMetrik('reachGoal', metrics?.button_product_cart, metrics?.metric_id);
 
-    if (isAuthorized) {
-      dispatch(addProductToCartAuthorized({ product: slug, quantity: 1 }));
-    }
-
-    if (!isAuthorized) {
-      dispatch(addProductToCartUnAuthorized({ product: slug, quantity: 1 }));
-    }
-
     setIsOpenModalAddedItem(true);
   };
 
+  const isWarningMessage = Boolean(!is_linked_transport && transportId);
   const formattedPrice = formatPrice(price);
   const isAuthorizationWarging = !isAuthorized && isShowAuthorizationWarning;
+
+  const handleClickToReviews = () => {
+    setIsToReview(true);
+  };
 
   return (
     <>
@@ -158,6 +149,7 @@ const ProductPage: FC = () => {
         <>
           {isOpenModalAddedItem && (
             <ModalAddedItemUnAuthorized
+              withInstallation={withInstallation}
               isOpen={isOpenModalAddedItem}
               setIsOpen={setIsOpenModalAddedItem}
               slug={slug}
@@ -168,6 +160,7 @@ const ProductPage: FC = () => {
         <>
           {isOpenModalAddedItem && (
             <ModalAddedItem
+              withInstallation={withInstallation}
               isOpen={isOpenModalAddedItem}
               setIsOpen={setIsOpenModalAddedItem}
               title={title}
@@ -178,11 +171,11 @@ const ProductPage: FC = () => {
       )}
 
       <Box className={styles.mainContainer}>
-        {!isMobile && <CatalogCategories isProduct />}
+        {!isTablet && <CatalogCategories isProduct />}
 
         <Box
           sx={{
-            width: { xs: '100%', md: '75%', lg: '80%' },
+            width: { xs: '100%', lg: '74%' },
           }}
         >
           <NavigationBreadcrumbs lastTitle={title || 'Имя отсутствует'} />
@@ -226,12 +219,14 @@ const ProductPage: FC = () => {
                   <CustomButton
                     customStyles={styles.buyButton}
                     onClick={buyItNow}
+                    disabled={withInstallation}
                   >
                     Купить сейчас
                   </CustomButton>
                   <CustomButton
                     customStyles={styles.buyButton}
                     onClick={addItemToBasket}
+                    disabled={isCartUpdated}
                   >
                     В корзину
                   </CustomButton>
@@ -240,12 +235,31 @@ const ProductPage: FC = () => {
                 <ProductPrice>{formattedPrice || 9999}</ProductPrice>
               </Box>
 
-              <ProductQuantity quantity={quantity || 0} />
-              <ProductSpecial />
+              <Box
+                display='flex'
+                flexDirection='row'
+                justifyContent='space-between'
+              >
+                <ProductQuantity warehouses={warehouses} />
+                <ProductInstallation
+                  withInstallation={withInstallation}
+                  setWithInstallation={setWithInstallation}
+                />
+              </Box>
+
+              <ProductSpecial
+                isWarningMessage={isWarningMessage}
+                averageRating={Number(average_rating)}
+                handleClickToReviews={handleClickToReviews}
+              />
             </Container>
           </Box>
 
-          <ProductTabsDescription {...productInfo} />
+          <ProductTabsDescription
+            productInfo={productInfo}
+            isToReview={isToReview}
+            setIsToReview={setIsToReview}
+          />
 
           <RecommendedProducts />
         </Box>

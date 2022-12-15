@@ -3,4 +3,10 @@ type ProductImageGalleryProps = {
   title: string;
 };
 
-export type { ProductImageGalleryProps };
+type CustomControlsProps = {
+  isFullscreen: boolean;
+  title: string;
+  closeFullscreen: () => void;
+};
+
+export type { ProductImageGalleryProps, CustomControlsProps };

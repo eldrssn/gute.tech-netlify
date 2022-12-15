@@ -1,13 +1,15 @@
 import React, { FC, KeyboardEvent, useContext, useState } from 'react';
 import classnames from 'classnames/bind';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 
 import { ModalAdvice } from 'components/main/ModalAdvice';
+import { BasketIcon } from 'components/ui/BasketIcon';
+import { RubleIcon } from 'components/ui/RubleIcon';
 import { selectShowcaseData } from 'store/reducers/showcase/selectors';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
 import {
@@ -18,12 +20,12 @@ import { useWindowSize } from 'hooks/useWindowSize';
 import { HIDE_PHONE_WIDTH } from 'constants/variables';
 import { formatPrice } from 'utility/helpers';
 import { sendMetrik } from 'utility/utils/metriks';
+import { handleEnterPress } from 'utility/utils';
 
 import { HeaderContext } from '../HeaderContext';
 import { LoginButton } from '../LoginButton';
 
 import styles from './headerAsideNav.module.scss';
-import { handleEnterPress } from 'utility/utils';
 
 const cn = classnames.bind(styles);
 
@@ -65,8 +67,8 @@ const HeaderAsideNav: FC = () => {
         />
       )}
       {(isFullHeader || isMobile) && !hidePhone && (
-        <MenuItem disableGutters>
-          <i className={styles.icon_phone} />
+        <MenuItem disableGutters className={styles.menuOutline}>
+          <Image src='/icons/phonev1.png' alt='phone' width='28' height='28' />
           <a
             href={`tel:${phone}`}
             className={cn(menuItemStyles, styles.menuItem_phone)}
@@ -83,18 +85,18 @@ const HeaderAsideNav: FC = () => {
         {!isMobile && (
           <Link href={'/cart'} passHref>
             <a className={styles.focusKeyboard}>
-              <MenuItem disableGutters>
+              <MenuItem className={styles.menuOutline} disableGutters>
                 <Box className={styles.shoppingCartIcon}>
-                  <Box className={styles.shoppingCart} />
+                  <BasketIcon className={styles.basketIcon} />
                   <Box component='div' className={styles.countCartItem}>
                     <span className={styles.countCartItem_number}>
                       {cartProductTotal}
                     </span>
                   </Box>
-                  <Typography className={styles.orderTotalCard}>
+                  <span className={styles.orderTotalCard}>
                     {formattedCartTotal}
-                    <i className={styles.icon_ruble} />
-                  </Typography>
+                    <RubleIcon className={styles.rubleIcon} />
+                  </span>
                 </Box>
               </MenuItem>
             </a>
@@ -102,16 +104,18 @@ const HeaderAsideNav: FC = () => {
         )}
 
         <MenuItem
-          className={styles.menuItem_callback}
-          disableGutters={!isFullHeader}
+          className={styles.menuOutline}
           onClick={handleClickCallback}
           onKeyDown={handlePressCallback}
           tabIndex={0}
         >
-          <Box className={styles.consiltIcon} />
-          {isFullHeader && (
-            <Typography className={menuItemStyles}>Консультация</Typography>
-          )}
+          <Image
+            src='/icons/consultIcon.png'
+            width={19}
+            height={26}
+            alt='consultation icon'
+          />
+          {isFullHeader && <span className={menuItemStyles}>Консультация</span>}
         </MenuItem>
         <LoginButton />
       </Box>

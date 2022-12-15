@@ -13,6 +13,8 @@ import {
   updateCartItemAuthorized,
 } from 'store/reducers/cart/actions';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
+import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectSelectedCitySlug } from 'store/reducers/regions/selectors';
 import { TCounterProps, TFormCountData } from 'components/base/cart/types';
 import { getInputRules } from 'utility/helpers';
 import { inputMasks } from 'constants/patterns';
@@ -29,6 +31,8 @@ const Counter: React.FC<TCounterProps> = ({
 
   const dispatch = useDispatch();
 
+  const selectedCitySlug = useSelector(selectSelectedCitySlug);
+  const transportId = useSelector(selectTransportId);
   const isAuthorized = useSelector(selectIsAuthorized);
 
   const isItemCountMin = item.quantity <= 1;
@@ -48,16 +52,30 @@ const Counter: React.FC<TCounterProps> = ({
       return;
     }
 
+    const items = [
+      {
+        product: item.slug,
+        quantity,
+        with_installation: item.withInstallation,
+      },
+    ];
+
     if (isAuthorized)
       dispatch(
-        updateCartItemAuthorized([{ product: item.slug, quantity: quantity }]),
+        updateCartItemAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
       );
 
     if (!isAuthorized) {
       dispatch(
-        updateCartItemUnAuthorized([
-          { product: item.slug, quantity: quantity },
-        ]),
+        updateCartItemUnAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
       );
     }
   });
@@ -67,18 +85,30 @@ const Counter: React.FC<TCounterProps> = ({
       return;
     }
 
+    const items = [
+      {
+        product: item.slug,
+        quantity: item.quantity + 1,
+        with_installation: item.withInstallation,
+      },
+    ];
+
     if (isAuthorized)
       dispatch(
-        updateCartItemAuthorized([
-          { product: item.slug, quantity: item.quantity + 1 },
-        ]),
+        updateCartItemAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
       );
 
     if (!isAuthorized) {
       dispatch(
-        updateCartItemUnAuthorized([
-          { product: item.slug, quantity: item.quantity + 1 },
-        ]),
+        updateCartItemUnAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
       );
     }
   };
@@ -88,18 +118,30 @@ const Counter: React.FC<TCounterProps> = ({
       return;
     }
 
+    const items = [
+      {
+        product: item.slug,
+        quantity: item.quantity - 1,
+        with_installation: item.withInstallation,
+      },
+    ];
+
     if (isAuthorized)
       dispatch(
-        updateCartItemAuthorized([
-          { product: item.slug, quantity: item.quantity - 1 },
-        ]),
+        updateCartItemAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
       );
 
     if (!isAuthorized) {
       dispatch(
-        updateCartItemUnAuthorized([
-          { product: item.slug, quantity: item.quantity - 1 },
-        ]),
+        updateCartItemUnAuthorized({
+          items,
+          city: selectedCitySlug,
+          transport: transportId,
+        }),
       );
     }
   };

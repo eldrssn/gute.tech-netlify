@@ -93,11 +93,10 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
 
   return (
     <Container
-      disableGutters
+      disableGutters={isTablet}
       className={styles.catalogContainer}
       sx={{
         flexDirection: isFullHeader ? 'row-reverse' : 'row',
-        paddingLeft: isTablet ? 0 : isFullHeader ? '46px' : 0,
       }}
     >
       <Box className={styles.mainCategories} ref={parentRef}>
@@ -157,4 +156,4 @@ const CatalogMenu: FC<CatalogMenuProps> = ({ handleClose }) => {
   );
 };
 
-export { CatalogMenu };
+export default CatalogMenu;

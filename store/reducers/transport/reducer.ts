@@ -12,6 +12,7 @@ import {
   fetchYears,
   fetchEngines,
   fetchTransportInfo,
+  resetOptionsWhenEditFilter,
   resetTransportInfo,
   resetEngines,
   resetBrands,
@@ -20,12 +21,19 @@ import {
   resetOptionsDataInBrandStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
+  setTransportYear,
+  clearTransportYear,
   setTransportId,
   clearTransportId,
 } from './actions';
 import { initialState } from './constants';
 
-import { TransportStore, ErrorAction, TransportIdData } from './types';
+import {
+  TransportStore,
+  ErrorAction,
+  TransportIdData,
+  TransportYearData,
+} from './types';
 
 const handlers = {
   [setTransportId.type]: (
@@ -36,6 +44,15 @@ const handlers = {
   },
   [clearTransportId.type]: (state: TransportStore) => {
     state.transportId = '';
+  },
+  [setTransportYear.type]: (
+    state: TransportStore,
+    { payload }: PayloadAction<TransportYearData>,
+  ) => {
+    state.transportYear = payload;
+  },
+  [clearTransportYear.type]: (state: TransportStore) => {
+    state.transportYear = '';
   },
 
   [fetchTransportInfo.pending.type]: (state: TransportStore) => {
@@ -148,6 +165,13 @@ const handlers = {
     const errorData = { name: error.name, message: error.message };
     state.engines.isLoading = false;
     state.engines.error = errorData;
+  },
+
+  [resetOptionsWhenEditFilter.type]: (state: TransportStore) => {
+    state.brands.data = [];
+    state.models.data = [];
+    state.engines.data = [];
+    state.years.data = [];
   },
 
   [resetTransportInfo.type]: (state: TransportStore) => {

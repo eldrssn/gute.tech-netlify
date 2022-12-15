@@ -1,30 +1,37 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import classnames from 'classnames/bind';
-import { useController } from 'react-hook-form';
-import Step from '@mui/material/Step';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
+import dynamic from 'next/dynamic';
 import { useDispatch, useSelector } from 'react-redux';
+import { useController } from 'react-hook-form';
+import { useCookies } from 'react-cookie';
+import TextField from '@mui/material/TextField';
+import Step from '@mui/material/Step';
+import Box from '@mui/material/Box';
+import classnames from 'classnames/bind';
 
 import { Loader } from 'components/ui/Loader';
 import {
   resetOptionsDataInBrandStep,
   resetOptionsDataInModelStep,
   resetOptionsDataInYearStep,
+  setTransportYear,
 } from 'store/reducers/transport/actions';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { selectEngines } from 'store/reducers/transport/selectors';
+import { CookieKey } from 'constants/types';
+import { COOKIE_TTL } from 'constants/variables';
+
+import { CheckIcon } from 'components/ui/CheckIcon';
+import { CaretDownIcon } from 'components/ui/CaretDownIcon';
 
 import { FilterStepProps } from './types';
-import { FilterPopover } from '../FilterPopover';
 import { HeaderContext } from '../HeaderContext';
 import { setDefaultValueByName } from '../../helpers';
 import { namesDefaultValueByStep } from '../../constants';
 import { HandleClickProps, StepInputs } from '../../types';
 
 import styles from './filterStep.module.scss';
+
+const FilterPopover = dynamic(() => import('../FilterPopover'));
 
 const cn = classnames.bind(styles);
 
@@ -41,12 +48,12 @@ const FilterStep: FC<FilterStepProps> = ({
   transportType,
   setTransportType,
   setCurrentTransportId,
-  valueForm,
   getValues,
   ...restProps
 }) => {
   const dispatch = useDispatch();
 
+  const [, setCookieTransportYear] = useCookies();
   const { isFullHeader } = useContext(HeaderContext);
   const { isTablet } = useWindowSize();
   const [isOpenPopover, setIsOpenPopover] = useState(false);
@@ -71,21 +78,21 @@ const FilterStep: FC<FilterStepProps> = ({
     [StepInputs.BRAND]: () => {
       dispatch(resetOptionsDataInBrandStep());
       const names = namesDefaultValueByStep[StepInputs.BRAND];
-      setDefaultValueByName(names, setValue, valueForm);
+      setDefaultValueByName(names, setValue);
     },
     [StepInputs.MODEL]: () => {
       dispatch(resetOptionsDataInModelStep());
       const names = namesDefaultValueByStep[StepInputs.MODEL];
-      setDefaultValueByName(names, setValue, valueForm);
+      setDefaultValueByName(names, setValue);
     },
     [StepInputs.YEAR]: () => {
       dispatch(resetOptionsDataInYearStep());
       const names = namesDefaultValueByStep[StepInputs.YEAR];
-      setDefaultValueByName(names, setValue, valueForm);
+      setDefaultValueByName(names, setValue);
     },
     [StepInputs.ENGINE]: () => {
       const names = namesDefaultValueByStep[StepInputs.ENGINE];
-      setDefaultValueByName(names, setValue, valueForm);
+      setDefaultValueByName(names, setValue);
     },
     [StepInputs.INACTIVE]: () => {
       null;
@@ -114,6 +121,18 @@ const FilterStep: FC<FilterStepProps> = ({
     if (inputStepId === StepInputs.ENGINE) {
       const currentEngine = engines.find((engine) => engine.slug === slug);
       setCurrentTransportId(currentEngine?.transport_id);
+    }
+
+    if (inputStepId === StepInputs.YEAR) {
+      dispatch(setTransportYear(slug));
+
+      const date = new Date();
+      date.setTime(date.getTime() + COOKIE_TTL);
+
+      setCookieTransportYear(CookieKey.TRANSPORT_YEAR, slug, {
+        path: '/',
+        expires: date,
+      });
     }
 
     setCurrentStep(
@@ -158,7 +177,7 @@ const FilterStep: FC<FilterStepProps> = ({
           {isLoadingoptionList ? (
             <Loader size={25} />
           ) : isValue ? (
-            <FontAwesomeIcon icon={faCheck} />
+            <CheckIcon />
           ) : (
             <span
               className={cn(styles.stepNumber_number, {
@@ -182,12 +201,9 @@ const FilterStep: FC<FilterStepProps> = ({
           disabled={isDisable}
         />
         {!isDisable && (
-          <FontAwesomeIcon
-            onClick={handleClickCaret}
-            className={cn(styles.caret, {
-              [styles.caretActive]: isActiveStep,
-            })}
-            icon={faCaretDown}
+          <CaretDownIcon
+            handleClickCaret={handleClickCaret}
+            isActiveStep={isActiveStep}
           />
         )}
       </div>

@@ -1,20 +1,20 @@
 import React, { FC, useContext, useState } from 'react';
 import classnames from 'classnames/bind';
-import Popover from '@mui/material/Popover';
+import dynamic from 'next/dynamic';
 
-import { useWindowSize } from 'hooks/useWindowSize';
 import { CustomButton } from 'components/ui/CustomButton';
 
 import { HeaderContext } from '../HeaderContext';
-import { CatalogMenu } from '../CatalogMenu';
 
 import styles from './catalogButton.module.scss';
+
+const Popover = dynamic(() => import('@mui/material/Popover'));
+const CatalogMenu = dynamic(() => import('../CatalogMenu'));
 
 const cn = classnames.bind(styles);
 
 const CatalogButton: FC = () => {
   const { isFullHeader } = useContext(HeaderContext);
-  const { isTablet } = useWindowSize();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,18 +26,15 @@ const CatalogButton: FC = () => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   const popoverLocation = isFullHeader ? 'right' : 'left';
 
   return (
     <>
       <CustomButton
-        aria-describedby={id}
         onClick={handleClick}
         customStyles={cn(styles.catalogButton, {
           [styles.catalogButton_hidden]: !isFullHeader,
-          [styles.catalogButton_tablet]: isTablet && isFullHeader,
           [styles.catalogButton_full]: isFullHeader,
         })}
       >
@@ -52,7 +49,6 @@ const CatalogButton: FC = () => {
 
       {anchorEl && (
         <Popover
-          id={id}
           open={open}
           anchorEl={anchorEl}
           onClose={handleClose}
@@ -68,17 +64,15 @@ const CatalogButton: FC = () => {
             style: {
               borderRadius: 0,
               width: '100%',
-              marginLeft: isFullHeader ? 0 : isTablet ? '-8px' : 0,
-              maxWidth: isTablet ? 'calc(100% - 48px)' : '1200px',
+              height: isFullHeader ? '70vh' : '85vh',
+              paddingRight: '16px',
+              backgroundColor: 'transparent',
+              boxShadow: 'none',
+              marginTop: isFullHeader ? '0' : '30px',
             },
           }}
           sx={{
             backgroundColor: '#00000031',
-
-            '&	.MuiPopover-paper': {
-              backgroundColor: 'transparent',
-              boxShadow: 'none',
-            },
           }}
         >
           <CatalogMenu handleClose={handleClose} />

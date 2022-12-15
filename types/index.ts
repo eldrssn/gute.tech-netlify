@@ -1,11 +1,4 @@
-import type { AppProps } from 'next/app';
 import { FiltersCategoryResponseData } from 'api/models/catalog';
-
-type ComponentWithPageLayout = AppProps & {
-  Component: AppProps['Component'] & {
-    PageLayout: React.ComponentType;
-  };
-};
 
 type Sorting = {
   sort: string;
@@ -28,12 +21,16 @@ type Slugs = Record<string, Slug>;
 
 type AnchorClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 
+type IconProps = {
+  className?: string;
+};
+
 export type {
-  ComponentWithPageLayout,
   Sorting,
   FiltersRequest,
   Filter,
   Slug,
   Slugs,
   AnchorClick,
+  IconProps,
 };

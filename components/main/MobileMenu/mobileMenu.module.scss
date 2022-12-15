@@ -1,5 +1,5 @@
-@import "~styles/colors.scss";
-@import "~styles/constants.scss";
+@import '~styles/colors.scss';
+@import '~styles/constants.scss';
 
 .mainContainer {
   height: 50px;
@@ -8,7 +8,7 @@
   bottom: 0;
   left: 0;
   background: $white;
-  z-index: $z-index9;
+  z-index: $z-index16;
 
   display: flex;
   justify-content: space-around;
@@ -27,6 +27,10 @@
 
 .menuItem_active {
   color: $blue1;
+
+  & svg {
+    fill: $blue1;
+  }
 }
 
 .menuItem_icon {

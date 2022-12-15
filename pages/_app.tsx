@@ -1,16 +1,16 @@
-import { wrapper } from 'store';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import { AppProps } from 'next/app';
 
-import { MainLayout } from 'layouts/MainLayout';
+import { wrapper } from 'store';
+
 import { InitialLoader } from 'layouts/InitialLoader';
 import { MetrikScript } from 'utility/utils/metriks';
 
-import 'styles/globals.scss';
 import 'slick-carousel/slick/slick.scss';
-
-import { ComponentWithPageLayout } from 'types';
+import 'styles/globals.scss';
 
 const theme = createTheme();
 
@@ -19,17 +19,13 @@ const cache = createCache({
   prepend: true,
 });
 
-function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
-  const Wrapper = Component.PageLayout || MainLayout;
-
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <CacheProvider value={cache}>
         <ThemeProvider theme={theme}>
           <InitialLoader>
-            <Wrapper>
-              <Component {...pageProps} />
-            </Wrapper>
+            <Component {...pageProps} />
           </InitialLoader>
         </ThemeProvider>
       </CacheProvider>

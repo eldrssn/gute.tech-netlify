@@ -33,7 +33,7 @@
   display: flex;
   justify-content: space-between;
   position: sticky;
-  top: 60px;
+  top: 70px;
 
   left: 0;
   z-index: $z-index8;
@@ -41,7 +41,7 @@
 
 @media (max-width: $tablet) {
   .cardHeader {
-    top: 105px;
+    top: 124px;
   }
 }
 

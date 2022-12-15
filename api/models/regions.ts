@@ -14,6 +14,7 @@ type BranchOfficeData = {
   phone_number: string;
   description: string;
   email: string;
+  title: string;
 };
 
 type BranchesData = {

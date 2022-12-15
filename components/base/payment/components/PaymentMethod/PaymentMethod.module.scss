@@ -1,5 +1,5 @@
-@import 'styles/colors.scss';
-@import '~styles/breakpoints.scss';
+@import "styles/colors.scss";
+@import "~styles/breakpoints.scss";
 
 .formTitle {
   font-size: 28px;
@@ -39,6 +39,12 @@
   position: relative;
 }
 
+.paymentChoice {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+}
+
 .divider {
   height: 100px;
   width: 1px;
@@ -47,25 +53,22 @@
 
 .infoPayment {
   width: 50%;
-  margin-left: 2%;
   padding-left: 2%;
-  border-left: 1px solid $gray2;
 }
 
 .imageIconCard {
-  object-fit: contain;
-  width: 100px;
-  height: 50px;
   img {
     object-fit: contain;
+    width: 100px;
+    height: 50px;
   }
 }
 
 .radioButtonContainer {
-  width: 48%;
+  width: 100%;
   padding: 16.5px 14px;
   border: solid 1px $white1;
-  height: 56px;
+  min-height: 56px;
   transition: 0.2s;
   cursor: pointer;
   box-shadow: 4px 4px 8px -3px rgba(34, 60, 80, 0.2);
@@ -88,8 +91,18 @@
   }
 }
 
+.radioButtonError {
+  border-color: $red3;
+  color: $red3;
+
+  &:hover {
+    color: $red3;
+  }
+}
+
 .formControlLabel {
-  width: 49%;
+  margin-right: 0px;
+
   span {
     color: $gray3;
     width: 100%;
@@ -101,7 +114,15 @@
   margin-bottom: 40px;
 }
 
+.selectInput {
+  width: 100%;
+}
+
 @media (max-width: $xsMobile) {
+  .paymentChoice {
+    width: 100%;
+  }
+
   .radioButtonContainer {
     width: 100%;
   }
@@ -116,6 +137,14 @@
     border-left: 0;
     margin: 10px 0 0;
     padding: 0;
+  }
+
+  .imageIconCard {
+    img {
+      object-fit: contain;
+      width: 75px;
+      height: 37px;
+    }
   }
 
   .info {

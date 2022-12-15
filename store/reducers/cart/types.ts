@@ -23,6 +23,8 @@ type fetchItemsPayloadData = {
 type CartItemData = {
   isChecked: boolean;
   quantity: number;
+  withInstallation: boolean;
+  installationPrice: number;
 } & ProductResponseData;
 
 type CartItemsState = {

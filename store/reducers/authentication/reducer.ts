@@ -1,4 +1,5 @@
-import { createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 import {
   LoginResponseErrorData,
@@ -36,6 +37,10 @@ import {
 } from './types';
 
 const handlers = {
+  [HYDRATE]: (state: AuthenticationStore, action: AnyAction) => {
+    state.authorized = action.payload.authenticationStore.authorized;
+  },
+
   [logOut.type]: (state: AuthenticationStore) => {
     state.authorized.loadingAuthorized = false;
     state.authorized.isAuthorized = false;

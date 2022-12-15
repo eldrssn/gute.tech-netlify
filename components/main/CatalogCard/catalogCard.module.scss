@@ -1,5 +1,6 @@
 @import 'styles/colors.scss';
 @import 'styles/constants.scss';
+@import 'styles/breakpoints.scss';
 
 .cardContainer {
   border-radius: 0;
@@ -12,6 +13,7 @@
   width: 100%;
   height: 430px;
   max-height: 430px;
+  position: relative;
 
   &:first-child {
     margin-left: 0;
@@ -20,6 +22,26 @@
   &:last-child {
     margin-right: 0;
   }
+}
+
+.ratingBox {
+  display: flex;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  background-color: $blue1;
+  color: $white;
+  padding: 5px;
+  width: 50px;
+  height: 30px;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+}
+
+.ratingNumber {
+  margin-top: 1px;
+  margin-left: 1px;
 }
 
 .cardLinkContainer {
@@ -55,7 +77,7 @@
 .cardImage {
   max-width: 100%;
   vertical-align: middle;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .cardInfo {
@@ -86,21 +108,12 @@
   display: inline-flex;
   align-items: center;
 }
-.icon_ruble {
-  font-weight: 400;
-  font-size: 85%;
-  font-style: normal;
-  height: auto;
-  justify-content: center;
-  display: block;
-  margin-left: 5px;
-  margin-top: 2px;
 
-  text-align: center;
-}
-.icon_ruble::before {
-  font-family: 'icons';
-  content: '\e906';
+.icon_ruble {
+  width: 15px;
+  height: 15px;
+  margin-bottom: 2px;
+  fill: $blue1;
 }
 
 .cardAddToShoppingButton {
@@ -136,30 +149,16 @@
   font-weight: 700;
 }
 
-.shoppingCart {
-  width: 24px;
-  height: 24px;
-  background-image: url('~assets/images/shoppingCart.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  filter: invert(100%);
-}
-
 .shoppingIcon {
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  font-size: 85%;
-  -webkit-font-smoothing: antialiased;
   margin-right: 2px;
   margin-top: 2px;
-}
 
-.shoppingIcon::before {
-  font-family: 'icons';
-  content: '\e908';
+  width: 24px;
+  height: 24px;
+
+  path {
+    fill: $white;
+  }
 }
 
 .cardContainer_slider {
@@ -183,5 +182,28 @@
     font-size: 16px;
     height: 75px;
     -webkit-line-clamp: 3;
+  }
+}
+
+.warningBox {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.consultationText_mobile {
+  display: none;
+}
+
+@media (max-width: $mobile) {
+  .consultationText_mobile {
+    display: block;
+    margin: 0;
+    margin-right: 5px;
+    font-size: 12px;
+    color: $red1;
   }
 }

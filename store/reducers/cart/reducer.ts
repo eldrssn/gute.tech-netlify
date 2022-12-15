@@ -1,6 +1,6 @@
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { CartResponseData, CartAddItemResponseData } from 'api/models/cart';
+import { CartResponseData } from 'api/models/cart';
 import {
   clearCartItems,
   changeChecked,
@@ -13,6 +13,7 @@ import {
   addProductToCartUnAuthorized,
   updateCartItemAuthorized,
   updateCartItemUnAuthorized,
+  clearCartAuthorized,
 } from './actions';
 import { initialState } from './constants';
 
@@ -38,8 +39,16 @@ const handlers = {
     ];
   },
 
+  [clearCartAuthorized.pending.type]: (state: CartStore) => {
+    state.cartItems.data = [];
+    state.cartSavedItems.data = [];
+    state.cartProductCount = 0;
+    state.cartTotal = 0;
+  },
+
   [setAllChecked.type]: (state: CartStore) => {
     const newCart = state.cartItems.data.map((cartItem) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { isChecked, ...othedItemData } = cartItem;
       return {
         isChecked: true,
@@ -51,6 +60,7 @@ const handlers = {
 
   [clearCheckedItems.type]: (state: CartStore) => {
     const newCart = state.cartItems.data.map((cartItem) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { isChecked, ...othedItemData } = cartItem;
       return {
         isChecked: false,
@@ -77,6 +87,7 @@ const handlers = {
       state.cartItems.data = [];
       return;
     }
+    const oldCartItems = state.cartItems.data;
     const { productsOptions } = payload.requestData;
     const newCartItems = payload.data.map((item) => {
       const newItemslug = item.slug;
@@ -84,14 +95,19 @@ const handlers = {
         (productOption) => productOption.productSlug === newItemslug,
       );
       const productOption = productsOptions[productOptionsIndex];
+      const oldCartItem = oldCartItems.find(
+        (oldItem) => oldItem.slug === item.slug,
+      );
+      const isChecked = oldCartItem ? oldCartItem.isChecked : true;
 
       return {
         ...item,
         quantity: productOption.quantity,
-        isChecked: true,
+        withInstallation: productOption.withInstallation,
+        installationPrice: productOption.installationPrice,
+        isChecked,
       };
     });
-
     state.cartItems.isLoading = false;
     state.cartItems.data = newCartItems;
   },
@@ -151,12 +167,12 @@ const handlers = {
   },
   [addProductToCartAuthorized.fulfilled.type]: (
     state: CartStore,
-    { payload }: PayloadAction<CartAddItemResponseData>,
+    { payload }: PayloadAction<CartResponseData>,
   ) => {
-    state.cartError = false;
     state.cartUpdated = false;
-    state.cartTotal = payload.total_price;
+    state.cartSavedItems.data = payload.results;
     state.cartProductCount = payload.total;
+    state.cartTotal = payload.total_price;
   },
   [addProductToCartAuthorized.rejected.type]: (state: CartStore) => {
     state.cartError = true;
@@ -169,12 +185,12 @@ const handlers = {
   },
   [addProductToCartUnAuthorized.fulfilled.type]: (
     state: CartStore,
-    { payload }: PayloadAction<CartAddItemResponseData>,
+    { payload }: PayloadAction<CartResponseData>,
   ) => {
-    state.cartError = false;
     state.cartUpdated = false;
-    state.cartTotal = payload.total_price;
+    state.cartSavedItems.data = payload.results;
     state.cartProductCount = payload.total;
+    state.cartTotal = payload.total_price;
   },
   [addProductToCartUnAuthorized.rejected.type]: (state: CartStore) => {
     state.cartError = true;
@@ -185,26 +201,36 @@ const handlers = {
     state.cartUpdated = true;
     state.cartError = false;
   },
-  [updateCartItemAuthorized.fulfilled.type]: (state: CartStore) => {
-    state.cartError = false;
+  [updateCartItemAuthorized.fulfilled.type]: (
+    state: CartStore,
+    { payload }: PayloadAction<CartResponseData>,
+  ) => {
     state.cartUpdated = false;
+    state.cartSavedItems.data = payload.results;
+    state.cartProductCount = payload.total;
+    state.cartTotal = payload.total_price;
   },
   [updateCartItemAuthorized.rejected.type]: (state: CartStore) => {
-    state.cartError = true;
     state.cartUpdated = false;
+    state.cartError = true;
   },
 
   [updateCartItemUnAuthorized.pending.type]: (state: CartStore) => {
     state.cartUpdated = true;
     state.cartError = false;
   },
-  [updateCartItemUnAuthorized.fulfilled.type]: (state: CartStore) => {
-    state.cartError = false;
+  [updateCartItemUnAuthorized.fulfilled.type]: (
+    state: CartStore,
+    { payload }: PayloadAction<CartResponseData>,
+  ) => {
     state.cartUpdated = false;
+    state.cartSavedItems.data = payload.results;
+    state.cartProductCount = payload.total;
+    state.cartTotal = payload.total_price;
   },
   [updateCartItemUnAuthorized.rejected.type]: (state: CartStore) => {
-    state.cartError = true;
     state.cartUpdated = false;
+    state.cartError = true;
   },
 };
 

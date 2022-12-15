@@ -1,7 +1,15 @@
 @import 'styles/colors.scss';
+@import 'styles/breakpoints.scss';
 
 .navBox {
   margin: 10px 0;
   display: flex;
+  justify-content: space-between;
   border: 1px solid $transparentBlue1;
+}
+
+@media (max-width: $xsMobile) {
+  .navBox {
+    flex-direction: column;
+  }
 }

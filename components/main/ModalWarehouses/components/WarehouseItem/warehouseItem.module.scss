@@ -1,0 +1,53 @@
+@import '~styles/colors.scss';
+
+.warehouseBox {
+  border-bottom: 1px solid $transparentGray;
+  padding: 10px 0;
+}
+
+.titleBox {
+  display: flex;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 20px;
+  margin: 0;
+  margin-bottom: 10px;
+  color: $blue1;
+}
+
+.titleIcon {
+  color: $blue1;
+  margin-left: 5px;
+}
+
+.address {
+  font-size: 14px;
+  margin: 0;
+  margin-bottom: 25px;
+}
+
+.quantity {
+  font-size: 16px;
+  margin: 15px 0;
+  text-align: end;
+}
+
+.bottomBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.installation {
+  display: flex;
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.installationLabel {
+  font-size: 12px;
+  margin: auto 0;
+  vertical-align: middle;
+}

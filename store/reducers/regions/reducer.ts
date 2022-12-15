@@ -1,17 +1,29 @@
-import { createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
-import { fetchRegions, setCitySlug, fetchBranches } from './actions';
+import {
+  fetchRegions,
+  setBranchId,
+  fetchBranches,
+  setCitySlug,
+} from './actions';
 import { initialState } from './constants';
 
 import {
   RegionsStore,
   ErrorAction,
   RegionData,
+  SelectedBranchId,
   SelectedCitySlug,
   BranchesData,
 } from './types';
 
 const handlers = {
+  [HYDRATE]: (state: RegionsStore, action: AnyAction) => {
+    state.regions = action.payload.regionStore.regions;
+    state.branches = action.payload.regionStore.branches;
+  },
+
   [fetchRegions.pending.type]: (state: RegionsStore) => {
     state.regions.isLoading = true;
   },
@@ -52,6 +64,12 @@ const handlers = {
     state.branches.error = errorData;
   },
 
+  [setBranchId.type]: (
+    state: RegionsStore,
+    { payload }: PayloadAction<SelectedBranchId>,
+  ) => {
+    state.selectedBranchId = payload;
+  },
   [setCitySlug.type]: (
     state: RegionsStore,
     { payload }: PayloadAction<SelectedCitySlug>,

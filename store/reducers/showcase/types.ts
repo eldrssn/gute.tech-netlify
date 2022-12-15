@@ -18,6 +18,7 @@ type Metrics = {
   button_cart_submit: string;
   button_callback_submit: string;
   button_buy_submit: string;
+  button_part_help: string;
 };
 
 type ShowcaseData = {

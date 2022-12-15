@@ -1,9 +1,10 @@
-@import "./colors.scss";
-@import "./breakpoints.scss";
+@import './colors.scss';
+@import './breakpoints.scss';
 
 :export {
   white: $white;
   blue: $blue1;
+  red: $red1;
   mobile: $mobile;
   sMobile: $sMobile;
   xsMobile: $xsMobile;

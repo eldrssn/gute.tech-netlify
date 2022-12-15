@@ -208,4 +208,4 @@ const UserForm = () => {
   );
 };
 
-export { UserForm };
+export default UserForm;

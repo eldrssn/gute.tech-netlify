@@ -1,17 +1,20 @@
-import React, { FC, useContext, useState } from 'react';
-
+import React, { FC, useContext, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import Menu from '@mui/material/Menu';
 
 import { CustomButton } from 'components/ui/CustomButton';
 
-import { HeaderFilters } from '../HeaderFilters';
 import { HeaderMobileNav } from '../HeaderMobileNav';
 import { SearchField } from '../SearchField';
 import { HeaderContext } from '../HeaderContext';
 
 import styles from './headerMobile.module.scss';
 
+const HeaderFilters = dynamic(() => import('../HeaderFilters'));
+
 const HeaderMobile: FC = () => {
+  const router = useRouter();
   const { transportText } = useContext(HeaderContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -24,6 +27,10 @@ const HeaderMobile: FC = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    handleClose();
+  }, [router.asPath]);
 
   return (
     <>
@@ -57,12 +64,13 @@ const HeaderMobile: FC = () => {
         sx={{
           overflowY: 'auto !important',
           top: '121px !important',
+          zIndex: '1100',
 
           '& .MuiPopover-paper': {
             borderRadius: 0,
             margin: 0,
             maxWidth: '100vw',
-            maxHeight: '350px',
+            maxHeight: '365px',
 
             boxSizing: 'border-box',
             left: '0px !important',
@@ -70,9 +78,9 @@ const HeaderMobile: FC = () => {
           },
           '& .MuiMenu-list': {
             display: 'block',
-            height: transportText ? '250px' : '350px',
+            height: transportText ? '250px' : '365px',
             overflow: 'visible',
-            maxHeight: '350px',
+            maxHeight: '365px',
             width: '100vw',
           },
           '& .MuiMenuItem-root': {

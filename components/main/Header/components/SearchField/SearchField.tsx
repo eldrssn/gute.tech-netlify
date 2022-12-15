@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
@@ -34,11 +35,11 @@ import { useArrowNavigation } from 'hooks/useArrowNavigation';
 
 import { HeaderContext } from '../HeaderContext';
 
-import { checkResultList } from './helpers';
 import styles from './styles.module.scss';
 
 const SearchField: FC = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { isMobile, isTablet } = useWindowSize();
   const { isFullHeader } = useContext(HeaderContext);
@@ -49,7 +50,6 @@ const SearchField: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const popupRef = useRef<HTMLDivElement | null>(null);
-  const isResult = checkResultList(popupRef);
 
   const searchFieldRef = useArrowNavigation({
     selectors: 'a',
@@ -108,9 +108,11 @@ const SearchField: FC = () => {
   };
 
   const handleBlur = () => {
-    if (!isResult) {
-      setFieldIsFocus(false);
+    if (isProductSeacrh || isCategorySearch) {
+      return;
     }
+
+    setFieldIsFocus(false);
   };
 
   useEffect(() => {
@@ -123,7 +125,7 @@ const SearchField: FC = () => {
 
   useEffect(() => {
     setFieldIsFocus(false);
-  }, [isFullHeader, isMobile, isTablet, setFieldIsFocus]);
+  }, [isFullHeader, isMobile, isTablet, setFieldIsFocus, router.asPath]);
 
   useEffect(() => {
     const errorMessage = cn({
@@ -140,7 +142,7 @@ const SearchField: FC = () => {
       handleClosePopover();
     }
 
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && isFocusSearchField) {
       handleEnter();
     }
   };
@@ -173,7 +175,9 @@ const SearchField: FC = () => {
         })}
       >
         <TextField
-          className={styles.textField}
+          className={cn(styles.textField, {
+            [styles.textfield_smallHeader]: !isFullHeader,
+          })}
           inputProps={{ type: 'text' }}
           onChange={handleChangeInput}
           onClick={handleOpenPopover}

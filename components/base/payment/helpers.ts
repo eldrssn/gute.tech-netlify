@@ -3,7 +3,6 @@ import { UseFormSetError } from 'react-hook-form';
 import { ProfileResponseData } from 'api/models/user';
 import { CartItemData } from 'store/reducers/cart/types';
 import { OrderingErrors } from 'api/models/payment';
-import { BranchesData } from 'api/models/regions';
 
 import { TFormData, FormKey } from './types';
 
@@ -13,6 +12,7 @@ const getOrderList = (cart: CartItemData[]) =>
     .map((item) => ({
       quantity: Number(item.quantity),
       slug: item.slug,
+      with_installation: item.withInstallation,
     }));
 
 const setPaymentFormErrors = ({
@@ -53,34 +53,22 @@ const setPaymentFormErrors = ({
   }
 };
 
-const getDefaultValues = (
-  profile: ProfileResponseData | null,
-  selectBranch: BranchesData | undefined,
-) => {
+const getDefaultValues = (profile: ProfileResponseData | null) => {
   return {
-    paymentMethod: 'CARD',
-    paymentGateway: 'SBERBANK',
+    paymentMethod: '',
+    paymentId: 0,
     phoneNumber: profile?.phone_number ? profile?.phone_number : '',
     nameValue: profile?.first_name ? profile.first_name : '',
     emailValue: profile?.email ? profile?.email : '',
-    branchesData: selectBranch ? selectBranch : null,
-    branch: null,
   };
 };
 
-const getBranchOffice = (
-  branchesCity: BranchesData[],
-  selectCitySlug: string | undefined,
-) =>
-  branchesCity.find((branch) => branch.slug === selectCitySlug)?.branches || [];
-
-const getBranch = (branches: BranchesData[], selectedCitySlug: string) =>
-  branches.find((branch) => branch.slug === selectedCitySlug);
+const getUrlCashPaymentType = (orderId: number) =>
+  `/payment/status?orderId=${orderId}&payment_type=CASH&lang=ru`;
 
 export {
   getOrderList,
   setPaymentFormErrors,
   getDefaultValues,
-  getBranchOffice,
-  getBranch,
+  getUrlCashPaymentType,
 };

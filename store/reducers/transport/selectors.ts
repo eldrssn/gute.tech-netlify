@@ -34,6 +34,11 @@ const selectTransportId = createSelector(
   ({ transportId }) => transportId,
 );
 
+const selectTransportYear = createSelector(
+  selectTransportStore,
+  ({ transportYear }) => transportYear,
+);
+
 export {
   selectTransportStore,
   selectBrands,
@@ -42,4 +47,5 @@ export {
   selectEngines,
   selectTransportInfo,
   selectTransportId,
+  selectTransportYear,
 };

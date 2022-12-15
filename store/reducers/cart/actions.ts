@@ -14,11 +14,10 @@ import {
 import {
   ProductResponseData,
   ProductsRequestData,
+  CartItemRequestData,
   CartResponseData,
   CartAddItemRequestData,
-  CartAddItemResponseData,
   CartUpdateItemRequestData,
-  CartUpdateItemResponeData,
 } from 'api/models/cart';
 import { createAsyncAction } from 'utility/helpers/store';
 
@@ -28,18 +27,24 @@ const clearCheckedItems = createAction('clearCheckedItems');
 const setCurrentPage = createAction<number>('setCurrentPage');
 const clearCartItems = createAction('clearCartItems');
 
-const fetchCartAuthorized = createAsyncAction<CartResponseData[]>({
+const fetchCartAuthorized = createAsyncAction<
+  CartResponseData[],
+  CartItemRequestData
+>({
   typeAction: 'cartStore/fetchCartAuthorized',
   request: getCartAuthorized,
 });
 
-const fetchCartUnAuthorized = createAsyncAction<CartResponseData[]>({
+const fetchCartUnAuthorized = createAsyncAction<
+  CartResponseData[],
+  CartItemRequestData
+>({
   typeAction: 'cartStore/fetchCartUnAuthorized',
   request: getCartUnAuthorized,
 });
 
 const addProductToCartAuthorized = createAsyncAction<
-  CartAddItemResponseData,
+  CartResponseData[],
   CartAddItemRequestData
 >({
   typeAction: 'cartStore/addProductToCartAuthorized',
@@ -47,7 +52,7 @@ const addProductToCartAuthorized = createAsyncAction<
 });
 
 const addProductToCartUnAuthorized = createAsyncAction<
-  CartAddItemResponseData,
+  CartResponseData[],
   CartAddItemRequestData
 >({
   typeAction: 'cartStore/addProductToCartUnAuthorized',
@@ -55,26 +60,26 @@ const addProductToCartUnAuthorized = createAsyncAction<
 });
 
 const clearCartAuthorized = createAsyncAction({
-  typeAction: 'cartStore/clearCartAuthorized',
+  typeAction: 'cartStore/clearCart',
   request: postCartClearAuthorized,
 });
 
 const clearCartUnAuthorized = createAsyncAction({
-  typeAction: 'cartStore/clearCartUnAuthorized',
+  typeAction: 'cartStore/clearCart',
   request: postCartClearUnAuthorized,
 });
 
 const updateCartItemAuthorized = createAsyncAction<
-  CartUpdateItemResponeData,
-  CartUpdateItemRequestData[]
+  CartResponseData[],
+  CartUpdateItemRequestData
 >({
   typeAction: 'cartStore/updateCartItemAuthorized',
   request: putCartItemUpdateAuthorized,
 });
 
 const updateCartItemUnAuthorized = createAsyncAction<
-  CartUpdateItemResponeData,
-  CartUpdateItemRequestData[]
+  CartResponseData[],
+  CartUpdateItemRequestData
 >({
   typeAction: 'cartStore/updateCartItemUnAuthorized',
   request: putCartItemUpdateUnAuthorized,

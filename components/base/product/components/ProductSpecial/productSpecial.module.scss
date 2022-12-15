@@ -1,4 +1,5 @@
 @import '~styles/colors.scss';
+@import '~styles/breakpoints.scss';
 
 .productSpecialItem {
   display: inline-block;
@@ -12,10 +13,13 @@
   transition: all 0.6s ease;
   color: $blue1;
   inline-size: fit-content;
+  cursor: pointer;
 }
 
 .productSpecialWrapper {
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
 }
 
 .productSpecialItem:hover {
@@ -45,8 +49,55 @@
   background-size: contain;
 }
 
-.mobileView {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  line-height: 1.57;
+.warningBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.ratingBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  margin-bottom: 45px;
+  background-color: $white;
+
+  &:hover {
+    background-color: $transparentBlue2;
+  }
+}
+
+.warningText {
+  padding: 0;
+  margin-left: 10px;
+  padding-bottom: 3px;
+  border-bottom: 1px dashed $red3;
+  transition: all 0.6s ease;
+  color: $red3;
+  text-decoration: none;
+  font-size: 14px;
+
+  &:hover {
+    border-bottom: 1px dashed transparent;
+  }
+}
+
+.warningIcon {
+  font-size: 30px;
+}
+
+@media (max-width: $tablet) {
+  .productSpecialWrapper {
+    margin-top: 0;
+    margin-bottom: 20px;
+    line-height: 1.57;
+  }
+}
+
+@media (max-width: $xsMobile) {
+  .productSpecialWrapper {
+    margin-top: 40px;
+  }
 }

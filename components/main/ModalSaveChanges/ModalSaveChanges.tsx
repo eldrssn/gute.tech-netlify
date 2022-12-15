@@ -3,14 +3,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
+import { CloseIcon } from 'components/ui/CloseIcon';
 import { ModalWrapper } from 'components/main/ModalWrapper';
-import { handleEnterPress } from 'utility/utils';
-
 import { CustomButton } from 'components/ui/CustomButton';
+import { handleEnterPress } from 'utility/utils';
 import { TOuterProps } from './types';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './modalSaveChanges.module.scss';
 
@@ -34,7 +31,7 @@ const ModalSaveChanges: React.FC<TOuterProps> = ({ isOpen, setIsOpen }) => {
           tabIndex={0}
           onKeyPress={handleKeyClose}
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <CloseIcon fillColor='black' />
         </Box>
         <Typography className={styles.title}>Сохранить изменения?</Typography>
 

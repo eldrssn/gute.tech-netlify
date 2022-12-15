@@ -12,6 +12,7 @@ const TOKEN_CACHE_TTL_DELETE = -1 * 24 * 60 * 60 * 1000;
 const TIMER_DELAY = 59;
 const COOKIE_TTL = 30 * 24 * 60 * 60 * 1000;
 const MIN_FILTERS_COUNT = 8;
+const STRINGIFY_FALSE = 'false';
 
 const descriptionTypeName = [
   DescriptionTypes.properties,
@@ -19,7 +20,6 @@ const descriptionTypeName = [
   DescriptionTypes.description,
   DescriptionTypes.installation,
   DescriptionTypes.reviews,
-  DescriptionTypes.faq,
 ];
 
 const tabNameByType: Record<DescriptionType, string> = {
@@ -28,10 +28,9 @@ const tabNameByType: Record<DescriptionType, string> = {
   [DescriptionTypes.description]: 'Описание',
   [DescriptionTypes.installation]: 'Установка',
   [DescriptionTypes.reviews]: 'Отзывы',
-  [DescriptionTypes.faq]: 'Вопросы',
 };
 
-const DEV_HOST = 'dev.gute.tech';
+const DEV_HOST = 'parts.gute.tech';
 
 enum QueryUrl {
   BRAND_SLUG = 'brandSlug',
@@ -67,4 +66,5 @@ export {
   QueryUrl,
   Slugs,
   MIN_FILTERS_COUNT,
+  STRINGIFY_FALSE,
 };

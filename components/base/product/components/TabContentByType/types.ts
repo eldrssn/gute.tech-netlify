@@ -2,7 +2,7 @@ import { Content, DescriptionType } from 'types/product';
 
 type TabContentByTypeProps = {
   type: DescriptionType;
-  content?: Content;
+  content?: Record<DescriptionType, Content | undefined>;
 };
 
 export type { TabContentByTypeProps };

@@ -6,15 +6,23 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import { clearTransportId } from 'store/reducers/transport/actions';
+import {
+  clearTransportId,
+  clearTransportYear,
+  resetOptionsWhenEditFilter,
+} from 'store/reducers/transport/actions';
 import { selectTransportInfo } from 'store/reducers/transport/selectors';
+import {
+  selectTransportYear,
+  selectTransportId,
+} from 'store/reducers/transport/selectors';
 import { CustomButton } from 'components/ui/CustomButton';
 import { useWindowSize } from 'hooks/useWindowSize';
 
-import { HeaderContext } from '../HeaderContext';
-import styles from './styles.module.scss';
-import { HeaderFiltersTextProps } from './types';
 import { StepInputs } from '../../types';
+import { HeaderContext } from '../HeaderContext';
+import { HeaderFiltersTextProps } from './types';
+import styles from './styles.module.scss';
 
 const cn = classnames.bind(styles);
 
@@ -23,6 +31,7 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
   reset,
   setCurrentStep,
   setTransportType,
+  setCurrentTransportId,
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -30,44 +39,60 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
 
   const { transportText, isFullHeader } = useContext(HeaderContext);
 
-  const { data: TransportInfo } = useSelector(selectTransportInfo);
+  const transportYear = useSelector(selectTransportYear);
+  const transportId = useSelector(selectTransportId);
+  const { data: TransportInfo, isLoading: isLoadingTransportInfo } =
+    useSelector(selectTransportInfo);
 
   const resetFilter = () => {
+    if (isLoadingTransportInfo) {
+      return;
+    }
+
     router.push('/');
     reset();
     dispatch(clearTransportId());
+    dispatch(clearTransportYear());
     setCurrentStep(StepInputs.YEAR);
   };
 
   const editFilter = () => {
+    if (isLoadingTransportInfo) {
+      return;
+    }
+
     if (!TransportInfo) {
       return null;
     }
 
+    dispatch(resetOptionsWhenEditFilter());
     const { brand, engine, model, years, type } = TransportInfo;
 
     setTransportType(type.slug);
     setValue('brand', {
       title: brand.title,
       slug: brand.slug,
-      searchValue: null,
+      searchValue: '',
     });
     setValue('engine', {
       title: engine.title,
       slug: engine.slug,
-      searchValue: null,
+      searchValue: '',
     });
     setValue('model', {
       title: model.title,
       slug: model.slug,
-      searchValue: null,
+      searchValue: '',
     });
     setValue('year', {
-      title: years[0].toString(),
-      slug: years[0].toString(),
-      searchValue: null,
+      title: transportYear ? transportYear : years[0].toString(),
+      slug: transportYear ? transportYear : years[0].toString(),
+      searchValue: '',
     });
+
     setCurrentStep(StepInputs.ENGINE);
+    setCurrentTransportId(transportId);
+
     router.push('/');
     dispatch(clearTransportId());
   };
@@ -103,6 +128,7 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
         onClick={resetFilter}
         customStyles={cn(styles.stepButtonSubmit, {
           [styles.stepButtonSubmitShortHeader]: !isFullHeader,
+          [styles.stepButtonSubmitDisable]: isLoadingTransportInfo,
         })}
       >
         Сбросить фильтр
@@ -112,6 +138,7 @@ const HeaderFiltersText: FC<HeaderFiltersTextProps> = ({
         onClick={editFilter}
         customStyles={cn(styles.stepButtonSubmit, styles.editButton, {
           [styles.stepButtonSubmitShortHeader]: !isFullHeader,
+          [styles.stepButtonSubmitDisable]: isLoadingTransportInfo,
         })}
       >
         Редактировать фильтр

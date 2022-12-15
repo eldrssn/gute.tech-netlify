@@ -6,16 +6,14 @@ import { TabAnalogues } from '../TabAnalogues';
 import { TabDefault } from '../TabDefault';
 import { TabDetails } from '../TabDetails';
 import { TabInstallation } from '../TabInstallation';
-import { TabFAQ } from '../TabFAQ';
+import { TabReviews } from '../TabReviews';
 
 import { TabContentByTypeProps } from './types';
-import { TabReviews } from '../TabReviews';
 
 const ContentByDescription: Record<DescriptionType, FC<TabProps>> = {
   [DescriptionTypes.properties]: TabDetails,
   [DescriptionTypes.description]: TabDefault,
   [DescriptionTypes.installation]: TabInstallation,
-  [DescriptionTypes.faq]: TabFAQ,
   [DescriptionTypes.reviews]: TabReviews,
   [DescriptionTypes.analogues]: TabAnalogues,
 };
@@ -23,7 +21,7 @@ const ContentByDescription: Record<DescriptionType, FC<TabProps>> = {
 const TabContentByType: FC<TabContentByTypeProps> = ({ type, content }) => {
   const Content = ContentByDescription[type];
 
-  return <Content content={content} />;
+  return <Content content={content?.[type]} />;
 };
 
 export { TabContentByType };

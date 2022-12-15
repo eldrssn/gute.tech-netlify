@@ -24,11 +24,9 @@
   margin: 5px;
 }
 
-.icon_ruble::before {
-  font-family: 'icons';
-  content: '\e906';
-  font-weight: 400;
-  font-size: 85%;
-  font-style: normal;
-  margin-left: 5px;
+.icon_ruble {
+  width: 22px;
+  height: 22px;
+  margin-bottom: -1px;
+  fill: $blue1;
 }

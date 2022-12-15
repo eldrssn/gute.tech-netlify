@@ -1,13 +1,21 @@
 type ReviewItem = {
-  userName: string;
-  date: string;
-  userPhoto: string;
-  rating: Record<string, number>;
-  header: string;
-  text: string;
-  id: number;
+  first_name: string;
+  last_name: string;
+  created_at: string;
+  grade: number;
+  comment: string;
 };
 
 type ReviewProps = { item: ReviewItem };
 
-export type { ReviewItem, ReviewProps };
+type ReviewsBoxProps = {
+  reviewsList?: ReviewItem[];
+};
+
+type PaginationProps = {
+  pageCount: number;
+  currentPage: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export type { ReviewItem, ReviewProps, ReviewsBoxProps, PaginationProps };

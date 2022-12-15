@@ -1,14 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import classnames from 'classnames/bind';
 import Link from 'next/link';
 
+import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
@@ -16,6 +17,7 @@ import { selectShowAuthorizationWarning } from 'store/reducers/modal/selectors';
 import { selectMetrics } from 'store/reducers/showcase/selectors';
 import { selectIsAuthorized } from 'store/reducers/authentication/selectors';
 import { selectTransportId } from 'store/reducers/transport/selectors';
+import { selectCartUpdated } from 'store/reducers/cart/selectors';
 import { ModalAddedItem } from 'components/main/ModalAddedItem';
 import { ModalAddedItemUnAuthorized } from 'components/main/ModalAddedItemUnAuthorized';
 import { Tittle } from 'components/ui/TittleTooltip/TittleTooltip';
@@ -30,6 +32,10 @@ import { sendMetrik } from 'utility/utils/metriks';
 
 import { CatalogCardProps } from './types';
 import styles from './catalogCard.module.scss';
+import { TransportWarning } from './components/TransportWarning';
+import { Rating } from './components/Rating';
+import { BasketIcon } from 'components/ui/BasketIcon';
+import { RubleIcon } from 'components/ui/RubleIcon';
 
 const cn = classnames.bind(styles);
 
@@ -39,7 +45,9 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
   slug,
   title,
   categories,
+  is_linked_transport,
   isSlider,
+  average_rating,
 }) => {
   const [isOpenModalAddedItem, setIsOpenModalAddedItem] = useState(false);
 
@@ -51,7 +59,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
     selectShowAuthorizationWarning,
   );
   const metrics = useSelector(selectMetrics);
-
+  const isCartUpdated = useSelector(selectCartUpdated);
   const transportId = useSelector(selectTransportId);
 
   const { asPath } = router;
@@ -85,14 +93,21 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
           [styles.cardContainer_slider]: isSlider,
         })}
       >
+        {!is_linked_transport && transportId && <TransportWarning />}
+
+        {Number(average_rating) > 0 && (
+          <Rating averageRating={average_rating} />
+        )}
+
         <Link href={getLink()}>
           <a className={styles.cardLinkContainer}>
             <CardMedia
-              component={'img'}
-              height='250'
+              component='img'
               src={image || '/images/no-image.jpeg'}
               alt={title}
               className={styles.cardImage}
+              height='250px'
+              loading='lazy'
             />
             <CardContent className={styles.cardInfo}>
               <Divider className={styles.cardDivider} />
@@ -106,9 +121,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
                   <Typography className={styles.cardPrice}>
                     {formattedPrice}
                   </Typography>
-                  <Typography className={styles.cardPrice}>
-                    <i className={styles.icon_ruble} />
-                  </Typography>
+                  <RubleIcon className={styles.icon_ruble} />
                 </div>
 
                 <CardActions className={styles.cardActions}>
@@ -124,8 +137,9 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
                   <CustomButton
                     customStyles={styles.cardAddToShoppingButton}
                     onClick={handleClickToBasket}
+                    disabled={isCartUpdated}
                   >
-                    <i className={styles.shoppingIcon} />
+                    <BasketIcon className={styles.shoppingIcon} />
                   </CustomButton>
                 </CardActions>
               </Box>
@@ -141,6 +155,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
               isOpen={isOpenModalAddedItem}
               setIsOpen={setIsOpenModalAddedItem}
               slug={slug}
+              withInstallation={false}
             />
           )}
         </>
@@ -152,6 +167,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
               setIsOpen={setIsOpenModalAddedItem}
               title={title}
               slug={slug}
+              withInstallation={false}
             />
           )}
         </>

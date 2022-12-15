@@ -43,6 +43,16 @@ const initialState: ProductStore = {
     isLoading: false,
     error: null,
   },
+  productReviewsList: {
+    data: null,
+    isLoading: true,
+    error: null,
+  },
+  productInstallationPrice: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
 };
 
 export { initProductList, initialState };

@@ -6,11 +6,10 @@ import Box from '@mui/material/Box';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 
+import { CustomControls } from './components/CustomControls';
 import { formatImages } from './helpers';
 import { ProductImageGalleryProps } from './types';
 import { IMG_CLASSNAME } from './constants';
-
-import styles from './productImageGallery.module.scss';
 
 const ProductImageGallery: FC<ProductImageGalleryProps> = ({
   images,
@@ -53,29 +52,11 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
     toggleFullscreen();
   };
 
-  const displayCustomControls = isFullscreen ? 'block' : 'none';
-
-  const renderCustomControls = () => (
-    <>
-      <Box
-        component='span'
-        sx={{ display: displayCustomControls }}
-        className={styles.closeButton}
-        onClick={closeFullscreen}
-      />
-      <Box
-        className={styles.imageDescription}
-        sx={{ display: displayCustomControls }}
-      >
-        {title}
-      </Box>
-    </>
-  );
-
   return (
     <Box
       sx={{
         width: { xs: '100%', sm: '50%' },
+        marginBottom: '20px',
       }}
     >
       <ImageGallery
@@ -89,7 +70,13 @@ const ProductImageGallery: FC<ProductImageGalleryProps> = ({
         lazyLoad={true}
         slideOnThumbnailOver={true}
         showIndex={isFullscreen}
-        renderCustomControls={renderCustomControls}
+        renderCustomControls={() => (
+          <CustomControls
+            isFullscreen={isFullscreen}
+            title={title}
+            closeFullscreen={closeFullscreen}
+          />
+        )}
       />
     </Box>
   );

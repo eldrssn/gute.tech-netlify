@@ -181,7 +181,7 @@ const CatalogMain: FC = () => {
             <Box
               component='section'
               className={cn(styles.cardHeader, styles.cardHeaderContainer)}
-              sx={{ top: { sm: '105px', lg: '60px' } }}
+              sx={{ top: { sm: '124px', lg: '70px' } }}
             >
               <CatalogSort setSorting={setSorting} />
 
