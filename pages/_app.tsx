@@ -38,24 +38,24 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 MyApp.getInitialProps = wrapper.getInitialAppProps(
   (store) => async (context) => {
-    const { ctx } = context;
-    const isServer = !!ctx.req;
+    // const { ctx } = context;
+    // const isServer = !!ctx.req;
 
-    if (isServer) {
-      const showcase = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/showcase/`,
-        {
-          headers: {
-            'content-type': 'application/json',
-            'X-Client-Host': DEV_HOST,
-          },
+    // if (isServer) {
+    const showcase = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/showcase/`,
+      {
+        headers: {
+          'content-type': 'application/json',
+          'X-Client-Host': DEV_HOST,
         },
-      ).then((response) => {
-        return response.json();
-      });
+      },
+    ).then((response) => {
+      return response.json();
+    });
 
-      store.dispatch(fetchShowcase(showcase));
-    }
+    store.dispatch(fetchShowcase(showcase));
+    // }
 
     return {
       pageProps: {
