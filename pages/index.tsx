@@ -6,7 +6,8 @@ import { fetchShowcase } from 'store/reducers/showcase/actions';
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
     const showcase = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/showcase/`,
+      `https://api-stage.gute.tech/api/v1/showcase/`,
+      // `${process.env.NEXT_PUBLIC_API_URL}/v1/showcase/`,
       {
         headers: {
           'content-type': 'application/json',
